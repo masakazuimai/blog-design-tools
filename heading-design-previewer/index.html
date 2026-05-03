@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>見出しデザイン プレビューア｜CSSコピペで使えるブログ見出し10選</title>
+  <meta name="description" content="ブログの見出しデザインをプレビューして、HTML・CSSをワンクリックでコピー。WordPressのカスタムHTMLブロックにそのまま貼れます。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f0f4f8;
+      color: #1e293b;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 1.75rem;
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .header p {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+
+    /* 2カラムレイアウト */
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* 左カラム：入力 */
+    .sidebar {
+      position: sticky;
+      top: 20px;
+    }
+
+    .input-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    .input-card h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #1e293b;
+    }
+
+    .input-card label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #475569;
+    }
+
+    .input-card input,
+    .input-card select {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-family: inherit;
+      transition: border-color 0.2s;
+      background: #f8fafc;
+    }
+
+    .input-card input:focus,
+    .input-card select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background: #fff;
+    }
+
+    .field + .field {
+      margin-top: 16px;
+    }
+
+    .tag-info {
+      margin-top: 16px;
+      padding: 12px;
+      background: #eff6ff;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      color: #1e40af;
+      line-height: 1.5;
+    }
+
+    /* 右カラム：プレビュー */
+    .main {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .card-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-anim {
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: #ede9fe;
+      color: #6d28d9;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .copy-btn {
+      background: #f1f5f9;
+      color: #475569;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+      transition: all 0.15s;
+    }
+
+    .copy-btn:hover {
+      background: #3b82f6;
+      color: #fff;
+    }
+
+    .copy-btn.copied {
+      background: #10b981;
+      color: #fff;
+    }
+
+    .preview {
+      padding: 24px 20px;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      background: #fafbfc;
+    }
+
+    .preview h2 {
+      width: 100%;
+      line-height: 1.4;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .code-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .code-panel.open {
+      max-height: 500px;
+    }
+
+    .code-tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 20px;
+      border-bottom: 1px solid #e2e8f0;
+      background: #f8fafc;
+    }
+
+    .code-tab {
+      padding: 8px 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #64748b;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      font-family: inherit;
+      transition: color 0.15s;
+    }
+
+    .code-tab.active {
+      color: #3b82f6;
+      border-bottom-color: #3b82f6;
+    }
+
+    .code-block {
+      display: none;
+      margin: 0;
+      padding: 16px 20px;
+      background: #1e293b;
+      color: #e2e8f0;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      font-family: 'SF Mono', Consolas, monospace;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+
+    .code-block.active {
+      display: block;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .toggle-btn {
+      background: none;
+      border: none;
+      color: #64748b;
+      font-size: 0.875rem;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 500;
+      padding: 4px 0;
+      transition: color 0.15s;
+    }
+
+    .toggle-btn:hover {
+      color: #3b82f6;
+    }
+
+    /* 見出しスタイル（WPブロックエディタでは再現困難なもの） */
+    .style-marker h2 {
+      background: linear-gradient(transparent 60%, #fef08a 60%);
+      font-size: 1.5rem;
+      display: inline;
+      padding: 0 4px;
+    }
+
+    .style-gradient-underline h2 {
+      border-bottom: 3px solid transparent;
+      border-image: linear-gradient(90deg, #3b82f6, #8b5cf6) 1;
+      padding-bottom: 8px;
+      font-size: 1.5rem;
+    }
+
+    .style-ribbon h2 {
+      background: #3b82f6;
+      color: #fff;
+      padding: 8px 20px 8px 16px;
+      font-size: 1.5rem;
+      display: inline-block;
+      border-radius: 0 4px 4px 0;
+      box-shadow: -4px 0 0 #1e3a8a;
+    }
+
+    .style-stripe h2 {
+      background: repeating-linear-gradient(
+        -45deg,
+        #eff6ff,
+        #eff6ff 4px,
+        #dbeafe 4px,
+        #dbeafe 8px
+      );
+      padding: 12px 16px;
+      border-radius: 4px;
+      font-size: 1.5rem;
+    }
+
+    .style-double-accent h2 {
+      font-size: 1.5rem;
+      padding: 10px 16px;
+      border-left: 4px solid #3b82f6;
+      border-bottom: 2px solid #3b82f6;
+      background: linear-gradient(135deg, #eff6ff 0%, transparent 60%);
+    }
+
+    .style-clip-step h2 {
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      color: #fff;
+      padding: 12px 20px 12px 24px;
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%);
+    }
+
+    .style-bracket h2 {
+      font-size: 1.5rem;
+      text-align: center;
+      position: relative;
+      padding: 8px 24px;
+    }
+
+    .style-bracket h2::before,
+    .style-bracket h2::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 16px;
+      height: 100%;
+      border: 2px solid #3b82f6;
+    }
+
+    .style-bracket h2::before {
+      left: 0;
+      border-right: none;
+    }
+
+    .style-bracket h2::after {
+      right: 0;
+      border-left: none;
+    }
+
+    /* アニメーション付きスタイル */
+    .style-hover-underline h2 {
+      font-size: 1.5rem;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 6px;
+    }
+
+    .style-hover-underline h2::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+      transition: width 0.3s ease;
+    }
+
+    .style-hover-underline h2:hover::after {
+      width: 100%;
+    }
+
+    .style-hover-bg h2 {
+      font-size: 1.5rem;
+      padding: 12px 16px;
+      border-radius: 6px;
+      position: relative;
+      z-index: 1;
+      transition: color 0.3s ease;
+    }
+
+    .style-hover-bg h2::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #3b82f6;
+      border-radius: 6px;
+      z-index: -1;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .style-hover-bg h2:hover {
+      color: #fff;
+    }
+
+    .style-hover-bg h2:hover::before {
+      transform: scaleX(1);
+    }
+
+    .style-gradient-flow h2 {
+      font-size: 1.5rem;
+      padding: 12px 16px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #eff6ff, #ede9fe, #fce7f3, #eff6ff);
+      background-size: 300% 100%;
+      animation: gradientFlow 4s ease infinite;
+    }
+
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .style-typing h2 {
+      font-size: 1.5rem;
+      border-right: 3px solid #3b82f6;
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      animation: blink 0.8s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    .style-bounce-border h2 {
+      font-size: 1.5rem;
+      padding-bottom: 10px;
+      position: relative;
+    }
+
+    .style-bounce-border h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: #3b82f6;
+      border-radius: 2px;
+      animation: bounceLine 2s ease-in-out infinite;
+    }
+
+    @keyframes bounceLine {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(40px); }
+    }
+
+    .style-glow h2 {
+      font-size: 1.5rem;
+      color: #1e40af;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 2px rgba(59, 130, 246, 0.3); }
+      to { text-shadow: 0 0 12px rgba(59, 130, 246, 0.6), 0 0 24px rgba(59, 130, 246, 0.2); }
+    }
+
+    .style-border-draw h2 {
+      font-size: 1.5rem;
+      padding: 12px 16px;
+      position: relative;
+    }
+
+    .style-border-draw h2::before,
+    .style-border-draw h2::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border: 2px solid transparent;
+    }
+
+    .style-border-draw h2::before {
+      top: 0;
+      left: 0;
+      border-top-color: #3b82f6;
+      border-left-color: #3b82f6;
+      animation: borderDraw 1.5s ease forwards;
+    }
+
+    .style-border-draw h2::after {
+      bottom: 0;
+      right: 0;
+      border-bottom-color: #3b82f6;
+      border-right-color: #3b82f6;
+      animation: borderDraw 1.5s ease 0.5s forwards;
+    }
+
+    @keyframes borderDraw {
+      to {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 20px;
+      color: #94a3b8;
+      font-size: 0.875rem;
+      border-top: 1px solid #e2e8f0;
+      background: #fff;
+    }
+
+    footer a {
+      color: #3b82f6;
+      text-decoration: none;
+    }
+
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .header { padding: 32px 16px; }
+      .header h1 { font-size: 1.5rem; }
+      .container { padding: 20px 12px 48px; }
+
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .btn-group { width: 100%; }
+      .btn-group .copy-btn { flex: 1; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>見出しデザイン プレビューア</h1>
+    <p>デザインを選んでHTML・CSSをコピー。WordPressにそのまま貼れます。</p>
+  </header>
+
+  <div class="container">
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="input-card">
+          <h2>設定</h2>
+          <div class="field">
+            <label for="preview-text">見出しテキスト</label>
+            <input type="text" id="preview-text" value="ブログの見出しサンプル" placeholder="見出しに表示するテキスト">
+          </div>
+          <div class="field">
+            <label for="tag-select">HTMLタグ</label>
+            <select id="tag-select">
+              <option value="h2">h2</option>
+              <option value="h3">h3</option>
+              <option value="h4">h4</option>
+            </select>
+          </div>
+          <div class="tag-info">
+            WordPressの「カスタムHTML」ブロックに貼り付けてください。コピーにはHTMLとCSSの両方が含まれます。
+          </div>
+        </div>
+      </aside>
+
+      <main class="main" id="cards"></main>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></p>
+  </footer>
+
+  <script>
+    const designs = [
+      {
+        name: "マーカー風（イエロー）",
+        className: "style-marker",
+        css: "background: linear-gradient(transparent 60%, #fef08a 60%);\nfont-size: 1.5rem;\nfont-weight: bold;\ndisplay: inline;\npadding: 0 4px;"
+      },
+      {
+        name: "下線グラデーション",
+        className: "style-gradient-underline",
+        css: "border-bottom: 3px solid transparent;\nborder-image: linear-gradient(90deg, #3b82f6, #8b5cf6) 1;\npadding-bottom: 8px;\nfont-size: 1.5rem;\nfont-weight: bold;"
+      },
+      {
+        name: "リボン",
+        className: "style-ribbon",
+        css: "background: #3b82f6;\ncolor: #fff;\npadding: 8px 20px 8px 16px;\nfont-size: 1.5rem;\nfont-weight: bold;\ndisplay: inline-block;\nborder-radius: 0 4px 4px 0;\nbox-shadow: -4px 0 0 #1e3a8a;"
+      },
+      {
+        name: "ストライプ背景",
+        className: "style-stripe",
+        css: "background: repeating-linear-gradient(\n  -45deg,\n  #eff6ff,\n  #eff6ff 4px,\n  #dbeafe 4px,\n  #dbeafe 8px\n);\npadding: 12px 16px;\nborder-radius: 4px;\nfont-size: 1.5rem;\nfont-weight: bold;"
+      },
+      {
+        name: "ダブルアクセント",
+        className: "style-double-accent",
+        css: "font-size: 1.5rem;\nfont-weight: bold;\npadding: 10px 16px;\nborder-left: 4px solid #3b82f6;\nborder-bottom: 2px solid #3b82f6;\nbackground: linear-gradient(135deg, #eff6ff 0%, transparent 60%);"
+      },
+      {
+        name: "矢印クリップ",
+        className: "style-clip-step",
+        css: "font-size: 1.5rem;\nfont-weight: bold;\nbackground: linear-gradient(135deg, #1e3a8a, #3b82f6);\ncolor: #fff;\npadding: 12px 20px 12px 24px;\nclip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%);"
+      },
+      {
+        name: "角かっこ囲み",
+        className: "style-bracket",
+        category: "装飾",
+        css: "font-size: 1.5rem;\nfont-weight: bold;\ntext-align: center;\nposition: relative;\npadding: 8px 24px;",
+        pseudoBefore: "content: '';\nposition: absolute;\ntop: 0;\nleft: 0;\nwidth: 16px;\nheight: 100%;\nborder: 2px solid #3b82f6;\nborder-right: none;",
+        pseudoAfter: "content: '';\nposition: absolute;\ntop: 0;\nright: 0;\nwidth: 16px;\nheight: 100%;\nborder: 2px solid #3b82f6;\nborder-left: none;"
+      },
+      {
+        name: "ホバー下線スライド",
+        className: "style-hover-underline",
+        category: "アニメーション",
+        css: "font-size: 1.5rem;\nfont-weight: bold;\nposition: relative;\ndisplay: inline-block;\npadding-bottom: 6px;",
+        pseudoAfter: "content: '';\nposition: absolute;\nleft: 0;\nbottom: 0;\nwidth: 0;\nheight: 3px;\nbackground: linear-gradient(90deg, #3b82f6, #8b5cf6);\ntransition: width 0.3s ease;",
+        pseudoHover: "width: 100%;"
+      },
+      {
+        name: "ホバー背景スライド",
+        className: "style-hover-bg",
+        category: "アニメーション",
+        css: "font-size: 1.5rem;\nfont-weight: bold;\npadding: 12px 16px;\nborder-radius: 6px;\nposition: relative;\nz-index: 1;\ntransition: color 0.3s ease;",
+        pseudoBefore: "content: '';\nposition: absolute;\ninset: 0;\nbackground: #3b82f6;\nborder-radius: 6px;\nz-index: -1;\ntransform: scaleX(0);\ntransform-origin: left;\ntransition: transform 0.3s ease;",
+        pseudoHoverSelf: "color: #fff;",
+        pseudoHoverBefore: "transform: scaleX(1);"
+      },
+      {
+        name: "グラデーション流れ",
+        className: "style-gradient-flow",
+        category: "アニメーション",
+        css: "font-size: 1.5rem;\nfont-weight: bold;\npadding: 12px 16px;\nborder-radius: 6px;\nbackground: linear-gradient(90deg, #eff6ff, #ede9fe, #fce7f3, #eff6ff);\nbackground-size: 300% 100%;\nanimation: gradientFlow 4s ease infinite;",
+        keyframes: "@keyframes gradientFlow {\n  0% { background-position: 0% 50%; }\n  50% { background-position: 100% 50%; }\n  100% { background-position: 0% 50%; }\n}"
+      },
+      {
+        name: "タイピングカーソル",
+        className: "style-typing",
+        category: "アニメーション",
+        css: "font-size: 1.5rem;\nfont-weight: bold;\nborder-right: 3px solid #3b82f6;\ndisplay: inline-block;\noverflow: hidden;\nwhite-space: nowrap;\nanimation: blink 0.8s step-end infinite;",
+        keyframes: "@keyframes blink {\n  50% { border-color: transparent; }\n}"
+      },
+      {
+        name: "バウンスライン",
+        className: "style-bounce-border",
+        category: "アニメーション",
+        css: "font-size: 1.5rem;\nfont-weight: bold;\npadding-bottom: 10px;\nposition: relative;",
+        pseudoAfter: "content: '';\nposition: absolute;\nbottom: 0;\nleft: 0;\nwidth: 60px;\nheight: 3px;\nbackground: #3b82f6;\nborder-radius: 2px;\nanimation: bounceLine 2s ease-in-out infinite;",
+        keyframes: "@keyframes bounceLine {\n  0%, 100% { transform: translateX(0); }\n  50% { transform: translateX(40px); }\n}"
+      },
+      {
+        name: "テキストグロウ",
+        className: "style-glow",
+        category: "アニメーション",
+        css: "font-size: 1.5rem;\nfont-weight: bold;\ncolor: #1e40af;\nanimation: glow 2s ease-in-out infinite alternate;",
+        keyframes: "@keyframes glow {\n  from { text-shadow: 0 0 2px rgba(59, 130, 246, 0.3); }\n  to { text-shadow: 0 0 12px rgba(59, 130, 246, 0.6), 0 0 24px rgba(59, 130, 246, 0.2); }\n}"
+      },
+      {
+        name: "枠線ドロー",
+        className: "style-border-draw",
+        category: "アニメーション",
+        css: "font-size: 1.5rem;\nfont-weight: bold;\npadding: 12px 16px;\nposition: relative;",
+        pseudoBefore: "content: '';\nposition: absolute;\ntop: 0;\nleft: 0;\nwidth: 0;\nheight: 0;\nborder: 2px solid transparent;\nborder-top-color: #3b82f6;\nborder-left-color: #3b82f6;\nanimation: borderDraw 1.5s ease forwards;",
+        pseudoAfter: "content: '';\nposition: absolute;\nbottom: 0;\nright: 0;\nwidth: 0;\nheight: 0;\nborder: 2px solid transparent;\nborder-bottom-color: #3b82f6;\nborder-right-color: #3b82f6;\nanimation: borderDraw 1.5s ease 0.5s forwards;",
+        keyframes: "@keyframes borderDraw {\n  to {\n    width: 100%;\n    height: 100%;\n  }\n}"
+      }
+    ];
+
+    const input = document.getElementById("preview-text");
+    const tagSelect = document.getElementById("tag-select");
+    const cardsContainer = document.getElementById("cards");
+
+    function needsFullCode(design) {
+      return design.keyframes || design.pseudoAfter || design.pseudoBefore || design.pseudoHoverSelf;
+    }
+
+    function getHtml(design, text, tag) {
+      if (needsFullCode(design)) {
+        return getFullCode(design, text, tag);
+      }
+      return `<${tag} style="${design.css.replace(/\n/g, ' ')}">${text}</${tag}>`;
+    }
+
+    function getFullCode(design, text, tag) {
+      const className = `heading-${design.className.replace('style-', '')}`;
+      let style = `.${className} {\n  ${design.css.replace(/\n/g, '\n  ')}\n}`;
+
+      if (design.pseudoBefore) {
+        style += `\n\n.${className}::before {\n  ${design.pseudoBefore.replace(/\n/g, '\n  ')}\n}`;
+      }
+      if (design.pseudoAfter) {
+        style += `\n\n.${className}::after {\n  ${design.pseudoAfter.replace(/\n/g, '\n  ')}\n}`;
+      }
+      if (design.pseudoHover) {
+        style += `\n\n.${className}:hover::after {\n  ${design.pseudoHover.replace(/\n/g, '\n  ')}\n}`;
+      }
+      if (design.pseudoHoverSelf) {
+        style += `\n\n.${className}:hover {\n  ${design.pseudoHoverSelf.replace(/\n/g, '\n  ')}\n}`;
+      }
+      if (design.pseudoHoverBefore) {
+        style += `\n\n.${className}:hover::before {\n  ${design.pseudoHoverBefore.replace(/\n/g, '\n  ')}\n}`;
+      }
+      if (design.keyframes) {
+        style += `\n\n${design.keyframes}`;
+      }
+
+      return `<style>\n${style}\n</style>\n<${tag} class="${className}">${text}</${tag}>`;
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function render() {
+      const text = input.value || "ブログの見出しサンプル";
+      const tag = tagSelect.value;
+
+      cardsContainer.innerHTML = designs.map((d, i) => {
+        const htmlInline = getHtml(d, text, tag);
+        const fullCode = getFullCode(d, text, tag);
+
+        const badge = d.category === "アニメーション" ? '<span class="badge-anim">CSS Animation</span>' : '';
+        return `
+        <div class="card">
+          <div class="card-header">
+            <span class="card-name">${d.name}${badge}</span>
+            <div class="btn-group">
+              <button class="copy-btn" data-type="full" data-index="${i}">HTML+CSS</button>
+              ${!needsFullCode(d) ? `<button class="copy-btn" data-type="inline" data-index="${i}">インライン</button>` : ''}
+            </div>
+          </div>
+          <div class="preview ${d.className}">
+            <h2>${text}</h2>
+          </div>
+          <div class="card-footer">
+            <button class="toggle-btn" data-target="code-${i}">コードを表示</button>
+          </div>
+          <div class="code-panel" id="code-${i}">
+            <div class="code-tabs">
+              <button class="code-tab active" data-panel="code-${i}" data-tab="full">HTML+CSS${needsFullCode(d) ? '' : '（推奨）'}</button>
+              ${!needsFullCode(d) ? `<button class="code-tab" data-panel="code-${i}" data-tab="inline">インラインスタイル</button>` : ''}
+            </div>
+            <pre class="code-block active" data-panel="code-${i}" data-content="full">${escapeHtml(fullCode)}</pre>
+            ${!needsFullCode(d) ? `<pre class="code-block" data-panel="code-${i}" data-content="inline">${escapeHtml(htmlInline)}</pre>` : ''}
+          </div>
+        </div>`;
+      }).join("");
+    }
+
+    input.addEventListener("input", render);
+    tagSelect.addEventListener("change", render);
+    render();
+
+    cardsContainer.addEventListener("click", async (e) => {
+      const copyBtn = e.target.closest(".copy-btn");
+      if (copyBtn) {
+        const index = parseInt(copyBtn.dataset.index);
+        const type = copyBtn.dataset.type;
+        const text = input.value || "ブログの見出しサンプル";
+        const tag = tagSelect.value;
+        const d = designs[index];
+        const code = type === "full" ? getFullCode(d, text, tag) : getHtml(d, text, tag);
+
+        await navigator.clipboard.writeText(code);
+        const original = copyBtn.textContent;
+        copyBtn.textContent = "コピー完了！";
+        copyBtn.classList.add("copied");
+        setTimeout(() => {
+          copyBtn.textContent = original;
+          copyBtn.classList.remove("copied");
+        }, 1500);
+        return;
+      }
+
+      const toggleBtn = e.target.closest(".toggle-btn");
+      if (toggleBtn) {
+        const panel = document.getElementById(toggleBtn.dataset.target);
+        const isOpen = panel.classList.toggle("open");
+        toggleBtn.textContent = isOpen ? "コードを閉じる" : "コードを表示";
+        return;
+      }
+
+      const codeTab = e.target.closest(".code-tab");
+      if (codeTab) {
+        const panelId = codeTab.dataset.panel;
+        const tabName = codeTab.dataset.tab;
+
+        document.querySelectorAll(`.code-tab[data-panel="${panelId}"]`).forEach(t => t.classList.remove("active"));
+        document.querySelectorAll(`.code-block[data-panel="${panelId}"]`).forEach(b => b.classList.remove("active"));
+
+        codeTab.classList.add("active");
+        document.querySelector(`.code-block[data-panel="${panelId}"][data-content="${tabName}"]`).classList.add("active");
+      }
+    });
+  </script>
+</body>
+</html>
