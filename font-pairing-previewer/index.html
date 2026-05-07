@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>フォントペアリング プレビューア｜見出し×本文の最適な組み合わせを見つける</title>
+  <meta name="description" content="Google Fontsの日本語・英語フォントから見出し×本文の組み合わせをブログ記事風にプレビュー。気に入ったらCSSをワンクリックでコピーできます。">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-7Z6M3CJEV3');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f0f4f8;
+      color: #1e293b;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 1.75rem;
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .header p {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 1rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #1e293b;
+    }
+
+    .field + .field { margin-top: 16px; }
+
+    .field label {
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #475569;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px 36px 12px 14px;
+      font-size: 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-family: inherit;
+      transition: border-color 0.2s;
+      background-color: #f8fafc;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23475569' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background-color: #fff;
+    }
+
+    .font-sample {
+      margin-top: 8px;
+      padding: 10px 12px;
+      background: #f8fafc;
+      border-radius: 6px;
+      font-size: 1.25rem;
+      color: #334155;
+      border: 1px solid #e2e8f0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      flex: 1;
+      height: 6px;
+      border-radius: 3px;
+      background: #e2e8f0;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #3b82f6;
+      cursor: pointer;
+      border: 2px solid #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #3b82f6;
+      cursor: pointer;
+      border: 2px solid #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .slider-value {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #3b82f6;
+      min-width: 48px;
+      text-align: right;
+    }
+
+    .bg-toggle {
+      display: flex;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .bg-btn {
+      flex: 1;
+      padding: 10px 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      border: none;
+      background: #fff;
+      cursor: pointer;
+      font-family: inherit;
+      color: #475569;
+      transition: all 0.2s;
+    }
+
+    .bg-btn + .bg-btn { border-left: 1px solid #e2e8f0; }
+
+    .bg-btn.active {
+      background: #3b82f6;
+      color: #fff;
+    }
+
+    .bg-btn:hover:not(.active) { background: #f1f5f9; }
+
+    .presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .preset-btn {
+      padding: 8px 14px;
+      font-size: 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 500;
+      color: #475569;
+      transition: all 0.2s;
+    }
+
+    .preset-btn:hover {
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    .preset-btn.active {
+      border-color: #3b82f6;
+      background: #eff6ff;
+      color: #1e40af;
+    }
+
+    .preset-desc {
+      margin-top: 12px;
+      padding: 10px 12px;
+      background: #eff6ff;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #1e40af;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .preset-desc.visible { display: block; }
+
+    .fav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .fav-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .fav-item:hover {
+      background: #eff6ff;
+      border-color: #3b82f6;
+    }
+
+    .fav-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .fav-item-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #334155;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .fav-item-fonts {
+      font-size: 1rem;
+      color: #94a3b8;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .fav-delete {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border: none;
+      background: none;
+      color: #94a3b8;
+      font-size: 1.125rem;
+      cursor: pointer;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .fav-delete:hover {
+      background: #fee2e2;
+      color: #ef4444;
+    }
+
+    .fav-empty {
+      font-size: 1rem;
+      color: #94a3b8;
+      text-align: center;
+      padding: 12px 0;
+    }
+
+    .fav-save-btn {
+      width: 100%;
+      margin-top: 12px;
+      padding: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: 2px dashed #cbd5e1;
+      border-radius: 8px;
+      background: none;
+      color: #64748b;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .fav-save-btn:hover {
+      border-color: #3b82f6;
+      color: #3b82f6;
+      background: #eff6ff;
+    }
+
+    .fav-save-form {
+      display: none;
+      margin-top: 12px;
+      gap: 8px;
+    }
+
+    .fav-save-form.open {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .fav-save-form input {
+      flex: 1;
+      min-width: 0;
+      padding: 10px 12px;
+      font-size: 1rem;
+      border: 2px solid #3b82f6;
+      border-radius: 8px;
+      font-family: inherit;
+      outline: none;
+      background: #fff;
+    }
+
+    .fav-save-confirm {
+      flex-shrink: 0;
+      padding: 10px 16px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      background: #3b82f6;
+      color: #fff;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+
+    .fav-save-confirm:hover { background: #2563eb; }
+
+    .fav-save-hint {
+      width: 100%;
+      font-size: 1rem;
+      color: #94a3b8;
+      text-align: center;
+    }
+
+    .copy-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .copy-btn {
+      flex: 1;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .copy-btn-primary {
+      background: #3b82f6;
+      color: #fff;
+    }
+
+    .copy-btn-primary:hover { background: #2563eb; }
+
+    .copy-btn-secondary {
+      background: #fff;
+      color: #475569;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    .copy-btn-secondary:hover { background: #f1f5f9; }
+
+    .copy-btn.copied {
+      background: #10b981 !important;
+      color: #fff !important;
+    }
+
+    .preview-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .preview-bar {
+      padding: 14px 24px;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: border-color 0.3s;
+    }
+
+    .preview-bar-label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1e293b;
+      transition: color 0.3s;
+    }
+
+    .pairing-label {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #64748b;
+      transition: color 0.3s;
+    }
+
+    .preview-content {
+      padding: 48px 40px;
+      max-width: 740px;
+      margin: 0 auto;
+    }
+
+    .preview-content h1 {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+
+    .preview-meta {
+      color: #94a3b8;
+      font-size: 1rem;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e2e8f0;
+      transition: color 0.3s, border-color 0.3s;
+    }
+
+    .preview-content h2 {
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-top: 40px;
+      margin-bottom: 16px;
+    }
+
+    .preview-content h3 {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-top: 32px;
+      margin-bottom: 12px;
+    }
+
+    .preview-content p {
+      margin-bottom: 20px;
+    }
+
+    .preview-content ul {
+      margin-bottom: 20px;
+      padding-left: 24px;
+    }
+
+    .preview-content li { margin-bottom: 8px; }
+
+    .preview-content blockquote {
+      border-left: 4px solid #3b82f6;
+      padding: 16px 20px;
+      margin: 28px 0;
+      background: #f8fafc;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .preview-card.bg-ivory { background: #f7f7f4; }
+
+    .preview-card.bg-dark { background: #1a1a2e; }
+    .preview-card.bg-dark .preview-content { color: #e2e8f0; }
+    .preview-card.bg-dark .preview-meta { color: #64748b; border-color: #2d2d44; }
+    .preview-card.bg-dark .preview-bar { border-color: #2d2d44; }
+    .preview-card.bg-dark .preview-bar-label { color: #e2e8f0; }
+    .preview-card.bg-dark .pairing-label { color: #94a3b8; }
+    .preview-card.bg-dark blockquote {
+      background: #16213e;
+      border-left-color: #60a5fa;
+    }
+
+    .code-output {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      margin-top: 16px;
+    }
+
+    .code-output-header {
+      padding: 14px 24px;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .code-output-header span {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .code-output-tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 24px;
+      border-bottom: 1px solid #e2e8f0;
+      background: #f8fafc;
+    }
+
+    .code-tab {
+      padding: 10px 16px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #64748b;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      font-family: inherit;
+      transition: color 0.15s;
+    }
+
+    .code-tab.active {
+      color: #3b82f6;
+      border-bottom-color: #3b82f6;
+    }
+
+    .code-tab:hover:not(.active) { color: #334155; }
+
+    .code-block {
+      display: none;
+      margin: 0;
+      padding: 20px 24px;
+      background: #1e293b;
+      color: #e2e8f0;
+      font-size: 1rem;
+      line-height: 1.7;
+      font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .code-block.active { display: block; }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 40px;
+      color: #64748b;
+      font-size: 1rem;
+      border-top: 1px solid #e2e8f0;
+      background: #fff;
+    }
+
+    footer a {
+      color: #1e293b;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: #3b82f6; }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .footer-links a {
+      border: 1px solid #e2e8f0;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .footer-links a:hover {
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    @media (max-width: 768px) {
+      footer {
+        flex-direction: column;
+        gap: 16px;
+        padding: 24px 16px;
+        text-align: center;
+      }
+
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+
+    @media (max-width: 768px) {
+      .layout { grid-template-columns: 1fr; }
+      .header { padding: 32px 16px; }
+      .header h1 { font-size: 1.5rem; }
+      .container { padding: 20px 12px 48px; }
+      .preview-content { padding: 28px 20px; }
+      .preview-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>フォントペアリング プレビューア</h1>
+    <p>Google Fontsの見出し×本文を実際のブログ記事風にプレビュー。CSSをコピーしてすぐ使えます。</p>
+  </header>
+
+  <div class="container">
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="card">
+          <h2 class="card-title">フォント設定</h2>
+          <div class="field">
+            <label for="heading-font">見出しフォント</label>
+            <select id="heading-font"></select>
+            <div class="font-sample" id="heading-sample">あいうえお ABCDabcd 0123</div>
+          </div>
+          <div class="field">
+            <label for="body-font">本文フォント</label>
+            <select id="body-font"></select>
+            <div class="font-sample" id="body-sample">あいうえお ABCDabcd 0123</div>
+          </div>
+          <div class="field">
+            <label>見出しサイズ</label>
+            <div class="slider-row">
+              <input type="range" id="heading-size" min="24" max="48" value="32" step="2">
+              <span class="slider-value" id="heading-size-val">32px</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>本文サイズ</label>
+            <div class="slider-row">
+              <input type="range" id="body-size" min="16" max="22" value="17" step="1">
+              <span class="slider-value" id="body-size-val">17px</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>行間</label>
+            <div class="slider-row">
+              <input type="range" id="line-height" min="1.4" max="2.2" value="1.8" step="0.1">
+              <span class="slider-value" id="line-height-val">1.8</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>プレビュー背景</label>
+            <div class="bg-toggle" id="bg-toggle">
+              <button class="bg-btn active" data-bg="white">白</button>
+              <button class="bg-btn" data-bg="ivory">アイボリー</button>
+              <button class="bg-btn" data-bg="dark">ダーク</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">おすすめペアリング</h2>
+          <div class="presets" id="presets"></div>
+          <div class="preset-desc" id="preset-desc"></div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">お気に入り</h2>
+          <div class="fav-list" id="fav-list"></div>
+          <button class="fav-save-btn" id="fav-save-toggle">+ 現在の組み合わせを保存</button>
+          <div class="fav-save-form" id="fav-save-form">
+            <input type="text" id="fav-name-input" placeholder="名前を入力">
+            <button class="fav-save-confirm" id="fav-save-confirm">保存</button>
+            <span class="fav-save-hint">Enter で保存 / Esc でキャンセル</span>
+          </div>
+        </div>
+
+        <div class="copy-group">
+          <button class="copy-btn copy-btn-primary" id="copy-css">CSSをコピー</button>
+          <button class="copy-btn copy-btn-secondary" id="copy-link">linkタグ</button>
+        </div>
+      </aside>
+
+      <main>
+        <div class="preview-card" id="preview-card">
+          <div class="preview-bar">
+            <span class="preview-bar-label">プレビュー</span>
+            <span class="pairing-label" id="pairing-label">Noto Serif JP × Noto Sans JP</span>
+          </div>
+          <article class="preview-content" id="preview-content">
+            <h1>フォントの選び方でブログの印象は大きく変わる</h1>
+            <p class="preview-meta">2026年5月7日 · 5分で読める</p>
+            <p>フォント選びはブログデザインの中でも最も重要な要素のひとつです。見出しと本文の組み合わせ次第で、読者に与える印象は大きく変わります。この記事では、効果的なフォントペアリングの基本を解説します。</p>
+            <h2>フォントペアリングの基本ルール</h2>
+            <p>ブログを訪れた読者は、最初の数秒でそのサイトの信頼性を判断します。フォントの選び方は、その第一印象に大きな影響を与えます。</p>
+            <p>見出しには存在感のあるフォントを、本文には読みやすいフォントを選ぶことが基本です。この「コントラスト」がフォントペアリングの鍵となります。</p>
+            <ul>
+              <li>見出しと本文でフォントのカテゴリを変える（明朝×ゴシックなど）</li>
+              <li>使用するフォントは2〜3種類までに抑える</li>
+              <li>ウェイト（太さ）でメリハリをつける</li>
+              <li>行間は本文で1.6〜2.0を目安にする</li>
+            </ul>
+            <h2>おすすめの組み合わせパターン</h2>
+            <h3>明朝体 × ゴシック体</h3>
+            <p>最もオーソドックスで効果的な組み合わせです。明朝体の見出しが格調と知性を演出し、ゴシック体の本文が読みやすさを担保します。ニュースサイトやビジネスブログに最適です。</p>
+            <blockquote>「タイポグラフィはデザインの90%を占める」— Oliver Reichenstein</blockquote>
+            <h3>英語フォント × 日本語フォント</h3>
+            <p>見出しに英語フォントを使うことで、スタイリッシュな印象を演出できます。Montserrat や Playfair Display は日本語フォントとの相性が良く、海外のトレンドを取り入れたデザインに仕上がります。</p>
+          </article>
+        </div>
+
+        <div class="code-output">
+          <div class="code-output-header">
+            <span>出力コード</span>
+          </div>
+          <div class="code-output-tabs">
+            <button class="code-tab active" data-tab="css">CSS（@import）</button>
+            <button class="code-tab" data-tab="link">HTML（linkタグ）</button>
+          </div>
+          <pre class="code-block active" id="code-css"></pre>
+          <pre class="code-block" id="code-link"></pre>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div style="max-width:1200px;margin:32px auto 0;padding:0 20px">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288"
+         crossorigin="anonymous"></script>
+    <!-- footer-top -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4871781946658288"
+         data-ad-slot="7493033745"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+  <footer>
+    <span>&copy; 2026 フォントペアリング プレビューア | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+    <div class="footer-links">
+      <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+      <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+    </div>
+  </footer>
+
+  <script>
+    const fontList = [
+      { name: 'Noto Sans JP', family: "'Noto Sans JP', sans-serif", param: 'Noto+Sans+JP:wght@400;700', category: 'ゴシック体' },
+      { name: 'Zen Kaku Gothic New', family: "'Zen Kaku Gothic New', sans-serif", param: 'Zen+Kaku+Gothic+New:wght@400;700', category: 'ゴシック体' },
+      { name: 'BIZ UDPGothic', family: "'BIZ UDPGothic', sans-serif", param: 'BIZ+UDPGothic:wght@400;700', category: 'ゴシック体' },
+      { name: 'M PLUS 1p', family: "'M PLUS 1p', sans-serif", param: 'M+PLUS+1p:wght@400;700', category: 'ゴシック体' },
+      { name: 'Noto Serif JP', family: "'Noto Serif JP', serif", param: 'Noto+Serif+JP:wght@400;700', category: '明朝体' },
+      { name: 'Shippori Mincho', family: "'Shippori Mincho', serif", param: 'Shippori+Mincho:wght@400;700', category: '明朝体' },
+      { name: 'Zen Old Mincho', family: "'Zen Old Mincho', serif", param: 'Zen+Old+Mincho:wght@400;700', category: '明朝体' },
+      { name: 'BIZ UDPMincho', family: "'BIZ UDPMincho', serif", param: 'BIZ+UDPMincho:wght@400;700', category: '明朝体' },
+      { name: 'M PLUS Rounded 1c', family: "'M PLUS Rounded 1c', sans-serif", param: 'M+PLUS+Rounded+1c:wght@400;700', category: '丸ゴシック' },
+      { name: 'Zen Maru Gothic', family: "'Zen Maru Gothic', sans-serif", param: 'Zen+Maru+Gothic:wght@400;700', category: '丸ゴシック' },
+      { name: 'Inter', family: "'Inter', sans-serif", param: 'Inter:wght@400;700', category: 'Sans-serif' },
+      { name: 'Roboto', family: "'Roboto', sans-serif", param: 'Roboto:wght@400;700', category: 'Sans-serif' },
+      { name: 'Open Sans', family: "'Open Sans', sans-serif", param: 'Open+Sans:wght@400;700', category: 'Sans-serif' },
+      { name: 'Montserrat', family: "'Montserrat', sans-serif", param: 'Montserrat:wght@400;700', category: 'Sans-serif' },
+      { name: 'Poppins', family: "'Poppins', sans-serif", param: 'Poppins:wght@400;700', category: 'Sans-serif' },
+      { name: 'Raleway', family: "'Raleway', sans-serif", param: 'Raleway:wght@400;700', category: 'Sans-serif' },
+      { name: 'Playfair Display', family: "'Playfair Display', serif", param: 'Playfair+Display:wght@400;700', category: 'Serif' },
+      { name: 'Lora', family: "'Lora', serif", param: 'Lora:wght@400;700', category: 'Serif' },
+      { name: 'Merriweather', family: "'Merriweather', serif", param: 'Merriweather:wght@400;700', category: 'Serif' },
+      { name: 'Source Serif 4', family: "'Source Serif 4', serif", param: 'Source+Serif+4:wght@400;700', category: 'Serif' },
+    ];
+
+    const presets = [
+      { name: '格調モダン', heading: 'Noto Serif JP', body: 'Noto Sans JP', desc: '明朝×ゴシックの王道。ニュース・ビジネス系に' },
+      { name: '和風エレガント', heading: 'Shippori Mincho', body: 'Zen Kaku Gothic New', desc: '上品な和風デザイン。文化・ライフスタイル系に' },
+      { name: 'やわらか', heading: 'Zen Maru Gothic', body: 'Noto Sans JP', desc: '丸ゴシックで親しみやすい。日記・レビュー系に' },
+      { name: '洋風モダン', heading: 'Montserrat', body: 'Noto Sans JP', desc: '英語見出しでスタイリッシュに。テック・デザイン系に' },
+      { name: 'クラシック', heading: 'Playfair Display', body: 'Noto Serif JP', desc: 'セリフ×明朝で文学的。エッセイ・書評系に' },
+      { name: 'ビジネス', heading: 'Noto Serif JP', body: 'Zen Kaku Gothic New', desc: '明朝見出しで格調+端正なゴシック本文。コーポレート系に' },
+      { name: 'ゴシック統一', heading: 'Zen Kaku Gothic New', body: 'Noto Sans JP', desc: 'ゴシック同士で統一感。モダンで安定した印象に' },
+      { name: '明朝統一', heading: 'Shippori Mincho', body: 'Noto Serif JP', desc: '明朝同士で統一感。文学的で落ち着いた雰囲気に' },
+    ];
+
+    const loadedFonts = new Set(['Noto+Sans+JP:wght@400;700', 'Noto+Serif+JP:wght@400;700']);
+
+    const headingSelect = document.getElementById('heading-font');
+    const bodySelect = document.getElementById('body-font');
+    const headingSizeSlider = document.getElementById('heading-size');
+    const bodySizeSlider = document.getElementById('body-size');
+    const lineHeightSlider = document.getElementById('line-height');
+
+    function findFontIndex(name) {
+      return fontList.findIndex(f => f.name === name);
+    }
+
+    function loadFont(param) {
+      if (loadedFonts.has(param)) return;
+      loadedFonts.add(param);
+      const link = document.createElement('link');
+      link.href = 'https://fonts.googleapis.com/css2?family=' + param + '&display=swap';
+      link.rel = 'stylesheet';
+      document.head.appendChild(link);
+    }
+
+    function buildSelectOptions(selectEl, selectedIndex) {
+      let currentCategory = '';
+      let html = '';
+      fontList.forEach((font, i) => {
+        if (font.category !== currentCategory) {
+          if (currentCategory) html += '</optgroup>';
+          html += '<optgroup label="' + font.category + '">';
+          currentCategory = font.category;
+        }
+        html += '<option value="' + i + '"' + (i === selectedIndex ? ' selected' : '') + '>' + font.name + '</option>';
+      });
+      html += '</optgroup>';
+      selectEl.innerHTML = html;
+    }
+
+    function buildPresetButtons() {
+      const container = document.getElementById('presets');
+      container.innerHTML = presets.map((p, i) =>
+        '<button class="preset-btn" data-index="' + i + '">' + p.name + '</button>'
+      ).join('');
+    }
+
+    function generateImportUrl(headingFont, bodyFont) {
+      if (headingFont.param === bodyFont.param) {
+        return 'https://fonts.googleapis.com/css2?family=' + headingFont.param + '&display=swap';
+      }
+      return 'https://fonts.googleapis.com/css2?family=' + headingFont.param + '&family=' + bodyFont.param + '&display=swap';
+    }
+
+    function generateCSS() {
+      const headingFont = fontList[headingSelect.value];
+      const bodyFont = fontList[bodySelect.value];
+      const bSize = bodySizeSlider.value;
+      const lh = lineHeightSlider.value;
+      const url = generateImportUrl(headingFont, bodyFont);
+
+      return '/* フォントペアリング: ' + headingFont.name + ' × ' + bodyFont.name + ' */\n' +
+        "@import url('" + url + "');\n\n" +
+        'h1, h2, h3, h4, h5, h6 {\n' +
+        '  font-family: ' + headingFont.family + ';\n' +
+        '  font-weight: 700;\n' +
+        '}\n\n' +
+        'body {\n' +
+        '  font-family: ' + bodyFont.family + ';\n' +
+        '  font-size: ' + bSize + 'px;\n' +
+        '  line-height: ' + lh + ';\n' +
+        '}';
+    }
+
+    function generateLinkTag() {
+      const headingFont = fontList[headingSelect.value];
+      const bodyFont = fontList[bodySelect.value];
+      const url = generateImportUrl(headingFont, bodyFont);
+
+      return '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
+        '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
+        '<link href="' + url + '" rel="stylesheet">';
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function updatePreview() {
+      const headingFont = fontList[headingSelect.value];
+      const bodyFont = fontList[bodySelect.value];
+      const hSize = parseInt(headingSizeSlider.value);
+      const bSize = parseInt(bodySizeSlider.value);
+      const lh = lineHeightSlider.value;
+
+      loadFont(headingFont.param);
+      loadFont(bodyFont.param);
+
+      const content = document.getElementById('preview-content');
+
+      content.querySelector('h1').style.fontFamily = headingFont.family;
+      content.querySelector('h1').style.fontSize = hSize + 'px';
+
+      content.querySelectorAll('h2').forEach(function(h) {
+        h.style.fontFamily = headingFont.family;
+        h.style.fontSize = Math.round(hSize * 0.8) + 'px';
+      });
+
+      content.querySelectorAll('h3').forEach(function(h) {
+        h.style.fontFamily = headingFont.family;
+        h.style.fontSize = Math.max(16, Math.round(hSize * 0.7)) + 'px';
+      });
+
+      content.querySelectorAll('p:not(.preview-meta), li, blockquote').forEach(function(el) {
+        el.style.fontFamily = bodyFont.family;
+        el.style.fontSize = bSize + 'px';
+        el.style.lineHeight = lh;
+      });
+
+      document.getElementById('heading-sample').style.fontFamily = headingFont.family;
+      document.getElementById('heading-sample').style.fontWeight = '700';
+      document.getElementById('body-sample').style.fontFamily = bodyFont.family;
+
+      document.getElementById('pairing-label').textContent = headingFont.name + ' × ' + bodyFont.name;
+
+      document.getElementById('heading-size-val').textContent = hSize + 'px';
+      document.getElementById('body-size-val').textContent = bSize + 'px';
+      document.getElementById('line-height-val').textContent = lh;
+
+      document.getElementById('code-css').textContent = generateCSS();
+      document.getElementById('code-link').textContent = generateLinkTag();
+
+      updateActivePreset();
+    }
+
+    function updateActivePreset() {
+      const headingFont = fontList[headingSelect.value];
+      const bodyFont = fontList[bodySelect.value];
+      const descEl = document.getElementById('preset-desc');
+
+      document.querySelectorAll('.preset-btn').forEach(function(btn) {
+        const preset = presets[parseInt(btn.dataset.index)];
+        const isActive = preset.heading === headingFont.name && preset.body === bodyFont.name;
+        btn.classList.toggle('active', isActive);
+
+        if (isActive) {
+          descEl.textContent = preset.desc;
+          descEl.classList.add('visible');
+        }
+      });
+
+      const hasActive = document.querySelector('.preset-btn.active');
+      if (!hasActive) {
+        descEl.classList.remove('visible');
+      }
+    }
+
+    async function copyToClipboard(text, btn) {
+      await navigator.clipboard.writeText(text);
+      const original = btn.textContent;
+      btn.textContent = 'コピー完了！';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = original;
+        btn.classList.remove('copied');
+      }, 1500);
+    }
+
+    function getFavorites() {
+      try { return JSON.parse(localStorage.getItem('fontPairingFavorites') || '[]'); }
+      catch (e) { return []; }
+    }
+
+    function saveFavoritesToStorage(favs) {
+      localStorage.setItem('fontPairingFavorites', JSON.stringify(favs));
+    }
+
+    function renderFavorites() {
+      var favs = getFavorites();
+      var container = document.getElementById('fav-list');
+
+      if (favs.length === 0) {
+        container.innerHTML = '<div class="fav-empty">まだ保存がありません</div>';
+        return;
+      }
+
+      container.innerHTML = favs.map(function(fav, i) {
+        return '<div class="fav-item" data-fav-index="' + i + '">' +
+          '<div class="fav-item-info">' +
+            '<div class="fav-item-name">' + escapeHtml(fav.name) + '</div>' +
+            '<div class="fav-item-fonts">' + escapeHtml(fav.headingName + ' × ' + fav.bodyName) + '</div>' +
+          '</div>' +
+          '<button class="fav-delete" data-fav-delete="' + i + '" title="削除">&times;</button>' +
+        '</div>';
+      }).join('');
+    }
+
+    function openSaveForm() {
+      var headingFont = fontList[headingSelect.value];
+      var bodyFont = fontList[bodySelect.value];
+      var input = document.getElementById('fav-name-input');
+      var form = document.getElementById('fav-save-form');
+      var toggle = document.getElementById('fav-save-toggle');
+
+      input.value = headingFont.name + ' × ' + bodyFont.name;
+      form.classList.add('open');
+      toggle.style.display = 'none';
+      input.focus();
+      input.select();
+    }
+
+    function closeSaveForm() {
+      document.getElementById('fav-save-form').classList.remove('open');
+      document.getElementById('fav-save-toggle').style.display = '';
+    }
+
+    function confirmSave() {
+      var headingFont = fontList[headingSelect.value];
+      var bodyFont = fontList[bodySelect.value];
+      var input = document.getElementById('fav-name-input');
+      var name = input.value.trim() || (headingFont.name + ' × ' + bodyFont.name);
+
+      var fav = {
+        name: name,
+        headingName: headingFont.name,
+        bodyName: bodyFont.name,
+        headingIndex: parseInt(headingSelect.value),
+        bodyIndex: parseInt(bodySelect.value),
+        headingSize: parseInt(headingSizeSlider.value),
+        bodySize: parseInt(bodySizeSlider.value),
+        lineHeight: parseFloat(lineHeightSlider.value)
+      };
+
+      saveFavoritesToStorage(getFavorites().concat([fav]));
+      renderFavorites();
+      closeSaveForm();
+    }
+
+    function deleteFavorite(index) {
+      var favs = getFavorites();
+      var removed = favs[index];
+      if (!confirm('「' + removed.name + '」を削除しますか？')) return;
+      saveFavoritesToStorage(favs.filter(function(_, i) { return i !== index; }));
+      renderFavorites();
+    }
+
+    function applyFavorite(index) {
+      var fav = getFavorites()[index];
+      if (!fav) return;
+      headingSelect.value = fav.headingIndex;
+      bodySelect.value = fav.bodyIndex;
+      headingSizeSlider.value = fav.headingSize;
+      bodySizeSlider.value = fav.bodySize;
+      lineHeightSlider.value = fav.lineHeight;
+      updatePreview();
+    }
+
+    buildSelectOptions(headingSelect, findFontIndex('Noto Serif JP'));
+    buildSelectOptions(bodySelect, findFontIndex('Noto Sans JP'));
+    buildPresetButtons();
+    renderFavorites();
+
+    headingSelect.addEventListener('change', updatePreview);
+    bodySelect.addEventListener('change', updatePreview);
+    headingSizeSlider.addEventListener('input', updatePreview);
+    bodySizeSlider.addEventListener('input', updatePreview);
+    lineHeightSlider.addEventListener('input', updatePreview);
+
+    document.getElementById('bg-toggle').addEventListener('click', function(e) {
+      var btn = e.target.closest('.bg-btn');
+      if (!btn) return;
+      document.querySelectorAll('.bg-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var card = document.getElementById('preview-card');
+      card.classList.remove('bg-dark', 'bg-ivory');
+      if (btn.dataset.bg === 'dark') card.classList.add('bg-dark');
+      if (btn.dataset.bg === 'ivory') card.classList.add('bg-ivory');
+    });
+
+    document.getElementById('presets').addEventListener('click', function(e) {
+      var btn = e.target.closest('.preset-btn');
+      if (!btn) return;
+      var preset = presets[parseInt(btn.dataset.index)];
+      headingSelect.value = findFontIndex(preset.heading);
+      bodySelect.value = findFontIndex(preset.body);
+      updatePreview();
+    });
+
+    document.getElementById('fav-save-toggle').addEventListener('click', openSaveForm);
+    document.getElementById('fav-save-confirm').addEventListener('click', confirmSave);
+    document.getElementById('fav-name-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') confirmSave();
+      if (e.key === 'Escape') closeSaveForm();
+    });
+
+    document.getElementById('fav-list').addEventListener('click', function(e) {
+      var deleteBtn = e.target.closest('.fav-delete');
+      if (deleteBtn) {
+        e.stopPropagation();
+        deleteFavorite(parseInt(deleteBtn.dataset.favDelete));
+        return;
+      }
+      var item = e.target.closest('.fav-item');
+      if (item) {
+        applyFavorite(parseInt(item.dataset.favIndex));
+      }
+    });
+
+    document.getElementById('copy-css').addEventListener('click', function() {
+      copyToClipboard(generateCSS(), this);
+    });
+
+    document.getElementById('copy-link').addEventListener('click', function() {
+      copyToClipboard(generateLinkTag(), this);
+    });
+
+    document.querySelector('.code-output-tabs').addEventListener('click', function(e) {
+      var tab = e.target.closest('.code-tab');
+      if (!tab) return;
+      document.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('active'); });
+      document.querySelectorAll('.code-block').forEach(function(b) { b.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById('code-' + tab.dataset.tab).classList.add('active');
+    });
+
+    updatePreview();
+  </script>
+</body>
+</html>

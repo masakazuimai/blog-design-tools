@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>見出しデザイン プレビューア｜CSSコピペで使えるブログ見出し10選</title>
   <meta name="description" content="ブログの見出しデザインをプレビューして、HTML・CSSをワンクリックでコピー。WordPressのカスタムHTMLブロックにそのまま貼れます。">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-7Z6M3CJEV3');
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
@@ -509,17 +518,51 @@
     }
 
     footer {
-      text-align: center;
-      padding: 32px 20px;
-      color: #94a3b8;
-      font-size: 0.875rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 40px;
+      color: #64748b;
+      font-size: 1rem;
       border-top: 1px solid #e2e8f0;
       background: #fff;
     }
 
     footer a {
-      color: #3b82f6;
+      color: #1e293b;
       text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: #3b82f6; }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .footer-links a {
+      border: 1px solid #e2e8f0;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .footer-links a:hover {
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    @media (max-width: 768px) {
+      footer {
+        flex-direction: column;
+        gap: 16px;
+        padding: 24px 16px;
+        text-align: center;
+      }
+
+      .footer-links { flex-wrap: wrap; justify-content: center; }
     }
 
     /* レスポンシブ */
@@ -580,8 +623,27 @@
     </div>
   </div>
 
+  <div style="max-width:1100px;margin:32px auto 0;padding:0 20px">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288"
+         crossorigin="anonymous"></script>
+    <!-- footer-top -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4871781946658288"
+         data-ad-slot="7493033745"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
   <footer>
-    <p>© 2026 <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></p>
+    <span>&copy; 2026 見出しデザイン プレビューア | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+    <div class="footer-links">
+      <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+      <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+    </div>
   </footer>
 
   <script>
