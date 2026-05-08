@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>HTML Outline Checker</title>
+    <style>
+      :root {
+        --ink: #1f2937;
+        --line: #e5e7eb;
+        --panel: #fff;
+        --bg: #f8fafc;
+        --err: #dc2626;
+        --warn: #d97706;
+        --info: #059669;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      header {
+        background: #0ea5e9;
+        color: #fff;
+        padding: 14px 16px;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 16px;
+      }
+      .wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 12px;
+      }
+
+      @media (max-width: 767px) {
+        .wrap {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .card h2 {
+        margin: 0;
+        padding: 10px 12px;
+        font-size: 14px;
+        border-bottom: 1px solid var(--line);
+      }
+      .content {
+        padding: 10px;
+      }
+      .toolbar {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 8px;
+        align-items: center;
+      }
+      button {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        background: #fff;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #f3f4f6;
+      }
+
+      /* エディタ（contenteditable） */
+      #editor {
+        min-height: 60vh;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px;
+        outline: none;
+        white-space: pre-wrap;
+        word-break: break-word;
+        font:
+          13px/1.6 ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          monospace;
+      }
+      /* 万一混入しても表示させない保険 */
+      #editor style,
+      #editor script {
+        display: none !important;
+      }
+
+      /* 文字色のみ（幅に影響しない） */
+      .err,
+      .warn,
+      .info {
+        color: currentColor;
+        font-weight: inherit;
+        letter-spacing: inherit;
+        background: none;
+        padding: 0;
+        line-height: inherit;
+      }
+      .err {
+        color: var(--err);
+      }
+      .warn {
+        color: var(--warn);
+      }
+      .info {
+        color: var(--info);
+      }
+
+      /* レンダリング差の抑制 */
+      #editor,
+      #editor * {
+        font-variant-ligatures: none;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* 結果パネル */
+      .issue {
+        border-bottom: 1px solid var(--line);
+        padding: 8px 6px;
+      }
+      .sev {
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      small {
+        color: #6b7280;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px 40px;
+        color: #64748b;
+        font-size: 1rem;
+        border-top: 1px solid #e2e8f0;
+        background: #fff;
+      }
+      footer a {
+        color: inherit;
+      }
+      .footer-links {
+        display: flex;
+        gap: 16px;
+      }
+
+      @media (max-width: 767px) {
+        footer {
+          flex-direction: column;
+          gap: 16px;
+          padding: 24px 16px;
+          text-align: center;
+        }
+        .footer-links {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header><h1>HTML Outline Checker</h1></header>
+    <main>
+      <div class="wrap">
+        <div class="card">
+          <h2>HTMLを貼り付け（「検証する」ボタンでのみ実行）</h2>
+          <div class="content">
+            <div class="toolbar">
+              <button id="btn-validate">検証する</button>
+              <button id="btn-sample-bad">サンプル</button>
+            </div>
+            <div id="editor" contenteditable="true" spellcheck="false" aria-label="HTML入力欄"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>検証結果</h2>
+          <div class="content" id="results"></div>
+        </div>
+      </div>
+    </main>
+    <div style="max-width: 900px; margin: 24px auto; text-align: center">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- footer-top -->
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <footer>
+      <span>&copy; 2026 HTML Outline Checker | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <!-- サンプル（そのまま生テキスト） -->
+    <script id="sample-html" type="text/plain">
+      <!DOCTYPE html>
+      <html lang="ja">
+      <head>
+        <!-- charset をわざと欠落 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- title も欠落 -->
+      </head>
+      <body>
+
+      <section>
+      <div class="a">
+      </section>
+      </div>
+
+      <ul>
+        <div>NG: ul直下のdiv</div>
+        <li>OK</li>
+      </ul>
+
+      <div class="btn btn primary btn">class 重複テスト</div>
+
+      <img src="a.jpg"> <!-- altなし -->
+
+      <h1>見出し1</h1>
+      <h3>飛び級h3</h3>
+
+      </body>
+      </html>
+    </script>
+
+    <script>
+      /* ================= ユーティリティ ================= */
+      const $ = (s) => document.querySelector(s);
+      const escapeHtml = (s) => (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      const bySeverity = { err: 3, warn: 2, info: 1 };
+
+      function renderWithRanges(raw, ranges) {
+        raw = (raw || "").replace(/\r\n?/g, "\n");
+        ranges.sort((a, b) => (a.start !== b.start ? a.start - b.start : b.end - a.end || bySeverity[b.cls] - bySeverity[a.cls]));
+        const merged = [];
+        let lastEnd = -1;
+        for (const r of ranges) {
+          if (r.start >= r.end) continue;
+          if (r.start < lastEnd) continue;
+          merged.push(r);
+          lastEnd = r.end;
+        }
+        let out = "",
+          i = 0;
+        for (const r of merged) {
+          if (i < r.start) out += escapeHtml(raw.slice(i, r.start));
+          out += `<span class="${r.cls}">${escapeHtml(raw.slice(r.start, r.end))}</span>`;
+          i = r.end;
+        }
+        if (i < raw.length) out += escapeHtml(raw.slice(i));
+        return out.replace(/\t/g, "  ").replace(/\n/g, "<br>").replace(/ {2}/g, " &nbsp;");
+      }
+
+      function findAllIndices(raw, snippet) {
+        if (!snippet) return [];
+        raw = raw.replace(/\r\n?/g, "\n");
+        const esc = (s) => s.replace(/[.*+?^${}()|[\\]\\]/g, "\\$&");
+        const pattern = esc(snippet).replace(/\s+/g, "\\s+");
+        const re = new RegExp(pattern, "gi");
+        const out = [];
+        let m;
+        while ((m = re.exec(raw)) !== null) {
+          out.push({ start: m.index, end: m.index + m[0].length });
+          if (m.index === re.lastIndex) re.lastIndex++;
+        }
+        return out;
+      }
+
+      /* ================ ルール用プリコンパイル ================ */
+      const RE = {
+        doctype: /^\s*<!doctype html>/i,
+        htmlOpen: /<html[^>]*>/i,
+        headOpen: /<head[^>]*>/i,
+        idAttr: /\bid="([^"]+)"/g,
+        imgOpenTags: /<img\b[^>]*>/gi,
+        classAttr: /\bclass\s*=\s*("([^"]*)"|'([^']*)')/gi,
+      };
+      const VOID = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]);
+
+      /* ====== DOM 解析用サニタイズ ====== */
+      function sanitizeForDOM(raw) {
+        let text = raw.replace(/\r\n?/g, "\n").replace(/[\u200B-\u200D\uFEFF]/g, "");
+        const live = /<!--\s*Code injected by live-server\s*-->[\s\S]*?<\s*\/script\s*>/gi;
+        const sRe = /<script\b[\s\S]*?<\/script\s*>/gi;
+        const stRe = /<style\b[\s\S]*?<\/style\s*>/gi;
+        text = text.replace(live, "").replace(sRe, "").replace(stRe, "");
+        return text;
+      }
+
+      /* ================ 解析（DOM + テキスト） ================ */
+      function analyze(raw) {
+        const issues = [];
+        const ranges = [];
+        const addIssue = (cls, title, why, fix) => issues.push({ cls, title, why, fix });
+        const addRanges = (cls, snip) => findAllIndices(raw, snip).forEach((r) => ranges.push({ ...r, cls }));
+
+        raw = raw.replace(/[\u200B-\u200D\uFEFF]/g, "");
+
+        // 1) DOCTYPE
+        if (!RE.doctype.test(raw)) {
+          addIssue("err", "DOCTYPE がありません", "互換モードになる恐れ。", "先頭に <!DOCTYPE html> を追加してください。");
+          const m = raw.match(RE.htmlOpen);
+          if (m) addRanges("err", m[0]);
+        }
+
+        const doc = new DOMParser().parseFromString(sanitizeForDOM(raw), "text/html");
+
+        // 2) <html lang>
+        const htmlEl = doc.documentElement;
+        if (!htmlEl) {
+          addIssue("err", "<html> 要素が見つかりません", "文書ルートが欠落。", "全体を <html>…</html> で囲んでください。");
+        } else if (!htmlEl.getAttribute("lang")) {
+          addIssue("warn", "<html lang> が未設定", "言語推定ができません。", '`<html lang="ja">` を追加してください。');
+          const m = raw.match(RE.htmlOpen);
+          if (m) addRanges("warn", m[0]);
+        }
+
+        // 3) <head> 基本
+        const head = doc.querySelector("head");
+        const hasCharsetRaw = /<meta[^>]*\bcharset\b/i.test(raw);
+        const hasViewportRaw = /<meta[^>]*\bname\s*=\s*["']viewport["']/i.test(raw);
+        const hasTitleRaw = /<title\b[^>]*>[\s\S]*?<\/title>/i.test(raw);
+
+        if (!head) {
+          addIssue("err", "<head> がありません", "メタ情報を宣言できません。", "<html> 直下に <head>…</head> を追加してください。");
+        } else {
+          const hasCharset = !!head.querySelector("meta[charset]") || hasCharsetRaw;
+          const hasViewport = !!head.querySelector("meta[name=viewport]") || hasViewportRaw;
+          const hasTitle = !!head.querySelector("title") || hasTitleRaw;
+
+          if (!hasCharset) {
+            addIssue("warn", "<meta charset> がありません", "文字化けの原因。", '`<meta charset="utf-8">` を <head> 先頭付近に。');
+            const m = raw.match(RE.headOpen);
+            if (m) addRanges("warn", m[0]);
+          }
+          if (!hasViewport) {
+            addIssue("warn", '<meta name="viewport"> がありません', "モバイル表示に影響。", '`<meta name="viewport" content="width=device-width, initial-scale=1">` を追加。');
+            const m = raw.match(RE.headOpen);
+            if (m) addRanges("warn", m[0]);
+          }
+          if (!hasTitle) {
+            addIssue("warn", "<title> がありません", "タブ/SEOに影響。", "<head> に <title>…</title> を追加。");
+            const m = raw.match(RE.headOpen);
+            if (m) addRanges("warn", m[0]);
+          }
+        }
+
+        // 4) id 重複
+        const ids = [];
+        let mm;
+        RE.idAttr.lastIndex = 0;
+        while ((mm = RE.idAttr.exec(raw)) !== null) {
+          ids.push({ id: mm[1], start: mm.index, end: mm.index + mm[0].length });
+          if (mm.index === RE.idAttr.lastIndex) RE.idAttr.lastIndex++;
+        }
+        const cnt = new Map();
+        ids.forEach((x) => cnt.set(x.id, (cnt.get(x.id) || 0) + 1));
+        const dups = [...cnt.entries()].filter(([, c]) => c > 1).map(([k]) => k);
+        if (dups.length) {
+          addIssue("err", "id 属性が重複しています", `重複: ${dups.join(", ")}`, "重複 id をリネーム/削除してください。");
+          ids.filter((x) => dups.includes(x.id)).forEach((x) => ranges.push({ start: x.start, end: x.end, cls: "err" }));
+        }
+
+        // 5) <img> alt なし
+        doc.querySelectorAll("img").forEach((img) => {
+          const alt = img.getAttribute("alt");
+          const ariaHidden = img.getAttribute("aria-hidden") === "true";
+          const role = img.getAttribute("role");
+          const presentational = ariaHidden || role === "presentation" || role === "none";
+          if (!presentational && (alt === null || alt.trim() === "")) {
+            addIssue("warn", "<img> に alt がありません", "支援技術に内容が伝わりません。", "意味のある代替テキストを付けてください。");
+            const tags = raw.match(RE.imgOpenTags) || [];
+            const src = img.getAttribute("src");
+            tags.forEach((tag) => {
+              if (src) {
+                const ok = new RegExp(`\\bsrc\\s*=\\s*["']?${src.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&")}`, "i").test(tag);
+                if (ok) findAllIndices(raw, tag).forEach((r) => ranges.push({ ...r, cls: "warn" }));
+              } else {
+                findAllIndices(raw, tag).forEach((r) => ranges.push({ ...r, cls: "warn" }));
+              }
+            });
+          }
+        });
+
+        // 6) li の親
+        doc.querySelectorAll("li").forEach((li) => {
+          const p = li.parentElement?.tagName?.toLowerCase();
+          if (p !== "ul" && p !== "ol") {
+            addIssue("err", "<li> の親が不正", "<li> は <ul>/<ol> 直下のみ可。", "親を変更してください。");
+            const open = li.outerHTML.match(/^<li\b[^>]*>/i)?.[0] || "<li";
+            findAllIndices(raw, open).forEach((r) => ranges.push({ ...r, cls: "err" }));
+          }
+        });
+
+        // 7) ul/ol 直下に li 以外
+        doc.querySelectorAll("ul,ol").forEach((list) => {
+          list.querySelectorAll(":scope > *:not(li)").forEach((bad) => {
+            addIssue("err", `${list.tagName.toLowerCase()} 直下に li 以外があります`, `子要素は <li> のみです。`, "余計な要素を <li> 内へ移動。");
+            const open = bad.outerHTML.match(new RegExp(`^<${bad.tagName}\\b[^>]*>`, "i"))?.[0] || `<${bad.tagName}`;
+            findAllIndices(raw, open).forEach((r) => ranges.push({ ...r, cls: "err" }));
+          });
+        });
+
+        // 8) 見出し階層
+        const hs = [...doc.querySelectorAll("h1,h2,h3,h4,h5,h6")];
+        if (hs.length) {
+          const h1c = hs.filter((h) => h.tagName === "H1").length;
+          if (h1c > 1) {
+            addIssue("warn", `<h1> が ${h1c} 個あります`, "主要見出しは通常1つ。", "他は h2 以降へ。");
+            const h = hs.find((h) => h.tagName === "H1");
+            const open = h?.outerHTML.match(/^<h1\b[^>]*>/i)?.[0] || "<h1";
+            if (open) findAllIndices(raw, open).forEach((r) => ranges.push({ ...r, cls: "warn" }));
+          }
+          let prev = +hs[0].tagName.slice(1);
+          for (let i = 1; i < hs.length; i++) {
+            const cur = +hs[i].tagName.slice(1);
+            if (cur > prev + 1) {
+              addIssue("warn", `見出しレベルの飛び級 (h${prev} → h${cur})`, "1段ずつ降りるのが望ましい。", "中間レベルを追加/調整してください。");
+              const open = hs[i].outerHTML.match(new RegExp(`^<${hs[i].tagName}\\b[^>]*>`, "i"))?.[0] || `<${hs[i].tagName}`;
+              findAllIndices(raw, open).forEach((r) => ranges.push({ ...r, cls: "warn" }));
+            }
+            prev = cur;
+          }
+        }
+
+        // 9) タグ不整合（修正版：クロス閉じを安全に処理）
+        (function () {
+          const stripped = raw
+            .replace(/<!--[\s\S]*?-->/g, "")
+            .replace(/<script\b[\s\S]*?<\/script\s*>/gi, "")
+            .replace(/<style\b[\s\S]*?<\/style\s*>/gi, "");
+
+          const tagRe = /<\/?([a-zA-Z][\w:-]*)([^>]*)>/g;
+          const stack = []; // { name, openSnippet }
+          let m;
+          while ((m = tagRe.exec(stripped)) !== null) {
+            const full = m[0];
+            const name = m[1].toLowerCase();
+            const isEnd = full.startsWith("</");
+            const selfClose = /\/\s*>$/.test(full) || VOID.has(name);
+
+            if (isEnd) {
+              if (!stack.length) {
+                addIssue("err", `不要な閉じタグ </${name}>`, "対応する開始タグがありません。", `不要な </${name}> を削除してください。`);
+                findAllIndices(raw, full).forEach((r) => ranges.push({ ...r, cls: "err" }));
+                continue;
+              }
+              if (stack[stack.length - 1].name === name) {
+                // 正常ペア
+                stack.pop();
+              } else {
+                // クロス閉じ：上から順に「閉じ忘れ」を報告して落としていく
+                while (stack.length && stack[stack.length - 1].name !== name) {
+                  const top = stack.pop();
+                  addIssue("err", `閉じタグ不足：<${top.name}>`, "開始タグに対応する閉じタグがありません（入れ子順序の逆転）。", `適切な位置に </${top.name}> を追加してください。`);
+                  if (top.openSnippet) findAllIndices(raw, top.openSnippet).forEach((r) => ranges.push({ ...r, cls: "err" }));
+                }
+                if (stack.length && stack[stack.length - 1].name === name) {
+                  // 目的の要素を1つだけ消して今回の閉じタグと対応づけ
+                  stack.pop();
+                } else {
+                  // 見つからない → この閉じタグ自体が不要
+                  addIssue("err", `不要な閉じタグ </${name}>`, "対応する開始タグがありません。", `不要な </${name}> を削除してください。`);
+                  findAllIndices(raw, full).forEach((r) => ranges.push({ ...r, cls: "err" }));
+                }
+              }
+            } else if (!selfClose) {
+              const openSnippet = full.match(new RegExp(`^<${name}\\b[^>]*>`, "i"))?.[0] || full;
+              stack.push({ name, openSnippet });
+            }
+          }
+          // 残りは閉じ忘れ
+          stack.forEach((s) => {
+            addIssue("err", `閉じタグ不足：<${s.name}>`, "開始タグに対応する閉じタグがありません。", `適切な位置に </${s.name}> を追加してください。`);
+            if (s.openSnippet) findAllIndices(raw, s.openSnippet).forEach((r) => ranges.push({ ...r, cls: "err" }));
+          });
+        })();
+
+        // 10) class 重複
+        (function () {
+          RE.classAttr.lastIndex = 0;
+          let m;
+          while ((m = RE.classAttr.exec(raw)) !== null) {
+            const full = m[0];
+            const val = (m[2] ?? m[3] ?? "").trim().replace(/\s+/g, " ");
+            if (!val) continue;
+            const tokens = val.split(" ");
+            const dups = [...new Set(tokens.filter((c, i, a) => a.indexOf(c) !== i))];
+            if (!dups.length) continue;
+
+            addIssue("warn", "class 属性に重複があります", `同一要素内で重複: ${dups.join(", ")}`, "重複したクラス名を削除してください。");
+            findAllIndices(raw, full).forEach((attr) => {
+              const txt = raw.slice(attr.start, attr.end);
+              dups.forEach((tok) => {
+                const wordRe = new RegExp(`\\b${tok.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&")}\\b`, "g");
+                let mm;
+                while ((mm = wordRe.exec(txt)) !== null) {
+                  ranges.push({ start: attr.start + mm.index, end: attr.start + mm.index + mm[0].length, cls: "warn" });
+                  if (mm.index === wordRe.lastIndex) wordRe.lastIndex++;
+                }
+              });
+            });
+          }
+        })();
+
+        return { issues, ranges };
+      }
+
+      /* ================== UI描画 ================== */
+      function renderIssues(issues) {
+        const res = $("#results");
+        if (!issues.length) {
+          res.innerHTML = `<div class="issue">問題は見つかりませんでした。</div>`;
+          return;
+        }
+        res.innerHTML = issues
+          .map(
+            (it) => `
+          <div class="issue">
+            <div class="sev ${it.cls}">${escapeHtml(it.title)}</div>
+            <div>${escapeHtml(it.why)}</div>
+            <div><small>対処: ${escapeHtml(it.fix)}</small></div>
+          </div>`,
+          )
+          .join("");
+      }
+
+      /* ================== 実行（ボタンでのみ） ================== */
+      function run() {
+        const editor = $("#editor");
+        const raw = editor.innerText.replace(/\r\n?/g, "\n").replace(/[\u200B-\u200D\uFEFF]/g, "");
+        const { issues, ranges } = analyze(raw);
+        editor.innerHTML = renderWithRanges(raw, ranges);
+        renderIssues(issues);
+      }
+
+      /* ================== イベント ================== */
+      // 「検証する」ボタンのみで実行
+      $("#btn-validate").addEventListener("click", run);
+
+      // サンプル投入（検証は自動で走らせない）
+      $("#btn-sample-bad").addEventListener("click", () => {
+        $("#editor").textContent = $("#sample-html").textContent.trim();
+      });
+
+      /* ===== 貼り付け/入力の安全化（常にプレーンテキスト、ただし検証はしない） ===== */
+      const editorEl = $("#editor");
+      let _norm = false;
+      editorEl.addEventListener("paste", (e) => {
+        e.preventDefault();
+        const text = (e.clipboardData || window.clipboardData).getData("text/plain") || "";
+        const ok = document.execCommand && document.execCommand("insertText", false, text);
+        if (!ok) {
+          const sel = getSelection();
+          if (sel && sel.rangeCount) {
+            const r = sel.getRangeAt(0);
+            r.deleteContents();
+            r.insertNode(document.createTextNode(text));
+            r.collapse(false);
+          } else editorEl.append(document.createTextNode(text));
+        }
+      });
+      editorEl.addEventListener("input", () => {
+        if (_norm) return;
+        _norm = true;
+        const txt = editorEl.innerText.replace(/\r\n?/g, "\n");
+        editorEl.textContent = txt; // span 等を除去
+        _norm = false;
+      });
+
+      /* 初期は空（自動検証なし） */
+      editorEl.textContent = "";
+    </script>
+  </body>
+</html>
