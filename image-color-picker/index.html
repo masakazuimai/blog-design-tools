@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>画像カラーピッカー｜写真からWEBデザイン用カラーパレットを自動生成</title>
+  <meta name="description" content="画像をアップロードするだけで、WEBデザインに使えるカラーパレットを自動生成。主要色の抽出からCSS変数・HEX・RGBコピーまで、ブラウザ完結で動作します。">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7Z6M3CJEV3');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPMincho&family=Noto+Serif+JP:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-bg: #f5f5f5;
+      --color-bg-secondary: #ebebeb;
+      --color-surface: #fafafa;
+      --color-surface-hover: #e0e0e0;
+      --color-border: #d0d0d0;
+      --color-border-hover: #b0b0b0;
+      --color-text: #111111;
+      --color-text-secondary: #555555;
+      --color-text-tertiary: #888888;
+      --color-accent: #333333;
+      --color-accent-hover: #444444;
+      --color-accent-muted: rgba(0, 0, 0, 0.06);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'BIZ UDPMincho', 'Noto Serif JP', serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.7;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.015;
+      z-index: 50;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* ヘッダー */
+    header {
+      background: linear-gradient(135deg, #1a1a1a 0%, #6b6b6b 100%);
+    }
+
+    header .header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 20px 24px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    header p {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 4px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: sticky;
+      top: 20px;
+    }
+
+    .card {
+      background: var(--color-surface);
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid var(--color-border);
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--color-text);
+    }
+
+    /* ドロップゾーン */
+    .drop-zone {
+      border: 2px dashed var(--color-border);
+      border-radius: 12px;
+      padding: 32px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--color-bg-secondary);
+      position: relative;
+    }
+
+    .drop-zone:hover,
+    .drop-zone.dragover {
+      border-color: var(--color-accent);
+      background: var(--color-accent-muted);
+    }
+
+    .drop-zone-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      background: var(--color-surface);
+      transition: background 0.2s;
+    }
+
+    .drop-zone:hover .drop-zone-icon {
+      background: var(--color-accent-muted);
+    }
+
+    .drop-zone-icon svg {
+      width: 28px;
+      height: 28px;
+      color: var(--color-text-tertiary);
+      transition: color 0.2s;
+    }
+
+    .drop-zone:hover .drop-zone-icon svg {
+      color: var(--color-accent);
+    }
+
+    .drop-zone-text {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--color-text);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .drop-zone-sub {
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+    }
+
+    .drop-zone-sub .accent {
+      color: var(--color-accent);
+      font-weight: 500;
+    }
+
+    .drop-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    /* プレビュー画像 */
+    .preview-wrap {
+      margin-top: 16px;
+      display: none;
+    }
+
+    .preview-wrap.active {
+      display: block;
+    }
+
+    .preview-img {
+      width: 100%;
+      border-radius: 8px;
+      display: block;
+      border: 1px solid var(--color-border);
+    }
+
+    .file-name {
+      font-size: 1rem;
+      color: var(--color-text-tertiary);
+      margin-top: 8px;
+      text-align: center;
+      word-break: break-all;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* 設定 */
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .setting-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .setting-label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+    }
+
+    .setting-value {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .setting-value input[type="range"] {
+      width: 100px;
+      accent-color: var(--color-accent);
+    }
+
+    .setting-value span {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-text);
+      min-width: 24px;
+      text-align: right;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .btn-extract {
+      width: 100%;
+      padding: 12px;
+      background: var(--color-accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+      font-family: inherit;
+    }
+
+    .btn-extract:hover {
+      background: var(--color-accent-hover);
+    }
+
+    .btn-extract:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* メインエリア */
+    .main {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--color-text-tertiary);
+    }
+
+    .empty-state-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      background: var(--color-bg-secondary);
+    }
+
+    .empty-state-icon svg {
+      width: 28px;
+      height: 28px;
+      color: var(--color-text-tertiary);
+    }
+
+    .empty-state-text {
+      font-size: 1.125rem;
+    }
+
+    /* 使い方ステップ */
+    .steps {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+      margin-top: 32px;
+    }
+
+    .step {
+      text-align: center;
+    }
+
+    .step-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--color-accent);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .step-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .step-desc {
+      font-size: 1rem;
+      color: var(--color-text-tertiary);
+      margin-top: 2px;
+    }
+
+    /* 抽出色一覧 */
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .palette-item {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+      background: var(--color-surface);
+    }
+
+    .palette-item:hover {
+      transform: translateY(-2px);
+      border-color: var(--color-accent);
+    }
+
+    .palette-swatch {
+      height: 80px;
+      position: relative;
+    }
+
+    .palette-percent {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.45);
+      color: #fff;
+      font-size: 1rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 500;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .palette-info {
+      padding: 10px 12px;
+    }
+
+    .palette-hex {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--color-text);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .palette-rgb {
+      font-size: 1rem;
+      color: var(--color-text-tertiary);
+      margin-top: 2px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .copied-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--color-text);
+      color: var(--color-surface);
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    .copied-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* パレット提案 */
+    .suggestion-section {
+      margin-top: 8px;
+    }
+
+    .suggestion-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+
+    .suggestion-row:hover {
+      background: var(--color-surface-hover);
+    }
+
+    .suggestion-swatch {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      border: 1px solid var(--color-border);
+    }
+
+    .suggestion-detail {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .suggestion-role {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .suggestion-hex {
+      font-size: 1rem;
+      color: var(--color-text-tertiary);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .suggestion-contrast {
+      font-size: 1rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 500;
+      flex-shrink: 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .contrast-pass {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .contrast-fail {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    /* CSSエクスポート */
+    .export-section {
+      margin-top: 8px;
+    }
+
+    .export-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+
+    .export-tab {
+      padding: 8px 16px;
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      background: var(--color-surface);
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+
+    .export-tab:hover {
+      border-color: var(--color-border-hover);
+      background: var(--color-surface-hover);
+    }
+
+    .export-tab.active {
+      background: var(--color-accent);
+      color: #fff;
+      border-color: var(--color-accent);
+    }
+
+    .export-code {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 16px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      line-height: 1.6;
+      overflow-x: auto;
+      white-space: pre;
+      position: relative;
+    }
+
+    .btn-copy-code {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 6px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #d4d4d4;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .btn-copy-code:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* プレビューカード */
+    .preview-section {
+      margin-top: 8px;
+    }
+
+    .preview-demo {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+    }
+
+    .preview-header {
+      padding: 24px;
+      text-align: center;
+    }
+
+    .preview-header h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .preview-header p {
+      font-size: 1rem;
+    }
+
+    .preview-body {
+      padding: 24px;
+    }
+
+    .preview-body p {
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .preview-btn {
+      display: inline-block;
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      cursor: default;
+    }
+
+    .preview-card-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .preview-mini-card {
+      padding: 16px;
+      border-radius: 8px;
+    }
+
+    .preview-mini-card h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .preview-mini-card p {
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+
+    /* フッター */
+    footer {
+      background: linear-gradient(135deg, #6b6b6b 0%, #1a1a1a 100%);
+      padding: 16px 0;
+      margin-top: auto;
+    }
+
+    footer .footer-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    footer p {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    footer a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    footer a:hover {
+      color: #fff;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-links a {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.7);
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover {
+      color: #fff;
+    }
+
+    /* 保存パレット */
+    .saved-empty {
+      font-size: 1rem;
+      color: var(--color-text-tertiary);
+      text-align: center;
+      padding: 12px 0;
+    }
+
+    .saved-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .saved-item {
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.15s;
+    }
+
+    .saved-item:hover {
+      border-color: var(--color-border-hover);
+    }
+
+    .saved-colors {
+      display: flex;
+      height: 32px;
+    }
+
+    .saved-colors span {
+      flex: 1;
+    }
+
+    .saved-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      gap: 8px;
+    }
+
+    .saved-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-text);
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .saved-date {
+      font-size: 1rem;
+      color: var(--color-text-tertiary);
+      font-family: 'JetBrains Mono', monospace;
+      flex-shrink: 0;
+    }
+
+    .saved-actions {
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .saved-actions button {
+      background: none;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 4px 8px;
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+      transition: all 0.15s;
+      font-family: inherit;
+      line-height: 1;
+    }
+
+    .saved-actions button:hover {
+      border-color: var(--color-border-hover);
+      color: var(--color-text);
+    }
+
+    .saved-actions button.delete-btn:hover {
+      border-color: #c0392b;
+      color: #c0392b;
+    }
+
+    .btn-save {
+      width: 100%;
+      padding: 10px;
+      background: var(--color-surface);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+      margin-top: 12px;
+    }
+
+    .btn-save:hover {
+      border-color: var(--color-border-hover);
+      background: var(--color-surface-hover);
+    }
+
+    .btn-save:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .save-input-row {
+      display: none;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .save-input-row.active {
+      display: flex;
+    }
+
+    .save-input-row input {
+      flex: 1;
+      padding: 8px 10px;
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      font-size: 1rem;
+      font-family: inherit;
+      background: var(--color-surface);
+      color: var(--color-text);
+      outline: none;
+    }
+
+    .save-input-row input:focus {
+      border-color: var(--color-accent);
+    }
+
+    .save-input-row button {
+      padding: 8px 14px;
+      background: var(--color-accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    .save-input-row button:hover {
+      background: var(--color-accent-hover);
+    }
+
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      footer .footer-inner {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+
+      .preview-card-row {
+        grid-template-columns: 1fr;
+      }
+
+      .palette-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      }
+
+      .steps {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>画像カラーピッカー</h1>
+      <p>写真やスクリーンショットからWEBデザイン用カラーパレットを自動生成</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="card">
+          <h2 class="card-title">画像をアップロード</h2>
+          <div class="drop-zone" id="dropZone">
+            <div class="drop-zone-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+              </svg>
+            </div>
+            <span class="drop-zone-text">画像をアップロード</span>
+            <span class="drop-zone-sub">ドラッグ&amp;ドロップ、または<span class="accent"> ファイルを選択</span></span>
+            <input type="file" id="fileInput" accept="image/*">
+          </div>
+          <div class="preview-wrap" id="previewWrap">
+            <img class="preview-img" id="previewImg" alt="プレビュー">
+            <div class="file-name" id="fileName"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">設定</h2>
+          <div class="setting-row">
+            <span class="setting-label">抽出する色数</span>
+            <div class="setting-value">
+              <input type="range" id="colorCount" min="3" max="12" value="6">
+              <span id="colorCountVal">6</span>
+            </div>
+          </div>
+          <div style="margin-top: 16px;">
+            <button class="btn-extract" id="btnExtract" disabled>色を抽出する</button>
+          </div>
+        </div>
+        <div class="card">
+          <h2 class="card-title">保存済みパレット</h2>
+          <div id="savedList" class="saved-list"></div>
+          <button class="btn-save" id="btnSave" disabled>現在のパレットを保存</button>
+          <div class="save-input-row" id="saveInputRow">
+            <input type="text" id="saveName" placeholder="パレット名">
+            <button id="btnSaveConfirm">保存</button>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main" id="mainArea">
+        <div class="empty-state" id="emptyState">
+          <div class="empty-state-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <span class="empty-state-text">画像をアップロードして色を抽出しましょう</span>
+          <div class="steps">
+            <div class="step">
+              <span class="step-number">01</span>
+              <p class="step-title">画像をアップロード</p>
+              <p class="step-desc">PNG, JPG, WebP など</p>
+            </div>
+            <div class="step">
+              <span class="step-number">02</span>
+              <p class="step-title">色を自動抽出</p>
+              <p class="step-desc">k-meansで主要色を分析</p>
+            </div>
+            <div class="step">
+              <span class="step-number">03</span>
+              <p class="step-title">コードをコピー</p>
+              <p class="step-desc">CSS / Tailwind / SCSS</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div style="max-width:1440px;margin:24px auto 0;padding:0 24px;text-align:center">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288"
+         crossorigin="anonymous"></script>
+    <!-- footer-top -->
+    <ins class="adsbygoogle"
+         style="display:block;text-align:center"
+         data-ad-client="ca-pub-4871781946658288"
+         data-ad-slot="7493033745"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>&copy; 2026 画像カラーピッカー | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></p>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work/ja" target="_blank" rel="noopener">SEO CHECKはこちら &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のジェネレーター &rarr;</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="copied-toast" id="copiedToast">コピーしました</div>
+
+  <canvas id="hiddenCanvas" style="display:none;"></canvas>
+
+  <script>
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const previewWrap = document.getElementById('previewWrap');
+    const previewImg = document.getElementById('previewImg');
+    const fileName = document.getElementById('fileName');
+    const colorCount = document.getElementById('colorCount');
+    const colorCountVal = document.getElementById('colorCountVal');
+    const btnExtract = document.getElementById('btnExtract');
+    const mainArea = document.getElementById('mainArea');
+    const emptyState = document.getElementById('emptyState');
+    const copiedToast = document.getElementById('copiedToast');
+    const hiddenCanvas = document.getElementById('hiddenCanvas');
+
+    const savedList = document.getElementById('savedList');
+    const btnSave = document.getElementById('btnSave');
+    const saveInputRow = document.getElementById('saveInputRow');
+    const saveName = document.getElementById('saveName');
+    const btnSaveConfirm = document.getElementById('btnSaveConfirm');
+
+    let loadedImage = null;
+    let currentClusters = null;
+    let currentTotalPixels = 0;
+
+    const STORAGE_KEY = 'image-color-picker-palettes';
+
+    function loadSavedPalettes() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    function savePalettes(palettes) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(palettes));
+    }
+
+    function renderSavedList() {
+      const palettes = loadSavedPalettes();
+      if (palettes.length === 0) {
+        savedList.innerHTML = '<div class="saved-empty">保存されたパレットはありません</div>';
+        return;
+      }
+      savedList.innerHTML = '';
+      palettes.forEach((p, idx) => {
+        const item = document.createElement('div');
+        item.className = 'saved-item';
+        const colorsHtml = p.colors.map(hex => `<span style="background:${hex}"></span>`).join('');
+        item.innerHTML = `
+          <div class="saved-colors">${colorsHtml}</div>
+          <div class="saved-meta">
+            <span class="saved-name">${escapeHtml(p.name)}</span>
+            <span class="saved-date">${p.date}</span>
+            <div class="saved-actions">
+              <button class="load-btn" data-idx="${idx}">読込</button>
+              <button class="delete-btn" data-idx="${idx}">削除</button>
+            </div>
+          </div>`;
+        savedList.appendChild(item);
+      });
+
+      savedList.querySelectorAll('.load-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const p = loadSavedPalettes()[parseInt(btn.dataset.idx)];
+          if (p) loadPalette(p);
+        });
+      });
+
+      savedList.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const palettes = loadSavedPalettes();
+          palettes.splice(parseInt(btn.dataset.idx), 1);
+          savePalettes(palettes);
+          renderSavedList();
+          showToast('削除しました');
+        });
+      });
+    }
+
+    function loadPalette(p) {
+      const clusters = p.colors.map((hex, i) => ({
+        rgb: hexToRgb(hex),
+        count: p.counts ? p.counts[i] : 1
+      }));
+      const total = clusters.reduce((sum, c) => sum + c.count, 0);
+      currentClusters = clusters;
+      currentTotalPixels = total;
+      btnSave.disabled = false;
+      renderResults(clusters, total);
+      showToast(`"${p.name}" を読み込みました`);
+    }
+
+    function hexToRgb(hex) {
+      const h = hex.replace('#', '');
+      return [parseInt(h.substring(0, 2), 16), parseInt(h.substring(2, 4), 16), parseInt(h.substring(4, 6), 16)];
+    }
+
+    btnSave.addEventListener('click', () => {
+      saveInputRow.classList.add('active');
+      saveName.value = '';
+      saveName.focus();
+    });
+
+    btnSaveConfirm.addEventListener('click', confirmSave);
+    saveName.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') confirmSave();
+    });
+
+    function confirmSave() {
+      if (!currentClusters) return;
+      const name = saveName.value.trim() || `パレット ${loadSavedPalettes().length + 1}`;
+      const now = new Date();
+      const date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+      const palettes = loadSavedPalettes();
+      palettes.unshift({
+        name,
+        date,
+        colors: currentClusters.map(c => rgbToHex(...c.rgb)),
+        counts: currentClusters.map(c => c.count)
+      });
+      savePalettes(palettes);
+      saveInputRow.classList.remove('active');
+      renderSavedList();
+      showToast('保存しました');
+    }
+
+    renderSavedList();
+
+    colorCount.addEventListener('input', () => {
+      colorCountVal.textContent = colorCount.value;
+    });
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('dragover');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        handleFile(file);
+      }
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        handleFile(file);
+      }
+    });
+
+    function handleFile(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          loadedImage = img;
+          previewImg.src = e.target.result;
+          fileName.textContent = file.name;
+          previewWrap.classList.add('active');
+          btnExtract.disabled = false;
+          extractColors();
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    btnExtract.addEventListener('click', extractColors);
+
+    function extractColors() {
+      if (!loadedImage) return;
+
+      const ctx = hiddenCanvas.getContext('2d', { willReadFrequently: true });
+      const maxSize = 200;
+      const scale = Math.min(maxSize / loadedImage.width, maxSize / loadedImage.height, 1);
+      const w = Math.floor(loadedImage.width * scale);
+      const h = Math.floor(loadedImage.height * scale);
+      hiddenCanvas.width = w;
+      hiddenCanvas.height = h;
+      ctx.drawImage(loadedImage, 0, 0, w, h);
+
+      const imageData = ctx.getImageData(0, 0, w, h);
+      const pixels = [];
+      for (let i = 0; i < imageData.data.length; i += 4) {
+        const r = imageData.data[i];
+        const g = imageData.data[i + 1];
+        const b = imageData.data[i + 2];
+        const a = imageData.data[i + 3];
+        if (a < 128) continue;
+        pixels.push([r, g, b]);
+      }
+
+      const k = parseInt(colorCount.value);
+      const clusters = kMeans(pixels, k, 20);
+      clusters.sort((a, b) => b.count - a.count);
+
+      currentClusters = clusters;
+      currentTotalPixels = pixels.length;
+      btnSave.disabled = false;
+      renderResults(clusters, pixels.length);
+    }
+
+    function kMeans(pixels, k, maxIter) {
+      const centroids = initCentroids(pixels, k);
+
+      for (let iter = 0; iter < maxIter; iter++) {
+        const assignments = new Array(pixels.length);
+        for (let i = 0; i < pixels.length; i++) {
+          let minDist = Infinity;
+          let best = 0;
+          for (let j = 0; j < centroids.length; j++) {
+            const d = colorDist(pixels[i], centroids[j]);
+            if (d < minDist) {
+              minDist = d;
+              best = j;
+            }
+          }
+          assignments[i] = best;
+        }
+
+        const sums = centroids.map(() => [0, 0, 0]);
+        const counts = new Array(centroids.length).fill(0);
+
+        for (let i = 0; i < pixels.length; i++) {
+          const c = assignments[i];
+          sums[c][0] += pixels[i][0];
+          sums[c][1] += pixels[i][1];
+          sums[c][2] += pixels[i][2];
+          counts[c]++;
+        }
+
+        let converged = true;
+        for (let j = 0; j < centroids.length; j++) {
+          if (counts[j] === 0) continue;
+          const newR = Math.round(sums[j][0] / counts[j]);
+          const newG = Math.round(sums[j][1] / counts[j]);
+          const newB = Math.round(sums[j][2] / counts[j]);
+          if (newR !== centroids[j][0] || newG !== centroids[j][1] || newB !== centroids[j][2]) {
+            converged = false;
+          }
+          centroids[j] = [newR, newG, newB];
+        }
+
+        if (converged) break;
+      }
+
+      const finalCounts = new Array(centroids.length).fill(0);
+      for (let i = 0; i < pixels.length; i++) {
+        let minDist = Infinity;
+        let best = 0;
+        for (let j = 0; j < centroids.length; j++) {
+          const d = colorDist(pixels[i], centroids[j]);
+          if (d < minDist) {
+            minDist = d;
+            best = j;
+          }
+        }
+        finalCounts[best]++;
+      }
+
+      return centroids.map((c, i) => ({
+        rgb: c,
+        count: finalCounts[i]
+      }));
+    }
+
+    function initCentroids(pixels, k) {
+      const centroids = [];
+      const idx = Math.floor(Math.random() * pixels.length);
+      centroids.push([...pixels[idx]]);
+
+      for (let i = 1; i < k; i++) {
+        const dists = pixels.map(p => {
+          let minD = Infinity;
+          for (const c of centroids) {
+            minD = Math.min(minD, colorDist(p, c));
+          }
+          return minD;
+        });
+        const total = dists.reduce((a, b) => a + b, 0);
+        let r = Math.random() * total;
+        for (let j = 0; j < pixels.length; j++) {
+          r -= dists[j];
+          if (r <= 0) {
+            centroids.push([...pixels[j]]);
+            break;
+          }
+        }
+      }
+      return centroids;
+    }
+
+    function colorDist(a, b) {
+      const dr = a[0] - b[0];
+      const dg = a[1] - b[1];
+      const db = a[2] - b[2];
+      return dr * dr + dg * dg + db * db;
+    }
+
+    function rgbToHex(r, g, b) {
+      return '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+    }
+
+    function rgbToHsl(r, g, b) {
+      r /= 255; g /= 255; b /= 255;
+      const max = Math.max(r, g, b);
+      const min = Math.min(r, g, b);
+      const l = (max + min) / 2;
+      if (max === min) return [0, 0, l];
+      const d = max - min;
+      const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      let h;
+      if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+      else if (max === g) h = ((b - r) / d + 2) / 6;
+      else h = ((r - g) / d + 4) / 6;
+      return [h, s, l];
+    }
+
+    function relativeLuminance(r, g, b) {
+      const [rs, gs, bs] = [r, g, b].map(v => {
+        v /= 255;
+        return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+      });
+      return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+    }
+
+    function contrastRatio(rgb1, rgb2) {
+      const l1 = relativeLuminance(...rgb1);
+      const l2 = relativeLuminance(...rgb2);
+      const lighter = Math.max(l1, l2);
+      const darker = Math.min(l1, l2);
+      return (lighter + 0.05) / (darker + 0.05);
+    }
+
+    function suggestPalette(clusters) {
+      const sorted = [...clusters].sort((a, b) => {
+        const [, , lA] = rgbToHsl(...a.rgb);
+        const [, , lB] = rgbToHsl(...b.rgb);
+        return lA - lB;
+      });
+
+      const darkest = sorted[0];
+      const lightest = sorted[sorted.length - 1];
+
+      const [, , darkL] = rgbToHsl(...darkest.rgb);
+      const [, , lightL] = rgbToHsl(...lightest.rgb);
+
+      const textColor = darkL < 0.3 ? darkest : { rgb: [30, 41, 59] };
+      const bgColor = lightL > 0.85 ? lightest : { rgb: [248, 250, 252] };
+
+      const midColors = sorted.filter(c => {
+        const [, s, l] = rgbToHsl(...c.rgb);
+        return l > 0.2 && l < 0.8 && s > 0.15;
+      });
+
+      const primary = midColors.length > 0
+        ? midColors.reduce((best, c) => {
+            const [, sB] = rgbToHsl(...best.rgb);
+            const [, sC] = rgbToHsl(...c.rgb);
+            return sC > sB ? c : best;
+          })
+        : sorted[Math.floor(sorted.length / 2)];
+
+      const primaryHsl = rgbToHsl(...primary.rgb);
+      let secondary = midColors.find(c => {
+        if (c === primary) return false;
+        const [h] = rgbToHsl(...c.rgb);
+        const hDiff = Math.abs(h - primaryHsl[0]);
+        return hDiff > 0.08 || hDiff < -0.08;
+      });
+
+      if (!secondary) {
+        secondary = sorted.find(c => c !== primary && c !== textColor && c !== bgColor) || primary;
+      }
+
+      const accentCandidates = sorted.filter(c => {
+        const [, s] = rgbToHsl(...c.rgb);
+        return s > 0.3 && c !== primary && c !== secondary;
+      });
+      const accent = accentCandidates.length > 0 ? accentCandidates[0] : secondary;
+
+      return {
+        primary: { role: 'プライマリ（CTA・リンク）', rgb: primary.rgb },
+        secondary: { role: 'セカンダリ（補助・ボーダー）', rgb: secondary.rgb },
+        accent: { role: 'アクセント（装飾・バッジ）', rgb: accent.rgb },
+        text: { role: 'テキスト', rgb: textColor.rgb },
+        background: { role: '背景', rgb: bgColor.rgb }
+      };
+    }
+
+    function showToast(msg) {
+      copiedToast.textContent = msg || 'コピーしました';
+      copiedToast.classList.add('show');
+      setTimeout(() => copiedToast.classList.remove('show'), 1500);
+    }
+
+    function copyText(text) {
+      navigator.clipboard.writeText(text).then(() => showToast());
+    }
+
+    function renderResults(clusters, totalPixels) {
+      emptyState.style.display = 'none';
+
+      const existing = mainArea.querySelectorAll('.card');
+      existing.forEach(el => el.remove());
+
+      const paletteCard = document.createElement('div');
+      paletteCard.className = 'card';
+      paletteCard.innerHTML = '<h2 class="card-title">抽出カラー（クリックでHEXコピー）</h2><div class="palette-grid" id="paletteGrid"></div>';
+      mainArea.appendChild(paletteCard);
+
+      const grid = paletteCard.querySelector('#paletteGrid');
+      clusters.forEach(c => {
+        const hex = rgbToHex(...c.rgb);
+        const pct = ((c.count / totalPixels) * 100).toFixed(1);
+        const item = document.createElement('div');
+        item.className = 'palette-item';
+        item.innerHTML = `
+          <div class="palette-swatch" style="background:${hex}">
+            <span class="palette-percent">${pct}%</span>
+          </div>
+          <div class="palette-info">
+            <div class="palette-hex">${hex.toUpperCase()}</div>
+            <div class="palette-rgb">rgb(${c.rgb.join(', ')})</div>
+          </div>`;
+        item.addEventListener('click', () => copyText(hex.toUpperCase()));
+        grid.appendChild(item);
+      });
+
+      const palette = suggestPalette(clusters);
+      const suggestionCard = document.createElement('div');
+      suggestionCard.className = 'card';
+      let suggestionHTML = '<h2 class="card-title">WEBデザイン用パレット提案</h2><div class="suggestion-section">';
+
+      for (const [key, val] of Object.entries(palette)) {
+        const hex = rgbToHex(...val.rgb).toUpperCase();
+        const bgForContrast = key === 'text' ? palette.background.rgb : palette.text.rgb;
+        const cr = contrastRatio(val.rgb, bgForContrast);
+        const passAA = cr >= 4.5;
+        const contrastLabel = key === 'background'
+          ? `vs Text ${cr.toFixed(1)}:1`
+          : key === 'text'
+            ? `vs BG ${cr.toFixed(1)}:1`
+            : `vs BG ${contrastRatio(val.rgb, palette.background.rgb).toFixed(1)}:1`;
+        const contrastClass = (key === 'text' || key === 'background') ? (passAA ? 'contrast-pass' : 'contrast-fail') : (contrastRatio(val.rgb, palette.background.rgb) >= 3 ? 'contrast-pass' : 'contrast-fail');
+
+        suggestionHTML += `
+          <div class="suggestion-row" data-hex="${hex}">
+            <div class="suggestion-swatch" style="background:${hex}"></div>
+            <div class="suggestion-detail">
+              <div class="suggestion-role">${val.role}</div>
+              <div class="suggestion-hex">${hex}</div>
+            </div>
+            <span class="suggestion-contrast ${contrastClass}">${contrastLabel}</span>
+          </div>`;
+      }
+      suggestionHTML += '</div>';
+      suggestionCard.innerHTML = suggestionHTML;
+      mainArea.appendChild(suggestionCard);
+
+      suggestionCard.querySelectorAll('.suggestion-row').forEach(row => {
+        row.addEventListener('click', () => copyText(row.dataset.hex));
+      });
+
+      const exportCard = document.createElement('div');
+      exportCard.className = 'card';
+
+      const cssVars = generateCSS(palette, 'css');
+      const tailwind = generateCSS(palette, 'tailwind');
+      const scss = generateCSS(palette, 'scss');
+
+      exportCard.innerHTML = `
+        <h2 class="card-title">コードをエクスポート</h2>
+        <div class="export-section">
+          <div class="export-tabs">
+            <button class="export-tab active" data-format="css">CSS変数</button>
+            <button class="export-tab" data-format="tailwind">Tailwind</button>
+            <button class="export-tab" data-format="scss">SCSS</button>
+          </div>
+          <div class="export-code" id="exportCode"><button class="btn-copy-code" id="btnCopyCode">Copy</button>${escapeHtml(cssVars)}</div>
+        </div>`;
+      mainArea.appendChild(exportCard);
+
+      const codeFormats = { css: cssVars, tailwind, scss };
+      const exportCode = exportCard.querySelector('#exportCode');
+      const btnCopyCode = exportCard.querySelector('#btnCopyCode');
+
+      exportCard.querySelectorAll('.export-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          exportCard.querySelectorAll('.export-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          exportCode.innerHTML = `<button class="btn-copy-code" id="btnCopyCode">Copy</button>${escapeHtml(codeFormats[tab.dataset.format])}`;
+          exportCode.querySelector('#btnCopyCode').addEventListener('click', () => {
+            copyText(codeFormats[tab.dataset.format]);
+          });
+        });
+      });
+
+      btnCopyCode.addEventListener('click', () => {
+        const activeTab = exportCard.querySelector('.export-tab.active');
+        copyText(codeFormats[activeTab.dataset.format]);
+      });
+
+      const previewCard = document.createElement('div');
+      previewCard.className = 'card';
+      const p = palette;
+      const primaryHex = rgbToHex(...p.primary.rgb);
+      const secondaryHex = rgbToHex(...p.secondary.rgb);
+      const accentHex = rgbToHex(...p.accent.rgb);
+      const textHex = rgbToHex(...p.text.rgb);
+      const bgHex = rgbToHex(...p.background.rgb);
+      const primaryTextColor = relativeLuminance(...p.primary.rgb) > 0.5 ? textHex : '#fff';
+      const accentTextColor = relativeLuminance(...p.accent.rgb) > 0.5 ? textHex : '#fff';
+
+      previewCard.innerHTML = `
+        <h2 class="card-title">プレビュー</h2>
+        <div class="preview-section">
+          <div class="preview-demo">
+            <div class="preview-header" style="background:${primaryHex};color:${primaryTextColor}">
+              <h3>サンプルページ</h3>
+              <p>抽出したカラーパレットでデザインするとこんな感じ</p>
+            </div>
+            <div class="preview-body" style="background:${bgHex};color:${textHex}">
+              <p>このプレビューは、画像から抽出したカラーパレットを使ったデザインイメージです。プライマリカラーをヘッダーやボタンに、セカンダリカラーをカードの装飾に使用しています。</p>
+              <div class="preview-btn" style="background:${primaryHex};color:${primaryTextColor}">詳しく見る</div>
+              <div class="preview-card-row">
+                <div class="preview-mini-card" style="background:${bgHex};border:2px solid ${secondaryHex}">
+                  <h4 style="color:${primaryHex}">機能 A</h4>
+                  <p style="color:${textHex}">セカンダリカラーのボーダーを活用</p>
+                </div>
+                <div class="preview-mini-card" style="background:${accentHex};color:${accentTextColor}">
+                  <h4>機能 B</h4>
+                  <p>アクセントカラーの背景</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      mainArea.appendChild(previewCard);
+    }
+
+    function generateCSS(palette, format) {
+      const entries = Object.entries(palette);
+      if (format === 'css') {
+        let code = ':root {\n';
+        for (const [key, val] of entries) {
+          const hex = rgbToHex(...val.rgb).toLowerCase();
+          code += `  --color-${key}: ${hex};\n`;
+        }
+        code += '}';
+        return code;
+      }
+      if (format === 'tailwind') {
+        let code = 'module.exports = {\n  theme: {\n    extend: {\n      colors: {\n';
+        for (const [key, val] of entries) {
+          const hex = rgbToHex(...val.rgb).toLowerCase();
+          code += `        '${key}': '${hex}',\n`;
+        }
+        code += '      },\n    },\n  },\n};';
+        return code;
+      }
+      if (format === 'scss') {
+        let code = '';
+        for (const [key, val] of entries) {
+          const hex = rgbToHex(...val.rgb).toLowerCase();
+          code += `$color-${key}: ${hex};\n`;
+        }
+        return code.trimEnd();
+      }
+      return '';
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+  </script>
+</body>
+</html>
