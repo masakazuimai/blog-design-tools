@@ -20,11 +20,19 @@ jobs:
           ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy tool directories
+        env:
+          REMOTE_USER: ${{ secrets.SSH_USER }}
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          REMOTE_PORT: ${{ secrets.SSH_PORT }}
+          REMOTE_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
+          DEST=$(echo "${REMOTE_PATH}" | tr -d '[:space:]')
+          REMOTE="${REMOTE_USER}@${REMOTE_HOST}"
+          PORT=$(echo "${REMOTE_PORT}" | tr -d '[:space:]')
           for dir in */; do
             if [ -f "${dir}index.html" ]; then
               echo "Deploying: ${dir}"
-              ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "mkdir -p ${{ secrets.DEPLOY_PATH }}/${dir}"
-              scp -P ${{ secrets.SSH_PORT }} -r "${dir}" "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}/${dir}"
+              ssh -p "${PORT}" "${REMOTE}" "mkdir -p ${DEST}/${dir}"
+              scp -P "${PORT}" -r "${dir}" "${REMOTE}:${DEST}/${dir}"
             fi
           done
