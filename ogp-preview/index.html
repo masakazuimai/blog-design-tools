@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OGPプレビューツール｜Twitter・Facebook・LINEのシェア表示を確認</title>
+  <meta name="description" content="OGP（Open Graph Protocol）の設定をリアルタイムでプレビュー。Twitter/X・Facebook・LINE・Discord・Slackでの表示を確認し、メタタグをワンクリックでコピーできます。">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7Z6M3CJEV3');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-bg: #f0f4f8;
+      --color-surface: #ffffff;
+      --color-surface-alt: #f8fafc;
+      --color-border: #e2e8f0;
+      --color-border-hover: #cbd5e1;
+      --color-text: #1e293b;
+      --color-text-secondary: #64748b;
+      --color-text-tertiary: #94a3b8;
+      --color-accent: #2b3a8e;
+      --color-accent-hover: #1a2466;
+      --color-accent-light: #eef0f9;
+      --color-success: #22c55e;
+      --color-success-light: #f0fdf4;
+      --color-warning: #f59e0b;
+      --color-warning-light: #fffbeb;
+      --color-error: #ef4444;
+      --color-error-light: #fef2f2;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.7;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0a0f2c 0%, #1a2466 40%, #2b3a8e 100%);
+      padding: 32px 20px;
+      text-align: center;
+    }
+
+    header h1 { font-size: 1.5rem; font-weight: 700; color: #fff; }
+    header p { font-size: 1rem; color: rgba(200, 210, 240, 0.85); margin-top: 4px; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static !important; }
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: sticky;
+      top: 20px;
+    }
+
+    .card {
+      background: var(--color-surface);
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid var(--color-border);
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title .icon { width: 20px; height: 20px; flex-shrink: 0; }
+
+    /* サイドバータブ */
+    .sidebar-tabs {
+      display: flex;
+      border-bottom: 2px solid var(--color-border);
+      margin: -24px -24px 20px;
+      padding: 0 24px;
+    }
+
+    .sidebar-tab {
+      padding: 12px 20px;
+      border: none;
+      background: none;
+      font-size: 0.9375rem;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 600;
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sidebar-tab:hover { color: var(--color-text-secondary); }
+
+    .sidebar-tab.active {
+      color: var(--color-accent);
+      border-bottom-color: var(--color-accent);
+    }
+
+    .sidebar-tab .tab-icon { width: 18px; height: 18px; }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group:last-child { margin-bottom: 0; }
+
+    .form-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: 6px;
+    }
+
+    .form-label .char-count {
+      font-weight: 400;
+      font-size: 0.8125rem;
+      color: var(--color-text-tertiary);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .form-label .char-count.warn { color: var(--color-warning); }
+    .form-label .char-count.over { color: var(--color-error); }
+
+    input[type="text"],
+    input[type="url"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: 'Noto Sans JP', sans-serif;
+      color: var(--color-text);
+      background: var(--color-surface);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    textarea { resize: vertical; min-height: 72px; }
+    select { cursor: pointer; }
+
+    .image-upload-area {
+      border: 2px dashed var(--color-border);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+
+    .image-upload-area:hover,
+    .image-upload-area.dragover {
+      border-color: var(--color-accent);
+      background: var(--color-accent-light);
+    }
+
+    .image-upload-area .upload-text { font-size: 0.875rem; color: var(--color-text-secondary); }
+    .image-upload-area .upload-text strong { color: var(--color-accent); }
+
+    .image-upload-area input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .image-preview-thumb {
+      max-width: 100%;
+      max-height: 120px;
+      border-radius: 6px;
+      margin-top: 8px;
+    }
+
+    .image-info {
+      font-size: 0.8125rem;
+      color: var(--color-text-tertiary);
+      margin-top: 6px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .image-clear {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 0.8125rem;
+      color: var(--color-error);
+      cursor: pointer;
+      border: none;
+      background: none;
+      text-decoration: underline;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    .or-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 12px 0;
+      font-size: 0.8125rem;
+      color: var(--color-text-tertiary);
+    }
+
+    .or-divider::before,
+    .or-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--color-border);
+    }
+
+    /* URL取得ボタン */
+    .fetch-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .fetch-row input { flex: 1; }
+
+    .fetch-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: var(--color-accent);
+      color: #fff;
+      font-size: 0.9375rem;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .fetch-btn:hover { background: var(--color-accent-hover); }
+
+    .fetch-btn:disabled {
+      background: var(--color-text-tertiary);
+      cursor: not-allowed;
+    }
+
+    .fetch-btn .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .fetch-status {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .fetch-status.error {
+      display: block;
+      background: var(--color-error-light);
+      color: #991b1b;
+    }
+
+    .fetch-status.success {
+      display: block;
+      background: var(--color-success-light);
+      color: #166534;
+    }
+
+    /* 取得結果の一覧 */
+    .fetched-tags {
+      margin-top: 16px;
+      display: none;
+    }
+
+    .fetched-tags.visible {
+      display: block;
+    }
+
+    .fetched-tag-item {
+      display: flex;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--color-border);
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    .fetched-tag-item:last-child { border-bottom: none; }
+
+    .fetched-tag-key {
+      flex-shrink: 0;
+      font-weight: 600;
+      color: var(--color-accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8125rem;
+      min-width: 120px;
+    }
+
+    .fetched-tag-value {
+      color: var(--color-text);
+      word-break: break-all;
+    }
+
+    .fetched-tag-value.missing {
+      color: var(--color-text-tertiary);
+      font-style: italic;
+    }
+
+    .main-area {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      min-width: 0;
+    }
+
+    .platform-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .platform-tab {
+      padding: 8px 16px;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      background: var(--color-surface);
+      font-size: 0.875rem;
+      font-family: 'Noto Sans JP', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+
+    .platform-tab:hover {
+      border-color: var(--color-accent);
+      background: var(--color-accent-light);
+    }
+
+    .platform-tab.active {
+      background: var(--color-accent);
+      color: #fff;
+      border-color: var(--color-accent);
+    }
+
+    .platform-tab .tab-icon { width: 18px; height: 18px; }
+
+    .preview-container {
+      background: var(--color-surface-alt);
+      border-radius: 12px;
+      padding: 32px;
+      border: 1px solid var(--color-border);
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .main-area .card {
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    /* Twitter/X - Summary Large Image */
+    .preview-twitter-large {
+      width: 506px;
+      max-width: 100%;
+      border: 1px solid #cfd9de;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      cursor: pointer;
+    }
+
+    .preview-twitter-large .tw-image {
+      width: 100%;
+      aspect-ratio: 1.91 / 1;
+      background: #e1e8ed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .preview-twitter-large .tw-image img { width: 100%; height: 100%; object-fit: cover; }
+    .preview-twitter-large .tw-image .placeholder { color: #8899a6; font-size: 0.875rem; }
+    .preview-twitter-large .tw-body { padding: 12px; }
+
+    .preview-twitter-large .tw-domain {
+      font-size: 0.8125rem;
+      color: #8899a6;
+      margin-bottom: 2px;
+      text-transform: lowercase;
+    }
+
+    .preview-twitter-large .tw-title {
+      font-size: 0.9375rem;
+      font-weight: 400;
+      color: #0f1419;
+      line-height: 1.3;
+      margin-bottom: 2px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .preview-twitter-large .tw-desc {
+      font-size: 0.8125rem;
+      color: #8899a6;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Twitter/X - Summary (small) */
+    .preview-twitter-summary {
+      width: 506px;
+      max-width: 100%;
+      border: 1px solid #cfd9de;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      cursor: pointer;
+      display: flex;
+    }
+
+    .preview-twitter-summary .tw-image {
+      width: 130px;
+      min-height: 130px;
+      flex-shrink: 0;
+      background: #e1e8ed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-right: 1px solid #cfd9de;
+    }
+
+    .preview-twitter-summary .tw-image img { width: 100%; height: 100%; object-fit: cover; }
+    .preview-twitter-summary .tw-image .placeholder { color: #8899a6; font-size: 0.75rem; }
+
+    .preview-twitter-summary .tw-body {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+    }
+
+    .preview-twitter-summary .tw-domain { font-size: 0.8125rem; color: #8899a6; text-transform: lowercase; }
+
+    .preview-twitter-summary .tw-title {
+      font-size: 0.9375rem;
+      font-weight: 400;
+      color: #0f1419;
+      line-height: 1.3;
+      margin: 2px 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .preview-twitter-summary .tw-desc {
+      font-size: 0.8125rem;
+      color: #8899a6;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Facebook */
+    .preview-facebook {
+      width: 500px;
+      max-width: 100%;
+      border: 1px solid #dadde1;
+      background: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      cursor: pointer;
+    }
+
+    .preview-facebook .fb-image {
+      width: 100%;
+      aspect-ratio: 1.91 / 1;
+      background: #f0f2f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .preview-facebook .fb-image img { width: 100%; height: 100%; object-fit: cover; }
+    .preview-facebook .fb-image .placeholder { color: #8a8d91; font-size: 0.875rem; }
+
+    .preview-facebook .fb-body {
+      padding: 12px 16px;
+      background: #f2f3f5;
+      border-top: 1px solid #dadde1;
+    }
+
+    .preview-facebook .fb-domain {
+      font-size: 0.8125rem;
+      color: #65676b;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .preview-facebook .fb-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1c1e21;
+      line-height: 1.35;
+      margin: 4px 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .preview-facebook .fb-desc {
+      font-size: 0.875rem;
+      color: #65676b;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* LINE */
+    .preview-line {
+      width: 340px;
+      max-width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif;
+    }
+
+    .preview-line .line-image {
+      width: 100%;
+      aspect-ratio: 1.91 / 1;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .preview-line .line-image img { width: 100%; height: 100%; object-fit: cover; }
+    .preview-line .line-image .placeholder { color: #999; font-size: 0.875rem; }
+    .preview-line .line-body { padding: 12px 14px; }
+
+    .preview-line .line-title {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: #111;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .preview-line .line-desc {
+      font-size: 0.8125rem;
+      color: #888;
+      margin-top: 4px;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Discord */
+    .preview-discord {
+      width: 432px;
+      max-width: 100%;
+      background: #2f3136;
+      border-left: 4px solid #e3a83a;
+      border-radius: 4px;
+      padding: 12px 16px;
+      font-family: 'gg sans', 'Noto Sans', sans-serif;
+    }
+
+    .preview-discord .dc-site-name { font-size: 0.8125rem; color: #00aff4; margin-bottom: 4px; }
+
+    .preview-discord .dc-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #00aff4;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .preview-discord .dc-desc {
+      font-size: 0.875rem;
+      color: #dcddde;
+      line-height: 1.4;
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .preview-discord .dc-image {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #202225;
+      aspect-ratio: 1.91 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .preview-discord .dc-image img { width: 100%; height: 100%; object-fit: cover; }
+    .preview-discord .dc-image .placeholder { color: #72767d; font-size: 0.875rem; }
+
+    /* Slack */
+    .preview-slack {
+      width: 460px;
+      max-width: 100%;
+      border-left: 4px solid #ddd;
+      padding: 8px 12px;
+      font-family: 'Slack-Lato', 'Lato', sans-serif;
+      background: transparent;
+    }
+
+    .preview-slack .sl-site-name { font-size: 0.875rem; font-weight: 700; color: var(--color-text); margin-bottom: 4px; }
+
+    .preview-slack .sl-title {
+      font-size: 0.9375rem;
+      color: #1264a3;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .preview-slack .sl-title:hover { text-decoration: underline; }
+
+    .preview-slack .sl-desc {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      line-height: 1.4;
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .preview-slack .sl-image {
+      width: 360px;
+      max-width: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #f8f8f8;
+      aspect-ratio: 1.91 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .preview-slack .sl-image img { width: 100%; height: 100%; object-fit: cover; }
+    .preview-slack .sl-image .placeholder { color: #999; font-size: 0.875rem; }
+
+    /* コード出力 */
+    .code-card { position: relative; }
+
+    .code-block {
+      background: #1e293b;
+      color: #e2e8f0;
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8125rem;
+      line-height: 1.7;
+      overflow-x: auto;
+      white-space: pre;
+      tab-size: 2;
+    }
+
+    .code-block .tag { color: #7dd3fc; }
+    .code-block .attr { color: #a5b4fc; }
+    .code-block .val { color: #86efac; }
+
+    .copy-btn {
+      position: absolute;
+      top: 60px;
+      right: 32px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      background: var(--color-accent);
+      color: #fff;
+      font-size: 0.875rem;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .copy-btn:hover { background: var(--color-accent-hover); }
+    .copy-btn.copied { background: var(--color-success); }
+
+    /* バリデーション */
+    .validation-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .validation-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      padding: 8px 12px;
+      border-radius: 8px;
+    }
+
+    .validation-item.pass { background: var(--color-success-light); color: #166534; }
+    .validation-item.warn { background: var(--color-warning-light); color: #92400e; }
+    .validation-item.fail { background: var(--color-error-light); color: #991b1b; }
+
+    .validation-icon { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; }
+
+    footer {
+      background: linear-gradient(135deg, #2b3a8e 0%, #0a0f2c 100%);
+      padding: 16px 0;
+      margin-top: auto;
+    }
+
+    footer .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    footer p { font-size: 1rem; color: rgba(255, 255, 255, 0.5); }
+    footer a { color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: color 0.15s; }
+    footer a:hover { color: #fff; }
+
+    .footer-links { display: flex; align-items: center; gap: 16px; }
+    .footer-links a { font-size: 1rem; color: rgba(255, 255, 255, 0.7); transition: color 0.15s; }
+    .footer-links a:hover { color: #fff; }
+
+    @media (max-width: 900px) {
+      footer .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-required { background: var(--color-error-light); color: var(--color-error); }
+    .badge-recommended { background: var(--color-accent-light); color: var(--color-accent); }
+
+    .section-divider {
+      height: 1px;
+      background: var(--color-border);
+      margin: 12px 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>OGP プレビューツール</h1>
+    <p>SNSでシェアされたときの表示をリアルタイムで確認</p>
+  </header>
+
+  <div class="container">
+    <div class="layout">
+      <!-- サイドバー -->
+      <div class="sidebar">
+        <div class="card">
+          <!-- サイドバータブ -->
+          <div class="sidebar-tabs">
+            <button class="sidebar-tab active" data-panel="urlPanel">
+              <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+              URL確認
+            </button>
+            <button class="sidebar-tab" data-panel="manualPanel">
+              <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+              手動入力
+            </button>
+          </div>
+
+          <!-- URL確認パネル -->
+          <div class="tab-panel active" id="urlPanel">
+            <div class="form-group">
+              <div class="form-label"><span>確認したいURL</span></div>
+              <div class="fetch-row">
+                <input type="url" id="fetchUrl" placeholder="https://example.com">
+                <button class="fetch-btn" id="fetchBtn" onclick="fetchOgp()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+                  取得
+                </button>
+              </div>
+              <div class="fetch-status" id="fetchStatus"></div>
+            </div>
+
+            <div class="fetched-tags" id="fetchedTags">
+            </div>
+          </div>
+
+          <!-- 手動入力パネル -->
+          <div class="tab-panel" id="manualPanel">
+            <div class="form-group">
+              <div class="form-label">
+                <span>og:title <span class="badge badge-required">必須</span></span>
+                <span class="char-count" id="titleCount">0 / 60</span>
+              </div>
+              <input type="text" id="ogTitle" placeholder="ページのタイトル">
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">
+                <span>og:description</span>
+                <span class="char-count" id="descCount">0 / 120</span>
+              </div>
+              <textarea id="ogDescription" rows="3" placeholder="ページの説明文"></textarea>
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">
+                <span>og:image <span class="badge badge-recommended">推奨</span></span>
+              </div>
+              <div class="image-upload-area" id="imageDropZone">
+                <div class="upload-text">
+                  <strong>クリック</strong>または<strong>ドラッグ＆ドロップ</strong>で画像を選択
+                </div>
+                <input type="file" id="imageFile" accept="image/*">
+              </div>
+              <div class="or-divider">または</div>
+              <input type="url" id="ogImage" placeholder="https://example.com/image.jpg">
+              <div id="imagePreviewArea" style="display:none; margin-top: 8px; text-align: center;">
+                <img id="imageThumb" class="image-preview-thumb" alt="">
+                <div class="image-info" id="imageInfo"></div>
+                <button class="image-clear" id="imageClear">画像をクリア</button>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <div class="form-group">
+              <div class="form-label"><span>og:url</span></div>
+              <input type="url" id="ogUrl" placeholder="https://example.com/page">
+            </div>
+
+            <div class="form-group">
+              <div class="form-label"><span>og:site_name</span></div>
+              <input type="text" id="ogSiteName" placeholder="サイト名">
+            </div>
+
+            <div class="form-group">
+              <div class="form-label"><span>og:type</span></div>
+              <select id="ogType">
+                <option value="website">website</option>
+                <option value="article">article</option>
+                <option value="product">product</option>
+                <option value="profile">profile</option>
+                <option value="book">book</option>
+                <option value="music.song">music.song</option>
+                <option value="video.other">video.other</option>
+              </select>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <div class="form-group">
+              <div class="form-label"><span>twitter:card</span></div>
+              <select id="twitterCard">
+                <option value="summary_large_image">summary_large_image（大きい画像）</option>
+                <option value="summary">summary（小さい画像）</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- メインエリア -->
+      <div class="main-area">
+        <div class="platform-tabs" id="platformTabs">
+          <button class="platform-tab active" data-platform="twitter">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            X
+          </button>
+          <button class="platform-tab" data-platform="facebook">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Facebook
+          </button>
+          <button class="platform-tab" data-platform="line">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+            LINE
+          </button>
+          <button class="platform-tab" data-platform="discord">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286z"/></svg>
+            Discord
+          </button>
+          <button class="platform-tab" data-platform="slack">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.042 15.165a2.528 2.528 0 01-2.52 2.523A2.528 2.528 0 010 15.165a2.527 2.527 0 012.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 012.521-2.52 2.527 2.527 0 012.521 2.52v6.313A2.528 2.528 0 018.834 24a2.528 2.528 0 01-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 01-2.521-2.52A2.528 2.528 0 018.834 0a2.528 2.528 0 012.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 012.521 2.521 2.528 2.528 0 01-2.521 2.521H2.522A2.528 2.528 0 010 8.834a2.528 2.528 0 012.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 012.522-2.521A2.528 2.528 0 0124 8.834a2.528 2.528 0 01-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 01-2.523 2.521 2.527 2.527 0 01-2.52-2.521V2.522A2.527 2.527 0 0115.165 0a2.528 2.528 0 012.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 012.523 2.522A2.528 2.528 0 0115.165 24a2.527 2.527 0 01-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 01-2.52-2.523 2.526 2.526 0 012.52-2.52h6.313A2.527 2.527 0 0124 15.165a2.528 2.528 0 01-2.522 2.523h-6.313z"/></svg>
+            Slack
+          </button>
+        </div>
+
+        <!-- プレビュー -->
+        <div class="card">
+          <div class="card-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            プレビュー
+          </div>
+          <div class="preview-container" id="previewContainer"></div>
+        </div>
+
+        <!-- チェック結果 -->
+        <div class="card">
+          <div class="card-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            チェック結果
+          </div>
+          <ul class="validation-list" id="validationList"></ul>
+        </div>
+
+        <!-- メタタグ -->
+        <div class="card code-card">
+          <div class="card-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            メタタグ
+          </div>
+          <button class="copy-btn" id="copyBtn" onclick="copyCode()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            コピー
+          </button>
+          <div class="code-block" id="codeOutput"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:1200px;margin:24px auto 0;padding:0 24px;text-align:center">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288"
+         crossorigin="anonymous"></script>
+    <!-- footer-top -->
+    <ins class="adsbygoogle"
+         style="display:block;text-align:center"
+         data-ad-client="ca-pub-4871781946658288"
+         data-ad-slot="7493033745"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>&copy; 2025 OGPプレビューツール | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></p>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work/ja" target="_blank" rel="noopener">SEO CHECKはこちら &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のジェネレーター &rarr;</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    const state = {
+      title: '',
+      description: '',
+      imageUrl: '',
+      imageBlobUrl: '',
+      imageWidth: 0,
+      imageHeight: 0,
+      url: '',
+      siteName: '',
+      type: 'website',
+      twitterCard: 'summary_large_image',
+      platform: 'twitter',
+    };
+
+    const inputs = {
+      title: $('ogTitle'),
+      description: $('ogDescription'),
+      image: $('ogImage'),
+      url: $('ogUrl'),
+      siteName: $('ogSiteName'),
+      type: $('ogType'),
+      twitterCard: $('twitterCard'),
+      imageFile: $('imageFile'),
+    };
+
+    // サイドバータブ切り替え
+    document.querySelectorAll('.sidebar-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        $(tab.dataset.panel).classList.add('active');
+      });
+    });
+
+    // URL入力でEnterキー対応
+    $('fetchUrl').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') fetchOgp();
+    });
+
+    // OGP取得
+    function fetchWithTimeout(url, timeoutMs) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), timeoutMs);
+      return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timer));
+    }
+
+    async function fetchViaMicrolink(url) {
+      const apiUrl = 'https://api.microlink.io/?url=' + encodeURIComponent(url);
+      const res = await fetchWithTimeout(apiUrl, 10000);
+      if (!res.ok) throw new Error('API応答エラー');
+      const json = await res.json();
+      if (json.status !== 'success' || !json.data) throw new Error('データ取得失敗');
+
+      const d = json.data;
+      return {
+        title: d.title || '',
+        description: d.description || '',
+        image: (d.image && d.image.url) ? d.image.url : '',
+        url: d.url || url,
+        siteName: d.publisher || '',
+        type: 'website',
+        twitterCard: 'summary_large_image',
+      };
+    }
+
+    async function fetchViaJsonlink(url) {
+      const apiUrl = 'https://jsonlink.io/api/extract?url=' + encodeURIComponent(url);
+      const res = await fetchWithTimeout(apiUrl, 10000);
+      if (!res.ok) throw new Error('jsonlink API失敗');
+      const d = await res.json();
+
+      return {
+        title: d.title || '',
+        description: d.description || '',
+        image: (d.images && d.images.length > 0) ? d.images[0] : '',
+        url: d.url || url,
+        siteName: d.domain || '',
+        type: 'website',
+        twitterCard: 'summary_large_image',
+      };
+    }
+
+    async function fetchViaProxy(url) {
+      const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(url);
+      const res = await fetchWithTimeout(proxyUrl, 8000);
+      if (!res.ok) throw new Error('allorigins失敗');
+      const j = await res.json();
+      if (!j.contents) throw new Error('コンテンツ取得失敗');
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(j.contents, 'text/html');
+      return parseOgTags(doc, url);
+    }
+
+    async function fetchOgp() {
+      const url = $('fetchUrl').value.trim();
+      if (!url) return;
+
+      const statusEl = $('fetchStatus');
+      const btn = $('fetchBtn');
+      const tagsEl = $('fetchedTags');
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>取得中';
+      statusEl.className = 'fetch-status';
+      statusEl.className = 'fetch-status';
+      tagsEl.classList.remove('visible');
+
+      try {
+        let ogTags;
+        const strategies = [fetchViaMicrolink, fetchViaJsonlink, fetchViaProxy];
+        let lastErr;
+        for (const fn of strategies) {
+          try {
+            ogTags = await fn(url);
+            break;
+          } catch (e) {
+            lastErr = e;
+          }
+        }
+        if (!ogTags) throw lastErr || new Error('すべての取得方法が失敗しました');
+
+        applyFetchedOgp(ogTags, url);
+        renderFetchedTags(ogTags);
+
+        statusEl.className = 'fetch-status success';
+        statusEl.textContent = 'OGPタグを取得しました';
+        tagsEl.classList.add('visible');
+      } catch (err) {
+        statusEl.className = 'fetch-status error';
+        statusEl.textContent = '取得に失敗しました: ' + err.message;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>取得';
+      }
+    }
+
+    function parseOgTags(doc, pageUrl) {
+      const get = (selectors) => {
+        for (const sel of selectors) {
+          const el = doc.querySelector(sel);
+          if (el) {
+            const val = el.getAttribute('content') || el.getAttribute('value') || '';
+            if (val) return val;
+          }
+        }
+        return '';
+      };
+
+      const title = get([
+        'meta[property="og:title"]',
+        'meta[name="og:title"]',
+        'meta[name="twitter:title"]',
+      ]) || doc.querySelector('title')?.textContent || '';
+
+      const description = get([
+        'meta[property="og:description"]',
+        'meta[name="og:description"]',
+        'meta[name="twitter:description"]',
+        'meta[name="description"]',
+      ]);
+
+      let image = get([
+        'meta[property="og:image"]',
+        'meta[name="og:image"]',
+        'meta[name="twitter:image"]',
+        'meta[name="twitter:image:src"]',
+      ]);
+
+      if (image && !image.startsWith('http')) {
+        try {
+          image = new URL(image, pageUrl).href;
+        } catch { /* そのまま */ }
+      }
+
+      const ogUrl = get([
+        'meta[property="og:url"]',
+        'meta[name="og:url"]',
+      ]) || pageUrl;
+
+      const siteName = get([
+        'meta[property="og:site_name"]',
+        'meta[name="og:site_name"]',
+      ]);
+
+      const type = get([
+        'meta[property="og:type"]',
+        'meta[name="og:type"]',
+      ]) || 'website';
+
+      const twitterCard = get([
+        'meta[name="twitter:card"]',
+        'meta[property="twitter:card"]',
+      ]) || 'summary_large_image';
+
+      return { title, description, image, url: ogUrl, siteName, type, twitterCard };
+    }
+
+    function applyFetchedOgp(tags, fetchedUrl) {
+      state.title = tags.title;
+      state.description = tags.description;
+      state.imageUrl = tags.image;
+      state.imageBlobUrl = '';
+      state.imageWidth = 0;
+      state.imageHeight = 0;
+      state.url = tags.url || fetchedUrl;
+      state.siteName = tags.siteName;
+      state.type = tags.type;
+      state.twitterCard = tags.twitterCard;
+
+      if (tags.image) {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          state.imageWidth = img.naturalWidth;
+          state.imageHeight = img.naturalHeight;
+          updateAll();
+        };
+        img.src = tags.image;
+      }
+
+      updateAll();
+    }
+
+    function renderFetchedTags(tags) {
+      const items = [
+        { key: 'og:title', value: tags.title },
+        { key: 'og:description', value: tags.description },
+        { key: 'og:image', value: tags.image },
+        { key: 'og:url', value: tags.url },
+        { key: 'og:site_name', value: tags.siteName },
+        { key: 'og:type', value: tags.type },
+        { key: 'twitter:card', value: tags.twitterCard },
+      ];
+
+      $('fetchedTags').innerHTML = items.map(item => {
+        const val = item.value
+          ? escapeHtml(item.value)
+          : '<span class="missing">未設定</span>';
+        return `<div class="fetched-tag-item">
+          <span class="fetched-tag-key">${escapeHtml(item.key)}</span>
+          <span class="fetched-tag-value">${val}</span>
+        </div>`;
+      }).join('');
+    }
+
+    function extractDomain(url) {
+      try { return new URL(url).hostname; } catch { return url || 'example.com'; }
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function getImageSrc() {
+      return state.imageBlobUrl || state.imageUrl;
+    }
+
+    function getImageHtml(placeholderText) {
+      const src = getImageSrc();
+      if (src) {
+        return `<img src="${escapeHtml(src)}" alt="OG Image" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="placeholder" style="display:none">${placeholderText}</span>`;
+      }
+      return `<span class="placeholder">${placeholderText}</span>`;
+    }
+
+    function renderPreview() {
+      const container = $('previewContainer');
+      const domain = extractDomain(state.url);
+      const title = state.title || 'ページタイトル';
+      const desc = state.description || 'ページの説明文がここに表示されます';
+      const siteName = state.siteName || domain;
+      const imgPlaceholder = '画像未設定';
+
+      switch (state.platform) {
+        case 'twitter':
+          if (state.twitterCard === 'summary') {
+            container.innerHTML = `
+              <div class="preview-twitter-summary">
+                <div class="tw-image">${getImageHtml(imgPlaceholder)}</div>
+                <div class="tw-body">
+                  <div class="tw-domain">${escapeHtml(domain)}</div>
+                  <div class="tw-title">${escapeHtml(title)}</div>
+                  <div class="tw-desc">${escapeHtml(desc)}</div>
+                </div>
+              </div>`;
+          } else {
+            container.innerHTML = `
+              <div class="preview-twitter-large">
+                <div class="tw-image">${getImageHtml(imgPlaceholder)}</div>
+                <div class="tw-body">
+                  <div class="tw-domain">${escapeHtml(domain)}</div>
+                  <div class="tw-title">${escapeHtml(title)}</div>
+                  <div class="tw-desc">${escapeHtml(desc)}</div>
+                </div>
+              </div>`;
+          }
+          break;
+        case 'facebook':
+          container.innerHTML = `
+            <div class="preview-facebook">
+              <div class="fb-image">${getImageHtml(imgPlaceholder)}</div>
+              <div class="fb-body">
+                <div class="fb-domain">${escapeHtml(domain)}</div>
+                <div class="fb-title">${escapeHtml(title)}</div>
+                <div class="fb-desc">${escapeHtml(desc)}</div>
+              </div>
+            </div>`;
+          break;
+        case 'line':
+          container.innerHTML = `
+            <div class="preview-line">
+              <div class="line-image">${getImageHtml(imgPlaceholder)}</div>
+              <div class="line-body">
+                <div class="line-title">${escapeHtml(title)}</div>
+                <div class="line-desc">${escapeHtml(desc)}</div>
+              </div>
+            </div>`;
+          break;
+        case 'discord':
+          container.innerHTML = `
+            <div class="preview-discord">
+              <div class="dc-site-name">${escapeHtml(siteName)}</div>
+              <div class="dc-title">${escapeHtml(title)}</div>
+              <div class="dc-desc">${escapeHtml(desc)}</div>
+              <div class="dc-image">${getImageHtml(imgPlaceholder)}</div>
+            </div>`;
+          break;
+        case 'slack':
+          container.innerHTML = `
+            <div class="preview-slack">
+              <div class="sl-site-name">${escapeHtml(siteName)}</div>
+              <div class="sl-title">${escapeHtml(title)}</div>
+              <div class="sl-desc">${escapeHtml(desc)}</div>
+              <div class="sl-image">${getImageHtml(imgPlaceholder)}</div>
+            </div>`;
+          break;
+      }
+    }
+
+    function runValidation() {
+      const list = $('validationList');
+      const checks = [];
+      const titleLen = state.title.length;
+      const descLen = state.description.length;
+
+      if (titleLen === 0) {
+        checks.push({ status: 'fail', text: 'og:title が未入力です' });
+      } else if (titleLen <= 60) {
+        checks.push({ status: 'pass', text: `og:title（${titleLen}文字）— 60文字以内で最適です` });
+      } else {
+        checks.push({ status: 'warn', text: `og:title（${titleLen}文字）— 60文字を超えると一部のSNSで省略されます` });
+      }
+
+      if (descLen === 0) {
+        checks.push({ status: 'warn', text: 'og:description が未入力です' });
+      } else if (descLen <= 120) {
+        checks.push({ status: 'pass', text: `og:description（${descLen}文字）— 120文字以内で最適です` });
+      } else {
+        checks.push({ status: 'warn', text: `og:description（${descLen}文字）— 120文字を超えると省略される場合があります` });
+      }
+
+      const hasImage = state.imageUrl || state.imageBlobUrl;
+      if (!hasImage) {
+        checks.push({ status: 'fail', text: 'og:image が未設定です — SNSでの表示に画像は必須です' });
+      } else if (state.imageWidth > 0 && state.imageHeight > 0) {
+        const w = state.imageWidth;
+        const h = state.imageHeight;
+        const ratio = (w / h).toFixed(2);
+        if (w >= 1200 && h >= 630) {
+          checks.push({ status: 'pass', text: `og:image（${w}×${h}px, 比率 ${ratio}）— 推奨サイズを満たしています` });
+        } else if (w >= 600 && h >= 315) {
+          checks.push({ status: 'warn', text: `og:image（${w}×${h}px）— 推奨は1200×630px以上です` });
+        } else {
+          checks.push({ status: 'fail', text: `og:image（${w}×${h}px）— 小さすぎます。最低600×315px、推奨1200×630pxです` });
+        }
+      } else {
+        checks.push({ status: 'pass', text: 'og:image が設定されています（URL指定）' });
+      }
+
+      if (!state.url) {
+        checks.push({ status: 'warn', text: 'og:url が未設定です — 正規URLの指定を推奨します' });
+      } else {
+        try {
+          new URL(state.url);
+          checks.push({ status: 'pass', text: 'og:url が正しい形式で設定されています' });
+        } catch {
+          checks.push({ status: 'fail', text: 'og:url が正しいURL形式ではありません' });
+        }
+      }
+
+      if (state.siteName) {
+        checks.push({ status: 'pass', text: 'og:site_name が設定されています' });
+      }
+
+      const icons = {
+        pass: '<svg class="validation-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+        warn: '<svg class="validation-icon" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><path d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+        fail: '<svg class="validation-icon" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2"><path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+      };
+
+      list.innerHTML = checks.map(c =>
+        `<li class="validation-item ${c.status}">${icons[c.status]}${escapeHtml(c.text)}</li>`
+      ).join('');
+    }
+
+    function generateCode() {
+      const lines = [];
+      const imageUrlForCode = state.imageUrl || '（画像URLを入力してください）';
+
+      lines.push(`<span class="tag">&lt;meta</span> <span class="attr">property</span>=<span class="val">"og:title"</span> <span class="attr">content</span>=<span class="val">"${escapeHtml(state.title)}"</span> <span class="tag">/&gt;</span>`);
+      lines.push(`<span class="tag">&lt;meta</span> <span class="attr">property</span>=<span class="val">"og:description"</span> <span class="attr">content</span>=<span class="val">"${escapeHtml(state.description)}"</span> <span class="tag">/&gt;</span>`);
+      lines.push(`<span class="tag">&lt;meta</span> <span class="attr">property</span>=<span class="val">"og:type"</span> <span class="attr">content</span>=<span class="val">"${escapeHtml(state.type)}"</span> <span class="tag">/&gt;</span>`);
+      if (state.url) {
+        lines.push(`<span class="tag">&lt;meta</span> <span class="attr">property</span>=<span class="val">"og:url"</span> <span class="attr">content</span>=<span class="val">"${escapeHtml(state.url)}"</span> <span class="tag">/&gt;</span>`);
+      }
+      lines.push(`<span class="tag">&lt;meta</span> <span class="attr">property</span>=<span class="val">"og:image"</span> <span class="attr">content</span>=<span class="val">"${escapeHtml(imageUrlForCode)}"</span> <span class="tag">/&gt;</span>`);
+      if (state.siteName) {
+        lines.push(`<span class="tag">&lt;meta</span> <span class="attr">property</span>=<span class="val">"og:site_name"</span> <span class="attr">content</span>=<span class="val">"${escapeHtml(state.siteName)}"</span> <span class="tag">/&gt;</span>`);
+      }
+      lines.push('');
+      lines.push(`<span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="val">"twitter:card"</span> <span class="attr">content</span>=<span class="val">"${escapeHtml(state.twitterCard)}"</span> <span class="tag">/&gt;</span>`);
+      lines.push(`<span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="val">"twitter:title"</span> <span class="attr">content</span>=<span class="val">"${escapeHtml(state.title)}"</span> <span class="tag">/&gt;</span>`);
+      lines.push(`<span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="val">"twitter:description"</span> <span class="attr">content</span>=<span class="val">"${escapeHtml(state.description)}"</span> <span class="tag">/&gt;</span>`);
+      lines.push(`<span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="val">"twitter:image"</span> <span class="attr">content</span>=<span class="val">"${escapeHtml(imageUrlForCode)}"</span> <span class="tag">/&gt;</span>`);
+
+      $('codeOutput').innerHTML = lines.join('\n');
+    }
+
+    function getPlainCode() {
+      const lines = [];
+      const imageUrlForCode = state.imageUrl || '（画像URLを入力してください）';
+
+      lines.push(`<meta property="og:title" content="${state.title}" />`);
+      lines.push(`<meta property="og:description" content="${state.description}" />`);
+      lines.push(`<meta property="og:type" content="${state.type}" />`);
+      if (state.url) {
+        lines.push(`<meta property="og:url" content="${state.url}" />`);
+      }
+      lines.push(`<meta property="og:image" content="${imageUrlForCode}" />`);
+      if (state.siteName) {
+        lines.push(`<meta property="og:site_name" content="${state.siteName}" />`);
+      }
+      lines.push('');
+      lines.push(`<meta name="twitter:card" content="${state.twitterCard}" />`);
+      lines.push(`<meta name="twitter:title" content="${state.title}" />`);
+      lines.push(`<meta name="twitter:description" content="${state.description}" />`);
+      lines.push(`<meta name="twitter:image" content="${imageUrlForCode}" />`);
+
+      return lines.join('\n');
+    }
+
+    function copyCode() {
+      const btn = $('copyBtn');
+      navigator.clipboard.writeText(getPlainCode()).then(() => {
+        btn.classList.add('copied');
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>コピー済み';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>コピー';
+        }, 2000);
+      });
+    }
+
+    function updateCharCount(id, len, max) {
+      const el = $(id);
+      el.textContent = `${len} / ${max}`;
+      el.className = 'char-count';
+      if (len > max) el.classList.add('over');
+      else if (len > max * 0.85) el.classList.add('warn');
+    }
+
+    function updateAll() {
+      renderPreview();
+      runValidation();
+      generateCode();
+    }
+
+    function handleImageFile(file) {
+      if (!file || !file.type.startsWith('image/')) return;
+      if (state.imageBlobUrl) URL.revokeObjectURL(state.imageBlobUrl);
+
+      const blobUrl = URL.createObjectURL(file);
+      state.imageBlobUrl = blobUrl;
+
+      const img = new Image();
+      img.onload = () => {
+        state.imageWidth = img.naturalWidth;
+        state.imageHeight = img.naturalHeight;
+        $('imageThumb').src = blobUrl;
+        $('imageInfo').textContent = `${img.naturalWidth} × ${img.naturalHeight}px`;
+        $('imagePreviewArea').style.display = 'block';
+        updateAll();
+      };
+      img.src = blobUrl;
+    }
+
+    function clearImage() {
+      if (state.imageBlobUrl) URL.revokeObjectURL(state.imageBlobUrl);
+      state.imageBlobUrl = '';
+      state.imageWidth = 0;
+      state.imageHeight = 0;
+      inputs.imageFile.value = '';
+      $('imagePreviewArea').style.display = 'none';
+      updateAll();
+    }
+
+    // 手動入力イベント
+    inputs.title.addEventListener('input', () => {
+      state.title = inputs.title.value;
+      updateCharCount('titleCount', state.title.length, 60);
+      updateAll();
+    });
+
+    inputs.description.addEventListener('input', () => {
+      state.description = inputs.description.value;
+      updateCharCount('descCount', state.description.length, 120);
+      updateAll();
+    });
+
+    inputs.image.addEventListener('input', () => {
+      state.imageUrl = inputs.image.value;
+      if (state.imageUrl && !state.imageBlobUrl) {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          state.imageWidth = img.naturalWidth;
+          state.imageHeight = img.naturalHeight;
+          $('imageThumb').src = state.imageUrl;
+          $('imageInfo').textContent = `${img.naturalWidth} × ${img.naturalHeight}px`;
+          $('imagePreviewArea').style.display = 'block';
+          updateAll();
+        };
+        img.onerror = () => {
+          state.imageWidth = 0;
+          state.imageHeight = 0;
+          $('imagePreviewArea').style.display = 'none';
+          updateAll();
+        };
+        img.src = state.imageUrl;
+      } else {
+        updateAll();
+      }
+    });
+
+    inputs.url.addEventListener('input', () => { state.url = inputs.url.value; updateAll(); });
+    inputs.siteName.addEventListener('input', () => { state.siteName = inputs.siteName.value; updateAll(); });
+    inputs.type.addEventListener('change', () => { state.type = inputs.type.value; updateAll(); });
+    inputs.twitterCard.addEventListener('change', () => { state.twitterCard = inputs.twitterCard.value; updateAll(); });
+
+    inputs.imageFile.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) handleImageFile(file);
+    });
+
+    $('imageClear').addEventListener('click', clearImage);
+
+    const dropZone = $('imageDropZone');
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('dragover'); });
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (file) handleImageFile(file);
+    });
+
+    // プラットフォームタブ
+    document.querySelectorAll('.platform-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.platform-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        state.platform = tab.dataset.platform;
+        renderPreview();
+      });
+    });
+
+    updateAll();
+  </script>
+</body>
+</html>
