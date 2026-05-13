@@ -29,14 +29,6 @@ jobs:
           DEST=$(echo "${REMOTE_PATH}" | tr -d '[:space:]')
           REMOTE="${REMOTE_USER}@${REMOTE_HOST}"
           PORT=$(echo "${REMOTE_PORT}" | tr -d '[:space:]')
-          # ネストされたサブディレクトリを削除（前回のscp -rの修正）
-          for dir in */; do
-            if [ -f "${dir}index.html" ]; then
-              name="${dir%/}"
-              ssh -p "${PORT}" "${REMOTE}" "rm -rf ${DEST}/${name}/${name}" 2>/dev/null || true
-            fi
-          done
-
           for dir in */; do
             if [ -f "${dir}index.html" ]; then
               name="${dir%/}"
