@@ -29,10 +29,19 @@ jobs:
           DEST=$(echo "${REMOTE_PATH}" | tr -d '[:space:]')
           REMOTE="${REMOTE_USER}@${REMOTE_HOST}"
           PORT=$(echo "${REMOTE_PORT}" | tr -d '[:space:]')
+          # ネストされたサブディレクトリを削除（前回のscp -rの修正）
           for dir in */; do
             if [ -f "${dir}index.html" ]; then
-              echo "Deploying: ${dir}"
-              ssh -p "${PORT}" "${REMOTE}" "mkdir -p ${DEST}/${dir}"
-              scp -P "${PORT}" -r "${dir}" "${REMOTE}:${DEST}/${dir}"
+              name="${dir%/}"
+              ssh -p "${PORT}" "${REMOTE}" "rm -rf ${DEST}/${name}/${name}" 2>/dev/null || true
+            fi
+          done
+
+          for dir in */; do
+            if [ -f "${dir}index.html" ]; then
+              name="${dir%/}"
+              echo "Deploying: ${name}"
+              ssh -p "${PORT}" "${REMOTE}" "mkdir -p ${DEST}/${name}"
+              scp -P "${PORT}" "${dir}"* "${REMOTE}:${DEST}/${name}/"
             fi
           done
