@@ -24,9 +24,7 @@ jobs:
           for dir in */; do
             if [ -f "${dir}index.html" ]; then
               echo "Deploying: ${dir}"
-              rsync -avz --chmod=D755,F644 \
-                -e "ssh -p ${{ secrets.SSH_PORT }}" \
-                "${dir}" \
-                "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}/${dir}"
+              ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "mkdir -p ${{ secrets.DEPLOY_PATH }}/${dir}"
+              scp -P ${{ secrets.SSH_PORT }} -r "${dir}" "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}/${dir}"
             fi
           done
