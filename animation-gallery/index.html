@@ -110,9 +110,13 @@
 
       .layout {
         display: grid;
-        grid-template-columns: 300px 1fr;
+        grid-template-columns: 300px minmax(0, 1fr);
         gap: 24px;
         align-items: start;
+      }
+      /* グリッドトラックを内容で押し広げないための保険 */
+      .main {
+        min-width: 0;
       }
 
       /* 左カラム：コントロール */
@@ -512,12 +516,13 @@
 
       @media (max-width: 900px) {
         .layout {
-          grid-template-columns: 1fr;
+          grid-template-columns: minmax(0, 1fr);
         }
         .sidebar {
           position: static;
           max-height: none;
           overflow-y: visible;
+          padding-right: 0;
         }
       }
       @media (max-width: 768px) {
@@ -530,6 +535,32 @@
         .footer-links {
           flex-wrap: wrap;
           justify-content: center;
+        }
+      }
+      @media (max-width: 600px) {
+        .header {
+          padding: 28px 16px;
+        }
+        .header h1 {
+          font-size: 1.4rem;
+        }
+        .container {
+          padding: 20px 14px 48px;
+        }
+        .grid {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+          gap: 12px;
+        }
+        .showcase-row {
+          gap: 14px;
+        }
+        /* ショーケースの固定幅要素をはみ出させない */
+        .showcase-item {
+          width: 100%;
+          padding: 18px;
+        }
+        .showcase-item .copy-btn {
+          width: 100%;
         }
       }
 
