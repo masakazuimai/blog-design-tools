@@ -704,13 +704,13 @@
         0% {
           opacity: 0;
         }
-        4% {
+        9% {
+          opacity: 1;
+        }
+        11% {
           opacity: 1;
         }
         20% {
-          opacity: 1;
-        }
-        24% {
           opacity: 0;
         }
         100% {
@@ -3039,7 +3039,7 @@
 
       // ---- フェードスライダー ----
       function fadeTotal() {
-        return (getSettings().dur * 5).toFixed(1);
+        return (getSettings().dur * 8).toFixed(1);
       }
       function renderFadeSlider() {
         const row = document.getElementById("fadeRow");
@@ -3076,7 +3076,7 @@
         const n = SLIDE_COLORS.length;
         const slideRules = SLIDE_COLORS.map((bg, i) => ".fade-slide:nth-child(" + (i + 1) + ") { background: " + bg + "; animation-delay: " + ((total / n) * i).toFixed(2) + "s; }");
         const slideHTML = SLIDE_COLORS.map((_, i) => '  <div class="fade-slide">' + (i + 1) + "</div>");
-        return ["<style>", ".fade-slider {", "  position: relative; width: 320px; height: 180px;", "  border-radius: 12px; overflow: hidden;", "}", ".fade-slide {", "  position: absolute; inset: 0;", "  display: flex; align-items: center; justify-content: center;", "  color: #fff; font-size: 2rem; font-weight: 700;", "  opacity: 0; animation: fadeSlider " + total + "s infinite;", "}"].concat(slideRules).concat(["@keyframes fadeSlider {", "  0%   { opacity: 0; }", "  4%   { opacity: 1; }", "  20%  { opacity: 1; }", "  24%  { opacity: 0; }", "  100% { opacity: 0; }", "}", "</style>", "", '<div class="fade-slider">']).concat(slideHTML).concat(["</div>"]).join("\n");
+        return ["<style>", ".fade-slider {", "  position: relative; width: 320px; height: 180px;", "  border-radius: 12px; overflow: hidden;", "}", ".fade-slide {", "  position: absolute; inset: 0;", "  display: flex; align-items: center; justify-content: center;", "  color: #fff; font-size: 2rem; font-weight: 700;", "  opacity: 0; animation: fadeSlider " + total + "s infinite;", "}"].concat(slideRules).concat(["@keyframes fadeSlider {", "  0%   { opacity: 0; }", "  9%   { opacity: 1; }", "  11%  { opacity: 1; }", "  20%  { opacity: 0; }", "  100% { opacity: 0; }", "}", "</style>", "", '<div class="fade-slider">']).concat(slideHTML).concat(["</div>"]).join("\n");
       }
 
       // ---- 自動スクロールカルーセル ----
@@ -3094,7 +3094,11 @@
         const track = document.createElement("div");
         track.className = "scroll-track";
         const dur = scrollDuration();
-        track.style.animation = "scrollCarousel " + dur + "s linear infinite";
+        // animation-play-state はインラインで指定せず、CSSの :hover で一時停止できるようにする
+        track.style.animationName = "scrollCarousel";
+        track.style.animationDuration = dur + "s";
+        track.style.animationTimingFunction = "linear";
+        track.style.animationIterationCount = "infinite";
         const items = SLIDE_COLORS.concat(SLIDE_COLORS);
         track.innerHTML = items.map((bg, i) => '<div class="scroll-item" style="background:' + bg + '">' + ((i % SLIDE_COLORS.length) + 1) + "</div>").join("");
         wrap.appendChild(track);
@@ -3242,7 +3246,11 @@
         const track = document.createElement("div");
         track.className = "marquee-track";
         const dur = marqueeDuration();
-        track.style.animation = "marquee " + dur + "s linear infinite";
+        // animation-play-state はインラインで指定せず、CSSの :hover で一時停止できるようにする
+        track.style.animationName = "marquee";
+        track.style.animationDuration = dur + "s";
+        track.style.animationTimingFunction = "linear";
+        track.style.animationIterationCount = "infinite";
         track.innerHTML = MARQUEE_LOGOS.concat(MARQUEE_LOGOS)
           .map((t) => '<div class="marquee-item">' + t + "</div>")
           .join("");
