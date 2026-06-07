@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CSSアニメーション ギャラリー｜全100種・3Dフリップカードをコピペで使える</title>
-    <meta name="description" content="animate.css相当＋3D・エフェクトを含む全100種類のCSSアニメーションに加え、表裏フリップカード・3Dキューブ・3Dメリーゴーランドのショーケースも一覧プレビュー。速度・イージング・繰り返しを調整して、@keyframes付きCSSやHTML一式をワンクリックでコピーできます。外部ライブラリ不要。" />
+    <meta name="description" content="3D・エフェクトを含む全100種類のCSSアニメーションに加え、3Dフリップカード・キューブ・メリーゴーランド、フェードスライダー・自動スクロールカルーセル・ロゴマーキー・カバーフローのショーケースも一覧プレビュー。速度・イージング・繰り返しを調整して、@keyframes付きCSSやHTML一式をワンクリックでコピーできます。外部ライブラリ不要。" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
     <script>
@@ -678,7 +678,219 @@
       }
 
       /* =========================================================
-       アニメーション定義（@keyframes）— animate.css 相当
+       スライダー・カルーセル（すべてCSSのみ・JS不要）
+       ========================================================= */
+      /* フェードスライダー（自動クロスフェード切替） */
+      .fade-slider {
+        position: relative;
+        width: 320px;
+        height: 180px;
+        max-width: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .fade-slide {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 2rem;
+        font-weight: 700;
+        opacity: 0;
+      }
+      @keyframes fadeSlider {
+        0% {
+          opacity: 0;
+        }
+        4% {
+          opacity: 1;
+        }
+        20% {
+          opacity: 1;
+        }
+        24% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      /* 自動スクロール無限カルーセル */
+      .scroll-carousel {
+        width: 360px;
+        max-width: 100%;
+        overflow: hidden;
+        border-radius: 12px;
+      }
+      .scroll-track {
+        display: flex;
+        gap: 16px;
+        width: max-content;
+      }
+      .scroll-track:hover {
+        animation-play-state: paused;
+      }
+      .scroll-item {
+        flex: none;
+        width: 150px;
+        height: 120px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 1.8rem;
+        font-weight: 700;
+      }
+      @keyframes scrollCarousel {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(calc(-50% - 8px));
+        }
+      }
+
+      /* ドットナビ カルーセル（純CSS・ラジオボタン制御。状態ルールはJSで生成・注入） */
+      .css-carousel {
+        position: relative;
+        width: 360px;
+        max-width: 100%;
+        overflow: hidden;
+        border-radius: 12px;
+      }
+      .css-carousel > input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .cc-track {
+        display: flex;
+        transition: transform 0.5s ease;
+      }
+      .cc-slide {
+        flex: 0 0 100%;
+        height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 2rem;
+        font-weight: 700;
+      }
+      .cc-dots {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 12px;
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+      }
+      .cc-dots label {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      /* ロゴマーキー（無限横流れ） */
+      .marquee {
+        width: 360px;
+        max-width: 100%;
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+        mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+      }
+      .marquee-track {
+        display: flex;
+        align-items: center;
+        gap: 36px;
+        width: max-content;
+      }
+      .marquee-track:hover {
+        animation-play-state: paused;
+      }
+      .marquee-item {
+        flex: none;
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: #475569;
+        white-space: nowrap;
+      }
+      @keyframes marquee {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(calc(-50% - 18px));
+        }
+      }
+
+      /* カバーフロー（純CSS・ラジオボタン制御。状態ルールはJSで生成・注入） */
+      .cf {
+        position: relative;
+        width: 360px;
+        max-width: 100%;
+        height: 200px;
+        perspective: 1000px;
+        overflow: hidden;
+        border-radius: 12px;
+      }
+      .cf > input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .cf-stage {
+        position: relative;
+        width: 100%;
+        height: 160px;
+        margin-top: 12px;
+        transform-style: preserve-3d;
+      }
+      .cf-item {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 140px;
+        height: 160px;
+        margin-left: -70px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 2.2rem;
+        font-weight: 700;
+        transition: transform 0.5s ease, opacity 0.5s ease;
+      }
+      .cf-dots {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 12px;
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        z-index: 10;
+      }
+      .cf-dots label {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.18);
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      /* =========================================================
+       アニメーション定義（@keyframes）
        ========================================================= */
       @keyframes bounce {
         from,
@@ -2056,7 +2268,7 @@
   <body>
     <div class="header">
       <h1>CSSアニメーション ギャラリー</h1>
-      <p>全100種類のアニメーション＋3Dショーケース（フリップカード・キューブ・メリーゴーランド）をプレビュー → 調整 → CSSコピペで使える</p>
+      <p>全100種類のアニメーション＋3Dショーケース（フリップカード・キューブ・メリーゴーランド）＋スライダー・カルーセル（フェード／自動スクロール／ドットナビ／マーキー／カバーフロー）をプレビュー → 調整 → CSSコピペで使える</p>
     </div>
 
     <div class="container">
@@ -2148,6 +2360,36 @@
             <h2 class="section-title">🎠 3Dメリーゴーランド</h2>
             <p class="section-desc">6枚のパネルが円周状に並んで回転するカルーセルです。回転速度はサイドバーの「再生速度」と連動します。</p>
             <div class="showcase-row" id="mgRow"></div>
+          </section>
+
+          <section class="showcase">
+            <h2 class="section-title">🎞️ フェードスライダー</h2>
+            <p class="section-desc">複数スライドが一定間隔でクロスフェードして自動で切り替わる定番スライドショー。切替速度はサイドバーの「再生速度」と連動します。コピーコードはJavaScript不要のCSSのみです。</p>
+            <div class="showcase-row" id="fadeRow"></div>
+          </section>
+
+          <section class="showcase">
+            <h2 class="section-title">🔁 自動スクロールカルーセル</h2>
+            <p class="section-desc">カードが横方向に途切れず流れ続ける無限ループカルーセル。マウスを乗せると一時停止します。スクロール速度はサイドバーの「再生速度」と連動します。</p>
+            <div class="showcase-row" id="scrollRow"></div>
+          </section>
+
+          <section class="showcase">
+            <h2 class="section-title">👆 ドットナビ カルーセル</h2>
+            <p class="section-desc">下部のドットをクリックすると1枚ずつスライドが切り替わります。ラジオボタン制御の純CSS実装で、JavaScript不要・スクロール連動なしで動きます。</p>
+            <div class="showcase-row" id="snapRow"></div>
+          </section>
+
+          <section class="showcase">
+            <h2 class="section-title">🏷️ ロゴマーキー</h2>
+            <p class="section-desc">ロゴやテキストが途切れず横に流れ続けるティッカー。導入実績やパートナー表示の定番です。マウスを乗せると一時停止します。流れる速度はサイドバーの「再生速度」と連動します。</p>
+            <div class="showcase-row" id="marqueeRow"></div>
+          </section>
+
+          <section class="showcase">
+            <h2 class="section-title">🎴 カバーフロー</h2>
+            <p class="section-desc">中央のカードが正面を向き、左右のカードが奥へ傾く3Dカルーセル。下部のドットをクリックして切り替えます。ラジオボタン制御の純CSS実装で、JavaScript不要・スクロール連動なしで動きます。</p>
+            <div class="showcase-row" id="coverRow"></div>
           </section>
         </main>
       </div>
@@ -2351,6 +2593,16 @@
             return buildCubeCode();
           case "mg":
             return buildCarouselCode();
+          case "fade":
+            return buildFadeSliderCode();
+          case "scroll":
+            return buildScrollCarouselCode();
+          case "snap":
+            return buildSnapCarouselCode();
+          case "marquee":
+            return buildMarqueeCode();
+          case "cover":
+            return buildCoverflowCode();
           default:
             return "";
         }
@@ -2386,6 +2638,11 @@
       }
       function selectCarousel(el) {
         selected = { kind: "mg" };
+        markSelected(el);
+        updatePreview();
+      }
+      function selectSlider(kind, el) {
+        selected = { kind };
         markSelected(el);
         updatePreview();
       }
@@ -2776,6 +3033,302 @@
         return ["<style>", ".mg-scene { width: 360px; height: 170px; perspective: 1000px; }", ".mg-ring {", "  position: relative; width: 100%; height: 100%;", "  transform-style: preserve-3d;", "  animation: mgSpin " + dur + "s infinite linear;", "}", ".mg-panel {", "  position: absolute; width: 120px; height: 90px; left: 120px; top: 40px;", "  display: flex; align-items: center; justify-content: center;", "  border-radius: 12px; color: #fff; font-size: 2rem; font-weight: 700;", "  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35);", "}"].concat(panelRules).concat(["@keyframes mgSpin {", "  from { transform: rotateX(-12deg) rotateY(0); }", "  to   { transform: rotateX(-12deg) rotateY(360deg); }", "}", "</style>", "", '<div class="mg-scene">', '  <div class="mg-ring">']).concat(panelHTML).concat(["  </div>", "</div>"]).join("\n");
       }
 
+      // ---- スライダー・カルーセル共通 ----
+      const SLIDE_COLORS = ["#3b82f6", "#6366f1", "#8b5cf6", "#ec4899", "#f59e0b"];
+      const MARQUEE_LOGOS = ["★ BRAND", "◆ STUDIO", "● LABS", "▲ WORKS", "■ DESIGN"];
+
+      // ---- フェードスライダー ----
+      function fadeTotal() {
+        return (getSettings().dur * 5).toFixed(1);
+      }
+      function renderFadeSlider() {
+        const row = document.getElementById("fadeRow");
+        row.innerHTML = "";
+        const item = document.createElement("div");
+        item.className = "showcase-item";
+
+        const slider = document.createElement("div");
+        slider.className = "fade-slider";
+        const total = fadeTotal();
+        slider.innerHTML = SLIDE_COLORS.map((bg, i) => '<div class="fade-slide" style="background:' + bg + ";animation:fadeSlider " + total + "s infinite;animation-delay:" + ((total / SLIDE_COLORS.length) * i).toFixed(2) + 's">' + (i + 1) + "</div>").join("");
+        slider.style.cursor = "pointer";
+        slider.addEventListener("click", () => selectSlider("fade", item));
+
+        const label = document.createElement("div");
+        label.className = "label";
+        label.textContent = "自動フェード切替（" + total + "s周期）";
+
+        const btn = document.createElement("button");
+        btn.className = "copy-btn";
+        btn.textContent = "HTML+CSS";
+        btn.addEventListener("click", (e) => {
+          selectSlider("fade", item);
+          copyText(buildFadeSliderCode(), e.currentTarget, "フェードスライダー");
+        });
+
+        item.appendChild(slider);
+        item.appendChild(label);
+        item.appendChild(btn);
+        row.appendChild(item);
+      }
+      function buildFadeSliderCode() {
+        const total = fadeTotal();
+        const n = SLIDE_COLORS.length;
+        const slideRules = SLIDE_COLORS.map((bg, i) => ".fade-slide:nth-child(" + (i + 1) + ") { background: " + bg + "; animation-delay: " + ((total / n) * i).toFixed(2) + "s; }");
+        const slideHTML = SLIDE_COLORS.map((_, i) => '  <div class="fade-slide">' + (i + 1) + "</div>");
+        return ["<style>", ".fade-slider {", "  position: relative; width: 320px; height: 180px;", "  border-radius: 12px; overflow: hidden;", "}", ".fade-slide {", "  position: absolute; inset: 0;", "  display: flex; align-items: center; justify-content: center;", "  color: #fff; font-size: 2rem; font-weight: 700;", "  opacity: 0; animation: fadeSlider " + total + "s infinite;", "}"].concat(slideRules).concat(["@keyframes fadeSlider {", "  0%   { opacity: 0; }", "  4%   { opacity: 1; }", "  20%  { opacity: 1; }", "  24%  { opacity: 0; }", "  100% { opacity: 0; }", "}", "</style>", "", '<div class="fade-slider">']).concat(slideHTML).concat(["</div>"]).join("\n");
+      }
+
+      // ---- 自動スクロールカルーセル ----
+      function scrollDuration() {
+        return (getSettings().dur * 8).toFixed(1);
+      }
+      function renderScrollCarousel() {
+        const row = document.getElementById("scrollRow");
+        row.innerHTML = "";
+        const item = document.createElement("div");
+        item.className = "showcase-item";
+
+        const wrap = document.createElement("div");
+        wrap.className = "scroll-carousel";
+        const track = document.createElement("div");
+        track.className = "scroll-track";
+        const dur = scrollDuration();
+        track.style.animation = "scrollCarousel " + dur + "s linear infinite";
+        const items = SLIDE_COLORS.concat(SLIDE_COLORS);
+        track.innerHTML = items.map((bg, i) => '<div class="scroll-item" style="background:' + bg + '">' + ((i % SLIDE_COLORS.length) + 1) + "</div>").join("");
+        wrap.appendChild(track);
+        wrap.style.cursor = "pointer";
+        wrap.addEventListener("click", () => selectSlider("scroll", item));
+
+        const label = document.createElement("div");
+        label.className = "label";
+        label.textContent = "無限スクロール（" + dur + "s）";
+
+        const btn = document.createElement("button");
+        btn.className = "copy-btn";
+        btn.textContent = "HTML+CSS";
+        btn.addEventListener("click", (e) => {
+          selectSlider("scroll", item);
+          copyText(buildScrollCarouselCode(), e.currentTarget, "自動スクロールカルーセル");
+        });
+
+        item.appendChild(wrap);
+        item.appendChild(label);
+        item.appendChild(btn);
+        row.appendChild(item);
+      }
+      function buildScrollCarouselCode() {
+        const dur = scrollDuration();
+        const itemHTML = SLIDE_COLORS.concat(SLIDE_COLORS).map((bg, i) => '    <div class="scroll-item" style="background: ' + bg + '">' + ((i % SLIDE_COLORS.length) + 1) + "</div>");
+        return ["<style>", ".scroll-carousel { width: 360px; overflow: hidden; border-radius: 12px; }", ".scroll-track {", "  display: flex; gap: 16px; width: max-content;", "  animation: scrollCarousel " + dur + "s linear infinite;", "}", "/* マウスを乗せたら一時停止 */", ".scroll-track:hover { animation-play-state: paused; }", ".scroll-item {", "  flex: none; width: 150px; height: 120px; border-radius: 12px;", "  display: flex; align-items: center; justify-content: center;", "  color: #fff; font-size: 1.8rem; font-weight: 700;", "}", "/* gap 16px の半分(8px)を引いて継ぎ目をなくす */", "@keyframes scrollCarousel {", "  from { transform: translateX(0); }", "  to   { transform: translateX(calc(-50% - 8px)); }", "}", "</style>", "", '<div class="scroll-carousel">', '  <!-- 同じ並びを2回置いてシームレスにループ -->', '  <div class="scroll-track">'].concat(itemHTML).concat(["  </div>", "</div>"]).join("\n");
+      }
+
+      // ---- ドットナビ カルーセル / カバーフロー 共通（純CSS・ラジオボタン制御） ----
+      // ラジオの :checked 状態に応じた transform 等のルールを生成する。
+      // ライブデモへの注入とコピーコード生成で同じ生成器を使う。
+      function ccStateRules() {
+        const n = SLIDE_COLORS.length;
+        const rules = [];
+        for (let i = 0; i < n; i++) {
+          rules.push(".cc-r" + (i + 1) + ":checked ~ .cc-track { transform: translateX(-" + i * 100 + "%); }");
+        }
+        for (let i = 0; i < n; i++) {
+          rules.push(".cc-r" + (i + 1) + ":checked ~ .cc-dots label:nth-child(" + (i + 1) + ") { background: #fff; }");
+        }
+        return rules;
+      }
+      function cfStateRules() {
+        const n = SLIDE_COLORS.length;
+        const rules = [];
+        for (let a = 0; a < n; a++) {
+          for (let i = 0; i < n; i++) {
+            const d = i - a;
+            let t, z, op;
+            if (d === 0) {
+              t = "translateX(0) rotateY(0deg) scale(1)";
+              z = n + 1;
+              op = "1";
+            } else if (d < 0) {
+              t = "translateX(" + (d * 52 - 28) + "px) rotateY(42deg) scale(0.78)";
+              z = n - Math.abs(d);
+              op = "0.65";
+            } else {
+              t = "translateX(" + (d * 52 + 28) + "px) rotateY(-42deg) scale(0.78)";
+              z = n - Math.abs(d);
+              op = "0.65";
+            }
+            rules.push(".cf-r" + (a + 1) + ":checked ~ .cf-stage .cf-item:nth-child(" + (i + 1) + ") { transform: " + t + "; z-index: " + z + "; opacity: " + op + "; }");
+          }
+        }
+        for (let a = 0; a < n; a++) {
+          rules.push(".cf-r" + (a + 1) + ":checked ~ .cf-dots label:nth-child(" + (a + 1) + ") { background: #6366f1; }");
+        }
+        return rules;
+      }
+      // 状態ルールはdurに依存しないので一度だけ<style>に注入する
+      let sliderStylesInjected = false;
+      function injectSliderStateStyles() {
+        if (sliderStylesInjected) return;
+        const style = document.createElement("style");
+        style.textContent = ccStateRules().concat(cfStateRules()).join("\n");
+        document.head.appendChild(style);
+        sliderStylesInjected = true;
+      }
+
+      // ---- ドットナビ カルーセル ----
+      function renderSnapCarousel() {
+        injectSliderStateStyles();
+        const row = document.getElementById("snapRow");
+        row.innerHTML = "";
+        const item = document.createElement("div");
+        item.className = "showcase-item";
+
+        const wrap = document.createElement("div");
+        wrap.className = "css-carousel";
+        const inputs = SLIDE_COLORS.map((_, i) => '<input class="cc-r' + (i + 1) + '" type="radio" name="ccDemo" id="ccDemo' + (i + 1) + '"' + (i === 0 ? " checked" : "") + ">").join("");
+        const slides = SLIDE_COLORS.map((bg, i) => '<div class="cc-slide" style="background:' + bg + '">' + (i + 1) + "</div>").join("");
+        const dots = SLIDE_COLORS.map((_, i) => '<label for="ccDemo' + (i + 1) + '"></label>').join("");
+        wrap.innerHTML = inputs + '<div class="cc-track">' + slides + "</div>" + '<div class="cc-dots">' + dots + "</div>";
+        wrap.querySelector(".cc-track").style.cursor = "pointer";
+        wrap.querySelector(".cc-track").addEventListener("click", () => selectSlider("snap", item));
+
+        const label = document.createElement("div");
+        label.className = "label";
+        label.textContent = "ドットで1枚ずつ切替";
+
+        const btn = document.createElement("button");
+        btn.className = "copy-btn";
+        btn.textContent = "HTML+CSS";
+        btn.addEventListener("click", (e) => {
+          selectSlider("snap", item);
+          copyText(buildSnapCarouselCode(), e.currentTarget, "ドットナビ カルーセル");
+        });
+
+        item.appendChild(wrap);
+        item.appendChild(label);
+        item.appendChild(btn);
+        row.appendChild(item);
+      }
+      function buildSnapCarouselCode() {
+        const base = ["<style>", ".css-carousel { position: relative; width: 360px; overflow: hidden; border-radius: 12px; }", ".css-carousel > input { position: absolute; opacity: 0; pointer-events: none; }", ".cc-track { display: flex; transition: transform 0.5s ease; }", ".cc-slide {", "  flex: 0 0 100%; height: 180px;", "  display: flex; align-items: center; justify-content: center;", "  color: #fff; font-size: 2rem; font-weight: 700;", "}", ".cc-dots {", "  position: absolute; left: 0; right: 0; bottom: 12px;", "  display: flex; justify-content: center; gap: 8px;", "}", ".cc-dots label {", "  width: 10px; height: 10px; border-radius: 50%;", "  background: rgba(255,255,255,0.5); cursor: pointer; transition: background 0.2s;", "}", "/* ラジオの選択状態でトラックを移動・ドットを強調 */"];
+        const inputs = SLIDE_COLORS.map((_, i) => '  <input class="cc-r' + (i + 1) + '" type="radio" name="cc" id="cc' + (i + 1) + '"' + (i === 0 ? " checked" : "") + ">");
+        const slides = SLIDE_COLORS.map((bg, i) => '    <div class="cc-slide" style="background: ' + bg + '">' + (i + 1) + "</div>");
+        const dots = SLIDE_COLORS.map((_, i) => '    <label for="cc' + (i + 1) + '"></label>');
+        return base
+          .concat(ccStateRules())
+          .concat(["</style>", "", '<div class="css-carousel">'])
+          .concat(inputs)
+          .concat(['  <div class="cc-track">'])
+          .concat(slides)
+          .concat(["  </div>", '  <div class="cc-dots">'])
+          .concat(dots)
+          .concat(["  </div>", "</div>"])
+          .join("\n");
+      }
+
+      // ---- ロゴマーキー ----
+      function marqueeDuration() {
+        return (getSettings().dur * 12).toFixed(1);
+      }
+      function renderMarquee() {
+        const row = document.getElementById("marqueeRow");
+        row.innerHTML = "";
+        const item = document.createElement("div");
+        item.className = "showcase-item";
+
+        const wrap = document.createElement("div");
+        wrap.className = "marquee";
+        const track = document.createElement("div");
+        track.className = "marquee-track";
+        const dur = marqueeDuration();
+        track.style.animation = "marquee " + dur + "s linear infinite";
+        track.innerHTML = MARQUEE_LOGOS.concat(MARQUEE_LOGOS)
+          .map((t) => '<div class="marquee-item">' + t + "</div>")
+          .join("");
+        wrap.appendChild(track);
+        wrap.style.cursor = "pointer";
+        wrap.addEventListener("click", () => selectSlider("marquee", item));
+
+        const label = document.createElement("div");
+        label.className = "label";
+        label.textContent = "無限ティッカー（" + dur + "s）";
+
+        const btn = document.createElement("button");
+        btn.className = "copy-btn";
+        btn.textContent = "HTML+CSS";
+        btn.addEventListener("click", (e) => {
+          selectSlider("marquee", item);
+          copyText(buildMarqueeCode(), e.currentTarget, "ロゴマーキー");
+        });
+
+        item.appendChild(wrap);
+        item.appendChild(label);
+        item.appendChild(btn);
+        row.appendChild(item);
+      }
+      function buildMarqueeCode() {
+        const dur = marqueeDuration();
+        const itemHTML = MARQUEE_LOGOS.concat(MARQUEE_LOGOS).map((t) => '    <div class="marquee-item">' + t + "</div>");
+        return ["<style>", ".marquee {", "  width: 360px; overflow: hidden;", "  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);", "  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);", "}", ".marquee-track {", "  display: flex; align-items: center; gap: 36px; width: max-content;", "  animation: marquee " + dur + "s linear infinite;", "}", ".marquee-track:hover { animation-play-state: paused; }", ".marquee-item {", "  flex: none; font-size: 1.4rem; font-weight: 800;", "  color: #475569; white-space: nowrap;", "}", "/* gap 36px の半分(18px)を引いて継ぎ目をなくす */", "@keyframes marquee {", "  from { transform: translateX(0); }", "  to   { transform: translateX(calc(-50% - 18px)); }", "}", "</style>", "", '<div class="marquee">', '  <!-- 同じ並びを2回置いてシームレスにループ -->', '  <div class="marquee-track">'].concat(itemHTML).concat(["  </div>", "</div>"]).join("\n");
+      }
+
+      // ---- カバーフロー ----
+      function coverflowDefaultIndex() {
+        return Math.floor(SLIDE_COLORS.length / 2);
+      }
+      function renderCoverflow() {
+        injectSliderStateStyles();
+        const row = document.getElementById("coverRow");
+        row.innerHTML = "";
+        const item = document.createElement("div");
+        item.className = "showcase-item";
+        const def = coverflowDefaultIndex();
+
+        const wrap = document.createElement("div");
+        wrap.className = "cf";
+        const inputs = SLIDE_COLORS.map((_, i) => '<input class="cf-r' + (i + 1) + '" type="radio" name="cfDemo" id="cfDemo' + (i + 1) + '"' + (i === def ? " checked" : "") + ">").join("");
+        const items = SLIDE_COLORS.map((bg, i) => '<div class="cf-item" style="background:' + bg + '">' + (i + 1) + "</div>").join("");
+        const dots = SLIDE_COLORS.map((_, i) => '<label for="cfDemo' + (i + 1) + '"></label>').join("");
+        wrap.innerHTML = inputs + '<div class="cf-stage">' + items + "</div>" + '<div class="cf-dots">' + dots + "</div>";
+        wrap.querySelector(".cf-stage").style.cursor = "pointer";
+        wrap.querySelector(".cf-stage").addEventListener("click", () => selectSlider("cover", item));
+
+        const label = document.createElement("div");
+        label.className = "label";
+        label.textContent = "ドットで切替えるカバーフロー";
+
+        const btn = document.createElement("button");
+        btn.className = "copy-btn";
+        btn.textContent = "HTML+CSS";
+        btn.addEventListener("click", (e) => {
+          selectSlider("cover", item);
+          copyText(buildCoverflowCode(), e.currentTarget, "カバーフロー");
+        });
+
+        item.appendChild(wrap);
+        item.appendChild(label);
+        item.appendChild(btn);
+        row.appendChild(item);
+      }
+      function buildCoverflowCode() {
+        const def = coverflowDefaultIndex();
+        const base = ["<style>", ".cf { position: relative; width: 360px; height: 200px; perspective: 1000px; overflow: hidden; border-radius: 12px; }", ".cf > input { position: absolute; opacity: 0; pointer-events: none; }", ".cf-stage { position: relative; width: 100%; height: 160px; margin-top: 12px; transform-style: preserve-3d; }", ".cf-item {", "  position: absolute; top: 0; left: 50%; width: 140px; height: 160px; margin-left: -70px;", "  border-radius: 14px;", "  display: flex; align-items: center; justify-content: center;", "  color: #fff; font-size: 2.2rem; font-weight: 700;", "  transition: transform 0.5s ease, opacity 0.5s ease;", "}", ".cf-dots {", "  position: absolute; left: 0; right: 0; bottom: 12px; z-index: 10;", "  display: flex; justify-content: center; gap: 8px;", "}", ".cf-dots label {", "  width: 10px; height: 10px; border-radius: 50%;", "  background: rgba(0,0,0,0.18); cursor: pointer; transition: background 0.2s;", "}", "/* ラジオの選択状態で各カードの3D位置とドットを切替 */"];
+        const inputs = SLIDE_COLORS.map((_, i) => '  <input class="cf-r' + (i + 1) + '" type="radio" name="cf" id="cf' + (i + 1) + '"' + (i === def ? " checked" : "") + ">");
+        const items = SLIDE_COLORS.map((bg, i) => '    <div class="cf-item" style="background: ' + bg + '">' + (i + 1) + "</div>");
+        const dots = SLIDE_COLORS.map((_, i) => '    <label for="cf' + (i + 1) + '"></label>');
+        return base
+          .concat(cfStateRules())
+          .concat(["</style>", "", '<div class="cf">'])
+          .concat(inputs)
+          .concat(['  <div class="cf-stage">'])
+          .concat(items)
+          .concat(["  </div>", '  <div class="cf-dots">'])
+          .concat(dots)
+          .concat(["  </div>", "</div>"])
+          .join("\n");
+      }
+
       // イベント
       els.demoType.addEventListener("change", () => {
         renderGrid();
@@ -2790,6 +3343,9 @@
         renderFlipCards();
         renderCube();
         renderCarousel();
+        renderFadeSlider();
+        renderScrollCarousel();
+        renderMarquee();
         updatePreview();
       });
       els.easing.addEventListener("change", updatePreview);
@@ -2816,6 +3372,11 @@
       renderFlipCards();
       renderCube();
       renderCarousel();
+      renderFadeSlider();
+      renderScrollCarousel();
+      renderSnapCarousel();
+      renderMarquee();
+      renderCoverflow();
       // 初期選択（先頭のアニメーション）
       selectAnim(ANIMATIONS[0], document.querySelector(".grid .card"));
     </script>
