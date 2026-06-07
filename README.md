@@ -10,6 +10,7 @@
 |---|---|---|
 | [見出しデザイン プレビューア](./heading-design-previewer/) | ブログの見出しデザインをプレビューしてCSS/HTMLをコピー | [デモ](https://codequest.work/generator/heading-design-previewer/) |
 | [フォントペアリング プレビューア](./font-pairing-previewer/) | Google Fontsの見出し×本文の組み合わせをブログ記事風にプレビュー | [デモ](https://codequest.work/generator/font-pairing-previewer/) |
+| [CSSアニメーション ギャラリー](./animation-gallery/) | 100種のCSSアニメーション＋3D（フリップカード・キューブ・メリーゴーランド）をプレビューして@keyframes付きCSS/HTMLをコピー | [デモ](https://codequest.work/generator/animation-gallery/) |
 
 ## 技術構成
 
