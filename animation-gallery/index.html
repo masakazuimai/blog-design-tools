@@ -3783,8 +3783,11 @@
       renderAll();
       // 初期選択（先頭のアニメーション）
       selectAnim(ANIMATIONS[0], document.querySelector(".grid .card"));
-      // 自動再生が「1回再生」なら、描画完了後に1回すべて再生する
-      if (els.autoPlayMode.value === "once") playAllVisible();
+      // 自動再生が「1回再生」なら、初回ペイント直後にすべて再生する
+      // （重い初期描画の前に再生するとアニメ冒頭が見えないため rAF 2回で待つ）
+      if (els.autoPlayMode.value === "once") {
+        requestAnimationFrame(() => requestAnimationFrame(playAllVisible));
+      }
     </script>
   </body>
 </html>
