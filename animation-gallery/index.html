@@ -2437,16 +2437,19 @@
                 </select>
               </div>
 
+              <div class="field">
+                <label>自動再生</label>
+                <select id="autoPlayMode">
+                  <option value="off">再生しない</option>
+                  <option value="once">再生</option>
+                </select>
+              </div>
+
               <button class="play-all" id="playAll">▶ すべて再生</button>
 
               <label class="toggle-row">
                 <input type="checkbox" id="hoverPlay" checked />
                 ホバーで再生する
-              </label>
-
-              <label class="toggle-row">
-                <input type="checkbox" id="autoPlayAll" />
-                ページを開いたら自動で1回すべて再生する
               </label>
 
               <button class="reset-settings" id="resetSettings">↺ 設定をデフォルトに戻す</button>
@@ -2693,7 +2696,7 @@
         iteration: document.getElementById("iteration"),
         playAll: document.getElementById("playAll"),
         hoverPlay: document.getElementById("hoverPlay"),
-        autoPlayAll: document.getElementById("autoPlayAll"),
+        autoPlayMode: document.getElementById("autoPlayMode"),
         resetSettings: document.getElementById("resetSettings"),
         countNote: document.getElementById("countNote"),
         toast: document.getElementById("toast"),
@@ -2711,7 +2714,7 @@
         easing: "ease",
         iteration: "1",
         hoverPlay: true,
-        autoPlayAll: false,
+        autoPlayMode: "off",
       };
 
       // 現在の設定値を localStorage へ保存する
@@ -2723,7 +2726,7 @@
             easing: els.easing.value,
             iteration: els.iteration.value,
             hoverPlay: els.hoverPlay.checked,
-            autoPlayAll: els.autoPlayAll.checked,
+            autoPlayMode: els.autoPlayMode.value,
           };
           localStorage.setItem(SETTINGS_KEY, JSON.stringify(data));
         } catch (error) {
@@ -2738,7 +2741,7 @@
         if (typeof data.easing === "string") els.easing.value = data.easing;
         if (typeof data.iteration === "string") els.iteration.value = data.iteration;
         if (typeof data.hoverPlay === "boolean") els.hoverPlay.checked = data.hoverPlay;
-        if (typeof data.autoPlayAll === "boolean") els.autoPlayAll.checked = data.autoPlayAll;
+        if (typeof data.autoPlayMode === "string") els.autoPlayMode.value = data.autoPlayMode;
         els.durVal.textContent = parseFloat(els.duration.value).toFixed(1) + "s";
       }
 
@@ -3757,7 +3760,7 @@
         updatePreview();
         saveSettings();
       });
-      els.autoPlayAll.addEventListener("change", saveSettings);
+      els.autoPlayMode.addEventListener("change", saveSettings);
       els.playAll.addEventListener("click", playAllVisible);
       els.resetSettings.addEventListener("click", resetSettings);
 
@@ -3780,8 +3783,8 @@
       renderAll();
       // 初期選択（先頭のアニメーション）
       selectAnim(ANIMATIONS[0], document.querySelector(".grid .card"));
-      // 自動再生がONなら、描画完了後に1回すべて再生する
-      if (els.autoPlayAll.checked) playAllVisible();
+      // 自動再生が「1回再生」なら、描画完了後に1回すべて再生する
+      if (els.autoPlayMode.value === "once") playAllVisible();
     </script>
   </body>
 </html>
