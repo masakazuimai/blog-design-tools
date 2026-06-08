@@ -193,6 +193,25 @@
         background: #172554;
       }
 
+      .reset-settings {
+        width: 100%;
+        margin-top: 12px;
+        padding: 12px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #475569;
+        background: #fff;
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        cursor: pointer;
+        font-family: inherit;
+        transition: background 0.2s, border-color 0.2s;
+      }
+      .reset-settings:hover {
+        background: #f1f5f9;
+        border-color: #94a3b8;
+      }
+
       .toggle-row {
         display: flex;
         align-items: center;
@@ -2425,6 +2444,8 @@
                 ホバーで再生する
               </label>
 
+              <button class="reset-settings" id="resetSettings">↺ 設定をデフォルトに戻す</button>
+
               <div class="count-note" id="countNote"></div>
             </div>
           </div>
@@ -2667,12 +2688,73 @@
         iteration: document.getElementById("iteration"),
         playAll: document.getElementById("playAll"),
         hoverPlay: document.getElementById("hoverPlay"),
+        resetSettings: document.getElementById("resetSettings"),
         countNote: document.getElementById("countNote"),
         toast: document.getElementById("toast"),
         codePreview: document.getElementById("codePreview"),
         fmtToggle: document.getElementById("fmtToggle"),
         copyPreview: document.getElementById("copyPreview"),
       };
+
+      // 設定の永続化（localStorage）
+      const SETTINGS_KEY = "animation-gallery-settings";
+      // デフォルト値（HTMLの初期値と一致させる）
+      const DEFAULT_SETTINGS = {
+        demoType: "text",
+        duration: "1",
+        easing: "ease",
+        iteration: "1",
+        hoverPlay: true,
+      };
+
+      // 現在の設定値を localStorage へ保存する
+      function saveSettings() {
+        try {
+          const data = {
+            demoType: els.demoType.value,
+            duration: els.duration.value,
+            easing: els.easing.value,
+            iteration: els.iteration.value,
+            hoverPlay: els.hoverPlay.checked,
+          };
+          localStorage.setItem(SETTINGS_KEY, JSON.stringify(data));
+        } catch (error) {
+          console.error("設定の保存に失敗しました:", error);
+        }
+      }
+
+      // localStorage から設定を読み込んで各 input/select へ反映する
+      function applySettings(data) {
+        if (typeof data.demoType === "string") els.demoType.value = data.demoType;
+        if (typeof data.duration === "string") els.duration.value = data.duration;
+        if (typeof data.easing === "string") els.easing.value = data.easing;
+        if (typeof data.iteration === "string") els.iteration.value = data.iteration;
+        if (typeof data.hoverPlay === "boolean") els.hoverPlay.checked = data.hoverPlay;
+        els.durVal.textContent = parseFloat(els.duration.value).toFixed(1) + "s";
+      }
+
+      // 起動時に保存済み設定を復元する（無効な値は無視してデフォルトのまま）
+      function restoreSettings() {
+        try {
+          const raw = localStorage.getItem(SETTINGS_KEY);
+          if (!raw) return;
+          applySettings(JSON.parse(raw));
+        } catch (error) {
+          console.error("設定の読み込みに失敗しました:", error);
+        }
+      }
+
+      // 設定をデフォルトへ戻し、保存内容も消す
+      function resetSettings() {
+        try {
+          localStorage.removeItem(SETTINGS_KEY);
+        } catch (error) {
+          console.error("設定のリセットに失敗しました:", error);
+        }
+        applySettings(DEFAULT_SETTINGS);
+        renderAll();
+        updatePreview();
+      }
 
       // 選択状態とコードプレビュー
       let selected = null; // { kind: 'anim'|'flip'|'cube'|'mg', data? }
@@ -3621,14 +3703,31 @@
         }
       }
 
+      // すべてのギャラリーを再描画する（初期化・リセットで共有）
+      function renderAll() {
+        renderFilters();
+        renderGrid();
+        renderFlipCards();
+        renderCube();
+        renderCarousel();
+        renderFadeSlider();
+        renderScrollCarousel();
+        renderSnapCarousel();
+        renderMarquee();
+        renderCoverflow();
+        renderHoverEffects();
+      }
+
       // イベント
       els.demoType.addEventListener("change", () => {
         renderGrid();
         updatePreview();
+        saveSettings();
       });
       els.hoverPlay.addEventListener("change", () => {
         renderGrid();
         updatePreview();
+        saveSettings();
       });
       els.duration.addEventListener("input", () => {
         els.durVal.textContent = parseFloat(els.duration.value).toFixed(1) + "s";
@@ -3639,10 +3738,18 @@
         renderScrollCarousel();
         renderMarquee();
         updatePreview();
+        saveSettings();
       });
-      els.easing.addEventListener("change", updatePreview);
-      els.iteration.addEventListener("change", updatePreview);
+      els.easing.addEventListener("change", () => {
+        updatePreview();
+        saveSettings();
+      });
+      els.iteration.addEventListener("change", () => {
+        updatePreview();
+        saveSettings();
+      });
       els.playAll.addEventListener("click", playAllVisible);
+      els.resetSettings.addEventListener("click", resetSettings);
 
       // 設定アコーディオン（初期は閉じた状態）
       const settingsCard = document.getElementById("settingsCard");
@@ -3658,18 +3765,9 @@
         if (selected) copyText(getSelectedCode(), e.currentTarget, "コード");
       });
 
-      // 初期化
-      renderFilters();
-      renderGrid();
-      renderFlipCards();
-      renderCube();
-      renderCarousel();
-      renderFadeSlider();
-      renderScrollCarousel();
-      renderSnapCarousel();
-      renderMarquee();
-      renderCoverflow();
-      renderHoverEffects();
+      // 初期化（保存済み設定を反映してから描画する）
+      restoreSettings();
+      renderAll();
       // 初期選択（先頭のアニメーション）
       selectAnim(ANIMATIONS[0], document.querySelector(".grid .card"));
     </script>
