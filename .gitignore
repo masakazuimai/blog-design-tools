@@ -1,3 +1,8 @@
 .DS_Store
 Thumbs.db
 *.log
+
+# Playwright検証用の一時ファイル
+.playwright-mcp/
+desktop-view.png
+mobile-view.png
