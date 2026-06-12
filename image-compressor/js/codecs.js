@@ -5,6 +5,7 @@
 const CDN_MODULES = {
   jpeg: 'https://esm.sh/@jsquash/jpeg@1',
   webp: 'https://esm.sh/@jsquash/webp@1',
+  avif: 'https://esm.sh/@jsquash/avif@2',
 }
 
 const moduleCache = {}
@@ -16,12 +17,13 @@ function loadModule(kind) {
   return moduleCache[kind]
 }
 
-export const EXT_MAP = { jpeg: 'jpg', png: 'png', webp: 'webp', svg: 'svg' }
+export const EXT_MAP = { jpeg: 'jpg', png: 'png', webp: 'webp', avif: 'avif', svg: 'svg' }
 
 export function detectFormat(mimeType) {
   if (mimeType === 'image/jpeg') return 'jpeg'
   if (mimeType === 'image/webp') return 'webp'
-  // PNG以外の未対応形式（GIF・AVIF等）はPNGとして出力する
+  if (mimeType === 'image/avif') return 'avif'
+  // PNG以外の未対応形式（GIF等）はPNGとして出力する
   return 'png'
 }
 
@@ -130,6 +132,8 @@ export function renderImageData(bitmap, plan, format) {
 export async function encodeImage(format, imageData, quality) {
   if (format === 'jpeg') return encodeWithWasm('jpeg', 'image/jpeg', imageData, quality)
   if (format === 'webp') return encodeWithWasm('webp', 'image/webp', imageData, quality)
+  // AVIFはエンコードが重いため、品質への影響が小さい範囲で速度優先にする
+  if (format === 'avif') return encodeWithWasm('avif', 'image/avif', imageData, quality, { speed: 7 })
   if (format === 'png') return encodePng(imageData, quality)
   if (format === 'svg') return encodeSvg(imageData, quality)
   throw new Error(`未対応の出力形式です: ${format}`)
@@ -151,12 +155,17 @@ function encodeSvg(imageData, quality) {
   }
 }
 
-async function encodeWithWasm(kind, mimeType, imageData, quality) {
+async function encodeWithWasm(kind, mimeType, imageData, quality, extraOptions = {}) {
   try {
     const { encode } = await loadModule(kind)
-    const buffer = await encode(imageData, { quality })
+    const buffer = await encode(imageData, { quality, ...extraOptions })
     return new Blob([buffer], { type: mimeType })
   } catch (error) {
+    // AVIFはCanvasのtoBlobが非対応（PNGに化ける）ためフォールバックせずエラーにする
+    if (kind === 'avif') {
+      console.error('AVIFのWASMエンコードに失敗:', error)
+      throw new Error('AVIFへの変換に失敗しました。通信環境を確認して再試行してください。')
+    }
     console.error(`${kind}のWASMエンコードに失敗したためCanvasにフォールバック:`, error)
     return canvasEncode(imageData, mimeType, quality / 100)
   }

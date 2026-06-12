@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>画像圧縮・WebP変換ツール｜JPG・PNG・WebP・SVG変換とリサイズがブラウザで完結</title>
-    <meta name="description" content="画像をドラッグ&ドロップするだけでJPG・PNG・WebP・SVGの圧縮・相互変換・リサイズができる無料ツール。画像はサーバーに送信されず、すべてブラウザ内で処理されるので安全です。" />
+    <title>画像圧縮・WebP変換ツール｜JPG・PNG・WebP・AVIF・SVG変換とリサイズがブラウザで完結</title>
+    <meta name="description" content="画像をドラッグ&ドロップするだけでJPG・PNG・WebP・AVIF・SVGの圧縮・相互変換・リサイズができる無料ツール。位置情報などのEXIF情報も自動で除去。画像はサーバーに送信されず、すべてブラウザ内で処理されるので安全です。" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
     <script>
@@ -24,13 +24,19 @@
     <header>
       <div class="header-inner">
         <h1>画像圧縮・<span class="accent">WebP変換</span>ツール</h1>
-        <p>JPG・PNG・WebP・SVGの圧縮・相互変換・リサイズがブラウザだけで完結</p>
+        <p>JPG・PNG・WebP・AVIF・SVGの圧縮・相互変換・リサイズがブラウザだけで完結</p>
         <p class="header-privacy">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="3" y="11" width="18" height="11" rx="2" />
             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
           </svg>
           画像はサーバーに送信されず、すべてブラウザ内で処理されます
+        </p>
+        <p class="header-privacy">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+          </svg>
+          位置情報などのEXIF情報は変換時に自動で除去されます
         </p>
       </div>
     </header>
@@ -103,7 +109,7 @@
                 <path d="m21 15-5-5L5 21" />
               </svg>
               <p class="drop-main">ここに画像をドラッグ&ドロップ</p>
-              <p class="drop-sub">またはクリックしてファイルを選択（複数可・JPG / PNG / WebP / SVG）</p>
+              <p class="drop-sub">またはクリックしてファイルを選択（複数可・JPG / PNG / WebP / AVIF / SVG）</p>
             </div>
             <div class="drop-previews" id="drop-previews" hidden></div>
           </div>
@@ -115,9 +121,11 @@
               <label class="radio-item"><input type="radio" name="format" value="jpeg" /><span>JPG に変換</span></label>
               <label class="radio-item"><input type="radio" name="format" value="png" /><span>PNG に変換</span></label>
               <label class="radio-item"><input type="radio" name="format" value="webp" /><span>WebP に変換</span></label>
+              <label class="radio-item"><input type="radio" name="format" value="avif" /><span>AVIF に変換</span></label>
               <label class="radio-item"><input type="radio" name="format" value="svg" /><span>SVG に変換</span></label>
             </div>
             <p class="hint" id="svg-hint" hidden>SVG出力はロゴ・イラスト向きです。写真は切り絵風の仕上がりになり、ファイルサイズが大きくなることがあります。</p>
+            <p class="hint" id="avif-hint" hidden>AVIFはWebPよりさらに小さくできる新しい形式で、主要ブラウザはすべて表示に対応しています。変換には1枚あたり数秒かかることがあります。</p>
           </div>
 
           <button class="run-button" id="run-button" disabled>変換・圧縮を実行</button>
@@ -134,8 +142,9 @@
       <section class="info-section">
         <h2>このツールでできること</h2>
         <ul>
-          <li><strong>画像圧縮</strong> — JPG・PNG・WebPを品質を指定して軽量化。PNGは減色処理で大幅にサイズを削減できます。</li>
-          <li><strong>形式変換</strong> — JPG・PNG・WebPを相互に変換。ブログのPageSpeed対策に有効なWebP化もワンクリックです。SVGの読み込み（PNG/JPG化）と、ロゴ・イラストのSVG化にも対応しています。</li>
+          <li><strong>画像圧縮</strong> — JPG・PNG・WebP・AVIFを品質を指定して軽量化。PNGは減色処理で大幅にサイズを削減できます。</li>
+          <li><strong>形式変換</strong> — JPG・PNG・WebP・AVIFを相互に変換。ブログのPageSpeed対策に有効なWebP化や、WebPよりさらに軽いAVIF化もワンクリックです。SVGの読み込み（PNG/JPG化）と、ロゴ・イラストのSVG化にも対応しています。</li>
+          <li><strong>EXIF除去</strong> — 撮影日時・カメラ機種・GPS位置情報などのEXIF情報は、変換の過程で自動的にすべて除去されます。スマホで撮った写真も位置情報を気にせずブログに掲載できます。</li>
           <li><strong>リサイズ・切り抜き</strong> — 自由サイズ指定のほか、OGP画像・Xヘッダー・YouTubeサムネイル・広告バナーなどのテンプレートサイズに合わせた切り抜きができます。切り抜き枠は位置・大きさともドラッグで自由に調整でき（Shiftで正方形）、正円切り抜き（アイコン用・円の外は透過）にも対応しています。</li>
           <li><strong>背景透過</strong> — 白背景のロゴ・図版などの単色背景を透過化し、PNG・WebPで出力できます。ロゴ内部の同色部分は残したまま、外周につながった背景だけを透過にします。</li>
           <li><strong>一括処理</strong> — 複数の画像をまとめて変換し、ZIPで一括ダウンロードできます。</li>
@@ -159,6 +168,10 @@
           <dd>いいえ。画像の読み込み・圧縮・変換はすべてブラウザ内（お使いの端末上）で完結し、サーバーには一切送信されません。</dd>
           <dt>なぜブログ画像はWebPに変換した方がよいのですか？</dt>
           <dd>WebPはJPGやPNGより同じ画質でファイルサイズを小さくできる形式で、ページ表示速度（Core Web Vitals）の改善につながります。主要ブラウザはすべてWebP表示に対応しています。</dd>
+          <dt>WebPとAVIFはどちらを使えばよいですか？</dt>
+          <dd>圧縮率はAVIFの方が高く、同じ画質でWebPよりさらに2〜3割小さくできることが多いです。Chrome・Safari・Firefox・Edgeの主要ブラウザはAVIF表示に対応済みなので、より軽くしたい場合はAVIF、互換性を最優先する場合はWebPがおすすめです。</dd>
+          <dt>写真のEXIF情報（位置情報・撮影日時）は残りますか？</dt>
+          <dd>いいえ。このツールは変換時に画像を一度分解して再構成するため、GPS位置情報・撮影日時・カメラ機種などのEXIF情報はすべて自動的に除去されます。自宅で撮った写真も場所を特定される心配なく公開できます。</dd>
           <dt>品質はどのくらいに設定すればよいですか？</dt>
           <dd>ブログ用途なら70〜80が目安です。見た目の劣化がほぼ分からないまま、ファイルサイズを大きく削減できます。</dd>
           <dt>写真をSVGに変換できますか？</dt>

@@ -34,6 +34,7 @@ const dom = {
   keepRatio: document.getElementById('keep-ratio'),
   noUpscale: document.getElementById('no-upscale'),
   svgHint: document.getElementById('svg-hint'),
+  avifHint: document.getElementById('avif-hint'),
   runButton: document.getElementById('run-button'),
   resultList: document.getElementById('result-list'),
   summaryBar: document.getElementById('summary-bar'),
@@ -98,6 +99,7 @@ function bindSettings() {
   document.querySelectorAll('input[name="format"]').forEach((radio) => {
     radio.addEventListener('change', () => {
       dom.svgHint.hidden = radio.value !== 'svg'
+      dom.avifHint.hidden = radio.value !== 'avif'
     })
   })
   document.querySelectorAll('input[name="resize-mode"]').forEach((radio) => {
