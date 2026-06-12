@@ -15,6 +15,7 @@ const dom = {
   quality: document.getElementById('quality'),
   qualityValue: document.getElementById('quality-value'),
   bgRemove: document.getElementById('bg-remove'),
+  bgRemoveSection: document.getElementById('bg-remove-section'),
   bgRemoveOptions: document.getElementById('bg-remove-options'),
   bgTolerance: document.getElementById('bg-tolerance'),
   bgToleranceValue: document.getElementById('bg-tolerance-value'),
@@ -134,6 +135,8 @@ function updateResizePanels() {
   // 正円切り抜きはテンプレート以外（リサイズしない・縮小・切り抜き）で利用可能
   dom.circleCropRow.hidden = mode === 'template'
   dom.circleHint.hidden = mode === 'template' || !dom.circleCrop.checked
+  // 背景透過は正円切り抜き時とテンプレート時のみ選択できる
+  dom.bgRemoveSection.hidden = !(mode === 'template' || dom.circleCrop.checked)
   // 切り抜き系の設定時のみ位置調整ボタンを出すため再描画する
   renderDropPreviews()
 }
@@ -262,11 +265,12 @@ function renderDropPreviews() {
 function readSettings() {
   const format = document.querySelector('input[name="format"]:checked').value
   const quality = Number(dom.quality.value)
+  const mode = document.querySelector('input[name="resize-mode"]:checked').value
+  // 背景透過はチェックボックスが表示されている文脈（正円・テンプレート）でのみ有効
   const bgRemove = {
-    enabled: dom.bgRemove.checked,
+    enabled: dom.bgRemove.checked && (mode === 'template' || dom.circleCrop.checked),
     tolerance: Number(dom.bgTolerance.value),
   }
-  const mode = document.querySelector('input[name="resize-mode"]:checked').value
 
   if (mode === 'free') {
     return {
