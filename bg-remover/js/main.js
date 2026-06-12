@@ -1,8 +1,9 @@
 // エントリーポイント: ファイル選択・AIモデル準備・切り抜きパイプラインの実行
 
-import { preloadModel, cutoutSubject } from './cutout.js'
-import { renderResults, renderSummary } from './ui.js'
-import { downloadBlob, downloadZip } from './download.js'
+// import先の ?v= はキャッシュバスティング用（サーバーがjsを7日キャッシュするため）。各ファイル更新時に日付を上げる
+import { preloadModel, cutoutSubject } from './cutout.js?v=20260613'
+import { renderResults, renderSummary } from './ui.js?v=20260613'
+import { downloadBlob, downloadZip } from './download.js?v=20260613'
 
 const dom = {
   dropZone: document.getElementById('drop-zone'),

@@ -1,11 +1,12 @@
 // エントリーポイント: 設定の読み取り・イベント配線・変換パイプラインの実行
 
-import { TEMPLATES, findTemplate, computeRenderPlan } from './resize.js'
-import { detectFormat, decodeToBitmap, renderImageData, encodeImage, EXT_MAP } from './codecs.js'
-import { renderResults, renderSummary } from './ui.js'
-import { downloadBlob, downloadZip } from './download.js'
-import { openCropEditor, openRegionEditor } from './crop-editor.js'
-import { removeBackground } from './bg-remove.js'
+// import先の ?v= はキャッシュバスティング用（サーバーがjsを7日キャッシュするため）。各ファイル更新時に日付を上げる
+import { TEMPLATES, findTemplate, computeRenderPlan } from './resize.js?v=20260613'
+import { detectFormat, decodeToBitmap, renderImageData, encodeImage, EXT_MAP } from './codecs.js?v=20260613'
+import { renderResults, renderSummary } from './ui.js?v=20260613'
+import { downloadBlob, downloadZip } from './download.js?v=20260613'
+import { openCropEditor, openRegionEditor } from './crop-editor.js?v=20260613'
+import { removeBackground } from './bg-remove.js?v=20260613'
 
 const dom = {
   dropZone: document.getElementById('drop-zone'),
