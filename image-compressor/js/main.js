@@ -31,9 +31,6 @@ const dom = {
   freeHeight: document.getElementById('free-height'),
   freeScaleOptions: document.getElementById('free-scale-options'),
   freeCropHint: document.getElementById('free-crop-hint'),
-  circleCropRow: document.getElementById('circle-crop-row'),
-  circleCrop: document.getElementById('circle-crop'),
-  circleHint: document.getElementById('circle-hint'),
   keepRatio: document.getElementById('keep-ratio'),
   noUpscale: document.getElementById('no-upscale'),
   svgHint: document.getElementById('svg-hint'),
@@ -46,6 +43,8 @@ const dom = {
 
 let selectedFiles = [] // {file, url, focus} の配列（urlはプレビュー用Object URL、focusは切り抜き位置0〜1）
 let results = []
+// 正円切り抜きの状態（モーダル内トグルで変更され、全画像に適用される）
+let cropCircle = false
 
 function init() {
   populateTemplates()
@@ -110,7 +109,6 @@ function bindSettings() {
   document.querySelectorAll('input[name="free-mode"]').forEach((radio) => {
     radio.addEventListener('change', updateResizePanels)
   })
-  dom.circleCrop.addEventListener('change', updateResizePanels)
   dom.bgTransparent.addEventListener('change', updateResizePanels)
   dom.bgRemove.addEventListener('change', () => {
     dom.bgRemoveOptions.hidden = !dom.bgRemove.checked
@@ -132,17 +130,13 @@ function updateResizePanels() {
   const freeMode = document.querySelector('input[name="free-mode"]:checked').value
   dom.freeScaleOptions.hidden = freeMode !== 'scale'
   dom.freeCropHint.hidden = freeMode !== 'crop'
-  // 正円切り抜きはテンプレート以外（リサイズしない・縮小・切り抜き）で利用可能
-  dom.circleCropRow.hidden = mode === 'template'
-  dom.circleHint.hidden = mode === 'template' || !dom.circleCrop.checked
-  // 背景透過は正円切り抜き時とテンプレート時のみ選択できる
-  dom.bgRemoveSection.hidden = !(mode === 'template' || dom.circleCrop.checked)
+  // 背景透過は切り抜き時とテンプレート時のみ選択できる
+  dom.bgRemoveSection.hidden = !(mode === 'template' || (mode === 'free' && freeMode === 'crop'))
   // 切り抜き系の設定時のみ位置調整ボタンを出すため再描画する
   renderDropPreviews()
 }
 
-// 位置調整が意味を持つ設定か
-// template: カバー切り抜き / free-crop: 指定サイズ切り抜き / circle: 正円のみ（リサイズしない・縮小）
+// 位置調整が意味を持つ設定か（template: カバー切り抜き / free-crop: 指定サイズ切り抜き）
 function cropEditorKind() {
   const mode = document.querySelector('input[name="resize-mode"]:checked').value
   if (mode === 'template') {
@@ -153,7 +147,7 @@ function cropEditorKind() {
     const freeMode = document.querySelector('input[name="free-mode"]:checked').value
     if (freeMode === 'crop') return 'free-crop'
   }
-  return dom.circleCrop.checked ? 'circle' : null
+  return null
 }
 
 function addFiles(files) {
@@ -217,8 +211,14 @@ function renderDropPreviews() {
       crop.setAttribute('aria-label', `${entry.file.name} のトリミング位置を調整`)
       crop.addEventListener('click', (event) => {
         event.stopPropagation()
-        const onApply = (focus) => {
+        const onApply = (focus, area, circle) => {
           selectedFiles = selectedFiles.map((e, i) => (i === index ? { ...e, focus } : e))
+          // ドラッグで選んだ範囲を幅・高さ入力と正円状態に反映する
+          if (area) {
+            dom.freeWidth.value = area.w
+            dom.freeHeight.value = area.h
+            cropCircle = Boolean(circle)
+          }
           renderDropPreviews()
         }
         if (editorKind === 'template') {
@@ -228,22 +228,12 @@ function renderDropPreviews() {
             focus: entry.focus,
             onApply,
           })
-        } else if (editorKind === 'free-crop') {
+        } else {
           openRegionEditor({
             url: entry.url,
             cropW: Number(dom.freeWidth.value) || 0,
             cropH: Number(dom.freeHeight.value) || 0,
-            circle: dom.circleCrop.checked,
-            focus: entry.focus,
-            onApply,
-          })
-        } else {
-          // 正円のみ（リサイズしない・縮小）: 直径は画像の短辺
-          openRegionEditor({
-            url: entry.url,
-            cropW: 0,
-            cropH: 0,
-            circle: true,
+            circle: cropCircle,
             focus: entry.focus,
             onApply,
           })
@@ -266,9 +256,11 @@ function readSettings() {
   const format = document.querySelector('input[name="format"]:checked').value
   const quality = Number(dom.quality.value)
   const mode = document.querySelector('input[name="resize-mode"]:checked').value
-  // 背景透過はチェックボックスが表示されている文脈（正円・テンプレート）でのみ有効
+  // 背景透過はチェックボックスが表示されている文脈（切り抜き・テンプレート）でのみ有効
+  const freeMode = document.querySelector('input[name="free-mode"]:checked').value
   const bgRemove = {
-    enabled: dom.bgRemove.checked && (mode === 'template' || dom.circleCrop.checked),
+    enabled:
+      dom.bgRemove.checked && (mode === 'template' || (mode === 'free' && freeMode === 'crop')),
     tolerance: Number(dom.bgTolerance.value),
   }
 
@@ -279,8 +271,8 @@ function readSettings() {
       bgRemove,
       resize: {
         mode,
-        freeMode: document.querySelector('input[name="free-mode"]:checked').value,
-        circle: dom.circleCrop.checked,
+        freeMode,
+        circle: cropCircle,
         width: Number(dom.freeWidth.value) || 0,
         height: Number(dom.freeHeight.value) || 0,
         keepRatio: dom.keepRatio.checked,
@@ -302,7 +294,7 @@ function readSettings() {
       },
     }
   }
-  return { format, quality, bgRemove, resize: { mode, circle: dom.circleCrop.checked } }
+  return { format, quality, bgRemove, resize: { mode } }
 }
 
 async function runPipeline() {
@@ -362,7 +354,7 @@ async function processFile(entry, settings) {
 function buildOutputName(originalName, format, resize, plan) {
   const dot = originalName.lastIndexOf('.')
   const base = dot > 0 ? originalName.slice(0, dot) : originalName
-  const resized = resize.mode !== 'none' || resize.circle
+  const resized = resize.mode !== 'none'
   const suffix = resized ? `_${plan.outW}x${plan.outH}` : ''
   return `${base}${suffix}.${EXT_MAP[format]}`
 }

@@ -291,8 +291,8 @@ input[type="range"] {
 
 .preview-tile img {
   display: block;
-  width: 96px;
-  height: 96px;
+  width: 192px;
+  height: 192px;
   object-fit: cover;
   border-radius: 8px;
   border: 1px solid var(--color-border);
@@ -301,10 +301,10 @@ input[type="range"] {
 
 .preview-remove {
   position: absolute;
-  top: -8px;
-  right: -8px;
-  width: 24px;
-  height: 24px;
+  top: -10px;
+  right: -10px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: var(--color-text);
   color: #fff;
@@ -320,15 +320,15 @@ input[type="range"] {
 .preview-remove:hover { background: var(--color-danger); }
 
 .preview-add {
-  width: 96px;
-  height: 96px;
+  width: 192px;
+  height: 192px;
   border: 2px dashed var(--color-border-hover);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--color-text-secondary);
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 .drop-zone:hover .preview-add { border-color: var(--color-accent); color: var(--color-accent); }
@@ -412,6 +412,12 @@ input[type="range"] {
 
 #crop-image.draggable:active { cursor: grabbing; }
 
+/* マーキー選択（切り抜きモーダルで範囲を描く） */
+#crop-image.marquee {
+  cursor: crosshair;
+  touch-action: none;
+}
+
 /* 自由サイズ切り抜き用の枠（枠外は暗くして切り抜き範囲を見せる） */
 #crop-region {
   position: absolute;
@@ -424,6 +430,20 @@ input[type="range"] {
 #crop-region:active { cursor: grabbing; }
 
 #crop-region.circle { border-radius: 50%; }
+
+/* 正円のサイズ変更ハンドル */
+#crop-region-handle {
+  position: absolute;
+  right: 6%;
+  bottom: 6%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--color-accent);
+  cursor: nwse-resize;
+  touch-action: none;
+}
 
 .crop-actions {
   display: flex;

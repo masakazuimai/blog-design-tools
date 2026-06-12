@@ -104,10 +104,10 @@ export function renderImageData(bitmap, plan, format) {
   ctx.drawImage(bitmap, d.sx, d.sy, d.sw, d.sh, d.dx, d.dy, d.dw, d.dh)
 
   if (plan.circle) {
-    // 円の外側を透過にする
+    // 出力枠に内接する楕円（正方形なら正円）の外側を透過にする
     ctx.globalCompositeOperation = 'destination-in'
     ctx.beginPath()
-    ctx.arc(plan.outW / 2, plan.outH / 2, Math.min(plan.outW, plan.outH) / 2, 0, Math.PI * 2)
+    ctx.ellipse(plan.outW / 2, plan.outH / 2, plan.outW / 2, plan.outH / 2, 0, 0, Math.PI * 2)
     ctx.fill()
     ctx.globalCompositeOperation = 'source-over'
 

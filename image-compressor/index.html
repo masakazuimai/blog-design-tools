@@ -68,7 +68,7 @@
                 <label class="check-item"><input type="checkbox" id="no-upscale" checked /><span>元の画像より拡大しない</span></label>
                 <p class="hint">幅だけ入力すると高さは自動計算されます。</p>
               </div>
-              <p class="hint" id="free-crop-hint" hidden>元の画像から指定サイズをそのまま切り抜きます。位置はサムネイルの「位置調整」で選べます。</p>
+              <p class="hint" id="free-crop-hint" hidden>元の画像から指定サイズをそのまま切り抜きます。範囲はサムネイルの「位置調整」からドラッグで自由に選べます（Shiftで正方形・モーダル内のチェックで円形/楕円）。ドラッグで選んだ範囲は上の幅・高さに反映されます。</p>
             </div>
 
             <div class="resize-panel" id="panel-template" hidden>
@@ -81,8 +81,6 @@
               <label class="check-item bg-color-row" id="bg-color-row" hidden>余白の色<input type="color" id="bg-color" value="#ffffff" /></label>
             </div>
 
-            <label class="check-item" id="circle-crop-row"><input type="checkbox" id="circle-crop" /><span>正円で切り抜く（アイコン用）</span></label>
-            <p class="hint" id="circle-hint" hidden>切り抜きサイズ指定時は幅・高さの小さい方、それ以外は画像（縮小後）の短辺を直径にした円で切り抜きます。円の外側は透過になります（JPG出力では白背景）。</p>
 
             <div id="bg-remove-section" hidden>
               <label class="check-item"><input type="checkbox" id="bg-remove" /><span>単色背景を透過にする</span></label>
@@ -138,7 +136,7 @@
         <ul>
           <li><strong>画像圧縮</strong> — JPG・PNG・WebPを品質を指定して軽量化。PNGは減色処理で大幅にサイズを削減できます。</li>
           <li><strong>形式変換</strong> — JPG・PNG・WebPを相互に変換。ブログのPageSpeed対策に有効なWebP化もワンクリックです。SVGの読み込み（PNG/JPG化）と、ロゴ・イラストのSVG化にも対応しています。</li>
-          <li><strong>リサイズ・切り抜き</strong> — 自由サイズ指定のほか、OGP画像・Xヘッダー・YouTubeサムネイル・広告バナーなどのテンプレートサイズに合わせた切り抜きができます。位置はドラッグで自由に調整でき、アイコン用の正円切り抜き（背景透過）にも対応しています。</li>
+          <li><strong>リサイズ・切り抜き</strong> — 自由サイズ指定のほか、OGP画像・Xヘッダー・YouTubeサムネイル・広告バナーなどのテンプレートサイズに合わせた切り抜きができます。切り抜き枠は位置・大きさともドラッグで自由に調整でき（Shiftで正方形）、正円切り抜き（アイコン用・円の外は透過）にも対応しています。</li>
           <li><strong>背景透過</strong> — 白背景のロゴ・図版などの単色背景を透過化し、PNG・WebPで出力できます。ロゴ内部の同色部分は残したまま、外周につながった背景だけを透過にします。</li>
           <li><strong>一括処理</strong> — 複数の画像をまとめて変換し、ZIPで一括ダウンロードできます。</li>
         </ul>
@@ -194,9 +192,12 @@
         </div>
         <div class="crop-frame" id="crop-frame">
           <img id="crop-image" alt="トリミング対象の画像" draggable="false" />
-          <div id="crop-region" hidden></div>
+          <div id="crop-region" hidden>
+            <div id="crop-region-handle" hidden></div>
+          </div>
         </div>
         <p class="hint" id="crop-hint">画像をドラッグして、切り抜く位置を調整します。</p>
+        <label class="check-item" id="crop-circle-row" hidden><input type="checkbox" id="crop-circle-toggle" /><span>円形で切り抜く（枠が正方形なら正円・外側は透過、JPGでは白）</span></label>
         <div class="crop-actions">
           <button type="button" class="crop-reset" id="crop-reset">中央に戻す</button>
           <button type="button" class="crop-apply" id="crop-apply">この位置にする</button>

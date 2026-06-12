@@ -37,8 +37,7 @@ export function findTemplate(id) {
 export function computeRenderPlan(srcW, srcH, resize) {
   if (resize.mode === 'free') return planFree(srcW, srcH, resize)
   if (resize.mode === 'template') return planTemplate(srcW, srcH, resize)
-  const base = fullPlan(srcW, srcH, srcW, srcH)
-  return resize.circle ? applyCircle(base, resize.focus) : base
+  return fullPlan(srcW, srcH, srcW, srcH)
 }
 
 function fullPlan(srcW, srcH, outW, outH) {
@@ -50,18 +49,11 @@ function fullPlan(srcW, srcH, outW, outH) {
   }
 }
 
-// 正円切り抜きの直径（両方指定なら小さい方、片方ならその値、未指定は画像の短辺）
-export function circleDiameter(w, h, srcW, srcH) {
-  const base = w && h ? Math.min(w, h) : w || h || Math.min(srcW, srcH)
-  return Math.min(base, srcW, srcH)
-}
-
 function planFree(srcW, srcH, { width, height, keepRatio, noUpscale, freeMode, circle, focus }) {
   const w = width > 0 ? width : null
   const h = height > 0 ? height : null
   if (freeMode === 'crop') return planCrop(srcW, srcH, w, h, focus, circle)
-  const base = planScale(srcW, srcH, w, h, keepRatio, noUpscale)
-  return circle ? applyCircle(base, focus) : base
+  return planScale(srcW, srcH, w, h, keepRatio, noUpscale)
 }
 
 function planScale(srcW, srcH, w, h, keepRatio, noUpscale) {
@@ -85,30 +77,11 @@ function planScale(srcW, srcH, w, h, keepRatio, noUpscale) {
   return fullPlan(srcW, srcH, outW, outH)
 }
 
-// 既存プランの出力を短辺の正方形に切り詰め、円形マスク用フラグを立てる
-// focusは正方形を出力のどこから取るか（0〜1、0.5が中央）
-function applyCircle(plan, focus) {
-  const f = focus ?? { x: 0.5, y: 0.5 }
-  const d = Math.min(plan.outW, plan.outH)
-  return {
-    outW: d,
-    outH: d,
-    draw: {
-      ...plan.draw,
-      dx: plan.draw.dx - Math.round((plan.outW - d) * f.x),
-      dy: plan.draw.dy - Math.round((plan.outH - d) * f.y),
-    },
-    bg: plan.bg,
-    circle: true,
-  }
-}
-
 // 指定サイズを等倍のまま切り抜く（focusは0〜1の位置、画像を超える指定は画像サイズまで）
-// circle時は直径×直径の正方形を切り抜き、描画側で円形マスクをかける
+// circle時は枠に内接する楕円マスクを描画側でかける（枠が正方形なら正円になる）
 function planCrop(srcW, srcH, w, h, focus, circle) {
-  const d = circle ? circleDiameter(w, h, srcW, srcH) : null
-  const cropW = circle ? d : Math.min(w ?? srcW, srcW)
-  const cropH = circle ? d : Math.min(h ?? srcH, srcH)
+  const cropW = Math.min(w ?? srcW, srcW)
+  const cropH = Math.min(h ?? srcH, srcH)
   const f = focus ?? { x: 0.5, y: 0.5 }
   const sx = Math.round((srcW - cropW) * f.x)
   const sy = Math.round((srcH - cropH) * f.y)
