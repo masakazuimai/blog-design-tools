@@ -110,6 +110,21 @@ function bindSettings() {
     radio.addEventListener('change', updateResizePanels)
   })
   dom.bgTransparent.addEventListener('change', updateResizePanels)
+  // サイズ設定の変更を縦横比連動とサムネイル下の「変換後サイズ」表示へ即時反映する
+  dom.freeWidth.addEventListener('input', () => {
+    syncLinkedInput('width')
+    renderDropPreviews()
+  })
+  dom.freeHeight.addEventListener('input', () => {
+    syncLinkedInput('height')
+    renderDropPreviews()
+  })
+  dom.keepRatio.addEventListener('change', () => {
+    syncLinkedInput('width')
+    renderDropPreviews()
+  })
+  dom.noUpscale.addEventListener('change', renderDropPreviews)
+  dom.templateSelect.addEventListener('change', renderDropPreviews)
   dom.bgRemove.addEventListener('change', () => {
     dom.bgRemoveOptions.hidden = !dom.bgRemove.checked
   })
@@ -130,6 +145,7 @@ function updateResizePanels() {
   const freeMode = document.querySelector('input[name="free-mode"]:checked').value
   dom.freeScaleOptions.hidden = freeMode !== 'scale'
   dom.freeCropHint.hidden = freeMode !== 'crop'
+  prefillScaleInputs()
   // 背景透過は切り抜き時とテンプレート時のみ選択できる
   dom.bgRemoveSection.hidden = !(mode === 'template' || (mode === 'free' && freeMode === 'crop'))
   // 切り抜き系の設定時のみ位置調整ボタンを出すため再描画する
@@ -152,16 +168,69 @@ function cropEditorKind() {
 
 function addFiles(files) {
   if (files.length === 0) return
-  selectedFiles = [
-    ...selectedFiles,
-    ...files.map((file) => ({
-      file,
-      url: URL.createObjectURL(file),
-      focus: { x: 0.5, y: 0.5 },
-    })),
-  ]
+  const added = files.map((file) => ({
+    file,
+    url: URL.createObjectURL(file),
+    focus: { x: 0.5, y: 0.5 },
+  }))
+  selectedFiles = [...selectedFiles, ...added]
   dom.runButton.disabled = false
   renderDropPreviews()
+  added.forEach(loadDimensions)
+}
+
+// サムネイル下のサイズ表示用に画像の実寸を取得する（取得後に再描画）
+async function loadDimensions(entry) {
+  try {
+    const bitmap = await decodeToBitmap(entry.file)
+    const { width, height } = bitmap
+    bitmap.close()
+    selectedFiles = selectedFiles.map((e) =>
+      e.file === entry.file ? { ...e, srcW: width, srcH: height } : e,
+    )
+    prefillScaleInputs()
+    renderDropPreviews()
+  } catch (error) {
+    console.error(`${entry.file.name} のサイズ取得に失敗:`, error)
+  }
+}
+
+// サイズ計算の基準になる画像（実寸が取得できた最初の1枚）
+function referenceDims() {
+  const entry = selectedFiles.find((e) => e.srcW)
+  return entry ? { w: entry.srcW, h: entry.srcH } : null
+}
+
+function isScaleMode() {
+  return (
+    document.querySelector('input[name="resize-mode"]:checked').value === 'free' &&
+    document.querySelector('input[name="free-mode"]:checked').value === 'scale'
+  )
+}
+
+// 縮小モードで入力が空なら、1枚目の画像サイズを初期値として入れる
+function prefillScaleInputs() {
+  if (!isScaleMode()) return
+  const ref = referenceDims()
+  if (!ref) return
+  if (dom.freeWidth.value === '' && dom.freeHeight.value === '') {
+    dom.freeWidth.value = ref.w
+    dom.freeHeight.value = ref.h
+  }
+}
+
+// 縦横比を維持中は、片方の入力からもう片方を自動計算する（基準は1枚目の画像）
+function syncLinkedInput(changed) {
+  if (!isScaleMode() || !dom.keepRatio.checked) return
+  const ref = referenceDims()
+  if (!ref) return
+  if (changed === 'width') {
+    const w = Number(dom.freeWidth.value)
+    if (w > 0) dom.freeHeight.value = Math.max(1, Math.round((w * ref.h) / ref.w))
+  } else {
+    const h = Number(dom.freeHeight.value)
+    if (h > 0) dom.freeWidth.value = Math.max(1, Math.round((h * ref.w) / ref.h))
+  }
 }
 
 function removeFile(index) {
@@ -184,11 +253,16 @@ function renderDropPreviews() {
     const tile = document.createElement('div')
     tile.className = 'preview-tile'
 
+    // ボタン類の配置基準になるサムネイル枠（下のサイズ表示とは分離）
+    const thumb = document.createElement('div')
+    thumb.className = 'preview-thumb'
+    tile.appendChild(thumb)
+
     const img = document.createElement('img')
     img.src = entry.url
     img.alt = entry.file.name
     img.title = entry.file.name
-    tile.appendChild(img)
+    thumb.appendChild(img)
 
     const remove = document.createElement('button')
     remove.className = 'preview-remove'
@@ -199,7 +273,22 @@ function renderDropPreviews() {
       event.stopPropagation()
       removeFile(index)
     })
-    tile.appendChild(remove)
+    thumb.appendChild(remove)
+
+    // 元サイズと変換後サイズの表示（実寸取得後のみ）
+    if (entry.srcW) {
+      const caption = document.createElement('div')
+      caption.className = 'preview-size'
+      const plan = computeRenderPlan(entry.srcW, entry.srcH, {
+        ...readSettings().resize,
+        focus: entry.focus,
+      })
+      caption.textContent =
+        plan.outW !== entry.srcW || plan.outH !== entry.srcH
+          ? `${entry.srcW}×${entry.srcH} → ${plan.outW}×${plan.outH}`
+          : `${entry.srcW}×${entry.srcH}`
+      tile.appendChild(caption)
+    }
 
     const editorKind = cropEditorKind()
     if (editorKind) {
@@ -239,7 +328,7 @@ function renderDropPreviews() {
           })
         }
       })
-      tile.appendChild(crop)
+      thumb.appendChild(crop)
     }
 
     dom.dropPreviews.appendChild(tile)

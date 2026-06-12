@@ -287,7 +287,18 @@ input[type="range"] {
   justify-content: center;
 }
 
-.preview-tile { position: relative; }
+.preview-tile { max-width: 192px; }
+
+.preview-thumb { position: relative; }
+
+.preview-size {
+  margin-top: 6px;
+  font-size: 1rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--color-text-secondary);
+  text-align: center;
+  line-height: 1.4;
+}
 
 .preview-tile img {
   display: block;
