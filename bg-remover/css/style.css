@@ -383,6 +383,15 @@ input[type="range"] {
 
 .editor-modes { display: flex; gap: 8px; }
 
+/* 自動選択ツール。消去/復元（方向）とは別軸なので区切り線で分ける */
+.editor-tools {
+  display: flex;
+  gap: 8px;
+  padding-left: 8px;
+  margin-left: 4px;
+  border-left: 1px solid var(--color-border);
+}
+
 .editor-mode {
   display: inline-flex;
   align-items: center;
@@ -416,12 +425,56 @@ input[type="range"] {
 
 .editor-size input[type="range"] { width: 120px; }
 
+/* labelの既定display(inline-flex)が[hidden]を上書きしてしまうため明示的に隠す */
+.editor-size[hidden] { display: none; }
+
 .editor-size-value {
   font-family: 'JetBrains Mono', monospace;
   color: var(--color-accent);
   min-width: 2.5ch;
   text-align: right;
 }
+
+/* ズーム操作（縮小 − / 倍率% / 拡大 ＋ / 手のひら） */
+.editor-zoom {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.editor-zoom-btn {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--color-text);
+  font-size: 1.125rem;
+  line-height: 1;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.editor-zoom-btn:hover:not(:disabled) { border-color: var(--color-border-hover); }
+.editor-zoom-btn:disabled { opacity: 0.4; cursor: default; }
+
+.editor-zoom-value {
+  min-width: 4.5ch;
+  text-align: center;
+  padding: 4px 2px;
+  border: none;
+  background: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.editor-zoom-value:hover { color: var(--color-accent); }
 
 .editor-spacer { flex: 1; }
 
@@ -453,7 +506,7 @@ input[type="range"] {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: auto;
+  overflow: hidden;
   padding: 16px;
   background: repeating-conic-gradient(#e5e7eb 0% 25%, #fff 0% 50%) 0 / 24px 24px;
 }
@@ -465,7 +518,16 @@ input[type="range"] {
   cursor: none;
   touch-action: none;
   box-shadow: 0 0 0 1px var(--color-border);
+  transform-origin: center center;
+  will-change: transform;
 }
+
+/* 自動選択モードはクリックで領域を選ぶためクロスヘアカーソルにする */
+.editor-canvas-wrap.auto-mode { cursor: crosshair; }
+
+/* パン操作中はブラシリングではなくグラブ系カーソルを表示する（自動選択より優先） */
+.editor-canvas-wrap.pan-ready { cursor: grab; }
+.editor-canvas-wrap.panning { cursor: grabbing; }
 
 /* workキャンバスがラップの寸法を決める。max-heightは概算でツールバー/ヒント分を差し引く */
 .editor-work {

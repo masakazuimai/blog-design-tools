@@ -4,7 +4,7 @@
 import { preloadModel, cutoutSubject } from './cutout.js?v=20260613'
 import { renderResults, renderSummary } from './ui.js?v=20260613'
 import { downloadBlob, downloadZip } from './download.js?v=20260613'
-import { runEditor } from './editor.js?v=20260613b'
+import { runEditor } from './editor.js?v=20260613d'
 
 const dom = {
   dropZone: document.getElementById('drop-zone'),
