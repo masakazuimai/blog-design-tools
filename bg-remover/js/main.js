@@ -4,6 +4,7 @@
 import { preloadModel, cutoutSubject } from './cutout.js?v=20260613'
 import { renderResults, renderSummary } from './ui.js?v=20260613'
 import { downloadBlob, downloadZip } from './download.js?v=20260613'
+import { runEditor } from './editor.js?v=20260613b'
 
 const dom = {
   dropZone: document.getElementById('drop-zone'),
@@ -27,6 +28,8 @@ const dom = {
 let selectedFiles = [] // {file, url} の配列（urlはプレビュー用Object URL）
 let results = []
 let preloadStarted = false
+// entry → { status, blob, url, showing } の切り抜きプレビューキャッシュ。本処理でも再利用する
+const cutoutCache = new Map()
 
 function init() {
   bindDropZone()
@@ -109,9 +112,74 @@ function showModelReady() {
 }
 
 function removeFile(index) {
-  URL.revokeObjectURL(selectedFiles[index].url)
+  const entry = selectedFiles[index]
+  URL.revokeObjectURL(entry.url)
+  const cached = cutoutCache.get(entry)
+  if (cached?.url) URL.revokeObjectURL(cached.url)
+  cutoutCache.delete(entry)
   selectedFiles = selectedFiles.filter((_, i) => i !== index)
   dom.runButton.disabled = selectedFiles.length === 0
+  renderDropPreviews()
+}
+
+// その1枚だけAI切り抜きを実行してキャッシュする。生成済みなら即返す
+// 戻り値: done状態オブジェクト / 生成失敗・並行実行中・生成中に削除された場合は null
+async function ensureCutout(entry) {
+  const current = cutoutCache.get(entry)
+  if (current?.status === 'done') return current
+  if (current?.status === 'loading') return null
+
+  cutoutCache.set(entry, { status: 'loading', blob: null, url: null, showing: false })
+  renderDropPreviews()
+  try {
+    // 進捗ハンドラは渡さない（モデル準備表示を切り抜きプレビューで上書きしないため）
+    const blob = await cutoutSubject(entry.file)
+    // 生成中に削除された場合はObject URLを作らず破棄する
+    if (!selectedFiles.includes(entry)) return null
+    const state = { status: 'done', blob, url: URL.createObjectURL(blob), showing: true }
+    cutoutCache.set(entry, state)
+    renderDropPreviews()
+    return state
+  } catch (error) {
+    console.error(`${entry.file.name} のプレビュー生成に失敗:`, error)
+    if (selectedFiles.includes(entry)) {
+      cutoutCache.set(entry, { status: 'error', blob: null, url: null, showing: false })
+    }
+    renderDropPreviews()
+    return null
+  }
+}
+
+// サムネ単位でAI切り抜きプレビューを生成・切り替えする
+// 未生成: 切り抜いて被写体プレビューを表示 / 生成済み: 元画像との表示トグル
+async function togglePreview(entry) {
+  const current = cutoutCache.get(entry)
+  if (current?.status === 'done') {
+    cutoutCache.set(entry, { ...current, showing: !current.showing })
+    renderDropPreviews()
+    return
+  }
+  await ensureCutout(entry)
+}
+
+// 切り抜き結果を手動レタッチ（被写体の増減）するモーダルエディタを開く
+async function openEditor(entry) {
+  const state = (await ensureCutout(entry)) ?? cutoutCache.get(entry)
+  if (state?.status !== 'done') return
+
+  const editedBlob = await runEditor(entry.file, state.blob)
+  if (!editedBlob) return // キャンセル
+
+  // 生成中の待機などで削除されていないか確認してから差し替える
+  if (!selectedFiles.includes(entry)) return
+  const old = cutoutCache.get(entry)
+  if (old?.url) URL.revokeObjectURL(old.url)
+  cutoutCache.set(entry, {
+    status: 'done',
+    blob: editedBlob,
+    url: URL.createObjectURL(editedBlob),
+    showing: true,
+  })
   renderDropPreviews()
 }
 
@@ -125,27 +193,7 @@ function renderDropPreviews() {
   if (!hasFiles) return
 
   selectedFiles.forEach((entry, index) => {
-    const tile = document.createElement('div')
-    tile.className = 'preview-tile'
-
-    const img = document.createElement('img')
-    img.src = entry.url
-    img.alt = entry.file.name
-    img.title = entry.file.name
-    tile.appendChild(img)
-
-    const remove = document.createElement('button')
-    remove.className = 'preview-remove'
-    remove.type = 'button'
-    remove.textContent = '×'
-    remove.setAttribute('aria-label', `${entry.file.name} を削除`)
-    remove.addEventListener('click', (event) => {
-      event.stopPropagation()
-      removeFile(index)
-    })
-    tile.appendChild(remove)
-
-    dom.dropPreviews.appendChild(tile)
+    dom.dropPreviews.appendChild(buildPreviewTile(entry, index))
   })
 
   const addTile = document.createElement('div')
@@ -153,6 +201,103 @@ function renderDropPreviews() {
   addTile.textContent = '＋'
   addTile.title = '画像を追加'
   dom.dropPreviews.appendChild(addTile)
+}
+
+const EYE_ICON =
+  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+  'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+  '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>'
+
+const PENCIL_ICON =
+  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+  'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+  '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>'
+
+function buildPreviewTile(entry, index) {
+  const tile = document.createElement('div')
+  tile.className = 'preview-tile'
+
+  const state = cutoutCache.get(entry)
+  const showingCutout = state?.status === 'done' && state.showing
+
+  const img = document.createElement('img')
+  img.src = showingCutout ? state.url : entry.url
+  img.alt = entry.file.name
+  img.title = entry.file.name
+  tile.appendChild(img)
+
+  // 生成済みなら、ホバー中だけ切り抜きを即表示する（クリックでの固定表示とは別）
+  if (state?.status === 'done') {
+    tile.addEventListener('mouseenter', () => {
+      img.src = state.url
+    })
+    tile.addEventListener('mouseleave', () => {
+      img.src = state.showing ? state.url : entry.url
+    })
+  }
+
+  if (showingCutout) {
+    tile.appendChild(buildBadge('切り抜きプレビュー'))
+  } else if (state?.status === 'error') {
+    tile.appendChild(buildBadge('切り抜き失敗', true))
+  }
+
+  if (state?.status === 'loading') {
+    tile.classList.add('is-loading')
+    const spinner = document.createElement('div')
+    spinner.className = 'preview-spinner'
+    tile.appendChild(spinner)
+  }
+
+  const toolbar = document.createElement('div')
+  toolbar.className = 'preview-toolbar'
+
+  const loading = state?.status === 'loading'
+  const eyeLabel = loading ? '切り抜き中…' : showingCutout ? '戻す' : '確認'
+  const eye = buildTileButton(EYE_ICON, eyeLabel, loading, (event) => {
+    event.stopPropagation()
+    togglePreview(entry)
+  })
+  toolbar.appendChild(eye)
+
+  const edit = buildTileButton(PENCIL_ICON, '編集', loading, (event) => {
+    event.stopPropagation()
+    openEditor(entry)
+  })
+  toolbar.appendChild(edit)
+
+  tile.appendChild(toolbar)
+
+  const remove = document.createElement('button')
+  remove.className = 'preview-remove'
+  remove.type = 'button'
+  remove.textContent = '×'
+  remove.setAttribute('aria-label', `${entry.file.name} を削除`)
+  remove.addEventListener('click', (event) => {
+    event.stopPropagation()
+    removeFile(index)
+  })
+  tile.appendChild(remove)
+
+  return tile
+}
+
+function buildTileButton(icon, label, disabled, onClick) {
+  const button = document.createElement('button')
+  button.className = 'preview-tool'
+  button.type = 'button'
+  button.disabled = disabled
+  button.innerHTML = icon
+  button.appendChild(document.createTextNode(label))
+  button.addEventListener('click', onClick)
+  return button
+}
+
+function buildBadge(text, isError = false) {
+  const badge = document.createElement('span')
+  badge.className = `preview-badge${isError ? ' error' : ''}`
+  badge.textContent = text
+  return badge
 }
 
 function readSettings() {
@@ -189,7 +334,12 @@ async function runPipeline() {
 async function processFile(entry, settings) {
   const { file } = entry
   try {
-    const pngBlob = await cutoutSubject(file, updateModelProgress)
+    // プレビューで生成済みの切り抜きがあれば再利用し、再推論を省く
+    const cached = cutoutCache.get(entry)
+    const pngBlob =
+      cached?.status === 'done' && cached.blob
+        ? cached.blob
+        : await cutoutSubject(file, updateModelProgress)
     const { blob, width, height } = await finalizeOutput(pngBlob, settings)
     return {
       file,
