@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>画像カラーピッカー｜写真からWEBデザイン用カラーパレットを自動生成</title>
-  <meta name="description" content="画像をアップロードするだけで、WEBデザインに使えるカラーパレットを自動生成。主要色の抽出からCSS変数・HEX・RGBコピーまで、ブラウザ完結で動作します。">
-  <link rel="canonical" href="https://codequest.work/generator/image-color-picker/">
+  <title>Image Color Picker — Extract a Web Design Color Palette from Any Photo</title>
+  <meta name="description" content="Upload an image and automatically generate a color palette for web design. Extract the dominant colors and copy them as CSS variables, Tailwind, SCSS, HEX, or RGB — all in your browser.">
+  <link rel="canonical" href="https://codequest.work/generator/image-color-picker/en/">
   <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/image-color-picker/">
   <link rel="alternate" hreflang="en" href="https://codequest.work/generator/image-color-picker/en/">
   <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/image-color-picker/">
@@ -13,13 +13,13 @@
   <!-- OGP -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="CodeQuest.work">
-  <meta property="og:locale" content="ja_JP">
-  <meta property="og:title" content="画像カラーピッカー｜写真からWEBデザイン用カラーパレットを自動生成">
-  <meta property="og:description" content="画像をアップロードするだけで、WEBデザインに使えるカラーパレットを自動生成。主要色の抽出からCSS変数・HEX・RGBコピーまで、ブラウザ完結で動作します。">
-  <meta property="og:url" content="https://codequest.work/generator/image-color-picker/">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Image Color Picker — Extract a Web Design Color Palette from Any Photo">
+  <meta property="og:description" content="Upload an image and automatically generate a color palette for web design. Copy colors as CSS variables, Tailwind, SCSS, HEX, or RGB — all in your browser.">
+  <meta property="og:url" content="https://codequest.work/generator/image-color-picker/en/">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="画像カラーピッカー｜写真からWEBデザイン用カラーパレットを自動生成">
-  <meta name="twitter:description" content="画像をアップロードするだけで、WEBデザインに使えるカラーパレットを自動生成。CSS変数・HEX・RGBをワンクリックでコピー。">
+  <meta name="twitter:title" content="Image Color Picker — Extract a Web Design Color Palette from Any Photo">
+  <meta name="twitter:description" content="Upload an image and automatically generate a color palette for web design. Copy as CSS variables, Tailwind, SCSS, HEX, or RGB in one click.">
   <!-- 構造化データ -->
   <script type="application/ld+json">
   {
@@ -27,23 +27,23 @@
     "@graph": [
       {
         "@type": "WebApplication",
-        "name": "画像カラーピッカー",
-        "url": "https://codequest.work/generator/image-color-picker/",
-        "description": "画像をアップロードするだけで、WEBデザインに使えるカラーパレットを自動生成し、CSS変数・Tailwind・SCSS・HEX・RGBでコピーできる無料ツール。ブラウザ完結。",
+        "name": "Image Color Picker",
+        "url": "https://codequest.work/generator/image-color-picker/en/",
+        "description": "A free tool to upload an image and automatically generate a web design color palette, then copy it as CSS variables, Tailwind, SCSS, HEX, or RGB. Runs entirely in your browser.",
         "applicationCategory": "DesignApplication",
         "operatingSystem": "Web",
         "browserRequirements": "Requires JavaScript.",
-        "inLanguage": "ja",
+        "inLanguage": "en",
         "isAccessibleForFree": true,
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
         "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
-          { "@type": "ListItem", "position": 2, "name": "ジェネレーター", "item": "https://codequest.work/category/generator/" },
-          { "@type": "ListItem", "position": 3, "name": "画像カラーピッカー", "item": "https://codequest.work/generator/image-color-picker/" }
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "Generators", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "Image Color Picker", "item": "https://codequest.work/generator/image-color-picker/en/" }
         ]
       }
     ]
@@ -61,14 +61,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPMincho&family=Noto+Serif+JP:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html・en/index.html と main.js の import を揃えて日付を上げる -->
-  <link rel="stylesheet" href="css/style.css?v=20260615">
+  <link rel="stylesheet" href="../css/style.css?v=20260615">
 </head>
 <body>
   <header>
     <div class="header-inner">
-      <a class="lang-switch" href="en/" hreflang="en">English</a>
-      <h1>画像カラーピッカー</h1>
-      <p>写真やスクリーンショットからWEBデザイン用カラーパレットを自動生成</p>
+      <a class="lang-switch" href="../" hreflang="ja">日本語</a>
+      <h1>Image Color Picker</h1>
+      <p>Automatically generate a web design color palette from photos and screenshots</p>
     </div>
   </header>
 
@@ -76,43 +76,43 @@
     <div class="layout">
       <aside class="sidebar">
         <div class="card">
-          <h2 class="card-title">画像をアップロード</h2>
+          <h2 class="card-title">Upload an image</h2>
           <div class="drop-zone" id="dropZone">
             <div class="drop-zone-icon">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
               </svg>
             </div>
-            <span class="drop-zone-text">画像をアップロード</span>
-            <span class="drop-zone-sub">ドラッグ&amp;ドロップ、または<span class="accent"> ファイルを選択</span></span>
+            <span class="drop-zone-text">Upload an image</span>
+            <span class="drop-zone-sub">Drag &amp; drop, or<span class="accent"> choose a file</span></span>
             <input type="file" id="fileInput" accept="image/*">
           </div>
           <div class="preview-wrap" id="previewWrap">
-            <img class="preview-img" id="previewImg" alt="プレビュー">
+            <img class="preview-img" id="previewImg" alt="Preview">
             <div class="file-name" id="fileName"></div>
           </div>
         </div>
 
         <div class="card">
-          <h2 class="card-title">設定</h2>
+          <h2 class="card-title">Settings</h2>
           <div class="setting-row">
-            <span class="setting-label">抽出する色数</span>
+            <span class="setting-label">Number of colors</span>
             <div class="setting-value">
               <input type="range" id="colorCount" min="3" max="12" value="6">
               <span id="colorCountVal">6</span>
             </div>
           </div>
           <div style="margin-top: 16px;">
-            <button class="btn-extract" id="btnExtract" disabled>色を抽出する</button>
+            <button class="btn-extract" id="btnExtract" disabled>Extract colors</button>
           </div>
         </div>
         <div class="card">
-          <h2 class="card-title">保存済みパレット</h2>
+          <h2 class="card-title">Saved palettes</h2>
           <div id="savedList" class="saved-list"></div>
-          <button class="btn-save" id="btnSave" disabled>現在のパレットを保存</button>
+          <button class="btn-save" id="btnSave" disabled>Save current palette</button>
           <div class="save-input-row" id="saveInputRow">
-            <input type="text" id="saveName" placeholder="パレット名">
-            <button id="btnSaveConfirm">保存</button>
+            <input type="text" id="saveName" placeholder="Palette name">
+            <button id="btnSaveConfirm">Save</button>
           </div>
         </div>
       </aside>
@@ -124,21 +124,21 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
             </svg>
           </div>
-          <span class="empty-state-text">画像をアップロードして色を抽出しましょう</span>
+          <span class="empty-state-text">Upload an image to extract its colors</span>
           <div class="steps">
             <div class="step">
               <span class="step-number">01</span>
-              <p class="step-title">画像をアップロード</p>
-              <p class="step-desc">PNG, JPG, WebP など</p>
+              <p class="step-title">Upload an image</p>
+              <p class="step-desc">PNG, JPG, WebP, and more</p>
             </div>
             <div class="step">
               <span class="step-number">02</span>
-              <p class="step-title">色を自動抽出</p>
-              <p class="step-desc">k-meansで主要色を分析</p>
+              <p class="step-title">Auto-extract colors</p>
+              <p class="step-desc">Dominant colors via k-means</p>
             </div>
             <div class="step">
               <span class="step-number">03</span>
-              <p class="step-title">コードをコピー</p>
+              <p class="step-title">Copy the code</p>
               <p class="step-desc">CSS / Tailwind / SCSS</p>
             </div>
           </div>
@@ -162,18 +162,18 @@
 
   <footer>
     <div class="footer-inner">
-      <p>&copy; 2026 画像カラーピッカー | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></p>
+      <p>&copy; 2026 Image Color Picker | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></p>
       <div class="footer-links">
-        <a href="https://seo.codequest.work/ja" target="_blank" rel="noopener">SEO CHECKはこちら &rarr;</a>
-        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のジェネレーター &rarr;</a>
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">SEO CHECK &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More generators &rarr;</a>
       </div>
     </div>
   </footer>
 
-  <div class="copied-toast" id="copiedToast">コピーしました</div>
+  <div class="copied-toast" id="copiedToast">Copied</div>
 
   <canvas id="hiddenCanvas" style="display:none;"></canvas>
 
-  <script type="module" src="js/main.js?v=20260615"></script>
+  <script type="module" src="../js/main.js?v=20260615"></script>
 </body>
 </html>
