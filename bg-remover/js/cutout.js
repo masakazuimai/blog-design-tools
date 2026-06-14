@@ -2,6 +2,8 @@
 // ONNXモデルによる被写体検出をすべてブラウザ内で実行する（画像は外部送信されない）
 // モデル・WASM（合計約40MB）は初回のみCDNから取得され、以降はブラウザキャッシュが使われる
 
+import { t } from './i18n.js?v=20260614'
+
 const CDN_URL = 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.7.0/+esm'
 
 let modulePromise = null
@@ -27,7 +29,7 @@ export async function cutoutSubject(file, onProgress) {
     })
   } catch (error) {
     console.error('AI被写体切り抜きに失敗:', error)
-    throw new Error('切り抜きに失敗しました。通信環境を確認して再試行してください。')
+    throw new Error(t.cutoutFailed)
   }
 }
 

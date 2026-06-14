@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Free Image Compressor & WebP/AVIF Converter — Runs in Your Browser | CodeQuest</title>
+    <meta name="description" content="Compress, convert, and resize JPG, PNG, WebP, AVIF, and SVG by drag & drop. EXIF data (including GPS location) is stripped automatically. Free, no signup — your images are never uploaded; everything runs in your browser." />
+    <link rel="canonical" href="https://codequest.work/generator/image-compressor/en/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/image-compressor/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/image-compressor/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/image-compressor/" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と main.js の両方で日付を上げる -->
+    <link rel="stylesheet" href="../css/style.css?v=20260614" />
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <a class="lang-switch" href="../" hreflang="ja">日本語</a>
+        <h1>Image Compressor &amp; <span class="accent">WebP Converter</span></h1>
+        <p>Compress, convert, and resize JPG, PNG, WebP, AVIF, and SVG — entirely in your browser</p>
+        <p class="header-privacy">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="11" width="18" height="11" rx="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          Your images are never uploaded — everything runs in your browser
+        </p>
+        <p class="header-privacy">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+          </svg>
+          EXIF data such as GPS location is removed automatically on conversion
+        </p>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="layout">
+        <aside class="sidebar">
+          <div class="card">
+            <div class="card-title">Quality <span class="quality-value" id="quality-value">75</span></div>
+            <input type="range" id="quality" min="1" max="100" value="75" />
+            <p class="hint">Lower values produce smaller files. For PNG, the number of colors is reduced automatically based on quality.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Resize</div>
+            <div class="radio-group">
+              <label class="radio-item"><input type="radio" name="resize-mode" value="none" checked /><span>Don't resize</span></label>
+              <label class="radio-item"><input type="radio" name="resize-mode" value="free" /><span>Custom size</span></label>
+              <label class="radio-item"><input type="radio" name="resize-mode" value="template" /><span>Template size</span></label>
+              <select id="template-select" aria-label="Choose a template size"></select>
+            </div>
+
+            <div class="resize-panel" id="panel-free" hidden>
+              <div class="radio-group">
+                <label class="radio-item"><input type="radio" name="free-mode" value="scale" checked /><span>Scale down (resize)</span></label>
+                <label class="radio-item"><input type="radio" name="free-mode" value="crop" /><span>Crop to size</span></label>
+              </div>
+              <div class="size-inputs">
+                <label>Width<input type="number" id="free-width" min="1" max="10000" placeholder="px" /></label>
+                <span class="size-x">×</span>
+                <label>Height<input type="number" id="free-height" min="1" max="10000" placeholder="px" /></label>
+              </div>
+              <div id="free-scale-options">
+                <label class="check-item"><input type="checkbox" id="keep-ratio" checked /><span>Keep aspect ratio</span></label>
+                <label class="check-item"><input type="checkbox" id="no-upscale" checked /><span>Don't enlarge beyond the original</span></label>
+                <p class="hint">While the aspect ratio is locked, changing the width updates the height automatically.</p>
+              </div>
+              <p class="hint" id="free-crop-hint" hidden>Crops the specified size directly from the original image. Choose the area by dragging on the thumbnail's “Adjust position” (hold Shift for a square; check the box in the dialog for a circle/ellipse). The area you drag is reflected in the width and height above.</p>
+            </div>
+
+            <div class="resize-panel" id="panel-template" hidden>
+              <div class="radio-group fit-group">
+                <label class="radio-item"><input type="radio" name="fit-mode" value="cover" checked /><span>Crop to center (cut off overflow)</span></label>
+                <label class="radio-item"><input type="radio" name="fit-mode" value="contain" /><span>Fit whole image (pad with margins)</span></label>
+              </div>
+              <label class="check-item" id="bg-transparent-row" hidden><input type="checkbox" id="bg-transparent" /><span>Make margins transparent</span></label>
+              <p class="hint" id="bg-transparent-hint" hidden>Available for PNG and WebP output. JPG can't keep transparency, so the margins become white.</p>
+              <label class="check-item bg-color-row" id="bg-color-row" hidden>Margin color<input type="color" id="bg-color" value="#ffffff" /></label>
+            </div>
+
+
+            <div id="bg-remove-section" hidden>
+              <label class="check-item"><input type="checkbox" id="bg-remove" /><span>Make a solid background transparent</span></label>
+              <div id="bg-remove-options" hidden>
+                <div class="card-title tolerance-title">Tolerance <span class="quality-value" id="bg-tolerance-value">30</span></div>
+                <input type="range" id="bg-tolerance" min="0" max="100" value="30" />
+                <p class="hint">Only the background color connected to the image edges is made transparent. Available for PNG, WebP, and SVG output (JPG can't keep transparency).</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <main class="main-area">
+          <div class="drop-zone" id="drop-zone">
+            <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/gif,image/avif,image/svg+xml" multiple hidden />
+            <div class="drop-placeholder" id="drop-placeholder">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <path d="m21 15-5-5L5 21" />
+              </svg>
+              <p class="drop-main">Drag & drop your images here</p>
+              <p class="drop-sub">or click to choose files (multiple OK · JPG / PNG / WebP / AVIF / SVG)</p>
+            </div>
+            <div class="drop-previews" id="drop-previews" hidden></div>
+          </div>
+
+          <div class="card format-card">
+            <div class="card-title">Output format</div>
+            <div class="radio-group format-group" id="format-group">
+              <label class="radio-item"><input type="radio" name="format" value="same" checked /><span>Keep original format</span></label>
+              <label class="radio-item"><input type="radio" name="format" value="jpeg" /><span>Convert to JPG</span></label>
+              <label class="radio-item"><input type="radio" name="format" value="png" /><span>Convert to PNG</span></label>
+              <label class="radio-item"><input type="radio" name="format" value="webp" /><span>Convert to WebP</span></label>
+              <label class="radio-item"><input type="radio" name="format" value="avif" /><span>Convert to AVIF</span></label>
+              <label class="radio-item"><input type="radio" name="format" value="svg" /><span>Convert to SVG</span></label>
+            </div>
+            <p class="hint" id="svg-hint" hidden>SVG output is best for logos and illustrations. Photos come out looking like cut-paper art and the file can be larger.</p>
+            <p class="hint" id="avif-hint" hidden>AVIF is a newer format that compresses even smaller than WebP, and all major browsers can display it. Conversion can take a few seconds per image.</p>
+          </div>
+
+          <button class="run-button" id="run-button" disabled>Convert & compress</button>
+
+          <div class="summary-bar" id="summary-bar" hidden>
+            <span id="summary-text"></span>
+            <button class="zip-button" id="zip-button">Download all as ZIP</button>
+          </div>
+
+          <ul class="result-list" id="result-list"></ul>
+        </main>
+      </div>
+
+      <section class="info-section">
+        <h2>What this tool does</h2>
+        <ul>
+          <li><strong>Image compression</strong> — Shrink JPG, PNG, WebP, and AVIF at a quality you choose. PNG can be reduced dramatically through color quantization.</li>
+          <li><strong>Format conversion</strong> — Convert between JPG, PNG, WebP, and AVIF. Convert to WebP (great for PageSpeed) or to AVIF (even smaller than WebP) in one click. Loading SVG (to PNG/JPG) and turning logos and illustrations into SVG are also supported.</li>
+          <li><strong>EXIF removal</strong> — Capture date, camera model, GPS location, and other EXIF data are all removed automatically during conversion. Post photos from your phone without worrying about location data.</li>
+          <li><strong>Resize & crop</strong> — Set a custom size, or crop to template sizes for OGP images, X headers, YouTube thumbnails, ad banners, and more. The crop box can be moved and resized by dragging (hold Shift for a square), and circular crops (for icons; outside the circle is transparent) are supported.</li>
+          <li><strong>Background removal</strong> — Make a solid background (such as a white logo or diagram) transparent and export as PNG or WebP. Same-colored areas inside the logo are preserved — only the background connected to the edges becomes transparent. To cut out a person or product from a photo, use the <a href="../../bg-remover/en/">AI Background Remover</a>.</li>
+          <li><strong>Batch processing</strong> — Convert multiple images at once and download them together as a ZIP.</li>
+        </ul>
+      </section>
+
+      <section class="info-section">
+        <h2>How to use</h2>
+        <ol>
+          <li>Drag & drop your images, or click to select them (multiple selection is supported).</li>
+          <li>Set the output format, quality, and resize options in the panel on the left.</li>
+          <li>Press “Convert & compress” to see the before/after file size and the reduction rate.</li>
+          <li>Download images individually or all together as a ZIP.</li>
+        </ol>
+      </section>
+
+      <section class="info-section">
+        <h2>Frequently asked questions</h2>
+        <dl class="faq">
+          <dt>Are my uploaded images stored anywhere?</dt>
+          <dd>No. Loading, compression, and conversion all run entirely in your browser (on your own device), and nothing is ever sent to a server.</dd>
+          <dt>Why should I convert blog images to WebP?</dt>
+          <dd>WebP produces smaller files than JPG or PNG at the same visual quality, which improves page load speed (Core Web Vitals). All major browsers can display WebP.</dd>
+          <dt>Should I use WebP or AVIF?</dt>
+          <dd>AVIF compresses more — often 20–30% smaller than WebP at the same quality. Chrome, Safari, Firefox, and Edge all support AVIF, so choose AVIF when you want the smallest files, and WebP when compatibility is the top priority.</dd>
+          <dt>Is EXIF data (location, capture date) kept?</dt>
+          <dd>No. This tool decodes and rebuilds each image during conversion, so GPS location, capture date, camera model, and other EXIF data are all removed automatically. You can publish photos taken at home without worrying about your location being identified.</dd>
+          <dt>What quality setting should I use?</dt>
+          <dd>For blog use, 70–80 is a good guide. You can cut file size substantially with little to no visible loss.</dd>
+          <dt>Can I convert a photo to SVG?</dt>
+          <dd>You can, but because SVG represents images as a collection of shapes, photos end up looking like cut-paper art. SVG conversion is best for logos, icons, and illustrations.</dd>
+        </dl>
+      </section>
+    </div>
+
+    <div style="max-width: 1100px; margin: 32px auto 0; padding: 0 24px">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- footer-top -->
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 Image Compressor &amp; WebP Converter | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+
+    <div class="crop-modal" id="crop-modal" hidden>
+      <div class="crop-dialog">
+        <div class="crop-header">
+          <span>Adjust crop position</span>
+          <button type="button" id="crop-close" aria-label="Close">×</button>
+        </div>
+        <div class="crop-frame" id="crop-frame">
+          <img id="crop-image" alt="Image to crop" draggable="false" />
+          <div id="crop-region" hidden>
+            <div id="crop-region-handle" hidden></div>
+          </div>
+        </div>
+        <p class="hint" id="crop-hint">Drag the image to adjust the crop position.</p>
+        <label class="check-item" id="crop-circle-row" hidden><input type="checkbox" id="crop-circle-toggle" /><span>Crop as a circle (a perfect circle if the box is square; outside is transparent, white for JPG)</span></label>
+        <div class="crop-actions">
+          <button type="button" class="crop-reset" id="crop-reset">Reset to center</button>
+          <button type="button" class="crop-apply" id="crop-apply">Use this position</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/upng-js@2.1.0/UPNG.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/imagetracerjs@1.2.6/imagetracer_v1.2.6.min.js"></script>
+    <script type="module" src="../js/main.js?v=20260614"></script>
+  </body>
+</html>

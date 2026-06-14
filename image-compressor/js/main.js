@@ -1,12 +1,13 @@
 // エントリーポイント: 設定の読み取り・イベント配線・変換パイプラインの実行
 
 // import先の ?v= はキャッシュバスティング用（サーバーがjsを7日キャッシュするため）。各ファイル更新時に日付を上げる
-import { TEMPLATES, findTemplate, computeRenderPlan } from './resize.js?v=20260613'
-import { detectFormat, decodeToBitmap, renderImageData, encodeImage, EXT_MAP } from './codecs.js?v=20260613'
-import { renderResults, renderSummary } from './ui.js?v=20260613'
-import { downloadBlob, downloadZip } from './download.js?v=20260613'
-import { openCropEditor, openRegionEditor } from './crop-editor.js?v=20260613'
-import { removeBackground } from './bg-remove.js?v=20260613'
+import { TEMPLATES, findTemplate, computeRenderPlan } from './resize.js?v=20260614'
+import { detectFormat, decodeToBitmap, renderImageData, encodeImage, EXT_MAP } from './codecs.js?v=20260614'
+import { renderResults, renderSummary } from './ui.js?v=20260614'
+import { downloadBlob, downloadZip } from './download.js?v=20260614'
+import { openCropEditor, openRegionEditor } from './crop-editor.js?v=20260614'
+import { removeBackground } from './bg-remove.js?v=20260614'
+import { t } from './i18n.js?v=20260614'
 
 const dom = {
   dropZone: document.getElementById('drop-zone'),
@@ -271,7 +272,7 @@ function renderDropPreviews() {
     remove.className = 'preview-remove'
     remove.type = 'button'
     remove.textContent = '×'
-    remove.setAttribute('aria-label', `${entry.file.name} を削除`)
+    remove.setAttribute('aria-label', t.removeAria(entry.file.name))
     remove.addEventListener('click', (event) => {
       event.stopPropagation()
       removeFile(index)
@@ -299,8 +300,8 @@ function renderDropPreviews() {
       const crop = document.createElement('button')
       crop.className = `preview-crop${adjusted ? ' adjusted' : ''}`
       crop.type = 'button'
-      crop.textContent = '位置調整'
-      crop.setAttribute('aria-label', `${entry.file.name} のトリミング位置を調整`)
+      crop.textContent = t.cropAdjust
+      crop.setAttribute('aria-label', t.cropAdjustAria(entry.file.name))
       crop.addEventListener('click', (event) => {
         event.stopPropagation()
         const onApply = (focus, area, circle) => {
@@ -340,7 +341,7 @@ function renderDropPreviews() {
   const addTile = document.createElement('div')
   addTile.className = 'preview-add'
   addTile.textContent = '＋'
-  addTile.title = '画像を追加'
+  addTile.title = t.addImage
   dom.dropPreviews.appendChild(addTile)
 }
 
@@ -394,7 +395,7 @@ async function runPipeline() {
   const settings = readSettings()
 
   dom.runButton.disabled = true
-  dom.runButton.textContent = '処理中…'
+  dom.runButton.textContent = t.processing
   results = selectedFiles.map((entry) => ({
     file: entry.file,
     status: 'processing',
@@ -406,7 +407,7 @@ async function runPipeline() {
   refreshView()
 
   dom.runButton.disabled = false
-  dom.runButton.textContent = '変換・圧縮を実行'
+  dom.runButton.textContent = t.runButton
 }
 
 async function processFile(entry, settings) {

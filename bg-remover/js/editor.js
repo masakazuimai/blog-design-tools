@@ -3,6 +3,8 @@
 // 画像はホイール／ピンチで拡大縮小でき、細かい箇所も精密にレタッチできる
 // runEditor(originalFile, cutoutBlob) → 編集済み透過PNGのBlob / キャンセル時は null
 
+import { t } from './i18n.js?v=20260614'
+
 const UNDO_LIMIT = 10 // やり直し履歴の上限（大きい画像のメモリ消費を抑えるため控えめにする）
 const MIN_ZOOM = 1 // 等倍（ステージにフィットした初期表示）が下限
 const MAX_ZOOM = 8 // これ以上は拡大しても精度が上がらないため上限とする
@@ -575,8 +577,8 @@ function buildEditorDom(layers) {
   toolbar.className = 'editor-toolbar'
   panel.appendChild(toolbar)
 
-  const modeErase = makeToolButton(ERASE_ICON, '消去')
-  const modeRestore = makeToolButton(RESTORE_ICON, '復元')
+  const modeErase = makeToolButton(ERASE_ICON, t.editorErase)
+  const modeRestore = makeToolButton(RESTORE_ICON, t.editorRestore)
   const modes = document.createElement('div')
   modes.className = 'editor-modes'
   modes.append(modeErase, modeRestore)
@@ -585,14 +587,14 @@ function buildEditorDom(layers) {
   // 自動選択（マジックワンド）。消去/復元の「方向」とは別軸の入力方法なので区切って配置する
   const tools = document.createElement('div')
   tools.className = 'editor-tools'
-  const autoBtn = makeToolButton(WAND_ICON, '自動選択')
+  const autoBtn = makeToolButton(WAND_ICON, t.editorAutoSelect)
   tools.appendChild(autoBtn)
   toolbar.appendChild(tools)
 
   const sizeWrap = document.createElement('label')
   sizeWrap.className = 'editor-size'
   const sizeLabel = document.createElement('span')
-  sizeLabel.textContent = 'ブラシ'
+  sizeLabel.textContent = t.editorBrush
   const size = document.createElement('input')
   size.type = 'range'
   size.min = '10'
@@ -607,7 +609,7 @@ function buildEditorDom(layers) {
   tolWrap.className = 'editor-size'
   tolWrap.hidden = true
   const tolLabel = document.createElement('span')
-  tolLabel.textContent = '許容値'
+  tolLabel.textContent = t.editorTolerance
   const tol = document.createElement('input')
   tol.type = 'range'
   tol.min = '0'
@@ -620,23 +622,23 @@ function buildEditorDom(layers) {
   // ズーム操作（− / 倍率%（クリックで等倍に戻す） / ＋ / 手のひら）
   const zoomWrap = document.createElement('div')
   zoomWrap.className = 'editor-zoom'
-  const zoomOut = makeZoomButton('−', '縮小')
+  const zoomOut = makeZoomButton('−', t.editorZoomOut)
   const zoomValue = document.createElement('button')
   zoomValue.type = 'button'
   zoomValue.className = 'editor-zoom-value'
-  zoomValue.title = 'クリックで等倍に戻す'
-  const zoomIn = makeZoomButton('＋', '拡大')
-  const panBtn = makeToolButton(HAND_ICON, '移動')
+  zoomValue.title = t.editorResetZoomTitle
+  const zoomIn = makeZoomButton('＋', t.editorZoomIn)
+  const panBtn = makeToolButton(HAND_ICON, t.editorPan)
   panBtn.classList.add('editor-pan')
   zoomWrap.append(zoomOut, zoomValue, zoomIn, panBtn)
   toolbar.appendChild(zoomWrap)
 
-  const undoBtn = makeTextButton('やり直し')
-  const resetBtn = makeTextButton('AI結果に戻す')
+  const undoBtn = makeTextButton(t.editorUndo)
+  const resetBtn = makeTextButton(t.editorResetToAI)
   const spacer = document.createElement('div')
   spacer.className = 'editor-spacer'
-  const cancelBtn = makeTextButton('キャンセル')
-  const applyBtn = makeTextButton('適用')
+  const cancelBtn = makeTextButton(t.editorCancel)
+  const applyBtn = makeTextButton(t.editorApply)
   applyBtn.classList.add('primary')
   toolbar.append(undoBtn, resetBtn, spacer, cancelBtn, applyBtn)
 
@@ -651,8 +653,7 @@ function buildEditorDom(layers) {
 
   const hint = document.createElement('p')
   hint.className = 'editor-hint'
-  hint.textContent =
-    '消去＝余分な背景を消す / 復元＝消えすぎた被写体を塗り戻す / 自動選択＝似た色の範囲をクリックで一括 / ホイール（ピンチ）で拡大・Spaceドラッグで移動（Ctrl+Z でやり直し）'
+  hint.textContent = t.editorHint
   panel.appendChild(hint)
 
   // ブラシ位置を示すリング（画面全体に対する固定配置のためroot直下に置く）

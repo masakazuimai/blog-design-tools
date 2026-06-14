@@ -1,5 +1,7 @@
 // 結果リスト・サマリーのDOM描画
 
+import { t } from './i18n.js?v=20260614'
+
 export function formatBytes(bytes) {
   if (bytes < 1024) return `${bytes} B`
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
@@ -37,12 +39,13 @@ function buildResultItem(result, onDownload) {
     const sign = percent >= 0 ? `-${percent}%` : `+${Math.abs(percent)}%`
     meta.innerHTML =
       `${formatBytes(result.origSize)} → ${formatBytes(result.newSize)} ` +
-      `<span class="${cls}">${sign}</span>（${result.outW}×${result.outH}）`
+      `<span class="${cls}">${sign}</span>` +
+      t.dims(result.outW, result.outH)
     info.appendChild(meta)
   } else {
     const status = document.createElement('div')
     status.className = `result-status${result.status === 'error' ? ' error' : ''}`
-    status.textContent = result.status === 'error' ? result.errorMessage : '処理中…'
+    status.textContent = result.status === 'error' ? result.errorMessage : t.processing
     info.appendChild(status)
   }
   li.appendChild(info)
@@ -52,7 +55,7 @@ function buildResultItem(result, onDownload) {
     actions.className = 'result-actions'
     const button = document.createElement('button')
     button.className = 'dl-button'
-    button.textContent = 'ダウンロード'
+    button.textContent = t.download
     button.addEventListener('click', () => onDownload(result))
     actions.appendChild(button)
     li.appendChild(actions)
@@ -70,8 +73,7 @@ export function renderSummary(barEl, textEl, results) {
   const origTotal = done.reduce((sum, r) => sum + r.origSize, 0)
   const newTotal = done.reduce((sum, r) => sum + r.newSize, 0)
   const percent = Math.round((1 - newTotal / origTotal) * 100)
-  textEl.innerHTML =
-    `${done.length}枚を処理: ${formatBytes(origTotal)} → ${formatBytes(newTotal)} ` +
-    `<strong>${percent >= 0 ? `-${percent}%` : `+${Math.abs(percent)}%`}</strong>`
+  const sign = percent >= 0 ? `-${percent}%` : `+${Math.abs(percent)}%`
+  textEl.innerHTML = t.summary(done.length, formatBytes(origTotal), formatBytes(newTotal), sign)
   barEl.hidden = false
 }

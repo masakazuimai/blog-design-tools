@@ -1,5 +1,7 @@
 // 結果リスト・サマリーのDOM描画
 
+import { t } from './i18n.js?v=20260614'
+
 export function formatBytes(bytes) {
   if (bytes < 1024) return `${bytes} B`
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
@@ -40,7 +42,7 @@ function buildResultItem(result, onDownload) {
   } else {
     const status = document.createElement('div')
     status.className = `result-status${result.status === 'error' ? ' error' : ''}`
-    status.textContent = result.status === 'error' ? result.errorMessage : 'AIが切り抜き中…'
+    status.textContent = result.status === 'error' ? result.errorMessage : t.statusCutting
     info.appendChild(status)
   }
   li.appendChild(info)
@@ -50,7 +52,7 @@ function buildResultItem(result, onDownload) {
     actions.className = 'result-actions'
     const button = document.createElement('button')
     button.className = 'dl-button'
-    button.textContent = 'ダウンロード'
+    button.textContent = t.download
     button.addEventListener('click', () => onDownload(result))
     actions.appendChild(button)
     li.appendChild(actions)
@@ -65,6 +67,6 @@ export function renderSummary(barEl, textEl, results) {
     barEl.hidden = true
     return
   }
-  textEl.innerHTML = `<strong>${done.length}枚</strong>の背景を透過にしました`
+  textEl.innerHTML = t.summary(done.length)
   barEl.hidden = false
 }

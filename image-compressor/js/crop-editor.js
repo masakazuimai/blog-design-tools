@@ -3,6 +3,8 @@
 // - 切り抜き用: 元画像全体を表示し、切り抜き枠をドラッグで移動・右下ハンドルで伸縮
 //   Shift押下中は1:1固定。「円形で切り抜く」トグルで枠に内接する楕円マスク（Shift併用で正円）
 
+import { t } from './i18n.js?v=20260614'
+
 const dom = {
   modal: document.getElementById('crop-modal'),
   frame: document.getElementById('crop-frame'),
@@ -66,7 +68,7 @@ function setupImageDrag(img, url, template, focus, onApply) {
   dom.image.classList.remove('marquee')
   dom.region.hidden = true
   dom.circleRow.hidden = true
-  dom.hint.textContent = '画像をドラッグして、切り抜く位置を調整します。'
+  dom.hint.textContent = t.cropHintImage
 
   session = {
     mode: 'image-drag',
@@ -105,8 +107,7 @@ function setupRegionDrag(img, url, { cropW, cropH, circle, focus, onApply }) {
   dom.regionHandle.hidden = false
   dom.circleRow.hidden = false
   dom.circleToggle.checked = Boolean(circle)
-  dom.hint.textContent =
-    '画像の上をドラッグして範囲を選択します（Shiftで正方形・正円）。枠の中をドラッグすると移動、右下のハンドルで微調整できます。'
+  dom.hint.textContent = t.cropHintRegion
 
   const regionW = Math.max(8, Math.round(effW * scale))
   const regionH = Math.max(8, Math.round(effH * scale))

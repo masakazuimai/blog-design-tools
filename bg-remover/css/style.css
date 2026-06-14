@@ -32,11 +32,28 @@ header {
 }
 
 .header-inner {
+  position: relative;
   max-width: 900px;
   margin: 0 auto;
   padding: 24px;
   text-align: center;
 }
+
+/* 言語切替リンク（ja ↔ en。ヘッダー右上） */
+.lang-switch {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: inline-block;
+  padding: 4px 12px;
+  border: 1px solid rgba(94, 234, 212, 0.4);
+  border-radius: 999px;
+  color: #5eead4;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+.lang-switch:hover { background: rgba(94, 234, 212, 0.12); }
 
 header h1 {
   font-size: 1.6rem;

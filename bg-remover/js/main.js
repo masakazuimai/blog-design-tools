@@ -1,10 +1,11 @@
 // エントリーポイント: ファイル選択・AIモデル準備・切り抜きパイプラインの実行
 
 // import先の ?v= はキャッシュバスティング用（サーバーがjsを7日キャッシュするため）。各ファイル更新時に日付を上げる
-import { preloadModel, cutoutSubject } from './cutout.js?v=20260613'
-import { renderResults, renderSummary } from './ui.js?v=20260613'
-import { downloadBlob, downloadZip } from './download.js?v=20260613'
-import { runEditor } from './editor.js?v=20260613d'
+import { preloadModel, cutoutSubject } from './cutout.js?v=20260614'
+import { renderResults, renderSummary } from './ui.js?v=20260614'
+import { downloadBlob, downloadZip } from './download.js?v=20260614'
+import { runEditor } from './editor.js?v=20260614'
+import { t } from './i18n.js?v=20260614'
 
 const dom = {
   dropZone: document.getElementById('drop-zone'),
@@ -93,22 +94,21 @@ async function startPreload() {
   } catch (error) {
     console.error('AIモデルの事前読み込みに失敗:', error)
     dom.modelProgressTrack.hidden = true
-    dom.modelProgressText.textContent =
-      'AIモデルの事前読み込みに失敗しました（実行時に再試行します）'
+    dom.modelProgressText.textContent = t.modelPreloadFailed
   }
 }
 
 function updateModelProgress(ratio) {
   const percent = Math.min(100, Math.round(ratio * 100))
   dom.modelProgressFill.style.width = `${percent}%`
-  dom.modelProgressText.textContent = `AIモデルをダウンロード中… ${percent}%（初回のみ・約40MB）`
+  dom.modelProgressText.textContent = t.modelDownloading(percent)
   if (percent >= 100) showModelReady()
 }
 
 function showModelReady() {
   dom.modelStatus.classList.add('ready')
   dom.modelProgressTrack.hidden = true
-  dom.modelProgressText.textContent = '✓ AIモデルの準備が完了しました'
+  dom.modelProgressText.textContent = t.modelReady
 }
 
 function removeFile(index) {
@@ -199,7 +199,7 @@ function renderDropPreviews() {
   const addTile = document.createElement('div')
   addTile.className = 'preview-add'
   addTile.textContent = '＋'
-  addTile.title = '画像を追加'
+  addTile.title = t.addImage
   dom.dropPreviews.appendChild(addTile)
 }
 
@@ -237,9 +237,9 @@ function buildPreviewTile(entry, index) {
   }
 
   if (showingCutout) {
-    tile.appendChild(buildBadge('切り抜きプレビュー'))
+    tile.appendChild(buildBadge(t.badgeCutoutPreview))
   } else if (state?.status === 'error') {
-    tile.appendChild(buildBadge('切り抜き失敗', true))
+    tile.appendChild(buildBadge(t.badgeCutoutFailed, true))
   }
 
   if (state?.status === 'loading') {
@@ -253,14 +253,14 @@ function buildPreviewTile(entry, index) {
   toolbar.className = 'preview-toolbar'
 
   const loading = state?.status === 'loading'
-  const eyeLabel = loading ? '切り抜き中…' : showingCutout ? '戻す' : '確認'
+  const eyeLabel = loading ? t.cutting : showingCutout ? t.revert : t.check
   const eye = buildTileButton(EYE_ICON, eyeLabel, loading, (event) => {
     event.stopPropagation()
     togglePreview(entry)
   })
   toolbar.appendChild(eye)
 
-  const edit = buildTileButton(PENCIL_ICON, '編集', loading, (event) => {
+  const edit = buildTileButton(PENCIL_ICON, t.edit, loading, (event) => {
     event.stopPropagation()
     openEditor(entry)
   })
@@ -272,7 +272,7 @@ function buildPreviewTile(entry, index) {
   remove.className = 'preview-remove'
   remove.type = 'button'
   remove.textContent = '×'
-  remove.setAttribute('aria-label', `${entry.file.name} を削除`)
+  remove.setAttribute('aria-label', t.removeAria(entry.file.name))
   remove.addEventListener('click', (event) => {
     event.stopPropagation()
     removeFile(index)
@@ -312,7 +312,7 @@ async function runPipeline() {
   const settings = readSettings()
 
   dom.runButton.disabled = true
-  dom.runButton.textContent = '処理中…'
+  dom.runButton.textContent = t.processing
   results = selectedFiles.map((entry) => ({
     file: entry.file,
     status: 'processing',
@@ -328,7 +328,7 @@ async function runPipeline() {
   }
 
   dom.runButton.disabled = false
-  dom.runButton.textContent = '背景を透過にする'
+  dom.runButton.textContent = t.runButton
 }
 
 async function processFile(entry, settings) {
@@ -396,7 +396,7 @@ function canvasToBlob(canvas, mimeType, quality) {
         if (blob) {
           resolve(blob)
         } else {
-          reject(new Error('画像の書き出しに失敗しました。'))
+          reject(new Error(t.exportFailed))
         }
       },
       mimeType,

@@ -2,6 +2,8 @@
 // JPG/WebPはjSquash（WASM）優先、読み込み失敗時はCanvasにフォールバック
 // PNGはUPNG.jsの減色圧縮を使用
 
+import { t } from './i18n.js?v=20260614'
+
 const CDN_MODULES = {
   jpeg: 'https://esm.sh/@jsquash/jpeg@1',
   webp: 'https://esm.sh/@jsquash/webp@1',
@@ -33,7 +35,7 @@ export async function decodeToBitmap(file) {
     return await createImageBitmap(file)
   } catch (error) {
     console.error('画像のデコードに失敗:', error)
-    throw new Error('この画像は読み込めませんでした。対応形式か確認してください。')
+    throw new Error(t.decodeFailed)
   }
 }
 
@@ -81,7 +83,7 @@ function loadImage(url) {
   return new Promise((resolve, reject) => {
     const img = new Image()
     img.onload = () => resolve(img)
-    img.onerror = () => reject(new Error('SVGの読み込みに失敗しました。'))
+    img.onerror = () => reject(new Error(t.svgLoadFailed))
     img.src = url
   })
 }
@@ -136,7 +138,7 @@ export async function encodeImage(format, imageData, quality) {
   if (format === 'avif') return encodeWithWasm('avif', 'image/avif', imageData, quality, { speed: 7 })
   if (format === 'png') return encodePng(imageData, quality)
   if (format === 'svg') return encodeSvg(imageData, quality)
-  throw new Error(`未対応の出力形式です: ${format}`)
+  throw new Error(t.unsupportedFormat(format))
 }
 
 function encodeSvg(imageData, quality) {
@@ -151,7 +153,7 @@ function encodeSvg(imageData, quality) {
     return Promise.resolve(new Blob([svg], { type: 'image/svg+xml' }))
   } catch (error) {
     console.error('SVGベクタライズに失敗:', error)
-    return Promise.reject(new Error('SVGへの変換に失敗しました。画像サイズを小さくして再試行してください。'))
+    return Promise.reject(new Error(t.svgConvertFailed))
   }
 }
 
@@ -164,7 +166,7 @@ async function encodeWithWasm(kind, mimeType, imageData, quality, extraOptions =
     // AVIFはCanvasのtoBlobが非対応（PNGに化ける）ためフォールバックせずエラーにする
     if (kind === 'avif') {
       console.error('AVIFのWASMエンコードに失敗:', error)
-      throw new Error('AVIFへの変換に失敗しました。通信環境を確認して再試行してください。')
+      throw new Error(t.avifFailed)
     }
     console.error(`${kind}のWASMエンコードに失敗したためCanvasにフォールバック:`, error)
     return canvasEncode(imageData, mimeType, quality / 100)
@@ -199,7 +201,7 @@ function canvasEncode(imageData, mimeType, quality) {
         if (blob) {
           resolve(blob)
         } else {
-          reject(new Error('画像のエンコードに失敗しました。'))
+          reject(new Error(t.encodeFailed))
         }
       },
       mimeType,

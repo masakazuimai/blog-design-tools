@@ -1,30 +1,32 @@
 // リサイズ計画の計算（描画はせず、出力サイズと描画パラメータだけを返す）
 
+import { t } from './i18n.js?v=20260614'
+
 export const TEMPLATES = [
   {
-    group: 'ブログ・OGP',
+    group: t.tplGroupBlog,
     items: [
-      { id: 'ogp', label: 'OGP画像（1200×630）', w: 1200, h: 630 },
-      { id: 'eyecatch', label: 'アイキャッチ 16:9（1280×720）', w: 1280, h: 720 },
+      { id: 'ogp', label: t.tplOgp, w: 1200, h: 630 },
+      { id: 'eyecatch', label: t.tplEyecatch, w: 1280, h: 720 },
     ],
   },
   {
-    group: 'SNS',
+    group: t.tplGroupSns,
     items: [
-      { id: 'x-post', label: 'X投稿（1600×900）', w: 1600, h: 900 },
-      { id: 'x-header', label: 'Xヘッダー（1500×500）', w: 1500, h: 500 },
-      { id: 'ig-post', label: 'Instagram投稿（1080×1080）', w: 1080, h: 1080 },
-      { id: 'ig-story', label: 'ストーリー（1080×1920）', w: 1080, h: 1920 },
-      { id: 'yt-thumb', label: 'YouTubeサムネイル（1280×720）', w: 1280, h: 720 },
+      { id: 'x-post', label: t.tplXPost, w: 1600, h: 900 },
+      { id: 'x-header', label: t.tplXHeader, w: 1500, h: 500 },
+      { id: 'ig-post', label: t.tplIgPost, w: 1080, h: 1080 },
+      { id: 'ig-story', label: t.tplIgStory, w: 1080, h: 1920 },
+      { id: 'yt-thumb', label: t.tplYtThumb, w: 1280, h: 720 },
     ],
   },
   {
-    group: '広告バナー',
+    group: t.tplGroupAd,
     items: [
-      { id: 'rectangle', label: 'レクタングル（300×250）', w: 300, h: 250 },
-      { id: 'leaderboard', label: 'リーダーボード（728×90）', w: 728, h: 90 },
-      { id: 'mobile-banner', label: 'モバイルバナー（320×100）', w: 320, h: 100 },
-      { id: 'skyscraper', label: 'スカイスクレイパー（160×600）', w: 160, h: 600 },
+      { id: 'rectangle', label: t.tplRectangle, w: 300, h: 250 },
+      { id: 'leaderboard', label: t.tplLeaderboard, w: 728, h: 90 },
+      { id: 'mobile-banner', label: t.tplMobileBanner, w: 320, h: 100 },
+      { id: 'skyscraper', label: t.tplSkyscraper, w: 160, h: 600 },
     ],
   },
 ]
