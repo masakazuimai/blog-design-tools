@@ -9,6 +9,21 @@
     <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/bg-remover/" />
     <link rel="alternate" hreflang="en" href="https://codequest.work/generator/bg-remover/en/" />
     <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/bg-remover/" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codequest.work/generator/bg-remover/en/" />
+    <meta property="og:title" content="Free Background Remover — No Upload, Runs in Your Browser | CodeQuest" />
+    <meta property="og:description" content="Remove the background from photos of people, products, and more — automatically, right in your browser. Free, no signup, no limits. Your images are never uploaded to a server." />
+    <meta property="og:image" content="https://codequest.work/generator/bg-remover/assets/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Free Background Remover — Runs in Your Browser" />
+    <meta name="twitter:description" content="Remove image backgrounds automatically, right in your browser. Free, no signup, no limits, no upload." />
+    <meta name="twitter:image" content="https://codequest.work/generator/bg-remover/assets/og.jpg" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
     <script>
@@ -24,6 +39,51 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と main.js の両方で日付を上げる -->
     <link rel="stylesheet" href="../css/style.css?v=20260614" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Free Background Remover",
+        "url": "https://codequest.work/generator/bg-remover/en/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web browser",
+        "inLanguage": "en",
+        "image": "https://codequest.work/generator/bg-remover/assets/og.jpg",
+        "description": "Remove the background from photos of people, products, and more — automatically, right in your browser. Free, no signup, no limits. Your images are never uploaded to a server.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": [
+          "AI subject detection and automatic background removal",
+          "Export as transparent PNG / WebP or white-background JPG",
+          "Batch processing and ZIP download",
+          "Runs in your browser — images are never uploaded"
+        ],
+        "publisher": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "Background Remover", "item": "https://codequest.work/generator/bg-remover/en/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Are my uploaded images stored anywhere?", "acceptedAnswer": { "@type": "Answer", "text": "No. The AI cutout runs entirely in your browser (on your own device), and your images are never sent to a server. The only network activity is the one-time download of the AI model itself." } },
+          { "@type": "Question", "name": "Is it free? Are there any limits?", "acceptedAnswer": { "@type": "Answer", "text": "It is completely free, with no usage limits and no account required. You can cut out as many images as you like." } },
+          { "@type": "Question", "name": "Why does the first run take a while?", "acceptedAnswer": { "@type": "Answer", "text": "Because the AI model that detects subjects (about 40MB) is downloaded only the first time. From the second time onward, your browser cache is used, so processing starts right away." } },
+          { "@type": "Question", "name": "What kinds of images cut out cleanly?", "acceptedAnswer": { "@type": "Answer", "text": "Photos with a clear boundary between the subject and the background — people, products, animals — work best. Fine hair, semi-transparent objects, and photos where the subject blends into the background may produce rougher edges." } },
+          { "@type": "Question", "name": "How do I make the cutout file smaller?", "acceptedAnswer": { "@type": "Answer", "text": "Use the companion Image Compressor & WebP Converter to convert to WebP, compress, and resize while keeping transparency." } }
+        ]
+      }
+    </script>
   </head>
   <body>
     <header>

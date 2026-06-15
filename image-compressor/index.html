@@ -9,6 +9,21 @@
     <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/image-compressor/" />
     <link rel="alternate" hreflang="en" href="https://codequest.work/generator/image-compressor/en/" />
     <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/image-compressor/" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codequest.work/generator/image-compressor/" />
+    <meta property="og:title" content="画像圧縮・WebP変換ツール｜JPG・PNG・WebP・AVIF・SVG変換とリサイズがブラウザで完結" />
+    <meta property="og:description" content="JPG・PNG・WebP・AVIF・SVGの圧縮・相互変換・リサイズができる無料ツール。EXIF情報も自動除去。画像はサーバーに送信されず、すべてブラウザ内で処理されます。" />
+    <meta property="og:image" content="https://codequest.work/generator/image-compressor/assets/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="画像圧縮・WebP/AVIF変換ツール｜ブラウザ完結・無料" />
+    <meta name="twitter:description" content="JPG・PNG・WebP・AVIF・SVGの圧縮・変換・リサイズが無料で。EXIF自動除去・ブラウザ内処理で安全。" />
+    <meta name="twitter:image" content="https://codequest.work/generator/image-compressor/assets/og.jpg" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
     <script>
@@ -24,6 +39,52 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と main.js の両方で日付を上げる -->
     <link rel="stylesheet" href="css/style.css?v=20260614" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "画像圧縮・WebP変換ツール",
+        "url": "https://codequest.work/generator/image-compressor/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web browser",
+        "inLanguage": "ja",
+        "image": "https://codequest.work/generator/image-compressor/assets/og.jpg",
+        "description": "JPG・PNG・WebP・AVIF・SVGの圧縮・相互変換・リサイズができる無料ツール。EXIF情報も自動で除去。画像はサーバーに送信されず、すべてブラウザ内で処理されます。",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": [
+          "JPG / PNG / WebP / AVIF / SVG の圧縮・相互変換",
+          "リサイズ・OGPなどの定型サイズ出力",
+          "EXIF（位置情報・撮影日時）の自動除去",
+          "ブラウザ内処理で画像を外部送信しない"
+        ],
+        "publisher": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "画像圧縮・WebP変換ツール", "item": "https://codequest.work/generator/image-compressor/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "アップロードした画像はどこかに保存されますか？", "acceptedAnswer": { "@type": "Answer", "text": "いいえ。画像の読み込み・圧縮・変換はすべてブラウザ内（お使いの端末上）で完結し、サーバーには一切送信されません。" } },
+          { "@type": "Question", "name": "なぜブログ画像はWebPに変換した方がよいのですか？", "acceptedAnswer": { "@type": "Answer", "text": "WebPはJPGやPNGより同じ画質でファイルサイズを小さくできる形式で、ページ表示速度（Core Web Vitals）の改善につながります。主要ブラウザはすべてWebP表示に対応しています。" } },
+          { "@type": "Question", "name": "WebPとAVIFはどちらを使えばよいですか？", "acceptedAnswer": { "@type": "Answer", "text": "圧縮率はAVIFの方が高く、同じ画質でWebPよりさらに2〜3割小さくできることが多いです。Chrome・Safari・Firefox・Edgeの主要ブラウザはAVIF表示に対応済みなので、より軽くしたい場合はAVIF、互換性を最優先する場合はWebPがおすすめです。" } },
+          { "@type": "Question", "name": "写真のEXIF情報（位置情報・撮影日時）は残りますか？", "acceptedAnswer": { "@type": "Answer", "text": "いいえ。このツールは変換時に画像を一度分解して再構成するため、GPS位置情報・撮影日時・カメラ機種などのEXIF情報はすべて自動的に除去されます。自宅で撮った写真も場所を特定される心配なく公開できます。" } },
+          { "@type": "Question", "name": "品質はどのくらいに設定すればよいですか？", "acceptedAnswer": { "@type": "Answer", "text": "ブログ用途なら70〜80が目安です。見た目の劣化がほぼ分からないまま、ファイルサイズを大きく削減できます。" } },
+          { "@type": "Question", "name": "写真をSVGに変換できますか？", "acceptedAnswer": { "@type": "Answer", "text": "変換自体は可能ですが、SVGは図形の集まりで画像を表現する形式のため、写真は切り絵のような仕上がりになります。SVG変換はロゴ・アイコン・イラストに向いています。" } }
+        ]
+      }
+    </script>
   </head>
   <body>
     <header>

@@ -17,9 +17,13 @@
   <meta property="og:title" content="画像カラーピッカー｜写真からWEBデザイン用カラーパレットを自動生成">
   <meta property="og:description" content="画像をアップロードするだけで、WEBデザインに使えるカラーパレットを自動生成。主要色の抽出からCSS変数・HEX・RGBコピーまで、ブラウザ完結で動作します。">
   <meta property="og:url" content="https://codequest.work/generator/image-color-picker/">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://codequest.work/generator/image-color-picker/assets/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="画像カラーピッカー｜写真からWEBデザイン用カラーパレットを自動生成">
   <meta name="twitter:description" content="画像をアップロードするだけで、WEBデザインに使えるカラーパレットを自動生成。CSS変数・HEX・RGBをワンクリックでコピー。">
+  <meta name="twitter:image" content="https://codequest.work/generator/image-color-picker/assets/og.jpg">
   <!-- 構造化データ -->
   <script type="application/ld+json">
   {
@@ -45,6 +49,16 @@
           { "@type": "ListItem", "position": 2, "name": "ジェネレーター", "item": "https://codequest.work/category/generator/" },
           { "@type": "ListItem", "position": 3, "name": "画像カラーピッカー", "item": "https://codequest.work/generator/image-color-picker/" }
         ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "このツールは無料ですか？", "acceptedAnswer": { "@type": "Answer", "text": "完全無料で、登録も回数制限もありません。抽出したパレットの保存・コピーも自由に行えます。" } },
+          { "@type": "Question", "name": "アップロードした画像はサーバーに送信されますか？", "acceptedAnswer": { "@type": "Answer", "text": "いいえ。色の抽出はすべてブラウザ内（お使いの端末上）で完結し、画像が外部サーバーに送信されることはありません。" } },
+          { "@type": "Question", "name": "どんな形式でコピーできますか？", "acceptedAnswer": { "@type": "Answer", "text": "HEX・RGBに加えて、CSSカスタムプロパティ（CSS変数）・Tailwind・SCSSの形式でワンクリックコピーできます。" } },
+          { "@type": "Question", "name": "色はどのように抽出していますか？", "acceptedAnswer": { "@type": "Answer", "text": "k-means法で画像のピクセルをクラスタリングし、画像を代表する主要色を自動で抽出しています。抽出する色数は調整できます。" } },
+          { "@type": "Question", "name": "どんな画像が向いていますか？", "acceptedAnswer": { "@type": "Answer", "text": "写真・イラスト・スクリーンショットなど、色の情報を持つ画像であれば利用できます。配色の参考やデザインのカラーパレット作成に便利です。" } }
+        ]
       }
     ]
   }
@@ -61,7 +75,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPMincho&family=Noto+Serif+JP:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html・en/index.html と main.js の import を揃えて日付を上げる -->
-  <link rel="stylesheet" href="css/style.css?v=20260615">
+  <link rel="stylesheet" href="css/style.css?v=20260615b">
 </head>
 <body>
   <header>
@@ -146,6 +160,24 @@
       </main>
     </div>
   </div>
+
+  <section class="faq-section">
+    <div class="faq-inner">
+      <h2 class="faq-heading">よくある質問</h2>
+      <dl class="faq">
+        <dt>このツールは無料ですか？</dt>
+        <dd>完全無料で、登録も回数制限もありません。抽出したパレットの保存・コピーも自由に行えます。</dd>
+        <dt>アップロードした画像はサーバーに送信されますか？</dt>
+        <dd>いいえ。色の抽出はすべてブラウザ内（お使いの端末上）で完結し、画像が外部サーバーに送信されることはありません。</dd>
+        <dt>どんな形式でコピーできますか？</dt>
+        <dd>HEX・RGBに加えて、CSSカスタムプロパティ（CSS変数）・Tailwind・SCSSの形式でワンクリックコピーできます。</dd>
+        <dt>色はどのように抽出していますか？</dt>
+        <dd>k-means法で画像のピクセルをクラスタリングし、画像を代表する主要色を自動で抽出しています。抽出する色数は調整できます。</dd>
+        <dt>どんな画像が向いていますか？</dt>
+        <dd>写真・イラスト・スクリーンショットなど、色の情報を持つ画像であれば利用できます。配色の参考やデザインのカラーパレット作成に便利です。</dd>
+      </dl>
+    </div>
+  </section>
 
   <div style="max-width: 728px; margin: 32px auto; text-align: center">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288"

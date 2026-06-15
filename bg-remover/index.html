@@ -9,6 +9,21 @@
     <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/bg-remover/" />
     <link rel="alternate" hreflang="en" href="https://codequest.work/generator/bg-remover/en/" />
     <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/bg-remover/" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codequest.work/generator/bg-remover/" />
+    <meta property="og:title" content="AI背景透過ツール（無料）｜人物・商品の被写体を自動切り抜き・ブラウザ完結で安全" />
+    <meta property="og:description" content="画像をドラッグ&ドロップするだけで、AIが被写体を自動検出して背景を透過にできる無料ツール。登録不要・回数制限なし。画像はサーバーに送信されず、すべてブラウザ内で処理されます。" />
+    <meta property="og:image" content="https://codequest.work/generator/bg-remover/assets/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="AI背景透過ツール（無料）｜被写体を自動切り抜き・ブラウザ完結" />
+    <meta name="twitter:description" content="AIが被写体を自動検出して背景を透過。登録不要・回数制限なし・画像はブラウザ内処理で安全。" />
+    <meta name="twitter:image" content="https://codequest.work/generator/bg-remover/assets/og.jpg" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
     <script>
@@ -24,6 +39,51 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と main.js の両方で日付を上げる -->
     <link rel="stylesheet" href="css/style.css?v=20260614" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "AI背景透過ツール",
+        "url": "https://codequest.work/generator/bg-remover/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web browser",
+        "inLanguage": "ja",
+        "image": "https://codequest.work/generator/bg-remover/assets/og.jpg",
+        "description": "AIが人物・商品・動物などの被写体を自動検出して背景を透過にできる無料ツール。登録不要・回数制限なし。画像はサーバーに送信されず、すべてブラウザ内で処理されます。",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": [
+          "AIによる被写体の自動検出・背景透過",
+          "透過PNG / WebP / 白背景JPGで書き出し",
+          "複数枚の一括処理・ZIP一括ダウンロード",
+          "ブラウザ内処理で画像を外部送信しない"
+        ],
+        "publisher": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "AI背景透過ツール", "item": "https://codequest.work/generator/bg-remover/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "アップロードした画像はどこかに保存されますか？", "acceptedAnswer": { "@type": "Answer", "text": "いいえ。AIによる切り抜き処理はすべてブラウザ内（お使いの端末上）で完結し、画像がサーバーに送信されることは一切ありません。通信が発生するのはAIモデル本体のダウンロードのみです。" } },
+          { "@type": "Question", "name": "無料ですか？回数制限はありますか？", "acceptedAnswer": { "@type": "Answer", "text": "完全無料で、回数制限も会員登録もありません。何枚でも切り抜けます。" } },
+          { "@type": "Question", "name": "初回だけ時間がかかるのはなぜですか？", "acceptedAnswer": { "@type": "Answer", "text": "被写体を検出するAIモデル（約40MB）を初回のみダウンロードするためです。2回目以降はブラウザのキャッシュが使われるため、すぐに処理が始まります。" } },
+          { "@type": "Question", "name": "どんな画像がきれいに切り抜けますか？", "acceptedAnswer": { "@type": "Answer", "text": "人物・商品・動物など、被写体と背景の境界がはっきりした写真が得意です。細い髪の毛・半透明のもの・背景と色が溶け合った写真は、輪郭が粗くなる場合があります。" } },
+          { "@type": "Question", "name": "切り抜いた画像を軽量化したいときは？", "acceptedAnswer": { "@type": "Answer", "text": "同シリーズの画像圧縮・WebP変換ツールで、透過を保ったままWebP化・圧縮・リサイズができます。" } }
+        ]
+      }
+    </script>
   </head>
   <body>
     <header>

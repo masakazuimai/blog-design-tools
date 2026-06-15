@@ -9,6 +9,21 @@
     <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/image-compressor/" />
     <link rel="alternate" hreflang="en" href="https://codequest.work/generator/image-compressor/en/" />
     <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/image-compressor/" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codequest.work/generator/image-compressor/en/" />
+    <meta property="og:title" content="Free Image Compressor & WebP/AVIF Converter — Runs in Your Browser | CodeQuest" />
+    <meta property="og:description" content="Compress, convert, and resize JPG, PNG, WebP, AVIF, and SVG by drag & drop. EXIF data (including GPS location) is stripped automatically. Free, no signup — your images are never uploaded." />
+    <meta property="og:image" content="https://codequest.work/generator/image-compressor/assets/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Free Image Compressor & WebP/AVIF Converter" />
+    <meta name="twitter:description" content="Compress, convert, and resize JPG / PNG / WebP / AVIF / SVG in your browser. Free, EXIF stripped, no upload." />
+    <meta name="twitter:image" content="https://codequest.work/generator/image-compressor/assets/og.jpg" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
     <script>
@@ -24,6 +39,52 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と main.js の両方で日付を上げる -->
     <link rel="stylesheet" href="../css/style.css?v=20260614" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Image Compressor & WebP/AVIF Converter",
+        "url": "https://codequest.work/generator/image-compressor/en/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web browser",
+        "inLanguage": "en",
+        "image": "https://codequest.work/generator/image-compressor/assets/og.jpg",
+        "description": "Compress, convert, and resize JPG, PNG, WebP, AVIF, and SVG by drag & drop. EXIF data (including GPS location) is stripped automatically. Free, no signup — your images are never uploaded.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": [
+          "Compress and convert JPG / PNG / WebP / AVIF / SVG",
+          "Resize and export common preset sizes (OGP, etc.)",
+          "Automatic EXIF (GPS, capture date) removal",
+          "Runs in your browser — images are never uploaded"
+        ],
+        "publisher": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "Image Compressor", "item": "https://codequest.work/generator/image-compressor/en/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Are my uploaded images stored anywhere?", "acceptedAnswer": { "@type": "Answer", "text": "No. Loading, compression, and conversion all run entirely in your browser (on your own device), and nothing is ever sent to a server." } },
+          { "@type": "Question", "name": "Why should I convert blog images to WebP?", "acceptedAnswer": { "@type": "Answer", "text": "WebP produces smaller files than JPG or PNG at the same visual quality, which improves page load speed (Core Web Vitals). All major browsers can display WebP." } },
+          { "@type": "Question", "name": "Should I use WebP or AVIF?", "acceptedAnswer": { "@type": "Answer", "text": "AVIF compresses more — often 20–30% smaller than WebP at the same quality. Chrome, Safari, Firefox, and Edge all support AVIF, so choose AVIF when you want the smallest files, and WebP when compatibility is the top priority." } },
+          { "@type": "Question", "name": "Is EXIF data (location, capture date) kept?", "acceptedAnswer": { "@type": "Answer", "text": "No. This tool decodes and rebuilds each image during conversion, so GPS location, capture date, camera model, and other EXIF data are all removed automatically. You can publish photos taken at home without worrying about your location being identified." } },
+          { "@type": "Question", "name": "What quality setting should I use?", "acceptedAnswer": { "@type": "Answer", "text": "For blog use, 70–80 is a good guide. You can cut file size substantially with little to no visible loss." } },
+          { "@type": "Question", "name": "Can I convert a photo to SVG?", "acceptedAnswer": { "@type": "Answer", "text": "You can, but because SVG represents images as a collection of shapes, photos end up looking like cut-paper art. SVG conversion is best for logos, icons, and illustrations." } }
+        ]
+      }
+    </script>
   </head>
   <body>
     <header>
