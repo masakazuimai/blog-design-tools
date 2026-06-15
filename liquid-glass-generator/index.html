@@ -9,6 +9,21 @@
     <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/liquid-glass-generator/" />
     <link rel="alternate" hreflang="en" href="https://codequest.work/generator/liquid-glass-generator/en/" />
     <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/liquid-glass-generator/" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codequest.work/generator/liquid-glass-generator/" />
+    <meta property="og:title" content="Liquid Glassジェネレーター｜WebGLでApple風の液体ガラスUIをコード生成（無料）" />
+    <meta property="og:description" content="AppleのLiquid Glass（液体ガラス）をWebGLで本物の屈折まで再現。屈折・色収差・すりガラス・スペキュラを調整して、コピペできるコードを生成する無料ツールです。" />
+    <meta property="og:image" content="https://codequest.work/generator/liquid-glass-generator/assets/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Liquid Glassジェネレーター｜WebGLでApple風の液体ガラスUIをコード生成（無料）" />
+    <meta name="twitter:description" content="AppleのLiquid Glass（液体ガラス）をWebGLで本物の屈折まで再現。コピペできるコードを生成する無料ツール。" />
+    <meta name="twitter:image" content="https://codequest.work/generator/liquid-glass-generator/assets/og.jpg" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
     <script>
@@ -23,7 +38,81 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と main.js の両方で日付を上げる -->
-    <link rel="stylesheet" href="css/style.css?v=20260615" />
+    <link rel="stylesheet" href="css/style.css?v=20260615b" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Liquid Glassジェネレーター",
+        "url": "https://codequest.work/generator/liquid-glass-generator/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web browser",
+        "inLanguage": "ja",
+        "image": "https://codequest.work/generator/liquid-glass-generator/assets/og.jpg",
+        "description": "AppleのLiquid Glass（液体ガラス）をWebGLで本物の屈折まで再現し、コピペできるコードを生成する無料ツール。屈折・色収差・すりガラス・スペキュラを調整して、背景画像の上にガラスのボタンやカードを重ねてプレビューできます。",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": [
+          "WebGLによる本物の屈折・色収差の再現",
+          "屈折・ぼかし・スペキュラ・色収差・ティントの調整",
+          "ボタン・カード・ピル・円の形状プリセット",
+          "コピペできる自己完結のWebGLコード生成"
+        ],
+        "publisher": {
+          "@type": "Organization",
+          "name": "CodeQuest.work",
+          "url": "https://codequest.work/"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "Liquid Glassジェネレーター", "item": "https://codequest.work/generator/liquid-glass-generator/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Liquid Glassジェネレーターは無料ですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "はい。完全無料で、登録も透かしもありません。生成したコードはそのまま商用利用できます。" }
+          },
+          {
+            "@type": "Question",
+            "name": "CSS方式のLiquid Glassジェネレーターと何が違いますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "多くのツールは backdrop-filter とSVGフィルタによるCSS方式で、背景を本当に屈折させることはできません。本ツールはWebGL（GLSLシェーダー）で背景ピクセルを再サンプリングするため、レンズのような屈折と縁の色収差まで実物に近づきます。" }
+          },
+          {
+            "@type": "Question",
+            "name": "効果はページの背景に追従しますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "いいえ。出力コードは背景画像をcanvasに焼き込む方式のため、その下にある任意のページ要素には追従しません。背景画像が決まっているヒーローやカードに向いています。" }
+          },
+          {
+            "@type": "Question",
+            "name": "対応ブラウザは？",
+            "acceptedAnswer": { "@type": "Answer", "text": "Chrome・Safari・EdgeなどWebGL対応ブラウザで屈折・色収差が表示されます。" }
+          },
+          {
+            "@type": "Question",
+            "name": "生成したコードは商用利用できますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "はい。生成されたコードはあなたのものです。背景画像のURLをご自身の権利のある画像に差し替えてご利用ください。" }
+          },
+          {
+            "@type": "Question",
+            "name": "AppleのLiquid Glassとは何ですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "Appleが2025年に発表したiOS 26・macOS Tahoeなどで採用された半透明のガラス素材表現です。背景を屈折させ、縁に鏡面ハイライトと色収差を載せ、全体をすりガラス状にぼかすのが特徴です。" }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <header>
@@ -132,19 +221,80 @@
 
       <!-- 解説 -->
       <section class="article">
+        <div class="answer-box">
+          <p><strong>Liquid Glassジェネレーター</strong>は、AppleのLiquid Glass（液体ガラス）を<strong>WebGLで本物の屈折まで再現</strong>し、コピペできるコードを書き出す無料ツールです。背景画像の上にガラスのボタンやカードを置き、屈折・色収差・すりガラス・スペキュラをスライダーで調整できます。登録不要・透かしなし。</p>
+        </div>
+
         <h2>Liquid Glassとは</h2>
-        <p>Liquid Glass（リキッドグラス／液体ガラス）は、Appleが提唱する半透明のガラス素材表現です。背景を<strong>屈折（レンズのように歪ませる）</strong>させ、縁に<strong>鏡面ハイライト</strong>と<strong>わずかな色収差</strong>を載せ、全体を<strong>すりガラス状にぼかす</strong>のが特徴です。</p>
-        <p>このうち「屈折」は <code>backdrop-filter</code> など純粋なCSSでは表現できません。そこで本ツールでは<strong>WebGL（GLSLシェーダー）</strong>で背景の歪みまで正確に再現し、その見た目をそのまま再現するコードを書き出します。</p>
+        <p>Liquid Glass（リキッドグラス／液体ガラス）は、Appleが2025年に発表しiOS 26・macOS Tahoeなどで採用された半透明のガラス素材表現です。背景を<strong>屈折（レンズのように歪ませる）</strong>させ、縁に<strong>鏡面ハイライト</strong>と<strong>わずかな色収差</strong>を載せ、全体を<strong>すりガラス状にぼかす</strong>のが特徴です。</p>
+
+        <h2>WebGL方式とCSS方式の違い</h2>
+        <p>多くのLiquid Glassジェネレーターは <code>backdrop-filter</code> とSVGフィルタによる<strong>CSS方式</strong>です。手軽ですが、背景を<strong>本当に屈折させること</strong>はできず、すりガラス＋ハイライトの平面的な表現にとどまります。本ツールはWebGL（GLSLシェーダー）で背景ピクセルをシェーダーで再サンプリングするため、縁のレンズ歪み・色収差まで実物に近づきます。</p>
+        <table class="compare-table">
+          <thead>
+            <tr><th>項目</th><th>CSS方式（一般的なツール）</th><th>WebGL方式（本ツール）</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>背景の屈折</td><td>不可（平面的なぼかしのみ）</td><td>可（レンズのように歪む）</td></tr>
+            <tr><td>色収差</td><td>擬似的</td><td>RGBずらしで実物に近い</td></tr>
+            <tr><td>ページ背景への追従</td><td>追従する</td><td>背景画像を焼き込む方式</td></tr>
+            <tr><td>出力</td><td>CSS / HTML</td><td>自己完結のWebGLスニペット</td></tr>
+          </tbody>
+        </table>
+
+        <h2>使い方（3ステップ）</h2>
+        <ol>
+          <li>形状（ボタン／カード／ピル／円）と背景画像を選びます。</li>
+          <li>屈折・ぼかし・スペキュラ・色収差・ティントを調整し、必要ならボタンのテキストを入力します。</li>
+          <li>「コードをコピー」で自己完結のWebGLスニペットを取得し、背景URLをご自身の画像に差し替えて貼り付けます。</li>
+        </ol>
+
+        <h2>こんな場面に</h2>
+        <ul>
+          <li>ヒーローセクションのガラス風CTAボタン</li>
+          <li>画像の上に重ねるガラスカード・価格カード</li>
+          <li>iOS 26風のガラスUIモックアップ</li>
+          <li>ポートフォリオやランディングページのアクセント</li>
+        </ul>
+
         <h3>仕組みと注意点</h3>
         <ul>
           <li>背景画像をcanvasに描画し、角丸矩形のガラス領域だけシェーダーで屈折・色収差・ぼかし・スペキュラを合成しています。</li>
           <li>出力コードは<strong>背景画像をcanvasに焼き込む</strong>方式です。任意のページ背景（その下にある記事本文など）には追従しません。ヒーローやカードなど、背景画像が決まっている箇所に向いています。</li>
           <li>屈折・色収差はChrome / Safari / Edge（WebGL対応ブラウザ）で表示されます。</li>
         </ul>
+
+        <h2>よくある質問</h2>
+        <div class="faq">
+          <div class="faq-item">
+            <h3>Liquid Glassジェネレーターは無料ですか？</h3>
+            <p>はい。完全無料で、登録も透かしもありません。生成したコードはそのまま商用利用できます。</p>
+          </div>
+          <div class="faq-item">
+            <h3>CSS方式のLiquid Glassジェネレーターと何が違いますか？</h3>
+            <p>多くのツールは <code>backdrop-filter</code> とSVGフィルタによるCSS方式で、背景を本当に屈折させることはできません。本ツールはWebGL（GLSLシェーダー）で背景ピクセルを再サンプリングするため、レンズのような屈折と縁の色収差まで実物に近づきます。</p>
+          </div>
+          <div class="faq-item">
+            <h3>効果はページの背景に追従しますか？</h3>
+            <p>いいえ。出力コードは背景画像をcanvasに焼き込む方式のため、その下にある任意のページ要素には追従しません。背景画像が決まっているヒーローやカードに向いています。</p>
+          </div>
+          <div class="faq-item">
+            <h3>対応ブラウザは？</h3>
+            <p>Chrome・Safari・EdgeなどWebGL対応ブラウザで屈折・色収差が表示されます。</p>
+          </div>
+          <div class="faq-item">
+            <h3>生成したコードは商用利用できますか？</h3>
+            <p>はい。生成されたコードはあなたのものです。背景画像のURLをご自身の権利のある画像に差し替えてご利用ください。</p>
+          </div>
+          <div class="faq-item">
+            <h3>AppleのLiquid Glassとは何ですか？</h3>
+            <p>Appleが2025年に発表したiOS 26・macOS Tahoeなどで採用された半透明のガラス素材表現です。背景を屈折させ、縁に鏡面ハイライトと色収差を載せ、全体をすりガラス状にぼかすのが特徴です。</p>
+          </div>
+        </div>
       </section>
     </div>
 
-    <div style="max-width: 1180px; margin: 32px auto 0; padding: 0 24px">
+    <div style="max-width: 728px; margin: 32px auto; text-align: center">
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
       <!-- footer-top -->
       <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
