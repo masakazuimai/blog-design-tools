@@ -18,7 +18,7 @@ const state = {
   // ガラス中心（CSSピクセル, キャンバス左上原点）。初期値はリサイズ時に中央へ
   cx: 0,
   cy: 0,
-  bgFile: BACKGROUNDS[0].file, // 組み込み背景のファイル名（カスタム時は null）
+  bgFile: BACKGROUNDS.find((bg) => bg.id === 'tree').file, // 組み込み背景の既定ファイル名（カスタム時は null）
   bgIsCustom: false,
   // ボタン内テキスト
   text: 'Button',
@@ -193,10 +193,10 @@ function bindShapes() {
 
 function bindBackgrounds() {
   const list = document.getElementById('bg-list')
-  BACKGROUNDS.forEach((bg, i) => {
+  BACKGROUNDS.forEach((bg) => {
     const btn = document.createElement('button')
     btn.type = 'button'
-    btn.className = 'bg-thumb' + (i === 0 ? ' active' : '')
+    btn.className = 'bg-thumb' + (bg.file === state.bgFile ? ' active' : '')
     btn.style.backgroundImage = `url(${backgroundUrl(bg.file)})`
     btn.title = bg.label[lang]
     btn.setAttribute('aria-label', bg.label[lang])

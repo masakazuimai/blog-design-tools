@@ -51,12 +51,7 @@
         "image": "https://codequest.work/generator/liquid-glass-generator/assets/og.jpg",
         "description": "AppleのLiquid Glass（液体ガラス）をWebGLで本物の屈折まで再現し、コピペできるコードを生成する無料ツール。屈折・色収差・すりガラス・スペキュラを調整して、背景画像の上にガラスのボタンやカードを重ねてプレビューできます。",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "featureList": [
-          "WebGLによる本物の屈折・色収差の再現",
-          "屈折・ぼかし・スペキュラ・色収差・ティントの調整",
-          "ボタン・カード・ピル・円の形状プリセット",
-          "コピペできる自己完結のWebGLコード生成"
-        ],
+        "featureList": ["WebGLによる本物の屈折・色収差の再現", "屈折・ぼかし・スペキュラ・色収差・ティントの調整", "ボタン・カード・ピル・円の形状プリセット", "コピペできる自己完結のWebGLコード生成"],
         "publisher": {
           "@type": "Organization",
           "name": "CodeQuest.work",
@@ -136,7 +131,11 @@
             <div class="bg-list" id="bg-list"></div>
             <label class="bg-upload-btn">
               <input type="file" id="bg-upload" accept="image/*" hidden />
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" y1="3" x2="12" y2="15" />
+              </svg>
               画像をアップロード
             </label>
           </div>
@@ -169,27 +168,27 @@
           <div class="card">
             <label class="slider-row">
               <span class="slider-label">屈折の強さ <em data-val="refraction"></em></span>
-              <input type="range" id="refraction" min="0" max="1.5" step="0.01" value="0.7" />
+              <input type="range" id="refraction" min="0" max="1.5" step="0.01" value="1.5" />
             </label>
             <label class="slider-row">
               <span class="slider-label">すりガラス（ぼかし） <em data-val="blur"></em></span>
-              <input type="range" id="blur" min="0" max="20" step="0.5" value="4" />
+              <input type="range" id="blur" min="0" max="20" step="0.5" value="0" />
             </label>
             <label class="slider-row">
               <span class="slider-label">縁の光（スペキュラ） <em data-val="specular"></em></span>
-              <input type="range" id="specular" min="0" max="1.5" step="0.01" value="0.7" />
+              <input type="range" id="specular" min="0" max="1.5" step="0.01" value="1.5" />
             </label>
             <label class="slider-row">
               <span class="slider-label">色収差 <em data-val="aberration"></em></span>
-              <input type="range" id="aberration" min="0" max="1" step="0.01" value="0.4" />
+              <input type="range" id="aberration" min="0" max="1" step="0.01" value="1" />
             </label>
             <label class="slider-row">
               <span class="slider-label">縁の厚み <em data-val="edge"></em></span>
-              <input type="range" id="edge" min="6" max="60" step="1" value="26" />
+              <input type="range" id="edge" min="6" max="60" step="1" value="60" />
             </label>
             <label class="slider-row">
               <span class="slider-label">角丸 <em data-val="radius"></em></span>
-              <input type="range" id="radius" min="0" max="46" step="1" value="40" />
+              <input type="range" id="radius" min="0" max="46" step="1" value="46" />
             </label>
           </div>
 
@@ -211,7 +210,10 @@
         <div class="output-head">
           <h2>生成されたコード</h2>
           <button type="button" class="copy-btn" id="copy-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
             <span>コードをコピー</span>
           </button>
         </div>
@@ -232,13 +234,33 @@
         <p>多くのLiquid Glassジェネレーターは <code>backdrop-filter</code> とSVGフィルタによる<strong>CSS方式</strong>です。手軽ですが、背景を<strong>本当に屈折させること</strong>はできず、すりガラス＋ハイライトの平面的な表現にとどまります。本ツールはWebGL（GLSLシェーダー）で背景ピクセルをシェーダーで再サンプリングするため、縁のレンズ歪み・色収差まで実物に近づきます。</p>
         <table class="compare-table">
           <thead>
-            <tr><th>項目</th><th>CSS方式（一般的なツール）</th><th>WebGL方式（本ツール）</th></tr>
+            <tr>
+              <th>項目</th>
+              <th>CSS方式（一般的なツール）</th>
+              <th>WebGL方式（本ツール）</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td>背景の屈折</td><td>不可（平面的なぼかしのみ）</td><td>可（レンズのように歪む）</td></tr>
-            <tr><td>色収差</td><td>擬似的</td><td>RGBずらしで実物に近い</td></tr>
-            <tr><td>ページ背景への追従</td><td>追従する</td><td>背景画像を焼き込む方式</td></tr>
-            <tr><td>出力</td><td>CSS / HTML</td><td>自己完結のWebGLスニペット</td></tr>
+            <tr>
+              <td>背景の屈折</td>
+              <td>不可（平面的なぼかしのみ）</td>
+              <td>可（レンズのように歪む）</td>
+            </tr>
+            <tr>
+              <td>色収差</td>
+              <td>擬似的</td>
+              <td>RGBずらしで実物に近い</td>
+            </tr>
+            <tr>
+              <td>ページ背景への追従</td>
+              <td>追従する</td>
+              <td>背景画像を焼き込む方式</td>
+            </tr>
+            <tr>
+              <td>出力</td>
+              <td>CSS / HTML</td>
+              <td>自己完結のWebGLスニペット</td>
+            </tr>
           </tbody>
         </table>
 

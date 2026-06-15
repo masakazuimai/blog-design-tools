@@ -10,7 +10,7 @@ export const VERTEX_SHADER = /* glsl */ `
     vUv = uv;
     gl_Position = vec4(position, 0.0, 1.0);
   }
-`
+`;
 
 // フラグメントシェーダー: 背景を cover 配置し、角丸矩形のガラス領域だけ
 // 屈折・色収差・フロスト（すりガラス）・スペキュラ・ティントを合成する。
@@ -125,25 +125,25 @@ export const FRAGMENT_SHADER = /* glsl */ `
     float coverage = 1.0 - smoothstep(-1.0, 1.0, d);
     gl_FragColor = vec4(mix(bgColor, glassColor, coverage), 1.0);
   }
-`
+`;
 
 // 形状プリセット。サイズ（半径ではなく実寸の半分=half）と角丸の既定値を持つ
 export const SHAPE_PRESETS = {
-  button: { label: 'button', halfW: 130, halfH: 46, radius: 40 },
-  card: { label: 'card', halfW: 200, halfH: 140, radius: 36 },
-  pill: { label: 'pill', halfW: 150, halfH: 40, radius: 40 },
-  circle: { label: 'circle', halfW: 90, halfH: 90, radius: 90 },
-}
+  button: { label: "button", halfW: 130, halfH: 46, radius: 46 },
+  card: { label: "card", halfW: 200, halfH: 140, radius: 36 },
+  pill: { label: "pill", halfW: 150, halfH: 40, radius: 40 },
+  circle: { label: "circle", halfW: 90, halfH: 90, radius: 90 },
+};
 
 // スライダー初期値（Liquid Glass らしい既定）
 export const DEFAULT_PARAMS = {
-  shape: 'button',
-  refraction: 0.7,
-  blur: 4,
-  specular: 0.7,
-  aberration: 0.4,
-  edge: 26,
-  radius: 40,
-  tint: '#ffffff',
+  shape: "button",
+  refraction: 1.5,
+  blur: 0,
+  specular: 1.5,
+  aberration: 1,
+  edge: 60,
+  radius: 46,
+  tint: "#ffffff",
   tintOpacity: 0.06,
-}
+};
