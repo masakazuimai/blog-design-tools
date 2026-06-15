@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liquid Glass Generator — Recreate Apple's Liquid Glass UI with WebGL (Free)</title>
+    <meta name="description" content="Recreate Apple's Liquid Glass design with WebGL and export copy-paste code. Adjust refraction, chromatic aberration, frosted blur, and specular highlights, and preview glass buttons or cards over a background image in real time. Free, no signup." />
+    <link rel="canonical" href="https://codequest.work/generator/liquid-glass-generator/en/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/liquid-glass-generator/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/liquid-glass-generator/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/liquid-glass-generator/" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と main.js の両方で日付を上げる -->
+    <link rel="stylesheet" href="../css/style.css?v=20260615" />
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <a class="lang-switch" href="../" hreflang="ja">日本語</a>
+        <h1>Liquid Glass <span class="accent">Generator</span></h1>
+        <p>Recreate Apple's Liquid Glass with WebGL. Tune refraction, chromatic aberration, and frosted blur, then export copy-paste code.</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="layout">
+        <!-- Preview -->
+        <section class="stage">
+          <div class="canvas-wrap">
+            <canvas id="preview"></canvas>
+            <div class="glass-label" id="glass-label"></div>
+            <p class="drag-hint">Drag on the preview to move the glass</p>
+          </div>
+          <div class="bg-bar">
+            <div class="bg-list" id="bg-list"></div>
+            <label class="bg-upload-btn">
+              <input type="file" id="bg-upload" accept="image/*" hidden />
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
+              Upload image
+            </label>
+          </div>
+        </section>
+
+        <!-- Controls -->
+        <aside class="panel" id="controls">
+          <div class="card">
+            <div class="card-title">Shape</div>
+            <div class="shape-row">
+              <button type="button" class="shape-btn active" data-shape="button">Button</button>
+              <button type="button" class="shape-btn" data-shape="card">Card</button>
+              <button type="button" class="shape-btn" data-shape="pill">Pill</button>
+              <button type="button" class="shape-btn" data-shape="circle">Circle</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Text</div>
+            <input type="text" id="label-text" class="text-input" placeholder="Button text" />
+            <div class="tint-row" style="margin-top: 14px">
+              <input type="color" id="label-color" value="#ffffff" aria-label="Text color" />
+              <label class="slider-row tint-opacity">
+                <span class="slider-label">Font size <em data-val="fontSize"></em></span>
+                <input type="range" id="fontSize" min="16" max="48" step="1" value="20" />
+              </label>
+            </div>
+          </div>
+
+          <div class="card">
+            <label class="slider-row">
+              <span class="slider-label">Refraction <em data-val="refraction"></em></span>
+              <input type="range" id="refraction" min="0" max="1.5" step="0.01" value="0.7" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Frosted blur <em data-val="blur"></em></span>
+              <input type="range" id="blur" min="0" max="20" step="0.5" value="4" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Edge specular <em data-val="specular"></em></span>
+              <input type="range" id="specular" min="0" max="1.5" step="0.01" value="0.7" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Chromatic aberration <em data-val="aberration"></em></span>
+              <input type="range" id="aberration" min="0" max="1" step="0.01" value="0.4" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Edge thickness <em data-val="edge"></em></span>
+              <input type="range" id="edge" min="6" max="60" step="1" value="26" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Corner radius <em data-val="radius"></em></span>
+              <input type="range" id="radius" min="0" max="46" step="1" value="40" />
+            </label>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Tint</div>
+            <div class="tint-row">
+              <input type="color" id="tint" value="#ffffff" aria-label="Tint color" />
+              <label class="slider-row tint-opacity">
+                <span class="slider-label">Opacity <em data-val="tintOpacity"></em></span>
+                <input type="range" id="tintOpacity" min="0" max="0.5" step="0.01" value="0.06" />
+              </label>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Output -->
+      <section class="output-section">
+        <div class="output-head">
+          <h2>Generated code</h2>
+          <button type="button" class="copy-btn" id="copy-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+            <span>Copy code</span>
+          </button>
+        </div>
+        <textarea id="output" readonly spellcheck="false"></textarea>
+        <p class="output-note">※ Replace the background URL with your own image. It's a self-contained snippet that loads the lightweight <code>ogl</code> library from a CDN.</p>
+      </section>
+
+      <!-- Article -->
+      <section class="article">
+        <h2>What is Liquid Glass?</h2>
+        <p>Liquid Glass is Apple's translucent glass material. It <strong>refracts the background like a lens</strong>, adds a <strong>specular highlight</strong> and <strong>subtle chromatic aberration</strong> along the edge, and applies a <strong>frosted blur</strong>.</p>
+        <p>The refraction part cannot be reproduced with pure CSS such as <code>backdrop-filter</code>. This tool recreates the background distortion accurately with <strong>WebGL (GLSL shaders)</strong> and exports code that reproduces the exact look.</p>
+        <h3>How it works &amp; caveats</h3>
+        <ul>
+          <li>The background image is drawn to a canvas, and only the rounded-rect glass area is composited with refraction, chromatic aberration, blur, and specular in the shader.</li>
+          <li>The exported code <strong>bakes the background image into the canvas</strong>. It does not follow arbitrary page content behind it — it's best for spots where the background image is fixed, such as heroes and cards.</li>
+          <li>Refraction and chromatic aberration render in WebGL-capable browsers (Chrome / Safari / Edge).</li>
+        </ul>
+      </section>
+    </div>
+
+    <div style="max-width: 1180px; margin: 32px auto 0; padding: 0 24px">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- footer-top -->
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 Liquid Glass Generator | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+
+    <script type="module" src="../js/main.js?v=20260615"></script>
+  </body>
+</html>
