@@ -1,0 +1,126 @@
+:root {
+  --light-color: #444;
+  --dark-color: #000;
+  --icon-color: #65615f;
+  --w: 30rem;        /* ボタン幅 */
+  --h: 10rem;        /* ボタン高さ */
+  --radius: 3rem;    /* 角丸 */
+  --rim: 0.3rem;     /* リム（ベゼル）太さ */
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html { font-size: 62.5%; }
+
+body {
+  min-height: 100vh;
+  background: #1d1d1d;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem 3rem;
+  place-content: center;
+  padding: 4rem;
+  font-family: sans-serif;
+}
+
+/* タブレット以下：1列に切り替え、ボタン幅は画面に追従 */
+@media (max-width: 720px) {
+  :root {
+    --w: min(34rem, 86vw);
+    --h: 9rem;
+    --radius: 2.6rem;
+  }
+  body {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    padding: 4rem 2rem;
+  }
+}
+
+/* スマホ：余白・文字をさらに引き締め */
+@media (max-width: 400px) {
+  :root { --h: 8rem; }
+  .label { font-size: 2.2rem; letter-spacing: 0.18em; text-indent: 0.18em; }
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.cap {
+  color: #9a9591;
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+}
+
+/* メタルボタン本体（全面描画のシェーダーcanvasを角丸でクリップ） */
+.lm {
+  position: relative;
+  width: var(--w);
+  height: var(--h);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+/* クリック時：少し沈み込む */
+.lm:active {
+  transform: translateY(0.2rem) scale(0.98);
+  box-shadow: 0 0.3rem 0.8rem rgba(0, 0, 0, 0.5);
+}
+
+/* 中央を覆う暗い面。メタルを“縁のリム”だけ見せる */
+.lm::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(var(--w) - var(--rim) * 2);
+  height: calc(var(--h) - var(--rim) * 2);
+  background: linear-gradient(var(--light-color), var(--dark-color));
+  border-radius: calc(var(--radius) - var(--rim));
+  box-shadow: inset 0 0.2rem 0.2rem 0.2rem rgba(255, 255, 255, 0.3);
+  z-index: 1;
+}
+
+.outline {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--radius);
+  z-index: 2;
+}
+
+/* 極細のカラーアウトライン */
+.outline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 0.025rem;
+  border-radius: inherit;
+  background: conic-gradient(from 180deg, blue, purple, red, purple, blue);
+  filter: grayscale(1);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask-composite: exclude;
+}
+
+.label {
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-indent: 0.25em;
+  color: var(--icon-color);
+}
