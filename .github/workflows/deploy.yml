@@ -34,6 +34,6 @@ jobs:
               name="${dir%/}"
               echo "Deploying: ${name}"
               ssh -p "${PORT}" "${REMOTE}" "mkdir -p ${DEST}/${name}"
-              scp -r -P "${PORT}" "${dir}"* "${REMOTE}:${DEST}/${name}/"
+              rsync -az -e "ssh -p ${PORT}" "${dir}" "${REMOTE}:${DEST}/${name}/"
             fi
           done
