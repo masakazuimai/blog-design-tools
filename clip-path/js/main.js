@@ -1,10 +1,12 @@
-import { SHAPES } from "./shapes.js?v=20260618";
+import { SHAPES } from "./shapes.js?v=20260618f";
 
 // ===== 状態 =====
 const state = {
   type: "polygon", // polygon | circle | ellipse | inset
   points: regularPolygon(6), // 初期表示は正多角形スライダー既定の6角
   activeShape: null,
+  fillRule: null, // 市松などは "evenodd"
+  stripeVertical: false, // ストライプの向き（本数スライダーが参照）
   circle: { r: 50, cx: 50, cy: 50 },
   ellipse: { rx: 50, ry: 35, cx: 50, cy: 50 },
   inset: { top: 10, right: 10, bottom: 10, left: 10, round: 0 },
@@ -32,7 +34,8 @@ const shapeGrid = document.getElementById("shape-grid");
 // ===== clip-path 値の生成 =====
 function buildValue() {
   if (state.type === "polygon") {
-    return "polygon(" + state.points.map(([x, y]) => `${round(x)}% ${round(y)}%`).join(", ") + ")";
+    const pts = state.points.map(([x, y]) => `${round(x)}% ${round(y)}%`).join(", ");
+    return `polygon(${state.fillRule ? state.fillRule + ", " : ""}${pts})`;
   }
   if (state.type === "circle") {
     const c = state.circle;
@@ -195,7 +198,21 @@ shapeGrid.addEventListener("click", (e) => {
   const btn = e.target.closest(".shape-btn");
   if (!btn) return;
   const shape = SHAPES.find((s) => s.key === btn.dataset.shape);
-  state.points = clonePoints(shape.points);
+  if (shape.parametric === "stripe") {
+    state.stripeVertical = !!shape.vertical;
+    state.points = stripePolygon(shape.n, state.stripeVertical);
+    state.fillRule = null;
+    stripes.value = shape.n;
+    stripesLabel.textContent = `${shape.n}`;
+  } else if (shape.parametric === "checker") {
+    state.points = checkerPolygon(shape.n);
+    state.fillRule = "evenodd";
+    cells.value = shape.n;
+    cellsLabel.textContent = `${shape.n}`;
+  } else {
+    state.points = clonePoints(shape.points);
+    state.fillRule = null;
+  }
   state.activeShape = shape.key;
   syncShapeButtons();
   renderHandles();
@@ -205,6 +222,7 @@ function syncShapeButtons() {
   shapeGrid.querySelectorAll(".shape-btn").forEach((b) => {
     b.classList.toggle("active", b.dataset.shape === state.activeShape);
   });
+  updateSliders();
 }
 
 // ===== スライダー（circle / ellipse / inset） =====
@@ -258,6 +276,7 @@ ngon.addEventListener("input", () => {
   ngonLabel.textContent = `${n}角`;
   state.points = regularPolygon(n);
   state.activeShape = null;
+  state.fillRule = null;
   syncShapeButtons();
   renderHandles();
   applyClip();
@@ -281,11 +300,85 @@ spikes.addEventListener("input", () => {
   spikesLabel.textContent = `${n}`;
   state.points = burstPolygon(n);
   state.activeShape = "burst";
+  state.fillRule = null;
   syncShapeButtons();
   renderHandles();
   applyClip();
 });
 spikesLabel.textContent = `${spikes.value}`;
+
+// ===== ストライプ／市松（蛇行パスの裏ワザで点数を可変生成） =====
+function stripePolygon(n, vertical) {
+  // n本のストライプ（等間隔・nonzero）。横は左辺、縦は上辺のブリッジで1本のパスに繋ぐ
+  const s = 100 / (2 * n);
+  const p = [];
+  for (let i = 0; i < n; i++) {
+    const a = 2 * i * s;
+    const b = a + s;
+    if (!vertical) p.push([0, a], [100, a], [100, b], [0, b]);
+    else p.push([a, 0], [a, 100], [b, 100], [b, 0]);
+  }
+  return p;
+}
+function comb(n, vertical) {
+  // 偶数番のバンドだけ塗る櫛状パス（横 or 縦）
+  const c = 100 / n;
+  const p = [];
+  for (let i = 0; i < n; i += 2) {
+    const a = i * c;
+    const b = Math.min((i + 1) * c, 100);
+    if (!vertical) p.push([0, a], [100, a], [100, b], [0, b]);
+    else p.push([a, 0], [a, 100], [b, 100], [b, 0]);
+  }
+  return p;
+}
+function checkerPolygon(n) {
+  // 横櫛＋縦櫛を連結し even-odd で重なりを抜く＝市松
+  return comb(n, false).concat(comb(n, true));
+}
+const stripes = document.getElementById("stripes");
+const stripesLabel = document.querySelector('[data-val="stripes"]');
+stripes.addEventListener("input", () => {
+  const n = Number(stripes.value);
+  stripesLabel.textContent = `${n}`;
+  state.points = stripePolygon(n, state.stripeVertical);
+  state.fillRule = null;
+  state.activeShape = state.stripeVertical ? "stripe-v" : "stripe";
+  syncShapeButtons();
+  renderHandles();
+  applyClip();
+});
+stripesLabel.textContent = `${stripes.value}`;
+
+const cells = document.getElementById("cells");
+const cellsLabel = document.querySelector('[data-val="cells"]');
+cells.addEventListener("input", () => {
+  const n = Number(cells.value);
+  cellsLabel.textContent = `${n}`;
+  state.points = checkerPolygon(n);
+  state.fillRule = "evenodd";
+  state.activeShape = "checkerboard";
+  syncShapeButtons();
+  renderHandles();
+  applyClip();
+});
+cellsLabel.textContent = `${cells.value}`;
+
+// ===== スライダーは該当する形のものだけ表示 =====
+const sliderRows = {
+  ngon: document.getElementById("ngon-row"),
+  spikes: document.getElementById("spikes-row"),
+  stripes: document.getElementById("stripes-row"),
+  cells: document.getElementById("cells-row"),
+};
+function updateSliders() {
+  const a = state.activeShape;
+  const mode =
+    a === "burst" ? "spikes" : a === "stripe" || a === "stripe-v" ? "stripes" : a === "checkerboard" ? "cells" : "ngon";
+  Object.entries(sliderRows).forEach(([key, row]) => {
+    if (row) row.classList.toggle("hidden", key !== mode);
+  });
+}
 
 // ===== 反転 =====
 // circle/ellipse/inset の state 値をスライダーUIへ反映

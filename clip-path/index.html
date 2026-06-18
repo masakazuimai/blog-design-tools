@@ -146,13 +146,21 @@
             <div class="card-title">定番の形（多角形）</div>
             <div class="shape-grid" id="shape-grid"></div>
             <p class="hint-text">形を選んでから、頂点をドラッグで微調整できます。</p>
-            <label class="slider-row" style="margin-top: 14px">
+            <label class="slider-row" id="ngon-row" style="margin-top: 14px">
               <span class="slider-label">正多角形の角数 <em data-val="ngon"></em></span>
               <input type="range" id="ngon" min="3" max="12" step="1" value="6" />
             </label>
-            <label class="slider-row">
+            <label class="slider-row hidden" id="spikes-row" style="margin-top: 14px">
               <span class="slider-label">バーストのトゲ数 <em data-val="spikes"></em></span>
               <input type="range" id="spikes" min="5" max="20" step="1" value="12" />
+            </label>
+            <label class="slider-row hidden" id="stripes-row" style="margin-top: 14px">
+              <span class="slider-label">ストライプの本数 <em data-val="stripes"></em></span>
+              <input type="range" id="stripes" min="2" max="12" step="1" value="5" />
+            </label>
+            <label class="slider-row hidden" id="cells-row" style="margin-top: 14px">
+              <span class="slider-label">チェックのマス数 <em data-val="cells"></em></span>
+              <input type="range" id="cells" min="2" max="10" step="1" value="4" />
             </label>
           </div>
 
@@ -375,6 +383,6 @@
       </div>
     </footer>
 
-    <script type="module" src="js/main.js?v=20260618"></script>
+    <script type="module" src="js/main.js?v=20260618f"></script>
   </body>
 </html>

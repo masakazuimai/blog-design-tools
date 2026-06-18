@@ -19,4 +19,8 @@ export const SHAPES = [
   { key: "cross", label: "十字", points: [[35, 0], [65, 0], [65, 35], [100, 35], [100, 65], [65, 65], [65, 100], [35, 100], [35, 65], [0, 65], [0, 35], [35, 35]] },
   { key: "message", label: "吹き出し", points: [[0, 0], [100, 0], [100, 75], [75, 75], [75, 100], [50, 75], [0, 75]] },
   { key: "frame", label: "フレーム", points: [[0, 0], [100, 0], [100, 100], [0, 100], [0, 80], [80, 80], [80, 20], [20, 20], [20, 80], [0, 80]] },
+  // 蛇行パスの裏ワザで生成する形（点数はスライダーで可変）。points は持たず main.js で生成する
+  { key: "stripe", label: "横ストライプ", parametric: "stripe", n: 5 },
+  { key: "stripe-v", label: "縦ストライプ", parametric: "stripe", n: 5, vertical: true },
+  { key: "checkerboard", label: "チェック", parametric: "checker", n: 4, fillRule: "evenodd" },
 ];
