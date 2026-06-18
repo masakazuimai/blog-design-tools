@@ -3,7 +3,7 @@
 import { Renderer, Triangle, Program, Mesh, Texture } from 'https://cdn.jsdelivr.net/npm/ogl@1.0.11/+esm'
 import { VERTEX_SHADER, FRAGMENT_SHADER, SHAPE_PRESETS, DEFAULT_PARAMS } from './glass.js?v=20260615'
 import { BACKGROUNDS, backgroundUrl, loadImage } from './backgrounds.js?v=20260615'
-import { generateSnippet } from './export.js?v=20260615'
+import { generateSnippet } from './export.js?v=20260619'
 import { hexToRgb, clamp } from './utils.js?v=20260615'
 import { t } from './i18n.js?v=20260615'
 
@@ -24,13 +24,16 @@ const state = {
   text: 'Button',
   textColor: '#ffffff',
   fontSize: 20,
+  // リンク先URL（空ならエクスポートで href="#" プレースホルダになる）
+  linkUrl: '',
 }
 
 // ---- DOM ------------------------------------------------------------------
 const canvas = document.getElementById('preview')
 const stage = canvas.parentElement // .canvas-wrap（サイズ基準。canvas自身のclientWidthは描画後のインラインstyleに左右されるため使わない）
 const labelEl = document.getElementById('glass-label')
-const outputEl = document.getElementById('output')
+const htmlOutEl = document.getElementById('output-html')
+const jsOutEl = document.getElementById('output-js')
 
 // ---- WebGL セットアップ -----------------------------------------------------
 const renderer = new Renderer({ canvas, dpr: Math.min(window.devicePixelRatio, 2), alpha: false, preserveDrawingBuffer: true })
@@ -108,11 +111,9 @@ function render() {
 // 出力コードを再生成する（ガラス位置には依存しないのでドラッグ中は呼ばない）
 function syncOutput() {
   const { radius, edge } = clampedEdgeRadius()
-  // カスタム背景（blob URL）はコピー先で無効なので差し替えを促すプレースホルダにする
-  const bgUrl = state.bgIsCustom
-    ? 'YOUR_IMAGE_URL'
-    : `https://codequest.work/generator/liquid-glass-generator/assets/${state.bgFile}`
-  outputEl.value = generateSnippet({
+  // 背景は常にプレースホルダで出力（コピー先でご自身の画像URLに差し替える前提）
+  const bgUrl = 'YOUR_IMG_FILE'
+  const { html, js } = generateSnippet({
     halfW: state.halfW,
     halfH: state.halfH,
     radius,
@@ -127,7 +128,15 @@ function syncOutput() {
     text: state.text,
     textColor: state.textColor,
     fontSize: state.fontSize,
+    linkUrl: state.linkUrl,
+    lang,
   })
+  htmlOutEl.value = html
+  jsOutEl.value = js
+  // HTML出力は短いので、スクロール不要で全文が見える高さに自動調整する
+  // （横スクロールバーの分も見込んで余白を加える）
+  htmlOutEl.style.height = 'auto'
+  htmlOutEl.style.height = (htmlOutEl.scrollHeight + 24) + 'px'
 }
 
 // 設定変更時のまとめ更新（描画 + 出力同期）
@@ -224,9 +233,11 @@ function bindBackgrounds() {
 function bindText() {
   const textEl = document.getElementById('label-text')
   const colorEl = document.getElementById('label-color')
+  const linkEl = document.getElementById('label-link')
   textEl.value = state.text
   textEl.addEventListener('input', () => { state.text = textEl.value; commit() })
   colorEl.addEventListener('input', () => { state.textColor = colorEl.value; commit() })
+  if (linkEl) linkEl.addEventListener('input', () => { state.linkUrl = linkEl.value; syncOutput() })
 }
 
 function bindDrag() {
@@ -255,18 +266,26 @@ function bindDrag() {
 }
 
 function bindCopy() {
-  const btn = document.getElementById('copy-btn')
-  btn.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(outputEl.value)
-      const label = btn.querySelector('span')
-      const prev = label.textContent
-      label.textContent = t('copied')
-      btn.classList.add('copied')
-      setTimeout(() => { label.textContent = prev; btn.classList.remove('copied') }, 1600)
-    } catch {
-      alert(t('copyFailed'))
-    }
+  // ボタンごとに対応するテキストエリアをコピーする
+  const pairs = [
+    ['copy-html', htmlOutEl],
+    ['copy-js', jsOutEl],
+  ]
+  pairs.forEach(([btnId, area]) => {
+    const btn = document.getElementById(btnId)
+    if (!btn || !area) return
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(area.value)
+        const label = btn.querySelector('span')
+        const prev = label.textContent
+        label.textContent = t('copied')
+        btn.classList.add('copied')
+        setTimeout(() => { label.textContent = prev; btn.classList.remove('copied') }, 1600)
+      } catch {
+        alert(t('copyFailed'))
+      }
+    })
   })
 }
 
