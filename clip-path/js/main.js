@@ -1,4 +1,5 @@
-import { SHAPES } from "./shapes.js?v=20260618f";
+import { SHAPES } from "./shapes.js?v=20260618h";
+import { t, LANG } from "./i18n.js?v=20260618h";
 
 // ===== 状態 =====
 const state = {
@@ -65,7 +66,7 @@ function renderOutput(value) {
   }
   css += `\n}`;
   if (state.animate) {
-    css += `\n\n/* ホバーで切り抜きを解除して全体を表示 */\n.clip-path:hover {\n  clip-path: inset(0);\n  -webkit-clip-path: inset(0);\n}`;
+    css += `\n\n/* ${t.animComment} */\n.clip-path:hover {\n  clip-path: inset(0);\n  -webkit-clip-path: inset(0);\n}`;
   }
   output.value = css;
 }
@@ -191,7 +192,7 @@ SHAPES.forEach((shape) => {
   btn.type = "button";
   btn.className = "shape-btn";
   btn.dataset.shape = shape.key;
-  btn.textContent = shape.label;
+  btn.textContent = LANG === "en" ? shape.labelEn || shape.label : shape.label;
   shapeGrid.appendChild(btn);
 });
 shapeGrid.addEventListener("click", (e) => {
@@ -273,7 +274,7 @@ function regularPolygon(n) {
 }
 ngon.addEventListener("input", () => {
   const n = Number(ngon.value);
-  ngonLabel.textContent = `${n}角`;
+  ngonLabel.textContent = `${n}${t.ngonSuffix}`;
   state.points = regularPolygon(n);
   state.activeShape = null;
   state.fillRule = null;
@@ -281,7 +282,7 @@ ngon.addEventListener("input", () => {
   renderHandles();
   applyClip();
 });
-ngonLabel.textContent = `${ngon.value}角`;
+ngonLabel.textContent = `${ngon.value}${t.ngonSuffix}`;
 
 // ===== バーストのトゲ数スライダー（5〜20） =====
 const spikes = document.getElementById("spikes");
@@ -461,7 +462,7 @@ copyBtn.addEventListener("click", async () => {
   const span = copyBtn.querySelector("span");
   const original = span.textContent;
   copyBtn.classList.add("copied");
-  span.textContent = "コピーしました";
+  span.textContent = t.copyDone;
   setTimeout(() => {
     copyBtn.classList.remove("copied");
     span.textContent = original;

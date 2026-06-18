@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clip-path Generator | Visual CSS clip-path maker with sliders (free)</title>
+    <meta name="description" content="Free visual CSS clip-path generator. Drag points to build polygons, circles, ellipses and inset — or use sliders for regular polygons, bursts, stripes and checkerboards. One-click copy with the -webkit- prefix. No signup." />
+    <link rel="canonical" href="https://codequest.work/generator/clip-path/en/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/clip-path/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/clip-path/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/clip-path/" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codequest.work/generator/clip-path/en/" />
+    <meta property="og:title" content="Clip-path Generator | Visual CSS clip-path maker with sliders (free)" />
+    <meta property="og:description" content="Drag points or use sliders for bursts, stripes and checkerboards. One-click copy with the -webkit- prefix. Free, no signup." />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Clip-path Generator | Visual CSS clip-path maker with sliders" />
+    <meta name="twitter:description" content="Drag points or use sliders for bursts, stripes and checkerboards. One-click copy with the -webkit- prefix. Free." />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css?v=20260618g" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Clip-path Generator",
+        "url": "https://codequest.work/generator/clip-path/en/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web browser",
+        "inLanguage": "en",
+        "description": "Free visual CSS clip-path generator. Drag points to build polygons, circles, ellipses and inset, or use sliders for regular polygons, bursts, stripes and checkerboards. One-click copy with the -webkit- prefix.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": ["Drag polygon points to edit", "Circle, ellipse and inset support", "Sliders for regular polygons, bursts, stripes and checkerboards", "Code output with the -webkit- prefix", "Hover animation code output"],
+        "publisher": {
+          "@type": "Organization",
+          "name": "CodeQuest.work",
+          "url": "https://codequest.work/"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "Clip-path Generator", "item": "https://codequest.work/generator/clip-path/en/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is the clip-path generator free?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. It is completely free with no signup and no watermark. The generated code is yours to use commercially." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need -webkit-clip-path?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Adding it is safer for older Safari and Chrome. This tool outputs both clip-path and -webkit-clip-path automatically." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I add or remove points?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Double-click the preview to add a point on the nearest edge, and double-click a point to remove it (minimum 3)." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can clip-path be animated?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Two polygons with the same number of points transition smoothly. Enable \"Animate on hover\" to output the transition and hover code." }
+          },
+          {
+            "@type": "Question",
+            "name": "Which browsers are supported?",
+            "acceptedAnswer": { "@type": "Answer", "text": "clip-path works in Chrome, Safari, Edge and Firefox. The basic shapes (polygon/circle/ellipse/inset) are widely supported." }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <a class="lang-switch" href="../" hreflang="ja">日本語</a>
+        <h1>clip-path <span class="accent">generator</span></h1>
+        <p>Build CSS <code>clip-path</code> visually by dragging points. Polygons, circles, ellipses and inset, plus sliders for bursts, stripes and checkerboards. Copy code with the <code>-webkit-</code> prefix in one click.</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="layout">
+        <!-- preview -->
+        <section class="stage">
+          <div class="preview-wrap" id="preview-wrap">
+            <div class="clip-box" id="clip-box"></div>
+            <div class="handles" id="handles"></div>
+          </div>
+          <p class="drag-hint">Drag points to move / double-click the preview to add / double-click a point to delete</p>
+          <div class="preview-bar" id="aspect-bar">
+            <button type="button" class="mini-btn active" data-aspect="1 / 1">Square</button>
+            <button type="button" class="mini-btn" data-aspect="16 / 9">Wide</button>
+            <button type="button" class="mini-btn" data-aspect="3 / 4">Tall</button>
+          </div>
+          <div class="preview-bar">
+            <label class="mini-btn">
+              <input type="file" id="bg-upload" accept="image/*" hidden />
+              Load image
+            </label>
+            <button type="button" class="mini-btn" id="bg-reset">Reset gradient</button>
+          </div>
+        </section>
+
+        <!-- controls -->
+        <aside class="panel">
+          <div class="card">
+            <div class="card-title">Shape type</div>
+            <div class="type-row" id="type-row">
+              <button type="button" class="type-btn active" data-type="polygon">Polygon</button>
+              <button type="button" class="type-btn" data-type="circle">Circle</button>
+              <button type="button" class="type-btn" data-type="ellipse">Ellipse</button>
+              <button type="button" class="type-btn" data-type="inset">Inset</button>
+            </div>
+          </div>
+
+          <!-- polygon -->
+          <div class="card" data-card="polygon">
+            <div class="card-title">Presets (polygon)</div>
+            <div class="shape-grid" id="shape-grid"></div>
+            <p class="hint-text">Pick a shape, then drag the points to fine-tune.</p>
+            <label class="slider-row" id="ngon-row" style="margin-top: 14px">
+              <span class="slider-label">Regular polygon sides <em data-val="ngon"></em></span>
+              <input type="range" id="ngon" min="3" max="12" step="1" value="6" />
+            </label>
+            <label class="slider-row hidden" id="spikes-row" style="margin-top: 14px">
+              <span class="slider-label">Burst spikes <em data-val="spikes"></em></span>
+              <input type="range" id="spikes" min="5" max="20" step="1" value="12" />
+            </label>
+            <label class="slider-row hidden" id="stripes-row" style="margin-top: 14px">
+              <span class="slider-label">Stripe count <em data-val="stripes"></em></span>
+              <input type="range" id="stripes" min="2" max="12" step="1" value="5" />
+            </label>
+            <label class="slider-row hidden" id="cells-row" style="margin-top: 14px">
+              <span class="slider-label">Checker cells <em data-val="cells"></em></span>
+              <input type="range" id="cells" min="2" max="10" step="1" value="4" />
+            </label>
+          </div>
+
+          <!-- circle -->
+          <div class="card hidden" data-card="circle">
+            <div class="card-title">Circle</div>
+            <label class="slider-row">
+              <span class="slider-label">Radius <em data-val="circle-r"></em></span>
+              <input type="range" id="circle-r" min="0" max="75" step="1" value="50" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Center X <em data-val="circle-cx"></em></span>
+              <input type="range" id="circle-cx" min="0" max="100" step="1" value="50" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Center Y <em data-val="circle-cy"></em></span>
+              <input type="range" id="circle-cy" min="0" max="100" step="1" value="50" />
+            </label>
+          </div>
+
+          <!-- ellipse -->
+          <div class="card hidden" data-card="ellipse">
+            <div class="card-title">Ellipse</div>
+            <label class="slider-row">
+              <span class="slider-label">Radius X <em data-val="ellipse-rx"></em></span>
+              <input type="range" id="ellipse-rx" min="0" max="75" step="1" value="50" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Radius Y <em data-val="ellipse-ry"></em></span>
+              <input type="range" id="ellipse-ry" min="0" max="75" step="1" value="35" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Center X <em data-val="ellipse-cx"></em></span>
+              <input type="range" id="ellipse-cx" min="0" max="100" step="1" value="50" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Center Y <em data-val="ellipse-cy"></em></span>
+              <input type="range" id="ellipse-cy" min="0" max="100" step="1" value="50" />
+            </label>
+          </div>
+
+          <!-- inset -->
+          <div class="card hidden" data-card="inset">
+            <div class="card-title">Inset</div>
+            <label class="slider-row">
+              <span class="slider-label">Top <em data-val="inset-top"></em></span>
+              <input type="range" id="inset-top" min="0" max="50" step="1" value="10" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Right <em data-val="inset-right"></em></span>
+              <input type="range" id="inset-right" min="0" max="50" step="1" value="10" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Bottom <em data-val="inset-bottom"></em></span>
+              <input type="range" id="inset-bottom" min="0" max="50" step="1" value="10" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Left <em data-val="inset-left"></em></span>
+              <input type="range" id="inset-left" min="0" max="50" step="1" value="10" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Round <em data-val="inset-round"></em></span>
+              <input type="range" id="inset-round" min="0" max="50" step="1" value="0" />
+            </label>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Transform</div>
+            <div class="preview-bar" style="justify-content: flex-start; margin-top: 0">
+              <button type="button" class="mini-btn" id="flip-h">↔ Flip H</button>
+              <button type="button" class="mini-btn" id="flip-v">↕ Flip V</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <label class="check-row">
+              <input type="checkbox" id="animate" />
+              <span>Animate on hover (output transition code)</span>
+            </label>
+          </div>
+        </aside>
+      </div>
+
+      <!-- output -->
+      <section class="output-section">
+        <div class="output-head">
+          <h2>Generated CSS</h2>
+          <button type="button" class="copy-btn" id="copy-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+            <span>Copy code</span>
+          </button>
+        </div>
+        <textarea id="output" readonly spellcheck="false"></textarea>
+        <p class="output-note">Add <code>class="clip-path"</code> to your element and paste. <code>-webkit-clip-path</code> is included for older browser support.</p>
+      </section>
+
+      <!-- article -->
+      <section class="article">
+        <div class="answer-box">
+          <p><strong>clip-path</strong> is a CSS property that <strong>clips</strong> an element to a shape — polygon, circle, ellipse and more. This free generator lets you build the <code>clip-path</code> value by dragging and copy it instantly. No signup, no watermark, free for commercial use.</p>
+        </div>
+
+        <h2>What is clip-path?</h2>
+        <p>clip-path clips the visible area of an element to a shape. You can use basic shapes like <code>polygon()</code>, <code>circle()</code>, <code>ellipse()</code> and <code>inset()</code> to mask images, cut diagonal sections, speech bubbles, arrows, stripes and checkerboards — with pure CSS and no image editing.</p>
+
+        <h2>How to use (3 steps)</h2>
+        <ol>
+          <li>Choose a shape type (polygon / circle / ellipse / inset). For polygons, pick a preset to start fast.</li>
+          <li>Drag the points on the preview to fine-tune. Double-click to add a point, double-click a point to remove it.</li>
+          <li>Click “Copy code” to get the CSS with <code>clip-path</code> and <code>-webkit-clip-path</code>, then paste it onto your element.</li>
+        </ol>
+
+        <h2>Basic shapes</h2>
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Function</th>
+              <th>Use</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>polygon()</code></td>
+              <td>Triangles, hexagons, arrows and any custom polygon</td>
+              <td><code>polygon(50% 0, 0 100%, 100% 100%)</code></td>
+            </tr>
+            <tr>
+              <td><code>circle()</code></td>
+              <td>Crop to a circle (avatars, icons)</td>
+              <td><code>circle(50% at 50% 50%)</code></td>
+            </tr>
+            <tr>
+              <td><code>ellipse()</code></td>
+              <td>Wide or tall ellipses</td>
+              <td><code>ellipse(50% 35% at 50% 50%)</code></td>
+            </tr>
+            <tr>
+              <td><code>inset()</code></td>
+              <td>Inset rectangle (with optional rounding)</td>
+              <td><code>inset(10% round 12px)</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Tips &amp; gotchas</h2>
+        <ul>
+          <li><strong>Older browsers</strong>: include <code>-webkit-clip-path</code> (this tool adds it automatically).</li>
+          <li><strong>Animation</strong>: to transition between two <code>polygon</code> shapes smoothly, keep the <strong>same number of points</strong>.</li>
+          <li><strong>Shadows</strong>: clip-path also clips <code>box-shadow</code>. To keep a shadow, use <code>filter: drop-shadow()</code> on the parent.</li>
+        </ul>
+
+        <h2>FAQ</h2>
+        <div class="faq">
+          <div class="faq-item">
+            <h3>Is the clip-path generator free?</h3>
+            <p>Yes. It is completely free with no signup and no watermark. The generated code is yours to use commercially.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Do I need -webkit-clip-path?</h3>
+            <p>Adding it is safer for older Safari and Chrome. This tool outputs both <code>clip-path</code> and <code>-webkit-clip-path</code> automatically.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Can I add or remove points?</h3>
+            <p>Yes. Double-click the preview to add a point on the nearest edge, and double-click a point to remove it (minimum 3).</p>
+          </div>
+          <div class="faq-item">
+            <h3>Can clip-path be animated?</h3>
+            <p>Yes. Two <code>polygon</code> shapes with the same number of points transition smoothly. Enable “Animate on hover” to output the transition and hover code.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Which browsers are supported?</h3>
+            <p>clip-path works in Chrome, Safari, Edge and Firefox. The basic shapes (polygon/circle/ellipse/inset) are widely supported.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div style="max-width: 728px; margin: 32px auto; text-align: center; min-height: 90px">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- footer-top -->
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 clip-path generator | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">Other tools &rarr;</a>
+      </div>
+    </footer>
+
+    <script type="module" src="../js/main.js?v=20260618h"></script>
+  </body>
+</html>
