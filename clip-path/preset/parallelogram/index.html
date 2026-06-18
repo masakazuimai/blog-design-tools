@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS 平行四辺形の作り方｜clip-pathで斜めの図形・ボタン（コピペ）</title>
+    <meta name="description" content="CSSのclip-pathで平行四辺形を作る方法。右傾き・左傾きのコードを実物プレビュー付きでコピーできます。斜めボタンやスポーティな見出しに。skewと違い中身が歪まない方法も解説。無料・登録不要。" />
+    <link rel="canonical" href="https://codequest.work/generator/clip-path/preset/parallelogram/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/clip-path/preset/parallelogram/" />
+    <meta property="og:title" content="CSS 平行四辺形の作り方｜clip-pathで斜めの図形・ボタン" />
+    <meta property="og:description" content="clip-pathで平行四辺形を作る方法。右傾き・左傾きのコードを実物プレビュー付きでコピーできます。" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/style.css?v=20260618" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "clip-path ジェネレーター", "item": "https://codequest.work/generator/clip-path/" },
+          { "@type": "ListItem", "position": 2, "name": "プリセット集", "item": "https://codequest.work/generator/clip-path/preset/" },
+          { "@type": "ListItem", "position": 3, "name": "平行四辺形", "item": "https://codequest.work/generator/clip-path/preset/parallelogram/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "transform: skew() と何が違う？", "acceptedAnswer": { "@type": "Answer", "text": "skewは要素ごと中身（テキスト）も傾きます。clip-pathは外形だけを平行四辺形に切り抜くため、中のテキストは傾かずまっすぐ表示できます。" } },
+          { "@type": "Question", "name": "斜めボタンで文字が切れます", "acceptedAnswer": { "@type": "Answer", "text": "左右の傾き分だけ内側が削れるため、padding-left / padding-right を多めにとると文字が切れません。" } }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <h1>CSS <span class="accent">平行四辺形</span>の作り方</h1>
+        <p><code>clip-path</code> で斜めの図形・ボタンを作るコードを、実物プレビュー付きでコピーできます。</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <section class="article" style="margin-top: 8px">
+        <div class="answer-box">
+          <p>平行四辺形は <code>clip-path: polygon(25% 0, 100% 0, 75% 100%, 0 100%)</code> で作れます。<code>transform: skew()</code> と違い<strong>中のテキストは傾かずまっすぐ</strong>のまま、外形だけ斜めにできます。スポーティな斜めボタンや見出しに使えます。下にコピペ用コードを用意しました。</p>
+        </div>
+
+        <h2>右傾き</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 240px; height: 120px; clip-path: polygon(25% 0, 100% 0, 75% 100%, 0 100%); -webkit-clip-path: polygon(25% 0, 100% 0, 75% 100%, 0 100%)">BUTTON</div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c1"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c1">.parallelogram {
+  clip-path: polygon(25% 0, 100% 0, 75% 100%, 0 100%);
+  -webkit-clip-path: polygon(25% 0, 100% 0, 75% 100%, 0 100%);
+}</pre>
+
+        <h2>左傾き</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 240px; height: 120px; clip-path: polygon(0 0, 75% 0, 100% 100%, 25% 100%); -webkit-clip-path: polygon(0 0, 75% 0, 100% 100%, 25% 100%)">BUTTON</div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c2"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c2">.parallelogram-left {
+  clip-path: polygon(0 0, 75% 0, 100% 100%, 25% 100%);
+  -webkit-clip-path: polygon(0 0, 75% 0, 100% 100%, 25% 100%);
+}</pre>
+
+        <h2>ポイントと注意点</h2>
+        <ul>
+          <li><strong>skew との違い</strong>：clip-path は外形だけ切り抜くので中身のテキストは傾きません。文字を読みやすく保てます。</li>
+          <li><strong>文字の余白</strong>：傾き分だけ内側が削れるので、<code>padding</code> を左右に多めにとると文字が切れません。</li>
+          <li><strong>傾きの強さ</strong>：頂点の <code>25%</code> / <code>75%</code> を変えると角度が変わります。微調整は <a href="../../">clip-path ジェネレーター</a> の「平行四辺形」プリセットが便利です。</li>
+        </ul>
+
+        <h2>関連</h2>
+        <div class="related">
+          <a href="../../"><strong>clip-path ジェネレーター →</strong><span>ドラッグで微調整</span></a>
+          <a href="../trapezoid/"><strong>台形 →</strong><span>タブ・見出し背景</span></a>
+          <a href="../arrow/"><strong>矢印 →</strong><span>右向き・左向き</span></a>
+        </div>
+      </section>
+    </div>
+
+    <div style="max-width: 728px; margin: 32px auto; text-align: center; min-height: 90px">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 clip-path ジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <script>
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const code = document.getElementById(btn.dataset.copy).textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+          } catch {}
+          const span = btn.querySelector("span");
+          const original = span.textContent;
+          btn.classList.add("copied");
+          span.textContent = "コピーしました";
+          setTimeout(() => {
+            btn.classList.remove("copied");
+            span.textContent = original;
+          }, 1600);
+        });
+      });
+    </script>
+  </body>
+</html>

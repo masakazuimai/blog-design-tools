@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>clip-path ジェネレーター｜CSSの切り抜き・図形をドラッグで作成（無料）</title>
+    <meta name="description" content="CSSのclip-pathをドラッグ操作で直感的に作成できる無料ツール。多角形・円・楕円・inset、三角形や六角形などの定番形状に対応し、-webkit-プレフィックス付きのコードをワンクリックでコピーできます。斜めセクションや吹き出しのプリセットも用意。登録不要。" />
+    <link rel="canonical" href="https://codequest.work/generator/clip-path/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/clip-path/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/clip-path/" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codequest.work/generator/clip-path/" />
+    <meta property="og:title" content="clip-path ジェネレーター｜CSSの切り抜き・図形をドラッグで作成（無料）" />
+    <meta property="og:description" content="CSSのclip-pathをドラッグ操作で直感的に作成。多角形・円・楕円・inset、定番形状に対応し、-webkit-付きのコードをワンクリックでコピーできる無料ツールです。" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="clip-path ジェネレーター｜CSSの切り抜き・図形をドラッグで作成（無料）" />
+    <meta name="twitter:description" content="CSSのclip-pathをドラッグ操作で直感的に作成。-webkit-付きのコードをワンクリックでコピーできる無料ツール。" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と main.js の両方で日付を上げる -->
+    <link rel="stylesheet" href="css/style.css?v=20260618" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "clip-path ジェネレーター",
+        "url": "https://codequest.work/generator/clip-path/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web browser",
+        "inLanguage": "ja",
+        "description": "CSSのclip-pathをドラッグ操作で直感的に作成できる無料ツール。多角形・円・楕円・insetや定番形状に対応し、-webkit-プレフィックス付きのコードをワンクリックでコピーできます。",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": ["多角形の頂点をドラッグで編集", "円・楕円・insetに対応", "三角形・六角形・星などの定番形状プリセット", "-webkit-プレフィックス付きのコード生成", "ホバーアニメーションのコード出力"],
+        "publisher": {
+          "@type": "Organization",
+          "name": "CodeQuest.work",
+          "url": "https://codequest.work/"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "clip-path ジェネレーター", "item": "https://codequest.work/generator/clip-path/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "clip-path ジェネレーターは無料ですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "はい。完全無料で、登録も透かしもありません。生成したコードはそのまま商用利用できます。" }
+          },
+          {
+            "@type": "Question",
+            "name": "-webkit-clip-path は必要ですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "古いSafariやChromeへの互換性のために併記が安全です。本ツールは clip-path と -webkit-clip-path の両方を自動で出力します。" }
+          },
+          {
+            "@type": "Question",
+            "name": "頂点（点）の数は増やせますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "はい。プレビュー上をダブルクリックすると最も近い辺に頂点を追加でき、頂点をダブルクリックすると削除できます（最小3点）。" }
+          },
+          {
+            "@type": "Question",
+            "name": "clip-path はアニメーションできますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "できます。頂点の数が同じ polygon どうしなら transition でなめらかに変化します。本ツールの「ホバーで変化」を有効にすると、transition とホバー時のコードを出力します。" }
+          },
+          {
+            "@type": "Question",
+            "name": "対応ブラウザは？",
+            "acceptedAnswer": { "@type": "Answer", "text": "clip-path はChrome・Safari・Edge・Firefoxなど主要ブラウザで利用できます。基本図形（polygon/circle/ellipse/inset）は広くサポートされています。" }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <h1>clip-path <span class="accent">ジェネレーター</span></h1>
+        <p>CSSの <code>clip-path</code> をドラッグ操作で直感的に作成。多角形・円・楕円・inset と定番形状に対応し、<code>-webkit-</code> 付きのコードをワンクリックでコピーできます。</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="layout">
+        <!-- プレビュー -->
+        <section class="stage">
+          <div class="preview-wrap" id="preview-wrap">
+            <div class="clip-box" id="clip-box"></div>
+            <div class="handles" id="handles"></div>
+          </div>
+          <p class="drag-hint">頂点をドラッグで移動／プレビューをダブルクリックで追加／頂点をダブルクリックで削除</p>
+          <div class="preview-bar" id="aspect-bar">
+            <button type="button" class="mini-btn active" data-aspect="1 / 1">正方形</button>
+            <button type="button" class="mini-btn" data-aspect="16 / 9">横長</button>
+            <button type="button" class="mini-btn" data-aspect="3 / 4">縦長</button>
+          </div>
+          <div class="preview-bar">
+            <label class="mini-btn">
+              <input type="file" id="bg-upload" accept="image/*" hidden />
+              画像を読み込む
+            </label>
+            <button type="button" class="mini-btn" id="bg-reset">グラデーションに戻す</button>
+          </div>
+        </section>
+
+        <!-- コントロール -->
+        <aside class="panel">
+          <div class="card">
+            <div class="card-title">形状タイプ</div>
+            <div class="type-row" id="type-row">
+              <button type="button" class="type-btn active" data-type="polygon">多角形</button>
+              <button type="button" class="type-btn" data-type="circle">円</button>
+              <button type="button" class="type-btn" data-type="ellipse">楕円</button>
+              <button type="button" class="type-btn" data-type="inset">inset</button>
+            </div>
+          </div>
+
+          <!-- polygon -->
+          <div class="card" data-card="polygon">
+            <div class="card-title">定番の形（多角形）</div>
+            <div class="shape-grid" id="shape-grid"></div>
+            <p class="hint-text">形を選んでから、頂点をドラッグで微調整できます。</p>
+            <label class="slider-row" style="margin-top: 14px">
+              <span class="slider-label">正多角形の角数 <em data-val="ngon"></em></span>
+              <input type="range" id="ngon" min="3" max="12" step="1" value="6" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">バーストのトゲ数 <em data-val="spikes"></em></span>
+              <input type="range" id="spikes" min="5" max="20" step="1" value="12" />
+            </label>
+          </div>
+
+          <!-- circle -->
+          <div class="card hidden" data-card="circle">
+            <div class="card-title">円（circle）</div>
+            <label class="slider-row">
+              <span class="slider-label">半径 <em data-val="circle-r"></em></span>
+              <input type="range" id="circle-r" min="0" max="75" step="1" value="50" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">中心X <em data-val="circle-cx"></em></span>
+              <input type="range" id="circle-cx" min="0" max="100" step="1" value="50" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">中心Y <em data-val="circle-cy"></em></span>
+              <input type="range" id="circle-cy" min="0" max="100" step="1" value="50" />
+            </label>
+          </div>
+
+          <!-- ellipse -->
+          <div class="card hidden" data-card="ellipse">
+            <div class="card-title">楕円（ellipse）</div>
+            <label class="slider-row">
+              <span class="slider-label">半径X <em data-val="ellipse-rx"></em></span>
+              <input type="range" id="ellipse-rx" min="0" max="75" step="1" value="50" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">半径Y <em data-val="ellipse-ry"></em></span>
+              <input type="range" id="ellipse-ry" min="0" max="75" step="1" value="35" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">中心X <em data-val="ellipse-cx"></em></span>
+              <input type="range" id="ellipse-cx" min="0" max="100" step="1" value="50" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">中心Y <em data-val="ellipse-cy"></em></span>
+              <input type="range" id="ellipse-cy" min="0" max="100" step="1" value="50" />
+            </label>
+          </div>
+
+          <!-- inset -->
+          <div class="card hidden" data-card="inset">
+            <div class="card-title">内側余白（inset）</div>
+            <label class="slider-row">
+              <span class="slider-label">上 <em data-val="inset-top"></em></span>
+              <input type="range" id="inset-top" min="0" max="50" step="1" value="10" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">右 <em data-val="inset-right"></em></span>
+              <input type="range" id="inset-right" min="0" max="50" step="1" value="10" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">下 <em data-val="inset-bottom"></em></span>
+              <input type="range" id="inset-bottom" min="0" max="50" step="1" value="10" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">左 <em data-val="inset-left"></em></span>
+              <input type="range" id="inset-left" min="0" max="50" step="1" value="10" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">角丸 <em data-val="inset-round"></em></span>
+              <input type="range" id="inset-round" min="0" max="50" step="1" value="0" />
+            </label>
+          </div>
+
+          <div class="card">
+            <div class="card-title">変形</div>
+            <div class="preview-bar" style="justify-content: flex-start; margin-top: 0">
+              <button type="button" class="mini-btn" id="flip-h">↔ 左右反転</button>
+              <button type="button" class="mini-btn" id="flip-v">↕ 上下反転</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <label class="check-row">
+              <input type="checkbox" id="animate" />
+              <span>ホバーで変化（アニメーションのコードを出力）</span>
+            </label>
+          </div>
+        </aside>
+      </div>
+
+      <!-- 出力 -->
+      <section class="output-section">
+        <div class="output-head">
+          <h2>生成されたCSS</h2>
+          <button type="button" class="copy-btn" id="copy-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+            <span>コードをコピー</span>
+          </button>
+        </div>
+        <textarea id="output" readonly spellcheck="false"></textarea>
+        <p class="output-note">対象の要素に <code>class="clip-path"</code> を付けて貼り付けてください。<code>-webkit-clip-path</code> は古いブラウザ互換のために併記しています。</p>
+      </section>
+
+      <!-- 解説 -->
+      <section class="article">
+        <div class="answer-box">
+          <p><strong>clip-path</strong> は、要素を多角形・円・楕円などの形に<strong>切り抜く（クリッピングする）</strong>CSSプロパティです。本ツールは <code>clip-path</code> の値をドラッグ操作で作り、そのままコピーできる無料のジェネレーターです。登録不要・透かしなしで、生成したコードは商用利用できます。</p>
+        </div>
+
+        <h2>clip-path とは</h2>
+        <p>clip-path は、要素の表示領域を指定した形状で切り抜くプロパティです。<code>polygon()</code>（多角形）、<code>circle()</code>（円）、<code>ellipse()</code>（楕円）、<code>inset()</code>（角丸つきの矩形）などの基本図形を指定できます。画像のマスク、斜めに区切ったセクション、吹き出し、矢印、リボンなどを画像編集なしでCSSだけで実現できます。</p>
+
+        <h2>使い方（3ステップ）</h2>
+        <ol>
+          <li>形状タイプ（多角形／円／楕円／inset）を選びます。多角形なら「定番の形」から選ぶと早いです。</li>
+          <li>プレビュー上の頂点をドラッグして微調整します。ダブルクリックで頂点を追加、頂点をダブルクリックで削除できます。</li>
+          <li>「コードをコピー」で <code>clip-path</code> と <code>-webkit-clip-path</code> 付きのCSSを取得し、対象の要素に貼り付けます。</li>
+        </ol>
+
+        <h2>基本図形の書き方</h2>
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>関数</th>
+              <th>用途</th>
+              <th>例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>polygon()</code></td>
+              <td>三角形・六角形・矢印など自由な多角形</td>
+              <td><code>polygon(50% 0, 0 100%, 100% 100%)</code></td>
+            </tr>
+            <tr>
+              <td><code>circle()</code></td>
+              <td>正円で切り抜く（アイコン等）</td>
+              <td><code>circle(50% at 50% 50%)</code></td>
+            </tr>
+            <tr>
+              <td><code>ellipse()</code></td>
+              <td>横長・縦長の楕円</td>
+              <td><code>ellipse(50% 35% at 50% 50%)</code></td>
+            </tr>
+            <tr>
+              <td><code>inset()</code></td>
+              <td>内側に余白をとった矩形（角丸可）</td>
+              <td><code>inset(10% round 12px)</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>用途別プリセット</h2>
+        <p>「この形のコードがすぐ欲しい」という用途別のプリセットを用意しています。各ページに実物プレビューとコピペコードがあります。</p>
+        <div class="related">
+          <a href="preset/diagonal-section/"><strong>斜めセクション →</strong><span>背景を斜めに区切る</span></a>
+          <a href="preset/speech-bubble/"><strong>吹き出し →</strong><span>しっぽ付きの吹き出し</span></a>
+          <a href="preset/arrow/"><strong>矢印 →</strong><span>右向き・左向きの矢印</span></a>
+          <a href="preset/ribbon/"><strong>リボン →</strong><span>帯・リボン状の見出し</span></a>
+          <a href="preset/hexagon/"><strong>六角形 →</strong><span>ハニカム・アイコン枠</span></a>
+          <a href="preset/triangle/"><strong>三角形 →</strong><span>上下左右の三角</span></a>
+          <a href="preset/circle/"><strong>丸く切り抜き →</strong><span>円形トリミング</span></a>
+          <a href="preset/star/"><strong>星 →</strong><span>五つ星マーク</span></a>
+          <a href="preset/trapezoid/"><strong>台形 →</strong><span>タブ・見出し背景</span></a>
+          <a href="preset/parallelogram/"><strong>平行四辺形 →</strong><span>斜めの図形・ボタン</span></a>
+        </div>
+
+        <h2>よくある失敗・注意点</h2>
+        <ul>
+          <li><strong>古いブラウザ対応</strong>：<code>-webkit-clip-path</code> を併記すると安全です（本ツールは自動で併記します）。</li>
+          <li><strong>アニメーション</strong>：<code>polygon</code> どうしを <code>transition</code> でなめらかに変化させるには、<strong>頂点の数を揃える</strong>必要があります。</li>
+          <li><strong>はみ出し</strong>：切り抜きで影（box-shadow）も一緒に切れてしまいます。影を付けたいときは親要素に <code>filter: drop-shadow()</code> を使います。</li>
+        </ul>
+
+        <h2>よくある質問</h2>
+        <div class="faq">
+          <div class="faq-item">
+            <h3>clip-path ジェネレーターは無料ですか？</h3>
+            <p>はい。完全無料で、登録も透かしもありません。生成したコードはそのまま商用利用できます。</p>
+          </div>
+          <div class="faq-item">
+            <h3>-webkit-clip-path は必要ですか？</h3>
+            <p>古いSafariやChromeへの互換性のために併記が安全です。本ツールは <code>clip-path</code> と <code>-webkit-clip-path</code> の両方を自動で出力します。</p>
+          </div>
+          <div class="faq-item">
+            <h3>頂点（点）の数は増やせますか？</h3>
+            <p>はい。プレビュー上をダブルクリックすると最も近い辺に頂点を追加でき、頂点をダブルクリックすると削除できます（最小3点）。</p>
+          </div>
+          <div class="faq-item">
+            <h3>clip-path はアニメーションできますか？</h3>
+            <p>できます。頂点の数が同じ <code>polygon</code> どうしなら <code>transition</code> でなめらかに変化します。「ホバーで変化」を有効にすると、<code>transition</code> とホバー時のコードを出力します。</p>
+          </div>
+          <div class="faq-item">
+            <h3>対応ブラウザは？</h3>
+            <p>clip-path はChrome・Safari・Edge・Firefoxなど主要ブラウザで利用できます。基本図形（polygon/circle/ellipse/inset）は広くサポートされています。</p>
+          </div>
+        </div>
+
+        <h2>関連ツール</h2>
+        <div class="related">
+          <a href="https://codequest.work/generator/grid/"><strong>CSS Grid ジェネレーター →</strong><span>グリッドレイアウトを作成</span></a>
+          <a href="https://codequest.work/generator/flex/"><strong>Flexbox ジェネレーター →</strong><span>Flexレイアウトを作成</span></a>
+          <a href="https://codequest.work/generator/clickable-area/"><strong>クリッカブルエリア →</strong><span>画像マップのCSSを生成</span></a>
+          <a href="https://codequest.work/generator/liquid-glass-generator/"><strong>Liquid Glass ジェネレーター →</strong><span>WebGLでApple風ガラスUI</span></a>
+          <a href="https://codequest.work/generator/animation-gallery/"><strong>CSSアニメーション集 →</strong><span>100種のアニメをコピペ</span></a>
+        </div>
+      </section>
+    </div>
+
+    <div style="max-width: 728px; margin: 32px auto; text-align: center; min-height: 90px">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- footer-top -->
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 clip-path ジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <script type="module" src="js/main.js?v=20260618"></script>
+  </body>
+</html>

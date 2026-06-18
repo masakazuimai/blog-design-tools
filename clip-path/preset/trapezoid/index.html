@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS 台形の作り方｜clip-pathで台形シェイプ（コピペ）</title>
+    <meta name="description" content="CSSのclip-pathで台形を作る方法。上がせまい台形・下がせまい台形のコードを実物プレビュー付きでコピーできます。タブやボタン、見出しの背景に。無料・登録不要。" />
+    <link rel="canonical" href="https://codequest.work/generator/clip-path/preset/trapezoid/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/clip-path/preset/trapezoid/" />
+    <meta property="og:title" content="CSS 台形の作り方｜clip-pathで台形シェイプ" />
+    <meta property="og:description" content="clip-pathで台形を作る方法。上下どちらがせまい台形も実物プレビュー付きでコードをコピーできます。" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/style.css?v=20260618" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "clip-path ジェネレーター", "item": "https://codequest.work/generator/clip-path/" },
+          { "@type": "ListItem", "position": 2, "name": "プリセット集", "item": "https://codequest.work/generator/clip-path/preset/" },
+          { "@type": "ListItem", "position": 3, "name": "台形", "item": "https://codequest.work/generator/clip-path/preset/trapezoid/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "傾きを変えるには？", "acceptedAnswer": { "@type": "Answer", "text": "上辺の左右の頂点（20%・80%）を内側に寄せるほど傾きが急になります。0%と100%にすると長方形になります。" } },
+          { "@type": "Question", "name": "タブのような見出しに使えますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。上がせまい台形はファイルタブやセクション見出しの背景としてよく使われます。" } }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <h1>CSS <span class="accent">台形</span>の作り方</h1>
+        <p><code>clip-path</code> で台形シェイプを作るコードを、実物プレビュー付きでコピーできます。</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <section class="article" style="margin-top: 8px">
+        <div class="answer-box">
+          <p>台形は <code>clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%)</code> で作れます。上辺の頂点を内側に寄せると上がせまい台形になります。タブやボタン、見出しの背景に使えます。下にコピペ用コードを用意しました。</p>
+        </div>
+
+        <h2>上がせまい台形</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 240px; height: 150px; clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%); -webkit-clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%)"></div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c1"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c1">.trapezoid {
+  clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+  -webkit-clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+}</pre>
+
+        <h2>下がせまい台形</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 240px; height: 150px; clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%); -webkit-clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%)"></div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c2"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c2">.trapezoid-down {
+  clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+  -webkit-clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+}</pre>
+
+        <h2>ポイントと注意点</h2>
+        <ul>
+          <li><strong>傾き</strong>：上辺の頂点（<code>20%</code>・<code>80%</code>）を内側に寄せるほど急になります。<code>0%</code>・<code>100%</code> で長方形に戻ります。</li>
+          <li><strong>タブ見出し</strong>：上がせまい台形はファイルタブやセクション見出しの背景に向いています。</li>
+          <li><strong>微調整</strong>は <a href="../../">clip-path ジェネレーター</a> の「台形」プリセットから頂点をドラッグできます。</li>
+        </ul>
+
+        <h2>関連</h2>
+        <div class="related">
+          <a href="../../"><strong>clip-path ジェネレーター →</strong><span>ドラッグで微調整</span></a>
+          <a href="../parallelogram/"><strong>平行四辺形 →</strong><span>斜めの図形・ボタン</span></a>
+          <a href="../diagonal-section/"><strong>斜めセクション →</strong><span>背景を斜めに</span></a>
+        </div>
+      </section>
+    </div>
+
+    <div style="max-width: 728px; margin: 32px auto; text-align: center; min-height: 90px">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 clip-path ジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <script>
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const code = document.getElementById(btn.dataset.copy).textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+          } catch {}
+          const span = btn.querySelector("span");
+          const original = span.textContent;
+          btn.classList.add("copied");
+          span.textContent = "コピーしました";
+          setTimeout(() => {
+            btn.classList.remove("copied");
+            span.textContent = original;
+          }, 1600);
+        });
+      });
+    </script>
+  </body>
+</html>

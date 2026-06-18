@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>clip-path プリセット集｜三角形・丸く切り抜き・星・斜めセクションなどのCSS</title>
+    <meta name="description" content="CSSのclip-pathでよく使う形のプリセット集。三角形・丸く切り抜き(円形)・星・台形・平行四辺形・六角形・斜めセクション・吹き出し・矢印・リボンのコードを実物プレビュー付きでコピーできます。微調整はclip-pathジェネレーターで。無料・登録不要。" />
+    <link rel="canonical" href="https://codequest.work/generator/clip-path/preset/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codequest.work/generator/clip-path/preset/" />
+    <meta property="og:title" content="clip-path プリセット集｜三角形・丸く切り抜き・星・斜めセクションなど" />
+    <meta property="og:description" content="CSSのclip-pathでよく使う形のプリセット集。三角形・円形・星・台形など10種を実物プレビュー付きでコードをコピーできます。" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css?v=20260618" />
+    <style>
+      .preset-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 18px;
+        margin: 24px 0;
+      }
+      .preset-card {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface);
+        overflow: hidden;
+        text-decoration: none;
+        color: var(--text);
+        transition: all 0.2s;
+      }
+      .preset-card:hover {
+        border-color: var(--accent);
+        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.14);
+        transform: translateY(-2px);
+      }
+      .preset-thumb {
+        height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f1f5f9;
+      }
+      .preset-thumb i {
+        display: block;
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6 60%, #ec4899);
+      }
+      .preset-body {
+        padding: 14px 16px;
+      }
+      .preset-body strong {
+        display: block;
+        font-size: 1.05rem;
+        margin-bottom: 4px;
+      }
+      .preset-body span {
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "clip-path ジェネレーター", "item": "https://codequest.work/generator/clip-path/" },
+          { "@type": "ListItem", "position": 3, "name": "プリセット集", "item": "https://codequest.work/generator/clip-path/preset/" }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <h1>clip-path <span class="accent">プリセット集</span></h1>
+        <p>CSSの <code>clip-path</code> でよく使う形を、実物プレビューとコピペコード付きでまとめました。微調整は <a href="../" style="color: #93c5fd">clip-path ジェネレーター</a> で。</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <section class="article" style="margin-top: 8px">
+        <div class="answer-box">
+          <p>用途別の <strong>clip-path プリセット</strong>です。使いたい形のページを開くと、実物プレビューとそのままコピーできるCSSコードがあります。座標を変えたいときは <a href="../">clip-path ジェネレーター</a> で頂点をドラッグして調整できます。</p>
+        </div>
+
+        <div class="preset-grid">
+          <a class="preset-card" href="diagonal-section/">
+            <div class="preset-thumb"><i style="clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%)"></i></div>
+            <div class="preset-body"><strong>斜めセクション</strong><span>背景を斜めに区切る</span></div>
+          </a>
+          <a class="preset-card" href="speech-bubble/">
+            <div class="preset-thumb"><i style="clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0 75%)"></i></div>
+            <div class="preset-body"><strong>吹き出し</strong><span>しっぽ付きの吹き出し</span></div>
+          </a>
+          <a class="preset-card" href="arrow/">
+            <div class="preset-thumb"><i style="clip-path: polygon(0 20%, 60% 20%, 60% 0, 100% 50%, 60% 100%, 60% 80%, 0 80%)"></i></div>
+            <div class="preset-body"><strong>矢印</strong><span>右向き・左向きの矢印</span></div>
+          </a>
+          <a class="preset-card" href="ribbon/">
+            <div class="preset-thumb"><i style="clip-path: polygon(0 0, 100% 0, 92% 50%, 100% 100%, 0 100%, 8% 50%)"></i></div>
+            <div class="preset-body"><strong>リボン</strong><span>帯・リボン状の見出し</span></div>
+          </a>
+          <a class="preset-card" href="hexagon/">
+            <div class="preset-thumb"><i style="clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)"></i></div>
+            <div class="preset-body"><strong>六角形</strong><span>ハニカム・アイコン枠</span></div>
+          </a>
+          <a class="preset-card" href="triangle/">
+            <div class="preset-thumb"><i style="clip-path: polygon(50% 0, 0 100%, 100% 100%)"></i></div>
+            <div class="preset-body"><strong>三角形</strong><span>上下左右の三角</span></div>
+          </a>
+          <a class="preset-card" href="circle/">
+            <div class="preset-thumb"><i style="clip-path: circle(50%)"></i></div>
+            <div class="preset-body"><strong>丸く切り抜き</strong><span>円形トリミング（アバター）</span></div>
+          </a>
+          <a class="preset-card" href="star/">
+            <div class="preset-thumb"><i style="clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)"></i></div>
+            <div class="preset-body"><strong>星</strong><span>五つ星マーク・バッジ</span></div>
+          </a>
+          <a class="preset-card" href="trapezoid/">
+            <div class="preset-thumb"><i style="clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%)"></i></div>
+            <div class="preset-body"><strong>台形</strong><span>タブ・見出し背景</span></div>
+          </a>
+          <a class="preset-card" href="parallelogram/">
+            <div class="preset-thumb"><i style="clip-path: polygon(25% 0, 100% 0, 75% 100%, 0 100%)"></i></div>
+            <div class="preset-body"><strong>平行四辺形</strong><span>斜めの図形・ボタン</span></div>
+          </a>
+        </div>
+
+        <h2>関連ツール</h2>
+        <div class="related">
+          <a href="../"><strong>clip-path ジェネレーター →</strong><span>ドラッグで自由に作成</span></a>
+          <a href="https://codequest.work/generator/grid/"><strong>CSS Grid ジェネレーター →</strong><span>グリッドレイアウト</span></a>
+          <a href="https://codequest.work/generator/flex/"><strong>Flexbox ジェネレーター →</strong><span>Flexレイアウト</span></a>
+          <a href="https://codequest.work/generator/liquid-glass-generator/"><strong>Liquid Glass ジェネレーター →</strong><span>WebGLでApple風ガラスUI</span></a>
+          <a href="https://codequest.work/generator/animation-gallery/"><strong>CSSアニメーション集 →</strong><span>100種のアニメをコピペ</span></a>
+        </div>
+      </section>
+    </div>
+
+    <div style="max-width: 728px; margin: 32px auto; text-align: center; min-height: 90px">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 clip-path ジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>

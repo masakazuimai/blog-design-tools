@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS 矢印の作り方｜clip-pathで右向き・左向きの矢印図形（コピペ）</title>
+    <meta name="description" content="CSSのclip-pathで矢印の図形を作る方法。右向き・左向きの矢印のコードを実物プレビュー付きでコピーできます。ボタンやステップ表示に使える矢印を画像なしで実現。無料・登録不要。" />
+    <link rel="canonical" href="https://codequest.work/generator/clip-path/preset/arrow/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/clip-path/preset/arrow/" />
+    <meta property="og:title" content="CSS 矢印の作り方｜clip-pathで右向き・左向きの矢印図形" />
+    <meta property="og:description" content="clip-pathで矢印の図形を作る方法。右向き・左向きのコードを実物プレビュー付きでコピーできます。" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/style.css?v=20260618" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "clip-path ジェネレーター", "item": "https://codequest.work/generator/clip-path/" },
+          { "@type": "ListItem", "position": 2, "name": "プリセット集", "item": "https://codequest.work/generator/clip-path/preset/" },
+          { "@type": "ListItem", "position": 3, "name": "矢印", "item": "https://codequest.work/generator/clip-path/preset/arrow/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "矢印の軸を太く・細くするには？", "acceptedAnswer": { "@type": "Answer", "text": "軸の上下の座標（20%・80%）を変えます。値の差を小さくすると軸が細く、大きくすると太くなります。" } },
+          { "@type": "Question", "name": "矢じり（先端）の大きさを変えるには？", "acceptedAnswer": { "@type": "Answer", "text": "先端が始まるX座標（60%など）を左右にずらします。左にずらすほど矢じりが大きくなります。" } }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <h1>CSS <span class="accent">矢印</span>の作り方</h1>
+        <p><code>clip-path</code> で右向き・左向きの矢印を作るコードを、実物プレビュー付きでコピーできます。</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <section class="article" style="margin-top: 8px">
+        <div class="answer-box">
+          <p>矢印は <code>clip-path: polygon(0 20%, 60% 20%, 60% 0, 100% 50%, 60% 100%, 60% 80%, 0 80%)</code> で作れます。軸（長方形）と矢じり（三角形）を頂点で組み合わせた形です。ボタンやステップ表示に画像なしで使えます。下にコピペ用コードを用意しました。</p>
+        </div>
+
+        <h2>右向きの矢印</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 220px; height: 160px; clip-path: polygon(0 20%, 60% 20%, 60% 0, 100% 50%, 60% 100%, 60% 80%, 0 80%); -webkit-clip-path: polygon(0 20%, 60% 20%, 60% 0, 100% 50%, 60% 100%, 60% 80%, 0 80%)"></div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c1"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c1">.arrow-right {
+  clip-path: polygon(0 20%, 60% 20%, 60% 0, 100% 50%, 60% 100%, 60% 80%, 0 80%);
+  -webkit-clip-path: polygon(0 20%, 60% 20%, 60% 0, 100% 50%, 60% 100%, 60% 80%, 0 80%);
+}</pre>
+
+        <h2>左向きの矢印</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 220px; height: 160px; clip-path: polygon(40% 0, 40% 20%, 100% 20%, 100% 80%, 40% 80%, 40% 100%, 0 50%); -webkit-clip-path: polygon(40% 0, 40% 20%, 100% 20%, 100% 80%, 40% 80%, 40% 100%, 0 50%)"></div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c2"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c2">.arrow-left {
+  clip-path: polygon(40% 0, 40% 20%, 100% 20%, 100% 80%, 40% 80%, 40% 100%, 0 50%);
+  -webkit-clip-path: polygon(40% 0, 40% 20%, 100% 20%, 100% 80%, 40% 80%, 40% 100%, 0 50%);
+}</pre>
+
+        <h2>ポイントと注意点</h2>
+        <ul>
+          <li><strong>軸の太さ</strong>：<code>20%</code> と <code>80%</code> の差で軸の太さが決まります。</li>
+          <li><strong>矢じりの大きさ</strong>：先端が始まる <code>60%</code> を左右にずらすと矢じりの大きさが変わります。</li>
+          <li><strong>微調整</strong>は <a href="../../">clip-path ジェネレーター</a> の「右矢印／左矢印」プリセットから頂点をドラッグすると簡単です。</li>
+        </ul>
+
+        <h2>関連</h2>
+        <div class="related">
+          <a href="../../"><strong>clip-path ジェネレーター →</strong><span>ドラッグで微調整</span></a>
+          <a href="../diagonal-section/"><strong>斜めセクション →</strong><span>背景を斜めに</span></a>
+          <a href="../ribbon/"><strong>リボン →</strong><span>帯状の見出し</span></a>
+        </div>
+      </section>
+    </div>
+
+    <div style="max-width: 728px; margin: 32px auto; text-align: center; min-height: 90px">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 clip-path ジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <script>
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const code = document.getElementById(btn.dataset.copy).textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+          } catch {}
+          const span = btn.querySelector("span");
+          const original = span.textContent;
+          btn.classList.add("copied");
+          span.textContent = "コピーしました";
+          setTimeout(() => {
+            btn.classList.remove("copied");
+            span.textContent = original;
+          }, 1600);
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS 画像を丸く切り抜く方法｜clip-path circleで円形トリミング（コピペ）</title>
+    <meta name="description" content="CSSのclip-pathで画像や要素を丸く切り抜く方法。円形・小さめの円・楕円のコードを実物プレビュー付きでコピーできます。アバターやアイコンの円形トリミングに。無料・登録不要。" />
+    <link rel="canonical" href="https://codequest.work/generator/clip-path/preset/circle/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/clip-path/preset/circle/" />
+    <meta property="og:title" content="CSS 画像を丸く切り抜く方法｜clip-path circleで円形トリミング" />
+    <meta property="og:description" content="clip-pathで画像や要素を丸く切り抜く方法。実物プレビュー付きでコードをコピーできます。" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/style.css?v=20260618" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "clip-path ジェネレーター", "item": "https://codequest.work/generator/clip-path/" },
+          { "@type": "ListItem", "position": 2, "name": "プリセット集", "item": "https://codequest.work/generator/clip-path/preset/" },
+          { "@type": "ListItem", "position": 3, "name": "丸く切り抜き", "item": "https://codequest.work/generator/clip-path/preset/circle/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "border-radius: 50% と何が違う？", "acceptedAnswer": { "@type": "Answer", "text": "見た目はほぼ同じですが、clip-pathは要素を実際に切り抜くため、はみ出した子要素や影も円形に沿って切れます。border-radiusは角を丸めるだけで、overflow:hiddenが別途必要な場合があります。" } },
+          { "@type": "Question", "name": "長方形の画像を丸くすると歪みますか？", "acceptedAnswer": { "@type": "Answer", "text": "circle(50%)は要素の短い辺を基準に正円で切り抜くため歪みません。ただし画像が正方形でないと中身が左右（上下）で切れます。object-fit:coverと正方形サイズの併用がおすすめです。" } }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <h1>CSS 画像を<span class="accent">丸く切り抜く</span>方法</h1>
+        <p><code>clip-path: circle()</code> で画像や要素を円形にトリミングするコードを、実物プレビュー付きでコピーできます。</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <section class="article" style="margin-top: 8px">
+        <div class="answer-box">
+          <p>画像を丸く切り抜くには <code>clip-path: circle(50%)</code> を指定します。要素の短い辺を直径とする正円で切り抜かれ、アバターやアイコンの円形トリミングに使えます。<code>img</code> にも背景画像にも効きます。下にコピペ用コードを用意しました。</p>
+        </div>
+
+        <h2>円形に切り抜く</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 180px; height: 180px; clip-path: circle(50%); -webkit-clip-path: circle(50%)"></div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c1"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c1">.circle {
+  clip-path: circle(50%);
+  -webkit-clip-path: circle(50%);
+}</pre>
+
+        <h2>小さめの円（余白をとる）</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 180px; height: 180px; clip-path: circle(40% at 50% 50%); -webkit-clip-path: circle(40% at 50% 50%)"></div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c2"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c2">.circle-small {
+  clip-path: circle(40% at 50% 50%);
+  -webkit-clip-path: circle(40% at 50% 50%);
+}</pre>
+
+        <h2>楕円に切り抜く</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 220px; height: 150px; clip-path: ellipse(50% 50% at 50% 50%); -webkit-clip-path: ellipse(50% 50% at 50% 50%)"></div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c3"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c3">.ellipse {
+  clip-path: ellipse(50% 50% at 50% 50%);
+  -webkit-clip-path: ellipse(50% 50% at 50% 50%);
+}</pre>
+
+        <h2>ポイントと注意点</h2>
+        <ul>
+          <li><strong>正円で切るコツ</strong>：要素を正方形サイズにし、画像は <code>object-fit: cover</code> を併用すると中身が歪みません。</li>
+          <li><strong>border-radius との違い</strong>：clip-path は要素を実際に切り抜くので、はみ出した子要素も円に沿って切れます。</li>
+          <li><strong>位置の調整</strong>：<code>at 50% 50%</code> を変えると円の中心が移動します。微調整は <a href="../../">clip-path ジェネレーター</a> の「円」タイプが便利です。</li>
+        </ul>
+
+        <h2>関連</h2>
+        <div class="related">
+          <a href="../../"><strong>clip-path ジェネレーター →</strong><span>ドラッグで微調整</span></a>
+          <a href="../hexagon/"><strong>六角形 →</strong><span>アイコン枠</span></a>
+          <a href="../triangle/"><strong>三角形 →</strong><span>上下左右の三角</span></a>
+        </div>
+      </section>
+    </div>
+
+    <div style="max-width: 728px; margin: 32px auto; text-align: center; min-height: 90px">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 clip-path ジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <script>
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const code = document.getElementById(btn.dataset.copy).textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+          } catch {}
+          const span = btn.querySelector("span");
+          const original = span.textContent;
+          btn.classList.add("copied");
+          span.textContent = "コピーしました";
+          setTimeout(() => {
+            btn.classList.remove("copied");
+            span.textContent = original;
+          }, 1600);
+        });
+      });
+    </script>
+  </body>
+</html>
