@@ -35,7 +35,7 @@
   }
 
   // ② 幅が確定するまで待ってから push（1枠1回のみ）
-  function fillSlot(ins) {
+  function fillSlot(ins, tries) {
     // ③ 二重 push 防止（自前の目印）
     if (ins.getAttribute("data-cq-init") === "1") return;
     // すでに AdSense が処理済みの枠は対象外
@@ -46,10 +46,22 @@
     var el = ins.getBoundingClientRect().width ? ins : ins.parentElement;
     var width = el ? el.getBoundingClientRect().width : 0;
     if (!width) {
-      // まだ幅が確定していない → 次フレームで再試行（push はしない）
-      requestAnimationFrame(function () {
-        fillSlot(ins);
-      });
+      // まだ幅が確定していない → 一定回数まで次フレームで再試行（push はしない）。
+      // 上限到達後は無限ループを避け、以降の幅変化（レイアウト確定・リサイズ）で一度だけ再試行。
+      tries = tries || 0;
+      if (tries < 120) {
+        requestAnimationFrame(function () {
+          fillSlot(ins, tries + 1);
+        });
+      } else if (typeof ResizeObserver !== "undefined" && el) {
+        var ro = new ResizeObserver(function () {
+          if ((el.getBoundingClientRect().width || 0) > 0) {
+            ro.disconnect();
+            fillSlot(ins);
+          }
+        });
+        ro.observe(el);
+      }
       return;
     }
     ins.setAttribute("data-cq-init", "1");
