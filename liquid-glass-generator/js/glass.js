@@ -144,6 +144,6 @@ export const DEFAULT_PARAMS = {
   aberration: 1,
   edge: 60,
   radius: 46,
-  tint: "#ffffff",
-  tintOpacity: 0.06,
+  tint: "#00ff00",
+  tintOpacity: 0.12,
 };

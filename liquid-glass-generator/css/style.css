@@ -203,6 +203,10 @@ header p {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  position: sticky;
+  top: 28px;
+  max-height: calc(100vh - 28px);
+  overflow-y: auto;
 }
 
 .card {
@@ -588,6 +592,11 @@ footer a:hover {
 @media (max-width: 920px) {
   .layout {
     grid-template-columns: 1fr;
+  }
+  .panel {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
   }
   .canvas-wrap {
     height: 360px;

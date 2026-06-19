@@ -1,7 +1,7 @@
 // Liquid Glass Generator — エントリポイント。
 // import先の ?v= はキャッシュバスティング用（サーバーがjsを7日キャッシュするため）。更新時に日付を上げる。
 import { Renderer, Triangle, Program, Mesh, Texture } from 'https://cdn.jsdelivr.net/npm/ogl@1.0.11/+esm'
-import { VERTEX_SHADER, FRAGMENT_SHADER, SHAPE_PRESETS, DEFAULT_PARAMS } from './glass.js?v=20260615'
+import { VERTEX_SHADER, FRAGMENT_SHADER, SHAPE_PRESETS, DEFAULT_PARAMS } from './glass.js?v=20260620'
 import { BACKGROUNDS, backgroundUrl, loadImage } from './backgrounds.js?v=20260615'
 import { generateSnippet } from './export.js?v=20260619'
 import { hexToRgb, clamp } from './utils.js?v=20260615'
