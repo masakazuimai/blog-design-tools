@@ -5,12 +5,15 @@ on:
     branches: [main]
     paths-ignore:
       - '*.md'
+  workflow_dispatch: {} # 手動実行＝全ツール強制デプロイ（取りこぼし時・一括再同期の保険）
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # git diff で変更ディレクトリを判定するため履歴を取得
 
       - name: Setup SSH
         run: |
@@ -19,7 +22,47 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
+      - name: Determine target directories
+        id: targets
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.sha }}
+        run: |
+          set -uo pipefail
+          ZERO="0000000000000000000000000000000000000000"
+
+          # index.html を持つトップレベルディレクトリ＝デプロイ対象ツール
+          all_dirs() {
+            for d in */; do
+              [ -f "${d}index.html" ] && echo "${d%/}"
+            done
+          }
+
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            echo "判定: 手動実行 → 全ツールデプロイ"
+            TARGETS=$(all_dirs)
+          elif [ -z "${BEFORE_SHA:-}" ] || [ "$BEFORE_SHA" = "$ZERO" ]; then
+            echo "判定: 初回push（比較元なし） → 全ツールデプロイ"
+            TARGETS=$(all_dirs)
+          else
+            CHANGED=$(git diff --name-only "$BEFORE_SHA" "$AFTER_SHA")
+            if echo "$CHANGED" | grep -q '^\.github/workflows/deploy\.yml$'; then
+              echo "判定: deploy.yml（共通設定）変更 → 全ツールデプロイ"
+              TARGETS=$(all_dirs)
+            else
+              # 変更ファイルのトップレベルディレクトリのうち index.html を持つものだけ
+              TARGETS=$(echo "$CHANGED" | grep '/' | cut -d/ -f1 | sort -u \
+                | while read -r d; do [ -f "${d}/index.html" ] && echo "$d"; done)
+            fi
+          fi
+
+          TARGETS=$(echo "$TARGETS" | tr '\n' ' ' | xargs)
+          echo "対象: ${TARGETS:-（なし）}"
+          echo "targets=$TARGETS" >> "$GITHUB_OUTPUT"
+
       - name: Deploy tool directories
+        if: steps.targets.outputs.targets != ''
         env:
           # リモートに転送されるロケールをCに固定し、接続先perlのロケール警告を抑止（root cause対処）
           LC_ALL: C
@@ -28,15 +71,17 @@ jobs:
           REMOTE_HOST: ${{ secrets.SSH_HOST }}
           REMOTE_PORT: ${{ secrets.SSH_PORT }}
           REMOTE_PATH: ${{ secrets.DEPLOY_PATH }}
+          TARGETS: ${{ steps.targets.outputs.targets }}
         run: |
           DEST=$(echo "${REMOTE_PATH}" | tr -d '[:space:]')
           REMOTE="${REMOTE_USER}@${REMOTE_HOST}"
           PORT=$(echo "${REMOTE_PORT}" | tr -d '[:space:]')
-          for dir in */; do
-            if [ -f "${dir}index.html" ]; then
-              name="${dir%/}"
-              echo "Deploying: ${name}"
-              ssh -p "${PORT}" "${REMOTE}" "mkdir -p ${DEST}/${name}"
-              rsync -az -e "ssh -p ${PORT}" "${dir}" "${REMOTE}:${DEST}/${name}/"
-            fi
+          for name in $TARGETS; do
+            echo "Deploying: ${name}"
+            ssh -p "${PORT}" "${REMOTE}" "mkdir -p ${DEST}/${name}"
+            rsync -az -e "ssh -p ${PORT}" "${name}/" "${REMOTE}:${DEST}/${name}/"
           done
+
+      - name: Nothing to deploy
+        if: steps.targets.outputs.targets == ''
+        run: echo "変更されたツールディレクトリはありません。デプロイをスキップします。"
