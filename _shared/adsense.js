@@ -79,7 +79,10 @@
   }
 
   function scan() {
-    var list = document.querySelectorAll("ins.adsbygoogle");
+    // 自分たちが設置した手動ユニット（data-ad-slot あり）だけを対象にする。
+    // Google の Auto Ads / アンカー広告が後から挿入する ins（data-ad-slot なし）には
+    // 一切触れない。これらに push / 折りたたみを掛けると Google 自動広告を壊すため。
+    var list = document.querySelectorAll("ins.adsbygoogle[data-ad-slot]");
     for (var i = 0; i < list.length; i++) fillSlot(list[i]);
   }
 
