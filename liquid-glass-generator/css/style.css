@@ -490,6 +490,26 @@ input[type="color"] {
   color: #c7d0e6;
 }
 
+.related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 14px;
+}
+.related a {
+  border: 1px solid var(--line);
+  padding: 10px 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--panel);
+  transition: all 0.15s;
+}
+.related a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .compare-table th {
   background: var(--panel-2);
   color: var(--text);
