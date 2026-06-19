@@ -19,21 +19,6 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-      # 共有アセット（広告ローダー）を先に配置し、各ページが参照する前に公開しておく。
-      - name: Deploy shared assets
-        env:
-          REMOTE_USER: ${{ secrets.SSH_USER }}
-          REMOTE_HOST: ${{ secrets.SSH_HOST }}
-          REMOTE_PORT: ${{ secrets.SSH_PORT }}
-          REMOTE_PATH: ${{ secrets.DEPLOY_PATH }}
-        run: |
-          DEST=$(echo "${REMOTE_PATH}" | tr -d '[:space:]')
-          REMOTE="${REMOTE_USER}@${REMOTE_HOST}"
-          PORT=$(echo "${REMOTE_PORT}" | tr -d '[:space:]')
-          echo "Deploying: _shared（全ツール共通の広告ローダー等）"
-          ssh -p "${PORT}" "${REMOTE}" "mkdir -p ${DEST}/_shared"
-          rsync -az -e "ssh -p ${PORT}" "_shared/" "${REMOTE}:${DEST}/_shared/"
-
       - name: Deploy tool directories
         env:
           REMOTE_USER: ${{ secrets.SSH_USER }}
