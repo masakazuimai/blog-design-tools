@@ -21,6 +21,9 @@ jobs:
 
       - name: Deploy tool directories
         env:
+          # リモートに転送されるロケールをCに固定し、接続先perlのロケール警告を抑止（root cause対処）
+          LC_ALL: C
+          LANG: C
           REMOTE_USER: ${{ secrets.SSH_USER }}
           REMOTE_HOST: ${{ secrets.SSH_HOST }}
           REMOTE_PORT: ${{ secrets.SSH_PORT }}
