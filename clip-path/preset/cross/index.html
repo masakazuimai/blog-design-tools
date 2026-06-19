@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS 十字・プラスの作り方｜clip-pathでプラスマーク（コピペ）</title>
+    <meta name="description" content="CSSのclip-pathで十字（プラス記号）を作る方法。標準の十字と太い十字のコードを実物プレビュー付きでコピーできます。医療系アイコンや追加ボタンの装飾に。無料・登録不要。" />
+    <link rel="canonical" href="https://codequest.work/generator/clip-path/preset/cross/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/clip-path/preset/cross/" />
+    <meta property="og:title" content="CSS 十字・プラスの作り方｜clip-pathでプラスマーク" />
+    <meta property="og:description" content="clip-pathで十字（プラス記号）を作る方法。標準と太めのコードを実物プレビュー付きでコピーできます。" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/style.css?v=20260618g" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "clip-path ジェネレーター", "item": "https://codequest.work/generator/clip-path/" },
+          { "@type": "ListItem", "position": 2, "name": "プリセット集", "item": "https://codequest.work/generator/clip-path/preset/" },
+          { "@type": "ListItem", "position": 3, "name": "十字・プラス", "item": "https://codequest.work/generator/clip-path/preset/cross/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "十字の太さを変えるには？", "acceptedAnswer": { "@type": "Answer", "text": "腕の幅を決める 35% / 65% の値を動かします。差を小さくすると（例 40%/60%）細い十字、大きくすると太い十字になります。" } },
+          { "@type": "Question", "name": "正確なプラス記号にするには？", "acceptedAnswer": { "@type": "Answer", "text": "要素を正方形にし、縦腕と横腕の幅指定を同じ値にすると、縦横対称のきれいなプラスになります。" } }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <h1>CSS <span class="accent">十字・プラス</span>の作り方</h1>
+        <p><code>clip-path</code> でプラス記号（十字）を作るコードを、実物プレビュー付きでコピーできます。</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <section class="article" style="margin-top: 8px">
+        <div class="answer-box">
+          <p>十字・プラスは <code>clip-path: polygon(35% 0, 65% 0, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100%, 35% 100%, 35% 65%, 0 65%, 0 35%, 35% 35%)</code> で作れます。医療系アイコンや「追加」ボタンの装飾に使えます。下にコピペ用コードを用意しました。</p>
+        </div>
+
+        <h2>標準の十字</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 160px; height: 160px; clip-path: polygon(35% 0, 65% 0, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100%, 35% 100%, 35% 65%, 0 65%, 0 35%, 35% 35%); -webkit-clip-path: polygon(35% 0, 65% 0, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100%, 35% 100%, 35% 65%, 0 65%, 0 35%, 35% 35%)"></div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c1"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c1">.cross {
+  clip-path: polygon(35% 0, 65% 0, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100%, 35% 100%, 35% 65%, 0 65%, 0 35%, 35% 35%);
+  -webkit-clip-path: polygon(35% 0, 65% 0, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100%, 35% 100%, 35% 65%, 0 65%, 0 35%, 35% 35%);
+}</pre>
+
+        <h2>太い十字</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 160px; height: 160px; clip-path: polygon(28% 0, 72% 0, 72% 28%, 100% 28%, 100% 72%, 72% 72%, 72% 100%, 28% 100%, 28% 72%, 0 72%, 0 28%, 28% 28%); -webkit-clip-path: polygon(28% 0, 72% 0, 72% 28%, 100% 28%, 100% 72%, 72% 72%, 72% 100%, 28% 100%, 28% 72%, 0 72%, 0 28%, 28% 28%)"></div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c2"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c2">.cross-bold {
+  clip-path: polygon(28% 0, 72% 0, 72% 28%, 100% 28%, 100% 72%, 72% 72%, 72% 100%, 28% 100%, 28% 72%, 0 72%, 0 28%, 28% 28%);
+  -webkit-clip-path: polygon(28% 0, 72% 0, 72% 28%, 100% 28%, 100% 72%, 72% 72%, 72% 100%, 28% 100%, 28% 72%, 0 72%, 0 28%, 28% 28%);
+}</pre>
+
+        <h2>ポイントと注意点</h2>
+        <ul>
+          <li><strong>腕の太さ</strong>：<code>35%</code> / <code>65%</code> の差で太さが決まります。差を広げると太く、狭めると細くなります。</li>
+          <li><strong>左右対称に</strong>：要素を正方形にし、縦横の幅指定を同じにすると整ったプラスになります。</li>
+          <li><strong>用途</strong>：背景色や背景画像を十字に切り抜けます。アイコンとして使うときはSVGの方が軽い場合もあります。微調整は <a href="../../">clip-path ジェネレーター</a> が便利です。</li>
+        </ul>
+
+        <h2>関連</h2>
+        <div class="related">
+          <a href="../../"><strong>clip-path ジェネレーター →</strong><span>ドラッグで微調整</span></a>
+          <a href="../diamond/"><strong>菱形（ダイヤ） →</strong><span>ダイヤ・アイコン枠</span></a>
+          <a href="../octagon/"><strong>八角形 →</strong><span>ストップ標識・枠</span></a>
+        </div>
+      </section>
+    </div>
+
+    <div style="max-width: 728px; margin: 32px auto; text-align: center; min-height: 90px">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 clip-path ジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <script>
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const code = document.getElementById(btn.dataset.copy).textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+          } catch {}
+          const span = btn.querySelector("span");
+          const original = span.textContent;
+          btn.classList.add("copied");
+          span.textContent = "コピーしました";
+          setTimeout(() => {
+            btn.classList.remove("copied");
+            span.textContent = original;
+          }, 1600);
+        });
+      });
+    </script>
+  </body>
+</html>

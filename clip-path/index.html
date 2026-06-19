@@ -40,6 +40,57 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と main.js の両方で日付を上げる -->
     <link rel="stylesheet" href="css/style.css?v=20260618g" />
+    <style>
+      /* 用途別プリセットのアコーディオン（このページ専用。グローバルcss cache bust回避のためインライン） */
+      .preset-acc {
+        margin: 16px 0 8px;
+      }
+      .preset-acc details {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--surface);
+        margin-bottom: 12px;
+        overflow: hidden;
+      }
+      .preset-acc summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 20px;
+        font-weight: 700;
+        font-size: 1.05rem;
+        color: var(--text);
+      }
+      .preset-acc summary::-webkit-details-marker {
+        display: none;
+      }
+      .preset-acc summary::after {
+        content: "＋";
+        margin-left: auto;
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 1.2rem;
+      }
+      .preset-acc details[open] summary::after {
+        content: "−";
+      }
+      .preset-acc summary:hover {
+        color: var(--accent);
+      }
+      .preset-acc .acc-note {
+        font-weight: 400;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+      .preset-acc .acc-body {
+        padding: 0 16px 16px;
+      }
+      .preset-acc .acc-body .related {
+        margin: 0;
+      }
+    </style>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -330,18 +381,55 @@
         </table>
 
         <h2>用途別プリセット</h2>
-        <p>「この形のコードがすぐ欲しい」という用途別のプリセットを用意しています。各ページに実物プレビューとコピペコードがあります。</p>
-        <div class="related">
-          <a href="preset/diagonal-section/"><strong>斜めセクション →</strong><span>背景を斜めに区切る</span></a>
-          <a href="preset/speech-bubble/"><strong>吹き出し →</strong><span>しっぽ付きの吹き出し</span></a>
-          <a href="preset/arrow/"><strong>矢印 →</strong><span>右向き・左向きの矢印</span></a>
-          <a href="preset/ribbon/"><strong>リボン →</strong><span>帯・リボン状の見出し</span></a>
-          <a href="preset/hexagon/"><strong>六角形 →</strong><span>ハニカム・アイコン枠</span></a>
-          <a href="preset/triangle/"><strong>三角形 →</strong><span>上下左右の三角</span></a>
-          <a href="preset/circle/"><strong>丸く切り抜き →</strong><span>円形トリミング</span></a>
-          <a href="preset/star/"><strong>星 →</strong><span>五つ星マーク</span></a>
-          <a href="preset/trapezoid/"><strong>台形 →</strong><span>タブ・見出し背景</span></a>
-          <a href="preset/parallelogram/"><strong>平行四辺形 →</strong><span>斜めの図形・ボタン</span></a>
+        <p>「この形のコードがすぐ欲しい」という用途別のプリセットを、用途カテゴリ別にまとめました。見出しをクリックすると一覧が開きます。各ページに実物プレビューとコピペコードがあります。微調整は上のジェネレーターでどうぞ。</p>
+        <div class="preset-acc">
+          <details open>
+            <summary>セクション区切り <span class="acc-note">背景や境界を斜め・波状に</span></summary>
+            <div class="acc-body">
+              <div class="related">
+                <a href="preset/diagonal-section/"><strong>斜めセクション →</strong><span>背景を斜めに区切る</span></a>
+                <a href="preset/zigzag/"><strong>ジグザグ縁 →</strong><span>波状・切手風の区切り</span></a>
+              </div>
+            </div>
+          </details>
+          <details>
+            <summary>図形・アイコン枠 <span class="acc-note">多角形・記号のシェイプ</span></summary>
+            <div class="acc-body">
+              <div class="related">
+                <a href="preset/triangle/"><strong>三角形 →</strong><span>上下左右の三角</span></a>
+                <a href="preset/hexagon/"><strong>六角形 →</strong><span>ハニカム・アイコン枠</span></a>
+                <a href="preset/star/"><strong>星 →</strong><span>五つ星マーク</span></a>
+                <a href="preset/diamond/"><strong>菱形（ダイヤ） →</strong><span>ダイヤ・アイコン枠</span></a>
+                <a href="preset/pentagon/"><strong>五角形 →</strong><span>ホームベース・タグ</span></a>
+                <a href="preset/octagon/"><strong>八角形 →</strong><span>ストップ標識・枠</span></a>
+                <a href="preset/cross/"><strong>十字・プラス →</strong><span>プラスマーク・医療系</span></a>
+              </div>
+            </div>
+          </details>
+          <details>
+            <summary>UI装飾・見出し <span class="acc-note">ボタン・ラベル・吹き出し</span></summary>
+            <div class="acc-body">
+              <div class="related">
+                <a href="preset/speech-bubble/"><strong>吹き出し →</strong><span>しっぽ付きの吹き出し</span></a>
+                <a href="preset/arrow/"><strong>矢印 →</strong><span>右向き・左向きの矢印</span></a>
+                <a href="preset/ribbon/"><strong>リボン →</strong><span>帯・リボン状の見出し</span></a>
+                <a href="preset/trapezoid/"><strong>台形 →</strong><span>タブ・見出し背景</span></a>
+                <a href="preset/parallelogram/"><strong>平行四辺形 →</strong><span>斜めの図形・ボタン</span></a>
+                <a href="preset/chevron/"><strong>シェブロン →</strong><span>パンくず・ステップUI</span></a>
+                <a href="preset/cut-corner/"><strong>角カット →</strong><span>隅切りのテック系カード</span></a>
+              </div>
+            </div>
+          </details>
+          <details>
+            <summary>切り抜き（トリミング） <span class="acc-note">画像・アバターの切り抜き</span></summary>
+            <div class="acc-body">
+              <div class="related">
+                <a href="preset/circle/"><strong>丸く切り抜き →</strong><span>円形トリミング</span></a>
+                <a href="preset/ellipse/"><strong>楕円で切り抜き →</strong><span>横長アバター・サムネ</span></a>
+                <a href="preset/rounded-crop/"><strong>角丸で切り抜き →</strong><span>角丸トリミング</span></a>
+              </div>
+            </div>
+          </details>
         </div>
 
         <h2>よくある失敗・注意点</h2>

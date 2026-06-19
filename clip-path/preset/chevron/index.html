@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS シェブロン（>型）の作り方｜clip-pathでパンくず・矢羽根（コピペ）</title>
+    <meta name="description" content="CSSのclip-pathでシェブロン（>型・山型）を作る方法。右向き・左向きのコードを実物プレビュー付きでコピーできます。パンくずリストや進捗ステップ（矢羽根）の装飾に。無料・登録不要。" />
+    <link rel="canonical" href="https://codequest.work/generator/clip-path/preset/chevron/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/clip-path/preset/chevron/" />
+    <meta property="og:title" content="CSS シェブロン（>型）の作り方｜clip-pathでパンくず・矢羽根" />
+    <meta property="og:description" content="clip-pathでシェブロン（>型）を作る方法。右向き・左向きのコードを実物プレビュー付きでコピーできます。" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/style.css?v=20260618g" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "clip-path ジェネレーター", "item": "https://codequest.work/generator/clip-path/" },
+          { "@type": "ListItem", "position": 2, "name": "プリセット集", "item": "https://codequest.work/generator/clip-path/preset/" },
+          { "@type": "ListItem", "position": 3, "name": "シェブロン", "item": "https://codequest.work/generator/clip-path/preset/chevron/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "矢印（arrow）との違いは？", "acceptedAnswer": { "@type": "Answer", "text": "シェブロンは帯の左右が同じ向きにくぼんだ「>」型で、横に並べてパンくずや矢羽根を作るのに向きます。矢印は片側が尖った1個の図形で、方向を指し示す用途に向きます。" } },
+          { "@type": "Question", "name": "パンくずを隙間なく並べるには？", "acceptedAnswer": { "@type": "Answer", "text": "シェブロンを横並びにし、margin-left をマイナスにして左のくぼみへ重ねると、矢羽根が連続したパンくずになります。" } }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <h1>CSS <span class="accent">シェブロン</span>の作り方</h1>
+        <p><code>clip-path</code> で「&gt;」型の矢羽根・パンくずを作るコードを、実物プレビュー付きでコピーできます。</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <section class="article" style="margin-top: 8px">
+        <div class="answer-box">
+          <p>シェブロン（&gt;型）は <code>clip-path: polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%, 25% 50%)</code> で作れます。横に並べるとパンくずリストや進捗ステップ（矢羽根）になります。下にコピペ用コードを用意しました。</p>
+        </div>
+
+        <h2>右向きシェブロン</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 200px; height: 80px; clip-path: polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%, 25% 50%); -webkit-clip-path: polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%, 25% 50%)">HOME</div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c1"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c1">.chevron {
+  clip-path: polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%, 25% 50%);
+  -webkit-clip-path: polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%, 25% 50%);
+}</pre>
+
+        <h2>左向きシェブロン</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 200px; height: 80px; clip-path: polygon(25% 0, 100% 0, 75% 50%, 100% 100%, 25% 100%, 0 50%); -webkit-clip-path: polygon(25% 0, 100% 0, 75% 50%, 100% 100%, 25% 100%, 0 50%)">BACK</div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c2"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c2">.chevron-left {
+  clip-path: polygon(25% 0, 100% 0, 75% 50%, 100% 100%, 25% 100%, 0 50%);
+  -webkit-clip-path: polygon(25% 0, 100% 0, 75% 50%, 100% 100%, 25% 100%, 0 50%);
+}</pre>
+
+        <h2>ポイントと注意点</h2>
+        <ul>
+          <li><strong>パンくずに並べる</strong>：右向きシェブロンを横並びにし、<code>margin-left</code> をマイナスにして左のくぼみに重ねると矢羽根が連続します。</li>
+          <li><strong>尖りの強さ</strong>：先端の <code>100% 50%</code> と くぼみ <code>25% 50%</code> を動かすと、尖り具合が変わります。</li>
+          <li><strong>文字の余白</strong>：左右がくぼむので <code>padding</code> を左右に多めにとると文字が切れません。微調整は <a href="../../">clip-path ジェネレーター</a> が便利です。</li>
+        </ul>
+
+        <h2>関連</h2>
+        <div class="related">
+          <a href="../../"><strong>clip-path ジェネレーター →</strong><span>ドラッグで微調整</span></a>
+          <a href="../arrow/"><strong>矢印 →</strong><span>右向き・左向きの矢印</span></a>
+          <a href="../pentagon/"><strong>五角形 →</strong><span>ホームベース・タグ</span></a>
+        </div>
+      </section>
+    </div>
+
+    <div style="max-width: 728px; margin: 32px auto; text-align: center; min-height: 90px">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 clip-path ジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <script>
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const code = document.getElementById(btn.dataset.copy).textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+          } catch {}
+          const span = btn.querySelector("span");
+          const original = span.textContent;
+          btn.classList.add("copied");
+          span.textContent = "コピーしました";
+          setTimeout(() => {
+            btn.classList.remove("copied");
+            span.textContent = original;
+          }, 1600);
+        });
+      });
+    </script>
+  </body>
+</html>

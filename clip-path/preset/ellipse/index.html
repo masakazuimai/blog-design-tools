@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS 楕円で切り抜く方法｜clip-path ellipseで横長・縦長トリミング（コピペ）</title>
+    <meta name="description" content="CSSのclip-pathで画像や要素を楕円に切り抜く方法。横長の楕円と縦長の楕円のコードを実物プレビュー付きでコピーできます。横長アバターやサムネイルのトリミングに。無料・登録不要。" />
+    <link rel="canonical" href="https://codequest.work/generator/clip-path/preset/ellipse/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/clip-path/preset/ellipse/" />
+    <meta property="og:title" content="CSS 楕円で切り抜く方法｜clip-path ellipseで横長・縦長トリミング" />
+    <meta property="og:description" content="clip-pathで画像や要素を楕円に切り抜く方法。横長・縦長のコードを実物プレビュー付きでコピーできます。" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/style.css?v=20260618g" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "clip-path ジェネレーター", "item": "https://codequest.work/generator/clip-path/" },
+          { "@type": "ListItem", "position": 2, "name": "プリセット集", "item": "https://codequest.work/generator/clip-path/preset/" },
+          { "@type": "ListItem", "position": 3, "name": "楕円で切り抜き", "item": "https://codequest.work/generator/clip-path/preset/ellipse/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "ellipse() の数値は何を表す？", "acceptedAnswer": { "@type": "Answer", "text": "ellipse(横半径 縦半径 at 中心X 中心Y) です。例の ellipse(50% 35% at 50% 50%) は、横は要素いっぱい・縦は35%の半径で、中心は要素の真ん中という意味です。" } },
+          { "@type": "Question", "name": "円との使い分けは？", "acceptedAnswer": { "@type": "Answer", "text": "正円で切るなら circle()、横長・縦長で切るなら ellipse() が向きます。横長のバナーやワイドなアバター枠は楕円が便利です。" } }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <h1>CSS <span class="accent">楕円で切り抜く</span>方法</h1>
+        <p><code>clip-path: ellipse()</code> で画像や要素を楕円にトリミングするコードを、実物プレビュー付きでコピーできます。</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <section class="article" style="margin-top: 8px">
+        <div class="answer-box">
+          <p>楕円で切り抜くには <code>clip-path: ellipse(50% 35% at 50% 50%)</code> を指定します。<code>ellipse(横半径 縦半径 at 中心)</code> の形で、横長アバターやワイドなサムネイルのトリミングに使えます。<code>img</code> にも背景画像にも効きます。下にコピペ用コードを用意しました。</p>
+        </div>
+
+        <h2>横長の楕円</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 240px; height: 150px; clip-path: ellipse(50% 35% at 50% 50%); -webkit-clip-path: ellipse(50% 35% at 50% 50%)"></div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c1"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c1">.ellipse-wide {
+  clip-path: ellipse(50% 35% at 50% 50%);
+  -webkit-clip-path: ellipse(50% 35% at 50% 50%);
+}</pre>
+
+        <h2>縦長の楕円</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 150px; height: 220px; clip-path: ellipse(40% 50% at 50% 50%); -webkit-clip-path: ellipse(40% 50% at 50% 50%)"></div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c2"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c2">.ellipse-tall {
+  clip-path: ellipse(40% 50% at 50% 50%);
+  -webkit-clip-path: ellipse(40% 50% at 50% 50%);
+}</pre>
+
+        <h2>ポイントと注意点</h2>
+        <ul>
+          <li><strong>半径の意味</strong>：1つ目が横半径、2つ目が縦半径です。両方50%にすると要素いっぱいの楕円になります。</li>
+          <li><strong>中身を歪ませない</strong>：画像は <code>object-fit: cover</code> を併用すると、切り抜いても中身が引き伸ばされません。</li>
+          <li><strong>中心の移動</strong>：<code>at 50% 50%</code> を変えると楕円の中心が動きます。微調整は <a href="../../">clip-path ジェネレーター</a> の「楕円」タイプが便利です。</li>
+        </ul>
+
+        <h2>関連</h2>
+        <div class="related">
+          <a href="../../"><strong>clip-path ジェネレーター →</strong><span>ドラッグで微調整</span></a>
+          <a href="../circle/"><strong>丸く切り抜き →</strong><span>円形トリミング</span></a>
+          <a href="../rounded-crop/"><strong>角丸で切り抜き →</strong><span>角丸トリミング</span></a>
+        </div>
+      </section>
+    </div>
+
+    <div style="max-width: 728px; margin: 32px auto; text-align: center; min-height: 90px">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 clip-path ジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <script>
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const code = document.getElementById(btn.dataset.copy).textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+          } catch {}
+          const span = btn.querySelector("span");
+          const original = span.textContent;
+          btn.classList.add("copied");
+          span.textContent = "コピーしました";
+          setTimeout(() => {
+            btn.classList.remove("copied");
+            span.textContent = original;
+          }, 1600);
+        });
+      });
+    </script>
+  </body>
+</html>

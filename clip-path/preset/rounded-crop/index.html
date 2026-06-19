@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS 角丸で切り抜く方法｜clip-path inset roundで角丸トリミング（コピペ）</title>
+    <meta name="description" content="CSSのclip-pathで角丸の四角形に切り抜く方法。inset(round)で角丸トリミング、余白付き角丸のコードを実物プレビュー付きでコピーできます。border-radiusとの違いも解説。無料・登録不要。" />
+    <link rel="canonical" href="https://codequest.work/generator/clip-path/preset/rounded-crop/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/clip-path/preset/rounded-crop/" />
+    <meta property="og:title" content="CSS 角丸で切り抜く方法｜clip-path inset roundで角丸トリミング" />
+    <meta property="og:description" content="clip-pathで角丸の四角形に切り抜く方法。inset(round)のコードを実物プレビュー付きでコピーできます。" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/style.css?v=20260618g" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "clip-path ジェネレーター", "item": "https://codequest.work/generator/clip-path/" },
+          { "@type": "ListItem", "position": 2, "name": "プリセット集", "item": "https://codequest.work/generator/clip-path/preset/" },
+          { "@type": "ListItem", "position": 3, "name": "角丸で切り抜き", "item": "https://codequest.work/generator/clip-path/preset/rounded-crop/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "border-radius と何が違う？", "acceptedAnswer": { "@type": "Answer", "text": "見た目は似ていますが、clip-path: inset(... round) は要素を実際に切り抜くため、はみ出した子要素や影も角丸に沿って切れます。border-radius は角を丸めるだけで、子要素のはみ出しには overflow: hidden が別途必要です。" } },
+          { "@type": "Question", "name": "余白をつけて切り抜くには？", "acceptedAnswer": { "@type": "Answer", "text": "inset の最初の値が内側の余白です。inset(8% round 16px) のようにすると、周囲を8%削ったうえで角丸に切り抜けます。" } }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <h1>CSS <span class="accent">角丸で切り抜く</span>方法</h1>
+        <p><code>clip-path: inset(... round)</code> で角丸の四角形にトリミングするコードを、実物プレビュー付きでコピーできます。</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <section class="article" style="margin-top: 8px">
+        <div class="answer-box">
+          <p>角丸で切り抜くには <code>clip-path: inset(0 round 24px)</code> を指定します。<code>border-radius</code> と違い<strong>はみ出した子要素や影も角丸に沿って切れる</strong>のが利点です。サムネイルやカードのトリミングに使えます。下にコピペ用コードを用意しました。</p>
+        </div>
+
+        <h2>角丸でトリミング</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 220px; height: 150px; clip-path: inset(0 round 24px); -webkit-clip-path: inset(0 round 24px)">CARD</div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c1"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c1">.rounded-crop {
+  clip-path: inset(0 round 24px);
+  -webkit-clip-path: inset(0 round 24px);
+}</pre>
+
+        <h2>余白をつけて角丸で切り抜き</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 220px; height: 150px; clip-path: inset(8% round 16px); -webkit-clip-path: inset(8% round 16px)">CARD</div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c2"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c2">.rounded-crop-inset {
+  clip-path: inset(8% round 16px);
+  -webkit-clip-path: inset(8% round 16px);
+}</pre>
+
+        <h2>ポイントと注意点</h2>
+        <ul>
+          <li><strong>border-radius との違い</strong>：clip-path は実際に切り抜くので、子要素や影もきれいに角丸へ収まります。</li>
+          <li><strong>余白の指定</strong>：<code>inset(8% round 16px)</code> の最初の値が内側の余白（上右下左）です。</li>
+          <li><strong>角丸の大きさ</strong>：<code>round</code> の後ろの値で丸みが決まります。<code>round 50%</code> にすると円・楕円に近づきます。微調整は <a href="../../">clip-path ジェネレーター</a> の「inset」タイプが便利です。</li>
+        </ul>
+
+        <h2>関連</h2>
+        <div class="related">
+          <a href="../../"><strong>clip-path ジェネレーター →</strong><span>ドラッグで微調整</span></a>
+          <a href="../circle/"><strong>丸く切り抜き →</strong><span>円形トリミング</span></a>
+          <a href="../cut-corner/"><strong>角カット →</strong><span>隅切りのテック系カード</span></a>
+        </div>
+      </section>
+    </div>
+
+    <div style="max-width: 728px; margin: 32px auto; text-align: center; min-height: 90px">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 clip-path ジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <script>
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const code = document.getElementById(btn.dataset.copy).textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+          } catch {}
+          const span = btn.querySelector("span");
+          const original = span.textContent;
+          btn.classList.add("copied");
+          span.textContent = "コピーしました";
+          setTimeout(() => {
+            btn.classList.remove("copied");
+            span.textContent = original;
+          }, 1600);
+        });
+      });
+    </script>
+  </body>
+</html>

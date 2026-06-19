@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS 五角形の作り方｜clip-pathでペンタゴン・ホームベース型（コピペ）</title>
+    <meta name="description" content="CSSのclip-pathで五角形を作る方法。正五角形とホームベース型（タグ・矢羽根）のコードを実物プレビュー付きでコピーできます。ステップ表示やラベルの装飾に。無料・登録不要。" />
+    <link rel="canonical" href="https://codequest.work/generator/clip-path/preset/pentagon/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/clip-path/preset/pentagon/" />
+    <meta property="og:title" content="CSS 五角形の作り方｜clip-pathでペンタゴン・ホームベース型" />
+    <meta property="og:description" content="clip-pathで五角形を作る方法。正五角形とホームベース型のコードを実物プレビュー付きでコピーできます。" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/style.css?v=20260618g" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "clip-path ジェネレーター", "item": "https://codequest.work/generator/clip-path/" },
+          { "@type": "ListItem", "position": 2, "name": "プリセット集", "item": "https://codequest.work/generator/clip-path/preset/" },
+          { "@type": "ListItem", "position": 3, "name": "五角形", "item": "https://codequest.work/generator/clip-path/preset/pentagon/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "正五角形の座標はどう決まる？", "acceptedAnswer": { "@type": "Answer", "text": "頂点を72度ずつ円周上に配置した近似値です。例の polygon(50% 0, 100% 38%, 82% 100%, 18% 100%, 0 38%) で正五角形に近い形になります。要素を正方形にするとバランスが良くなります。" } },
+          { "@type": "Question", "name": "ホームベース型は何に使う？", "acceptedAnswer": { "@type": "Answer", "text": "右端が尖った五角形で、タグ・ラベルや進捗ステップ（矢羽根）の表示によく使われます。複数並べるとフロー表示になります。" } }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <h1>CSS <span class="accent">五角形</span>の作り方</h1>
+        <p><code>clip-path</code> でペンタゴン・ホームベース型を作るコードを、実物プレビュー付きでコピーできます。</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <section class="article" style="margin-top: 8px">
+        <div class="answer-box">
+          <p>正五角形は <code>clip-path: polygon(50% 0, 100% 38%, 82% 100%, 18% 100%, 0 38%)</code> で作れます。右端が尖ったホームベース型はタグやステップ表示に便利です。下にコピペ用コードを用意しました。</p>
+        </div>
+
+        <h2>正五角形（ペンタゴン）</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 170px; height: 170px; clip-path: polygon(50% 0, 100% 38%, 82% 100%, 18% 100%, 0 38%); -webkit-clip-path: polygon(50% 0, 100% 38%, 82% 100%, 18% 100%, 0 38%)">5</div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c1"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c1">.pentagon {
+  clip-path: polygon(50% 0, 100% 38%, 82% 100%, 18% 100%, 0 38%);
+  -webkit-clip-path: polygon(50% 0, 100% 38%, 82% 100%, 18% 100%, 0 38%);
+}</pre>
+
+        <h2>ホームベース型（タグ・矢羽根）</h2>
+        <div class="demo-stage">
+          <div class="demo-fig" style="width: 220px; height: 100px; clip-path: polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%); -webkit-clip-path: polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%)">STEP 1</div>
+        </div>
+        <div class="code-head">
+          <h3>CSS</h3>
+          <button type="button" class="copy-btn" data-copy="c2"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="c2">.pentagon-tag {
+  clip-path: polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%);
+  -webkit-clip-path: polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%);
+}</pre>
+
+        <h2>ポイントと注意点</h2>
+        <ul>
+          <li><strong>正五角形のバランス</strong>：要素を正方形（幅=高さ）にすると整った五角形になります。</li>
+          <li><strong>矢羽根（フロー）</strong>：ホームベース型を横に並べ、左端を少しずらすと進捗ステップの矢羽根になります。</li>
+          <li><strong>文字の余白</strong>：尖った側は内側が削れるので <code>padding-right</code> を多めにとると文字が切れません。微調整は <a href="../../">clip-path ジェネレーター</a> が便利です。</li>
+        </ul>
+
+        <h2>関連</h2>
+        <div class="related">
+          <a href="../../"><strong>clip-path ジェネレーター →</strong><span>ドラッグで微調整</span></a>
+          <a href="../hexagon/"><strong>六角形 →</strong><span>ハニカム・アイコン枠</span></a>
+          <a href="../chevron/"><strong>シェブロン →</strong><span>パンくず・ステップUI</span></a>
+        </div>
+      </section>
+    </div>
+
+    <div style="max-width: 728px; margin: 32px auto; text-align: center; min-height: 90px">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 clip-path ジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <script>
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const code = document.getElementById(btn.dataset.copy).textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+          } catch {}
+          const span = btn.querySelector("span");
+          const original = span.textContent;
+          btn.classList.add("copied");
+          span.textContent = "コピーしました";
+          setTimeout(() => {
+            btn.classList.remove("copied");
+            span.textContent = original;
+          }, 1600);
+        });
+      });
+    </script>
+  </body>
+</html>
