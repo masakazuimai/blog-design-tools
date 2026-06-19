@@ -169,6 +169,8 @@ function bindSlider(id, key, format = (v) => v) {
   const el = document.getElementById(id)
   const out = document.querySelector(`[data-val="${id}"]`)
   if (!el) return
+  // DOM初期値を state（=DEFAULT_PARAMS）に合わせ、表示と数値を連動させる
+  if (state[key] != null) el.value = String(state[key])
   const update = () => {
     state[key] = parseFloat(el.value)
     if (out) out.textContent = format(state[key])
@@ -302,7 +304,9 @@ bindSlider('edge', 'edge', (v) => Math.round(v))
 bindSlider('radius', 'radius', (v) => Math.round(v))
 bindSlider('fontSize', 'fontSize', (v) => `${Math.round(v)}px`)
 bindSlider('tintOpacity', 'tintOpacity', (v) => v.toFixed(2))
-document.getElementById('tint').addEventListener('input', (e) => { state.tint = e.target.value; commit() })
+const tintEl = document.getElementById('tint')
+tintEl.value = state.tint // サンプル色を実際のティント値に同期
+tintEl.addEventListener('input', (e) => { state.tint = e.target.value; commit() })
 bindCopy()
 
 window.addEventListener('resize', resize)

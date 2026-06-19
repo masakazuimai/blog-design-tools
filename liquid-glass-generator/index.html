@@ -154,6 +154,17 @@
           </div>
 
           <div class="card">
+            <div class="card-title">ティント</div>
+            <div class="tint-row">
+              <input type="color" id="tint" value="#00ff00" aria-label="ティント色" />
+              <label class="slider-row tint-opacity">
+                <span class="slider-label">濃度 <em data-val="tintOpacity"></em></span>
+                <input type="range" id="tintOpacity" min="0" max="0.5" step="0.01" value="0.12" />
+              </label>
+            </div>
+          </div>
+
+          <div class="card">
             <div class="card-title">テキスト</div>
             <input type="text" id="label-text" class="text-input" placeholder="ボタンのテキスト" />
             <input type="url" id="label-link" class="text-input" placeholder="リンク先URL（例: https://example.com）" style="margin-top: 10px" />
@@ -193,16 +204,6 @@
             </label>
           </div>
 
-          <div class="card">
-            <div class="card-title">ティント</div>
-            <div class="tint-row">
-              <input type="color" id="tint" value="#ffffff" aria-label="ティント色" />
-              <label class="slider-row tint-opacity">
-                <span class="slider-label">濃度 <em data-val="tintOpacity"></em></span>
-                <input type="range" id="tintOpacity" min="0" max="0.5" step="0.01" value="0.06" />
-              </label>
-            </div>
-          </div>
         </aside>
       </div>
 
