@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>透過リキッドガラスCSSジェネレーター｜backdrop-filterでスクロール追従する液体ガラス（無料）</title>
+    <meta name="description" content="backdrop-filterとSVG feDisplacementMapで、背後のページを“ライブ”で屈折させる透過リキッドガラスのボタン・カードを作る無料ツール。スクロールで後ろが動けば歪みも追従。HTML/CSSをコピペできます。" />
+    <link rel="canonical" href="https://codequest.work/generator/liquid-glass-css-generator/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/liquid-glass-css-generator/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/liquid-glass-css-generator/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/liquid-glass-css-generator/" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codequest.work/generator/liquid-glass-css-generator/" />
+    <meta property="og:title" content="透過リキッドガラスCSSジェネレーター｜backdrop-filterでスクロール追従する液体ガラス" />
+    <meta property="og:description" content="backdrop-filterとSVG feDisplacementMapで、背後のページをライブ屈折させる透過リキッドガラスのボタン・カードを生成。スクロールで後ろが動けば歪みも追従。HTML/CSSをコピペできる無料ツール。" />
+    <meta property="og:image" content="https://codequest.work/generator/liquid-glass-css-generator/assets/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="透過リキッドガラスCSSジェネレーター｜スクロール追従する液体ガラス" />
+    <meta name="twitter:description" content="backdrop-filter＋SVGで背後のページをライブ屈折。スクロールで歪みも追従する透過リキッドガラスをコード生成する無料ツール。" />
+    <meta name="twitter:image" content="https://codequest.work/generator/liquid-glass-css-generator/assets/og.jpg" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と各JSの import 両方で日付を上げる -->
+    <link rel="stylesheet" href="css/style.css?v=20260619" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "透過リキッドガラスCSSジェネレーター",
+        "url": "https://codequest.work/generator/liquid-glass-css-generator/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web browser",
+        "inLanguage": "ja",
+        "image": "https://codequest.work/generator/liquid-glass-css-generator/assets/og.jpg",
+        "description": "backdrop-filterとSVG feDisplacementMapで、背後のページをライブ屈折させる透過リキッドガラスのボタン・カードを生成し、コピペできるHTML/CSSを出力する無料ツール。スクロールで後ろが動けば歪みも追従します。",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": ["backdrop-filter＋SVGによる背後ピクセルのライブ屈折", "スクロール追従する歪み", "歪み・ぼかし・ティント・縁ハイライトの調整", "ボタン・ピル・円・カードの形状プリセット", "リンク付きでクリック範囲を形状に一致", "コピペできる自己完結のHTML/CSS出力"],
+        "publisher": {
+          "@type": "Organization",
+          "name": "CodeQuest.work",
+          "url": "https://codequest.work/"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "透過リキッドガラスCSSジェネレーター", "item": "https://codequest.work/generator/liquid-glass-css-generator/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ライブ屈折はどのブラウザで表示されますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "背後ピクセルを歪ませるライブ屈折は、Chrome・Edge などChromium系ブラウザで表示されます。Safari・Firefox は backdrop-filter の url() フィルタに対応していないため、ぼかし＋ティントのフロストガラスに自動で劣化します。レイアウトは崩れません。" }
+          },
+          {
+            "@type": "Question",
+            "name": "既存のWebGL版「Liquid Glassジェネレーター」と何が違いますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "WebGL版は背景画像をcanvasに焼き込んで屈折させる方式で、ヒーローやカードのように背景が固定された場面に向きます。本ツールは backdrop-filter で背後にある実際のページを屈折させるため、スクロールすると後ろの動きに歪みが追従します。ヘッダーやフローティングUIなど“下が透けて動く”場面に向いています。" }
+          },
+          {
+            "@type": "Question",
+            "name": "背景画像は必要ですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "不要です。背後にあるページ内容そのものを透過・屈折するため、貼り付け先の背景に自動で追従します。背景画像の差し替えやCORSの心配もありません。" }
+          },
+          {
+            "@type": "Question",
+            "name": "スマホ（iOS Safari）でも屈折しますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "iOS Safari は WebKit エンジンのため、屈折は表示されず、ぼかし＋ティントのフロストガラスに劣化します。デザインとしては成立しますが、歪みのアニメーションを必須にする設計は避けるのがおすすめです。" }
+          },
+          {
+            "@type": "Question",
+            "name": "クリックできる範囲はガラスの形状と一致しますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "はい。リンクURLを入力すると <a> 要素として出力し、clip-path: inset(0 round R) でクリック領域を角丸や円の形状に厳密一致させます。円形ボタンで四隅が反応してしまうこともありません。" }
+          },
+          {
+            "@type": "Question",
+            "name": "出力したコードはそのまま使えますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "はい。HTML（マークアップ＋SVGフィルタ）とCSSをコピーして貼るだけで動きます。外部ライブラリ依存はなく自己完結しているため、貼り付け先のCSSにも影響されにくい構成です。" }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="brand"><span>Liquid Glass</span> CSS Generator</div>
+      <a class="lang-switch" href="en/">English</a>
+    </header>
+
+    <section class="hero">
+      <h1>スクロールで後ろが歪む<br /><span>透過リキッドガラス</span> ジェネレーター</h1>
+      <p>backdrop-filter ＋ SVG feDisplacementMap だけで、背後のページを“ライブ”で屈折させる透過ガラスのボタン・カードを作成。HTML/CSS をコピペするだけで使えます。</p>
+    </section>
+
+    <div class="layout">
+      <!-- コントロール -->
+      <aside class="panel">
+        <h2>形状</h2>
+        <div class="field">
+          <div class="shape-row">
+            <button class="chip" data-shape="button">ボタン</button>
+            <button class="chip" data-shape="pill">ピル</button>
+            <button class="chip" data-shape="circle">円</button>
+            <button class="chip" data-shape="card">カード</button>
+          </div>
+        </div>
+
+        <h2>サイズ・歪み</h2>
+        <div class="field"><label>幅<span class="val"></span></label><input type="range" min="80" max="420" step="1" data-param="w" /></div>
+        <div class="field"><label>高さ<span class="val"></span></label><input type="range" min="40" max="320" step="1" data-param="h" /></div>
+        <div class="field"><label>角丸<span class="val"></span></label><input type="range" min="0" max="160" step="1" data-param="radius" /></div>
+        <div class="field"><label>歪み強度<span class="val"></span></label><input type="range" min="0" max="160" step="1" data-param="scale" /></div>
+        <div class="field"><label>縁の屈折幅<span class="val"></span></label><input type="range" min="4" max="60" step="1" data-param="edge" /></div>
+        <div class="field"><label>ぼかし<span class="val"></span></label><input type="range" min="0" max="20" step="0.5" data-param="blur" /></div>
+
+        <h2>見た目</h2>
+        <div class="field"><label>彩度<span class="val"></span></label><input type="range" min="1" max="3" step="0.1" data-param="saturate" /></div>
+        <div class="row2">
+          <div class="field"><label>ティント色</label><input type="color" data-param="tint" /></div>
+          <div class="field"><label>濃度<span class="val"></span></label><input type="range" min="0" max="0.6" step="0.02" data-param="tintAlpha" /></div>
+        </div>
+        <div class="field"><label>縁ハイライト<span class="val"></span></label><input type="range" min="0" max="1" step="0.05" data-param="highlight" /></div>
+        <div class="field"><label>境界線<span class="val"></span></label><input type="range" min="0" max="1" step="0.05" data-param="border" /></div>
+
+        <h2>テキスト・リンク</h2>
+        <div class="field"><label>ラベル</label><input type="text" data-param="text" placeholder="Get Started" /></div>
+        <div class="field"><label>リンク先URL（空ならダミー）</label><input type="text" data-param="linkUrl" placeholder="https://example.com" /></div>
+        <div class="row2">
+          <div class="field"><label>文字色</label><input type="color" data-param="textColor" /></div>
+          <div class="field"><label>文字サイズ<span class="val"></span></label><input type="range" min="12" max="40" step="1" data-param="fontSize" /></div>
+        </div>
+      </aside>
+
+      <!-- プレビュー＋出力 -->
+      <div class="stage-wrap">
+        <div id="support-notice" class="support-notice">checking…</div>
+        <div class="bg-row">
+          <button class="chip active" data-bg="photo">画像</button>
+          <button class="chip" data-bg="text">テキスト</button>
+          <button class="chip" data-bg="colorful">カラフル</button>
+        </div>
+        <div class="preview-stage">
+          <div id="preview-track" class="preview-track bg-photo">
+            <div class="scroll-hint">↓ スクロールすると後ろが動き、歪みが追従します</div>
+            <div class="lg-sticky"><div class="lg-sticky-inner"><a id="lg-preview" href="#"></a></div></div>
+          </div>
+        </div>
+
+        <div class="output">
+          <div class="output-grid">
+            <div class="code-block">
+              <div class="code-head"><h3>HTML</h3><button class="copy-btn" id="copy-html">HTMLをコピー</button></div>
+              <textarea id="output-html" class="code" readonly></textarea>
+            </div>
+            <div class="code-block">
+              <div class="code-head"><h3>CSS</h3><button class="copy-btn" id="copy-css">CSSをコピー</button></div>
+              <textarea id="output-css" class="code" readonly></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 記事 -->
+    <article class="article">
+      <div class="answer-box">
+        <p>透過リキッドガラスとは、<strong>backdrop-filter</strong> と SVG の <strong>feDisplacementMap</strong> を組み合わせ、要素の背後にあるページのピクセルそのものをレンズのように屈折・ぼかしして見せる手法です。背景を焼き込まないため、スクロールで後ろが動くと歪みもそれに追従します。</p>
+      </div>
+
+      <h2>WebGL方式とCSS方式（本ツール）の違い</h2>
+      <p>「Liquid Glass」をWebで作る方法は大きく2系統あります。用途で使い分けるのがおすすめです。</p>
+      <table class="compare-table">
+        <thead>
+          <tr><th>観点</th><th>WebGL版（liquid-glass-generator）</th><th>本ツール（CSS / backdrop-filter）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>屈折する対象</td><td>canvasに焼き込んだ背景画像</td><td>背後にある実際のページ（ライブ）</td></tr>
+          <tr><td>スクロール追従</td><td>×（背景は固定）</td><td>○（Chromium系）</td></tr>
+          <tr><td>出力コード</td><td>&lt;canvas&gt; ＋ JS（ogl）</td><td>&lt;a&gt;/&lt;div&gt; ＋ CSS / SVG</td></tr>
+          <tr><td>得意な用途</td><td>ヒーロー・カードの見せ場</td><td>ヘッダー・フローティングUI</td></tr>
+          <tr><td>ブラウザ</td><td>WebGL全般</td><td>屈折はChromium、他はフロストに劣化</td></tr>
+        </tbody>
+      </table>
+
+      <h2>使い方（3ステップ）</h2>
+      <ol>
+        <li>形状（ボタン／ピル／円／カード）とサイズを選ぶ</li>
+        <li>歪み・ぼかし・ティント・縁ハイライトを調整する</li>
+        <li>出力された HTML と CSS をコピーして貼り付ける</li>
+      </ol>
+
+      <h2>よくある質問</h2>
+      <div class="faq-item"><h3>ライブ屈折はどのブラウザで表示されますか？</h3><p>背後ピクセルを歪ませるライブ屈折は Chrome・Edge などChromium系で表示されます。Safari・Firefox は backdrop-filter の url() フィルタに対応していないため、ぼかし＋ティントのフロストガラスに自動で劣化します（レイアウトは崩れません）。</p></div>
+      <div class="faq-item"><h3>既存のWebGL版「Liquid Glassジェネレーター」と何が違いますか？</h3><p>WebGL版は背景画像をcanvasに焼き込んで屈折させる方式で、背景が固定されたヒーローやカード向け。本ツールは backdrop-filter で背後の実ページを屈折させるため、スクロールで後ろが動くと歪みも追従し、ヘッダーやフローティングUIに向きます。</p></div>
+      <div class="faq-item"><h3>背景画像は必要ですか？</h3><p>不要です。背後にあるページ内容そのものを透過・屈折するため、貼り付け先の背景に自動で追従します。</p></div>
+      <div class="faq-item"><h3>スマホ（iOS Safari）でも屈折しますか？</h3><p>iOS Safari は WebKit エンジンのため屈折は出ず、フロスト表示に劣化します。歪みを前提にしない設計がおすすめです。</p></div>
+      <div class="faq-item"><h3>クリックできる範囲はガラスの形状と一致しますか？</h3><p>はい。リンクURLを入れると &lt;a&gt; として出力し、clip-path でクリック領域を角丸・円に厳密一致させます。</p></div>
+      <div class="faq-item"><h3>出力したコードはそのまま使えますか？</h3><p>HTML（マークアップ＋SVGフィルタ）とCSSをコピーして貼るだけ。外部依存なしの自己完結構成です。</p></div>
+
+      <h2>関連ツール</h2>
+      <div class="related">
+        <a href="https://codequest.work/generator/liquid-glass-generator/">Liquid Glassジェネレーター（WebGL版）</a>
+        <a href="https://codequest.work/generator/clip-path/">clip-path ジェネレーター</a>
+        <a href="https://codequest.work/generator/animation-gallery/">CSSアニメーションギャラリー</a>
+        <a href="https://codequest.work/generator/heading-design-previewer/">見出しデザインプレビュー</a>
+      </div>
+    </article>
+
+    <!-- AdSense -->
+    <div class="ad-wrap">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- footer-top -->
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 透過リキッドガラスCSSジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <!-- 屈折用SVGフィルタの注入先 -->
+    <div id="filter-host" aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden"></div>
+
+    <script type="module" src="js/main.js?v=20260619"></script>
+  </body>
+</html>
