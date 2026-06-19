@@ -1,7 +1,7 @@
 // 状態管理・ライブプレビュー・出力束ね
-import { DEFAULT_PARAMS, SHAPE_PRESETS, buildDisplacementMap, buildFilterSvg, buildGlassCss } from "./glass.js?v=20260619";
-import { generateSnippet } from "./export.js?v=20260619";
-import { I18N, getLang } from "./i18n.js?v=20260619";
+import { DEFAULT_PARAMS, SHAPE_PRESETS, buildDisplacementMap, buildFilterSvg, buildGlassCss } from "./glass.js?v=20260619b";
+import { generateSnippet } from "./export.js?v=20260619b";
+import { I18N, getLang } from "./i18n.js?v=20260619b";
 
 const PREVIEW_FILTER_ID = "liquid-glass-filter";
 const lang = getLang();

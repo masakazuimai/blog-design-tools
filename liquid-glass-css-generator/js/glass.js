@@ -17,7 +17,7 @@ export const DEFAULT_PARAMS = {
   h: 140,
   radius: 999,
   scale: 75, // 歪み強度（feDisplacementMap scale）
-  blur: 3, // 背後ぼかし(px)
+  blur: 0, // 背後ぼかし(px)
   edge: 22, // 屈折する縁の帯幅(px)
   saturate: 1.6, // 彩度（ガラスの透明感）
   tint: "#ffffff", // ティント色
