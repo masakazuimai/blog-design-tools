@@ -20,7 +20,7 @@ export const DEFAULT_PARAMS = {
   blur: 0, // 背後ぼかし(px)
   edge: 30, // 屈折する縁の帯幅(px)
   saturate: 1.6, // 彩度（ガラスの透明感）
-  tint: "#ffffff", // ティント色
+  tint: "#ff0000", // ティント色
   tintAlpha: 0.12, // ティント濃度
   highlight: 0.6, // 縁ハイライト強度(0-1)
   border: 0.4, // 境界線の不透明度(0-1)
