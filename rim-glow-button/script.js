@@ -440,9 +440,10 @@ spinBtn.addEventListener("click", () => {
 
 // パターン切替時に適用する既定値（そのパターンで見栄えの良い値へ寄せる）
 const PATTERN_DEFAULTS = {
-  point: { thickness: 1 }, // ポイントは細いリムの方が「1点」が際立つ
+  point: { thickness: 1, pointZ: 30, blur: 0 }, // ポイントは細いリムで広がり広め・ボカシなしが締まる
   neon: { thickness: 4, blur: 1 }, // ネオンは細めのリム＋弱めのボカシが締まる
   spot: { thickness: 20 }, // スポットは太めの方が集光が映える
+  dual: { constant: 1.5, thickness: 15 }, // デュアルは強めの光＋やや太めで両色が映える
 };
 
 // 指定キーの値をstateとスライダー・表示に反映
