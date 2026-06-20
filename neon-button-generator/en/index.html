@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neon Button Generator — 13 Glowing CSS Button Styles (Free)</title>
+    <meta name="description" content="Free tool to create CSS buttons with a glowing rim using SVG filters. 13 light patterns — neon, spotlight, dual, gradient, chase and more — with auto animation. Copy-paste HTML/CSS." />
+    <link rel="canonical" href="https://codequest.work/generator/neon-button-generator/en/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/neon-button-generator/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/neon-button-generator/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/neon-button-generator/" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codequest.work/generator/neon-button-generator/en/" />
+    <meta property="og:title" content="Neon Button Generator — 13 Glowing CSS Button Styles (Free)" />
+    <meta property="og:description" content="Free tool to create CSS buttons with a glowing rim using SVG filters. 13 light patterns with auto animation. Copy-paste HTML/CSS." />
+    <meta property="og:image" content="https://codequest.work/generator/neon-button-generator/assets/og-en.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Neon Button Generator — 13 Glowing CSS Button Styles" />
+    <meta name="twitter:description" content="Create CSS buttons with a glowing rim using SVG filters. 13 light patterns with auto animation. Copy-paste HTML/CSS. Free." />
+    <meta name="twitter:image" content="https://codequest.work/generator/neon-button-generator/assets/og-en.jpg" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="stylesheet" href="../css/style.css?v=20260620" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Neon Button Generator",
+        "url": "https://codequest.work/generator/neon-button-generator/en/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web browser",
+        "inLanguage": "en",
+        "image": "https://codequest.work/generator/neon-button-generator/assets/og-en.jpg",
+        "description": "Free tool that creates CSS buttons with a glowing rim using SVG filters. 13 light patterns with auto animation, and copy-paste, self-contained HTML/CSS output.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": ["13 light patterns (directional, point, spot, neon, dual, gradient, tri, pulse, chase, flicker, double rim, underglow, corner)", "Rim glow rendered with SVG filters", "Auto animation output (rotation, pulse and more)", "Color, size, thickness and corner-radius controls", "Copy-paste, self-contained HTML/CSS output"],
+        "publisher": {
+          "@type": "Organization",
+          "name": "CodeQuest.work",
+          "url": "https://codequest.work/"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "Neon Button Generator", "item": "https://codequest.work/generator/neon-button-generator/en/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What kind of buttons can I make?",
+            "acceptedAnswer": { "@type": "Answer", "text": "You can make CSS buttons whose rim (edge) glows. Choose from 13 light patterns — directional, neon, spotlight, gradient, double rim, underglow and more — and tune color, thickness, corner radius and blur." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use the output code as-is?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Copy the two HTML and CSS blocks and paste them — that is all. There are no external libraries; the code, including the SVG filter, is self-contained." }
+          },
+          {
+            "@type": "Question",
+            "name": "Are the glow animations included?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. With auto-animate on, JavaScript for the pattern's rotation or pulse animation is appended to the output code and runs wherever you paste it." }
+          },
+          {
+            "@type": "Question",
+            "name": "Which browsers are supported?",
+            "acceptedAnswer": { "@type": "Answer", "text": "It works in major browsers that support SVG filters (feSpecularLighting, feGaussianBlur), such as Chrome, Edge, Safari and Firefox." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is it free for commercial use?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. It is free, and the buttons you generate can be used on commercial sites." }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="brand"><span>Neon Button</span> Generator</div>
+      <a class="lang-switch" href="../" hreflang="ja">日本語</a>
+    </header>
+
+    <main class="stage">
+      <!-- Glowing-rim button. The contents are rebuilt by script.js per light pattern. -->
+      <div class="preview">
+        <button class="rim-btn" type="button">
+          <svg class="rim-btn__svg" viewBox="0 0 320 120" width="320" height="120" aria-hidden="true"></svg>
+          <span class="rim-btn__label">BUTTON</span>
+        </button>
+      </div>
+
+      <!-- Light pattern selection (buttons), placed above the settings panel -->
+      <section class="patterns">
+        <h2 class="patterns__title">Light pattern</h2>
+        <div class="patterns__grid">
+          <button class="pattern-btn is-active" type="button" data-pattern-btn="distant">Directional</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="point">Point</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="spot">Spot</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="neon">Neon</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="dual">Dual</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="gradient">Gradient</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="tri">Tri</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="pulse">Pulse</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="chase">Chase</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="flicker">Flicker</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="double">Double Rim</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="under">Underglow</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="corner">Corner</button>
+        </div>
+      </section>
+
+      <!-- Control panel (each input is bound to state) -->
+      <div class="panel">
+        <div class="field field--wide">
+          <div class="field__head">
+            <label for="label">Button text</label>
+          </div>
+          <input class="field__text" id="label" type="text" value="BUTTON" maxlength="24" data-key="label" />
+        </div>
+
+        <div class="field">
+          <div class="field__head">
+            <label for="width">Width</label>
+            <span class="field__value" data-out="width">320px</span>
+          </div>
+          <input class="field__slider" id="width" type="range" min="160" max="560" step="4" value="320" data-key="width" data-unit="px" />
+        </div>
+
+        <!-- Directional / Dual / Tri: light direction -->
+        <div class="field" data-pattern="distant dual tri">
+          <div class="field__head">
+            <label for="azimuth">Light angle</label>
+            <span class="field__value" data-out="azimuth">135°</span>
+          </div>
+          <input class="field__slider" id="azimuth" type="range" min="0" max="360" step="1" value="135" data-key="azimuth" data-unit="°" data-round="1" />
+        </div>
+
+        <div class="field" data-pattern="distant dual tri">
+          <div class="field__head">
+            <label for="elevation">Light elevation</label>
+            <span class="field__value" data-out="elevation">46°</span>
+          </div>
+          <input class="field__slider" id="elevation" type="range" min="0" max="90" step="1" value="46" data-key="elevation" data-unit="°" />
+        </div>
+
+        <!-- Point / Spot: light position -->
+        <div class="field" data-pattern="point spot">
+          <div class="field__head">
+            <label for="pointX">Light X</label>
+            <span class="field__value" data-out="pointXPct">50%</span>
+          </div>
+          <input class="field__slider" id="pointX" type="range" min="0" max="100" step="1" value="50" data-key="pointXPct" data-unit="%" />
+        </div>
+
+        <div class="field" data-pattern="point spot">
+          <div class="field__head">
+            <label for="pointY">Light Y</label>
+            <span class="field__value" data-out="pointYPct">0%</span>
+          </div>
+          <input class="field__slider" id="pointY" type="range" min="0" max="100" step="1" value="0" data-key="pointYPct" data-unit="%" />
+        </div>
+
+        <div class="field" data-pattern="point">
+          <div class="field__head">
+            <label for="pointZ">Light spread</label>
+            <span class="field__value" data-out="pointZ">14</span>
+          </div>
+          <input class="field__slider" id="pointZ" type="range" min="1" max="100" step="1" value="14" data-key="pointZ" />
+        </div>
+
+        <!-- Spot: light height / cone angle -->
+        <div class="field" data-pattern="spot">
+          <div class="field__head">
+            <label for="spotZ">Light height</label>
+            <span class="field__value" data-out="spotZ">40</span>
+          </div>
+          <input class="field__slider" id="spotZ" type="range" min="1" max="100" step="1" value="40" data-key="spotZ" />
+        </div>
+
+        <div class="field" data-pattern="spot">
+          <div class="field__head">
+            <label for="cone">Cone angle</label>
+            <span class="field__value" data-out="coneAngle">40°</span>
+          </div>
+          <input class="field__slider" id="cone" type="range" min="1" max="90" step="1" value="40" data-key="coneAngle" data-unit="°" />
+        </div>
+
+        <div class="field">
+          <div class="field__head">
+            <label for="thickness">Rim thickness</label>
+            <span class="field__value" data-out="thickness">14</span>
+          </div>
+          <input class="field__slider" id="thickness" type="range" min="1" max="40" step="1" value="14" data-key="thickness" />
+        </div>
+
+        <div class="field">
+          <div class="field__head">
+            <label for="radius">Corner radius</label>
+            <span class="field__value" data-out="radius">46</span>
+          </div>
+          <input class="field__slider" id="radius" type="range" min="0" max="46" step="1" value="46" data-key="radius" />
+        </div>
+
+        <div class="field">
+          <div class="field__head">
+            <label for="blur">Blur</label>
+            <span class="field__value" data-out="blur">3</span>
+          </div>
+          <input class="field__slider" id="blur" type="range" min="0" max="15" step="0.5" value="3" data-key="blur" />
+        </div>
+
+        <!-- specular (directional / spot / dual / tri). Point uses a gradient, neon-type has no light source -->
+        <div class="field" data-pattern="distant spot dual tri">
+          <div class="field__head">
+            <label for="surface">Depth</label>
+            <span class="field__value" data-out="surfaceScale">8</span>
+          </div>
+          <input class="field__slider" id="surface" type="range" min="0" max="30" step="1" value="8" data-key="surfaceScale" />
+        </div>
+
+        <div class="field" data-pattern="distant spot dual tri">
+          <div class="field__head">
+            <label for="exponent">Sharpness</label>
+            <span class="field__value" data-out="exponent">70</span>
+          </div>
+          <input class="field__slider" id="exponent" type="range" min="1" max="120" step="1" value="70" data-key="exponent" />
+        </div>
+
+        <div class="field" data-pattern="distant spot dual tri">
+          <div class="field__head">
+            <label for="constant">Strength</label>
+            <span class="field__value" data-out="constant">1.2</span>
+          </div>
+          <input class="field__slider" id="constant" type="range" min="0" max="3" step="0.1" value="1.2" data-key="constant" />
+        </div>
+
+        <!-- Rim color (directional / point / spot / corner / chase + outer ring of double) -->
+        <div class="field" data-pattern="distant point spot corner chase double">
+          <div class="field__head">
+            <label for="color">Rim color</label>
+          </div>
+          <input class="field__color" id="color" type="color" value="#ffffff" data-key="lightColor" />
+        </div>
+
+        <!-- Glow color (neon / pulse / flicker / underglow + inner ring of double) -->
+        <div class="field" data-pattern="neon pulse flicker under double">
+          <div class="field__head">
+            <label for="glowColor">Glow color</label>
+          </div>
+          <input class="field__color" id="glowColor" type="color" value="#00ffaa" data-key="glowColor" />
+        </div>
+
+        <!-- Glow strength (neon / pulse / flicker / underglow) -->
+        <div class="field" data-pattern="neon pulse flicker under">
+          <div class="field__head">
+            <label for="glowIntensity">Glow strength</label>
+            <span class="field__value" data-out="glowIntensity">0.3</span>
+          </div>
+          <input class="field__slider" id="glowIntensity" type="range" min="0" max="1" step="0.05" value="0.3" data-key="glowIntensity" />
+        </div>
+
+        <!-- Dual / Gradient / Tri: colors -->
+        <div class="field" data-pattern="dual gradient tri">
+          <div class="field__head">
+            <label for="leftColor">Left color</label>
+          </div>
+          <input class="field__color" id="leftColor" type="color" value="#22d3ee" data-key="leftColor" />
+        </div>
+
+        <div class="field" data-pattern="dual gradient tri">
+          <div class="field__head">
+            <label for="rightColor">Right color</label>
+          </div>
+          <input class="field__color" id="rightColor" type="color" value="#f472b6" data-key="rightColor" />
+        </div>
+
+        <!-- Tri: third color -->
+        <div class="field" data-pattern="tri">
+          <div class="field__head">
+            <label for="thirdColor">Third color</label>
+          </div>
+          <input class="field__color" id="thirdColor" type="color" value="#a78bfa" data-key="thirdColor" />
+        </div>
+
+        <div class="field">
+          <div class="field__head">
+            <label for="fillColor">Button color</label>
+          </div>
+          <input class="field__color" id="fillColor" type="color" value="#11141b" data-key="fillColor" />
+        </div>
+
+        <div class="field">
+          <div class="field__head">
+            <label for="fillOpacity">Button opacity</label>
+            <span class="field__value" data-out="fillOpacity">0</span>
+          </div>
+          <input class="field__slider" id="fillOpacity" type="range" min="0" max="1" step="0.05" value="0" data-key="fillOpacity" />
+        </div>
+
+        <div class="field">
+          <div class="field__head">
+            <label for="speed">Speed</label>
+            <span class="field__value" data-out="speed">1</span>
+          </div>
+          <input class="field__slider" id="speed" type="range" min="0.1" max="4" step="0.1" value="1" data-key="speed" />
+        </div>
+
+        <div class="panel__actions">
+          <button class="btn" id="spin" type="button" aria-pressed="false">Auto-animate: OFF</button>
+          <button class="btn" id="reset" type="button">Reset</button>
+        </div>
+      </div>
+
+      <!-- Generated code output (updates live with every setting) -->
+      <div class="output">
+        <div class="output__col">
+          <div class="output__head">
+            <h2>HTML</h2>
+            <button class="btn" id="copyHtml" type="button">Copy HTML</button>
+          </div>
+          <textarea class="output__code" id="outHtml" readonly spellcheck="false"></textarea>
+        </div>
+        <div class="output__col">
+          <div class="output__head">
+            <h2>CSS</h2>
+            <button class="btn" id="copyCss" type="button">Copy CSS</button>
+          </div>
+          <textarea class="output__code" id="outCss" readonly spellcheck="false"></textarea>
+        </div>
+      </div>
+    </main>
+
+    <!-- Article (visible content for AIO / FAQ schema) -->
+    <article class="article">
+      <div class="answer-box">
+        <p>Neon Button Generator is a free tool that creates CSS buttons whose rim (edge) glows, rendered with <strong>SVG filters</strong> rather than a flat box-shadow. Pick from 13 light patterns, tune the colors and size, and copy ready-to-paste <strong>HTML/CSS</strong>.</p>
+      </div>
+
+      <h2>How to use it (3 steps)</h2>
+      <ol class="steps">
+        <li>Pick one of the 13 <strong>light patterns</strong> with the buttons</li>
+        <li>Adjust color, thickness, corner radius, blur and animation speed</li>
+        <li>Copy the generated <strong>HTML</strong> and <strong>CSS</strong> and paste them into your project</li>
+      </ol>
+
+      <h2>The 13 light patterns at a glance</h2>
+      <table class="pattern-table">
+        <thead>
+          <tr><th>Pattern</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Directional</td><td>One-sided sweep light (feDistantLight)</td></tr>
+          <tr><td>Point</td><td>A single bright point (radial gradient)</td></tr>
+          <tr><td>Spot</td><td>Tightly focused spotlight (feSpotLight)</td></tr>
+          <tr><td>Neon</td><td>The whole rim glows evenly</td></tr>
+          <tr><td>Dual</td><td>Two colors from opposite sides</td></tr>
+          <tr><td>Gradient</td><td>A multi-color gradient flows around the rim</td></tr>
+          <tr><td>Tri</td><td>Three colors from three directions</td></tr>
+          <tr><td>Pulse</td><td>The rim glow breathes slowly</td></tr>
+          <tr><td>Chase</td><td>A band of light runs around the rim</td></tr>
+          <tr><td>Flicker</td><td>Random flicker like a neon tube</td></tr>
+          <tr><td>Double Rim</td><td>Two layers glow in different colors</td></tr>
+          <tr><td>Underglow</td><td>Light pooling below, like a floor reflection</td></tr>
+          <tr><td>Corner</td><td>The four corners glow</td></tr>
+        </tbody>
+      </table>
+
+      <h2>FAQ</h2>
+      <div class="faq-item">
+        <h3>What kind of buttons can I make?</h3>
+        <p>You can make CSS buttons whose rim (edge) glows. Choose from 13 light patterns — directional, neon, spotlight, gradient, double rim, underglow and more — and tune color, thickness, corner radius and blur.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I use the output code as-is?</h3>
+        <p>Yes. Copy the two HTML and CSS blocks and paste them — that is all. There are no external libraries; the code, including the SVG filter, is self-contained.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Are the glow animations included?</h3>
+        <p>Yes. With auto-animate on, JavaScript for the pattern's rotation or pulse animation is appended to the output code and runs wherever you paste it.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Which browsers are supported?</h3>
+        <p>It works in major browsers that support SVG filters (feSpecularLighting, feGaussianBlur), such as Chrome, Edge, Safari and Firefox.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Is it free for commercial use?</h3>
+        <p>Yes. It is free, and the buttons you generate can be used on commercial sites.</p>
+      </div>
+
+      <h2>Related tools</h2>
+      <div class="related">
+        <a href="https://codequest.work/generator/liquid-glass-css-generator/en/" target="_blank" rel="noopener">Liquid Glass CSS Generator</a>
+        <a href="https://codequest.work/generator/liquid-glass-generator/en/" target="_blank" rel="noopener">Liquid Glass Generator (WebGL)</a>
+        <a href="https://codequest.work/generator/clip-path/en/" target="_blank" rel="noopener">clip-path Generator</a>
+        <a href="https://codequest.work/generator/animation-gallery/en/" target="_blank" rel="noopener">CSS Animation Gallery</a>
+      </div>
+    </article>
+
+    <!-- AdSense -->
+    <div class="ad-wrap">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- neon-button-generator -->
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="5577670436" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 Neon Button Generator | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+
+    <script src="../js/script.js?v=20260620"></script>
+  </body>
+</html>

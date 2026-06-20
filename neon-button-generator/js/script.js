@@ -6,6 +6,7 @@ const VIEW_H = 120; // ボタンの高さ（viewBox単位・固定）
 const MARGIN = 14; // リム矩形の左右上下マージン
 
 const panel = document.querySelector(".panel");
+const patternsGrid = document.querySelector(".patterns__grid");
 const btnEl = document.querySelector(".rim-btn");
 const svgEl = document.querySelector(".rim-btn__svg");
 const labelEl = document.querySelector(".rim-btn__label");
@@ -13,12 +14,61 @@ const outHtmlArea = document.getElementById("outHtml");
 const outCssArea = document.getElementById("outCss");
 const spinBtn = document.getElementById("spin");
 
+// ── 言語（ja / en）──────────────────────────────────────
+// HTMLの lang 属性で判定。UIボタン文言と出力コードのコメントを切り替える（ロジックは共通）。
+const LANG = document.documentElement.lang === "en" ? "en" : "ja";
+const T = {
+  ja: {
+    copyHtml: "HTMLをコピー",
+    copyCss: "CSSをコピー",
+    copied: "コピーしました",
+    spinOn: "自動回転：ON",
+    spinOff: "自動回転：OFF",
+    cmt: {
+      pulseBlur: "縁の発光を脈動させる",
+      tri: "3灯を120°差で回転",
+      breath: "縁の発光をゆっくり明滅(ブリージング)させる",
+      flicker: "ネオン管のようにランダムに明滅させる",
+      gradient: "グラデーションを回転させる",
+      chase: "光の帯を縁に沿って走らせる",
+      distant: "縁の光源角度(azimuth)を回してリムを回転発光させる",
+      point: "光の点をリムに沿って周回させる",
+      spot: "光源(ホットスポット)をリムに沿って周回させる",
+      dual: "対向2灯を180°差で回転",
+      speedNote: "1フレームあたりの角度（大きいほど速い）",
+    },
+  },
+  en: {
+    copyHtml: "Copy HTML",
+    copyCss: "Copy CSS",
+    copied: "Copied!",
+    spinOn: "Auto-animate: ON",
+    spinOff: "Auto-animate: OFF",
+    cmt: {
+      pulseBlur: "Pulse the rim glow",
+      tri: "Rotate three lights 120 degrees apart",
+      breath: "Slowly breathe the rim glow",
+      flicker: "Flicker randomly like a neon tube",
+      gradient: "Rotate the gradient",
+      chase: "Run a band of light along the rim",
+      distant: "Rotate the light azimuth to sweep the glowing rim",
+      point: "Orbit the light point along the rim",
+      spot: "Orbit the hotspot light along the rim",
+      dual: "Rotate two opposing lights 180 degrees apart",
+      speedNote: "degrees per frame (higher is faster)",
+    },
+  },
+}[LANG];
+
 // ── 状態 ──────────────────────────────────────────────
 // 初期値はHTML側のコントロール(value/selected)から読み取る（既定値の二重管理を避ける）
 let state = {};
 document.querySelectorAll("[data-key]").forEach((el) => {
   state[el.dataset.key] = el.type === "range" ? Number(el.value) : el.value;
 });
+// パターンはボタンUI（data-key外）。アクティブなボタンから初期値を読む
+state.pattern =
+  document.querySelector("[data-pattern-btn].is-active")?.dataset.patternBtn ?? "distant";
 
 // ラベルのHTMLエスケープ（出力コードにそのまま貼れる形へ）
 const escapeHtml = (s) =>
@@ -32,6 +82,21 @@ const specAttrs = (s) =>
 // 光源位置（%指定→viewBox座標へ換算。幅変更に強い）
 const lightX = (s, w) => (s.pointXPct / 100 * w).toFixed(1);
 const lightY = (s) => (s.pointYPct / 100 * VIEW_H).toFixed(1);
+
+// グロー発光フィルタ（パルス/フリッカー/アンダーグローで共用）。
+// feFuncA(class=rim-btn__breath)のslopeを揺らして明滅させる。offsetYで下方向の床光に。
+function buildGlowFilter(s, offsetY) {
+  const gi = s.glowIntensity;
+  const bl = (s.blur * 3 + 3).toFixed(2);
+  return `<feFlood flood-color="${s.glowColor}" result="tint" />
+        <feGaussianBlur in="SourceAlpha" stdDeviation="${bl}" result="bl0" />
+        <feOffset in="bl0" dx="0" dy="${offsetY}" result="bl" />
+        <feComposite in="tint" in2="bl" operator="in" result="glow" />
+        <feComponentTransfer in="glow" result="g"><feFuncA class="rim-btn__breath" type="linear" slope="${(gi * 5).toFixed(2)}" /></feComponentTransfer>
+        <feFlood flood-color="${s.glowColor}" result="coreFlood" />
+        <feComposite in="coreFlood" in2="SourceAlpha" operator="in" result="core" />
+        <feMerge><feMergeNode in="g" /><feMergeNode in="core" /></feMerge>`;
+}
 
 function buildFilterMarkup(s, w) {
   switch (s.pattern) {
@@ -96,6 +161,38 @@ function buildFilterMarkup(s, w) {
           <feMergeNode in="r2" />
         </feMerge>`;
 
+    // トライ：3灯（120°差・3色）をfeMerge
+    case "tri": {
+      const d = Math.round(s.azimuth);
+      return `<feGaussianBlur in="SourceAlpha" stdDeviation="${s.blur}" result="height" />
+        <feSpecularLighting in="height" ${specAttrs(s)} lighting-color="${s.leftColor}" result="t1">
+          <feDistantLight class="rim-btn__light rim-btn__light--a" azimuth="${d}" elevation="${s.elevation}" />
+        </feSpecularLighting>
+        <feSpecularLighting in="height" ${specAttrs(s)} lighting-color="${s.rightColor}" result="t2">
+          <feDistantLight class="rim-btn__light rim-btn__light--b" azimuth="${(d + 120) % 360}" elevation="${s.elevation}" />
+        </feSpecularLighting>
+        <feSpecularLighting in="height" ${specAttrs(s)} lighting-color="${s.thirdColor}" result="t3">
+          <feDistantLight class="rim-btn__light rim-btn__light--c" azimuth="${(d + 240) % 360}" elevation="${s.elevation}" />
+        </feSpecularLighting>
+        <feComposite in="t1" in2="SourceAlpha" operator="in" result="r1" />
+        <feComposite in="t2" in2="SourceAlpha" operator="in" result="r2" />
+        <feComposite in="t3" in2="SourceAlpha" operator="in" result="r3" />
+        <feMerge>
+          <feMergeNode in="r1" />
+          <feMergeNode in="r2" />
+          <feMergeNode in="r3" />
+        </feMerge>`;
+    }
+
+    // パルス／フリッカー：縁全体の均一発光（明滅はアニメ側で制御）
+    case "pulse":
+    case "flicker":
+      return buildGlowFilter(s, 0);
+
+    // アンダーグロー：発光を下方向へオフセットして床に反射する光に
+    case "under":
+      return buildGlowFilter(s, (s.thickness * 0.6 + 8).toFixed(1));
+
     default:
       return "";
   }
@@ -135,11 +232,11 @@ function buildPointRim(s) {
 function buildSpecularRim(s) {
   const w = s.width;
   const rectW = w - MARGIN * 2;
-  // ネオンの大きなブルームが切れないよう、ネオンだけフィルタ領域を広げる
-  const region =
-    s.pattern === "neon"
-      ? `x="-120%" y="-120%" width="340%" height="340%"`
-      : `x="-50%" y="-50%" width="200%" height="200%"`;
+  // 大きなブルームが切れないよう、グロー系パターンはフィルタ領域を広げる
+  const glowPatterns = ["neon", "pulse", "flicker", "under"];
+  const region = glowPatterns.includes(s.pattern)
+    ? `x="-120%" y="-120%" width="340%" height="340%"`
+    : `x="-50%" y="-50%" width="200%" height="200%"`;
   return `
       <defs>
         <filter id="rimGlow" ${region} color-interpolation-filters="linearRGB">
@@ -152,9 +249,114 @@ function buildSpecularRim(s) {
       </g>`;
 }
 
+// グラデーション：左→右→左の多色グラデで塗ったストローク（回転で色が縁を流れる）
+function buildGradientRim(s) {
+  const w = s.width;
+  const rectW = w - MARGIN * 2;
+  return `
+      <defs>
+        <linearGradient id="rimGrad" class="rim-btn__gradient" x1="0" y1="0" x2="1" y2="0" gradientTransform="rotate(0 0.5 0.5)">
+          <stop offset="0" stop-color="${s.leftColor}" />
+          <stop offset="0.5" stop-color="${s.rightColor}" />
+          <stop offset="1" stop-color="${s.leftColor}" />
+        </linearGradient>
+        <filter id="rimGlow" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="linearRGB">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="${s.blur}" result="glow" />
+          <feMerge><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      <rect x="${MARGIN}" y="14" width="${rectW}" height="92" rx="${s.radius}" fill="${s.fillColor}" fill-opacity="${s.fillOpacity}" />
+      <g filter="url(#rimGlow)">
+        <rect x="${MARGIN}" y="14" width="${rectW}" height="92" rx="${s.radius}" fill="none" stroke="url(#rimGrad)" stroke-width="${s.thickness}" />
+      </g>`;
+}
+
+// 二重リム：外側(lightColor)＋内側(glowColor)の2層ストローク
+function buildDoubleRim(s) {
+  const w = s.width;
+  const rectW = w - MARGIN * 2;
+  const inset = Math.min(20, s.thickness + 4);
+  const innerW = Math.max(2, rectW - inset * 2);
+  const innerH = Math.max(2, 92 - inset * 2);
+  const sw = Math.max(1, s.thickness * 0.55).toFixed(1);
+  return `
+      <defs>
+        <filter id="rimGlow" x="-60%" y="-60%" width="220%" height="220%" color-interpolation-filters="linearRGB">
+          <feGaussianBlur class="rim-btn__pulse" in="SourceGraphic" stdDeviation="${s.blur}" result="glow" />
+          <feMerge><feMergeNode in="glow" /><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      <rect x="${MARGIN}" y="14" width="${rectW}" height="92" rx="${s.radius}" fill="${s.fillColor}" fill-opacity="${s.fillOpacity}" />
+      <g filter="url(#rimGlow)">
+        <rect x="${MARGIN}" y="14" width="${rectW}" height="92" rx="${s.radius}" fill="none" stroke="${s.lightColor}" stroke-width="${sw}" />
+        <rect x="${MARGIN + inset}" y="${14 + inset}" width="${innerW}" height="${innerH}" rx="${Math.max(0, s.radius - inset)}" fill="none" stroke="${s.glowColor}" stroke-width="${sw}" />
+      </g>`;
+}
+
+// コーナーグロー：四隅に放射状グラデの光（ボタン形状にクリップ）＋淡いベースリム
+function buildCornerRim(s) {
+  const w = s.width;
+  const rectW = w - MARGIN * 2;
+  const x0 = MARGIN, y0 = 14, x1 = MARGIN + rectW, y1 = 14 + 92;
+  const r = s.thickness * 2 + 16;
+  const corner = (cx, cy) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#cornerGrad)" />`;
+  return `
+      <defs>
+        <radialGradient id="cornerGrad">
+          <stop offset="0" stop-color="${s.lightColor}" stop-opacity="1" />
+          <stop offset="0.55" stop-color="${s.lightColor}" stop-opacity="0.35" />
+          <stop offset="1" stop-color="${s.lightColor}" stop-opacity="0" />
+        </radialGradient>
+        <clipPath id="rimClip"><rect x="${x0}" y="${y0}" width="${rectW}" height="92" rx="${s.radius}" /></clipPath>
+        <filter id="rimGlow" x="-60%" y="-60%" width="220%" height="220%" color-interpolation-filters="linearRGB">
+          <feGaussianBlur class="rim-btn__pulse" in="SourceGraphic" stdDeviation="${s.blur}" result="glow" />
+          <feMerge><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      <rect x="${x0}" y="${y0}" width="${rectW}" height="92" rx="${s.radius}" fill="${s.fillColor}" fill-opacity="${s.fillOpacity}" />
+      <g filter="url(#rimGlow)">
+        <rect x="${x0}" y="${y0}" width="${rectW}" height="92" rx="${s.radius}" fill="none" stroke="${s.lightColor}" stroke-width="${s.thickness}" stroke-opacity="0.22" />
+        <g clip-path="url(#rimClip)">${corner(x0, y0)}${corner(x1, y0)}${corner(x0, y1)}${corner(x1, y1)}</g>
+      </g>`;
+}
+
+// チェイス：淡いベースリム＋短い光の帯（dasharray）を周回させる
+function buildChaseRim(s) {
+  const w = s.width;
+  const rectW = w - MARGIN * 2;
+  const perim = 2 * (rectW + 92);
+  const seg = Math.max(28, perim * 0.16);
+  const gap = perim - seg;
+  return `
+      <defs>
+        <filter id="rimGlow" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="linearRGB">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="${Math.max(1, s.blur)}" result="glow" />
+          <feMerge><feMergeNode in="glow" /><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      <rect x="${MARGIN}" y="14" width="${rectW}" height="92" rx="${s.radius}" fill="${s.fillColor}" fill-opacity="${s.fillOpacity}" />
+      <g filter="url(#rimGlow)">
+        <rect x="${MARGIN}" y="14" width="${rectW}" height="92" rx="${s.radius}" fill="none" stroke="${s.lightColor}" stroke-width="${s.thickness}" stroke-opacity="0.16" />
+        <rect class="rim-btn__chase" x="${MARGIN}" y="14" width="${rectW}" height="92" rx="${s.radius}" fill="none" stroke="${s.lightColor}" stroke-width="${s.thickness}" stroke-linecap="round" stroke-dasharray="${seg.toFixed(1)} ${gap.toFixed(1)}" stroke-dashoffset="0" />
+      </g>`;
+}
+
 // defs＋リム矩形のSVG中身を返す（ライブ・出力で共用）
 function buildSvgInner(s) {
-  return s.pattern === "point" ? buildPointRim(s) : buildSpecularRim(s);
+  switch (s.pattern) {
+    case "point":
+      return buildPointRim(s);
+    case "gradient":
+      return buildGradientRim(s);
+    case "double":
+      return buildDoubleRim(s);
+    case "corner":
+      return buildCornerRim(s);
+    case "chase":
+      return buildChaseRim(s);
+    default:
+      return buildSpecularRim(s);
+  }
 }
 
 // ── ライブ描画 ────────────────────────────────────────
@@ -212,10 +414,10 @@ function syncSlider(key) {
 // ── 出力コード生成 ────────────────────────────────────
 function buildSpinScript(s) {
   const w = s.width;
-  if (s.pattern === "neon") {
+  if (s.pattern === "neon" || s.pattern === "double" || s.pattern === "corner") {
     // 脈動：にじみ(stdDeviation)をsinで揺らす
     return `\n<script>
-  // 縁の発光を脈動させる
+  // ${T.cmt.pulseBlur}
   document.querySelectorAll(".rim-btn .rim-btn__pulse").forEach((blur) => {
     const base = ${s.blur}, amp = ${Math.max(1, s.blur * 0.6).toFixed(1)};
     let t = 0;
@@ -231,7 +433,7 @@ function buildSpinScript(s) {
   if (s.pattern === "point") {
     // 光の点(放射状グラデの中心)をリムに沿って周回
     return `\n<script>
-  // 光の点をリムに沿って周回させる
+  // ${T.cmt.point}
   document.querySelectorAll(".rim-btn .rim-btn__ptgrad").forEach((grad) => {
     const cx = ${w / 2}, cy = ${VIEW_H / 2}, rx = ${(w * 0.4).toFixed(1)}, ry = 40;
     let t = ${pointStartT(s).toFixed(4)};
@@ -248,7 +450,7 @@ function buildSpinScript(s) {
   if (s.pattern === "spot") {
     // ホットスポット(光源位置x,y)をリムに沿って周回
     return `\n<script>
-  // 光源(ホットスポット)をリムに沿って周回させる
+  // ${T.cmt.spot}
   document.querySelectorAll(".rim-btn").forEach((btn) => {
     const light = btn.querySelector(".rim-btn__light");
     if (!light) return;
@@ -267,7 +469,7 @@ function buildSpinScript(s) {
   if (s.pattern === "dual") {
     // 対向2灯のazimuthを180°差を保って回す
     return `\n<script>
-  // 対向2灯を180°差で回転
+  // ${T.cmt.dual}
   document.querySelectorAll(".rim-btn").forEach((btn) => {
     const a = btn.querySelector(".rim-btn__light--a");
     const b = btn.querySelector(".rim-btn__light--b");
@@ -282,12 +484,91 @@ function buildSpinScript(s) {
   });
 <\/script>`;
   }
+  if (s.pattern === "tri") {
+    // 3灯を120°差で回転
+    return `\n<script>
+  // ${T.cmt.tri}
+  document.querySelectorAll(".rim-btn").forEach((btn) => {
+    const a = btn.querySelector(".rim-btn__light--a");
+    const b = btn.querySelector(".rim-btn__light--b");
+    const c = btn.querySelector(".rim-btn__light--c");
+    let deg = ${Math.round(s.azimuth)};
+    const speed = ${s.speed};
+    (function tick() {
+      deg = (deg + speed) % 360;
+      if (a) a.setAttribute("azimuth", deg);
+      if (b) b.setAttribute("azimuth", (deg + 120) % 360);
+      if (c) c.setAttribute("azimuth", (deg + 240) % 360);
+      requestAnimationFrame(tick);
+    })();
+  });
+<\/script>`;
+  }
+  if (s.pattern === "pulse" || s.pattern === "under") {
+    // ブリージング：発光のアルファ(slope)をsinで明滅
+    return `\n<script>
+  // ${T.cmt.breath}
+  document.querySelectorAll(".rim-btn .rim-btn__breath").forEach((fn) => {
+    const peak = ${(s.glowIntensity * 5).toFixed(2)};
+    let t = 0;
+    const speed = ${(s.speed * 0.05).toFixed(4)};
+    (function tick() {
+      t += speed;
+      fn.setAttribute("slope", (peak * (0.3 + 0.7 * (0.5 + 0.5 * Math.sin(t)))).toFixed(2));
+      requestAnimationFrame(tick);
+    })();
+  });
+<\/script>`;
+  }
+  if (s.pattern === "flicker") {
+    // ネオン管のランダム明滅
+    return `\n<script>
+  // ${T.cmt.flicker}
+  document.querySelectorAll(".rim-btn .rim-btn__breath").forEach((fn) => {
+    const peak = ${(s.glowIntensity * 5).toFixed(2)};
+    (function tick() {
+      fn.setAttribute("slope", (peak * (0.15 + 0.85 * Math.random())).toFixed(2));
+      setTimeout(() => requestAnimationFrame(tick), 40 + Math.random() * 120);
+    })();
+  });
+<\/script>`;
+  }
+  if (s.pattern === "gradient") {
+    // グラデーションを回転させ色が縁を流れるように
+    return `\n<script>
+  // ${T.cmt.gradient}
+  document.querySelectorAll(".rim-btn .rim-btn__gradient").forEach((g) => {
+    let deg = 0;
+    const speed = ${s.speed};
+    (function tick() {
+      deg = (deg + speed) % 360;
+      g.setAttribute("gradientTransform", "rotate(" + deg + " 0.5 0.5)");
+      requestAnimationFrame(tick);
+    })();
+  });
+<\/script>`;
+  }
+  if (s.pattern === "chase") {
+    // 光の帯を縁に沿って走らせる
+    return `\n<script>
+  // ${T.cmt.chase}
+  document.querySelectorAll(".rim-btn .rim-btn__chase").forEach((seg) => {
+    let pos = 0;
+    const speed = ${(s.speed * 4).toFixed(1)};
+    (function tick() {
+      pos += speed;
+      seg.setAttribute("stroke-dashoffset", String(-Math.round(pos)));
+      requestAnimationFrame(tick);
+    })();
+  });
+<\/script>`;
+  }
   // distant：azimuthを回す
   return `\n<script>
-  // 縁の光源角度(azimuth)を回してリムを回転発光させる
+  // ${T.cmt.distant}
   document.querySelectorAll(".rim-btn .rim-btn__light").forEach((light) => {
     let deg = ${Math.round(s.azimuth)};
-    const speed = ${s.speed}; // 1フレームあたりの角度（大きいほど速い）
+    const speed = ${s.speed}; // ${T.cmt.speedNote}
     (function tick() {
       deg = (deg + speed) % 360;
       light.setAttribute("azimuth", deg);
@@ -361,8 +642,12 @@ function cacheTargets() {
     light: svgEl.querySelector(".rim-btn__light"),
     a: svgEl.querySelector(".rim-btn__light--a"),
     b: svgEl.querySelector(".rim-btn__light--b"),
+    c: svgEl.querySelector(".rim-btn__light--c"),
     pulse: svgEl.querySelector(".rim-btn__pulse"),
     grad: svgEl.querySelector(".rim-btn__ptgrad"),
+    breath: svgEl.querySelector(".rim-btn__breath"),
+    gradient: svgEl.querySelector(".rim-btn__gradient"),
+    chase: svgEl.querySelector(".rim-btn__chase"),
   };
 }
 
@@ -380,6 +665,15 @@ function tick() {
       const deg = Math.round(state.azimuth);
       targets.a?.setAttribute("azimuth", String(deg));
       targets.b?.setAttribute("azimuth", String((deg + 180) % 360));
+      syncSlider("azimuth");
+      break;
+    }
+    case "tri": {
+      state = { ...state, azimuth: (state.azimuth + sp) % 360 };
+      const deg = Math.round(state.azimuth);
+      targets.a?.setAttribute("azimuth", String(deg));
+      targets.b?.setAttribute("azimuth", String((deg + 120) % 360));
+      targets.c?.setAttribute("azimuth", String((deg + 240) % 360));
       syncSlider("azimuth");
       break;
     }
@@ -401,10 +695,38 @@ function tick() {
       syncSlider("pointYPct");
       break;
     }
-    case "neon": {
+    case "neon":
+    case "double":
+    case "corner": {
       spinT += sp * 0.04;
       const base = state.blur, amp = Math.max(1, state.blur * 0.6);
       targets.pulse?.setAttribute("stdDeviation", (base + amp * (0.5 + 0.5 * Math.sin(spinT))).toFixed(2));
+      break;
+    }
+    case "pulse":
+    case "under": {
+      spinT += sp * 0.05;
+      const peak = state.glowIntensity * 5;
+      targets.breath?.setAttribute("slope", (peak * (0.3 + 0.7 * (0.5 + 0.5 * Math.sin(spinT)))).toFixed(2));
+      break;
+    }
+    case "flicker": {
+      spinT += sp;
+      if (spinT >= 2) {
+        spinT = 0;
+        const peak = state.glowIntensity * 5;
+        targets.breath?.setAttribute("slope", (peak * (0.15 + 0.85 * Math.random())).toFixed(2));
+      }
+      break;
+    }
+    case "gradient": {
+      state = { ...state, gradAngle: ((state.gradAngle || 0) + sp) % 360 };
+      targets.gradient?.setAttribute("gradientTransform", `rotate(${Math.round(state.gradAngle)} 0.5 0.5)`);
+      break;
+    }
+    case "chase": {
+      state = { ...state, dashPos: (state.dashPos || 0) + sp * 4 };
+      targets.chase?.setAttribute("stroke-dashoffset", String(-Math.round(state.dashPos)));
       break;
     }
   }
@@ -414,7 +736,7 @@ function tick() {
 function startSpin() {
   cancelAnimationFrame(rafId); // 既存ループを止めてから開始（二重tick防止）
   spinning = true;
-  spinBtn.textContent = "自動回転：ON";
+  spinBtn.textContent = T.spinOn;
   spinBtn.setAttribute("aria-pressed", "true");
   applyLive(); // 最新ノードを生成してから対象をキャッシュ
   cacheTargets();
@@ -426,7 +748,7 @@ function startSpin() {
 function stopSpin() {
   if (!spinning) return;
   spinning = false;
-  spinBtn.textContent = "自動回転：OFF";
+  spinBtn.textContent = T.spinOff;
   spinBtn.setAttribute("aria-pressed", "false");
   cancelAnimationFrame(rafId);
   applyLive();
@@ -442,8 +764,16 @@ spinBtn.addEventListener("click", () => {
 const PATTERN_DEFAULTS = {
   point: { thickness: 1, pointZ: 30, blur: 0 }, // ポイントは細いリムで広がり広め・ボカシなしが締まる
   neon: { thickness: 4, blur: 1 }, // ネオンは細めのリム＋弱めのボカシが締まる
-  spot: { thickness: 20 }, // スポットは太めの方が集光が映える
+  spot: { thickness: 20, spotZ: 50 }, // スポットは太めの方が集光が映える。光源は少し高めで広がりを持たせる
   dual: { constant: 1.5, thickness: 15 }, // デュアルは強めの光＋やや太めで両色が映える
+  gradient: { thickness: 8, blur: 2 }, // グラデは中太リム＋軽いにじみで色がきれいに乗る
+  tri: { thickness: 14, constant: 1.5 }, // トライは太め＋強め光で3色が分かれて映える
+  pulse: { thickness: 4, blur: 2, glowIntensity: 0.5 }, // パルスは細リム＋発光やや強めで明滅が映える
+  chase: { thickness: 6, blur: 2 }, // チェイスは中細リムで帯がくっきり走る
+  flicker: { thickness: 4, blur: 1, glowIntensity: 0.4 }, // フリッカーは細リム＋ネオン管らしい控えめ発光
+  double: { thickness: 8, blur: 2 }, // 二重リムは中太で2層が分離して見える
+  under: { thickness: 8, blur: 4, glowIntensity: 0.5 }, // アンダーは太め＋広いにじみで床光が広がる
+  corner: { thickness: 8, blur: 3 }, // コーナーは中太＋にじみで四隅の光が柔らかい
 };
 
 // 指定キーの値をstateとスライダー・表示に反映
@@ -458,23 +788,33 @@ function applyPatternDefaults(pattern) {
   });
 }
 
+// ── 光パターン切替（ボタン）──────────────────────────
+function selectPattern(pattern) {
+  if (pattern === state.pattern) return;
+  state = { ...state, pattern };
+  patternsGrid.querySelectorAll("[data-pattern-btn]").forEach((b) =>
+    b.classList.toggle("is-active", b.dataset.patternBtn === pattern)
+  );
+  applyPatternDefaults(pattern);
+  syncControlVisibility(pattern);
+  if (spinning) startSpin(); // 回転を維持したまま新パターンへ切替（applyLive/updateOutputも内包）
+  else {
+    applyLive();
+    updateOutput();
+  }
+}
+
+patternsGrid.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-pattern-btn]");
+  if (btn) selectPattern(btn.dataset.patternBtn);
+});
+
 // ── コントロール入力 ──────────────────────────────────
 panel.addEventListener("input", (e) => {
   const el = e.target;
   const key = el.dataset.key;
   if (!key) return;
   state = { ...state, [key]: el.type === "range" ? Number(el.value) : el.value };
-  if (key === "pattern") {
-    applyPatternDefaults(state.pattern);
-    syncControlVisibility(state.pattern);
-    if (spinning) startSpin(); // 回転を維持したまま新パターンへ切替（applyLive/updateOutputも内包）
-    else {
-      applyLive();
-      updateOutput();
-    }
-    updateReadout(key);
-    return;
-  }
   applyLive();
   updateOutput();
   updateReadout(key);
@@ -499,6 +839,7 @@ document.getElementById("reset").addEventListener("click", () => {
 // ── コピー ────────────────────────────────────────────
 const bindCopy = (btnId, area, label) => {
   const btn = document.getElementById(btnId);
+  btn.textContent = label; // 言語に合わせてラベルを確定（HTML側と二重管理しない）
   btn.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(area.value);
@@ -506,12 +847,12 @@ const bindCopy = (btnId, area, label) => {
       area.select();
       document.execCommand("copy");
     }
-    btn.textContent = "コピーしました";
+    btn.textContent = T.copied;
     setTimeout(() => (btn.textContent = label), 1400);
   });
 };
-bindCopy("copyHtml", outHtmlArea, "HTMLをコピー");
-bindCopy("copyCss", outCssArea, "CSSをコピー");
+bindCopy("copyHtml", outHtmlArea, T.copyHtml);
+bindCopy("copyCss", outCssArea, T.copyCss);
 
 // ── 初期化 ────────────────────────────────────────────
 syncControlVisibility(state.pattern);

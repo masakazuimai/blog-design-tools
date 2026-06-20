@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ネオンボタンジェネレーター｜光る縁のCSSボタンを無料生成（13パターン）</title>
+    <meta name="description" content="SVGフィルタで縁(リム)が光るボタンを作る無料ツール。ネオン・スポット・グラデーションなど13種の光パターンと自動アニメに対応し、コピペできるHTML/CSSを出力します。" />
+    <link rel="canonical" href="https://codequest.work/generator/neon-button-generator/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/neon-button-generator/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/neon-button-generator/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/neon-button-generator/" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codequest.work/generator/neon-button-generator/" />
+    <meta property="og:title" content="ネオンボタンジェネレーター｜光る縁のCSSボタンを無料生成（13パターン）" />
+    <meta property="og:description" content="SVGフィルタで縁(リム)が光るボタンを作る無料ツール。13種の光パターンと自動アニメに対応し、コピペできるHTML/CSSを出力します。" />
+    <meta property="og:image" content="https://codequest.work/generator/neon-button-generator/assets/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ネオンボタンジェネレーター｜光る縁のCSSボタンを無料生成" />
+    <meta name="twitter:description" content="SVGフィルタで縁が光るCSSボタンを13種の光パターンで生成。コピペできるHTML/CSSを出力する無料ツール。" />
+    <meta name="twitter:image" content="https://codequest.work/generator/neon-button-generator/assets/og.jpg" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="stylesheet" href="css/style.css?v=20260620" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "ネオンボタンジェネレーター",
+        "url": "https://codequest.work/generator/neon-button-generator/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web browser",
+        "inLanguage": "ja",
+        "image": "https://codequest.work/generator/neon-button-generator/assets/og.jpg",
+        "description": "SVGフィルタでボタンの縁(リム)だけを光らせるCSSボタンを生成する無料ツール。13種の光パターンと自動アニメに対応し、コピペできるHTML/CSSを出力します。",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": ["13種の光パターン（方向ライト/ポイント/スポット/ネオン/デュアル/グラデーション/トライ/パルス/チェイス/フリッカー/二重リム/アンダーグロー/コーナー）", "SVGフィルタによる縁の発光", "回転・明滅などの自動アニメーション出力", "色・サイズ・太さ・角丸の調整", "コピペできる自己完結のHTML/CSS出力"],
+        "publisher": {
+          "@type": "Organization",
+          "name": "CodeQuest.work",
+          "url": "https://codequest.work/"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "ネオンボタンジェネレーター", "item": "https://codequest.work/generator/neon-button-generator/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "どんなボタンが作れますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "ボタンの縁(リム)が光るCSSボタンを作れます。方向ライト・ネオン・スポット・グラデーション・二重リム・アンダーグローなど13種の光パターンから選び、色・太さ・角丸・滲みを調整できます。" }
+          },
+          {
+            "@type": "Question",
+            "name": "出力したコードはそのまま使えますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "はい。HTMLとCSSの2ブロックをコピーして貼るだけで動きます。外部ライブラリ依存はなく、SVGフィルタを含む自己完結のコードを出力します。" }
+          },
+          {
+            "@type": "Question",
+            "name": "光るアニメーションも出力されますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "はい。自動回転をONにすると、パターンに応じた回転・明滅などのアニメーション用JavaScriptが出力コードに添付されます。貼り付け先でもそのまま動きます。" }
+          },
+          {
+            "@type": "Question",
+            "name": "どのブラウザで表示されますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "SVGフィルタ（feSpecularLighting・feGaussianBlur 等）に対応する Chrome・Edge・Safari・Firefox などの主要ブラウザで表示されます。" }
+          },
+          {
+            "@type": "Question",
+            "name": "商用利用できますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "はい。無料で、生成したボタンは商用サイトでも利用できます。" }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="brand"><span>Neon Button</span> Generator</div>
+      <a class="lang-switch" href="en/" hreflang="en">English</a>
+    </header>
+
+    <main class="stage">
+      <!-- 縁(リム)が光るボタン。スクロールしても見えるよう上部に固定。中身はscript.jsが光パターンに応じて再構築する -->
+      <div class="preview">
+        <button class="rim-btn" type="button">
+          <svg class="rim-btn__svg" viewBox="0 0 320 120" width="320" height="120" aria-hidden="true"></svg>
+          <span class="rim-btn__label">BUTTON</span>
+        </button>
+      </div>
+
+      <!-- 光パターン選択（ボタン）。設定パネルの上の独立セクション -->
+      <section class="patterns">
+        <h2 class="patterns__title">光パターン</h2>
+        <div class="patterns__grid">
+          <button class="pattern-btn is-active" type="button" data-pattern-btn="distant">方向ライト</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="point">ポイント</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="spot">スポット</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="neon">ネオン</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="dual">デュアル</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="gradient">グラデーション</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="tri">トライ</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="pulse">パルス</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="chase">チェイス</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="flicker">フリッカー</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="double">二重リム</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="under">アンダーグロー</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="corner">コーナー</button>
+        </div>
+      </section>
+
+      <!-- コントロールパネル（各入力がstateに連動） -->
+      <div class="panel">
+        <div class="field field--wide">
+          <div class="field__head">
+            <label for="label">ボタンテキスト</label>
+          </div>
+          <input class="field__text" id="label" type="text" value="BUTTON" maxlength="24" data-key="label" />
+        </div>
+
+        <div class="field">
+          <div class="field__head">
+            <label for="width">ボタン幅</label>
+            <span class="field__value" data-out="width">320px</span>
+          </div>
+          <input class="field__slider" id="width" type="range" min="160" max="560" step="4" value="320" data-key="width" data-unit="px" />
+        </div>
+
+        <!-- 方向/デュアル/トライ：光源の向き -->
+        <div class="field" data-pattern="distant dual tri">
+          <div class="field__head">
+            <label for="azimuth">光源角度</label>
+            <span class="field__value" data-out="azimuth">135°</span>
+          </div>
+          <input class="field__slider" id="azimuth" type="range" min="0" max="360" step="1" value="135" data-key="azimuth" data-unit="°" data-round="1" />
+        </div>
+
+        <div class="field" data-pattern="distant dual tri">
+          <div class="field__head">
+            <label for="elevation">光源高度</label>
+            <span class="field__value" data-out="elevation">46°</span>
+          </div>
+          <input class="field__slider" id="elevation" type="range" min="0" max="90" step="1" value="46" data-key="elevation" data-unit="°" />
+        </div>
+
+        <!-- ポイント/スポット：光源位置 -->
+        <div class="field" data-pattern="point spot">
+          <div class="field__head">
+            <label for="pointX">光源位置X</label>
+            <span class="field__value" data-out="pointXPct">50%</span>
+          </div>
+          <input class="field__slider" id="pointX" type="range" min="0" max="100" step="1" value="50" data-key="pointXPct" data-unit="%" />
+        </div>
+
+        <div class="field" data-pattern="point spot">
+          <div class="field__head">
+            <label for="pointY">光源位置Y</label>
+            <span class="field__value" data-out="pointYPct">0%</span>
+          </div>
+          <input class="field__slider" id="pointY" type="range" min="0" max="100" step="1" value="0" data-key="pointYPct" data-unit="%" />
+        </div>
+
+        <div class="field" data-pattern="point">
+          <div class="field__head">
+            <label for="pointZ">光の広がり</label>
+            <span class="field__value" data-out="pointZ">14</span>
+          </div>
+          <input class="field__slider" id="pointZ" type="range" min="1" max="100" step="1" value="14" data-key="pointZ" />
+        </div>
+
+        <!-- スポット：光源の高さ・コーン角 -->
+        <div class="field" data-pattern="spot">
+          <div class="field__head">
+            <label for="spotZ">光源の高さ</label>
+            <span class="field__value" data-out="spotZ">40</span>
+          </div>
+          <input class="field__slider" id="spotZ" type="range" min="1" max="100" step="1" value="40" data-key="spotZ" />
+        </div>
+
+        <div class="field" data-pattern="spot">
+          <div class="field__head">
+            <label for="cone">コーン角</label>
+            <span class="field__value" data-out="coneAngle">40°</span>
+          </div>
+          <input class="field__slider" id="cone" type="range" min="1" max="90" step="1" value="40" data-key="coneAngle" data-unit="°" />
+        </div>
+
+        <div class="field">
+          <div class="field__head">
+            <label for="thickness">リムの太さ</label>
+            <span class="field__value" data-out="thickness">14</span>
+          </div>
+          <input class="field__slider" id="thickness" type="range" min="1" max="40" step="1" value="14" data-key="thickness" />
+        </div>
+
+        <div class="field">
+          <div class="field__head">
+            <label for="radius">角丸</label>
+            <span class="field__value" data-out="radius">46</span>
+          </div>
+          <input class="field__slider" id="radius" type="range" min="0" max="46" step="1" value="46" data-key="radius" />
+        </div>
+
+        <div class="field">
+          <div class="field__head">
+            <label for="blur">滲み（ぼかし）</label>
+            <span class="field__value" data-out="blur">3</span>
+          </div>
+          <input class="field__slider" id="blur" type="range" min="0" max="15" step="0.5" value="3" data-key="blur" />
+        </div>
+
+        <!-- specular系（方向/スポット/デュアル/トライ。ポイント=グラデ方式・ネオン系=光源なしは対象外）-->
+        <div class="field" data-pattern="distant spot dual tri">
+          <div class="field__head">
+            <label for="surface">立体感</label>
+            <span class="field__value" data-out="surfaceScale">8</span>
+          </div>
+          <input class="field__slider" id="surface" type="range" min="0" max="30" step="1" value="8" data-key="surfaceScale" />
+        </div>
+
+        <div class="field" data-pattern="distant spot dual tri">
+          <div class="field__head">
+            <label for="exponent">光の鋭さ</label>
+            <span class="field__value" data-out="exponent">70</span>
+          </div>
+          <input class="field__slider" id="exponent" type="range" min="1" max="120" step="1" value="70" data-key="exponent" />
+        </div>
+
+        <div class="field" data-pattern="distant spot dual tri">
+          <div class="field__head">
+            <label for="constant">光の強さ</label>
+            <span class="field__value" data-out="constant">1.2</span>
+          </div>
+          <input class="field__slider" id="constant" type="range" min="0" max="3" step="0.1" value="1.2" data-key="constant" />
+        </div>
+
+        <!-- リムの色（方向/ポイント/スポット/コーナー/チェイス＋二重リムの外側） -->
+        <div class="field" data-pattern="distant point spot corner chase double">
+          <div class="field__head">
+            <label for="color">リムの色</label>
+          </div>
+          <input class="field__color" id="color" type="color" value="#ffffff" data-key="lightColor" />
+        </div>
+
+        <!-- グロー色（ネオン/パルス/フリッカー/アンダーグロー＋二重リムの内側） -->
+        <div class="field" data-pattern="neon pulse flicker under double">
+          <div class="field__head">
+            <label for="glowColor">グロー色</label>
+          </div>
+          <input class="field__color" id="glowColor" type="color" value="#00ffaa" data-key="glowColor" />
+        </div>
+
+        <!-- グロー強度（ネオン/パルス/フリッカー/アンダーグロー） -->
+        <div class="field" data-pattern="neon pulse flicker under">
+          <div class="field__head">
+            <label for="glowIntensity">グロー強度</label>
+            <span class="field__value" data-out="glowIntensity">0.3</span>
+          </div>
+          <input class="field__slider" id="glowIntensity" type="range" min="0" max="1" step="0.05" value="0.3" data-key="glowIntensity" />
+        </div>
+
+        <!-- デュアル/グラデ/トライ：色 -->
+        <div class="field" data-pattern="dual gradient tri">
+          <div class="field__head">
+            <label for="leftColor">左の色</label>
+          </div>
+          <input class="field__color" id="leftColor" type="color" value="#22d3ee" data-key="leftColor" />
+        </div>
+
+        <div class="field" data-pattern="dual gradient tri">
+          <div class="field__head">
+            <label for="rightColor">右の色</label>
+          </div>
+          <input class="field__color" id="rightColor" type="color" value="#f472b6" data-key="rightColor" />
+        </div>
+
+        <!-- トライ：3色目 -->
+        <div class="field" data-pattern="tri">
+          <div class="field__head">
+            <label for="thirdColor">3つ目の色</label>
+          </div>
+          <input class="field__color" id="thirdColor" type="color" value="#a78bfa" data-key="thirdColor" />
+        </div>
+
+        <div class="field">
+          <div class="field__head">
+            <label for="fillColor">ボタンの色</label>
+          </div>
+          <input class="field__color" id="fillColor" type="color" value="#11141b" data-key="fillColor" />
+        </div>
+
+        <div class="field">
+          <div class="field__head">
+            <label for="fillOpacity">ボタンの濃さ</label>
+            <span class="field__value" data-out="fillOpacity">0</span>
+          </div>
+          <input class="field__slider" id="fillOpacity" type="range" min="0" max="1" step="0.05" value="0" data-key="fillOpacity" />
+        </div>
+
+        <div class="field">
+          <div class="field__head">
+            <label for="speed">回転速度</label>
+            <span class="field__value" data-out="speed">1</span>
+          </div>
+          <input class="field__slider" id="speed" type="range" min="0.1" max="4" step="0.1" value="1" data-key="speed" />
+        </div>
+
+        <div class="panel__actions">
+          <button class="btn" id="spin" type="button" aria-pressed="false">自動回転：OFF</button>
+          <button class="btn" id="reset" type="button">リセット</button>
+        </div>
+      </div>
+
+      <!-- 生成コード出力（各設定値に連動して更新される貼り付け用コード） -->
+      <div class="output">
+        <div class="output__col">
+          <div class="output__head">
+            <h2>HTML</h2>
+            <button class="btn" id="copyHtml" type="button">HTMLをコピー</button>
+          </div>
+          <textarea class="output__code" id="outHtml" readonly spellcheck="false"></textarea>
+        </div>
+        <div class="output__col">
+          <div class="output__head">
+            <h2>CSS</h2>
+            <button class="btn" id="copyCss" type="button">CSSをコピー</button>
+          </div>
+          <textarea class="output__code" id="outCss" readonly spellcheck="false"></textarea>
+        </div>
+      </div>
+    </main>
+
+    <!-- 記事（AIO/FAQ schema対応の可視コンテンツ） -->
+    <article class="article">
+      <div class="answer-box">
+        <p>ネオンボタンジェネレーターは、<strong>SVGフィルタ</strong>でボタンの縁(リム)だけを光らせるCSSボタンを作る無料ツールです。13種の光パターンから選び、色・サイズを調整して、そのまま貼り付けられる<strong>HTML/CSS</strong>を出力できます。</p>
+      </div>
+
+      <h2>使い方（3ステップ）</h2>
+      <ol class="steps">
+        <li>13種の<strong>光パターン</strong>から好きなものをボタンで選ぶ</li>
+        <li>色・太さ・角丸・滲み・回転速度などを調整する</li>
+        <li>出力された<strong>HTML</strong>と<strong>CSS</strong>をコピーして貼り付ける</li>
+      </ol>
+
+      <h2>13種の光パターン早見表</h2>
+      <table class="pattern-table">
+        <thead>
+          <tr><th>パターン</th><th>特徴</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>方向ライト</td><td>片側から当たるスイープ光（feDistantLight）</td></tr>
+          <tr><td>ポイント</td><td>一点が強く光る（放射状グラデ）</td></tr>
+          <tr><td>スポット</td><td>鋭く絞った集光（feSpotLight）</td></tr>
+          <tr><td>ネオン</td><td>縁全体が均一に発光</td></tr>
+          <tr><td>デュアル</td><td>両側を2色で照らす</td></tr>
+          <tr><td>グラデーション</td><td>多色グラデが縁を流れる</td></tr>
+          <tr><td>トライ</td><td>3色を3方向から</td></tr>
+          <tr><td>パルス</td><td>縁全体がゆっくり明滅（ブリージング）</td></tr>
+          <tr><td>チェイス</td><td>光の帯が縁を周回</td></tr>
+          <tr><td>フリッカー</td><td>ネオン管風のランダム明滅</td></tr>
+          <tr><td>二重リム</td><td>内外2層が別色で光る</td></tr>
+          <tr><td>アンダーグロー</td><td>下方向の床反射のような光</td></tr>
+          <tr><td>コーナー</td><td>四隅が放射状に光る</td></tr>
+        </tbody>
+      </table>
+
+      <h2>よくある質問</h2>
+      <div class="faq-item">
+        <h3>どんなボタンが作れますか？</h3>
+        <p>ボタンの縁(リム)が光るCSSボタンを作れます。方向ライト・ネオン・スポット・グラデーション・二重リム・アンダーグローなど13種の光パターンから選び、色・太さ・角丸・滲みを調整できます。</p>
+      </div>
+      <div class="faq-item">
+        <h3>出力したコードはそのまま使えますか？</h3>
+        <p>はい。HTMLとCSSの2ブロックをコピーして貼るだけで動きます。外部ライブラリ依存はなく、SVGフィルタを含む自己完結のコードを出力します。</p>
+      </div>
+      <div class="faq-item">
+        <h3>光るアニメーションも出力されますか？</h3>
+        <p>はい。自動回転をONにすると、パターンに応じた回転・明滅などのアニメーション用JavaScriptが出力コードに添付されます。貼り付け先でもそのまま動きます。</p>
+      </div>
+      <div class="faq-item">
+        <h3>どのブラウザで表示されますか？</h3>
+        <p>SVGフィルタ（feSpecularLighting・feGaussianBlur など）に対応する Chrome・Edge・Safari・Firefox などの主要ブラウザで表示されます。</p>
+      </div>
+      <div class="faq-item">
+        <h3>商用利用できますか？</h3>
+        <p>はい。無料で、生成したボタンは商用サイトでも利用できます。</p>
+      </div>
+
+      <h2>関連ツール</h2>
+      <div class="related">
+        <a href="https://codequest.work/generator/liquid-glass-css-generator/" target="_blank" rel="noopener">透過リキッドガラスCSSジェネレーター</a>
+        <a href="https://codequest.work/generator/liquid-glass-generator/" target="_blank" rel="noopener">Liquid Glassジェネレーター（WebGL）</a>
+        <a href="https://codequest.work/generator/clip-path/" target="_blank" rel="noopener">clip-path ジェネレーター</a>
+        <a href="https://codequest.work/generator/animation-gallery/" target="_blank" rel="noopener">CSSアニメーションギャラリー</a>
+        <a href="https://codequest.work/generator/heading-design-previewer/" target="_blank" rel="noopener">見出しデザインプレビュー</a>
+      </div>
+    </article>
+
+    <!-- AdSense -->
+    <div class="ad-wrap">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- neon-button-generator -->
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="5577670436" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 Neon Button Generator | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <script src="js/script.js?v=20260620"></script>
+  </body>
+</html>
