@@ -102,7 +102,7 @@ export function buildFilterSvg(filterId, params, mapDataUri) {
   const h = Math.round(params.h);
   return `<svg class="lg-filter-svg" width="0" height="0" aria-hidden="true" style="position:absolute;overflow:hidden">
   <filter id="${filterId}" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse">
-    <feImage href="${mapDataUri}" xlink:href="${mapDataUri}" x="0" y="0" width="${w}" height="${h}" preserveAspectRatio="none" result="map"/>
+    <feImage href="${mapDataUri}" x="0" y="0" width="${w}" height="${h}" preserveAspectRatio="none" result="map"/>
     <feDisplacementMap in="SourceGraphic" in2="map" scale="${params.scale}" xChannelSelector="R" yChannelSelector="G"/>
   </filter>
 </svg>`;
