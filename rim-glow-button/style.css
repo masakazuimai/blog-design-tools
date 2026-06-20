@@ -1,0 +1,259 @@
+/* 縁(リム)が光源パラメータで光るSVGボタンのデモ */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100dvh;
+  display: grid;
+  place-content: center;
+  padding: 48px 20px;
+  background: radial-gradient(120% 120% at 50% 26%, #1b1e26 0%, #0a0b0f 72%);
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: #e8eaf0;
+}
+
+/* 中央のステージ（ボタン＋パネル） */
+.stage {
+  display: grid;
+  justify-items: center;
+  gap: 40px;
+}
+
+/* ボタン本体（SVGを背面、ラベルを前面に重ねる） */
+.rim-btn {
+  position: relative;
+  width: 320px;
+  height: 120px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+
+.rim-btn:active {
+  transform: translateY(2px) scale(0.99);
+}
+
+/* SVGはボタンと同じ実寸で描画（サイズはscript.jsが管理） */
+/* セレクタを .rim-btn 子孫にしてUAの svg:not(:root){overflow:hidden} に勝たせる */
+.rim-btn .rim-btn__svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  overflow: visible; /* ネオンのブルームがボタン外までにじめるように */
+}
+
+/* ラベルはSVGの上に重ねて常にくっきり */
+.rim-btn__label {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  color: #cfd4de;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+/* コントロールパネル（3列） */
+.panel {
+  width: min(840px, 92vw);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px 22px;
+  padding: 24px;
+  border: 1px solid #232833;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* タブレット＝2列、スマホ＝1列 */
+@media (max-width: 760px) {
+  .panel {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+/* 全幅フィールド（ボタンテキスト等） */
+.field--wide {
+  grid-column: 1 / -1;
+}
+
+.field__text {
+  width: 100%;
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid #232833;
+  border-radius: 8px;
+  background: #11141b;
+  color: #e8eaf0;
+  font-size: 16px;
+  cursor: text;
+}
+
+.field__text:focus {
+  outline: none;
+  border-color: #22d3ee;
+}
+
+/* パターン選択（field__text を流用しつつネイティブselectの体裁を整える） */
+.field__select {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, #9aa3b4 50%),
+    linear-gradient(135deg, #9aa3b4 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) 16px,
+    calc(100% - 12px) 16px;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 34px;
+}
+
+/* 選択中パターンに無関係なフィールドは非表示 */
+.field[hidden] {
+  display: none;
+}
+
+.field__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 16px;
+  color: #9aa3b4;
+}
+
+.field__value {
+  color: #22d3ee;
+  font-weight: 700;
+}
+
+/* スライダーはシアン */
+.field__slider {
+  width: 100%;
+  height: 22px;
+  accent-color: #22d3ee;
+  cursor: pointer;
+}
+
+.field__color {
+  width: 100%;
+  height: 38px;
+  padding: 0;
+  border: 1px solid #232833;
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+}
+
+/* アクション行（自動回転・リセット）はパネル全幅 */
+.panel__actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  font-size: 16px;
+  padding: 9px 18px;
+  border-radius: 10px;
+  border: 1px solid #333a47;
+  background: #161922;
+  color: #cfd4de;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.btn:hover {
+  border-color: #22d3ee;
+  color: #22d3ee;
+}
+
+.btn[aria-pressed="true"] {
+  border-color: #22d3ee;
+  color: #22d3ee;
+}
+
+/* 生成コード出力（HTML/CSSの2カラム） */
+.output {
+  width: min(840px, 92vw);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 22px;
+}
+
+@media (max-width: 760px) {
+  .output {
+    grid-template-columns: 1fr;
+  }
+}
+
+.output__col {
+  display: grid;
+  gap: 8px;
+}
+
+.output__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.output__head h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #9aa3b4;
+}
+
+.output__code {
+  width: 100%;
+  height: 220px;
+  padding: 12px;
+  border: 1px solid #232833;
+  border-radius: 10px;
+  background: #11141b;
+  color: #cfd4de;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 16px;
+  line-height: 1.5;
+  resize: vertical;
+  white-space: pre;
+  tab-size: 2;
+}
+
+.output__code:focus {
+  outline: none;
+  border-color: #22d3ee;
+}
