@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Neon Button Generator — 13 Glowing CSS Button Styles (Free)</title>
-    <meta name="description" content="Free tool to create CSS buttons with a glowing rim using SVG filters. 13 light patterns — neon, spotlight, dual, gradient, chase and more — with auto animation. Copy-paste HTML/CSS." />
+    <title>Neon Button Generator — 15 Glowing CSS Button Styles (Free)</title>
+    <meta name="description" content="Free tool to create CSS buttons with a glowing rim using SVG filters. 15 light patterns — neon, arc shine, dual, gradient, chase and more — with auto animation. Copy-paste HTML/CSS." />
     <link rel="canonical" href="https://codequest.work/generator/neon-button-generator/en/" />
     <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/neon-button-generator/" />
     <link rel="alternate" hreflang="en" href="https://codequest.work/generator/neon-button-generator/en/" />
@@ -12,8 +12,8 @@
     <!-- OGP -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://codequest.work/generator/neon-button-generator/en/" />
-    <meta property="og:title" content="Neon Button Generator — 13 Glowing CSS Button Styles (Free)" />
-    <meta property="og:description" content="Free tool to create CSS buttons with a glowing rim using SVG filters. 13 light patterns with auto animation. Copy-paste HTML/CSS." />
+    <meta property="og:title" content="Neon Button Generator — 15 Glowing CSS Button Styles (Free)" />
+    <meta property="og:description" content="Free tool to create CSS buttons with a glowing rim using SVG filters. 15 light patterns with auto animation. Copy-paste HTML/CSS." />
     <meta property="og:image" content="https://codequest.work/generator/neon-button-generator/assets/og-en.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -21,8 +21,8 @@
     <meta property="og:locale" content="en_US" />
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Neon Button Generator — 13 Glowing CSS Button Styles" />
-    <meta name="twitter:description" content="Create CSS buttons with a glowing rim using SVG filters. 13 light patterns with auto animation. Copy-paste HTML/CSS. Free." />
+    <meta name="twitter:title" content="Neon Button Generator — 15 Glowing CSS Button Styles" />
+    <meta name="twitter:description" content="Create CSS buttons with a glowing rim using SVG filters. 15 light patterns with auto animation. Copy-paste HTML/CSS. Free." />
     <meta name="twitter:image" content="https://codequest.work/generator/neon-button-generator/assets/og-en.jpg" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
@@ -45,9 +45,9 @@
         "operatingSystem": "Web browser",
         "inLanguage": "en",
         "image": "https://codequest.work/generator/neon-button-generator/assets/og-en.jpg",
-        "description": "Free tool that creates CSS buttons with a glowing rim using SVG filters. 13 light patterns with auto animation, and copy-paste, self-contained HTML/CSS output.",
+        "description": "Free tool that creates CSS buttons with a glowing rim using SVG filters. 15 light patterns with auto animation, and copy-paste, self-contained HTML/CSS output.",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "featureList": ["13 light patterns (directional, point, spot, neon, dual, gradient, tri, pulse, chase, flicker, double rim, underglow, corner)", "Rim glow rendered with SVG filters", "Auto animation output (rotation, pulse and more)", "Color, size, thickness and corner-radius controls", "Copy-paste, self-contained HTML/CSS output"],
+        "featureList": ["15 light patterns (directional, point, arc shine, beam glow, gloss shine, neon, dual, gradient, tri, pulse, chase, flicker, double rim, underglow, corner)", "Rim glow rendered with SVG filters", "Auto animation output (rotation, pulse and more)", "Color, size, thickness and corner-radius controls", "Copy-paste, self-contained HTML/CSS output"],
         "publisher": {
           "@type": "Organization",
           "name": "CodeQuest.work",
@@ -74,7 +74,7 @@
           {
             "@type": "Question",
             "name": "What kind of buttons can I make?",
-            "acceptedAnswer": { "@type": "Answer", "text": "You can make CSS buttons whose rim (edge) glows. Choose from 13 light patterns — directional, neon, spotlight, gradient, double rim, underglow and more — and tune color, thickness, corner radius and blur." }
+            "acceptedAnswer": { "@type": "Answer", "text": "You can make CSS buttons whose rim (edge) glows. Choose from 15 light patterns — directional, neon, arc shine, gradient, double rim, underglow and more — and tune color, thickness, corner radius and blur." }
           },
           {
             "@type": "Question",
@@ -121,7 +121,9 @@
         <div class="patterns__grid">
           <button class="pattern-btn is-active" type="button" data-pattern-btn="distant">Directional</button>
           <button class="pattern-btn" type="button" data-pattern-btn="point">Point</button>
-          <button class="pattern-btn" type="button" data-pattern-btn="spot">Spot</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="arcshine">Arc Shine</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="beamglow">Beam Glow</button>
+          <button class="pattern-btn" type="button" data-pattern-btn="glossshine">Gloss Shine</button>
           <button class="pattern-btn" type="button" data-pattern-btn="neon">Neon</button>
           <button class="pattern-btn" type="button" data-pattern-btn="dual">Dual</button>
           <button class="pattern-btn" type="button" data-pattern-btn="gradient">Gradient</button>
@@ -169,8 +171,8 @@
           <input class="field__slider" id="elevation" type="range" min="0" max="90" step="1" value="46" data-key="elevation" data-unit="°" />
         </div>
 
-        <!-- Point / Spot: light position -->
-        <div class="field" data-pattern="point spot">
+        <!-- Point: light position -->
+        <div class="field" data-pattern="point">
           <div class="field__head">
             <label for="pointX">Light X</label>
             <span class="field__value" data-out="pointXPct">50%</span>
@@ -178,7 +180,7 @@
           <input class="field__slider" id="pointX" type="range" min="0" max="100" step="1" value="50" data-key="pointXPct" data-unit="%" />
         </div>
 
-        <div class="field" data-pattern="point spot">
+        <div class="field" data-pattern="point">
           <div class="field__head">
             <label for="pointY">Light Y</label>
             <span class="field__value" data-out="pointYPct">0%</span>
@@ -186,7 +188,8 @@
           <input class="field__slider" id="pointY" type="range" min="0" max="100" step="1" value="0" data-key="pointYPct" data-unit="%" />
         </div>
 
-        <div class="field" data-pattern="point">
+        <!-- Point / Beam Glow: light spread -->
+        <div class="field" data-pattern="point beamglow">
           <div class="field__head">
             <label for="pointZ">Light spread</label>
             <span class="field__value" data-out="pointZ">14</span>
@@ -194,21 +197,39 @@
           <input class="field__slider" id="pointZ" type="range" min="1" max="100" step="1" value="14" data-key="pointZ" />
         </div>
 
-        <!-- Spot: light height / cone angle -->
-        <div class="field" data-pattern="spot">
+        <!-- Arc Shine / Beam Glow: orbit position -->
+        <div class="field" data-pattern="arcshine beamglow">
           <div class="field__head">
-            <label for="spotZ">Light height</label>
-            <span class="field__value" data-out="spotZ">40</span>
+            <label for="orbit">Orbit angle</label>
+            <span class="field__value" data-out="orbitAngle">90°</span>
           </div>
-          <input class="field__slider" id="spotZ" type="range" min="1" max="100" step="1" value="40" data-key="spotZ" />
+          <input class="field__slider" id="orbit" type="range" min="0" max="360" step="1" value="90" data-key="orbitAngle" data-unit="°" data-round="1" />
         </div>
 
-        <div class="field" data-pattern="spot">
+        <!-- Arc Shine: arc length -->
+        <div class="field" data-pattern="arcshine">
           <div class="field__head">
-            <label for="cone">Cone angle</label>
-            <span class="field__value" data-out="coneAngle">40°</span>
+            <label for="arcLen">Arc length</label>
+            <span class="field__value" data-out="arcLen">22%</span>
           </div>
-          <input class="field__slider" id="cone" type="range" min="1" max="90" step="1" value="40" data-key="coneAngle" data-unit="°" />
+          <input class="field__slider" id="arcLen" type="range" min="5" max="60" step="1" value="22" data-key="arcLen" data-unit="%" />
+        </div>
+
+        <!-- Gloss Shine: sheen angle / width -->
+        <div class="field" data-pattern="glossshine">
+          <div class="field__head">
+            <label for="glossAngle">Sheen angle</label>
+            <span class="field__value" data-out="glossAngle">35°</span>
+          </div>
+          <input class="field__slider" id="glossAngle" type="range" min="0" max="360" step="1" value="35" data-key="glossAngle" data-unit="°" data-round="1" />
+        </div>
+
+        <div class="field" data-pattern="glossshine">
+          <div class="field__head">
+            <label for="glossWidth">Sheen width</label>
+            <span class="field__value" data-out="glossWidth">12</span>
+          </div>
+          <input class="field__slider" id="glossWidth" type="range" min="4" max="40" step="1" value="12" data-key="glossWidth" />
         </div>
 
         <div class="field">
@@ -235,8 +256,8 @@
           <input class="field__slider" id="blur" type="range" min="0" max="15" step="0.5" value="3" data-key="blur" />
         </div>
 
-        <!-- specular (directional / spot / dual / tri). Point uses a gradient, neon-type has no light source -->
-        <div class="field" data-pattern="distant spot dual tri">
+        <!-- specular (directional / dual / tri). Point uses a gradient, neon-type has no light source -->
+        <div class="field" data-pattern="distant dual tri">
           <div class="field__head">
             <label for="surface">Depth</label>
             <span class="field__value" data-out="surfaceScale">8</span>
@@ -244,7 +265,7 @@
           <input class="field__slider" id="surface" type="range" min="0" max="30" step="1" value="8" data-key="surfaceScale" />
         </div>
 
-        <div class="field" data-pattern="distant spot dual tri">
+        <div class="field" data-pattern="distant dual tri">
           <div class="field__head">
             <label for="exponent">Sharpness</label>
             <span class="field__value" data-out="exponent">70</span>
@@ -252,7 +273,7 @@
           <input class="field__slider" id="exponent" type="range" min="1" max="120" step="1" value="70" data-key="exponent" />
         </div>
 
-        <div class="field" data-pattern="distant spot dual tri">
+        <div class="field" data-pattern="distant dual tri">
           <div class="field__head">
             <label for="constant">Strength</label>
             <span class="field__value" data-out="constant">1.2</span>
@@ -260,8 +281,8 @@
           <input class="field__slider" id="constant" type="range" min="0" max="3" step="0.1" value="1.2" data-key="constant" />
         </div>
 
-        <!-- Rim color (directional / point / spot / corner / chase + outer ring of double) -->
-        <div class="field" data-pattern="distant point spot corner chase double">
+        <!-- Rim color (directional / point / corner / chase / arc / beam / gloss + outer ring of double) -->
+        <div class="field" data-pattern="distant point corner chase double arcshine beamglow glossshine">
           <div class="field__head">
             <label for="color">Rim color</label>
           </div>
@@ -318,9 +339,9 @@
         <div class="field">
           <div class="field__head">
             <label for="fillOpacity">Button opacity</label>
-            <span class="field__value" data-out="fillOpacity">0</span>
+            <span class="field__value" data-out="fillOpacity">1</span>
           </div>
-          <input class="field__slider" id="fillOpacity" type="range" min="0" max="1" step="0.05" value="0" data-key="fillOpacity" />
+          <input class="field__slider" id="fillOpacity" type="range" min="0" max="1" step="0.05" value="1" data-key="fillOpacity" />
         </div>
 
         <div class="field">
@@ -359,17 +380,17 @@
     <!-- Article (visible content for AIO / FAQ schema) -->
     <article class="article">
       <div class="answer-box">
-        <p>Neon Button Generator is a free tool that creates CSS buttons whose rim (edge) glows, rendered with <strong>SVG filters</strong> rather than a flat box-shadow. Pick from 13 light patterns, tune the colors and size, and copy ready-to-paste <strong>HTML/CSS</strong>.</p>
+        <p>Neon Button Generator is a free tool that creates CSS buttons whose rim (edge) glows, rendered with <strong>SVG filters</strong> rather than a flat box-shadow. Pick from 15 light patterns, tune the colors and size, and copy ready-to-paste <strong>HTML/CSS</strong>.</p>
       </div>
 
       <h2>How to use it (3 steps)</h2>
       <ol class="steps">
-        <li>Pick one of the 13 <strong>light patterns</strong> with the buttons</li>
+        <li>Pick one of the 15 <strong>light patterns</strong> with the buttons</li>
         <li>Adjust color, thickness, corner radius, blur and animation speed</li>
         <li>Copy the generated <strong>HTML</strong> and <strong>CSS</strong> and paste them into your project</li>
       </ol>
 
-      <h2>The 13 light patterns at a glance</h2>
+      <h2>The 15 light patterns at a glance</h2>
       <table class="pattern-table">
         <thead>
           <tr><th>Pattern</th><th>What it does</th></tr>
@@ -377,7 +398,9 @@
         <tbody>
           <tr><td>Directional</td><td>One-sided sweep light (feDistantLight)</td></tr>
           <tr><td>Point</td><td>A single bright point (radial gradient)</td></tr>
-          <tr><td>Spot</td><td>Tightly focused spotlight (feSpotLight)</td></tr>
+          <tr><td>Arc Shine</td><td>A smooth glossy sheen sweeps part of the rim</td></tr>
+          <tr><td>Beam Glow</td><td>A focused pool of light gathers on the rim</td></tr>
+          <tr><td>Gloss Shine</td><td>A glass-like diagonal sheen runs across the rim</td></tr>
           <tr><td>Neon</td><td>The whole rim glows evenly</td></tr>
           <tr><td>Dual</td><td>Two colors from opposite sides</td></tr>
           <tr><td>Gradient</td><td>A multi-color gradient flows around the rim</td></tr>
@@ -394,7 +417,7 @@
       <h2>FAQ</h2>
       <div class="faq-item">
         <h3>What kind of buttons can I make?</h3>
-        <p>You can make CSS buttons whose rim (edge) glows. Choose from 13 light patterns — directional, neon, spotlight, gradient, double rim, underglow and more — and tune color, thickness, corner radius and blur.</p>
+        <p>You can make CSS buttons whose rim (edge) glows. Choose from 15 light patterns — directional, neon, arc shine, gradient, double rim, underglow and more — and tune color, thickness, corner radius and blur.</p>
       </div>
       <div class="faq-item">
         <h3>Can I use the output code as-is?</h3>

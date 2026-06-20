@@ -33,7 +33,9 @@ const T = {
       chase: "光の帯を縁に沿って走らせる",
       distant: "縁の光源角度(azimuth)を回してリムを回転発光させる",
       point: "光の点をリムに沿って周回させる",
-      spot: "光源(ホットスポット)をリムに沿って周回させる",
+      arcshine: "円弧状のツヤ光を縁の一部に乗せて周回させる",
+      beamglow: "焦点を持つ光だまりを縁の一点に集めて周回させる",
+      glossshine: "ガラスのような対角の艶反射を縁に走らせる",
       dual: "対向2灯を180°差で回転",
       speedNote: "1フレームあたりの角度（大きいほど速い）",
     },
@@ -53,7 +55,9 @@ const T = {
       chase: "Run a band of light along the rim",
       distant: "Rotate the light azimuth to sweep the glowing rim",
       point: "Orbit the light point along the rim",
-      spot: "Orbit the hotspot light along the rim",
+      arcshine: "Orbit a glossy arc of light along part of the rim",
+      beamglow: "Orbit a focused pool of light along the rim",
+      glossshine: "Sweep a glass-like diagonal sheen across the rim",
       dual: "Rotate two opposing lights 180 degrees apart",
       speedNote: "degrees per frame (higher is faster)",
     },
@@ -79,10 +83,6 @@ const escapeHtml = (s) =>
 const specAttrs = (s) =>
   `surfaceScale="${s.surfaceScale}" specularConstant="${s.constant}" specularExponent="${s.exponent}"`;
 
-// 光源位置（%指定→viewBox座標へ換算。幅変更に強い）
-const lightX = (s, w) => (s.pointXPct / 100 * w).toFixed(1);
-const lightY = (s) => (s.pointYPct / 100 * VIEW_H).toFixed(1);
-
 // グロー発光フィルタ（パルス/フリッカー/アンダーグローで共用）。
 // feFuncA(class=rim-btn__breath)のslopeを揺らして明滅させる。offsetYで下方向の床光に。
 function buildGlowFilter(s, offsetY) {
@@ -105,16 +105,6 @@ function buildFilterMarkup(s, w) {
       return `<feGaussianBlur in="SourceAlpha" stdDeviation="${s.blur}" result="height" />
         <feSpecularLighting in="height" ${specAttrs(s)} lighting-color="${s.lightColor}" result="spec">
           <feDistantLight class="rim-btn__light" azimuth="${Math.round(s.azimuth)}" elevation="${s.elevation}" />
-        </feSpecularLighting>
-        <feComposite in="spec" in2="SourceAlpha" operator="in" />`;
-
-    // スポット：中央へ向けて絞った集光（コーン角で広がりを調整）
-    case "spot":
-      return `<feGaussianBlur in="SourceAlpha" stdDeviation="${s.blur}" result="height" />
-        <feSpecularLighting in="height" ${specAttrs(s)} lighting-color="${s.lightColor}" result="spec">
-          <feSpotLight class="rim-btn__light" x="${lightX(s, w)}" y="${lightY(s)}" z="${s.spotZ}"
-            pointsAtX="${w / 2}" pointsAtY="${VIEW_H / 2}" pointsAtZ="0"
-            specularExponent="1" limitingConeAngle="${s.coneAngle}" />
         </feSpecularLighting>
         <feComposite in="spec" in2="SourceAlpha" operator="in" />`;
 
@@ -228,7 +218,7 @@ function buildPointRim(s) {
       </g>`;
 }
 
-// specular方式（方向/スポット/デュアル）＋ネオン：フィルタで縁を発光させる
+// specular方式（方向/デュアル/トライ）＋ネオン：フィルタで縁を発光させる
 function buildSpecularRim(s) {
   const w = s.width;
   const rectW = w - MARGIN * 2;
@@ -246,6 +236,92 @@ function buildSpecularRim(s) {
       <rect x="${MARGIN}" y="14" width="${rectW}" height="92" rx="${s.radius}" fill="${s.fillColor}" fill-opacity="${s.fillOpacity}" />
       <g filter="url(#rimGlow)">
         <rect x="${MARGIN}" y="14" width="${rectW}" height="92" rx="${s.radius}" fill="none" stroke="#ffffff" stroke-width="${s.thickness}" />
+      </g>`;
+}
+
+// アークシャイン：縁の一部が滑らかに艶めく「艶掃き」（位置=周回角度・広さ=弧長で操作）。
+// チェイス（ハードな端の帯）と差別化するため、ダッシュではなく放射グラデを縁に乗せる。
+// 縁全体を淡く光らせつつ、周回角度の位置を中心に明→暗へ滑らかに減衰させる（端が溶ける）。
+function buildArcShineRim(s) {
+  const w = s.width;
+  const rectW = w - MARGIN * 2;
+  const perim = 2 * (rectW + 92);
+  const th = s.orbitAngle * Math.PI / 180;
+  const cx = (w / 2 + (rectW / 2) * Math.cos(th)).toFixed(1);
+  const cy = (VIEW_H / 2 + 46 * Math.sin(th)).toFixed(1);
+  const r = (s.thickness + (s.arcLen / 100) * perim * 0.5).toFixed(1); // 弧の長さ→広い半径で長く滑らかに掃く
+  return `
+      <defs>
+        <radialGradient id="rimArcGrad" class="rim-btn__arc" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="${r}">
+          <stop offset="0" stop-color="${s.lightColor}" stop-opacity="1" />
+          <stop offset="0.35" stop-color="${s.lightColor}" stop-opacity="0.55" />
+          <stop offset="1" stop-color="${s.lightColor}" stop-opacity="0" />
+        </radialGradient>
+        <filter id="rimGlow" x="-60%" y="-60%" width="220%" height="220%" color-interpolation-filters="linearRGB">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="${Math.max(0.8, s.blur).toFixed(2)}" result="glow" />
+          <feMerge><feMergeNode in="glow" /><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      <rect x="${MARGIN}" y="14" width="${rectW}" height="92" rx="${s.radius}" fill="${s.fillColor}" fill-opacity="${s.fillOpacity}" />
+      <g filter="url(#rimGlow)">
+        <rect x="${MARGIN}" y="14" width="${rectW}" height="92" rx="${s.radius}" fill="none" stroke="${s.lightColor}" stroke-width="${s.thickness}" stroke-opacity="0.08" />
+        <rect x="${MARGIN}" y="14" width="${rectW}" height="92" rx="${s.radius}" fill="none" stroke="url(#rimArcGrad)" stroke-width="${s.thickness}" />
+      </g>`;
+}
+
+// ビームグロー：焦点を持つ光だまりを縁の一点に集める（位置=周回角度・広がり=光の広がりで操作）。
+// 放射状グラデの中心を、ボタンの縁に沿った楕円上に周回角度で配置する。
+function buildBeamGlowRim(s) {
+  const w = s.width;
+  const rectW = w - MARGIN * 2;
+  const th = s.orbitAngle * Math.PI / 180;
+  const cx = (w / 2 + (rectW / 2) * Math.cos(th)).toFixed(1);
+  const cy = (VIEW_H / 2 + 46 * Math.sin(th)).toFixed(1);
+  const r = (s.pointZ * 2 + s.thickness).toFixed(1);
+  return `
+      <defs>
+        <radialGradient id="rimBeamGrad" class="rim-btn__beam" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="${r}">
+          <stop offset="0" stop-color="${s.lightColor}" stop-opacity="1" />
+          <stop offset="0.5" stop-color="${s.lightColor}" stop-opacity="0.4" />
+          <stop offset="1" stop-color="${s.lightColor}" stop-opacity="0" />
+        </radialGradient>
+        <filter id="rimGlow" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="linearRGB">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="${s.blur}" result="glow" />
+          <feMerge><feMergeNode in="glow" /><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      <rect x="${MARGIN}" y="14" width="${rectW}" height="92" rx="${s.radius}" fill="${s.fillColor}" fill-opacity="${s.fillOpacity}" />
+      <g filter="url(#rimGlow)">
+        <rect x="${MARGIN}" y="14" width="${rectW}" height="92" rx="${s.radius}" fill="none" stroke="url(#rimBeamGrad)" stroke-width="${s.thickness}" />
+      </g>`;
+}
+
+// グロスシャイン：ガラスのような対角の艶反射を縁に走らせる（角度・幅で操作）。
+// 線形グラデに2本の明帯を置き、gradientTransformで角度を回す。
+function buildGlossShineRim(s) {
+  const w = s.width;
+  const rectW = w - MARGIN * 2;
+  const hw = Math.max(0.02, Math.min(0.18, s.glossWidth / 100));
+  const c = s.lightColor;
+  const stop = (o, op) => `<stop offset="${o.toFixed(3)}" stop-color="${c}" stop-opacity="${op}" />`;
+  const p1 = 0.3, p2 = 0.72, dim = 0.12;
+  const stops = [
+    stop(0, dim), stop(p1 - hw, dim), stop(p1, 1), stop(p1 + hw, dim),
+    stop(p2 - hw, dim), stop(p2, 1), stop(p2 + hw, dim), stop(1, dim),
+  ].join("");
+  return `
+      <defs>
+        <linearGradient id="rimGlossGrad" class="rim-btn__gloss" x1="0" y1="0" x2="1" y2="0" gradientTransform="rotate(${Math.round(s.glossAngle)} 0.5 0.5)">
+          ${stops}
+        </linearGradient>
+        <filter id="rimGlow" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="linearRGB">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="${s.blur}" result="glow" />
+          <feMerge><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      <rect x="${MARGIN}" y="14" width="${rectW}" height="92" rx="${s.radius}" fill="${s.fillColor}" fill-opacity="${s.fillOpacity}" />
+      <g filter="url(#rimGlow)">
+        <rect x="${MARGIN}" y="14" width="${rectW}" height="92" rx="${s.radius}" fill="none" stroke="url(#rimGlossGrad)" stroke-width="${s.thickness}" />
       </g>`;
 }
 
@@ -346,6 +422,12 @@ function buildSvgInner(s) {
   switch (s.pattern) {
     case "point":
       return buildPointRim(s);
+    case "arcshine":
+      return buildArcShineRim(s);
+    case "beamglow":
+      return buildBeamGlowRim(s);
+    case "glossshine":
+      return buildGlossShineRim(s);
     case "gradient":
       return buildGradientRim(s);
     case "double":
@@ -447,20 +529,52 @@ function buildSpinScript(s) {
   });
 <\/script>`;
   }
-  if (s.pattern === "spot") {
-    // ホットスポット(光源位置x,y)をリムに沿って周回
+  if (s.pattern === "arcshine") {
+    // 艶掃き(放射状グラデの中心)を縁の楕円上で周回
     return `\n<script>
-  // ${T.cmt.spot}
-  document.querySelectorAll(".rim-btn").forEach((btn) => {
-    const light = btn.querySelector(".rim-btn__light");
-    if (!light) return;
-    const cx = ${w / 2}, cy = ${VIEW_H / 2}, rx = ${(w * 0.4).toFixed(1)}, ry = 40;
-    let t = ${pointStartT(s).toFixed(4)};
-    const speed = ${(s.speed * Math.PI / 180).toFixed(4)};
+  // ${T.cmt.arcshine}
+  document.querySelectorAll(".rim-btn .rim-btn__arc").forEach((grad) => {
+    const cx = ${w / 2}, cy = ${VIEW_H / 2}, rx = ${((w - MARGIN * 2) / 2).toFixed(1)}, ry = 46;
+    let deg = ${Math.round(s.orbitAngle)};
+    const speed = ${s.speed};
     (function tick() {
-      t += speed;
-      light.setAttribute("x", (cx + rx * Math.cos(t)).toFixed(1));
-      light.setAttribute("y", (cy + ry * Math.sin(t)).toFixed(1));
+      deg = (deg + speed) % 360;
+      const t = deg * Math.PI / 180;
+      grad.setAttribute("cx", (cx + rx * Math.cos(t)).toFixed(1));
+      grad.setAttribute("cy", (cy + ry * Math.sin(t)).toFixed(1));
+      requestAnimationFrame(tick);
+    })();
+  });
+<\/script>`;
+  }
+  if (s.pattern === "beamglow") {
+    // 焦点を持つ光だまり(放射状グラデの中心)を縁の楕円上で周回
+    return `\n<script>
+  // ${T.cmt.beamglow}
+  document.querySelectorAll(".rim-btn .rim-btn__beam").forEach((grad) => {
+    const cx = ${w / 2}, cy = ${VIEW_H / 2}, rx = ${((w - MARGIN * 2) / 2).toFixed(1)}, ry = 46;
+    let deg = ${Math.round(s.orbitAngle)};
+    const speed = ${s.speed};
+    (function tick() {
+      deg = (deg + speed) % 360;
+      const t = deg * Math.PI / 180;
+      grad.setAttribute("cx", (cx + rx * Math.cos(t)).toFixed(1));
+      grad.setAttribute("cy", (cy + ry * Math.sin(t)).toFixed(1));
+      requestAnimationFrame(tick);
+    })();
+  });
+<\/script>`;
+  }
+  if (s.pattern === "glossshine") {
+    // 対角の艶反射(線形グラデ)を回転させて縁に走らせる
+    return `\n<script>
+  // ${T.cmt.glossshine}
+  document.querySelectorAll(".rim-btn .rim-btn__gloss").forEach((g) => {
+    let deg = ${Math.round(s.glossAngle)};
+    const speed = ${s.speed};
+    (function tick() {
+      deg = (deg + speed) % 360;
+      g.setAttribute("gradientTransform", "rotate(" + deg + " 0.5 0.5)");
       requestAnimationFrame(tick);
     })();
   });
@@ -629,7 +743,7 @@ let rafId = 0;
 let spinT = 0; // 軌道アニメ用の位相
 let targets = {}; // ライブSVG内の更新対象要素
 
-// ポイント/スポットの現在位置から軌道の開始位相を求める（回転開始時の連続性確保）
+// ポイントの現在位置から軌道の開始位相を求める（回転開始時の連続性確保）
 function pointStartT(s) {
   const w = s.width;
   const cx = w / 2, cy = VIEW_H / 2, rx = w * 0.4, ry = 40;
@@ -648,6 +762,9 @@ function cacheTargets() {
     breath: svgEl.querySelector(".rim-btn__breath"),
     gradient: svgEl.querySelector(".rim-btn__gradient"),
     chase: svgEl.querySelector(".rim-btn__chase"),
+    arc: svgEl.querySelector(".rim-btn__arc"),
+    beam: svgEl.querySelector(".rim-btn__beam"),
+    gloss: svgEl.querySelector(".rim-btn__gloss"),
   };
 }
 
@@ -677,22 +794,38 @@ function tick() {
       syncSlider("azimuth");
       break;
     }
-    case "point":
-    case "spot": {
+    case "point": {
       spinT += sp * Math.PI / 180;
       const w = state.width;
       const x = w / 2 + w * 0.4 * Math.cos(spinT);
       const y = VIEW_H / 2 + 40 * Math.sin(spinT);
-      if (state.pattern === "point") {
-        targets.grad?.setAttribute("cx", x.toFixed(1));
-        targets.grad?.setAttribute("cy", y.toFixed(1));
-      } else {
-        targets.light?.setAttribute("x", x.toFixed(1));
-        targets.light?.setAttribute("y", y.toFixed(1));
-      }
+      targets.grad?.setAttribute("cx", x.toFixed(1));
+      targets.grad?.setAttribute("cy", y.toFixed(1));
       state = { ...state, pointXPct: +(x / w * 100).toFixed(1), pointYPct: +(y / VIEW_H * 100).toFixed(1) };
       syncSlider("pointXPct");
       syncSlider("pointYPct");
+      break;
+    }
+    case "arcshine": {
+      state = { ...state, orbitAngle: (state.orbitAngle + sp) % 360 };
+      const w = state.width, rectW = w - MARGIN * 2, th = state.orbitAngle * Math.PI / 180;
+      targets.arc?.setAttribute("cx", (w / 2 + (rectW / 2) * Math.cos(th)).toFixed(1));
+      targets.arc?.setAttribute("cy", (VIEW_H / 2 + 46 * Math.sin(th)).toFixed(1));
+      syncSlider("orbitAngle");
+      break;
+    }
+    case "beamglow": {
+      state = { ...state, orbitAngle: (state.orbitAngle + sp) % 360 };
+      const w = state.width, rectW = w - MARGIN * 2, th = state.orbitAngle * Math.PI / 180;
+      targets.beam?.setAttribute("cx", (w / 2 + (rectW / 2) * Math.cos(th)).toFixed(1));
+      targets.beam?.setAttribute("cy", (VIEW_H / 2 + 46 * Math.sin(th)).toFixed(1));
+      syncSlider("orbitAngle");
+      break;
+    }
+    case "glossshine": {
+      state = { ...state, glossAngle: (state.glossAngle + sp) % 360 };
+      targets.gloss?.setAttribute("gradientTransform", `rotate(${Math.round(state.glossAngle)} 0.5 0.5)`);
+      syncSlider("glossAngle");
       break;
     }
     case "neon":
@@ -740,7 +873,7 @@ function startSpin() {
   spinBtn.setAttribute("aria-pressed", "true");
   applyLive(); // 最新ノードを生成してから対象をキャッシュ
   cacheTargets();
-  spinT = state.pattern === "point" || state.pattern === "spot" ? pointStartT(state) : 0;
+  spinT = state.pattern === "point" ? pointStartT(state) : 0;
   updateOutput(); // 出力にアニメ用<script>を添付（回転中は再生成しないので安定）
   tick();
 }
@@ -764,7 +897,9 @@ spinBtn.addEventListener("click", () => {
 const PATTERN_DEFAULTS = {
   point: { thickness: 1, pointZ: 30, blur: 0 }, // ポイントは細いリムで広がり広め・ボカシなしが締まる
   neon: { thickness: 4, blur: 1 }, // ネオンは細めのリム＋弱めのボカシが締まる
-  spot: { thickness: 20, spotZ: 50 }, // スポットは太めの方が集光が映える。光源は少し高めで広がりを持たせる
+  arcshine: { thickness: 10, blur: 2 }, // アークは中細リムで艶の帯がくっきり締まる
+  beamglow: { thickness: 14, blur: 3, pointZ: 24 }, // ビームは中太＋やや広めの焦点で光だまりが映える
+  glossshine: { thickness: 12, blur: 2 }, // グロスは中太リムで対角の艶反射が分かれて映える
   dual: { constant: 1.5, thickness: 15 }, // デュアルは強めの光＋やや太めで両色が映える
   gradient: { thickness: 8, blur: 2 }, // グラデは中太リム＋軽いにじみで色がきれいに乗る
   tri: { thickness: 14, constant: 1.5 }, // トライは太め＋強め光で3色が分かれて映える
