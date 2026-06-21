@@ -370,17 +370,22 @@ function buildDoubleRim(s) {
 }
 
 // コーナーグロー：四隅に放射状グラデの光（ボタン形状にクリップ）＋淡いベースリム
+// グロー強度(glowIntensity)で四隅グローと縁の明るさ（不透明度）を調整する。
 function buildCornerRim(s) {
   const w = s.width;
   const rectW = w - MARGIN * 2;
   const x0 = MARGIN, y0 = 14, x1 = MARGIN + rectW, y1 = 14 + 92;
-  const r = s.thickness * 2 + 16;
+  const gi = s.glowIntensity;
+  const inner = Math.min(1, gi).toFixed(2); // 四隅グロー中心の明るさ
+  const mid = Math.min(1, gi * 0.55).toFixed(2); // 中間の減衰（高強度ほど明るく残す）
+  const rimOp = (gi * 0.32).toFixed(2); // ベースリムの淡い明るさ
+  const r = (s.thickness * 2 + 14 + gi * 20).toFixed(1); // 強度で光の広がりも拡大（1ではっきり）
   const corner = (cx, cy) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#cornerGrad)" />`;
   return `
       <defs>
         <radialGradient id="cornerGrad">
-          <stop offset="0" stop-color="${s.lightColor}" stop-opacity="1" />
-          <stop offset="0.55" stop-color="${s.lightColor}" stop-opacity="0.35" />
+          <stop offset="0" stop-color="${s.lightColor}" stop-opacity="${inner}" />
+          <stop offset="0.55" stop-color="${s.lightColor}" stop-opacity="${mid}" />
           <stop offset="1" stop-color="${s.lightColor}" stop-opacity="0" />
         </radialGradient>
         <clipPath id="rimClip"><rect x="${x0}" y="${y0}" width="${rectW}" height="92" rx="${s.radius}" /></clipPath>
@@ -391,7 +396,7 @@ function buildCornerRim(s) {
       </defs>
       <rect x="${x0}" y="${y0}" width="${rectW}" height="92" rx="${s.radius}" fill="${s.fillColor}" fill-opacity="${s.fillOpacity}" />
       <g filter="url(#rimGlow)">
-        <rect x="${x0}" y="${y0}" width="${rectW}" height="92" rx="${s.radius}" fill="none" stroke="${s.lightColor}" stroke-width="${s.thickness}" stroke-opacity="0.22" />
+        <rect x="${x0}" y="${y0}" width="${rectW}" height="92" rx="${s.radius}" fill="none" stroke="${s.lightColor}" stroke-width="${s.thickness}" stroke-opacity="${rimOp}" />
         <g clip-path="url(#rimClip)">${corner(x0, y0)}${corner(x1, y0)}${corner(x0, y1)}${corner(x1, y1)}</g>
       </g>`;
 }
@@ -908,7 +913,7 @@ const PATTERN_DEFAULTS = {
   flicker: { thickness: 4, blur: 1, glowIntensity: 0.4 }, // フリッカーは細リム＋ネオン管らしい控えめ発光
   double: { thickness: 8, blur: 2 }, // 二重リムは中太で2層が分離して見える
   under: { thickness: 8, blur: 4, glowIntensity: 0.5 }, // アンダーは太め＋広いにじみで床光が広がる
-  corner: { thickness: 8, blur: 3 }, // コーナーは中太＋にじみで四隅の光が柔らかい
+  corner: { thickness: 8, blur: 3, glowIntensity: 0.9 }, // コーナーは中太＋にじみで四隅の光が柔らかい
 };
 
 // 指定キーの値をstateとスライダー・表示に反映
