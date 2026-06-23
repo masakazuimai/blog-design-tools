@@ -1,8 +1,8 @@
 // コントロール配線・タブ切替・コード出力・ライブプレビューの統合。
-import { defaultState } from "./config.js?v=20260623i";
-import { fullCode } from "./generators.js?v=20260623i";
-import { renderPreview } from "./preview.js?v=20260623i";
-import { t } from "./i18n.js?v=20260623i";
+import { defaultState } from "./config.js?v=20260623j";
+import { fullCode } from "./generators.js?v=20260623j";
+import { renderPreview } from "./preview.js?v=20260623j";
+import { t } from "./i18n.js?v=20260623j";
 
 const state = { ...defaultState };
 let activeLib = "swiper";
@@ -67,6 +67,14 @@ document.querySelectorAll("[data-group]").forEach((group) => {
             tn.checked = false;
             state.thumbnail = false;
           }
+        }
+      }
+      // 縦方向は矢印をデフォルトでOFFにする（必要なら手動で再ON可）
+      if (key === "direction" && btn.dataset.value === "vertical") {
+        const arrowsBox = document.getElementById("arrows");
+        if (arrowsBox && arrowsBox.checked) {
+          arrowsBox.checked = false;
+          state.arrows = false;
         }
       }
       refresh();
