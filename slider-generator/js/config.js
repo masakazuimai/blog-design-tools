@@ -8,10 +8,10 @@ export const defaultState = {
   speed: 500, // 遷移速度(ms)
   effect: "slide", // slide | fade | coverflow | cube | flip | cards | marquee（coverflow〜cardsはSwiper専用）
   direction: "horizontal", // horizontal | vertical
-  loop: true,
-  centered: false,
-  autoplay: false,
-  autoplayDelay: 3000, // 自動再生の間隔(ms)
+  loop: true, // 常時ON（UI非表示）。最後のスライド後も一定方向に連続ループ
+  centered: true, // 常時ON（UI非表示）。表示枚数2枚以上のときだけ中央寄せが効く
+  autoplay: true,
+  autoplayDelay: 1000, // 自動再生の間隔(ms)
   pauseOnHover: true, // ホバーで一時停止
   arrows: true,
   pagination: true,

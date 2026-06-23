@@ -39,7 +39,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と main.js の両方で日付を上げる -->
-    <link rel="stylesheet" href="css/style.css?v=20260623f" />
+    <link rel="stylesheet" href="css/style.css?v=20260623i" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -170,7 +170,7 @@
             </label>
             <label class="slider-row">
               <span class="slider-label">スマホ表示枚数（≤768px） <em data-val="perViewMobile"></em></span>
-              <input type="range" id="perViewMobile" min="1" max="4" step="1" value="1" />
+              <input type="range" id="perViewMobile" min="1" max="2" step="1" value="1" />
             </label>
             <label class="slider-row">
               <span class="slider-label">スライド間の余白 <em data-val="gap"></em></span>
@@ -205,25 +205,17 @@
                 <button type="button" class="type-btn" data-value="vertical">縦</button>
               </div>
             </div>
-            <label class="check-row">
-              <input type="checkbox" id="loop" checked />
-              <span>ループ（無限ループ）</span>
-            </label>
-            <label class="check-row">
-              <input type="checkbox" id="centered" />
-              <span>中央寄せ（centered）</span>
-            </label>
           </div>
 
           <div class="card">
             <div class="card-title">自動再生</div>
             <label class="check-row">
-              <input type="checkbox" id="autoplay" />
+              <input type="checkbox" id="autoplay" checked />
               <span>自動再生する</span>
             </label>
-            <label class="slider-row hidden" id="autoplayDelay-row" style="margin-top: 14px">
+            <label class="slider-row" id="autoplayDelay-row" style="margin-top: 14px">
               <span class="slider-label">再生間隔 <em data-val="autoplayDelay"></em></span>
-              <input type="range" id="autoplayDelay" min="1000" max="6000" step="500" value="3000" />
+              <input type="range" id="autoplayDelay" min="1000" max="6000" step="500" value="1000" />
             </label>
             <label class="check-row">
               <input type="checkbox" id="pauseOnHover" checked />
@@ -284,10 +276,6 @@
             <label class="check-row">
               <input type="checkbox" id="adaptiveHeight" />
               <span>可変高さ（adaptiveHeight）</span>
-            </label>
-            <label class="slider-row" style="margin-top: 14px">
-              <span class="slider-label">中央余白（centerPadding・中央寄せ時） <em data-val="centerPadding"></em></span>
-              <input type="range" id="centerPadding" min="0" max="120" step="10" value="60" />
             </label>
           </div>
         </aside>
@@ -442,6 +430,6 @@
       </div>
     </footer>
 
-    <script type="module" src="js/main.js?v=20260623f"></script>
+    <script type="module" src="js/main.js?v=20260623i"></script>
   </body>
 </html>

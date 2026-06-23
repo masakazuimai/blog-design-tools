@@ -1,8 +1,8 @@
 // コントロール配線・タブ切替・コード出力・ライブプレビューの統合。
-import { defaultState } from "./config.js?v=20260623f";
-import { fullCode } from "./generators.js?v=20260623f";
-import { renderPreview } from "./preview.js?v=20260623f";
-import { t } from "./i18n.js?v=20260623f";
+import { defaultState } from "./config.js?v=20260623i";
+import { fullCode } from "./generators.js?v=20260623i";
+import { renderPreview } from "./preview.js?v=20260623i";
+import { t } from "./i18n.js?v=20260623i";
 
 const state = { ...defaultState };
 let activeLib = "swiper";
@@ -22,7 +22,7 @@ const EFFECTS_BY_LIB = {
 const SINGLE_VIEW_EFFECTS = ["fade", "cube", "flip", "cards"];
 
 // ===== レンジ入力（数値）=====
-const ranges = ["slideCount", "perView", "perViewMobile", "gap", "speed", "autoplayDelay", "centerPadding"];
+const ranges = ["slideCount", "perView", "perViewMobile", "gap", "speed", "autoplayDelay"];
 ranges.forEach((id) => {
   const el = document.getElementById(id);
   if (!el) return;
@@ -44,7 +44,7 @@ function updateValueLabel(id) {
   const label = document.querySelector(`[data-val="${id}"]`);
   if (!label) return;
   const el = document.getElementById(id);
-  const suffix = id === "gap" || id === "centerPadding" ? "px" : id === "speed" || id === "autoplayDelay" ? "ms" : "枚";
+  const suffix = id === "gap" ? "px" : id === "speed" || id === "autoplayDelay" ? "ms" : "枚";
   label.textContent = `${el.value}${suffix}`;
 }
 
@@ -76,8 +76,6 @@ document.querySelectorAll("[data-group]").forEach((group) => {
 
 // ===== チェックボックス =====
 const checkboxes = [
-  "loop",
-  "centered",
   "autoplay",
   "pauseOnHover",
   "arrows",
@@ -107,7 +105,7 @@ function toggleRow(rowId, show) {
   if (row) row.classList.toggle("hidden", !show);
 }
 
-// 1枚表示エフェクト（fade/cube/flip/cards）のときは表示枚数・センター寄せを無効化
+// 1枚表示エフェクト（fade/cube/flip/cards）のときは表示枚数を無効化
 function applyEffectLock() {
   const locked = SINGLE_VIEW_EFFECTS.includes(state.effect);
   ["perView", "perViewMobile"].forEach((id) => {
@@ -115,11 +113,6 @@ function applyEffectLock() {
     if (el) el.disabled = locked;
     el?.closest(".slider-row")?.classList.toggle("is-disabled", locked);
   });
-  const centered = document.getElementById("centered");
-  if (centered) {
-    centered.disabled = locked;
-    centered.closest(".check-row")?.classList.toggle("is-disabled", locked);
-  }
 }
 
 // data-libs を持つ要素を、選択中ライブラリが対応する場合だけ表示

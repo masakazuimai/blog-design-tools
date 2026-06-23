@@ -12,7 +12,7 @@ import {
   thumbsPerView,
   marqueeDuration,
   marqueeSplideSpeed,
-} from "./generators.js?v=20260623f";
+} from "./generators.js?v=20260623i";
 
 const loaded = new Map();
 
@@ -178,6 +178,7 @@ function renderGallery(name, state, host) {
   host.innerHTML = galleryPreviewMarkup(name, state);
   const fade = state.effect === "fade";
   const per = thumbsPerView(state);
+  const loop = state.loop; // ループON=最後のスライド後も一定方向に連続。OFF=端で停止
 
   if (name === "swiper") {
     const thumbs = new window.Swiper(host.querySelector(".thumb-slider"), {
@@ -187,6 +188,7 @@ function renderGallery(name, state, host) {
       watchSlidesProgress: true,
     });
     const mainOpt = { spaceBetween: 8, thumbs: { swiper: thumbs } };
+    if (loop) mainOpt.loop = true;
     if (fade) {
       mainOpt.effect = "fade";
       mainOpt.fadeEffect = { crossFade: true };
@@ -201,7 +203,9 @@ function renderGallery(name, state, host) {
     const main = new window.Swiper(host.querySelector(".main-slider"), mainOpt);
     current = { name, instances: [main, thumbs], host };
   } else if (name === "splide") {
-    const mainOpt = { type: fade ? "fade" : "slide", rewind: true, pagination: false, arrows: state.arrows };
+    // fadeはloop type不可なのでrewindで巡回。それ以外はtype:'loop'で連続
+    const mainOpt = { type: fade ? "fade" : loop ? "loop" : "slide", pagination: false, arrows: state.arrows };
+    if (fade && loop) mainOpt.rewind = true;
     if (state.autoplay) {
       mainOpt.autoplay = true;
       mainOpt.interval = state.autoplayDelay;
@@ -226,6 +230,7 @@ function renderGallery(name, state, host) {
     const mainOpt = {
       slidesToShow: 1,
       slidesToScroll: 1,
+      infinite: loop,
       arrows: state.arrows,
       asNavFor: host.querySelector(".thumb-slider"),
     };
@@ -238,6 +243,7 @@ function renderGallery(name, state, host) {
     $(host.querySelector(".thumb-slider")).slick({
       slidesToShow: per,
       slidesToScroll: 1,
+      infinite: loop,
       asNavFor: host.querySelector(".main-slider"),
       focusOnSelect: true,
       arrows: false,

@@ -2,7 +2,7 @@
 // オプションオブジェクト・マークアップ・コピペ用コード文字列を生成する純粋関数群。
 // プレビューはオプションオブジェクトを直接使い、出力欄は文字列化したコードを使う。
 
-import { LANG } from "./i18n.js?v=20260623f";
+import { LANG } from "./i18n.js?v=20260623i";
 
 // プレビュー・出力で使うサンプル画像（Unsplash・安定した固定ID）
 export const IMAGES = [
@@ -90,7 +90,7 @@ export function swiperOptions(state) {
     opt.centeredSlides = true;
     opt.coverflowEffect = { rotate: 30, stretch: 0, depth: 120, modifier: 1, slideShadows: true };
   }
-  if (state.centered) opt.centeredSlides = true;
+  if (state.centered && perViewOf(state) > 1) opt.centeredSlides = true;
   // Swiper固有オプション
   if (state.grabCursor && state.effect !== "coverflow") opt.grabCursor = true;
   if (state.mousewheel) opt.mousewheel = true;
@@ -190,7 +190,7 @@ export function slickOptions(state) {
     opt.vertical = true;
     opt.verticalSwiping = true;
   }
-  if (state.centered) {
+  if (state.centered && perViewOf(state) > 1) {
     opt.centerMode = true;
     opt.centerPadding = `${state.centerPadding}px`;
   }
@@ -288,6 +288,10 @@ export function thumbCode(name, state) {
   const per = thumbVisible(state);
   const fade = state.effect === "fade";
   const auto = state.autoplay;
+  const loop = state.loop; // ループON=最後のスライド後も一定方向に連続。OFF=端で停止
+  // Splide: 通常はtype:'loop'で連続。fadeはloop type不可なのでrewindで巡回させる
+  const splideType = fade ? "fade" : loop ? "loop" : "slide";
+  const splideRewind = fade && loop;
 
   if (name === "swiper") {
     return `${CMT.head}
@@ -323,7 +327,7 @@ ${CMT.init}
     watchSlidesProgress: true,
   });
   const main = new Swiper('.main-slider', {
-    spaceBetween: 8,${fade ? "\n    effect: 'fade',\n    fadeEffect: { crossFade: true }," : ""}${auto ? `\n    autoplay: { delay: ${state.autoplayDelay} },` : ""}
+    spaceBetween: 8,${loop ? "\n    loop: true," : ""}${fade ? "\n    effect: 'fade',\n    fadeEffect: { crossFade: true }," : ""}${auto ? `\n    autoplay: { delay: ${state.autoplayDelay} },` : ""}
     navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
     thumbs: { swiper: thumbs },
   });
@@ -360,8 +364,7 @@ ${CMT.init}
 <script src="${CDN.splide.js}"></script>
 <script>
   const main = new Splide('.main-slider', {
-    type: '${fade ? "fade" : "slide"}',
-    rewind: true,
+    type: '${splideType}',${splideRewind ? "\n    rewind: true," : ""}
     pagination: false,
     arrows: ${state.arrows},${auto ? `\n    autoplay: true,\n    interval: ${state.autoplayDelay},` : ""}
   });
@@ -406,12 +409,14 @@ ${CMT.initJq}
   $('.main-slider').slick({
     slidesToShow: 1,
     slidesToScroll: 1,
+    infinite: ${loop},
     arrows: ${state.arrows},${fade ? "\n    fade: true," : ""}${auto ? `\n    autoplay: true,\n    autoplaySpeed: ${state.autoplayDelay},` : ""}
     asNavFor: '.thumb-slider',
   });
   $('.thumb-slider').slick({
     slidesToShow: ${per},
     slidesToScroll: 1,
+    infinite: ${loop},
     asNavFor: '.main-slider',
     focusOnSelect: true,
     arrows: false,
