@@ -12,7 +12,7 @@ import {
   thumbsPerView,
   marqueeDuration,
   marqueeSplideSpeed,
-} from "./generators.js?v=20260623j";
+} from "./generators.js?v=20260623k";
 
 const loaded = new Map();
 
@@ -129,22 +129,26 @@ export async function renderPreview(name, state, host) {
 // 無限スクロール（連続・マーキー）のライブプレビュー
 function renderMarquee(name, state, host) {
   const plain = { ...state, arrows: false, pagination: false };
+  const vertical = state.direction === "vertical"; // 縦はSwiper/Splideのみ対応（Slickは横で表示）
   if (name === "swiper") {
     host.innerHTML = swiperPreviewMarkup(state.slideCount, plain);
-    const sw = new window.Swiper(host.querySelector(".my-slider"), {
+    const opt = {
       slidesPerView: state.perView,
       spaceBetween: state.gap,
       loop: true,
       speed: marqueeDuration(state),
       allowTouchMove: false,
       autoplay: { delay: 0, disableOnInteraction: false },
-    });
+    };
+    if (vertical) opt.direction = "vertical";
+    if (state.pauseOnHover) opt.autoplay.pauseOnMouseEnter = true;
+    const sw = new window.Swiper(host.querySelector(".my-slider"), opt);
     const wrap = host.querySelector(".swiper-wrapper");
     if (wrap) wrap.style.transitionTimingFunction = "linear";
     current = { name, instances: [sw], host };
   } else if (name === "splide") {
     host.innerHTML = splidePreviewMarkup(state.slideCount);
-    const sp = new window.Splide(host.querySelector(".my-slider"), {
+    const opt = {
       type: "loop",
       perPage: state.perView,
       gap: `${state.gap}px`,
@@ -152,7 +156,12 @@ function renderMarquee(name, state, host) {
       arrows: false,
       pagination: false,
       autoScroll: { speed: marqueeSplideSpeed(state), pauseOnHover: state.pauseOnHover },
-    });
+    };
+    if (vertical) {
+      opt.direction = "ttb";
+      opt.height = "16rem";
+    }
+    const sp = new window.Splide(host.querySelector(".my-slider"), opt);
     sp.mount({ AutoScroll: window.splide.Extensions.AutoScroll });
     current = { name, instances: [sp], host };
   } else if (name === "slick") {

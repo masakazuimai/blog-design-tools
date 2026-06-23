@@ -1,8 +1,8 @@
 // パターン別ページ用。ページが定義した window.PRESET_STATE を使い、
 // 本体と同じエンジンで3ライブラリのコードを出力し、ライブプレビューを描画する。
-import { defaultState } from "./config.js?v=20260623j";
-import { fullCode } from "./generators.js?v=20260623j";
-import { renderPreview } from "./preview.js?v=20260623j";
+import { defaultState } from "./config.js?v=20260623k";
+import { fullCode } from "./generators.js?v=20260623k";
+import { renderPreview } from "./preview.js?v=20260623k";
 
 const state = { ...defaultState, ...(window.PRESET_STATE || {}) };
 

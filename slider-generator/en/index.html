@@ -38,7 +38,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/style.css?v=20260623j" />
+    <link rel="stylesheet" href="../css/style.css?v=20260623k" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -187,7 +187,9 @@
                 <button type="button" class="type-btn" data-value="cards" data-libs="swiper">Cards</button>
               </div>
               <p class="hint-text" data-libs="swiper">Coverflow, Cube, Flip and Cards are Swiper-only.</p>
-              <p class="hint-text hidden" id="marquee-hint">Marquee scrolls continuously at a constant speed (great for logo strips). Arrows, dots and autoplay are disabled.</p>
+              <p class="hint-text hidden" id="marquee-hint">Infinite scroll (marquee) runs continuously at a constant speed (great for logo strips). Arrows, dots and autoplay are disabled. Vertical direction is supported.</p>
+              <p class="hint-text hidden" id="marquee-hover-note">"Pause on hover": Splide stops anywhere instantly, while Swiper and Slick coast to the next slide before stopping. For a mid-slide stop, use Splide.</p>
+              <p class="hint-text hidden" id="marquee-vertical-note">Slick's marquee is horizontal only (vertical falls back to horizontal). For vertical marquee, use Swiper or Splide.</p>
             </div>
             <div class="slider-row">
               <span class="slider-label">Direction</span>
@@ -397,6 +399,6 @@
       </div>
     </footer>
 
-    <script type="module" src="../js/main.js?v=20260623j"></script>
+    <script type="module" src="../js/main.js?v=20260623k"></script>
   </body>
 </html>

@@ -39,7 +39,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と main.js の両方で日付を上げる -->
-    <link rel="stylesheet" href="css/style.css?v=20260623j" />
+    <link rel="stylesheet" href="css/style.css?v=20260623k" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -196,7 +196,9 @@
                 <button type="button" class="type-btn" data-value="cards" data-libs="swiper">カード</button>
               </div>
               <p class="hint-text" data-libs="swiper">カバーフロー・キューブ・フリップ・カードはSwiper専用です。</p>
-              <p class="hint-text hidden" id="marquee-hint">無限スクロールは止まらず等速で流し続けます（ロゴ帯・お知らせ向き）。矢印・ドット・自動再生は無効です。</p>
+              <p class="hint-text hidden" id="marquee-hint">無限スクロール（マーキー）は等速で流し続けます（ロゴ帯・お知らせ向き）。矢印・ドット・自動再生は無効です。縦方向にも対応します。</p>
+              <p class="hint-text hidden" id="marquee-hover-note">「ホバーで一時停止」はSplideなら途中でも即停止、Swiper／Slickは次の画像まで進んでから停止します。途中で止めたいときはSplideがおすすめです。</p>
+              <p class="hint-text hidden" id="marquee-vertical-note">Slickの無限スクロール（マーキー）は横方向のみ対応です（縦を選んでも横で出力されます）。縦の無限スクロールはSwiper／Splideをご利用ください。</p>
             </div>
             <div class="slider-row">
               <span class="slider-label">方向</span>
@@ -430,6 +432,6 @@
       </div>
     </footer>
 
-    <script type="module" src="js/main.js?v=20260623j"></script>
+    <script type="module" src="js/main.js?v=20260623k"></script>
   </body>
 </html>

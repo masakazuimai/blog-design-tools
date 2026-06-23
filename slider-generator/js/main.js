@@ -1,8 +1,8 @@
 // コントロール配線・タブ切替・コード出力・ライブプレビューの統合。
-import { defaultState } from "./config.js?v=20260623j";
-import { fullCode } from "./generators.js?v=20260623j";
-import { renderPreview } from "./preview.js?v=20260623j";
-import { t } from "./i18n.js?v=20260623j";
+import { defaultState } from "./config.js?v=20260623k";
+import { fullCode } from "./generators.js?v=20260623k";
+import { renderPreview } from "./preview.js?v=20260623k";
+import { t } from "./i18n.js?v=20260623k";
 
 const state = { ...defaultState };
 let activeLib = "swiper";
@@ -175,6 +175,11 @@ function refresh() {
   output.value = fullCode(activeLib, state);
   slickWarn.classList.toggle("hidden", activeLib !== "slick");
   document.getElementById("marquee-hint")?.classList.toggle("hidden", state.effect !== "marquee");
+  // ホバー停止の効き方がライブラリで異なる旨を案内（マーキー時のみ）
+  document.getElementById("marquee-hover-note")?.classList.toggle("hidden", state.effect !== "marquee");
+  // Slickは縦の無限スクロール非対応（横で出力される）旨を案内
+  const slickVerticalMarquee = activeLib === "slick" && state.effect === "marquee" && state.direction === "vertical";
+  document.getElementById("marquee-vertical-note")?.classList.toggle("hidden", !slickVerticalMarquee);
   renderPreview(activeLib, state, host);
 }
 

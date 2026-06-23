@@ -2,7 +2,7 @@
 // オプションオブジェクト・マークアップ・コピペ用コード文字列を生成する純粋関数群。
 // プレビューはオプションオブジェクトを直接使い、出力欄は文字列化したコードを使う。
 
-import { LANG } from "./i18n.js?v=20260623j";
+import { LANG } from "./i18n.js?v=20260623k";
 
 // プレビュー・出力で使うサンプル画像（Unsplash・安定した固定ID）
 export const IMAGES = [
@@ -440,13 +440,21 @@ export function marqueeCode(name, state) {
   const per = state.perView;
   const gap = state.gap;
   const ms = marqueeDuration(state);
+  // 縦の無限スクロールはSwiper/Splideのみ対応（Slickは縦等速の品質が悪いため横で出力）
+  const vertical = state.direction === "vertical";
 
   if (name === "swiper") {
+    // 縦はコンテナに高さが必要。画像は枠に合わせて切り抜く
+    const verticalCss = vertical
+      ? `\n  .my-slider { height: 16rem; }\n  .my-slider .swiper-slide img { display: block; width: 100%; height: 100%; object-fit: cover; }`
+      : "";
+    const directionOpt = vertical ? `\n    direction: 'vertical',` : "";
+    const hoverOpt = state.pauseOnHover ? ", pauseOnMouseEnter: true" : "";
     return `${CMT.head}
 <link rel="stylesheet" href="${CDN.swiper.css}" />
 <style>
   ${CMT.marqueeCss}
-  .my-slider .swiper-wrapper { transition-timing-function: linear !important; }
+  .my-slider .swiper-wrapper { transition-timing-function: linear !important; }${verticalCss}
 </style>
 
 ${CMT.html}
@@ -456,17 +464,19 @@ ${CMT.init}
 <script src="${CDN.swiper.js}"></script>
 <script>
   new Swiper('.my-slider', {
-    slidesPerView: ${per},${gap > 0 ? `\n    spaceBetween: ${gap},` : ""}
+    slidesPerView: ${per},${gap > 0 ? `\n    spaceBetween: ${gap},` : ""}${directionOpt}
     loop: true,
     speed: ${ms},
     allowTouchMove: false,
-    autoplay: { delay: 0, disableOnInteraction: false },
+    autoplay: { delay: 0, disableOnInteraction: false${hoverOpt} },
   });
 </script>`;
   }
 
   if (name === "splide") {
     const sp = marqueeSplideSpeed(state);
+    // 縦はトラックに高さを与える（AutoScrollは縦方向にも対応）
+    const directionOpt = vertical ? `\n    direction: 'ttb',\n    height: '16rem',` : "";
     return `${CMT.head}
 <link rel="stylesheet" href="${CDN.splide.css}" />
 
@@ -479,7 +489,7 @@ ${CMT.initAutoScroll}
 <script>
   new Splide('.my-slider', {
     type: 'loop',
-    perPage: ${per},${gap > 0 ? `\n    gap: '${gap}px',` : ""}
+    perPage: ${per},${gap > 0 ? `\n    gap: '${gap}px',` : ""}${directionOpt}
     drag: 'free',
     arrows: false,
     pagination: false,
