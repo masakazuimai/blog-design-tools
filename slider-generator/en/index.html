@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slider / Carousel Generator | Swiper, Splide &amp; Slick (Free)</title>
+    <meta name="description" content="Generate image slider (carousel) code for Swiper, Splide and Slick at once. Set slides per view, autoplay, fade, arrows and more, then copy ready-to-paste HTML/JS with a live preview. Free, no signup." />
+    <link rel="canonical" href="https://codequest.work/generator/slider-generator/en/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/slider-generator/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/slider-generator/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/slider-generator/" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codequest.work/generator/slider-generator/en/" />
+    <meta property="og:title" content="Slider / Carousel Generator | Swiper, Splide &amp; Slick (Free)" />
+    <meta property="og:description" content="Generate image slider code for Swiper, Splide and Slick at once. Copy ready-to-paste HTML/JS with a live preview. Free, no signup." />
+    <meta property="og:image" content="https://codequest.work/generator/slider-generator/assets/og-en.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Slider Generator" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Slider / Carousel Generator | Swiper, Splide &amp; Slick (Free)" />
+    <meta name="twitter:description" content="Generate image slider code for Swiper, Splide and Slick at once. Copy ready-to-paste HTML/JS with a live preview." />
+    <meta name="twitter:image" content="https://codequest.work/generator/slider-generator/assets/og-en.jpg" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css?v=20260623e" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Slider Generator",
+        "url": "https://codequest.work/generator/slider-generator/en/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web browser",
+        "inLanguage": "en",
+        "description": "Generate image slider (carousel) code for Swiper, Splide and Slick at once, with a live preview. Free, no signup.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": ["Supports Swiper, Splide and Slick", "Generates code for all three from one config", "Live preview", "Fade, coverflow and 3D effects (Swiper)", "Infinite scroll (marquee)", "Thumbnail-synced gallery", "Library-specific options", "Responsive (mobile slides per view)"],
+        "publisher": {
+          "@type": "Organization",
+          "name": "CodeQuest.work",
+          "url": "https://codequest.work/"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "Slider / Carousel Generator", "item": "https://codequest.work/generator/slider-generator/en/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is the Slider Generator free?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. It is completely free with no signup and no watermark. The generated HTML/JS can be used commercially." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I choose Swiper, Splide or Slick?",
+            "acceptedAnswer": { "@type": "Answer", "text": "For new projects choose Swiper (no jQuery, actively developed) or Splide (lightweight, accessible). Slick requires jQuery and is no longer maintained, so it is not recommended for new work; the code is provided mainly for maintaining existing Slick sliders." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use my own images?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Replace the sample image (Unsplash) URLs in the generated code with your own image paths." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does it support fade (cross-fade)?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Select the Fade effect and the generator outputs the fade configuration for each library. Slides per view is automatically locked to 1 for fade." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between a carousel and a slider?",
+            "acceptedAnswer": { "@type": "Answer", "text": "They mean essentially the same thing. A UI that shows multiple images or items side by side and lets you cycle through them is called a carousel or a slider. This tool generates the same code either way." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I build a slider with thumbnails?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Turn on Thumbnail gallery to generate a main slider synced with a thumbnail strip (Swiper thumbs, Splide sync, Slick asNavFor)." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does it support coverflow or infinite scroll?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. With Swiper you can use coverflow, cube, flip and cards 3D effects, and all three libraries support an infinite scroll (marquee) effect." }
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "Generate slider code with the Slider Generator",
+        "description": "Pick a library, set the motion and layout, then copy ready-to-paste code in three steps.",
+        "step": [
+          { "@type": "HowToStep", "name": "Pick a library", "text": "Choose Swiper, Splide or Slick from the tabs." },
+          { "@type": "HowToStep", "name": "Configure motion and layout", "text": "Set slides per view, autoplay, fade, infinite scroll, arrows and more. The preview updates instantly." },
+          { "@type": "HowToStep", "name": "Copy and paste the code", "text": "Click Copy code to get the CDN includes, HTML and init JS, swap the sample images and paste." }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <a class="lang-switch" href="../" hreflang="ja">日本語</a>
+        <h1>Slider / Carousel <span class="accent">Generator</span></h1>
+        <p>Generate image slider (carousel) code for <strong>Swiper, Splide and Slick</strong> at once. Configure once and copy ready-to-paste HTML/JS with a live preview.</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="lib-tabs" role="tablist">
+        <button type="button" class="lib-tab active" data-lib="swiper" role="tab">Swiper<small>Popular, no jQuery</small></button>
+        <button type="button" class="lib-tab" data-lib="splide" role="tab">Splide<small>Lightweight</small></button>
+        <button type="button" class="lib-tab" data-lib="slick" role="tab">Slick<small>jQuery, legacy</small></button>
+      </div>
+
+      <div class="layout">
+        <section class="stage">
+          <div id="preview-host"></div>
+          <p class="drag-hint">Live preview of the selected library. Images are samples (Unsplash).</p>
+        </section>
+
+        <aside class="panel">
+          <div class="card">
+            <div class="card-title">Basics</div>
+            <label class="slider-row">
+              <span class="slider-label">Number of slides <em data-val="slideCount"></em></span>
+              <input type="range" id="slideCount" min="2" max="12" step="1" value="6" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Slides per view (PC) <em data-val="perView"></em></span>
+              <input type="range" id="perView" min="1" max="10" step="1" value="1" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Slides per view (mobile ≤768px) <em data-val="perViewMobile"></em></span>
+              <input type="range" id="perViewMobile" min="1" max="4" step="1" value="1" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Gap between slides <em data-val="gap"></em></span>
+              <input type="range" id="gap" min="0" max="60" step="2" value="0" />
+            </label>
+            <label class="slider-row">
+              <span class="slider-label">Transition speed <em data-val="speed"></em></span>
+              <input type="range" id="speed" min="100" max="1500" step="50" value="500" />
+            </label>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Motion</div>
+            <div class="slider-row">
+              <span class="slider-label">Effect</span>
+              <div class="type-row effect-row" data-group="effect">
+                <button type="button" class="type-btn active" data-value="slide">Slide</button>
+                <button type="button" class="type-btn" data-value="fade">Fade</button>
+                <button type="button" class="type-btn" data-value="marquee">Marquee</button>
+                <button type="button" class="type-btn" data-value="coverflow" data-libs="swiper">Coverflow</button>
+                <button type="button" class="type-btn" data-value="cube" data-libs="swiper">Cube</button>
+                <button type="button" class="type-btn" data-value="flip" data-libs="swiper">Flip</button>
+                <button type="button" class="type-btn" data-value="cards" data-libs="swiper">Cards</button>
+              </div>
+              <p class="hint-text" data-libs="swiper">Coverflow, Cube, Flip and Cards are Swiper-only.</p>
+              <p class="hint-text hidden" id="marquee-hint">Marquee scrolls continuously at a constant speed (great for logo strips). Arrows, dots and autoplay are disabled.</p>
+            </div>
+            <div class="slider-row">
+              <span class="slider-label">Direction</span>
+              <div class="type-row" data-group="direction">
+                <button type="button" class="type-btn active" data-value="horizontal">Horizontal</button>
+                <button type="button" class="type-btn" data-value="vertical">Vertical</button>
+              </div>
+            </div>
+            <label class="check-row">
+              <input type="checkbox" id="loop" checked />
+              <span>Loop (infinite)</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" id="centered" />
+              <span>Centered slides</span>
+            </label>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Autoplay</div>
+            <label class="check-row">
+              <input type="checkbox" id="autoplay" />
+              <span>Enable autoplay</span>
+            </label>
+            <label class="slider-row hidden" id="autoplayDelay-row" style="margin-top: 14px">
+              <span class="slider-label">Interval <em data-val="autoplayDelay"></em></span>
+              <input type="range" id="autoplayDelay" min="1000" max="6000" step="500" value="3000" />
+            </label>
+            <label class="check-row">
+              <input type="checkbox" id="pauseOnHover" checked />
+              <span>Pause on hover</span>
+            </label>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Navigation</div>
+            <label class="check-row">
+              <input type="checkbox" id="arrows" checked />
+              <span>Show prev/next arrows</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" id="pagination" checked />
+              <span>Show pagination dots</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" id="thumbnail" />
+              <span>Thumbnail gallery</span>
+            </label>
+            <p class="hint-text">In thumbnail mode the main slider shows one slide and the thumbnails below navigate it (slides per view, loop, etc. are ignored).</p>
+          </div>
+
+          <!-- Swiper-only -->
+          <div class="card" data-libs="swiper">
+            <div class="card-title">Swiper options</div>
+            <label class="check-row">
+              <input type="checkbox" id="grabCursor" />
+              <span>Grab cursor</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" id="mousewheel" />
+              <span>Mousewheel control</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" id="keyboard" />
+              <span>Keyboard control</span>
+            </label>
+          </div>
+
+          <!-- Splide-only -->
+          <div class="card hidden" data-libs="splide">
+            <div class="card-title">Splide options</div>
+            <label class="check-row">
+              <input type="checkbox" id="rewind" />
+              <span>Rewind (back to first)</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" id="dragFree" />
+              <span>Free drag</span>
+            </label>
+          </div>
+
+          <!-- Slick-only -->
+          <div class="card hidden" data-libs="slick">
+            <div class="card-title">Slick options</div>
+            <label class="check-row">
+              <input type="checkbox" id="adaptiveHeight" />
+              <span>Adaptive height</span>
+            </label>
+            <label class="slider-row" style="margin-top: 14px">
+              <span class="slider-label">Center padding (center mode) <em data-val="centerPadding"></em></span>
+              <input type="range" id="centerPadding" min="0" max="120" step="10" value="60" />
+            </label>
+          </div>
+        </aside>
+      </div>
+
+      <section class="output-section">
+        <div class="output-head">
+          <h2>Generated code</h2>
+          <button type="button" class="copy-btn" id="copy-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+            <span>Copy code</span>
+          </button>
+        </div>
+        <div class="slick-warn hidden" id="slick-warn">
+          <span>⚠️</span>
+          <span><strong>Slick is not recommended for new projects.</strong> It requires jQuery and has not been updated since around 2017. For new work, prefer <strong>Swiper</strong> (no jQuery) or the lightweight <strong>Splide</strong>. Use this for maintaining or migrating existing Slick sliders.</span>
+        </div>
+        <textarea id="output" readonly spellcheck="false"></textarea>
+        <p class="output-note">Replace the sample image (Unsplash) <code>&lt;img src&gt;</code> with your own. CDN tags are included in the output.</p>
+      </section>
+
+      <section class="article">
+        <div class="answer-box">
+          <p>The <strong>Slider Generator</strong> creates image slider (carousel) code for <strong>Swiper, Splide and Slick</strong> from a single configuration, with a live preview. Free, no signup, no watermark — the generated code can be used commercially.</p>
+        </div>
+
+        <h2>Choosing a slider / carousel library</h2>
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Library</th>
+              <th>jQuery</th>
+              <th>Size</th>
+              <th>Maintenance</th>
+              <th>Best for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Swiper</strong></td>
+              <td>No</td>
+              <td>~140KB</td>
+              <td>Actively developed</td>
+              <td>Feature-rich default. 3D, thumbnails and more</td>
+            </tr>
+            <tr>
+              <td><strong>Splide</strong></td>
+              <td>No</td>
+              <td>~29KB (lightest)</td>
+              <td>Maintained</td>
+              <td>Lightest, accessibility-first</td>
+            </tr>
+            <tr>
+              <td><strong>Slick</strong></td>
+              <td>Required</td>
+              <td>~42KB + jQuery</td>
+              <td>Unmaintained (legacy)</td>
+              <td>Maintaining existing sites; migrate to Swiper/Splide</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>How to use (3 steps)</h2>
+        <ol>
+          <li>Pick a library from the <strong>Swiper / Splide / Slick</strong> tabs.</li>
+          <li>Set slides per view, autoplay, fade, arrows and more — the preview updates instantly.</li>
+          <li>Click “Copy code”, swap the sample images for your own, and paste.</li>
+        </ol>
+
+        <h2>FAQ</h2>
+        <div class="faq">
+          <div class="faq-item">
+            <h3>Is the Slider Generator free?</h3>
+            <p>Yes. It is completely free with no signup and no watermark. The generated code can be used commercially.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Should I choose Swiper, Splide or Slick?</h3>
+            <p>For new projects choose <strong>Swiper</strong> or <strong>Splide</strong>. Slick requires jQuery and is no longer maintained, so it is not recommended for new work.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Can I use my own images?</h3>
+            <p>Yes. Replace the sample image (Unsplash) URLs in the generated code with your own image paths.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Does it support fade (cross-fade)?</h3>
+            <p>Yes. Select the Fade effect and the generator outputs the fade configuration for each library. Slides per view is locked to 1 for fade.</p>
+          </div>
+          <div class="faq-item">
+            <h3>What is the difference between a carousel and a slider?</h3>
+            <p>They mean essentially the same thing. A UI that shows multiple images or items side by side and lets you cycle through them is called a <strong>carousel</strong> or a <strong>slider</strong>. This tool generates the same code either way.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Can I build a slider with thumbnails?</h3>
+            <p>Yes. Turn on “Thumbnail gallery” to generate a main slider synced with a thumbnail strip (Swiper <code>thumbs</code>, Splide <code>sync</code>, Slick <code>asNavFor</code>).</p>
+          </div>
+          <div class="faq-item">
+            <h3>Does it support coverflow or infinite scroll?</h3>
+            <p>Yes. With Swiper you can use coverflow, cube, flip and cards 3D effects, and all three libraries support an infinite scroll (marquee) effect.</p>
+          </div>
+        </div>
+
+        <h2>Related tools</h2>
+        <div class="related">
+          <a href="https://codequest.work/generator/clip-path/en/"><strong>clip-path Generator →</strong><span>Create CSS clip shapes</span></a>
+          <a href="https://codequest.work/generator/animation-gallery/en/"><strong>CSS Animations →</strong><span>100 copy-paste animations</span></a>
+          <a href="https://codequest.work/generator/image-compressor/en/"><strong>Image Compressor →</strong><span>Optimize slider images</span></a>
+        </div>
+      </section>
+    </div>
+
+    <div style="max-width: 728px; margin: 32px auto; text-align: center; min-height: 90px">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- slider-generator-en -->
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 Slider Generator | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+
+    <script type="module" src="../js/main.js?v=20260623e"></script>
+  </body>
+</html>

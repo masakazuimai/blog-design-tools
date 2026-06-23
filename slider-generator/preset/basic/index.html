@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>基本のスライダー｜Swiper・Splide・Slickのコード</title>
+    <meta name="description" content="1枚ずつ・矢印＋ドット付きの最もシンプルな画像スライダー（カルーセル）のコードを、Swiper・Splide・Slickの3ライブラリで掲載。コピペで使えます。" />
+    <link rel="canonical" href="https://codequest.work/generator/slider-generator/preset/basic/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/slider-generator/preset/basic/" />
+    <meta property="og:title" content="基本のスライダー｜Swiper・Splide・Slickのコード" />
+    <meta property="og:description" content="1枚ずつ・矢印＋ドット付きの最もシンプルな画像スライダー（カルーセル）のコードを、Swiper・Splide・Slickの3ライブラリで掲載。コピペで使えます。" />
+    <meta property="og:image" content="https://codequest.work/generator/slider-generator/assets/og.jpg" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/style.css?v=20260623e" />
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "ホーム",
+      "item": "https://codequest.work/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "ツール",
+      "item": "https://codequest.work/category/generator/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "スライダー ジェネレーター",
+      "item": "https://codequest.work/generator/slider-generator/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "基本のスライダー",
+      "item": "https://codequest.work/generator/slider-generator/preset/basic/"
+    }
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "基本のスライダーは Swiper・Splide・Slick の3ライブラリに対応していますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "はい。基本のスライダーのコードを Swiper・Splide・Slick の3つで掲載しています。コピーしてそのまま使えます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "このコードは無料で使えますか？商用利用できますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "はい。無料・登録不要で、掲載しているコードはそのまま商用利用できます。"
+      }
+    }
+  ]
+}
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <h1>基本のスライダー<span class="accent"> のコード</span></h1>
+        <p>1枚ずつ切り替わる、矢印とページネーション（ドット）付きの最も基本的なスライダーです。まず迷ったらこの形から始めるのがおすすめです。</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <section class="preset-demo">
+        <div id="preview-host"></div>
+        <p class="drag-hint">Swiperでの動作プレビューです。画像はサンプル（Unsplash）です。微調整は <a href="../../">ジェネレーター本体</a> でどうぞ。</p>
+      </section>
+
+      <section class="output-section">
+        <h2 style="margin: 0 0 4px; font-size: 1.15rem">コピペ用コード（3ライブラリ）</h2>
+        <p class="output-note" style="margin: 0 0 8px">サンプル画像（Unsplash）の <code>&lt;img src&gt;</code> をご自身の画像に置き換えてください。</p>
+        <div class="code-head">
+          <h3>Swiper</h3>
+          <button type="button" class="copy-btn small" data-copy="code-swiper"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="code-swiper"></pre>
+        <div class="code-head">
+          <h3>Splide</h3>
+          <button type="button" class="copy-btn small" data-copy="code-splide"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="code-splide"></pre>
+        <div class="code-head">
+          <h3>Slick（jQuery・非推奨）</h3>
+          <button type="button" class="copy-btn small" data-copy="code-slick"><span>コピー</span></button>
+        </div>
+        <pre class="code-block" id="code-slick"></pre>
+        <div class="slick-warn" style="margin-top: 16px">
+          <span>⚠️</span>
+          <span><strong>SlickはjQuery必須で更新が停止しています。</strong>新規実装ではSwiper/Splideをおすすめします。</span>
+        </div>
+      </section>
+
+      <section class="article">
+        <h2>よくある質問</h2>
+        <div class="faq">
+          <div class="faq-item">
+            <h3>基本のスライダーは Swiper・Splide・Slick の3ライブラリに対応していますか？</h3>
+            <p>はい。基本のスライダーのコードを Swiper・Splide・Slick の3つで掲載しています。コピーしてそのまま使えます。</p>
+          </div>
+          <div class="faq-item">
+            <h3>このコードは無料で使えますか？商用利用できますか？</h3>
+            <p>はい。無料・登録不要で、掲載しているコードはそのまま商用利用できます。</p>
+          </div>
+        </div>
+
+        <h2>関連パターン・ツール</h2>
+        <div class="related">
+          <a href="../fade/"><strong>フェード切替スライダー →</strong><span>画像をふんわり重ねて切り替えるフェー…</span></a>
+          <a href="../multiple/"><strong>複数枚表示スライダー →</strong><span>PCで3枚並べて表示し、スマホでは1…</span></a>
+          <a href="../autoplay/"><strong>自動再生スライダー →</strong><span>一定間隔で自動的に送られる自動再生ス…</span></a>
+          <a href="../../"><strong>スライダー ジェネレーター →</strong><span>設定して3種のコードを生成</span></a>
+        </div>
+      </section>
+    </div>
+
+    <div style="max-width: 728px; margin: 32px auto; text-align: center; min-height: 90px">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- slider-generator-preset -->
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 スライダー ジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <script>
+      window.PRESET_STATE = {"perView":1,"loop":true,"arrows":true,"pagination":true};
+      window.PRESET_PREVIEW = "swiper";
+    </script>
+    <script type="module" src="../../js/preset.js?v=20260623e"></script>
+  </body>
+</html>
