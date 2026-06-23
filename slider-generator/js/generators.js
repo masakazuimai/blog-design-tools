@@ -2,7 +2,7 @@
 // オプションオブジェクト・マークアップ・コピペ用コード文字列を生成する純粋関数群。
 // プレビューはオプションオブジェクトを直接使い、出力欄は文字列化したコードを使う。
 
-import { LANG } from "./i18n.js?v=20260623e";
+import { LANG } from "./i18n.js?v=20260623f";
 
 // プレビュー・出力で使うサンプル画像（Unsplash・安定した固定ID）
 export const IMAGES = [
@@ -108,12 +108,17 @@ export function swiperOptions(state) {
   return opt;
 }
 
-export function swiperMarkup(count) {
+export function swiperMarkup(count, state = {}) {
   const slides = Array.from({ length: count }, (_, i) => `      <div class="swiper-slide">${img(i)}</div>`).join("\n");
+  // ドット/矢印はSwiperが「箱」の中に描画する。ONのときだけ要素を出力する（無ければプレビューと食い違う）
+  const pager = state.pagination ? `\n  <div class="swiper-pagination"></div>` : "";
+  const nav = state.arrows
+    ? `\n  <div class="swiper-button-prev"></div>\n  <div class="swiper-button-next"></div>`
+    : "";
   return `<div class="swiper my-slider">
   <div class="swiper-wrapper">
 ${slides}
-  </div>
+  </div>${pager}${nav}
 </div>`;
 }
 
@@ -515,7 +520,7 @@ export function fullCode(name, state) {
 <link rel="stylesheet" href="${CDN.swiper.css}" />
 
 ${CMT.html}
-${swiperMarkup(count)}
+${swiperMarkup(count, state)}
 
 ${CMT.init}
 <script src="${CDN.swiper.js}"></script>

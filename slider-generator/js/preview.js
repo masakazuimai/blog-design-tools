@@ -12,7 +12,7 @@ import {
   thumbsPerView,
   marqueeDuration,
   marqueeSplideSpeed,
-} from "./generators.js?v=20260623e";
+} from "./generators.js?v=20260623f";
 
 const loaded = new Map();
 

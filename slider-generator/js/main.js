@@ -1,8 +1,8 @@
 // コントロール配線・タブ切替・コード出力・ライブプレビューの統合。
-import { defaultState } from "./config.js?v=20260623e";
-import { fullCode } from "./generators.js?v=20260623e";
-import { renderPreview } from "./preview.js?v=20260623e";
-import { t } from "./i18n.js?v=20260623e";
+import { defaultState } from "./config.js?v=20260623f";
+import { fullCode } from "./generators.js?v=20260623f";
+import { renderPreview } from "./preview.js?v=20260623f";
+import { t } from "./i18n.js?v=20260623f";
 
 const state = { ...defaultState };
 let activeLib = "swiper";
