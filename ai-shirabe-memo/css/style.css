@@ -386,9 +386,28 @@ body {
   line-height: 1.5;
   color: var(--muted);
 }
-.menu-hint a {
+/* Puter公式サイト・GitHubへのリンク。下線だけでなくチップ（枠線＋↗）で「押せる」と分かるように */
+.puter-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.puter-links a {
+  font-size: 16px;
   color: var(--ink);
-  text-decoration: underline;
+  text-decoration: none;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  border-radius: 8px;
+  padding: 4px 10px;
+}
+.puter-links a::after {
+  content: " ↗";
+}
+.puter-links a:hover {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.5);
 }
 
 .field {
