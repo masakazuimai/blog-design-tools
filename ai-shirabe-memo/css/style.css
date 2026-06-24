@@ -1130,24 +1130,6 @@ footer a:hover {
     display: none;
   }
 }
-/* スマホ：フッターをホワイトボードの下へ（ボードは縮めず全画面・下スクロールで広告に到達） */
-@media (max-width: 768px) {
-  html,
-  body {
-    height: auto;
-  }
-  body {
-    overflow-x: hidden;
-    overflow-y: visible;
-  }
-  .toolbar {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .board {
-    flex: none;
-    height: calc(100vh - var(--bar-h));
-    height: calc(100svh - var(--bar-h));
-  }
-}
+/* スマホはページスクロールさせない（body overflow:hidden のまま）。
+   フッターは最下部に固定・ボードは内部スクロール。
+   → 入力欄フォーカスでキーボードが出てもページが動かず、フッターがせり上がらない */

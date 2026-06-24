@@ -1,10 +1,10 @@
 // アプリ本体。状態（付箋配列・設定・APIキー）を保持し、ボード操作と会話を配線する。
 // 付箋は会話スレッド（messages配列）を持ち、送信のたびに履歴ごとAIへ渡す。
 
-import { PROVIDERS, NOTE_COLORS, NOTE_DEFAULTS, DEFAULT_SETTINGS, STORAGE_KEYS } from "./config.js?v=20260624v"
-import { loadJson, saveJson } from "./storage.js?v=20260624v"
-import { callAI } from "./ai.js?v=20260624v"
-import { processAttachment } from "./image.js?v=20260624v"
+import { PROVIDERS, NOTE_COLORS, NOTE_DEFAULTS, DEFAULT_SETTINGS, STORAGE_KEYS } from "./config.js?v=20260624w"
+import { loadJson, saveJson } from "./storage.js?v=20260624w"
+import { callAI } from "./ai.js?v=20260624w"
+import { processAttachment } from "./image.js?v=20260624w"
 import {
   createNoteElement,
   renderThread,
@@ -17,7 +17,7 @@ import {
   flashSaved,
   filesFromDataTransfer,
   colorValue,
-} from "./notes.js?v=20260624v"
+} from "./notes.js?v=20260624w"
 
 // --- 状態（更新は常に新しい配列/オブジェクトを作る） ---
 let notes = (loadJson(STORAGE_KEYS.board, []) || []).map(migrateNote)
