@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7Z6M3CJEV3');
+  </script>
+  <title>使い方・よくある質問｜AIでちょっと調べながらメモ</title>
+  <meta name="description" content="「AIでちょっと調べながらメモ」の使い方とよくある質問。付箋でのAIチャット、メモへの切替、AIプロバイダ（Puter／Gemini／Groq／Claude）の選び方、データの保存（localStorage）について解説します。" />
+  <link rel="canonical" href="https://codequest.work/generator/ai-shirabe-memo/guide/" />
+  <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/ai-shirabe-memo/guide/" />
+  <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/ai-shirabe-memo/guide/" />
+  <!-- OGP -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://codequest.work/generator/ai-shirabe-memo/guide/" />
+  <meta property="og:title" content="使い方・よくある質問｜AIでちょっと調べながらメモ" />
+  <meta property="og:description" content="付箋でのAIチャット、メモへの切替、AIプロバイダの選び方、データの保存について。「AIでちょっと調べながらメモ」の使い方とFAQ。" />
+  <meta property="og:image" content="https://codequest.work/generator/ai-shirabe-memo/assets/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="CodeQuest.work" />
+  <meta property="og:locale" content="ja_JP" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="使い方・よくある質問｜AIでちょっと調べながらメモ" />
+  <meta name="twitter:description" content="付箋でのAIチャット、メモへの切替、AIプロバイダの選び方、データの保存について。使い方とFAQ。" />
+  <meta name="twitter:image" content="https://codequest.work/generator/ai-shirabe-memo/assets/og.jpg" />
+  <style>
+    :root {
+      --ink: #1f2430;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --accent: #4f46e5;
+      --bg: #f7f8fa;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+      font-size: 16px;
+      line-height: 1.85;
+      color: var(--ink);
+      background: var(--bg);
+    }
+    a { color: var(--accent); }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      height: 60px;
+      padding: 0 24px;
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .topbar__brand { display: flex; align-items: center; gap: 8px; font-weight: 700; letter-spacing: -0.01em; text-decoration: none; color: var(--ink); }
+    .topbar__logo { font-size: 20px; }
+    .topbar__back {
+      font-size: 16px;
+      text-decoration: none;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 7px 14px;
+      white-space: nowrap;
+    }
+    .topbar__back:hover { background: rgba(79, 70, 229, 0.06); }
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 40px 24px 64px;
+    }
+    h1 {
+      font-size: 30px;
+      line-height: 1.4;
+      letter-spacing: -0.02em;
+      margin: 0 0 12px;
+    }
+    h1 .accent { color: var(--accent); }
+    .lead { color: var(--muted); margin: 0 0 36px; }
+    h2 {
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      margin: 48px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--line);
+    }
+    h3 { font-size: 18px; margin: 28px 0 6px; }
+    p { margin: 8px 0 16px; }
+    ol.steps { margin: 0; padding: 0; list-style: none; counter-reset: step; }
+    ol.steps > li {
+      position: relative;
+      padding: 16px 16px 16px 56px;
+      margin-bottom: 12px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      counter-increment: step;
+    }
+    ol.steps > li::before {
+      content: counter(step);
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      border-radius: 50%;
+      font-size: 16px;
+    }
+    ol.steps b { display: block; margin-bottom: 2px; }
+    .note-box {
+      background: #fef9c3;
+      border: 1px solid #fde68a;
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin: 20px 0;
+    }
+    .note-box strong { display: block; margin-bottom: 4px; }
+    .faq dt {
+      font-weight: 700;
+      margin: 22px 0 6px;
+      padding-left: 26px;
+      position: relative;
+    }
+    .faq dt::before { content: "Q."; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+    .faq dd { margin: 0 0 8px; padding-left: 26px; position: relative; color: #374151; }
+    .faq dd::before { content: "A."; position: absolute; left: 0; color: var(--muted); font-weight: 700; }
+    .cta {
+      display: inline-block;
+      margin-top: 16px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 10px;
+    }
+    .cta:hover { background: #4338ca; }
+    footer {
+      border-top: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      text-align: center;
+      padding: 24px 16px;
+      font-size: 16px;
+    }
+    footer a { color: #1e293b; text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+    @media (max-width: 600px) {
+      h1 { font-size: 25px; }
+      .topbar { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="topbar__brand" href="../">
+      <span class="topbar__logo">🗒️</span>
+      <span>AIでちょっと調べながらメモ</span>
+    </a>
+    <a class="topbar__back" href="../">← ツールを開く</a>
+  </header>
+
+  <main>
+    <h1>使い方・<span class="accent">よくある質問</span></h1>
+    <p class="lead">「AIでちょっと調べながらメモ」は、ホワイトボードに付箋を貼る感覚で、AIに聞きながらメモを取れる無料アプリです。付箋ごとにAIチャットとふつうのメモを切り替えられ、内容はブラウザに自動保存されます。</p>
+
+    <h2>使い方</h2>
+    <ol class="steps">
+      <li><b>付箋を追加する</b>メニューの「＋ 付箋を追加」を押すか、ボードの空いているところを<strong>ダブルクリック</strong>します。</li>
+      <li><b>AIに聞く</b>付箋にメッセージを入力して「送信」。回答が表示され、続けて送信すれば会話をそのまま続けられます。</li>
+      <li><b>メモに切り替える</b>付箋上部の「AI / メモ」トグルで、AIを使わないふつうのメモ帳としても使えます（内容は両方とも保持されます）。</li>
+      <li><b>使うAIを選ぶ</b>右上のメニューでAIを選択します。<strong>Puter はキー不要</strong>ですぐ使えます。Gemini・Groq・Claude は自分のAPIキーを入力して使います（キーはブラウザ内にのみ保存）。</li>
+      <li><b>画像・ファイルを添付する</b>送信欄の📎ボタンから、画像やファイルを付箋に添付できます（表示のみ・AIには送りません）。</li>
+      <li><b>付箋を整える</b>左上の●で色を変更、タイトルを<strong>ダブルクリック</strong>で編集、ドラッグで移動、右下のつまみでサイズ変更、×で削除できます。</li>
+      <li><b>付箋を探す</b>画面左端の「›」タブを押すと付箋の一覧が開きます。タイトルで検索したり、クリックしてその付箋へジャンプできます。</li>
+      <li><b>保存について</b>変更は<strong>自動保存</strong>されます。保存先はお使いのブラウザ（localStorage）です。</li>
+    </ol>
+
+    <div class="note-box">
+      <strong>データの保存場所について（大切）</strong>
+      メモ・会話・APIキーは、すべて<strong>お使いのブラウザ内（localStorage）にのみ</strong>保存され、運営のサーバーには送信されません。別の端末や別のブラウザには引き継がれず、ブラウザのデータを消すと内容も消えます。共有パソコンでの利用や、有料APIキーの入力にはご注意ください。
+    </div>
+
+    <h2 id="faq">よくある質問</h2>
+    <dl class="faq">
+      <dt>無料で使えますか？</dt>
+      <dd>はい、完全無料で登録も不要です。キー不要の Puter を選べば、そのまますぐに使えます。</dd>
+
+      <dt>メモやAIとの会話はどこに保存されますか？</dt>
+      <dd>お使いのブラウザ内（localStorage）にのみ保存されます。運営のサーバーには送信しません。別の端末・別ブラウザには引き継がれず、ブラウザの履歴やデータを消すと消えます。共有パソコンでの利用はご注意ください。</dd>
+
+      <dt>APIキー（Gemini・Groq・Claude）は安全ですか？</dt>
+      <dd>入力したキーはあなたのブラウザ内にのみ保存され、送信先は各AI提供元のAPIだけです。運営や第三者には送られません。共有パソコンでは有料キーを入力しないでください。</dd>
+
+      <dt>どのAIが使えますか？</dt>
+      <dd>キー不要の Puter（GPT・Claude・Gemini 系）と、ご自身のAPIキーで使う Google Gemini／Groq／Claude（Anthropic）に対応しています。</dd>
+
+      <dt>普通のメモアプリとしても使えますか？</dt>
+      <dd>はい。付箋ごとに「AI」と「メモ」を切り替えられます。AIに聞かず、ただのメモ帳としても使えます。</dd>
+
+      <dt>画像やファイルは貼れますか？</dt>
+      <dd>はい。付箋に画像やファイルを添付して表示できます。表示のみで、AIへは送信されません。</dd>
+    </dl>
+
+    <p><a class="cta" href="../">ツールを開く →</a></p>
+  </main>
+
+  <footer>
+    &copy; 2026 AIでちょっと調べながらメモ | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a>
+  </footer>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "無料で使えますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "はい、完全無料で登録も不要です。キー不要の Puter を選べば、そのまますぐに使えます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "メモやAIとの会話はどこに保存されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "お使いのブラウザ内（localStorage）にのみ保存されます。運営のサーバーには送信しません。別の端末・別ブラウザには引き継がれず、ブラウザの履歴やデータを消すと消えます。共有パソコンでの利用はご注意ください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "APIキー（Gemini・Groq・Claude）は安全ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "入力したキーはあなたのブラウザ内にのみ保存され、送信先は各AI提供元のAPIだけです。運営や第三者には送られません。共有パソコンでは有料キーを入力しないでください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "どのAIが使えますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "キー不要の Puter（GPT・Claude・Gemini 系）と、ご自身のAPIキーで使う Google Gemini／Groq／Claude（Anthropic）に対応しています。" }
+      },
+      {
+        "@type": "Question",
+        "name": "普通のメモアプリとしても使えますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "はい。付箋ごとに「AI」と「メモ」を切り替えられます。AIに聞かず、ただのメモ帳としても使えます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "画像やファイルは貼れますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "はい。付箋に画像やファイルを添付して表示できます。表示のみで、AIへは送信されません。" }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+      { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://codequest.work/category/generator/" },
+      { "@type": "ListItem", "position": 3, "name": "AIでちょっと調べながらメモ", "item": "https://codequest.work/generator/ai-shirabe-memo/" },
+      { "@type": "ListItem", "position": 4, "name": "使い方・よくある質問", "item": "https://codequest.work/generator/ai-shirabe-memo/guide/" }
+    ]
+  }
+  </script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7Z6M3CJEV3');
+  </script>
+  <title>AIでちょっと調べながらメモ｜AIに聞ける無料メモアプリ</title>
+  <meta name="description" content="AIにちょっと聞いて調べながら、付箋にメモできる無料アプリ。調べもの・アイデア整理・下書きを1枚のボードでサッと。登録不要・データはブラウザに保存。" />
+  <link rel="canonical" href="https://codequest.work/generator/ai-shirabe-memo/" />
+  <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/ai-shirabe-memo/" />
+  <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/ai-shirabe-memo/" />
+  <!-- OGP -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://codequest.work/generator/ai-shirabe-memo/" />
+  <meta property="og:title" content="AIでちょっと調べながらメモ｜AIに聞ける無料メモアプリ" />
+  <meta property="og:description" content="AIにちょっと聞いて調べながら、付箋にメモできる無料アプリ。調べもの・アイデア整理・下書きを1枚のボードでサッと。登録不要・データはブラウザに保存。" />
+  <meta property="og:image" content="https://codequest.work/generator/ai-shirabe-memo/assets/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="AIでちょっと調べながらメモ" />
+  <meta property="og:site_name" content="CodeQuest.work" />
+  <meta property="og:locale" content="ja_JP" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AIでちょっと調べながらメモ｜AIに聞ける無料メモアプリ" />
+  <meta name="twitter:description" content="AIにちょっと聞いて調べながら付箋にメモ。調べもの・アイデア整理・下書きを1枚のボードで。登録不要の無料ツール。" />
+  <meta name="twitter:image" content="https://codequest.work/generator/ai-shirabe-memo/assets/og.jpg" />
+  <link rel="stylesheet" href="css/style.css?v=20260624r" />
+  <!-- AI（キー不要のPuter.js） -->
+  <script src="https://js.puter.com/v2/"></script>
+  <!-- 回答プレビュー用のmarkdown描画とサニタイズ -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AIでちょっと調べながらメモ",
+    "url": "https://codequest.work/generator/ai-shirabe-memo/",
+    "applicationCategory": "ProductivityApplication",
+    "operatingSystem": "Web browser",
+    "inLanguage": "ja",
+    "description": "AIにちょっと聞いて調べながら、付箋にメモできる無料アプリ。付箋ごとにAIチャットとふつうのメモを切り替えられ、データはブラウザに自動保存されます。",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "featureList": [
+      "ホワイトボード上に付箋を貼ってメモ",
+      "付箋ごとにAIチャット／ふつうのメモを切替",
+      "複数AI対応（Puterはキー不要、Gemini・Groq・ClaudeはBYOK）",
+      "AIとの会話を続けられる（マルチターン）",
+      "画像・ファイルの添付（表示のみ）",
+      "付箋タイトルの検索・一覧からジャンプ",
+      "データはブラウザに自動保存（localStorage）"
+    ],
+    "publisher": {
+      "@type": "Organization",
+      "name": "CodeQuest.work",
+      "url": "https://codequest.work/"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+      { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://codequest.work/category/generator/" },
+      { "@type": "ListItem", "position": 3, "name": "AIでちょっと調べながらメモ", "item": "https://codequest.work/generator/ai-shirabe-memo/" }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="toolbar">
+    <div class="toolbar__brand">
+      <span class="toolbar__logo">🗒️</span>
+      <span class="toolbar__title">AIでちょっと調べながらメモ</span>
+    </div>
+
+    <button id="menu-toggle" class="hamburger" type="button" aria-label="メニュー" aria-expanded="false" aria-controls="menu-panel">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav id="menu-panel" class="menu-panel" aria-label="設定メニュー">
+      <div class="menu-section">
+        <label class="field field--col">
+          <span class="field__label">AI</span>
+          <select id="provider"></select>
+        </label>
+        <label class="field field--col">
+          <span class="field__label">モデル</span>
+          <select id="model"></select>
+        </label>
+        <label class="field field--col" id="apikey-wrap" hidden>
+          <span class="field__label">APIキー</span>
+          <span class="field__key">
+            <input id="apikey" type="password" autocomplete="off" spellcheck="false" />
+            <a id="apikey-link" href="#" target="_blank" rel="noopener" title="無料キーを取得">取得</a>
+          </span>
+        </label>
+      </div>
+      <div class="menu-section menu-section--actions">
+        <button id="add-note" type="button" class="btn btn--primary">＋ 付箋を追加</button>
+        <button id="clear-board" type="button" class="btn btn--ghost">全消去</button>
+      </div>
+      <div class="menu-section menu-section--links">
+        <a class="menu-link" href="guide/" target="_blank" rel="noopener">📖 使い方・よくある質問</a>
+      </div>
+    </nav>
+
+    <nav id="list-panel" class="list-panel" aria-label="付箋一覧">
+      <div class="list-panel__head">
+        <span class="list-panel__title">付箋を探す</span>
+        <button id="list-close" class="list-close" type="button" aria-label="閉じる">×</button>
+      </div>
+      <input id="list-search" class="list-search" type="search" placeholder="タイトルで検索…" autocomplete="off" />
+      <div id="list-items" class="list-items"></div>
+    </nav>
+  </header>
+
+  <button id="list-toggle" class="list-tab" type="button" aria-label="付箋を探す" aria-expanded="false" aria-controls="list-panel" title="付箋一覧を開く">
+    <span class="list-tab__icon">›</span>
+  </button>
+
+  <main id="board" class="board">
+    <div class="empty-hint">
+      <p class="empty-hint__title">付箋を貼ってはじめましょう</p>
+      <p class="empty-hint__sub">「＋ 付箋を追加」か、ここを<strong>ダブルクリック</strong>で付箋を作成。<br />付箋にAIへの質問を書いて「送信」すると回答が表示されます。ふつうのメモにも切り替えOK・保存は自動です。</p>
+    </div>
+  </main>
+
+  <footer>
+    <span>&copy; 2026 AIでちょっと調べながらメモ | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+    <div class="footer-ad">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288"
+           crossorigin="anonymous"></script>
+      <!-- ai-shirabe-memo -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-4871781946658288"
+           data-ad-slot="4850594890"
+           data-ad-format="horizontal"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js?v=20260624r"></script>
+</body>
+</html>
