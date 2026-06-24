@@ -1114,7 +1114,7 @@ footer a:hover {
   text-align: center;
 }
 .footer-ad ins.adsbygoogle {
-  display: inline-block;
+  display: block; /* inline-blockだと行ボックスのディセンダ分の隙間が広告下にできる */
   width: 468px;
   height: 60px;
 }
