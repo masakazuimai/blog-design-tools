@@ -1161,9 +1161,9 @@ footer a:hover {
    サイズは在庫の多い300x250（ミディアムレクタングル） */
 .footer-ad {
   position: fixed;
-  right: 20px;
-  bottom: 84px; /* footer(64px)＋右端ボタンに重ならないよう上に逃がす */
-  z-index: 1000;
+  right: 0;
+  bottom: 0; /* 画面右下ぴったり（footerに被ってOK） */
+  z-index: 90; /* ボード/フッターより上・メニュー/一覧パネル(1000)より下＝パネル展開時は広告を隠す */
   display: flex;
   flex-direction: column;
   align-items: center;
