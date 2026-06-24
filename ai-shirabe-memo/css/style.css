@@ -1108,6 +1108,16 @@ body:not(.is-empty) .empty-hint {
   .field__key input {
     width: 130px;
   }
+
+  /* SPでは付箋をもう一回り小さく表示（インラインstyleを上書き）。
+     固定サイズにするため、タッチで扱いづらいリサイズハンドルは隠す */
+  .note {
+    width: 272px !important;
+    height: 320px !important;
+  }
+  .note__resize {
+    display: none;
+  }
 }
 
 /* ===== 共通フッター（他ツールと統一） ===== */
@@ -1131,15 +1141,78 @@ footer a {
 footer a:hover {
   color: #3b82f6;
 }
-/* footer右側の広告。固定サイズ（PC=468x60）で出す＝幅0エラーが起きない */
+/* 右端のボタン2つ（他ツールと統一） */
+.footer-links {
+  display: flex;
+  gap: 16px;
+}
+.footer-links a {
+  border: 1px solid #e2e8f0;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+.footer-links a:hover {
+  border-color: #3b82f6;
+  color: #3b82f6;
+}
+/* PCでは右下にフローティングカードとして固定表示（ChatWork風）。footerからは抜く。
+   サイズは在庫の多い300x250（ミディアムレクタングル） */
 .footer-ad {
-  flex: 0 0 auto;
-  text-align: center;
+  position: fixed;
+  right: 20px;
+  bottom: 84px; /* footer(64px)＋右端ボタンに重ならないよう上に逃がす */
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px 12px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
+}
+.footer-ad.is-closed {
+  display: none;
+}
+.ad-widget__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  z-index: 1; /* 広告iframeの上に×を出してクリックできるようにする */
+}
+.ad-widget__label {
+  color: #94a3b8;
+  letter-spacing: 0.04em;
+}
+.ad-widget__close {
+  appearance: none;
+  border: none;
+  background: #f1f5f9;
+  color: #64748b;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.ad-widget__close:hover {
+  background: #e2e8f0;
+  color: #1e293b;
 }
 .footer-ad ins.adsbygoogle {
   display: block; /* inline-blockだと行ボックスのディセンダ分の隙間が広告下にできる */
-  width: 468px;
-  height: 60px;
+  width: 300px;
+  height: 250px;
 }
 /* コピーライト＋468px広告が横並びで収まらない幅では縦積み＋広告をモバイルバナー(320x50)に */
 @media (max-width: 1040px) {
@@ -1150,8 +1223,26 @@ footer a:hover {
     padding: 8px 16px;
     text-align: center;
   }
+  /* スマホはフローティング解除してfooter内に戻す（×・ラベルも非表示） */
   .footer-ad {
+    position: static;
     align-self: center;
+    gap: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    z-index: auto;
+  }
+  .footer-ad.is-closed {
+    display: flex; /* PCで閉じた状態でもスマホのfooter広告は表示する */
+  }
+  .ad-widget__head {
+    display: none;
+  }
+  .footer-links {
+    display: none; /* スマホ（footer縦積み時）は右端ボタンを非表示 */
   }
   .footer-ad ins.adsbygoogle {
     width: 320px;

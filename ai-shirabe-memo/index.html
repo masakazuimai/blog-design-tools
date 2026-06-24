@@ -32,7 +32,7 @@
   <meta name="twitter:title" content="AIでちょっと調べながらメモ｜AIに聞ける無料メモアプリ" />
   <meta name="twitter:description" content="AIにちょっと聞いて調べながら付箋にメモ。調べもの・アイデア整理・下書きを1枚のボードで。登録不要の無料ツール。" />
   <meta name="twitter:image" content="https://codequest.work/generator/ai-shirabe-memo/assets/og.jpg" />
-  <link rel="stylesheet" href="css/style.css?v=20260624ad" />
+  <link rel="stylesheet" href="css/style.css?v=20260624sp" />
   <!-- AI（キー不要のPuter.js） -->
   <script src="https://js.puter.com/v2/"></script>
   <!-- 回答プレビュー用のmarkdown描画とサニタイズ -->
@@ -76,6 +76,8 @@
     ]
   }
   </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
 </head>
 <body>
   <header class="toolbar">
@@ -143,9 +145,15 @@
 
   <footer>
     <span>&copy; 2026 <span class="copy-extra">AIでちょっと調べながらメモ | Created by </span><a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
-    <div class="footer-ad">
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288"
-           crossorigin="anonymous"></script>
+    <div class="footer-links">
+      <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+      <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+    </div>
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">広告</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+      </div>
       <!-- ai-shirabe-memo -->
       <ins class="adsbygoogle"
            style="display:block"
@@ -156,6 +164,22 @@
       </script>
     </div>
   </footer>
+  <script>
+    // PCの右下フローティング広告カードの「×で閉じる」。閉じた状態はlocalStorageで記憶する
+    (function () {
+      var KEY = 'aiShirabeAdClosed';
+      var widget = document.getElementById('ad-widget');
+      var closeBtn = document.getElementById('ad-close');
+      if (!widget || !closeBtn) return;
+      try {
+        if (localStorage.getItem(KEY) === '1') widget.classList.add('is-closed');
+      } catch (e) {}
+      closeBtn.addEventListener('click', function () {
+        widget.classList.add('is-closed');
+        try { localStorage.setItem(KEY, '1'); } catch (e) {}
+      });
+    })();
+  </script>
 
   <script type="module" src="js/main.js?v=20260624ad"></script>
 </body>
