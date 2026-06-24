@@ -1,7 +1,7 @@
 // 付箋DOMの生成と更新ヘルパー。付箋＝会話スレッドとして描画する。
 // 状態管理はmain.jsが持ち、ここは描画とイベント委譲に専念する。
 
-import { NOTE_COLORS } from "./config.js?v=20260624t"
+import { NOTE_COLORS } from "./config.js?v=20260624v"
 
 const ROLE_LABEL = { user: "あなた", assistant: "AI" }
 
