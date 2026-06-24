@@ -17,6 +17,8 @@ html,
 body {
   margin: 0;
   height: 100%;
+  /* 画面外に控える右メニュー/左ドロワーが横スクロールを生まないよう塞ぐ */
+  overflow-x: hidden;
 }
 
 body {
@@ -1100,16 +1102,19 @@ footer a:hover {
 }
 /* footer右側の広告（旧リンクボタンの位置に横長バナー・paddingは付けない） */
 .footer-ad {
+  /* 幅を明示する（空の<ins>でも枠が0に潰れないように）。
+     幅0だと AdSense が "No slot size for availableWidth=0" を出す */
   flex: 0 0 auto;
-  max-width: 468px;
-  min-width: 0;
+  width: min(468px, 40vw);
   min-height: 60px;
   text-align: center;
 }
 .footer-ad .adsbygoogle {
   display: block;
+  width: 100%;
 }
-@media (max-width: 768px) {
+/* コピーライト＋468px広告が横並びで収まらない幅では縦積みにする */
+@media (max-width: 980px) {
   footer {
     height: auto;
     flex-direction: column;
@@ -1120,5 +1125,6 @@ footer a:hover {
   .footer-ad {
     align-self: center;
     width: 100%;
+    max-width: 468px;
   }
 }
