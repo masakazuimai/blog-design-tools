@@ -29,17 +29,46 @@ async function callPuter({ model, messages, onChunk }) {
   const options = { stream: true }
   if (model) options.model = model
 
-  const response = await puter.ai.chat(messages, options)
-  let full = ""
-  for await (const part of response) {
-    const chunk = part?.text ?? ""
-    if (chunk) {
-      full += chunk
-      onChunk?.(full)
+  // Puterは初回にサインインのポップアップが出る。スマホ等でブロックされると
+  // 応答が来ずに固まるため、一定時間 最初の応答が来なければ案内付きで打ち切る。
+  const FIRST_RESPONSE_TIMEOUT = 30000
+  let firstSeen = false
+  let timer = null
+  const timeout = new Promise((_, reject) => {
+    timer = setTimeout(() => {
+      if (!firstSeen) {
+        reject(
+          new Error(
+            "Puterから応答がありません。サインインのポップアップを許可してサインインするか、上のメニューで別のAI（自分の無料キー）に切り替えてください。"
+          )
+        )
+      }
+    }, FIRST_RESPONSE_TIMEOUT)
+  })
+
+  const run = (async () => {
+    const response = await puter.ai.chat(messages, options)
+    let full = ""
+    for await (const part of response) {
+      const chunk = part?.text ?? ""
+      if (chunk) {
+        if (!firstSeen) {
+          firstSeen = true
+          clearTimeout(timer)
+        }
+        full += chunk
+        onChunk?.(full)
+      }
     }
+    if (!full) throw new Error("空の応答が返りました")
+    return full
+  })()
+
+  try {
+    return await Promise.race([run, timeout])
+  } finally {
+    clearTimeout(timer)
   }
-  if (!full) throw new Error("空の応答が返りました")
-  return full
 }
 
 // Google Gemini（BYOK）。roleは user / model に変換して contents で送る。

@@ -379,6 +379,14 @@ body {
   border-color: rgba(0, 0, 0, 0.5);
 }
 
+/* AI選択の下に出す注記（Puterのサインイン案内など） */
+.menu-hint {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
 .field {
   display: flex;
   align-items: center;
