@@ -386,6 +386,10 @@ body {
   line-height: 1.5;
   color: var(--muted);
 }
+.menu-hint a {
+  color: var(--ink);
+  text-decoration: underline;
+}
 
 .field {
   display: flex;
