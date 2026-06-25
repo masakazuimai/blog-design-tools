@@ -119,6 +119,11 @@ header p {
   gap: 24px;
   align-items: start;
 }
+/* グリッド項目の min-width:auto による横溢れ（プレビュー内スライダーの固有幅が列幅を押し広げる）を防ぐ */
+.stage,
+.panel {
+  min-width: 0;
+}
 
 /* ===== プレビュー ===== */
 .stage {
@@ -640,6 +645,11 @@ footer a:hover {
   .footer-links {
     flex-wrap: wrap;
     justify-content: center;
+  }
+  /* 比較テーブルが狭幅で画面外へはみ出すため、テーブル内で横スクロールさせる */
+  .compare-table {
+    display: block;
+    overflow-x: auto;
   }
 }
 
