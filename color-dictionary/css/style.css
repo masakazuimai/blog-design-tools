@@ -738,13 +738,13 @@ main {
   width: 728px;
   height: 90px;
 }
-@media (max-width: 768px) {
+@media (max-width: 727px) {
   .cd-ad {
     min-height: 50px;
     padding: 20px 16px 24px;
   }
   .cd-ad ins {
-    width: 300px;
+    width: 320px;
     height: 50px;
   }
 }
