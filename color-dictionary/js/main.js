@@ -1,13 +1,13 @@
 // 色の辞書 — メインロジック（検索・絞り込み・カード描画・詳細モーダル・コピー）
-import { COLORS, HUE_GROUPS } from "./colors.js?v=20260625a";
-import { t, LANG } from "./i18n.js?v=20260625a";
+import { COLORS, HUE_GROUPS } from "./colors.js?v=20260625d";
+import { t, LANG } from "./i18n.js?v=20260625d";
 import {
   rgbString,
   hslString,
   contrastRatio,
   readableTextColor,
   wcagGrade,
-} from "./color-utils.js?v=20260625a";
+} from "./color-utils.js?v=20260625d";
 
 const state = { q: "", cat: "all", hue: "all" };
 
