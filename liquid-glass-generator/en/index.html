@@ -70,44 +70,6 @@
         ]
       }
     </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Is this Liquid Glass generator free?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. It's completely free, with no signup and no watermark. The generated code is yours to use commercially." }
-          },
-          {
-            "@type": "Question",
-            "name": "How is this different from CSS liquid glass generators?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Most tools use backdrop-filter and SVG filters, which cannot truly refract the background. This tool re-samples the background pixels with WebGL (GLSL shaders), so you get real lens-like refraction and edge chromatic aberration that look closer to the real material." }
-          },
-          {
-            "@type": "Question",
-            "name": "Does the effect follow the page background?",
-            "acceptedAnswer": { "@type": "Answer", "text": "No. The exported code bakes the background image into the canvas, so it does not follow arbitrary page content behind it. It's best for spots where the background image is fixed, such as heroes and cards." }
-          },
-          {
-            "@type": "Question",
-            "name": "Which browsers are supported?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Refraction and chromatic aberration render in WebGL-capable browsers such as Chrome, Safari, and Edge." }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I use the generated code commercially?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. The generated code is yours. Just replace the background image URL with an image you have the rights to use." }
-          },
-          {
-            "@type": "Question",
-            "name": "What is Apple's Liquid Glass?",
-            "acceptedAnswer": { "@type": "Answer", "text": "It's the translucent glass material Apple introduced in 2025 across iOS 26, macOS Tahoe, and more. It refracts the background, adds a specular highlight and chromatic aberration along the edge, and applies a frosted blur." }
-          }
-        ]
-      }
-    </script>
   </head>
   <body>
     <header>
@@ -239,107 +201,7 @@
       </section>
 
       <!-- Article -->
-      <section class="article">
-        <div class="answer-box">
-          <p>The <strong>Liquid Glass Generator</strong> recreates Apple's Liquid Glass with <strong>real refraction rendered in WebGL</strong> — not just a CSS blur — and exports copy-paste code. Place a glass button or card over a background image and tune refraction, chromatic aberration, frosted blur, and specular with sliders. Free, no signup, no watermark.</p>
-        </div>
-
-        <h2>What is Liquid Glass?</h2>
-        <p>Liquid Glass is the translucent glass material Apple introduced in 2025 across iOS 26, macOS Tahoe, and more. It <strong>refracts the background like a lens</strong>, adds a <strong>specular highlight</strong> and <strong>subtle chromatic aberration</strong> along the edge, and applies a <strong>frosted blur</strong>.</p>
-
-        <h2>WebGL vs. CSS liquid glass</h2>
-        <p>Most liquid glass generators use a <strong>CSS approach</strong> with <code>backdrop-filter</code> and SVG filters. It's convenient, but it <strong>cannot truly refract the background</strong> — you get a flat frosted panel with a highlight. This tool re-samples the background pixels with WebGL (GLSL shaders), so the edge lens distortion and chromatic aberration look closer to the real material.</p>
-        <table class="compare-table">
-          <thead>
-            <tr>
-              <th>Aspect</th>
-              <th>CSS approach (typical tools)</th>
-              <th>WebGL approach (this tool)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Background refraction</td>
-              <td>No (flat blur only)</td>
-              <td>Yes (lens-like distortion)</td>
-            </tr>
-            <tr>
-              <td>Chromatic aberration</td>
-              <td>Faked</td>
-              <td>Real RGB shift</td>
-            </tr>
-            <tr>
-              <td>Follows page background</td>
-              <td>Yes</td>
-              <td>Bakes the background image</td>
-            </tr>
-            <tr>
-              <td>Output</td>
-              <td>CSS / HTML</td>
-              <td>Self-contained WebGL snippet</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h2>How to use it (3 steps)</h2>
-        <ol>
-          <li>Pick a shape (button / card / pill / circle) and a background image.</li>
-          <li>Adjust refraction, blur, specular, chromatic aberration, and tint, and add button text if you want.</li>
-          <li>Click "Copy code" to get a self-contained WebGL snippet, then replace the background URL with your own image.</li>
-        </ol>
-
-        <h2>Great for</h2>
-        <ul>
-          <li>Glass-style CTA buttons in hero sections</li>
-          <li>Glass cards or pricing cards over an image</li>
-          <li>iOS 26-style glass UI mockups</li>
-          <li>Accents on portfolios and landing pages</li>
-        </ul>
-
-        <h3>How it works &amp; caveats</h3>
-        <ul>
-          <li>The background image is drawn to a canvas, and only the rounded-rect glass area is composited with refraction, chromatic aberration, blur, and specular in the shader.</li>
-          <li>The exported code <strong>bakes the background image into the canvas</strong>. It does not follow arbitrary page content behind it — it's best for spots where the background image is fixed, such as heroes and cards.</li>
-          <li>Refraction and chromatic aberration render in WebGL-capable browsers (Chrome / Safari / Edge).</li>
-        </ul>
-
-        <h2>Frequently asked questions</h2>
-        <div class="faq">
-          <div class="faq-item">
-            <h3>Is this Liquid Glass generator free?</h3>
-            <p>Yes. It's completely free, with no signup and no watermark. The generated code is yours to use commercially.</p>
-          </div>
-          <div class="faq-item">
-            <h3>How is this different from CSS liquid glass generators?</h3>
-            <p>Most tools use <code>backdrop-filter</code> and SVG filters, which cannot truly refract the background. This tool re-samples the background pixels with WebGL (GLSL shaders), so you get real lens-like refraction and edge chromatic aberration that look closer to the real material.</p>
-          </div>
-          <div class="faq-item">
-            <h3>Does the effect follow the page background?</h3>
-            <p>No. The exported code bakes the background image into the canvas, so it does not follow arbitrary page content behind it. It's best for spots where the background image is fixed, such as heroes and cards.</p>
-          </div>
-          <div class="faq-item">
-            <h3>Which browsers are supported?</h3>
-            <p>Refraction and chromatic aberration render in WebGL-capable browsers such as Chrome, Safari, and Edge.</p>
-          </div>
-          <div class="faq-item">
-            <h3>Can I use the generated code commercially?</h3>
-            <p>Yes. The generated code is yours. Just replace the background image URL with an image you have the rights to use.</p>
-          </div>
-          <div class="faq-item">
-            <h3>What is Apple's Liquid Glass?</h3>
-            <p>It's the translucent glass material Apple introduced in 2025 across iOS 26, macOS Tahoe, and more. It refracts the background, adds a specular highlight and chromatic aberration along the edge, and applies a frosted blur.</p>
-          </div>
-        </div>
-
-        <h2>Related tools</h2>
-        <div class="related">
-          <a href="https://codequest.work/generator/liquid-glass-css-generator/en/" target="_blank" rel="noopener">Liquid Glass CSS Generator (CSS/SVG)</a>
-          <a href="https://codequest.work/generator/clip-path/en/" target="_blank" rel="noopener">clip-path Generator</a>
-          <a href="https://codequest.work/generator/animation-gallery/en/" target="_blank" rel="noopener">CSS Animation Gallery</a>
-          <a href="https://codequest.work/generator/grid/en/" target="_blank" rel="noopener">CSS Grid Generator</a>
-          <a href="https://codequest.work/generator/flex/en/" target="_blank" rel="noopener">Flexbox Generator</a>
-        </div>
-      </section>
+      <p class="hint" style="text-align:center;margin:16px auto 0;max-width:760px;">For how to use it, the WebGL vs. CSS difference, and FAQ, see the <a href="howto.html">how-to guide</a>. Need a CSS/SVG version? Try the <a href="https://codequest.work/generator/liquid-glass-css-generator/en/">Liquid Glass CSS Generator</a>.</p>
     </div>
 
     <div class="ad-wrap" style="margin: 32px auto; text-align: center;">
@@ -354,6 +216,7 @@
     <footer>
       <span>&copy; 2026 Liquid Glass Generator | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
       <div class="footer-links">
+        <a href="howto.html">&#128214; How to use &amp; FAQ</a>
         <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
         <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
       </div>
