@@ -66,39 +66,6 @@
         ]
       }
     </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "どんなボタンが作れますか？",
-            "acceptedAnswer": { "@type": "Answer", "text": "ボタンの縁(リム)が光るCSSボタンを作れます。方向ライト・ネオン・グラデーション・アークシャイン・二重リム・アンダーグローなど15種の光パターンから選び、色・太さ・角丸・滲みを調整できます。" }
-          },
-          {
-            "@type": "Question",
-            "name": "出力したコードはそのまま使えますか？",
-            "acceptedAnswer": { "@type": "Answer", "text": "はい。HTMLとCSSの2ブロックをコピーして貼るだけで動きます。外部ライブラリ依存はなく、SVGフィルタを含む自己完結のコードを出力します。" }
-          },
-          {
-            "@type": "Question",
-            "name": "光るアニメーションも出力されますか？",
-            "acceptedAnswer": { "@type": "Answer", "text": "はい。自動回転をONにすると、パターンに応じた回転・明滅などのアニメーション用JavaScriptが出力コードに添付されます。貼り付け先でもそのまま動きます。" }
-          },
-          {
-            "@type": "Question",
-            "name": "どのブラウザで表示されますか？",
-            "acceptedAnswer": { "@type": "Answer", "text": "SVGフィルタ（feSpecularLighting・feGaussianBlur 等）に対応する Chrome・Edge・Safari・Firefox などの主要ブラウザで表示されます。" }
-          },
-          {
-            "@type": "Question",
-            "name": "商用利用できますか？",
-            "acceptedAnswer": { "@type": "Answer", "text": "はい。無料で、生成したボタンは商用サイトでも利用できます。" }
-          }
-        ]
-      }
-    </script>
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
   </head>
@@ -379,74 +346,7 @@
       </div>
     </main>
 
-    <!-- 記事（AIO/FAQ schema対応の可視コンテンツ） -->
-    <article class="article">
-      <div class="answer-box">
-        <p>ネオンボタンジェネレーターは、<strong>SVGフィルタ</strong>でボタンの縁(リム)だけを光らせるCSSボタンを作る無料ツールです。15種の光パターンから選び、色・サイズを調整して、そのまま貼り付けられる<strong>HTML/CSS</strong>を出力できます。</p>
-      </div>
-
-      <h2>使い方（3ステップ）</h2>
-      <ol class="steps">
-        <li>15種の<strong>光パターン</strong>から好きなものをボタンで選ぶ</li>
-        <li>色・太さ・角丸・滲み・回転速度などを調整する</li>
-        <li>出力された<strong>HTML</strong>と<strong>CSS</strong>をコピーして貼り付ける</li>
-      </ol>
-
-      <h2>15種の光パターン早見表</h2>
-      <table class="pattern-table">
-        <thead>
-          <tr><th>パターン</th><th>特徴</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>方向ライト</td><td>片側から当たるスイープ光（feDistantLight）</td></tr>
-          <tr><td>ポイント</td><td>一点が強く光る（放射状グラデ）</td></tr>
-          <tr><td>アークシャイン</td><td>縁の一部が滑らかに艶めく艶掃き</td></tr>
-          <tr><td>ビームグロー</td><td>焦点を持つ光だまりが縁の一点に集まる</td></tr>
-          <tr><td>グロスシャイン</td><td>ガラスのような対角の艶反射が縁に走る</td></tr>
-          <tr><td>ネオン</td><td>縁全体が均一に発光</td></tr>
-          <tr><td>デュアル</td><td>両側を2色で照らす</td></tr>
-          <tr><td>グラデーション</td><td>多色グラデが縁を流れる</td></tr>
-          <tr><td>トライ</td><td>3色を3方向から</td></tr>
-          <tr><td>パルス</td><td>縁全体がゆっくり明滅（ブリージング）</td></tr>
-          <tr><td>チェイス</td><td>光の帯が縁を周回</td></tr>
-          <tr><td>フリッカー</td><td>ネオン管風のランダム明滅</td></tr>
-          <tr><td>二重リム</td><td>内外2層が別色で光る</td></tr>
-          <tr><td>アンダーグロー</td><td>下方向の床反射のような光</td></tr>
-          <tr><td>コーナー</td><td>四隅が放射状に光る</td></tr>
-        </tbody>
-      </table>
-
-      <h2>よくある質問</h2>
-      <div class="faq-item">
-        <h3>どんなボタンが作れますか？</h3>
-        <p>ボタンの縁(リム)が光るCSSボタンを作れます。方向ライト・ネオン・グラデーション・アークシャイン・二重リム・アンダーグローなど15種の光パターンから選び、色・太さ・角丸・滲みを調整できます。</p>
-      </div>
-      <div class="faq-item">
-        <h3>出力したコードはそのまま使えますか？</h3>
-        <p>はい。HTMLとCSSの2ブロックをコピーして貼るだけで動きます。外部ライブラリ依存はなく、SVGフィルタを含む自己完結のコードを出力します。</p>
-      </div>
-      <div class="faq-item">
-        <h3>光るアニメーションも出力されますか？</h3>
-        <p>はい。自動回転をONにすると、パターンに応じた回転・明滅などのアニメーション用JavaScriptが出力コードに添付されます。貼り付け先でもそのまま動きます。</p>
-      </div>
-      <div class="faq-item">
-        <h3>どのブラウザで表示されますか？</h3>
-        <p>SVGフィルタ（feSpecularLighting・feGaussianBlur など）に対応する Chrome・Edge・Safari・Firefox などの主要ブラウザで表示されます。</p>
-      </div>
-      <div class="faq-item">
-        <h3>商用利用できますか？</h3>
-        <p>はい。無料で、生成したボタンは商用サイトでも利用できます。</p>
-      </div>
-
-      <h2>関連ツール</h2>
-      <div class="related">
-        <a href="https://codequest.work/generator/liquid-glass-css-generator/" target="_blank" rel="noopener">透過リキッドガラスCSSジェネレーター</a>
-        <a href="https://codequest.work/generator/liquid-glass-generator/" target="_blank" rel="noopener">Liquid Glassジェネレーター（WebGL）</a>
-        <a href="https://codequest.work/generator/clip-path/" target="_blank" rel="noopener">clip-path ジェネレーター</a>
-        <a href="https://codequest.work/generator/animation-gallery/" target="_blank" rel="noopener">CSSアニメーションギャラリー</a>
-        <a href="https://codequest.work/generator/heading-design-previewer/" target="_blank" rel="noopener">見出しデザインプレビュー</a>
-      </div>
-    </article>
+    <p class="hint" style="text-align:center;margin:16px auto 0;max-width:760px;">使い方・15種の光パターン早見表・FAQは<a href="howto.html">使い方ガイド</a>をご覧ください。</p>
 
     <!-- AdSense -->
     <div class="ad-wrap">
@@ -460,6 +360,7 @@
     <footer>
       <span>&copy; 2026 Neon Button Generator | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
       <div class="footer-links">
+        <a href="howto.html">&#128214; 使い方・FAQ</a>
         <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
         <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
       </div>
