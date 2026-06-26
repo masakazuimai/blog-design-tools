@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>スライダー／カルーセル ジェネレーターの使い方｜ライブラリの選び方・3ステップ・パターン別コード集とFAQ｜CodeQuest</title>
+    <meta name="description" content="スライダー（カルーセル）ジェネレーターの使い方ガイド。Swiper・Splide・Slickの選び方比較表、コードを作る3ステップ、パターン別のコード集、よくある失敗、FAQをまとめました。" />
+    <link rel="canonical" href="https://codequest.work/generator/slider-generator/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/slider-generator/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/slider-generator/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/slider-generator/howto.html" />
+    <!-- OGP -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/slider-generator/howto.html" />
+    <meta property="og:title" content="スライダー／カルーセル ジェネレーターの使い方｜選び方・3ステップ・パターン別コード集とFAQ" />
+    <meta property="og:description" content="Swiper・Splide・Slickの選び方比較表、コードを作る3ステップ、パターン別のコード集、よくある失敗、FAQをまとめた使い方ガイド。" />
+    <meta property="og:image" content="https://codequest.work/generator/slider-generator/assets/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="スライダー／カルーセル ジェネレーターの使い方｜選び方・3ステップ・FAQ" />
+    <meta name="twitter:description" content="Swiper・Splide・Slickの選び方比較表、コードを作る3ステップ、パターン別のコード集、FAQ。" />
+    <meta name="twitter:image" content="https://codequest.work/generator/slider-generator/assets/og.jpg" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "スライダー ジェネレーター", "item": "https://codequest.work/generator/slider-generator/" },
+          { "@type": "ListItem", "position": 4, "name": "使い方", "item": "https://codequest.work/generator/slider-generator/howto.html" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "スライダー ジェネレーターでスライダーのコードを作る",
+        "description": "ライブラリを選び、動き・表示枚数などを設定して、コピペできるコードを出力するまでの3ステップ。",
+        "step": [
+          { "@type": "HowToStep", "name": "ライブラリを選ぶ", "text": "上部のタブで Swiper / Splide / Slick から使うライブラリを選びます。" },
+          { "@type": "HowToStep", "name": "動きと表示を設定する", "text": "表示枚数・自動再生・フェード・無限スクロール・矢印などを設定します。プレビューが即座に更新されます。" },
+          { "@type": "HowToStep", "name": "コードをコピーして貼り付け", "text": "「コードをコピー」でCDN読み込み・HTML・初期化JSを取得し、サンプル画像を差し替えて貼り付けます。" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "スライダー ジェネレーターは無料ですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "はい。完全無料で、登録も透かしもありません。生成したHTML/JSはそのまま商用利用できます。" }
+          },
+          {
+            "@type": "Question",
+            "name": "Swiper・Splide・Slickのどれを選べばよいですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "新規ならjQuery不要で活発に開発されているSwiper、軽量・高アクセシビリティ・日本語ドキュメント重視ならSplideがおすすめです。SlickはjQuery必須で更新が停止しているため、新規採用は非推奨です。既存のSlickを使っている場合の参考としてコードを用意しています。" }
+          },
+          {
+            "@type": "Question",
+            "name": "生成したコードに自分の画像を使えますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "はい。出力されるコードのサンプル画像（Unsplash）のURLを、ご自身の画像パスに置き換えるだけで使えます。" }
+          },
+          {
+            "@type": "Question",
+            "name": "フェード（クロスフェード）にも対応していますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "対応しています。エフェクトで「フェード」を選ぶと、各ライブラリのフェード設定込みのコードを生成します。フェード時は表示枚数が自動的に1枚に固定されます。" }
+          },
+          {
+            "@type": "Question",
+            "name": "レスポンシブ（スマホで表示枚数を変える）はできますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "できます。「スマホ表示枚数（≤768px）」を設定すると、各ライブラリのブレークポイント設定を含むコードを生成します。" }
+          },
+          {
+            "@type": "Question",
+            "name": "カルーセルとスライダーの違いは？",
+            "acceptedAnswer": { "@type": "Answer", "text": "ほぼ同じ意味で使われます。複数の画像やコンテンツを横に並べて切り替えて見せるUIを、日本では「スライダー」、英語圏を中心に「カルーセル（carousel）」と呼びます。本ツールはどちらの呼び方でも同じコードを生成します。" }
+          },
+          {
+            "@type": "Question",
+            "name": "サムネイル付きのスライダーは作れますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "はい。「サムネイル付きギャラリー」をオンにすると、メイン画像と連動するサムネイル一覧付きのコードを生成します。Swiperはthumbs、Splideはsync、SlickはasNavForで実装されます。" }
+          },
+          {
+            "@type": "Question",
+            "name": "カバーフローや無限スクロールにも対応していますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "対応しています。Swiper選択時はカバーフロー・キューブ・フリップ・カードの3Dエフェクトを、3ライブラリ共通で無限スクロール（マーキー）を生成できます。" }
+          }
+        ]
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css?v=20260625b" />
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+    <style>
+      .howto-wrap { max-width: 860px; margin: 0 auto; padding: 24px 20px 8px; }
+      .back-btn { display: inline-block; margin: 8px 0 16px; color: var(--accent, #3498db); text-decoration: none; font-size: 16px; }
+      .back-btn:hover { text-decoration: underline; }
+    </style>
+  </head>
+  <body>
+    <div class="howto-wrap">
+      <a href="/generator/slider-generator/" class="back-btn">← スライダー ジェネレーター（ツール）に戻る</a>
+      <h1>スライダー／カルーセル ジェネレーターの使い方</h1>
+
+      <section class="article">
+        <div class="answer-box">
+          <p><strong>スライダー ジェネレーター</strong>は、画像スライダー（カルーセル）の実装コードを <strong>Swiper・Splide・Slick</strong> の3ライブラリで同時に生成できる無料ツールです。表示枚数・自動再生・フェードなどを設定すると、コピペできるHTML/JSをライブプレビュー付きで出力します。登録不要・透かしなしで、生成したコードは商用利用できます。</p>
+        </div>
+
+        <h2>スライダー（カルーセル）ライブラリの選び方</h2>
+        <p>JavaScriptで画像スライダーを実装する代表的なライブラリが <code>Swiper</code>・<code>Splide</code>・<code>Slick</code> の3つです。それぞれ特徴が異なります。</p>
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>ライブラリ</th>
+              <th>jQuery</th>
+              <th>サイズ目安</th>
+              <th>保守状況</th>
+              <th>向いているケース</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Swiper</strong></td>
+              <td>不要</td>
+              <td>約140KB</td>
+              <td>活発に開発中</td>
+              <td>機能が豊富。迷ったらこれ。3D・サムネ連動など高度な演出にも対応</td>
+            </tr>
+            <tr>
+              <td><strong>Splide</strong></td>
+              <td>不要</td>
+              <td>約29KB（最軽量）</td>
+              <td>健在（作者は日本人）</td>
+              <td>軽さ・アクセシビリティ重視。日本語ドキュメントがあり導入しやすい</td>
+            </tr>
+            <tr>
+              <td><strong>Slick</strong></td>
+              <td>必須</td>
+              <td>約42KB＋jQuery</td>
+              <td>更新停止（非推奨）</td>
+              <td>既存サイトの保守。新規ではSwiper/Splideへの移行を推奨</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>使い方（3ステップ）</h2>
+        <ol>
+          <li>上部のタブで <strong>Swiper / Splide / Slick</strong> から使うライブラリを選びます。</li>
+          <li>表示枚数・自動再生・フェード・矢印などを設定します（プレビューが即座に更新されます）。</li>
+          <li>「コードをコピー」でCDN読み込み・HTML・初期化JSを取得し、サンプル画像を自分の画像に差し替えて貼り付けます。</li>
+        </ol>
+
+        <h2>パターン別のコード集</h2>
+        <p>「この見た目のコードがすぐ欲しい」という定番パターンを、3ライブラリそろえて用意しました。微調整は<a href="/generator/slider-generator/">ジェネレーター本体</a>でどうぞ。</p>
+        <div class="related">
+          <a href="preset/basic/"><strong>基本のスライダー →</strong><span>1枚ずつ・矢印＋ドット</span></a>
+          <a href="preset/fade/"><strong>フェード切替 →</strong><span>ふんわり重ねて切り替え</span></a>
+          <a href="preset/multiple/"><strong>複数枚表示 →</strong><span>3枚並べて見せる</span></a>
+          <a href="preset/autoplay/"><strong>自動再生スライダー →</strong><span>一定間隔で自動送り</span></a>
+        </div>
+
+        <h2>よくある失敗・注意点</h2>
+        <ul>
+          <li><strong>CSSの読み込み忘れ</strong>：各ライブラリは専用CSSが必須です。本ツールは <code>&lt;link&gt;</code> タグも含めて出力します。</li>
+          <li><strong>フェード時の表示枚数</strong>：フェードは仕様上1枚表示が前提です。本ツールはフェード選択時に表示枚数を自動で1に固定します。</li>
+          <li><strong>Slickの採用</strong>：jQuery依存で更新が停止しています。新規ではSwiper/Splideを選ぶのが安全です。</li>
+        </ul>
+
+        <h2>よくある質問</h2>
+        <div class="faq">
+          <div class="faq-item">
+            <h3>スライダー ジェネレーターは無料ですか？</h3>
+            <p>はい。完全無料で、登録も透かしもありません。生成したHTML/JSはそのまま商用利用できます。</p>
+          </div>
+          <div class="faq-item">
+            <h3>Swiper・Splide・Slickのどれを選べばよいですか？</h3>
+            <p>新規ならjQuery不要で活発に開発されている <strong>Swiper</strong>、軽量・高アクセシビリティ・日本語ドキュメント重視なら <strong>Splide</strong> がおすすめです。SlickはjQuery必須で更新が停止しているため、新規採用は非推奨です。</p>
+          </div>
+          <div class="faq-item">
+            <h3>生成したコードに自分の画像を使えますか？</h3>
+            <p>はい。出力コードのサンプル画像（Unsplash）のURLを、ご自身の画像パスに置き換えるだけで使えます。</p>
+          </div>
+          <div class="faq-item">
+            <h3>フェード（クロスフェード）にも対応していますか？</h3>
+            <p>対応しています。エフェクトで「フェード」を選ぶと、各ライブラリのフェード設定込みのコードを生成します。フェード時は表示枚数が自動的に1枚に固定されます。</p>
+          </div>
+          <div class="faq-item">
+            <h3>レスポンシブ（スマホで表示枚数を変える）はできますか？</h3>
+            <p>できます。「スマホ表示枚数（≤768px）」を設定すると、各ライブラリのブレークポイント設定を含むコードを生成します。</p>
+          </div>
+          <div class="faq-item">
+            <h3>カルーセルとスライダーの違いは？</h3>
+            <p>ほぼ同じ意味で使われます。複数の画像やコンテンツを横に並べて切り替えて見せるUIを、日本では「スライダー」、英語圏を中心に「カルーセル（carousel）」と呼びます。本ツールはどちらの呼び方でも同じカルーセル／スライダーのコードを生成します。</p>
+          </div>
+          <div class="faq-item">
+            <h3>サムネイル付きのスライダー（カルーセル）は作れますか？</h3>
+            <p>はい。「サムネイル付きギャラリー」をオンにすると、メイン画像と連動するサムネイル一覧付きのコードを生成します。Swiperは <code>thumbs</code>、Splideは <code>sync</code>、Slickは <code>asNavFor</code> で実装されます。</p>
+          </div>
+          <div class="faq-item">
+            <h3>カバーフローや無限スクロールにも対応していますか？</h3>
+            <p>対応しています。Swiper選択時はカバーフロー・キューブ・フリップ・カードの3Dエフェクトを、3ライブラリ共通で無限スクロール（マーキー）を生成できます。</p>
+          </div>
+        </div>
+
+        <h2>関連ツール</h2>
+        <div class="related">
+          <a href="https://codequest.work/generator/clip-path/"><strong>clip-path ジェネレーター →</strong><span>CSSの切り抜き・図形を作成</span></a>
+          <a href="https://codequest.work/generator/animation-gallery/"><strong>CSSアニメーション集 →</strong><span>100種のアニメをコピペ</span></a>
+          <a href="https://codequest.work/generator/clickable-area/"><strong>クリッカブルエリア →</strong><span>画像マップのCSSを生成</span></a>
+          <a href="https://codequest.work/generator/image-compressor/"><strong>画像圧縮・変換 →</strong><span>スライダー画像を軽量化</span></a>
+        </div>
+      </section>
+
+      <p style="margin-top:24px;"><a href="/generator/slider-generator/" class="back-btn">← スライダー ジェネレーター（ツール）を使う</a></p>
+    </div>
+
+    <div class="ad-wrap" style="margin: 32px auto; text-align: center;">
+      <!-- Carousel Generator -->
+      <ins class="adsbygoogle ad-banner" style="display:inline-block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="3363053135"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 スライダー ジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>

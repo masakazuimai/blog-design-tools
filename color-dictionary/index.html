@@ -70,44 +70,6 @@
         ]
       }
     </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "色の辞書は無料ですか？",
-            "acceptedAnswer": { "@type": "Answer", "text": "はい。完全無料で、登録も不要です。表示されるHEX/RGB/HSLのカラーコードはそのまま商用・個人問わず利用できます。" }
-          },
-          {
-            "@type": "Question",
-            "name": "日本の伝統色とは何ですか？",
-            "acceptedAnswer": { "@type": "Answer", "text": "古来の日本で、植物や鉱物の染料・顔料、自然や暮らしの情景から名づけられてきた色のことです。茜色・浅葱色・江戸紫のように、名前そのものに由来や物語があるのが特徴で、本ツールでは代表的な250色を収録しています。" }
-          },
-          {
-            "@type": "Question",
-            "name": "CSSの名前付き色（カラーキーワード）とは？",
-            "acceptedAnswer": { "@type": "Answer", "text": "crimson や teal のように、HEXの代わりにそのままCSSへ書ける色の名前です。W3Cの仕様で147色が定義されており、color: crimson; のように記述できます。本ツールでは綴り違い（gray／grey など）を1色に統合し、約140色を由来つきで収録しています。" }
-          },
-          {
-            "@type": "Question",
-            "name": "カラーコードはどの形式でコピーできますか？",
-            "acceptedAnswer": { "@type": "Answer", "text": "各色の詳細画面で、HEX・RGB・HSLの3形式をワンクリックでコピーできます。一覧のカードからはHEXをすばやくコピーできます。" }
-          },
-          {
-            "@type": "Question",
-            "name": "色名や読みがわからなくても探せますか？",
-            "acceptedAnswer": { "@type": "Answer", "text": "はい。漢字の色名・ひらがなの読み・ローマ字・英語名・HEXのいずれでも検索できます。さらに色相（赤・青など）やカテゴリ（伝統色／CSS名）で絞り込めます。" }
-          },
-          {
-            "@type": "Question",
-            "name": "文字色として使えるか（読みやすさ）はわかりますか？",
-            "acceptedAnswer": { "@type": "Answer", "text": "各色の詳細画面で、白背景・黒背景それぞれとのコントラスト比とWCAGの等級（AA／AAA）を表示します。アクセシブルな配色の判断に使えます。" }
-          }
-        ]
-      }
-    </script>
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
   </head>
@@ -148,73 +110,7 @@
       <div class="grid" id="grid"></div>
     </main>
 
-    <!-- 読み物（SEO） -->
-    <section class="article">
-      <div class="article-inner">
-        <h2>色の名前の由来と意味を知ると、配色は強くなる</h2>
-        <p class="lead">
-          色の辞書とは、色の名前・カラーコード（HEX/RGB/HSL）に加えて、<strong>名前の由来</strong>と<strong>色が持つ意味・印象</strong>をまとめた辞典です。同じ色でも「なぜその名前なのか」を知ると、配色の意図を言葉で説明でき、デザインの説得力が増します。
-        </p>
-        <p>
-          このツールは、千年以上の歴史を持つ<strong>日本の伝統色250色</strong>と、Webでそのまま使える<strong>CSSの名前付き色約140色</strong>（gray／grey などの綴り違いは1色に統合）を、同じ画面で横断的に引けるようにしたものです。色相やカテゴリで絞り込み、気になった色はクリックすれば、由来・意味・相性のよい配色・コントラスト比まで確認できます。
-        </p>
-
-        <h2>日本の伝統色 ― 名前に物語がある色</h2>
-        <p>
-          日本の伝統色は、<strong>植物や鉱物の染料・顔料</strong>、あるいは自然や暮らしの情景から名づけられてきました。たとえば「茜色」はアカネの根で染めた赤、「浅葱色」はネギの若葉のような薄い青緑、「江戸紫」は江戸で愛された青みの紫を指します。名前を知ることは、その色がまとう文化的な背景を知ることでもあります。
-        </p>
-        <ul>
-          <li><strong>染料・顔料に由来する色</strong>：茜色、紅色、藍色、群青、胡粉色 など</li>
-          <li><strong>植物・花に由来する色</strong>：桜色、撫子色、山吹色、菫色、藤色 など</li>
-          <li><strong>地名・人物・時代に由来する色</strong>：江戸紫、利休鼠 など</li>
-        </ul>
-
-        <h2>CSSの名前付き色 ― コードにそのまま書ける色</h2>
-        <p>
-          CSSには <code>crimson</code> や <code>teal</code> のように、HEXの代わりに直接書ける<strong>カラーキーワード</strong>が147色定義されています（W3C仕様）。<code>color: crimson;</code> のように記述でき、コードの可読性が上がります。これらの名前にも由来があり、<code>crimson</code> はエンジムシ由来の深紅、<code>rebeccapurple</code> はCSS界の故人を追悼して2014年に追加された紫です。
-        </p>
-
-        <h2>Webデザインでの色の選び方</h2>
-        <ol>
-          <li><strong>基調色（ベース）を決める</strong>：面積の大きい背景・余白の色。彩度を抑えた色が扱いやすい。</li>
-          <li><strong>主役色（メイン）を1つ</strong>：ブランドや世界観を表す色。伝統色から選ぶと独自性が出る。</li>
-          <li><strong>差し色（アクセント）を1つ</strong>：CTAや強調に。基調色の補色や、彩度の高い色を少量だけ。</li>
-          <li><strong>コントラストを確認する</strong>：文字と背景の組み合わせはWCAGでAA（4.5:1）以上を目安に。本ツールの詳細画面で確認できます。</li>
-        </ol>
-
-        <h2>よくある質問</h2>
-        <div class="faq">
-          <div class="faq-item">
-            <h3>色の辞書は無料ですか？</h3>
-            <p>はい。完全無料・登録不要です。表示されるカラーコードは商用・個人を問わずそのまま利用できます。</p>
-          </div>
-          <div class="faq-item">
-            <h3>カラーコードはどの形式でコピーできますか？</h3>
-            <p>各色の詳細画面でHEX・RGB・HSLの3形式をワンクリックでコピーできます。一覧カードからはHEXをすばやくコピーできます。</p>
-          </div>
-          <div class="faq-item">
-            <h3>色名や読みがわからなくても探せますか？</h3>
-            <p>漢字の色名・ひらがな・ローマ字・英語名・HEXのいずれでも検索できます。色相やカテゴリでの絞り込みにも対応しています。</p>
-          </div>
-          <div class="faq-item">
-            <h3>文字色として読みやすいか確認できますか？</h3>
-            <p>詳細画面で、白背景・黒背景とのコントラスト比とWCAG等級（AA／AAA）を表示します。アクセシブルな配色の判断に使えます。</p>
-          </div>
-          <div class="faq-item">
-            <h3>収録している色数は？</h3>
-            <p>日本の伝統色250色と、CSSの名前付き色約140色（gray／grey などの綴り違いは1色に統合）を収録しています。今後も拡充予定です。</p>
-          </div>
-        </div>
-
-        <h2>関連ツール</h2>
-        <div class="related">
-          <a href="https://codequest.work/generator/image-color-picker/"><strong>画像カラーピッカー →</strong><span>画像から配色を抽出</span></a>
-          <a href="https://codequest.work/generator/neon-button-generator/"><strong>ネオンボタン →</strong><span>発光ボタンのCSSを生成</span></a>
-          <a href="https://codequest.work/generator/clip-path/"><strong>clip-path ジェネレーター →</strong><span>図形の切り抜きCSS</span></a>
-          <a href="https://codequest.work/generator/animation-gallery/"><strong>CSSアニメーション集 →</strong><span>100種のアニメをコピペ</span></a>
-        </div>
-      </div>
-    </section>
+    <p class="hint" style="text-align:center;margin:28px auto 0;max-width:760px;">色名の由来・伝統色とCSS名前付き色の解説・配色の基本・FAQは<a href="howto.html">色名の由来・配色ガイド</a>をご覧ください。</p>
 
     <!-- 広告（フッター上・PC 728×90 / SP 320×50 固定） -->
     <div class="cd-ad">
@@ -228,6 +124,7 @@
     <footer>
       <span>&copy; 2026 色の辞書 | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
       <div class="footer-links">
+        <a href="howto.html">&#128214; 色名の由来・配色ガイド</a>
         <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
         <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
       </div>

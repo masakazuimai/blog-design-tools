@@ -69,62 +69,6 @@
         ]
       }
     </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Is the Slider Generator free?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. It is completely free with no signup and no watermark. The generated HTML/JS can be used commercially." }
-          },
-          {
-            "@type": "Question",
-            "name": "Should I choose Swiper, Splide or Slick?",
-            "acceptedAnswer": { "@type": "Answer", "text": "For new projects choose Swiper (no jQuery, actively developed) or Splide (lightweight, accessible). Slick requires jQuery and is no longer maintained, so it is not recommended for new work; the code is provided mainly for maintaining existing Slick sliders." }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I use my own images?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Replace the sample image (Unsplash) URLs in the generated code with your own image paths." }
-          },
-          {
-            "@type": "Question",
-            "name": "Does it support fade (cross-fade)?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Select the Fade effect and the generator outputs the fade configuration for each library. Slides per view is automatically locked to 1 for fade." }
-          },
-          {
-            "@type": "Question",
-            "name": "What is the difference between a carousel and a slider?",
-            "acceptedAnswer": { "@type": "Answer", "text": "They mean essentially the same thing. A UI that shows multiple images or items side by side and lets you cycle through them is called a carousel or a slider. This tool generates the same code either way." }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I build a slider with thumbnails?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Turn on Thumbnail gallery to generate a main slider synced with a thumbnail strip (Swiper thumbs, Splide sync, Slick asNavFor)." }
-          },
-          {
-            "@type": "Question",
-            "name": "Does it support coverflow or infinite scroll?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. With Swiper you can use coverflow, cube, flip and cards 3D effects, and all three libraries support an infinite scroll (marquee) effect." }
-          }
-        ]
-      }
-    </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "HowTo",
-        "name": "Generate slider code with the Slider Generator",
-        "description": "Pick a library, set the motion and layout, then copy ready-to-paste code in three steps.",
-        "step": [
-          { "@type": "HowToStep", "name": "Pick a library", "text": "Choose Swiper, Splide or Slick from the tabs." },
-          { "@type": "HowToStep", "name": "Configure motion and layout", "text": "Set slides per view, autoplay, fade, infinite scroll, arrows and more. The preview updates instantly." },
-          { "@type": "HowToStep", "name": "Copy and paste the code", "text": "Click Copy code to get the CDN includes, HTML and init JS, swap the sample images and paste." }
-        ]
-      }
-    </script>
   </head>
   <body>
     <header>
@@ -293,93 +237,7 @@
         <p class="output-note">Replace the sample image (Unsplash) <code>&lt;img src&gt;</code> with your own. CDN tags are included in the output.</p>
       </section>
 
-      <section class="article">
-        <div class="answer-box">
-          <p>The <strong>Slider Generator</strong> creates image slider (carousel) code for <strong>Swiper, Splide and Slick</strong> from a single configuration, with a live preview. Free, no signup, no watermark — the generated code can be used commercially.</p>
-        </div>
-
-        <h2>Choosing a slider / carousel library</h2>
-        <table class="compare-table">
-          <thead>
-            <tr>
-              <th>Library</th>
-              <th>jQuery</th>
-              <th>Size</th>
-              <th>Maintenance</th>
-              <th>Best for</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Swiper</strong></td>
-              <td>No</td>
-              <td>~140KB</td>
-              <td>Actively developed</td>
-              <td>Feature-rich default. 3D, thumbnails and more</td>
-            </tr>
-            <tr>
-              <td><strong>Splide</strong></td>
-              <td>No</td>
-              <td>~29KB (lightest)</td>
-              <td>Maintained</td>
-              <td>Lightest, accessibility-first</td>
-            </tr>
-            <tr>
-              <td><strong>Slick</strong></td>
-              <td>Required</td>
-              <td>~42KB + jQuery</td>
-              <td>Unmaintained (legacy)</td>
-              <td>Maintaining existing sites; migrate to Swiper/Splide</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h2>How to use (3 steps)</h2>
-        <ol>
-          <li>Pick a library from the <strong>Swiper / Splide / Slick</strong> tabs.</li>
-          <li>Set slides per view, autoplay, fade, arrows and more — the preview updates instantly.</li>
-          <li>Click “Copy code”, swap the sample images for your own, and paste.</li>
-        </ol>
-
-        <h2>FAQ</h2>
-        <div class="faq">
-          <div class="faq-item">
-            <h3>Is the Slider Generator free?</h3>
-            <p>Yes. It is completely free with no signup and no watermark. The generated code can be used commercially.</p>
-          </div>
-          <div class="faq-item">
-            <h3>Should I choose Swiper, Splide or Slick?</h3>
-            <p>For new projects choose <strong>Swiper</strong> or <strong>Splide</strong>. Slick requires jQuery and is no longer maintained, so it is not recommended for new work.</p>
-          </div>
-          <div class="faq-item">
-            <h3>Can I use my own images?</h3>
-            <p>Yes. Replace the sample image (Unsplash) URLs in the generated code with your own image paths.</p>
-          </div>
-          <div class="faq-item">
-            <h3>Does it support fade (cross-fade)?</h3>
-            <p>Yes. Select the Fade effect and the generator outputs the fade configuration for each library. Slides per view is locked to 1 for fade.</p>
-          </div>
-          <div class="faq-item">
-            <h3>What is the difference between a carousel and a slider?</h3>
-            <p>They mean essentially the same thing. A UI that shows multiple images or items side by side and lets you cycle through them is called a <strong>carousel</strong> or a <strong>slider</strong>. This tool generates the same code either way.</p>
-          </div>
-          <div class="faq-item">
-            <h3>Can I build a slider with thumbnails?</h3>
-            <p>Yes. Turn on “Thumbnail gallery” to generate a main slider synced with a thumbnail strip (Swiper <code>thumbs</code>, Splide <code>sync</code>, Slick <code>asNavFor</code>).</p>
-          </div>
-          <div class="faq-item">
-            <h3>Does it support coverflow or infinite scroll?</h3>
-            <p>Yes. With Swiper you can use coverflow, cube, flip and cards 3D effects, and all three libraries support an infinite scroll (marquee) effect.</p>
-          </div>
-        </div>
-
-        <h2>Related tools</h2>
-        <div class="related">
-          <a href="https://codequest.work/generator/clip-path/en/"><strong>clip-path Generator →</strong><span>Create CSS clip shapes</span></a>
-          <a href="https://codequest.work/generator/animation-gallery/en/"><strong>CSS Animations →</strong><span>100 copy-paste animations</span></a>
-          <a href="https://codequest.work/generator/image-compressor/en/"><strong>Image Compressor →</strong><span>Optimize slider images</span></a>
-        </div>
-      </section>
+      <p class="hint" style="text-align:center;margin:24px auto 0;max-width:760px;">For choosing a library, the 3-step workflow, ready-made patterns, common mistakes and FAQ, see the <a href="howto.html">how-to guide</a>.</p>
     </div>
 
     <div class="ad-wrap" style="margin: 32px auto; text-align: center;">
@@ -394,6 +252,7 @@
     <footer>
       <span>&copy; 2026 Slider Generator | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
       <div class="footer-links">
+        <a href="howto.html">&#128214; How to use &amp; FAQ</a>
         <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
         <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
       </div>
