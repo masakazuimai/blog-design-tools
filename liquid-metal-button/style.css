@@ -124,3 +124,66 @@ body {
   text-indent: 0.25em;
   color: var(--icon-color);
 }
+
+/* SEO用の見出し・フッター（2カラムグリッドを全幅でまたぐ） */
+.lm-head {
+  grid-column: 1 / -1;
+  max-width: 70rem;
+  margin: 0 auto 1rem;
+  text-align: center;
+}
+
+.lm-head h1 {
+  color: #e8e4df;
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.lm-head .accent {
+  color: #b9c4cf;
+}
+
+.lm-head p {
+  color: #9a9591;
+  font-size: 1.6rem;
+  line-height: 1.8;
+  margin-top: 1.2rem;
+}
+
+.lm-foot {
+  grid-column: 1 / -1;
+  margin-top: 1rem;
+  text-align: center;
+  color: #6f6b68;
+  font-size: 1.6rem;
+  line-height: 2;
+}
+
+.lm-foot a {
+  color: #9aa6b2;
+  text-decoration: none;
+}
+
+.lm-foot a:hover {
+  text-decoration: underline;
+}
+
+.lm-foot-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.6rem;
+  margin-left: 1.6rem;
+}
+
+@media (max-width: 720px) {
+  .lm-head h1 {
+    font-size: 2.4rem;
+  }
+  .lm-foot-links {
+    display: flex;
+    margin-left: 0;
+    margin-top: 0.8rem;
+  }
+}
