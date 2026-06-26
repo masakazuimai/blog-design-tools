@@ -67,44 +67,6 @@
         ]
       }
     </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "ライブ屈折はどのブラウザで表示されますか？",
-            "acceptedAnswer": { "@type": "Answer", "text": "背後ピクセルを歪ませるライブ屈折は、Chrome・Edge などChromium系ブラウザで表示されます。Safari・Firefox は backdrop-filter の url() フィルタに対応していないため、ぼかし＋ティントのフロストガラスに自動で劣化します。レイアウトは崩れません。" }
-          },
-          {
-            "@type": "Question",
-            "name": "既存のWebGL版「Liquid Glassジェネレーター」と何が違いますか？",
-            "acceptedAnswer": { "@type": "Answer", "text": "WebGL版は背景画像をcanvasに焼き込んで屈折させる方式で、ヒーローやカードのように背景が固定された場面に向きます。本ツールは backdrop-filter で背後にある実際のページを屈折させるため、スクロールすると後ろの動きに歪みが追従します。ヘッダーやフローティングUIなど“下が透けて動く”場面に向いています。" }
-          },
-          {
-            "@type": "Question",
-            "name": "背景画像は必要ですか？",
-            "acceptedAnswer": { "@type": "Answer", "text": "不要です。背後にあるページ内容そのものを透過・屈折するため、貼り付け先の背景に自動で追従します。背景画像の差し替えやCORSの心配もありません。" }
-          },
-          {
-            "@type": "Question",
-            "name": "スマホ（iOS Safari）でも屈折しますか？",
-            "acceptedAnswer": { "@type": "Answer", "text": "iOS Safari は WebKit エンジンのため、屈折は表示されず、ぼかし＋ティントのフロストガラスに劣化します。デザインとしては成立しますが、歪みのアニメーションを必須にする設計は避けるのがおすすめです。" }
-          },
-          {
-            "@type": "Question",
-            "name": "クリックできる範囲はガラスの形状と一致しますか？",
-            "acceptedAnswer": { "@type": "Answer", "text": "はい。リンクURLを入力すると <a> 要素として出力し、clip-path: inset(0 round R) でクリック領域を角丸や円の形状に厳密一致させます。円形ボタンで四隅が反応してしまうこともありません。" }
-          },
-          {
-            "@type": "Question",
-            "name": "出力したコードはそのまま使えますか？",
-            "acceptedAnswer": { "@type": "Answer", "text": "はい。HTML（マークアップ＋SVGフィルタ）とCSSをコピーして貼るだけで動きます。外部ライブラリ依存はなく自己完結しているため、貼り付け先のCSSにも影響されにくい構成です。" }
-          }
-        ]
-      }
-    </script>
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
   </head>
@@ -188,52 +150,7 @@
       </div>
     </div>
 
-    <!-- 記事 -->
-    <article class="article">
-      <div class="answer-box">
-        <p>透過リキッドガラスとは、<strong>backdrop-filter</strong> と SVG の <strong>feDisplacementMap</strong> を組み合わせ、要素の背後にあるページのピクセルそのものをレンズのように屈折・ぼかしして見せる手法です。背景を焼き込まないため、スクロールで後ろが動くと歪みもそれに追従します。</p>
-      </div>
-
-      <h2>WebGL方式とCSS方式（本ツール）の違い</h2>
-      <p>「Liquid Glass」をWebで作る方法は大きく2系統あります。用途で使い分けるのがおすすめです。</p>
-      <table class="compare-table">
-        <thead>
-          <tr><th>観点</th><th>WebGL版（liquid-glass-generator）</th><th>本ツール（CSS / backdrop-filter）</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>屈折する対象</td><td>canvasに焼き込んだ背景画像</td><td>背後にある実際のページ（ライブ）</td></tr>
-          <tr><td>スクロール追従</td><td>×（背景は固定）</td><td>○（Chromium系）</td></tr>
-          <tr><td>出力コード</td><td>&lt;canvas&gt; ＋ JS（ogl）</td><td>&lt;a&gt;/&lt;div&gt; ＋ CSS / SVG</td></tr>
-          <tr><td>得意な用途</td><td>ヒーロー・カードの見せ場</td><td>ヘッダー・フローティングUI</td></tr>
-          <tr><td>ブラウザ</td><td>WebGL全般</td><td>屈折はChromium、他はフロストに劣化</td></tr>
-        </tbody>
-      </table>
-
-      <h2>使い方（3ステップ）</h2>
-      <ol>
-        <li>形状（ボタン／ピル／円／カード）とサイズを選ぶ</li>
-        <li>歪み・ぼかし・ティント・縁ハイライトを調整する</li>
-        <li>出力された HTML と CSS をコピーして貼り付ける</li>
-      </ol>
-
-      <h2>よくある質問</h2>
-      <div class="faq-item"><h3>ライブ屈折はどのブラウザで表示されますか？</h3><p>背後ピクセルを歪ませるライブ屈折は Chrome・Edge などChromium系で表示されます。Safari・Firefox は backdrop-filter の url() フィルタに対応していないため、ぼかし＋ティントのフロストガラスに自動で劣化します（レイアウトは崩れません）。</p></div>
-      <div class="faq-item"><h3>既存のWebGL版「Liquid Glassジェネレーター」と何が違いますか？</h3><p>WebGL版は背景画像をcanvasに焼き込んで屈折させる方式で、背景が固定されたヒーローやカード向け。本ツールは backdrop-filter で背後の実ページを屈折させるため、スクロールで後ろが動くと歪みも追従し、ヘッダーやフローティングUIに向きます。</p></div>
-      <div class="faq-item"><h3>背景画像は必要ですか？</h3><p>不要です。背後にあるページ内容そのものを透過・屈折するため、貼り付け先の背景に自動で追従します。</p></div>
-      <div class="faq-item"><h3>スマホ（iOS Safari）でも屈折しますか？</h3><p>iOS Safari は WebKit エンジンのため屈折は出ず、フロスト表示に劣化します。歪みを前提にしない設計がおすすめです。</p></div>
-      <div class="faq-item"><h3>クリックできる範囲はガラスの形状と一致しますか？</h3><p>はい。リンクURLを入れると &lt;a&gt; として出力し、clip-path でクリック領域を角丸・円に厳密一致させます。</p></div>
-      <div class="faq-item"><h3>出力したコードはそのまま使えますか？</h3><p>HTML（マークアップ＋SVGフィルタ）とCSSをコピーして貼るだけ。外部依存なしの自己完結構成です。</p></div>
-
-      <h2>関連ツール</h2>
-      <div class="related">
-        <a href="https://codequest.work/generator/liquid-glass-generator/" target="_blank" rel="noopener">Liquid Glassジェネレーター（WebGL版）</a>
-        <a href="https://codequest.work/generator/clip-path/" target="_blank" rel="noopener">clip-path ジェネレーター</a>
-        <a href="https://codequest.work/generator/animation-gallery/" target="_blank" rel="noopener">CSSアニメーションギャラリー</a>
-        <a href="https://codequest.work/generator/heading-design-previewer/" target="_blank" rel="noopener">見出しデザインプレビュー</a>
-        <a href="https://codequest.work/generator/grid/" target="_blank" rel="noopener">CSS Grid ジェネレーター</a>
-        <a href="https://codequest.work/generator/flex/" target="_blank" rel="noopener">Flexbox ジェネレーター</a>
-      </div>
-    </article>
+    <p class="hint" style="text-align:center;margin:16px auto 0;max-width:760px;">使い方・WebGL方式との違い・FAQは<a href="howto.html">使い方ガイド</a>をご覧ください。背景画像を焼き込むWebGL版が必要なら<a href="https://codequest.work/generator/liquid-glass-generator/">Liquid Glassジェネレーター</a>もあります。</p>
 
     <!-- AdSense -->
     <div class="ad-wrap">
@@ -247,6 +164,7 @@
     <footer>
       <span>&copy; 2026 透過リキッドガラスCSSジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
       <div class="footer-links">
+        <a href="howto.html">&#128214; 使い方・FAQ</a>
         <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
         <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
       </div>

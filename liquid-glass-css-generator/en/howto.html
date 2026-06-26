@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to Use the Liquid Glass CSS Generator — WebGL vs. CSS, 3 Steps & FAQ | CodeQuest</title>
+    <meta name="description" content="How to use the Liquid Glass CSS Generator: how backdrop-filter and SVG refract the live page behind your element, how it differs from the WebGL version, the 3-step workflow, browser support, and FAQ." />
+    <link rel="canonical" href="https://codequest.work/generator/liquid-glass-css-generator/en/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/liquid-glass-css-generator/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/liquid-glass-css-generator/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/liquid-glass-css-generator/howto.html" />
+    <!-- OGP -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/liquid-glass-css-generator/en/howto.html" />
+    <meta property="og:title" content="How to Use the Liquid Glass CSS Generator — WebGL vs. CSS & FAQ" />
+    <meta property="og:description" content="How backdrop-filter refracts the live page behind your element, how it differs from the WebGL version, the 3-step workflow, browser support, and FAQ." />
+    <meta property="og:image" content="https://codequest.work/generator/liquid-glass-css-generator/assets/og-en.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="How to Use the Liquid Glass CSS Generator — WebGL vs. CSS & FAQ" />
+    <meta name="twitter:description" content="How backdrop-filter refracts the live page, how it differs from WebGL, the 3-step workflow, and FAQ." />
+    <meta name="twitter:image" content="https://codequest.work/generator/liquid-glass-css-generator/assets/og-en.jpg" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "Liquid Glass CSS Generator", "item": "https://codequest.work/generator/liquid-glass-css-generator/en/" },
+          { "@type": "ListItem", "position": 4, "name": "How to use", "item": "https://codequest.work/generator/liquid-glass-css-generator/en/howto.html" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to use the Liquid Glass CSS Generator",
+        "description": "Pick a shape and size, tune distortion, blur, tint, and edge highlight, and copy the generated HTML/CSS.",
+        "step": [
+          { "@type": "HowToStep", "name": "Pick a shape and size", "text": "Pick a shape (button / pill / circle / card) and size." },
+          { "@type": "HowToStep", "name": "Tune the look", "text": "Tune distortion, blur, tint and edge highlight." },
+          { "@type": "HowToStep", "name": "Paste the code", "text": "Copy the generated HTML and CSS and paste them in." }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Which browsers show the live refraction?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The refraction that bends the backdrop pixels works in Chromium-based browsers such as Chrome and Edge. Safari and Firefox do not support url() filters in backdrop-filter, so they gracefully fall back to a blur + tint frosted glass. The layout never breaks." }
+          },
+          {
+            "@type": "Question",
+            "name": "How is this different from the WebGL Liquid Glass Generator?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The WebGL version bakes a background image into a canvas and refracts that, which suits heroes and cards with a fixed background. This tool refracts the actual page behind the element with backdrop-filter, so the distortion follows the scroll. It is ideal for headers and floating UI where the content underneath moves." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need a background image?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. It refracts whatever page content sits behind the element, so it adapts to wherever you paste it. There is no image to swap and no CORS to worry about." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does it refract on mobile (iOS Safari)?",
+            "acceptedAnswer": { "@type": "Answer", "text": "iOS Safari uses the WebKit engine, so the refraction does not appear and it falls back to a frosted blur + tint. It still looks like glass, but avoid designs that depend on the distortion." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does the clickable area match the glass shape?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. When you add a link URL it outputs an <a> element and uses clip-path: inset(0 round R) so the clickable area matches the rounded or circular shape exactly. Corners of a circular button never trigger the link." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use the generated code as-is?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Copy the HTML (markup + SVG filter) and the CSS, paste them, and it works. There are no external libraries, so it is self-contained and resilient to the host page's CSS." }
+          }
+        ]
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="stylesheet" href="../css/style.css?v=20260625a" />
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+    <style>
+      .howto-wrap { max-width: 860px; margin: 0 auto; padding: 24px 20px 8px; }
+      .back-btn { display: inline-block; margin: 8px 0 16px; color: var(--accent, #3498db); text-decoration: none; font-size: 16px; }
+      .back-btn:hover { text-decoration: underline; }
+    </style>
+  </head>
+  <body>
+    <div class="howto-wrap">
+      <a href="/generator/liquid-glass-css-generator/en/" class="back-btn">← Back to the Liquid Glass CSS Generator (tool)</a>
+      <h1>How to use the Liquid Glass CSS Generator</h1>
+
+      <article class="article">
+        <div class="answer-box">
+          <p>A transparent liquid glass effect combines <strong>backdrop-filter</strong> with the SVG <strong>feDisplacementMap</strong> filter to refract and blur the pixels of the page sitting behind an element, like a lens. Because nothing is baked into an image, the distortion follows the scroll as the content underneath moves.</p>
+        </div>
+
+        <h2>WebGL vs CSS (this tool)</h2>
+        <p>There are two main ways to build "Liquid Glass" on the web. Pick by use case.</p>
+        <table class="compare-table">
+          <thead>
+            <tr><th>Aspect</th><th>WebGL version (liquid-glass-generator)</th><th>This tool (CSS / backdrop-filter)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>What is refracted</td><td>A background image baked into a canvas</td><td>The actual page behind it (live)</td></tr>
+            <tr><td>Follows the scroll</td><td>No (background is fixed)</td><td>Yes (Chromium)</td></tr>
+            <tr><td>Output code</td><td>&lt;canvas&gt; + JS (ogl)</td><td>&lt;a&gt;/&lt;div&gt; + CSS / SVG</td></tr>
+            <tr><td>Best for</td><td>Hero and card showpieces</td><td>Headers and floating UI</td></tr>
+            <tr><td>Browsers</td><td>WebGL everywhere</td><td>Refraction in Chromium, frosted fallback elsewhere</td></tr>
+          </tbody>
+        </table>
+
+        <h2>How to use (3 steps)</h2>
+        <ol>
+          <li>Pick a shape (button / pill / circle / card) and size</li>
+          <li>Tune distortion, blur, tint and edge highlight</li>
+          <li>Copy the generated HTML and CSS and paste them in</li>
+        </ol>
+
+        <h2>FAQ</h2>
+        <div class="faq-item"><h3>Which browsers show the live refraction?</h3><p>The refraction that bends backdrop pixels works in Chromium browsers (Chrome, Edge). Safari and Firefox don't support url() filters in backdrop-filter, so they fall back to a blur + tint frosted glass (the layout never breaks).</p></div>
+        <div class="faq-item"><h3>How is this different from the WebGL Liquid Glass Generator?</h3><p>The WebGL version bakes a background image into a canvas (good for fixed-background heroes and cards). This tool refracts the live page with backdrop-filter, so the distortion follows the scroll — ideal for headers and floating UI.</p></div>
+        <div class="faq-item"><h3>Do I need a background image?</h3><p>No. It refracts whatever page content is behind the element, so it adapts to wherever you paste it.</p></div>
+        <div class="faq-item"><h3>Does it refract on mobile (iOS Safari)?</h3><p>iOS Safari uses WebKit, so the refraction doesn't appear and it falls back to a frosted look. Avoid designs that depend on the distortion.</p></div>
+        <div class="faq-item"><h3>Does the clickable area match the glass shape?</h3><p>Yes. Add a link URL and it outputs an &lt;a&gt; with clip-path so the clickable area matches the rounded or circular shape exactly.</p></div>
+        <div class="faq-item"><h3>Can I use the generated code as-is?</h3><p>Yes. Copy the HTML (markup + SVG filter) and the CSS and paste them. No external dependencies — it's self-contained.</p></div>
+
+        <h2>Related tools</h2>
+        <div class="related">
+          <a href="https://codequest.work/generator/liquid-glass-generator/en/" target="_blank" rel="noopener">Liquid Glass Generator (WebGL)</a>
+          <a href="https://codequest.work/generator/clip-path/en/" target="_blank" rel="noopener">clip-path Generator</a>
+          <a href="https://codequest.work/generator/animation-gallery/en/" target="_blank" rel="noopener">CSS Animation Gallery</a>
+          <a href="https://codequest.work/generator/grid/en/" target="_blank" rel="noopener">CSS Grid Generator</a>
+          <a href="https://codequest.work/generator/flex/en/" target="_blank" rel="noopener">Flexbox Generator</a>
+        </div>
+      </article>
+
+      <p style="margin-top:24px;"><a href="/generator/liquid-glass-css-generator/en/" class="back-btn">← Use the Liquid Glass CSS Generator (tool)</a></p>
+    </div>
+
+    <div class="ad-wrap">
+      <!-- liquid-glass-css-generator en -->
+      <ins class="adsbygoogle ad-banner" style="display:inline-block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="9941065628"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 Liquid Glass CSS Generator | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>
