@@ -136,3 +136,26 @@ footer a:hover { color: var(--accent); }
   .ad-wrap { min-height: 100px; }
   .ad-banner { width: 320px; height: 100px; }
 }
+
+/* 使い方ガイドへの導線（ヒント）。SPでは左寄せ＋行間広めで読みやすくする */
+.hint {
+  max-width: 760px;
+  margin: 16px auto 0;
+  padding: 0 16px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text);
+}
+.hint a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+@media (max-width: 600px) {
+  .hint {
+    text-align: left;
+    margin-top: 20px;
+    line-height: 1.9;
+  }
+}
