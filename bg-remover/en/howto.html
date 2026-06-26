@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to Use the Background Remover — Steps, Output Formats & FAQ | CodeQuest</title>
+    <meta name="description" content="How to use the free AI Background Remover: steps to cut out people, products, and animals automatically, how to choose between transparent PNG, WebP, and white-background JPG, tips for clean cutouts, and FAQ." />
+    <link rel="canonical" href="https://codequest.work/generator/bg-remover/en/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/bg-remover/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/bg-remover/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/bg-remover/howto.html" />
+    <!-- OGP -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/bg-remover/en/howto.html" />
+    <meta property="og:title" content="How to Use the Background Remover — Steps, Output Formats & FAQ" />
+    <meta property="og:description" content="Steps to cut out subjects automatically, how to choose between transparent PNG, WebP, and white-background JPG, tips for clean cutouts, and FAQ." />
+    <meta property="og:image" content="https://codequest.work/generator/bg-remover/assets/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="How to Use the Background Remover — Steps & FAQ" />
+    <meta name="twitter:description" content="Steps to cut out subjects automatically, choosing PNG / WebP / JPG output, tips for clean cutouts, and FAQ." />
+    <meta name="twitter:image" content="https://codequest.work/generator/bg-remover/assets/og.jpg" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "Background Remover", "item": "https://codequest.work/generator/bg-remover/en/" },
+          { "@type": "ListItem", "position": 4, "name": "How to use", "item": "https://codequest.work/generator/bg-remover/en/howto.html" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to use the Background Remover",
+        "description": "Load an image, choose an output format, let the AI cut out the subject, and download.",
+        "step": [
+          { "@type": "HowToStep", "name": "Choose images", "text": "Drag & drop your images, or click to select them (multiple selection is supported). The AI model downloads automatically the first time." },
+          { "@type": "HowToStep", "name": "Pick an output format", "text": "Choose PNG (transparent), WebP (transparent), or JPG (white background)." },
+          { "@type": "HowToStep", "name": "Remove the background", "text": "Press “Remove background” and the AI cuts out each subject one by one." },
+          { "@type": "HowToStep", "name": "Download", "text": "Download images individually or all together as a ZIP." }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Are my uploaded images stored anywhere?", "acceptedAnswer": { "@type": "Answer", "text": "No. The AI cutout runs entirely in your browser (on your own device), and your images are never sent to a server. The only network activity is the one-time download of the AI model itself." } },
+          { "@type": "Question", "name": "Is it free? Are there any limits?", "acceptedAnswer": { "@type": "Answer", "text": "It is completely free, with no usage limits and no account required. You can cut out as many images as you like." } },
+          { "@type": "Question", "name": "Why does the first run take a while?", "acceptedAnswer": { "@type": "Answer", "text": "Because the AI model that detects subjects (about 40MB) is downloaded only the first time. From the second time onward, your browser cache is used, so processing starts right away." } },
+          { "@type": "Question", "name": "What kinds of images cut out cleanly?", "acceptedAnswer": { "@type": "Answer", "text": "Photos with a clear boundary between the subject and the background — people, products, animals — work best. Fine hair, semi-transparent objects, and photos where the subject blends into the background may produce rougher edges." } },
+          { "@type": "Question", "name": "How do I make the cutout file smaller?", "acceptedAnswer": { "@type": "Answer", "text": "Use the companion Image Compressor & WebP Converter to convert to WebP, compress, and resize while keeping transparency." } }
+        ]
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css?v=20260625a" />
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+    <style>
+      .howto-wrap { max-width: 860px; margin: 0 auto; padding: 24px 20px 8px; }
+      .back-btn { display: inline-block; margin: 8px 0 16px; color: var(--accent, #3498db); text-decoration: none; font-size: 16px; }
+      .back-btn:hover { text-decoration: underline; }
+      .howto-table { width: 100%; border-collapse: collapse; margin: 8px 0 4px; font-size: 16px; }
+      .howto-table th, .howto-table td { border: 1px solid var(--border, #e2e8f0); padding: 10px 12px; text-align: left; vertical-align: top; }
+      .howto-table th { background: var(--surface, #f8fafc); white-space: nowrap; }
+    </style>
+  </head>
+  <body>
+    <div class="howto-wrap">
+      <a href="/generator/bg-remover/en/" class="back-btn">← Back to the Background Remover (tool)</a>
+      <h1>How to use the Background Remover</h1>
+
+      <p>The <strong>Background Remover</strong> is a free tool that lets AI automatically detect subjects — people, products, animals — and make only the background transparent, just by dragging and dropping an image. No manual selection or pen work is required, and your images are never uploaded: <strong>everything runs in your browser</strong>. This page covers what the tool can do, how to use it, how to choose an output format, and frequently asked questions.</p>
+
+      <section class="info-section">
+        <h2>What this tool does</h2>
+        <ul>
+          <li><strong>AI subject cutout</strong> — AI automatically detects subjects such as people, products, and animals, and cleanly removes the background. No manual selection or pen work required.</li>
+          <li><strong>Transparent PNG / WebP output</strong> — Save the cutout as a transparent PNG or WebP. Exporting as a white-background JPG is also supported.</li>
+          <li><strong>Batch processing</strong> — Cut out multiple images at once and download them together as a ZIP. There are no usage limits.</li>
+          <li><strong>Privacy first</strong> — All AI processing runs entirely in your browser (on your own device). Your images are never uploaded to any external server.</li>
+        </ul>
+      </section>
+
+      <section class="info-section">
+        <h2>How to use</h2>
+        <ol>
+          <li>Drag & drop your images, or click to select them (multiple selection is supported). The AI model downloads automatically the first time.</li>
+          <li>Choose an output format (PNG, WebP, or JPG).</li>
+          <li>Press “Remove background” and the AI cuts out each subject one by one.</li>
+          <li>Download images individually or all together as a ZIP.</li>
+        </ol>
+      </section>
+
+      <section class="info-section">
+        <h2>Choosing an output format</h2>
+        <p>Pick one of three output formats depending on how you'll use the cutout.</p>
+        <table class="howto-table">
+          <thead>
+            <tr><th>Format</th><th>Background</th><th>Best for</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>PNG (transparent)</td><td>Transparent</td><td>Maximum compatibility. The go-to format for keeping transparency across documents, slides, and other tools.</td></tr>
+            <tr><td>WebP (transparent)</td><td>Transparent</td><td>Websites and blogs. Same look as PNG at a smaller file size — better for page speed (Core Web Vitals).</td></tr>
+            <tr><td>JPG (white background)</td><td>White</td><td>When you don't need transparency — white-background product shots or profile photos. The lightest option, but transparency is not preserved.</td></tr>
+          </tbody>
+        </table>
+        <p class="hint">To compress, resize, or convert your cutout further, try the <a href="../../image-compressor/en/">Image Compressor &amp; WebP Converter</a> (it keeps transparency intact).</p>
+      </section>
+
+      <section class="info-section">
+        <h2>Tips for clean cutouts</h2>
+        <ul>
+          <li><strong>Make the subject stand out from the background</strong> — The greater the contrast in color and brightness between subject and background, the cleaner the extracted edges.</li>
+          <li><strong>Know the tricky cases</strong> — Fine hair, semi-transparent glass, and photos where the subject blends into the background may produce rougher edges.</li>
+          <li><strong>You don't need extreme resolution</strong> — Cutout accuracy depends on how the subject is captured. Very large images just take longer to process, so a size suited to your use case is enough.</li>
+        </ul>
+      </section>
+
+      <section class="info-section">
+        <h2>Frequently asked questions</h2>
+        <dl class="faq">
+          <dt>Are my uploaded images stored anywhere?</dt>
+          <dd>No. The AI cutout runs entirely in your browser (on your own device), and your images are never sent to a server. The only network activity is the one-time download of the AI model itself.</dd>
+          <dt>Is it free? Are there any limits?</dt>
+          <dd>It is completely free, with no usage limits and no account required. You can cut out as many images as you like.</dd>
+          <dt>Why does the first run take a while?</dt>
+          <dd>Because the AI model that detects subjects (about 40MB) is downloaded only the first time. From the second time onward, your browser cache is used, so processing starts right away.</dd>
+          <dt>What kinds of images cut out cleanly?</dt>
+          <dd>Photos with a clear boundary between the subject and the background — people, products, animals — work best. Fine hair, semi-transparent objects, and photos where the subject blends into the background may produce rougher edges.</dd>
+          <dt>How do I make the cutout file smaller?</dt>
+          <dd>Use the companion <a href="../../image-compressor/en/">Image Compressor &amp; WebP Converter</a> to convert to WebP, compress, and resize while keeping transparency.</dd>
+        </dl>
+      </section>
+
+      <p style="margin-top:24px;"><a href="/generator/bg-remover/en/" class="back-btn">← Use the Background Remover (tool)</a></p>
+    </div>
+
+    <div class="ad-wrap" style="margin: 32px auto; text-align: center;">
+      <!-- bg-remover en -->
+      <ins class="adsbygoogle ad-banner" style="display:inline-block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="6329123671"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 Free Background Remover | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>
