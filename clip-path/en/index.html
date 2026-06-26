@@ -69,52 +69,6 @@
         ]
       }
     </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Is the clip-path generator free?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. It is completely free with no signup and no watermark. The generated code is yours to use commercially." }
-          },
-          {
-            "@type": "Question",
-            "name": "Do I need -webkit-clip-path?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Adding it is safer for older Safari and Chrome. This tool outputs both clip-path and -webkit-clip-path automatically." }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I add or remove points?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Double-click the preview to add a point on the nearest edge, and double-click a point to remove it (minimum 3)." }
-          },
-          {
-            "@type": "Question",
-            "name": "Can clip-path be animated?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Two polygons with the same number of points transition smoothly. Enable \"Animate on hover\" to output the transition and hover code." }
-          },
-          {
-            "@type": "Question",
-            "name": "Which browsers are supported?",
-            "acceptedAnswer": { "@type": "Answer", "text": "clip-path works in Chrome, Safari, Edge and Firefox. The basic shapes (polygon/circle/ellipse/inset) are widely supported." }
-          }
-        ]
-      }
-    </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "HowTo",
-        "name": "How to generate CSS clip-path code with the generator",
-        "description": "Build a clip-path value by dragging and copy the CSS with the -webkit- prefix in three steps.",
-        "step": [
-          { "@type": "HowToStep", "name": "Pick a shape type", "text": "Choose polygon, circle, ellipse or inset. For polygons, start from a preset shape to save time." },
-          { "@type": "HowToStep", "name": "Drag points to fine-tune", "text": "Drag the points on the preview to adjust the shape. Double-click to add a point, double-click a point to remove it." },
-          { "@type": "HowToStep", "name": "Copy and paste the code", "text": "Use Copy code to grab the CSS with clip-path and -webkit-clip-path, then paste it onto your target element." }
-        ]
-      }
-    </script>
   </head>
   <body>
     <header>
@@ -279,86 +233,6 @@
         <p class="output-note">Add <code>class="clip-path"</code> to your element and paste. <code>-webkit-clip-path</code> is included for older browser support.</p>
       </section>
 
-      <!-- article -->
-      <section class="article">
-        <div class="answer-box">
-          <p><strong>clip-path</strong> is a CSS property that <strong>clips</strong> an element to a shape — polygon, circle, ellipse and more. This free generator lets you build the <code>clip-path</code> value by dragging and copy it instantly. No signup, no watermark, free for commercial use.</p>
-        </div>
-
-        <h2>What is clip-path?</h2>
-        <p>clip-path clips the visible area of an element to a shape. You can use basic shapes like <code>polygon()</code>, <code>circle()</code>, <code>ellipse()</code> and <code>inset()</code> to mask images, cut diagonal sections, speech bubbles, arrows, stripes and checkerboards — with pure CSS and no image editing.</p>
-
-        <h2>How to use (3 steps)</h2>
-        <ol>
-          <li>Choose a shape type (polygon / circle / ellipse / inset). For polygons, pick a preset to start fast.</li>
-          <li>Drag the points on the preview to fine-tune. Double-click to add a point, double-click a point to remove it.</li>
-          <li>Click “Copy code” to get the CSS with <code>clip-path</code> and <code>-webkit-clip-path</code>, then paste it onto your element.</li>
-        </ol>
-
-        <h2>Basic shapes</h2>
-        <table class="compare-table">
-          <thead>
-            <tr>
-              <th>Function</th>
-              <th>Use</th>
-              <th>Example</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>polygon()</code></td>
-              <td>Triangles, hexagons, arrows and any custom polygon</td>
-              <td><code>polygon(50% 0, 0 100%, 100% 100%)</code></td>
-            </tr>
-            <tr>
-              <td><code>circle()</code></td>
-              <td>Crop to a circle (avatars, icons)</td>
-              <td><code>circle(50% at 50% 50%)</code></td>
-            </tr>
-            <tr>
-              <td><code>ellipse()</code></td>
-              <td>Wide or tall ellipses</td>
-              <td><code>ellipse(50% 35% at 50% 50%)</code></td>
-            </tr>
-            <tr>
-              <td><code>inset()</code></td>
-              <td>Inset rectangle (with optional rounding)</td>
-              <td><code>inset(10% round 12px)</code></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h2>Tips &amp; gotchas</h2>
-        <ul>
-          <li><strong>Older browsers</strong>: include <code>-webkit-clip-path</code> (this tool adds it automatically).</li>
-          <li><strong>Animation</strong>: to transition between two <code>polygon</code> shapes smoothly, keep the <strong>same number of points</strong>.</li>
-          <li><strong>Shadows</strong>: clip-path also clips <code>box-shadow</code>. To keep a shadow, use <code>filter: drop-shadow()</code> on the parent.</li>
-        </ul>
-
-        <h2>FAQ</h2>
-        <div class="faq">
-          <div class="faq-item">
-            <h3>Is the clip-path generator free?</h3>
-            <p>Yes. It is completely free with no signup and no watermark. The generated code is yours to use commercially.</p>
-          </div>
-          <div class="faq-item">
-            <h3>Do I need -webkit-clip-path?</h3>
-            <p>Adding it is safer for older Safari and Chrome. This tool outputs both <code>clip-path</code> and <code>-webkit-clip-path</code> automatically.</p>
-          </div>
-          <div class="faq-item">
-            <h3>Can I add or remove points?</h3>
-            <p>Yes. Double-click the preview to add a point on the nearest edge, and double-click a point to remove it (minimum 3).</p>
-          </div>
-          <div class="faq-item">
-            <h3>Can clip-path be animated?</h3>
-            <p>Yes. Two <code>polygon</code> shapes with the same number of points transition smoothly. Enable “Animate on hover” to output the transition and hover code.</p>
-          </div>
-          <div class="faq-item">
-            <h3>Which browsers are supported?</h3>
-            <p>clip-path works in Chrome, Safari, Edge and Firefox. The basic shapes (polygon/circle/ellipse/inset) are widely supported.</p>
-          </div>
-        </div>
-      </section>
     </div>
 
     <div class="ad-wrap" style="margin: 32px auto; text-align: center;">
@@ -373,6 +247,7 @@
     <footer>
       <span>&copy; 2026 clip-path generator | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
       <div class="footer-links">
+        <a href="howto.html">&#128214; How to use &amp; FAQ</a>
         <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
         <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">Other tools &rarr;</a>
       </div>
