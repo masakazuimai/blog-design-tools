@@ -740,12 +740,12 @@ main {
 }
 @media (max-width: 727px) {
   .cd-ad {
-    min-height: 50px;
+    min-height: 100px;
     padding: 20px 16px 24px;
   }
   .cd-ad ins {
     width: 320px;
-    height: 50px;
+    height: 100px;
   }
 }
 
