@@ -886,3 +886,143 @@
   .ad-wrap { min-height: 100px; }
   .ad-banner { width: 320px; height: 100px; }
 }
+
+/* ガイドへの導線（index フッター上） */
+.hint {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+}
+.hint a {
+  color: var(--color-accent);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* ============ 使い方・ガイドページ（howto.html） ============ */
+.howto-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 24px 20px 8px;
+}
+.back-btn {
+  display: inline-block;
+  margin: 8px 0 16px;
+  color: var(--color-accent);
+  text-decoration: none;
+  font-size: 16px;
+}
+.back-btn:hover { text-decoration: underline; }
+.howto-wrap > h1 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+  color: var(--color-text);
+  margin: 0 0 8px;
+}
+.article {
+  margin-top: 24px;
+}
+.article-inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+.article h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+  color: var(--color-text);
+  margin: 44px 0 14px;
+}
+.article h2:first-child { margin-top: 0; }
+.article h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 28px 0 8px;
+}
+.article p {
+  font-size: 1.04rem;
+  line-height: 1.95;
+  color: var(--color-text-secondary);
+  margin: 0 0 16px;
+}
+.article ul,
+.article ol {
+  padding-left: 1.4em;
+  margin: 0 0 18px;
+  color: var(--color-text-secondary);
+}
+.article li {
+  font-size: 1.04rem;
+  line-height: 1.9;
+  margin-bottom: 8px;
+}
+.article strong {
+  font-weight: 700;
+  color: var(--color-text);
+}
+.article code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.92em;
+  background: var(--color-accent-muted);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--color-text);
+}
+.article .lead {
+  font-size: 1.12rem;
+  line-height: 1.95;
+  color: var(--color-text);
+  padding: 20px 22px;
+  background: var(--color-surface);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 0 8px 8px 0;
+}
+.faq-item {
+  border-top: 1px solid var(--color-border);
+  padding: 20px 0;
+}
+.faq-item:last-child {
+  border-bottom: 1px solid var(--color-border);
+}
+.faq-item h3 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+  color: var(--color-text);
+}
+.faq-item p {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+.related {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+.related a {
+  display: block;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  text-decoration: none;
+  background: var(--color-surface);
+  transition: border-color 0.2s, transform 0.16s;
+}
+.related a:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+.related a strong {
+  display: block;
+  color: var(--color-text);
+  font-weight: 700;
+}
+.related a span {
+  display: block;
+  color: var(--color-text-tertiary);
+  font-size: 0.9rem;
+  margin-top: 2px;
+}

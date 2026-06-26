@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>画像カラーピッカーの使い方とよくある質問｜写真から配色を抽出するガイド</title>
+  <meta name="description" content="画像カラーピッカーの使い方を手順で解説。画像のアップロードから主要色の抽出、CSS変数・Tailwind・SCSS・HEX・RGBでのコピー、配色づくりのコツ、よくある質問までをまとめたガイドページです。">
+  <link rel="canonical" href="https://codequest.work/generator/image-color-picker/howto.html">
+  <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/image-color-picker/howto.html">
+  <link rel="alternate" hreflang="en" href="https://codequest.work/generator/image-color-picker/en/howto.html">
+  <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/image-color-picker/howto.html">
+  <meta name="robots" content="index, follow">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="CodeQuest.work">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:title" content="画像カラーピッカーの使い方とよくある質問｜写真から配色を抽出するガイド">
+  <meta property="og:description" content="画像のアップロードから主要色の抽出、CSS変数・Tailwind・SCSS・HEX・RGBでのコピー、配色づくりのコツ、よくある質問までをまとめたガイドページ。">
+  <meta property="og:url" content="https://codequest.work/generator/image-color-picker/howto.html">
+  <meta property="og:image" content="https://codequest.work/generator/image-color-picker/assets/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="画像カラーピッカーの使い方とよくある質問">
+  <meta name="twitter:description" content="画像から配色を抽出する手順、CSS変数・Tailwind・SCSSでのコピー、配色のコツ、FAQをまとめたガイド。">
+  <meta name="twitter:image" content="https://codequest.work/generator/image-color-picker/assets/og.jpg">
+  <!-- 構造化データ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+      { "@type": "ListItem", "position": 2, "name": "ジェネレーター", "item": "https://codequest.work/category/generator/" },
+      { "@type": "ListItem", "position": 3, "name": "画像カラーピッカー", "item": "https://codequest.work/generator/image-color-picker/" },
+      { "@type": "ListItem", "position": 4, "name": "使い方・FAQ", "item": "https://codequest.work/generator/image-color-picker/howto.html" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "画像から配色（カラーパレット）を抽出する方法",
+    "description": "画像カラーピッカーを使って、写真やスクリーンショットからWEBデザイン用のカラーパレットを抽出し、CSSにコピーする手順。",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "画像をアップロード", "text": "PNG・JPG・WebPなどの画像をドラッグ&ドロップ、またはファイル選択でアップロードします。画像は端末内で処理され、サーバーには送信されません。" },
+      { "@type": "HowToStep", "position": 2, "name": "色数を選んで抽出", "text": "抽出する色数（3〜12色）をスライダーで調整し、「色を抽出する」を押すと、k-means法で主要色が自動抽出されます。" },
+      { "@type": "HowToStep", "position": 3, "name": "コードをコピー", "text": "抽出された各色を、HEX・RGBに加えてCSS変数・Tailwind・SCSSの形式でワンクリックコピーし、デザインやコードに使います。" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "このツールは無料ですか？", "acceptedAnswer": { "@type": "Answer", "text": "完全無料で、登録も回数制限もありません。抽出したパレットの保存・コピーも自由に行えます。" } },
+      { "@type": "Question", "name": "アップロードした画像はサーバーに送信されますか？", "acceptedAnswer": { "@type": "Answer", "text": "いいえ。色の抽出はすべてブラウザ内（お使いの端末上）で完結し、画像が外部サーバーに送信されることはありません。" } },
+      { "@type": "Question", "name": "どんな形式でコピーできますか？", "acceptedAnswer": { "@type": "Answer", "text": "HEX・RGBに加えて、CSSカスタムプロパティ（CSS変数）・Tailwind・SCSSの形式でワンクリックコピーできます。" } },
+      { "@type": "Question", "name": "色はどのように抽出していますか？", "acceptedAnswer": { "@type": "Answer", "text": "k-means法で画像のピクセルをクラスタリングし、画像を代表する主要色を自動で抽出しています。抽出する色数は調整できます。" } },
+      { "@type": "Question", "name": "どんな画像が向いていますか？", "acceptedAnswer": { "@type": "Answer", "text": "写真・イラスト・スクリーンショットなど、色の情報を持つ画像であれば利用できます。配色の参考やデザインのカラーパレット作成に便利です。" } }
+    ]
+  }
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7Z6M3CJEV3');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPMincho&family=Noto+Serif+JP:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=20260627a">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="howto-wrap">
+    <a href="/generator/image-color-picker/" class="back-btn">← 画像カラーピッカー（ツール）に戻る</a>
+    <h1>画像カラーピッカーの使い方とよくある質問</h1>
+
+    <section class="article">
+      <div class="article-inner">
+        <p class="lead">
+          画像カラーピッカーは、<strong>写真やスクリーンショットをアップロードするだけ</strong>で、WEBデザインに使えるカラーパレットを自動生成するツールです。抽出した色は<strong>CSS変数・Tailwind・SCSS・HEX・RGB</strong>でそのままコピーでき、処理はすべてブラウザ内で完結します。
+        </p>
+
+        <h2>使い方（3ステップ）</h2>
+        <ol>
+          <li><strong>画像をアップロード</strong>：PNG・JPG・WebPなどの画像を、ドロップゾーンへドラッグ&amp;ドロップするか「ファイルを選択」から読み込みます。画像は端末内で処理され、サーバーには送信されません。</li>
+          <li><strong>色数を選んで抽出</strong>：「抽出する色数」スライダーで3〜12色の範囲を指定し、「色を抽出する」を押します。k-means法で画像の主要色が自動的に抽出されます。</li>
+          <li><strong>コードをコピー</strong>：抽出された各色をクリックして、HEX・RGB・CSS変数・Tailwind・SCSSの形式でコピーします。気に入った組み合わせは「パレットを保存」でブラウザに残せます。</li>
+        </ol>
+
+        <h2>抽出した色のコピー形式</h2>
+        <p>
+          用途に合わせて、次の形式でコピーできます。コーディングの工程に合わせて選んでください。
+        </p>
+        <ul>
+          <li><strong>HEX</strong>：<code>#3498db</code> のような16進数。最も汎用的で、デザインツールにもそのまま貼れます。</li>
+          <li><strong>RGB</strong>：<code>rgb(52, 152, 219)</code>。透明度を扱いたいときの起点にも便利です。</li>
+          <li><strong>CSS変数</strong>：<code>--color-1: #3498db;</code> のようなカスタムプロパティ。配色をまとめて管理できます。</li>
+          <li><strong>Tailwind / SCSS</strong>：設定ファイルや変数に貼りやすい形式。既存のデザイントークンに組み込めます。</li>
+        </ul>
+
+        <h2>きれいな配色を作るコツ</h2>
+        <ol>
+          <li><strong>基調色（ベース）を決める</strong>：面積の大きい背景・余白に使う色。抽出色の中で彩度の低いものが扱いやすくなります。</li>
+          <li><strong>主役色（メイン）を1つ</strong>：ブランドや世界観を表す色。画像から最も印象的な色を選びます。</li>
+          <li><strong>差し色（アクセント）を1つ</strong>：CTAや強調に使う色。彩度の高い色を少量だけ使うと締まります。</li>
+          <li><strong>色数を絞る</strong>：抽出色を全部使う必要はありません。3〜5色に絞ると統一感が出ます。</li>
+        </ol>
+
+        <h2>向いている画像・向いていない画像</h2>
+        <p>
+          写真・イラスト・スクリーンショットなど、<strong>色の情報を持つ画像</strong>であれば利用できます。被写体やテーマカラーがはっきりしている画像ほど、意図に近いパレットが得られます。一方、ほぼ単色の画像やノイズの多い画像では、似た色ばかりが並ぶことがあります。その場合は色数を増減して調整してみてください。
+        </p>
+
+        <h2>よくある質問</h2>
+        <div class="faq">
+          <div class="faq-item">
+            <h3>このツールは無料ですか？</h3>
+            <p>完全無料で、登録も回数制限もありません。抽出したパレットの保存・コピーも自由に行えます。</p>
+          </div>
+          <div class="faq-item">
+            <h3>アップロードした画像はサーバーに送信されますか？</h3>
+            <p>いいえ。色の抽出はすべてブラウザ内（お使いの端末上）で完結し、画像が外部サーバーに送信されることはありません。</p>
+          </div>
+          <div class="faq-item">
+            <h3>どんな形式でコピーできますか？</h3>
+            <p>HEX・RGBに加えて、CSSカスタムプロパティ（CSS変数）・Tailwind・SCSSの形式でワンクリックコピーできます。</p>
+          </div>
+          <div class="faq-item">
+            <h3>色はどのように抽出していますか？</h3>
+            <p>k-means法で画像のピクセルをクラスタリングし、画像を代表する主要色を自動で抽出しています。抽出する色数は調整できます。</p>
+          </div>
+          <div class="faq-item">
+            <h3>どんな画像が向いていますか？</h3>
+            <p>写真・イラスト・スクリーンショットなど、色の情報を持つ画像であれば利用できます。配色の参考やデザインのカラーパレット作成に便利です。</p>
+          </div>
+        </div>
+
+        <h2>関連ツール</h2>
+        <div class="related">
+          <a href="https://codequest.work/generator/color-dictionary/"><strong>色の辞書 →</strong><span>伝統色とCSS名の意味・由来</span></a>
+          <a href="https://codequest.work/generator/neon-button-generator/"><strong>ネオンボタン →</strong><span>発光ボタンのCSSを生成</span></a>
+          <a href="https://codequest.work/generator/clip-path/"><strong>clip-path ジェネレーター →</strong><span>図形の切り抜きCSS</span></a>
+          <a href="https://codequest.work/generator/animation-gallery/"><strong>CSSアニメーション集 →</strong><span>100種のアニメをコピペ</span></a>
+        </div>
+      </div>
+    </section>
+
+    <p style="margin-top:24px;"><a href="/generator/image-color-picker/" class="back-btn">← 画像カラーピッカー（ツール）を使う</a></p>
+  </div>
+
+  <div class="ad-wrap" style="margin: 32px auto; text-align: center;">
+    <!-- image-color-picker -->
+    <ins class="adsbygoogle ad-banner" style="display:inline-block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="4824470313"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>&copy; 2026 画像カラーピッカー | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></p>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work/ja" target="_blank" rel="noopener">SEO CHECKはこちら &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のジェネレーター &rarr;</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
