@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to Use the Image Compressor — WebP/AVIF Convert &amp; Resize Steps | CodeQuest</title>
+    <meta name="description" content="How to use the image compressor: compress, convert (WebP/AVIF), resize, strip EXIF, and remove backgrounds. Includes the recommended quality setting, WebP vs. AVIF, and answers to common questions." />
+    <link rel="canonical" href="https://codequest.work/generator/image-compressor/en/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/image-compressor/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/image-compressor/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/image-compressor/howto.html" />
+    <!-- OGP -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/image-compressor/en/howto.html" />
+    <meta property="og:title" content="How to Use the Image Compressor — Convert &amp; Resize Steps | CodeQuest" />
+    <meta property="og:description" content="How to compress, convert (WebP/AVIF), and resize images, plus the recommended quality setting, WebP vs. AVIF, and FAQ." />
+    <meta property="og:image" content="https://codequest.work/generator/image-compressor/assets/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="How to Use the Image Compressor — Convert &amp; Resize Steps" />
+    <meta name="twitter:description" content="How to compress, convert (WebP/AVIF), and resize images, plus the recommended quality, WebP vs. AVIF, and FAQ." />
+    <meta name="twitter:image" content="https://codequest.work/generator/image-compressor/assets/og.jpg" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "Image Compressor", "item": "https://codequest.work/generator/image-compressor/en/" },
+          { "@type": "ListItem", "position": 4, "name": "How to use", "item": "https://codequest.work/generator/image-compressor/en/howto.html" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to use the image compressor",
+        "description": "Load images, set the format, quality, and resize options, then compress, convert, and download.",
+        "step": [
+          { "@type": "HowToStep", "name": "Add images", "text": "Drag & drop your images, or click to select them (multiple selection is supported)." },
+          { "@type": "HowToStep", "name": "Set options", "text": "Set the output format, quality, and resize options in the panel on the left." },
+          { "@type": "HowToStep", "name": "Convert & compress", "text": "Press \"Convert & compress\" to see the before/after file size and the reduction rate." },
+          { "@type": "HowToStep", "name": "Download", "text": "Download images individually or all together as a ZIP." }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Are my uploaded images stored anywhere?", "acceptedAnswer": { "@type": "Answer", "text": "No. Loading, compression, and conversion all run entirely in your browser (on your own device), and nothing is ever sent to a server." } },
+          { "@type": "Question", "name": "Why should I convert blog images to WebP?", "acceptedAnswer": { "@type": "Answer", "text": "WebP produces smaller files than JPG or PNG at the same visual quality, which improves page load speed (Core Web Vitals). All major browsers can display WebP." } },
+          { "@type": "Question", "name": "Should I use WebP or AVIF?", "acceptedAnswer": { "@type": "Answer", "text": "AVIF compresses more — often 20–30% smaller than WebP at the same quality. Chrome, Safari, Firefox, and Edge all support AVIF, so choose AVIF when you want the smallest files, and WebP when compatibility is the top priority." } },
+          { "@type": "Question", "name": "Is EXIF data (location, capture date) kept?", "acceptedAnswer": { "@type": "Answer", "text": "No. This tool decodes and rebuilds each image during conversion, so GPS location, capture date, camera model, and other EXIF data are all removed automatically. You can publish photos taken at home without worrying about your location being identified." } },
+          { "@type": "Question", "name": "What quality setting should I use?", "acceptedAnswer": { "@type": "Answer", "text": "For blog use, 70–80 is a good guide. You can cut file size substantially with little to no visible loss." } },
+          { "@type": "Question", "name": "Can I convert a photo to SVG?", "acceptedAnswer": { "@type": "Answer", "text": "You can, but because SVG represents images as a collection of shapes, photos end up looking like cut-paper art. SVG conversion is best for logos, icons, and illustrations." } }
+        ]
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css?v=20260625a" />
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+    <style>
+      .howto-wrap { max-width: 860px; margin: 0 auto; padding: 24px 20px 8px; }
+      .back-btn { display: inline-block; margin: 8px 0 16px; color: var(--accent, #3498db); text-decoration: none; font-size: 16px; }
+      .back-btn:hover { text-decoration: underline; }
+    </style>
+  </head>
+  <body>
+    <div class="howto-wrap">
+      <a href="/generator/image-compressor/en/" class="back-btn">← Back to the Image Compressor</a>
+      <h1>How to use the Image Compressor</h1>
+
+      <p>This free tool lets you <strong>compress, convert, and resize</strong> JPG, PNG, WebP, AVIF, and SVG entirely in your browser. Your images are never uploaded, and EXIF data (GPS location, capture date) is stripped automatically. This page covers what it does, how to use it, and common questions.</p>
+
+      <section class="info-section">
+        <h2>What this tool does</h2>
+        <ul>
+          <li><strong>Image compression</strong> — Shrink JPG, PNG, WebP, and AVIF at a quality you choose. PNG can be reduced dramatically through color quantization.</li>
+          <li><strong>Format conversion</strong> — Convert between JPG, PNG, WebP, and AVIF. Convert to WebP (great for PageSpeed) or to AVIF (even smaller than WebP) in one click. Loading SVG (to PNG/JPG) and turning logos and illustrations into SVG are also supported.</li>
+          <li><strong>EXIF removal</strong> — Capture date, camera model, GPS location, and other EXIF data are all removed automatically during conversion. Post photos from your phone without worrying about location data.</li>
+          <li><strong>Resize & crop</strong> — Set a custom size, or crop to template sizes for OGP images, X headers, YouTube thumbnails, ad banners, and more. The crop box can be moved and resized by dragging (hold Shift for a square), and circular crops (for icons; outside the circle is transparent) are supported.</li>
+          <li><strong>Background removal</strong> — Make a solid background (such as a white logo or diagram) transparent and export as PNG or WebP. Same-colored areas inside the logo are preserved — only the background connected to the edges becomes transparent. To cut out a person or product from a photo, use the <a href="../../bg-remover/en/">AI Background Remover</a>.</li>
+          <li><strong>Batch processing</strong> — Convert multiple images at once and download them together as a ZIP.</li>
+        </ul>
+      </section>
+
+      <section class="info-section">
+        <h2>How to use</h2>
+        <ol>
+          <li>Drag & drop your images, or click to select them (multiple selection is supported).</li>
+          <li>Set the output format, quality, and resize options in the panel on the left.</li>
+          <li>Press “Convert & compress” to see the before/after file size and the reduction rate.</li>
+          <li>Download images individually or all together as a ZIP.</li>
+        </ol>
+      </section>
+
+      <section class="info-section">
+        <h2>Frequently asked questions</h2>
+        <dl class="faq">
+          <dt>Are my uploaded images stored anywhere?</dt>
+          <dd>No. Loading, compression, and conversion all run entirely in your browser (on your own device), and nothing is ever sent to a server.</dd>
+          <dt>Why should I convert blog images to WebP?</dt>
+          <dd>WebP produces smaller files than JPG or PNG at the same visual quality, which improves page load speed (Core Web Vitals). All major browsers can display WebP.</dd>
+          <dt>Should I use WebP or AVIF?</dt>
+          <dd>AVIF compresses more — often 20–30% smaller than WebP at the same quality. Chrome, Safari, Firefox, and Edge all support AVIF, so choose AVIF when you want the smallest files, and WebP when compatibility is the top priority.</dd>
+          <dt>Is EXIF data (location, capture date) kept?</dt>
+          <dd>No. This tool decodes and rebuilds each image during conversion, so GPS location, capture date, camera model, and other EXIF data are all removed automatically. You can publish photos taken at home without worrying about your location being identified.</dd>
+          <dt>What quality setting should I use?</dt>
+          <dd>For blog use, 70–80 is a good guide. You can cut file size substantially with little to no visible loss.</dd>
+          <dt>Can I convert a photo to SVG?</dt>
+          <dd>You can, but because SVG represents images as a collection of shapes, photos end up looking like cut-paper art. SVG conversion is best for logos, icons, and illustrations.</dd>
+        </dl>
+      </section>
+
+      <p style="margin-top:24px;"><a href="/generator/image-compressor/en/" class="back-btn">← Use the Image Compressor</a></p>
+    </div>
+
+    <div class="ad-wrap" style="margin: 32px auto; text-align: center;">
+      <!-- footer-top -->
+      <ins class="adsbygoogle ad-banner" style="display:inline-block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 Image Compressor &amp; WebP Converter | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>

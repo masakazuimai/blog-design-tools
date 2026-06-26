@@ -71,20 +71,6 @@
         ]
       }
     </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          { "@type": "Question", "name": "Are my uploaded images stored anywhere?", "acceptedAnswer": { "@type": "Answer", "text": "No. Loading, compression, and conversion all run entirely in your browser (on your own device), and nothing is ever sent to a server." } },
-          { "@type": "Question", "name": "Why should I convert blog images to WebP?", "acceptedAnswer": { "@type": "Answer", "text": "WebP produces smaller files than JPG or PNG at the same visual quality, which improves page load speed (Core Web Vitals). All major browsers can display WebP." } },
-          { "@type": "Question", "name": "Should I use WebP or AVIF?", "acceptedAnswer": { "@type": "Answer", "text": "AVIF compresses more — often 20–30% smaller than WebP at the same quality. Chrome, Safari, Firefox, and Edge all support AVIF, so choose AVIF when you want the smallest files, and WebP when compatibility is the top priority." } },
-          { "@type": "Question", "name": "Is EXIF data (location, capture date) kept?", "acceptedAnswer": { "@type": "Answer", "text": "No. This tool decodes and rebuilds each image during conversion, so GPS location, capture date, camera model, and other EXIF data are all removed automatically. You can publish photos taken at home without worrying about your location being identified." } },
-          { "@type": "Question", "name": "What quality setting should I use?", "acceptedAnswer": { "@type": "Answer", "text": "For blog use, 70–80 is a good guide. You can cut file size substantially with little to no visible loss." } },
-          { "@type": "Question", "name": "Can I convert a photo to SVG?", "acceptedAnswer": { "@type": "Answer", "text": "You can, but because SVG represents images as a collection of shapes, photos end up looking like cut-paper art. SVG conversion is best for logos, icons, and illustrations." } }
-        ]
-      }
-    </script>
   </head>
   <body>
     <header>
@@ -206,45 +192,6 @@
         </main>
       </div>
 
-      <section class="info-section">
-        <h2>What this tool does</h2>
-        <ul>
-          <li><strong>Image compression</strong> — Shrink JPG, PNG, WebP, and AVIF at a quality you choose. PNG can be reduced dramatically through color quantization.</li>
-          <li><strong>Format conversion</strong> — Convert between JPG, PNG, WebP, and AVIF. Convert to WebP (great for PageSpeed) or to AVIF (even smaller than WebP) in one click. Loading SVG (to PNG/JPG) and turning logos and illustrations into SVG are also supported.</li>
-          <li><strong>EXIF removal</strong> — Capture date, camera model, GPS location, and other EXIF data are all removed automatically during conversion. Post photos from your phone without worrying about location data.</li>
-          <li><strong>Resize & crop</strong> — Set a custom size, or crop to template sizes for OGP images, X headers, YouTube thumbnails, ad banners, and more. The crop box can be moved and resized by dragging (hold Shift for a square), and circular crops (for icons; outside the circle is transparent) are supported.</li>
-          <li><strong>Background removal</strong> — Make a solid background (such as a white logo or diagram) transparent and export as PNG or WebP. Same-colored areas inside the logo are preserved — only the background connected to the edges becomes transparent. To cut out a person or product from a photo, use the <a href="../../bg-remover/en/">AI Background Remover</a>.</li>
-          <li><strong>Batch processing</strong> — Convert multiple images at once and download them together as a ZIP.</li>
-        </ul>
-      </section>
-
-      <section class="info-section">
-        <h2>How to use</h2>
-        <ol>
-          <li>Drag & drop your images, or click to select them (multiple selection is supported).</li>
-          <li>Set the output format, quality, and resize options in the panel on the left.</li>
-          <li>Press “Convert & compress” to see the before/after file size and the reduction rate.</li>
-          <li>Download images individually or all together as a ZIP.</li>
-        </ol>
-      </section>
-
-      <section class="info-section">
-        <h2>Frequently asked questions</h2>
-        <dl class="faq">
-          <dt>Are my uploaded images stored anywhere?</dt>
-          <dd>No. Loading, compression, and conversion all run entirely in your browser (on your own device), and nothing is ever sent to a server.</dd>
-          <dt>Why should I convert blog images to WebP?</dt>
-          <dd>WebP produces smaller files than JPG or PNG at the same visual quality, which improves page load speed (Core Web Vitals). All major browsers can display WebP.</dd>
-          <dt>Should I use WebP or AVIF?</dt>
-          <dd>AVIF compresses more — often 20–30% smaller than WebP at the same quality. Chrome, Safari, Firefox, and Edge all support AVIF, so choose AVIF when you want the smallest files, and WebP when compatibility is the top priority.</dd>
-          <dt>Is EXIF data (location, capture date) kept?</dt>
-          <dd>No. This tool decodes and rebuilds each image during conversion, so GPS location, capture date, camera model, and other EXIF data are all removed automatically. You can publish photos taken at home without worrying about your location being identified.</dd>
-          <dt>What quality setting should I use?</dt>
-          <dd>For blog use, 70–80 is a good guide. You can cut file size substantially with little to no visible loss.</dd>
-          <dt>Can I convert a photo to SVG?</dt>
-          <dd>You can, but because SVG represents images as a collection of shapes, photos end up looking like cut-paper art. SVG conversion is best for logos, icons, and illustrations.</dd>
-        </dl>
-      </section>
     </div>
 
     <div class="ad-wrap" style="margin: 32px auto; text-align: center;">
@@ -259,6 +206,7 @@
     <footer>
       <span>&copy; 2026 Image Compressor &amp; WebP Converter | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
       <div class="footer-links">
+        <a href="howto.html">&#128214; How to use &amp; FAQ</a>
         <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
         <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
       </div>

@@ -71,20 +71,6 @@
         ]
       }
     </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          { "@type": "Question", "name": "アップロードした画像はどこかに保存されますか？", "acceptedAnswer": { "@type": "Answer", "text": "いいえ。画像の読み込み・圧縮・変換はすべてブラウザ内（お使いの端末上）で完結し、サーバーには一切送信されません。" } },
-          { "@type": "Question", "name": "なぜブログ画像はWebPに変換した方がよいのですか？", "acceptedAnswer": { "@type": "Answer", "text": "WebPはJPGやPNGより同じ画質でファイルサイズを小さくできる形式で、ページ表示速度（Core Web Vitals）の改善につながります。主要ブラウザはすべてWebP表示に対応しています。" } },
-          { "@type": "Question", "name": "WebPとAVIFはどちらを使えばよいですか？", "acceptedAnswer": { "@type": "Answer", "text": "圧縮率はAVIFの方が高く、同じ画質でWebPよりさらに2〜3割小さくできることが多いです。Chrome・Safari・Firefox・Edgeの主要ブラウザはAVIF表示に対応済みなので、より軽くしたい場合はAVIF、互換性を最優先する場合はWebPがおすすめです。" } },
-          { "@type": "Question", "name": "写真のEXIF情報（位置情報・撮影日時）は残りますか？", "acceptedAnswer": { "@type": "Answer", "text": "いいえ。このツールは変換時に画像を一度分解して再構成するため、GPS位置情報・撮影日時・カメラ機種などのEXIF情報はすべて自動的に除去されます。自宅で撮った写真も場所を特定される心配なく公開できます。" } },
-          { "@type": "Question", "name": "品質はどのくらいに設定すればよいですか？", "acceptedAnswer": { "@type": "Answer", "text": "ブログ用途なら70〜80が目安です。見た目の劣化がほぼ分からないまま、ファイルサイズを大きく削減できます。" } },
-          { "@type": "Question", "name": "写真をSVGに変換できますか？", "acceptedAnswer": { "@type": "Answer", "text": "変換自体は可能ですが、SVGは図形の集まりで画像を表現する形式のため、写真は切り絵のような仕上がりになります。SVG変換はロゴ・アイコン・イラストに向いています。" } }
-        ]
-      }
-    </script>
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
   </head>
@@ -208,45 +194,6 @@
         </main>
       </div>
 
-      <section class="info-section">
-        <h2>このツールでできること</h2>
-        <ul>
-          <li><strong>画像圧縮</strong> — JPG・PNG・WebP・AVIFを品質を指定して軽量化。PNGは減色処理で大幅にサイズを削減できます。</li>
-          <li><strong>形式変換</strong> — JPG・PNG・WebP・AVIFを相互に変換。ブログのPageSpeed対策に有効なWebP化や、WebPよりさらに軽いAVIF化もワンクリックです。SVGの読み込み（PNG/JPG化）と、ロゴ・イラストのSVG化にも対応しています。</li>
-          <li><strong>EXIF除去</strong> — 撮影日時・カメラ機種・GPS位置情報などのEXIF情報は、変換の過程で自動的にすべて除去されます。スマホで撮った写真も位置情報を気にせずブログに掲載できます。</li>
-          <li><strong>リサイズ・切り抜き</strong> — 自由サイズ指定のほか、OGP画像・Xヘッダー・YouTubeサムネイル・広告バナーなどのテンプレートサイズに合わせた切り抜きができます。切り抜き枠は位置・大きさともドラッグで自由に調整でき（Shiftで正方形）、正円切り抜き（アイコン用・円の外は透過）にも対応しています。</li>
-          <li><strong>背景透過</strong> — 白背景のロゴ・図版などの単色背景を透過化し、PNG・WebPで出力できます。ロゴ内部の同色部分は残したまま、外周につながった背景だけを透過にします。写真から人物・商品などの被写体だけを切り抜きたい場合は<a href="../bg-remover/">AI背景透過ツール</a>をご利用ください。</li>
-          <li><strong>一括処理</strong> — 複数の画像をまとめて変換し、ZIPで一括ダウンロードできます。</li>
-        </ul>
-      </section>
-
-      <section class="info-section">
-        <h2>使い方</h2>
-        <ol>
-          <li>画像をドラッグ&ドロップ、またはクリックして選択します（複数選択可）。</li>
-          <li>左の設定パネルで出力形式・品質・リサイズを指定します。</li>
-          <li>「変換・圧縮を実行」を押すと、変換前後のファイルサイズと削減率が表示されます。</li>
-          <li>1枚ずつ、またはZIPでまとめてダウンロードします。</li>
-        </ol>
-      </section>
-
-      <section class="info-section">
-        <h2>よくある質問</h2>
-        <dl class="faq">
-          <dt>アップロードした画像はどこかに保存されますか？</dt>
-          <dd>いいえ。画像の読み込み・圧縮・変換はすべてブラウザ内（お使いの端末上）で完結し、サーバーには一切送信されません。</dd>
-          <dt>なぜブログ画像はWebPに変換した方がよいのですか？</dt>
-          <dd>WebPはJPGやPNGより同じ画質でファイルサイズを小さくできる形式で、ページ表示速度（Core Web Vitals）の改善につながります。主要ブラウザはすべてWebP表示に対応しています。</dd>
-          <dt>WebPとAVIFはどちらを使えばよいですか？</dt>
-          <dd>圧縮率はAVIFの方が高く、同じ画質でWebPよりさらに2〜3割小さくできることが多いです。Chrome・Safari・Firefox・Edgeの主要ブラウザはAVIF表示に対応済みなので、より軽くしたい場合はAVIF、互換性を最優先する場合はWebPがおすすめです。</dd>
-          <dt>写真のEXIF情報（位置情報・撮影日時）は残りますか？</dt>
-          <dd>いいえ。このツールは変換時に画像を一度分解して再構成するため、GPS位置情報・撮影日時・カメラ機種などのEXIF情報はすべて自動的に除去されます。自宅で撮った写真も場所を特定される心配なく公開できます。</dd>
-          <dt>品質はどのくらいに設定すればよいですか？</dt>
-          <dd>ブログ用途なら70〜80が目安です。見た目の劣化がほぼ分からないまま、ファイルサイズを大きく削減できます。</dd>
-          <dt>写真をSVGに変換できますか？</dt>
-          <dd>変換自体は可能ですが、SVGは図形の集まりで画像を表現する形式のため、写真は切り絵のような仕上がりになります。SVG変換はロゴ・アイコン・イラストに向いています。</dd>
-        </dl>
-      </section>
     </div>
 
     <div class="ad-wrap" style="margin: 32px auto; text-align: center;">
@@ -260,6 +207,7 @@
     <footer>
       <span>&copy; 2026 画像圧縮・WebP変換ツール | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
       <div class="footer-links">
+        <a href="howto.html">&#128214; 使い方・FAQ</a>
         <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
         <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
       </div>
