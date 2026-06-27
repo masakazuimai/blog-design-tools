@@ -65,7 +65,7 @@
         ]
       }
     </script>
-    <link rel="stylesheet" href="../style.css?v=20260627t" />
+    <link rel="stylesheet" href="../style.css?v=20260627v" />
   </head>
   <body>
     <header class="lm-head">
@@ -103,12 +103,6 @@
 
       <aside class="lm-sidebar">
         <section class="panel">
-          <h2 class="panel-title">Templates</h2>
-          <p class="panel-note">Click to load a preset</p>
-          <div class="tpl-grid" id="tplGrid"></div>
-        </section>
-
-        <section class="panel">
           <h2 class="panel-title">Settings</h2>
           <div class="shape-row" role="group" aria-label="Button shape">
             <button type="button" class="shape-btn is-active" data-shape="rect">Rectangle</button>
@@ -122,6 +116,12 @@
             <div class="ctrl-row"><span class="ctrl-name">hue</span><input type="range" class="sld sld-hue" id="hueSld" min="0" max="360" step="5" value="210" aria-label="color hue" /><span class="ctrl-val" id="hueVal">210</span></div>
             <div class="ctrl-row"><span class="ctrl-name">tint</span><input type="range" class="sld" id="satSld" min="0" max="0.8" step="0.05" value="0" aria-label="color tint (0 = white)" /><span class="ctrl-val" id="satVal">0</span></div>
           </div>
+        </section>
+
+        <section class="panel">
+          <h2 class="panel-title">Templates</h2>
+          <p class="panel-note">Click to load a preset</p>
+          <div class="tpl-grid" id="tplGrid"></div>
         </section>
       </aside>
     </main>

@@ -612,14 +612,31 @@ body {
   }
 }
 
-/* タブレット以下：1カラムに積む */
+/* タブレット以下：1カラムに積む（プレビュー → テンプレート＋設定 → 生成コードの順） */
 @media (max-width: 880px) {
   .lm-app {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     gap: 2rem;
   }
+  /* .lm-mainを透過させ、子（プレビュー/コード）を.lm-app直下のflex子にしてorderで並べ替え */
+  .lm-main {
+    display: contents;
+  }
+  /* プレビューは画面上部に達したら固定（スクロール中も表示を保つ） */
+  .preview {
+    order: 1;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
   .lm-sidebar {
+    order: 2;
     position: static;
+  }
+  .code-panel {
+    order: 3;
   }
 }
 
