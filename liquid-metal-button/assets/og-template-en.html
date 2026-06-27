@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1200px; height: 630px; overflow: hidden; }
+      body {
+        background: radial-gradient(130% 130% at 50% 28%, #262626 0%, #161616 55%, #0c0c0c 100%);
+        font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .lm {
+        position: relative;
+        width: 560px;
+        height: 162px;
+        border-radius: 42px;
+        overflow: hidden;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+      }
+      .lm canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+      .lm::before {
+        content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        width: calc(100% - 32px); height: calc(100% - 32px);
+        background: linear-gradient(#444, #000); border-radius: 26px;
+        box-shadow: inset 0 3px 3px 3px rgba(255, 255, 255, 0.3); z-index: 1;
+      }
+      .lm .outline { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 2; }
+      .lm .label { font-size: 44px; font-weight: 700; letter-spacing: 0.28em; text-indent: 0.28em; color: #6e6a67; }
+      .title {
+        margin-top: 56px;
+        font-size: 60px;
+        font-weight: 800;
+        color: #f1ede8;
+        letter-spacing: -0.015em;
+        line-height: 1.1;
+      }
+      .title .accent { color: #b9c4cf; }
+      .sub {
+        margin-top: 22px;
+        font-size: 28px;
+        color: #a39e99;
+        letter-spacing: 0.01em;
+      }
+      .pill {
+        margin-top: 26px;
+        font-size: 22px;
+        color: #cfe0ef;
+        border: 1px solid #3a4856;
+        background: rgba(43, 53, 64, 0.55);
+        border-radius: 999px;
+        padding: 9px 22px;
+        letter-spacing: 0.02em;
+      }
+      .brand {
+        position: absolute;
+        bottom: 40px;
+        right: 56px;
+        font-size: 26px;
+        font-weight: 700;
+        color: #8a949e;
+        letter-spacing: 0.02em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="lm">
+      <div class="outline"><span class="label">BUTTON</span></div>
+    </div>
+    <div class="title">Liquid Metal Button<span class="accent"> Generator</span></div>
+    <div class="sub">Chrome &amp; metallic buttons with WebGL — copy ready-to-use HTML/CSS/JS</div>
+    <div class="pill">Free · No dependencies · MIT</div>
+    <div class="brand">CodeQuest.work</div>
+
+    <script>
+      var VERT = `attribute vec2 a_pos;
+void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }`;
+      var FRAG = `precision highp float;
+uniform vec2 u_res;
+uniform float u_rep;
+uniform float u_angle;
+uniform float u_hue;
+uniform float u_sat;
+mat2 rot(float a) { float c = cos(a), s = sin(a); return mat2(c, -s, s, c); }
+vec3 hue2rgb(float h) {
+  h = fract(h / 360.0) * 6.0;
+  return clamp(abs(mod(h + vec3(0.0, 4.0, 2.0), 6.0) - 3.0) - 1.0, 0.0, 1.0);
+}
+float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
+float noise(vec2 p) {
+  vec2 i = floor(p), f = fract(p);
+  vec2 u = f * f * (3.0 - 2.0 * f);
+  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x),
+             mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y);
+}
+float fbm(vec2 p) {
+  float v = 0.0, a = 0.5;
+  for (int i = 0; i < 3; i++) { v += a * noise(p); p = p * 2.02 + 11.0; a *= 0.5; }
+  return v;
+}
+void main() {
+  vec2 p = gl_FragCoord.xy / u_res - 0.5;
+  p.x *= u_res.x / u_res.y;
+  p *= rot(radians(u_angle));
+  float scale = 0.28 + u_rep * 0.5;
+  float w1 = fbm(p * scale + vec2(0.4, 0.2));
+  float w2 = fbm(p * scale * 1.5 - vec2(0.3, 0.5));
+  float warp = (w1 + w2) * u_rep * 2.4;
+  float bands = sin((p.x + p.y) * (0.6 + u_rep * 1.4) + warp);
+  float m = smoothstep(0.0, 1.0, abs(bands));
+  float spec = pow(1.0 - abs(bands), 7.0);
+  vec3 col = mix(vec3(0.04, 0.05, 0.07), vec3(0.55, 0.58, 0.62), m);
+  col = mix(col, vec3(0.97, 0.98, 1.0), spec);
+  col *= mix(vec3(1.0), hue2rgb(u_hue), u_sat);
+  gl_FragColor = vec4(col, 1.0);
+}`;
+      function compile(gl, type, src) {
+        var s = gl.createShader(type);
+        gl.shaderSource(s, src); gl.compileShader(s);
+        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s));
+        return s;
+      }
+      var box = document.querySelector(".lm");
+      var canvas = document.createElement("canvas");
+      box.insertBefore(canvas, box.firstChild);
+      var gl = canvas.getContext("webgl", { antialias: true, preserveDrawingBuffer: true });
+      var prog = gl.createProgram();
+      gl.attachShader(prog, compile(gl, gl.VERTEX_SHADER, VERT));
+      gl.attachShader(prog, compile(gl, gl.FRAGMENT_SHADER, FRAG));
+      gl.linkProgram(prog); gl.useProgram(prog);
+      var buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      var aPos = gl.getAttribLocation(prog, "a_pos");
+      gl.enableVertexAttribArray(aPos);
+      gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+      var dpr = 2;
+      canvas.width = Math.round(box.clientWidth * dpr);
+      canvas.height = Math.round(box.clientHeight * dpr);
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform2f(gl.getUniformLocation(prog, "u_res"), canvas.width, canvas.height);
+      gl.uniform1f(gl.getUniformLocation(prog, "u_rep"), 1.0);
+      gl.uniform1f(gl.getUniformLocation(prog, "u_angle"), 32.0);
+      gl.uniform1f(gl.getUniformLocation(prog, "u_hue"), 210.0);
+      gl.uniform1f(gl.getUniformLocation(prog, "u_sat"), 0.0);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    </script>
+  </body>
+</html>

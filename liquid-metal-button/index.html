@@ -3,24 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>リキッドメタルボタン｜液体金属の質感ボタン WebGLサンプル｜CodeQuest</title>
-    <meta name="description" content="液体金属（リキッドメタル）の質感を持つボタンのWebGLサンプル集。うねりの細かさ（repetition）と光の角度（angle）を変えた6パターンの金属質感を並べて比較できる無料のプレビューです。" />
+    <title>リキッドメタルボタン ジェネレーター｜液体金属ボタンをWebGLで作成・コード生成｜CodeQuest</title>
+    <meta name="description" content="液体金属（クローム）の質感を持つボタンをWebGLシェーダーで作れる無料ジェネレーター。テンプレートからうねり・光の角度・速さ・色・リム・形を調整し、外部ライブラリ不要のHTML/CSS/JS（MIT）をそのままコピーできます。" />
     <link rel="canonical" href="https://codequest.work/generator/liquid-metal-button/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/liquid-metal-button/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/liquid-metal-button/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/liquid-metal-button/" />
     <!-- OGP -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://codequest.work/generator/liquid-metal-button/" />
-    <meta property="og:title" content="リキッドメタルボタン｜液体金属の質感ボタン WebGLサンプル" />
-    <meta property="og:description" content="液体金属（リキッドメタル）の質感を持つボタンのWebGLサンプル集。repetitionとangleを変えた6パターンの金属質感を比較できる無料プレビュー。" />
+    <meta property="og:title" content="リキッドメタルボタン ジェネレーター｜液体金属ボタンをWebGLで作成" />
+    <meta property="og:description" content="液体金属（クローム）ボタンをWebGLで作れる無料ジェネレーター。色・形・速さ・リムを調整し、外部ライブラリ不要のHTML/CSS/JS（MIT）をコピーできます。" />
     <meta property="og:image" content="https://codequest.work/generator/liquid-metal-button/assets/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="リキッドメタルボタン" />
+    <meta property="og:image:alt" content="リキッドメタルボタン ジェネレーター" />
     <meta property="og:site_name" content="CodeQuest.work" />
     <meta property="og:locale" content="ja_JP" />
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="リキッドメタルボタン｜液体金属の質感ボタン WebGLサンプル" />
-    <meta name="twitter:description" content="液体金属の質感を持つボタンのWebGLサンプル集。repetitionとangleを変えた6パターンを比較できる無料プレビュー。" />
+    <meta name="twitter:title" content="リキッドメタルボタン ジェネレーター｜液体金属ボタンをWebGLで作成" />
+    <meta name="twitter:description" content="液体金属（クローム）ボタンをWebGLで作れる無料ジェネレーター。色・形・速さ・リムを調整し、外部ライブラリ不要のコード（MIT）をコピー。" />
     <meta name="twitter:image" content="https://codequest.work/generator/liquid-metal-button/assets/og.png" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
@@ -36,14 +39,14 @@
       {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "リキッドメタルボタン",
+        "name": "リキッドメタルボタン ジェネレーター",
         "url": "https://codequest.work/generator/liquid-metal-button/",
         "applicationCategory": "DesignApplication",
         "operatingSystem": "Web browser",
         "inLanguage": "ja",
-        "description": "液体金属（リキッドメタル）の質感を持つボタンのWebGLサンプル集。うねりの細かさ（repetition）と光の角度（angle）を変えた6パターンの金属質感を並べて比較できます。",
+        "description": "液体金属（クローム）の質感を持つボタンをWebGLシェーダーで作れる無料ジェネレーター。テンプレートからうねり・光の角度・速さ・色・リム・形を調整し、外部ライブラリ不要のHTML/CSS/JS（MIT）をコピーできます。",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "featureList": ["液体金属（リキッドメタル）質感ボタンのWebGLサンプル", "repetition（うねりの細かさ）違いの比較", "angle（光の角度）違いの比較", "6パターンを並べて表示", "レスポンシブ対応"],
+        "featureList": ["WebGLシェーダーによる液体金属（クローム）質感のボタン生成", "テンプレートからプリセットを選択", "うねり(rep)・光の角度(angle)・動きの速さ(speed)の調整", "色(hue/tint)・リム幅・形(長方形/丸)・ダーク/ライトの切替", "外部ライブラリ不要のHTML/CSS/JS（MIT）をコピー"],
         "publisher": {
           "@type": "Organization",
           "name": "CodeQuest.work",
@@ -62,59 +65,89 @@
         ]
       }
     </script>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=20260627t" />
   </head>
   <body>
     <header class="lm-head">
-      <h1>リキッドメタルボタン<span class="accent">｜液体金属の質感サンプル</span></h1>
-      <p>WebGLシェーダーで描く、液体金属（リキッドメタル）の質感を持つボタンのサンプル集です。うねりの細かさ（repetition）と光の角度（angle）を変えた6パターンを並べ、金属質感の違いを比較できます。</p>
+      <div class="lm-head-top">
+        <h1>リキッドメタルボタン<span class="accent">｜液体金属ボタン ジェネレーター</span></h1>
+        <div class="lang-switch"><a href="en/" hreflang="en">English</a></div>
+      </div>
+      <p>WebGLシェーダーで描く、液体金属（リキッドメタル）の質感を持つボタンのジェネレーターです。9種のテンプレートから選び、うねりの細かさ（rep）・光の角度（angle）・動きの速さ（speed）を調整して、再利用できるコードを生成できます。</p>
     </header>
 
-    <div class="cell">
-      <span class="cap">A: rep 0.4 / angle 0</span>
-      <div class="lm" data-rep="0.4" data-ang="0">
-        <div class="outline"><span class="label">BUTTON</span></div>
+    <main class="lm-app">
+      <div class="lm-main">
+        <div class="preview" data-bg="dark">
+          <div class="bg-toggle" role="group" aria-label="プレビュー背景">
+            <button type="button" class="bg-btn is-active" data-bg="dark">ダーク</button>
+            <button type="button" class="bg-btn" data-bg="light">ライト</button>
+          </div>
+          <div class="lm" data-shape="rect" data-theme="dark" data-rep="0" data-ang="0" data-spd="0.6" data-hue="210" data-sat="0" data-rim="8">
+            <div class="outline"><span class="label">BUTTON</span></div>
+          </div>
+        </div>
+
+        <section class="code-panel" id="codePanel">
+          <div class="code-head">
+            <span class="code-title">生成コード <span class="code-meta" id="codeMeta"></span></span>
+            <div class="code-tabs" role="tablist">
+              <button type="button" class="tab is-active" data-tab="full">一式（HTML/CSS/JS）</button>
+              <button type="button" class="tab" data-tab="cssjs">JS + CSS</button>
+            </div>
+            <button type="button" class="copy-btn" id="copyBtn">コピー</button>
+          </div>
+          <pre class="code-block"><code id="codeOut"></code></pre>
+        </section>
       </div>
-    </div>
-    <div class="cell">
-      <span class="cap">B: rep 0.8 / angle 0</span>
-      <div class="lm" data-rep="0.8" data-ang="0">
-        <div class="outline"><span class="label">BUTTON</span></div>
-      </div>
-    </div>
-    <div class="cell">
-      <span class="cap">C: rep 0.4 / angle 45</span>
-      <div class="lm" data-rep="0.4" data-ang="45">
-        <div class="outline"><span class="label">BUTTON</span></div>
-      </div>
-    </div>
-    <div class="cell">
-      <span class="cap">D: rep 0.8 / angle 45</span>
-      <div class="lm" data-rep="0.8" data-ang="45">
-        <div class="outline"><span class="label">BUTTON</span></div>
-      </div>
-    </div>
-    <div class="cell">
-      <span class="cap">E: rep 1.5 / angle 90</span>
-      <div class="lm" data-rep="1.5" data-ang="90">
-        <div class="outline"><span class="label">BUTTON</span></div>
-      </div>
-    </div>
-    <div class="cell">
-      <span class="cap">F: rep 0.2 / angle 0</span>
-      <div class="lm" data-rep="0.2" data-ang="0">
-        <div class="outline"><span class="label">BUTTON</span></div>
-      </div>
+
+      <aside class="lm-sidebar">
+        <section class="panel">
+          <h2 class="panel-title">テンプレート</h2>
+          <p class="panel-note">クリックで設定をプリセット値に切り替え</p>
+          <div class="tpl-grid" id="tplGrid"></div>
+        </section>
+
+        <section class="panel">
+          <h2 class="panel-title">設定</h2>
+          <div class="shape-row" role="group" aria-label="ボタンの形">
+            <button type="button" class="shape-btn is-active" data-shape="rect">長方形</button>
+            <button type="button" class="shape-btn" data-shape="circle">丸</button>
+          </div>
+          <div class="ctrl">
+            <div class="ctrl-row"><span class="ctrl-name">rep</span><input type="range" class="sld" id="repSld" min="0" max="3" step="0.1" value="0" aria-label="repetition" /><span class="ctrl-val" id="repVal">0</span></div>
+            <div class="ctrl-row"><span class="ctrl-name">angle</span><input type="range" class="sld" id="angSld" min="0" max="360" step="5" value="0" aria-label="angle" /><span class="ctrl-val" id="angVal">0</span></div>
+            <div class="ctrl-row"><span class="ctrl-name">speed</span><input type="range" class="sld" id="spdSld" min="0" max="4" step="0.1" value="0.6" aria-label="speed" /><span class="ctrl-val" id="spdVal">0.6</span></div>
+            <div class="ctrl-row"><span class="ctrl-name">rim</span><input type="range" class="sld" id="rimSld" min="2" max="28" step="1" value="8" aria-label="リムの太さ" /><span class="ctrl-val" id="rimVal">8</span></div>
+            <div class="ctrl-row"><span class="ctrl-name">hue</span><input type="range" class="sld sld-hue" id="hueSld" min="0" max="360" step="5" value="210" aria-label="模様の色相" /><span class="ctrl-val" id="hueVal">210</span></div>
+            <div class="ctrl-row"><span class="ctrl-name">tint</span><input type="range" class="sld" id="satSld" min="0" max="0.8" step="0.05" value="0" aria-label="色の濃さ（0で白）" /><span class="ctrl-val" id="satVal">0</span></div>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <!-- 広告（ツール系ページ規格：PC/tab 728×90・SP 320×100 固定） -->
+    <div class="ad-wrap" style="width:100%; margin:32px auto 0; text-align:center;">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- liquid-metal-button -->
+      <ins class="adsbygoogle ad-banner"
+           style="display:inline-block"
+           data-ad-client="ca-pub-4871781946658288"
+           data-ad-slot="9567728786"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
     </div>
 
     <footer class="lm-foot">
       <span>&copy; 2026 リキッドメタルボタン | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
       <span class="lm-foot-links">
-        <a href="https://codequest.work/generator/neon-button-generator/" target="_blank" rel="noopener">ネオンボタンジェネレーター &rarr;</a>
+        <a href="howto.html">&#128214; 使い方・FAQ</a>
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
         <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
       </span>
     </footer>
 
-    <script type="module" src="script.js"></script>
+    <script src="script.js?v=20260627o" defer></script>
   </body>
 </html>

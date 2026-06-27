@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to Use the Liquid Metal Button Generator｜3 Steps, Settings & FAQ｜CodeQuest</title>
+    <meta name="description" content="How-to guide for the Liquid Metal Button generator (WebGL metallic buttons). Learn the 3-step workflow — pick a template, tune waviness, angle, speed, color, rim, shape and theme, then copy the code — plus a settings cheat sheet and FAQ." />
+    <link rel="canonical" href="https://codequest.work/generator/liquid-metal-button/en/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/liquid-metal-button/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/liquid-metal-button/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/liquid-metal-button/howto.html" />
+    <!-- OGP -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/liquid-metal-button/en/howto.html" />
+    <meta property="og:title" content="How to Use the Liquid Metal Button Generator｜3 Steps, Settings & FAQ" />
+    <meta property="og:description" content="3-step workflow for building WebGL liquid-metal buttons, a settings cheat sheet, and FAQ." />
+    <meta property="og:image" content="https://codequest.work/generator/liquid-metal-button/assets/og-en.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="How to Use the Liquid Metal Button Generator｜3 Steps, Settings & FAQ" />
+    <meta name="twitter:description" content="3-step workflow for WebGL liquid-metal buttons, settings cheat sheet, and FAQ." />
+    <meta name="twitter:image" content="https://codequest.work/generator/liquid-metal-button/assets/og-en.png" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "Liquid Metal Button", "item": "https://codequest.work/generator/liquid-metal-button/en/" },
+          { "@type": "ListItem", "position": 4, "name": "How to use", "item": "https://codequest.work/generator/liquid-metal-button/en/howto.html" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to use the Liquid Metal Button generator",
+        "description": "Pick a template, tune the look, and copy ready-to-use HTML/CSS/JS.",
+        "step": [
+          { "@type": "HowToStep", "name": "Pick a template", "text": "Click the closest preset (FLAT or A–H)." },
+          { "@type": "HowToStep", "name": "Tune the look", "text": "Adjust waviness, angle, speed, rim, hue and tint, plus shape (rectangle/circle) and theme (dark/light)." },
+          { "@type": "HowToStep", "name": "Copy the code", "text": "Copy from the All-in-one (HTML/CSS/JS) tab or the JS + CSS tab." }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "What kind of buttons can I make?", "acceptedAnswer": { "@type": "Answer", "text": "Buttons with a liquid-metal (chrome) finish rendered by a WebGL shader. Change the waviness, color, rim, shape and theme to go from silver to gold or colored metal." } },
+          { "@type": "Question", "name": "Can I use the generated code as-is?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The All-in-one (HTML/CSS/JS) tab is a self-contained snippet that includes the WebGL engine and runs on paste. The JS + CSS tab is a lightweight version for sites that already load the createLiquidMetal helper. There are no external dependencies (MIT)." } },
+          { "@type": "Question", "name": "Can I make a smooth metal with no waviness?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Pick the FLAT template or set waviness (rep) to 0 for a smooth, mirror-like metal." } },
+          { "@type": "Question", "name": "Can I make the rim white?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Set tint to 0 for a white (uncolored) metal. Raise hue and tint for gold, copper, blue, green and more." } },
+          { "@type": "Question", "name": "Is the animation included?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Use the speed slider to control motion. Set speed to 0 for a static metal." } },
+          { "@type": "Question", "name": "Which browsers are supported?", "acceptedAnswer": { "@type": "Answer", "text": "Any major browser with WebGL support — Chrome, Edge, Safari and Firefox." } },
+          { "@type": "Question", "name": "Can I use it commercially?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The generated code is MIT licensed and free to use on commercial sites." } }
+        ]
+      }
+    </script>
+    <style>
+      :root { --accent: #b9c4cf; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { background: #1d1d1d; color: #cfcac5; font-family: sans-serif; line-height: 1.85; font-size: 16px; padding: 24px 20px 8px; }
+      .howto-wrap { max-width: 860px; margin: 0 auto; }
+      .howto-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+      .back-btn { display: inline-block; margin: 8px 0 16px; color: var(--accent); text-decoration: none; font-size: 16px; }
+      .back-btn:hover { text-decoration: underline; }
+      .lang-link { color: var(--accent); text-decoration: none; font-size: 16px; border: 1px solid #3a4856; border-radius: 8px; padding: 5px 14px; background: #2b3540; }
+      .lang-link:hover { background: #34414f; }
+      h1 { color: #e8e4df; font-size: 28px; line-height: 1.35; margin-bottom: 20px; }
+      h2 { color: #e8e4df; font-size: 22px; margin: 36px 0 14px; }
+      h3 { color: #e8e4df; font-size: 18px; margin-bottom: 6px; }
+      p { font-size: 16px; }
+      strong { color: #e2ddd8; }
+      .answer-box { background: #161b20; border: 1px solid #2b3540; border-left: 4px solid #b9c4cf; border-radius: 10px; padding: 18px 20px; }
+      .steps { margin: 0 0 8px 1.3em; }
+      .steps li { margin-bottom: 8px; }
+      .howto-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+      .howto-table th, .howto-table td { border: 1px solid #2c2c2c; padding: 10px 12px; text-align: left; vertical-align: top; }
+      .howto-table th { background: #1b1b1b; color: #e8e4df; }
+      .howto-table td:first-child { color: #cfe0ef; white-space: nowrap; font-family: monospace; }
+      .faq-item { margin-bottom: 18px; }
+      .related { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+      .related a { color: #9aa6b2; text-decoration: none; border: 1px solid #2c2c2c; border-radius: 8px; padding: 8px 14px; }
+      .related a:hover { background: #262626; }
+      .ad-wrap { width: 100%; margin: 32px auto 0; text-align: center; min-height: 90px; }
+      .ad-banner { width: 728px; height: 90px; }
+      @media screen and (max-width: 727px) { .ad-wrap { min-height: 100px; } .ad-banner { width: 320px; height: 100px; } }
+      footer { margin: 40px auto 0; max-width: 860px; text-align: center; color: #6f6b68; font-size: 16px; line-height: 2; }
+      footer a { color: #9aa6b2; text-decoration: none; }
+      footer a:hover { text-decoration: underline; }
+      .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 8px; }
+    </style>
+  </head>
+  <body>
+    <div class="howto-wrap">
+      <div class="howto-top">
+        <a href="./" class="back-btn">&larr; Back to the Liquid Metal Button tool</a>
+        <a href="../howto.html" hreflang="ja" class="lang-link">日本語</a>
+      </div>
+      <h1>How to use the Liquid Metal Button generator</h1>
+
+      <article>
+        <div class="answer-box">
+          <p>The Liquid Metal Button generator is a free tool that builds buttons with a liquid-metal (chrome) finish using a <strong>WebGL shader</strong>. Pick a template, tune waviness (rep), light angle, speed, color, rim and shape, and copy <strong>dependency-free HTML/CSS/JS (MIT)</strong>.</p>
+        </div>
+
+        <h2>How to use it (3 steps)</h2>
+        <ol class="steps">
+          <li><strong>Pick a template</strong>: click the closest preset from FLAT or A–H</li>
+          <li><strong>Tune it</strong>: adjust waviness, angle, speed, rim, hue and tint, plus shape (rectangle/circle) and theme (dark/light)</li>
+          <li><strong>Copy the code</strong>: copy from the “All-in-one (HTML/CSS/JS)” or “JS + CSS” tab and paste it in</li>
+        </ol>
+
+        <h2>Settings cheat sheet</h2>
+        <table class="howto-table">
+          <thead>
+            <tr><th>Setting</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>waviness</td><td>Strength of the metal ripples. 0 = a smooth, mirror-like metal with no waves</td></tr>
+            <tr><td>angle</td><td>Angle of the light / ripples (0–360°)</td></tr>
+            <tr><td>speed</td><td>Animation speed. 0 = static</td></tr>
+            <tr><td>rim</td><td>Width of the visible metal rim (px)</td></tr>
+            <tr><td>hue</td><td>Color hue of the pattern (0–360°)</td></tr>
+            <tr><td>tint</td><td>Color strength. 0 = white (uncolored metal); raise it to apply the hue</td></tr>
+            <tr><td>shape</td><td>Rectangle / Circle</td></tr>
+            <tr><td>theme</td><td>Dark (dark face + light text) / Light (light face + dark text). Also switches the preview background</td></tr>
+          </tbody>
+        </table>
+
+        <h2>The two code tabs</h2>
+        <ol class="steps">
+          <li><strong>All-in-one (HTML/CSS/JS)</strong>: a self-contained snippet that includes the WebGL engine and runs on paste</li>
+          <li><strong>JS + CSS</strong>: a lightweight version (this button’s CSS + call) for sites that already load the <code>createLiquidMetal</code> helper</li>
+        </ol>
+
+        <h2>FAQ</h2>
+        <div class="faq-item">
+          <h3>What kind of buttons can I make?</h3>
+          <p>Buttons with a liquid-metal (chrome) finish rendered by a WebGL shader. Change the waviness, color, rim, shape and theme to go from silver to gold or colored metal.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I use the generated code as-is?</h3>
+          <p>Yes. The All-in-one (HTML/CSS/JS) tab is a self-contained snippet that includes the WebGL engine and runs on paste. The JS + CSS tab is a lightweight version for sites that already load the <code>createLiquidMetal</code> helper. No external dependencies (MIT).</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I make a smooth metal with no waviness?</h3>
+          <p>Yes. Pick the <strong>FLAT</strong> template or set <strong>waviness (rep) to 0</strong> for a smooth, mirror-like metal.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I make the rim white?</h3>
+          <p>Yes. Set <strong>tint to 0</strong> for a white (uncolored) metal. Raise hue and tint for gold, copper, blue, green and more.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Is the animation included?</h3>
+          <p>Yes. Use the <strong>speed</strong> slider to control motion. Set speed to 0 for a static metal.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Which browsers are supported?</h3>
+          <p>Any major browser with WebGL support — Chrome, Edge, Safari and Firefox.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I use it commercially?</h3>
+          <p>Yes. The generated code is MIT licensed and free to use on commercial sites.</p>
+        </div>
+
+        <h2>Related tools</h2>
+        <div class="related">
+          <a href="https://codequest.work/generator/neon-button-generator/" target="_blank" rel="noopener">Neon Button Generator</a>
+          <a href="https://codequest.work/generator/liquid-glass-css-generator/" target="_blank" rel="noopener">Liquid Glass CSS Generator</a>
+          <a href="https://codequest.work/generator/liquid-glass-generator/" target="_blank" rel="noopener">Liquid Glass Generator (WebGL)</a>
+          <a href="https://codequest.work/generator/clip-path/" target="_blank" rel="noopener">clip-path Generator</a>
+          <a href="https://codequest.work/generator/animation-gallery/" target="_blank" rel="noopener">CSS Animation Gallery</a>
+        </div>
+      </article>
+
+      <p style="margin-top: 24px;"><a href="./" class="back-btn">&larr; Use the Liquid Metal Button tool</a></p>
+    </div>
+
+    <div class="ad-wrap">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- liquid-metal-button howto -->
+      <ins class="adsbygoogle ad-banner" style="display:inline-block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="9567728786"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 Liquid Metal Button | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>

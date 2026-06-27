@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liquid Metal Button Generator — Chrome / Metallic Buttons (WebGL) | CodeQuest</title>
+    <meta name="description" content="Free liquid-metal (chrome) button generator powered by a WebGL shader. Pick a template, then tune waviness, light angle, speed, color, rim and shape, toggle dark/light, and copy dependency-free HTML/CSS/JS. MIT licensed, no dependencies." />
+    <link rel="canonical" href="https://codequest.work/generator/liquid-metal-button/en/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/liquid-metal-button/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/liquid-metal-button/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/liquid-metal-button/" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codequest.work/generator/liquid-metal-button/en/" />
+    <meta property="og:title" content="Liquid Metal Button Generator — Chrome / Metallic Buttons (WebGL)" />
+    <meta property="og:description" content="Free liquid-metal (chrome) button generator powered by a WebGL shader. Tune waviness, angle, speed, color, rim and shape, then copy dependency-free HTML/CSS/JS. MIT licensed." />
+    <meta property="og:image" content="https://codequest.work/generator/liquid-metal-button/assets/og-en.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Liquid Metal Button" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Liquid Metal Button Generator — Chrome / Metallic Buttons (WebGL)" />
+    <meta name="twitter:description" content="Free liquid-metal (chrome) button generator with a WebGL shader. Tune waviness, angle, speed, color, rim and shape, then copy dependency-free code. MIT licensed." />
+    <meta name="twitter:image" content="https://codequest.work/generator/liquid-metal-button/assets/og-en.png" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Liquid Metal Button Generator",
+        "url": "https://codequest.work/generator/liquid-metal-button/en/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web browser",
+        "inLanguage": "en",
+        "description": "Free liquid-metal (chrome) button generator powered by a WebGL shader. Tune waviness, light angle, speed, color, rim and shape, toggle dark/light, and copy dependency-free HTML/CSS/JS.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": ["WebGL liquid-metal (chrome) button shader", "Adjustable waviness, light angle and animation speed", "Color (hue/tint), rim width and shape (rectangle/circle)", "Dark / light theme", "Copy ready-to-use, dependency-free HTML/CSS/JS"],
+        "publisher": {
+          "@type": "Organization",
+          "name": "CodeQuest.work",
+          "url": "https://codequest.work/"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "Liquid Metal Button", "item": "https://codequest.work/generator/liquid-metal-button/en/" }
+        ]
+      }
+    </script>
+    <link rel="stylesheet" href="../style.css?v=20260627t" />
+  </head>
+  <body>
+    <header class="lm-head">
+      <div class="lm-head-top">
+        <h1>Liquid Metal Button<span class="accent"> — WebGL Metallic Button Generator</span></h1>
+        <div class="lang-switch"><a href="../" hreflang="ja">日本語</a></div>
+      </div>
+      <p>A generator for liquid-metal (chrome) buttons drawn with a WebGL shader. Pick a template, then tune waviness (rep), light angle and speed, adjust color, rim and shape, switch dark / light — and copy ready-to-use, dependency-free code (MIT).</p>
+    </header>
+
+    <main class="lm-app">
+      <div class="lm-main">
+        <div class="preview" data-bg="dark">
+          <div class="bg-toggle" role="group" aria-label="Preview background">
+            <button type="button" class="bg-btn is-active" data-bg="dark">Dark</button>
+            <button type="button" class="bg-btn" data-bg="light">Light</button>
+          </div>
+          <div class="lm" data-shape="rect" data-theme="dark" data-rep="0" data-ang="0" data-spd="0.6" data-hue="210" data-sat="0" data-rim="8">
+            <div class="outline"><span class="label">BUTTON</span></div>
+          </div>
+        </div>
+
+        <section class="code-panel" id="codePanel">
+          <div class="code-head">
+            <span class="code-title">Generated code <span class="code-meta" id="codeMeta"></span></span>
+            <div class="code-tabs" role="tablist">
+              <button type="button" class="tab is-active" data-tab="full">All-in-one (HTML/CSS/JS)</button>
+              <button type="button" class="tab" data-tab="cssjs">JS + CSS</button>
+            </div>
+            <button type="button" class="copy-btn" id="copyBtn">Copy</button>
+          </div>
+          <pre class="code-block"><code id="codeOut"></code></pre>
+        </section>
+      </div>
+
+      <aside class="lm-sidebar">
+        <section class="panel">
+          <h2 class="panel-title">Templates</h2>
+          <p class="panel-note">Click to load a preset</p>
+          <div class="tpl-grid" id="tplGrid"></div>
+        </section>
+
+        <section class="panel">
+          <h2 class="panel-title">Settings</h2>
+          <div class="shape-row" role="group" aria-label="Button shape">
+            <button type="button" class="shape-btn is-active" data-shape="rect">Rectangle</button>
+            <button type="button" class="shape-btn" data-shape="circle">Circle</button>
+          </div>
+          <div class="ctrl">
+            <div class="ctrl-row"><span class="ctrl-name">waviness</span><input type="range" class="sld" id="repSld" min="0" max="3" step="0.1" value="0" aria-label="waviness (repetition)" /><span class="ctrl-val" id="repVal">0</span></div>
+            <div class="ctrl-row"><span class="ctrl-name">angle</span><input type="range" class="sld" id="angSld" min="0" max="360" step="5" value="0" aria-label="light angle" /><span class="ctrl-val" id="angVal">0</span></div>
+            <div class="ctrl-row"><span class="ctrl-name">speed</span><input type="range" class="sld" id="spdSld" min="0" max="4" step="0.1" value="0.6" aria-label="animation speed" /><span class="ctrl-val" id="spdVal">0.6</span></div>
+            <div class="ctrl-row"><span class="ctrl-name">rim</span><input type="range" class="sld" id="rimSld" min="2" max="28" step="1" value="8" aria-label="rim width" /><span class="ctrl-val" id="rimVal">8</span></div>
+            <div class="ctrl-row"><span class="ctrl-name">hue</span><input type="range" class="sld sld-hue" id="hueSld" min="0" max="360" step="5" value="210" aria-label="color hue" /><span class="ctrl-val" id="hueVal">210</span></div>
+            <div class="ctrl-row"><span class="ctrl-name">tint</span><input type="range" class="sld" id="satSld" min="0" max="0.8" step="0.05" value="0" aria-label="color tint (0 = white)" /><span class="ctrl-val" id="satVal">0</span></div>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <!-- Ad (tool-page spec: PC/tablet 728x90, mobile 320x100, fixed) -->
+    <div class="ad-wrap" style="width:100%; margin:32px auto 0; text-align:center;">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- liquid-metal-button -->
+      <ins class="adsbygoogle ad-banner"
+           style="display:inline-block"
+           data-ad-client="ca-pub-4871781946658288"
+           data-ad-slot="9567728786"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer class="lm-foot">
+      <span>&copy; 2026 Liquid Metal Button | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <span class="lm-foot-links">
+        <a href="howto.html">&#128214; How to use &amp; FAQ</a>
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </span>
+    </footer>
+
+    <script src="../script.js?v=20260627o" defer></script>
+  </body>
+</html>

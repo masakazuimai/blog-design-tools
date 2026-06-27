@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>リキッドメタルボタンの使い方｜3ステップ・設定早見表とFAQ｜CodeQuest</title>
+    <meta name="description" content="リキッドメタルボタン（WebGLの液体金属ボタン）の使い方ガイド。テンプレート選択から rep・angle・speed・色・リム・形・テーマの調整、コードのコピーまでの3ステップ、設定早見表、よくある質問をまとめています。" />
+    <link rel="canonical" href="https://codequest.work/generator/liquid-metal-button/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/liquid-metal-button/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/liquid-metal-button/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/liquid-metal-button/howto.html" />
+    <!-- OGP -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/liquid-metal-button/howto.html" />
+    <meta property="og:title" content="リキッドメタルボタンの使い方｜3ステップ・設定早見表とFAQ" />
+    <meta property="og:description" content="WebGLの液体金属ボタンを作る3ステップ、rep/angle/speed/色/リム/形/テーマの設定早見表、よくある質問をまとめた使い方ガイド。" />
+    <meta property="og:image" content="https://codequest.work/generator/liquid-metal-button/assets/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="リキッドメタルボタンの使い方｜3ステップ・設定早見表とFAQ" />
+    <meta name="twitter:description" content="WebGLの液体金属ボタンを作る3ステップ、設定早見表、FAQ。" />
+    <meta name="twitter:image" content="https://codequest.work/generator/liquid-metal-button/assets/og.png" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "リキッドメタルボタン", "item": "https://codequest.work/generator/liquid-metal-button/" },
+          { "@type": "ListItem", "position": 4, "name": "使い方", "item": "https://codequest.work/generator/liquid-metal-button/howto.html" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "リキッドメタルボタンの使い方",
+        "description": "テンプレートを選び、質感・色・形・テーマを調整して、貼り付けられるHTML/CSS/JSを生成する手順。",
+        "step": [
+          { "@type": "HowToStep", "name": "テンプレートを選ぶ", "text": "FLAT・A〜H のテンプレートから近いものをクリックします。" },
+          { "@type": "HowToStep", "name": "質感・色・形を調整する", "text": "rep・angle・speed・rim・hue・tint と、形（長方形/丸）・テーマ（ダーク/ライト）を調整します。" },
+          { "@type": "HowToStep", "name": "コードをコピーする", "text": "「一式」または「JS + CSS」タブのコードをコピーして貼り付けます。" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "どんなボタンが作れますか？", "acceptedAnswer": { "@type": "Answer", "text": "WebGLシェーダーで描く、液体金属（クローム）の質感を持つボタンを作れます。うねり・色・リム・形・テーマを変えて、シルバーからゴールド・カラーメタルまで表現できます。" } },
+          { "@type": "Question", "name": "出力したコードはそのまま使えますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。「一式（HTML/CSS/JS）」タブはWebGLの描画エンジンまで含む自己完結コードで、コピペで動きます。「JS + CSS」タブは createLiquidMetal ヘルパーを読み込み済みの人向けの軽量版です。外部ライブラリ依存はありません（MIT）。" } },
+          { "@type": "Question", "name": "うねりの無い、なめらかな金属にできますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。テンプレートの FLAT を選ぶか、rep（うねり）を 0 にすると、うねりの無いなめらかな鏡面メタルになります。" } },
+          { "@type": "Question", "name": "リムの色を白にできますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。tint（色の濃さ）を 0 にすると無色＝白のメタルになります。hue と tint を上げると金・銅・青・緑など好きな色のメタルにできます。" } },
+          { "@type": "Question", "name": "アニメーションも出力されますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。speed で動きの速さを調整できます。speed を 0 にすると静止した金属になります。" } },
+          { "@type": "Question", "name": "どのブラウザで表示されますか？", "acceptedAnswer": { "@type": "Answer", "text": "WebGL に対応する Chrome・Edge・Safari・Firefox などの主要ブラウザで表示されます。" } },
+          { "@type": "Question", "name": "商用利用できますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。生成されるコードは MIT ライセンスで、商用サイトでも自由に利用できます。" } }
+        ]
+      }
+    </script>
+    <style>
+      :root { --accent: #b9c4cf; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { background: #1d1d1d; color: #cfcac5; font-family: sans-serif; line-height: 1.85; font-size: 16px; padding: 24px 20px 8px; }
+      .howto-wrap { max-width: 860px; margin: 0 auto; }
+      .howto-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+      .back-btn { display: inline-block; margin: 8px 0 16px; color: var(--accent); text-decoration: none; font-size: 16px; }
+      .back-btn:hover { text-decoration: underline; }
+      .lang-link { color: var(--accent); text-decoration: none; font-size: 16px; border: 1px solid #3a4856; border-radius: 8px; padding: 5px 14px; background: #2b3540; }
+      .lang-link:hover { background: #34414f; }
+      h1 { color: #e8e4df; font-size: 28px; line-height: 1.35; margin-bottom: 20px; }
+      h2 { color: #e8e4df; font-size: 22px; margin: 36px 0 14px; }
+      h3 { color: #e8e4df; font-size: 18px; margin-bottom: 6px; }
+      p { font-size: 16px; }
+      strong { color: #e2ddd8; }
+      .answer-box { background: #161b20; border: 1px solid #2b3540; border-left: 4px solid #b9c4cf; border-radius: 10px; padding: 18px 20px; }
+      .steps { margin: 0 0 8px 1.3em; }
+      .steps li { margin-bottom: 8px; }
+      .howto-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+      .howto-table th, .howto-table td { border: 1px solid #2c2c2c; padding: 10px 12px; text-align: left; vertical-align: top; }
+      .howto-table th { background: #1b1b1b; color: #e8e4df; }
+      .howto-table td:first-child { color: #cfe0ef; white-space: nowrap; font-family: monospace; }
+      .faq-item { margin-bottom: 18px; }
+      .related { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+      .related a { color: #9aa6b2; text-decoration: none; border: 1px solid #2c2c2c; border-radius: 8px; padding: 8px 14px; }
+      .related a:hover { background: #262626; }
+      .ad-wrap { width: 100%; margin: 32px auto 0; text-align: center; min-height: 90px; }
+      .ad-banner { width: 728px; height: 90px; }
+      @media screen and (max-width: 727px) { .ad-wrap { min-height: 100px; } .ad-banner { width: 320px; height: 100px; } }
+      footer { margin: 40px auto 0; max-width: 860px; text-align: center; color: #6f6b68; font-size: 16px; line-height: 2; }
+      footer a { color: #9aa6b2; text-decoration: none; }
+      footer a:hover { text-decoration: underline; }
+      .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 8px; }
+    </style>
+  </head>
+  <body>
+    <div class="howto-wrap">
+      <div class="howto-top">
+        <a href="./" class="back-btn">&larr; リキッドメタルボタン（ツール）に戻る</a>
+        <a href="en/howto.html" hreflang="en" class="lang-link">English</a>
+      </div>
+      <h1>リキッドメタルボタンの使い方</h1>
+
+      <article>
+        <div class="answer-box">
+          <p>リキッドメタルボタンは、<strong>WebGLシェーダー</strong>で液体金属（クローム）の質感を持つボタンを作れる無料ツールです。テンプレートを選び、うねり(rep)・光の角度(angle)・速さ(speed)・色・リム・形を調整して、外部ライブラリ不要の<strong>HTML/CSS/JS（MIT）</strong>を生成できます。</p>
+        </div>
+
+        <h2>使い方（3ステップ）</h2>
+        <ol class="steps">
+          <li><strong>テンプレートを選ぶ</strong>：FLAT・A〜H から、作りたい質感に近いものをクリック</li>
+          <li><strong>調整する</strong>：rep・angle・speed・rim・hue・tint と、形（長方形/丸）・テーマ（ダーク/ライト）をスライダー/ボタンで調整</li>
+          <li><strong>コードをコピー</strong>：「一式（HTML/CSS/JS）」または「JS + CSS」タブのコードをコピーして貼り付け</li>
+        </ol>
+
+        <h2>設定項目 早見表</h2>
+        <table class="howto-table">
+          <thead>
+            <tr><th>項目</th><th>役割</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>rep</td><td>うねりの強さ。0でうねり無しのなめらかな鏡面メタルになる</td></tr>
+            <tr><td>angle</td><td>光（うねり）の角度（0〜360°）</td></tr>
+            <tr><td>speed</td><td>アニメーションの速さ。0で静止</td></tr>
+            <tr><td>rim</td><td>金属が見える縁（リム）の太さ（px）</td></tr>
+            <tr><td>hue</td><td>模様の色相（0〜360°）</td></tr>
+            <tr><td>tint</td><td>色の濃さ。0で白（無色メタル）、上げるとhueの色がのる</td></tr>
+            <tr><td>形</td><td>長方形 / 丸（円）</td></tr>
+            <tr><td>テーマ</td><td>ダーク（暗い面＋淡色文字）/ ライト（明るい面＋濃色文字）。プレビュー背景も切替</td></tr>
+          </tbody>
+        </table>
+
+        <h2>生成コードの2タブ</h2>
+        <ol class="steps">
+          <li><strong>一式（HTML/CSS/JS）</strong>：WebGLの描画エンジンまで含む自己完結スニペット。コピペだけで動く</li>
+          <li><strong>JS + CSS</strong>：<code>createLiquidMetal</code> ヘルパーを読み込み済みの人向けの軽量版（このボタンのCSS＋呼び出しのみ）</li>
+        </ol>
+
+        <h2>よくある質問</h2>
+        <div class="faq-item">
+          <h3>どんなボタンが作れますか？</h3>
+          <p>WebGLシェーダーで描く、液体金属（クローム）の質感を持つボタンを作れます。うねり・色・リム・形・テーマを変えて、シルバーからゴールド・カラーメタルまで表現できます。</p>
+        </div>
+        <div class="faq-item">
+          <h3>出力したコードはそのまま使えますか？</h3>
+          <p>はい。「一式（HTML/CSS/JS）」タブはWebGLの描画エンジンまで含む自己完結コードで、コピペで動きます。「JS + CSS」タブは <code>createLiquidMetal</code> ヘルパーを読み込み済みの人向けの軽量版です。外部ライブラリ依存はありません（MIT）。</p>
+        </div>
+        <div class="faq-item">
+          <h3>うねりの無い、なめらかな金属にできますか？</h3>
+          <p>はい。テンプレートの <strong>FLAT</strong> を選ぶか、<strong>rep を 0</strong> にすると、うねりの無いなめらかな鏡面メタルになります。</p>
+        </div>
+        <div class="faq-item">
+          <h3>リムの色を白にできますか？</h3>
+          <p>はい。<strong>tint を 0</strong> にすると無色＝白のメタルになります。hue と tint を上げると金・銅・青・緑など好きな色のメタルにできます。</p>
+        </div>
+        <div class="faq-item">
+          <h3>アニメーションも出力されますか？</h3>
+          <p>はい。<strong>speed</strong> で動きの速さを調整できます。speed を 0 にすると静止した金属になります。</p>
+        </div>
+        <div class="faq-item">
+          <h3>どのブラウザで表示されますか？</h3>
+          <p>WebGL に対応する Chrome・Edge・Safari・Firefox などの主要ブラウザで表示されます。</p>
+        </div>
+        <div class="faq-item">
+          <h3>商用利用できますか？</h3>
+          <p>はい。生成されるコードは MIT ライセンスで、商用サイトでも自由に利用できます。</p>
+        </div>
+
+        <h2>関連ツール</h2>
+        <div class="related">
+          <a href="https://codequest.work/generator/neon-button-generator/" target="_blank" rel="noopener">ネオンボタンジェネレーター</a>
+          <a href="https://codequest.work/generator/liquid-glass-css-generator/" target="_blank" rel="noopener">透過リキッドガラスCSSジェネレーター</a>
+          <a href="https://codequest.work/generator/liquid-glass-generator/" target="_blank" rel="noopener">Liquid Glassジェネレーター（WebGL）</a>
+          <a href="https://codequest.work/generator/clip-path/" target="_blank" rel="noopener">clip-path ジェネレーター</a>
+          <a href="https://codequest.work/generator/animation-gallery/" target="_blank" rel="noopener">CSSアニメーションギャラリー</a>
+        </div>
+      </article>
+
+      <p style="margin-top: 24px;"><a href="./" class="back-btn">&larr; リキッドメタルボタン（ツール）を使う</a></p>
+    </div>
+
+    <div class="ad-wrap">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- liquid-metal-button howto -->
+      <ins class="adsbygoogle ad-banner" style="display:inline-block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="9567728786"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 リキッドメタルボタン | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>

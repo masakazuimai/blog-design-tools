@@ -2,10 +2,11 @@
   --light-color: #444;
   --dark-color: #000;
   --icon-color: #65615f;
-  --w: 30rem;        /* ボタン幅 */
-  --h: 10rem;        /* ボタン高さ */
-  --radius: 3rem;    /* 角丸 */
-  --rim: 0.3rem;     /* リム（ベゼル）太さ */
+  --w: 36rem;        /* プレビューボタン幅 */
+  --h: 11rem;        /* プレビューボタン高さ */
+  --radius: 3.2rem;  /* 角丸 */
+  --rim: 0.8rem;     /* リム（ベゼル）太さ＝金属面の幅 */
+  --circle: 16rem;   /* 丸形の直径 */
 }
 
 *, *::before, *::after {
@@ -19,45 +20,295 @@ html { font-size: 62.5%; }
 body {
   min-height: 100vh;
   background: #1d1d1d;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5rem 3rem;
-  place-content: center;
-  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  padding: 4rem 2rem;
   font-family: sans-serif;
 }
 
-/* タブレット以下：1列に切り替え、ボタン幅は画面に追従 */
-@media (max-width: 720px) {
-  :root {
-    --w: min(34rem, 86vw);
-    --h: 9rem;
-    --radius: 2.6rem;
-  }
-  body {
-    grid-template-columns: 1fr;
-    gap: 4rem;
-    padding: 4rem 2rem;
-  }
+/* 見出し（コンテンツ幅・中央寄せ） */
+.lm-head {
+  width: 100%;
+  max-width: 112rem;
+  margin: 0 auto 3rem;
+  text-align: center;
 }
 
-/* スマホ：余白・文字をさらに引き締め */
-@media (max-width: 400px) {
-  :root { --h: 8rem; }
-  .label { font-size: 2.2rem; letter-spacing: 0.18em; text-indent: 0.18em; }
+/* h1と言語ボタンを同じ行に：空き｜h1中央｜ボタン右（サイドバー右端と一致） */
+.lm-head-top {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  column-gap: 1.2rem;
 }
 
-.cell {
+.lm-head-top h1 {
+  grid-column: 2;
+}
+
+.lm-head-top .lang-switch {
+  grid-column: 3;
+  justify-self: end;
+}
+
+/* 言語切り替え（h1と同じ行・コンテンツ右端） */
+.lang-switch {
+  margin: 0;
+}
+
+.lang-switch a {
+  display: inline-block;
+  color: #cfe0ef;
+  text-decoration: none;
+  font-size: 1.6rem;
+  background: #2b3540;
+  border: 0.1rem solid #3a4856;
+  border-radius: 0.8rem;
+  padding: 0.5rem 1.4rem;
+  transition: background 0.12s ease;
+}
+
+.lang-switch a:hover {
+  background: #34414f;
+}
+
+.lm-head h1 {
+  color: #e8e4df;
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.lm-head .accent {
+  color: #b9c4cf;
+}
+
+.lm-head p {
+  color: #9a9591;
+  font-size: 1.6rem;
+  line-height: 1.8;
+  max-width: 70rem;
+  margin: 1.2rem auto 0;
+}
+
+/* アプリ本体：左＝プレビュー＋コード / 右＝サイドバー */
+.lm-app {
+  width: 100%;
+  max-width: 112rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 34rem;
+  gap: 2.8rem;
+  align-items: start;
+}
+
+.lm-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  min-width: 0;
+}
+
+/* 大きなプレビュー1つ */
+.preview {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30rem;
+  padding: 5rem 3rem;
+  background: #161616;
+  border: 0.1rem solid #2a2a2a;
+  border-radius: 1.6rem;
+}
+
+/* プレビュー背景：ライト切替（#F5F5F5） */
+.preview[data-bg="light"] {
+  background: #f5f5f5;
+  border-color: #e2e2e2;
+}
+
+/* プレビュー背景トグル（右上） */
+.bg-toggle {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  display: flex;
+  gap: 0.4rem;
+}
+
+.bg-btn {
+  background: rgba(0, 0, 0, 0.35);
+  color: #e0dcd7;
+  border: 0.1rem solid rgba(255, 255, 255, 0.18);
+  border-radius: 0.7rem;
+  padding: 0.5rem 1.1rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.bg-btn.is-active {
+  background: #b9c4cf;
+  border-color: #b9c4cf;
+  color: #141414;
+  font-weight: 700;
+}
+
+.preview[data-bg="light"] .bg-btn {
+  background: rgba(255, 255, 255, 0.7);
+  color: #444;
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+.preview[data-bg="light"] .bg-btn.is-active {
+  background: #2b3540;
+  color: #f5f5f5;
+  border-color: #2b3540;
+}
+
+.lm-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: sticky;
+  top: 2rem;
+}
+
+.panel {
+  background: #161616;
+  border: 0.1rem solid #2a2a2a;
+  border-radius: 1.4rem;
+  padding: 1.8rem;
+}
+
+.panel-title {
+  color: #e8e4df;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.panel-note {
+  margin-top: 0.4rem;
+  margin-bottom: 1.4rem;
+  color: #8f8a86;
+  font-size: 1.5rem;
+  line-height: 1.6;
+}
+
+/* テンプレート（プリセット）ボタン群 */
+.tpl-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+}
+
+.tpl-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.2rem;
+  gap: 0.3rem;
+  padding: 1rem 0.4rem;
+  background: #232323;
+  border: 0.1rem solid #343434;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease;
 }
 
-.cap {
-  color: #9a9591;
-  font-size: 1.5rem;
-  letter-spacing: 0.05em;
+.tpl-btn:hover {
+  background: #2c2c2c;
+}
+
+.tpl-btn.is-active {
+  background: #2b3540;
+  border-color: #b9c4cf;
+}
+
+.tpl-id {
+  color: #d8d3ce;
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.tpl-btn.is-active .tpl-id {
+  color: #cfe0ef;
+}
+
+.tpl-meta {
+  color: #8f8a86;
+  font-size: 1.6rem;
+  font-family: monospace;
+  line-height: 1.1;
+}
+
+/* rep / angle / speed スライダー */
+.ctrl {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  width: 100%;
+}
+
+.ctrl-row {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr 4.5rem;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.ctrl-name {
+  color: #8f8a86;
+  font-size: 1.6rem;
+  font-family: monospace;
+}
+
+.ctrl-val {
+  color: #cfcac5;
+  font-size: 1.6rem;
+  font-family: monospace;
+  text-align: right;
+}
+
+.sld {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 0.4rem;
+  border-radius: 0.4rem;
+  background: #3a3a3a;
+  cursor: pointer;
+}
+
+.sld::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: #b9c4cf;
+  border: none;
+  cursor: pointer;
+}
+
+.sld::-moz-range-thumb {
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: #b9c4cf;
+  border: none;
+  cursor: pointer;
+}
+
+/* 色相スライダーはトラックを虹色に（色変更のUIヒント） */
+.sld-hue {
+  background: linear-gradient(
+    to right,
+    hsl(0, 60%, 60%), hsl(60, 60%, 60%), hsl(120, 60%, 60%),
+    hsl(180, 60%, 60%), hsl(240, 60%, 60%), hsl(300, 60%, 60%), hsl(360, 60%, 60%)
+  );
 }
 
 /* メタルボタン本体（全面描画のシェーダーcanvasを角丸でクリップ） */
@@ -69,6 +320,68 @@ body {
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+/* シェーダー描画canvas（中央の暗い面より下＝縁のリムだけ見せる） */
+.lm canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 丸形（円） */
+.lm[data-shape="circle"] {
+  width: var(--circle);
+  height: var(--circle);
+  border-radius: 50%;
+}
+
+.lm[data-shape="circle"]::before {
+  width: calc(var(--circle) - var(--rim) * 2);
+  height: calc(var(--circle) - var(--rim) * 2);
+  border-radius: 50%;
+}
+
+.lm[data-shape="circle"] .outline {
+  border-radius: 50%;
+}
+
+.lm[data-shape="circle"] .label {
+  font-size: 2rem;
+  letter-spacing: 0.08em;
+  text-indent: 0.08em;
+}
+
+/* 形セレクタ（長方形 / 丸） */
+.shape-row {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1.6rem;
+}
+
+.shape-btn {
+  flex: 1;
+  background: #232323;
+  color: #b6b1ac;
+  border: 0.1rem solid #343434;
+  border-radius: 0.9rem;
+  padding: 0.9rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+.shape-btn:hover {
+  background: #2c2c2c;
+}
+
+.shape-btn.is-active {
+  background: #2b3540;
+  border-color: #b9c4cf;
+  color: #cfe0ef;
+  font-weight: 700;
 }
 
 /* クリック時：少し沈み込む */
@@ -125,35 +438,141 @@ body {
   color: var(--icon-color);
 }
 
-/* SEO用の見出し・フッター（2カラムグリッドを全幅でまたぐ） */
-.lm-head {
-  grid-column: 1 / -1;
-  max-width: 70rem;
-  margin: 0 auto 1rem;
-  text-align: center;
+/* ライトテーマ：ボタン面を明るく・テキストを濃く反転 */
+.lm[data-theme="light"] {
+  --light-color: #fcfcfc;
+  --dark-color: #d2d2d2;
 }
 
-.lm-head h1 {
+.lm[data-theme="light"]::before {
+  box-shadow: inset 0 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.12);
+}
+
+.lm[data-theme="light"] .label {
+  color: #333333;
+}
+
+/* 生成コードパネル（プレビューの下・メイン列いっぱい） */
+.code-panel {
+  width: 100%;
+  background: #141414;
+  border: 0.1rem solid #2c2c2c;
+  border-radius: 1.2rem;
+  overflow: hidden;
+}
+
+.code-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.4rem 1.6rem;
+  background: #1b1b1b;
+  border-bottom: 0.1rem solid #2c2c2c;
+}
+
+.code-title {
   color: #e8e4df;
-  font-size: 2.8rem;
+  font-size: 1.7rem;
   font-weight: 700;
-  line-height: 1.35;
 }
 
-.lm-head .accent {
-  color: #b9c4cf;
+.code-meta {
+  margin-left: 0.6rem;
+  color: #8f8a86;
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-family: monospace;
 }
 
-.lm-head p {
-  color: #9a9591;
+.code-tabs {
+  display: inline-flex;
+  gap: 0.6rem;
+  margin-left: auto;
+}
+
+.tab {
+  background: #262626;
+  color: #b6b1ac;
+  border: 0.1rem solid #353535;
+  border-radius: 0.8rem;
+  padding: 0.7rem 1.2rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.tab:hover {
+  background: #2f2f2f;
+}
+
+.tab.is-active {
+  background: #b9c4cf;
+  color: #141414;
+  border-color: #b9c4cf;
+  font-weight: 700;
+}
+
+.copy-btn {
+  background: #2b3540;
+  color: #cfe0ef;
+  border: 0.1rem solid #3a4856;
+  border-radius: 0.8rem;
+  padding: 0.7rem 1.4rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.copy-btn:hover {
+  background: #34414f;
+}
+
+.copy-btn.is-copied {
+  background: #2f5d3a;
+  border-color: #2f5d3a;
+  color: #d6f5dd;
+}
+
+.code-block {
+  margin: 0;
+  padding: 1.8rem;
+  overflow-x: auto;
+  max-height: 44rem;
+}
+
+.code-block code {
+  display: block;
+  color: #d6d1cc;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 1.6rem;
-  line-height: 1.8;
-  margin-top: 1.2rem;
+  line-height: 1.6;
+  white-space: pre;
+  tab-size: 2;
+}
+
+/* 広告（ツール系ページ規格：固定サイズ・CLS防止） */
+.ad-wrap {
+  min-height: 90px;
+}
+
+.ad-banner {
+  width: 728px;
+  height: 90px;
+}
+
+@media screen and (max-width: 727px) {
+  .ad-wrap {
+    min-height: 100px;
+  }
+  .ad-banner {
+    width: 320px;
+    height: 100px;
+  }
 }
 
 .lm-foot {
-  grid-column: 1 / -1;
-  margin-top: 1rem;
+  margin: 4rem auto 0;
   text-align: center;
   color: #6f6b68;
   font-size: 1.6rem;
@@ -177,7 +596,44 @@ body {
   margin-left: 1.6rem;
 }
 
-@media (max-width: 720px) {
+/* 狭い画面：h1と言語ボタンを同じ行に保てないので縦積み（ボタンを上・右寄せ） */
+@media (max-width: 860px) {
+  .lm-head-top {
+    grid-template-columns: 1fr;
+  }
+  .lm-head-top h1 {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .lm-head-top .lang-switch {
+    grid-column: 1;
+    grid-row: 1;
+    margin-bottom: 1.2rem;
+  }
+}
+
+/* タブレット以下：1カラムに積む */
+@media (max-width: 880px) {
+  .lm-app {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .lm-sidebar {
+    position: static;
+  }
+}
+
+/* スマホ：ボタン・余白を引き締め */
+@media (max-width: 480px) {
+  :root {
+    --w: min(34rem, 82vw);
+    --h: 9.5rem;
+    --radius: 2.8rem;
+  }
+  .preview {
+    min-height: 24rem;
+    padding: 3.5rem 1.5rem;
+  }
   .lm-head h1 {
     font-size: 2.4rem;
   }
@@ -185,5 +641,10 @@ body {
     display: flex;
     margin-left: 0;
     margin-top: 0.8rem;
+  }
+  .label {
+    font-size: 2.2rem;
+    letter-spacing: 0.18em;
+    text-indent: 0.18em;
   }
 }
