@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html,
+      body { background: #111; }
+      .og {
+        width: 1200px;
+        height: 630px;
+        background: radial-gradient(120% 120% at 78% 30%, #20262e 0%, #141414 60%);
+        display: flex;
+        align-items: center;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        overflow: hidden;
+        position: relative;
+      }
+      .copy {
+        width: 55%;
+        padding: 0 24px 0 80px;
+      }
+      .badge {
+        display: inline-block;
+        color: #cfe0ef;
+        background: #2b3540;
+        border: 1px solid #3a4856;
+        border-radius: 999px;
+        font-size: 22px;
+        font-weight: 700;
+        padding: 8px 22px;
+        letter-spacing: 0.04em;
+        margin-bottom: 26px;
+      }
+      .title {
+        color: #eef1f4;
+        font-size: 76px;
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+      }
+      .title .accent { color: #9fb6cc; }
+      .sub {
+        color: #9aa6b2;
+        font-size: 27px;
+        font-weight: 500;
+        line-height: 1.5;
+        margin-top: 22px;
+      }
+      .brand {
+        position: absolute;
+        left: 80px;
+        bottom: 42px;
+        color: #6f7b88;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+      .stage-wrap {
+        width: 45%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        perspective: 1100px;
+      }
+      .ring {
+        position: relative;
+        width: 1px;
+        height: 1px;
+        transform-style: preserve-3d;
+        transform: rotateX(10deg) rotateY(-16deg);
+      }
+      .card {
+        --h: 212;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 168px;
+        height: 222px;
+        margin-left: -84px;
+        margin-top: -111px;
+        border-radius: 18px;
+        background: linear-gradient(160deg, hsl(var(--h), 42%, 38%), hsl(var(--h), 48%, 14%));
+        border: 1px solid hsla(var(--h), 50%, 80%, 0.28);
+        box-shadow: 0 22px 48px rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: hsl(var(--h), 45%, 88%);
+        font-size: 40px;
+        font-weight: 800;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="og">
+      <div class="copy">
+        <span class="badge">GSAP · Free · No sign-up</span>
+        <div class="title">3D Carousel<br /><span class="accent">Generator</span></div>
+        <div class="sub">6 GSAP 3D carousels<br />Merry-go-round, cube, ferris wheel &amp; more</div>
+      </div>
+      <div class="stage-wrap">
+        <div class="ring" id="ring"></div>
+      </div>
+      <div class="brand">CodeQuest.work</div>
+    </div>
+    <script>
+      var ring = document.getElementById("ring");
+      var n = 7,
+        radius = 210,
+        hue = 210;
+      for (var i = 0; i < n; i++) {
+        var c = document.createElement("div");
+        c.className = "card";
+        c.textContent = i + 1;
+        var ang = (i * 360) / n;
+        c.style.transform = "rotateY(" + ang + "deg) translateZ(" + radius + "px)";
+        var face = Math.cos(((ang - 20) * Math.PI) / 180);
+        c.style.filter = "brightness(" + (0.45 + 0.55 * (face * 0.5 + 0.5)).toFixed(3) + ")";
+        c.style.zIndex = Math.round(face * 100);
+        c.style.setProperty("--h", hue);
+        ring.appendChild(c);
+      }
+    </script>
+  </body>
+</html>

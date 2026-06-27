@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3Dカルーセルの使い方｜GSAPで作る6タイプの設定早見表とFAQ｜CodeQuest</title>
+    <meta name="description" content="GSAPで作る3Dカルーセル（メリーゴーランド・縦回転・カードスタック・フラワー・キューブ・観覧車）ジェネレーターの使い方ガイド。タイプ選択から設定・画像の差し替え・コードのコピーまでの3ステップ、6タイプ早見表、設定項目早見表、よくある質問をまとめています。" />
+    <link rel="canonical" href="https://codequest.work/generator/carousel-3d/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/carousel-3d/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/carousel-3d/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/carousel-3d/howto.html" />
+    <!-- OGP -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/carousel-3d/howto.html" />
+    <meta property="og:title" content="3Dカルーセルの使い方｜6タイプ・設定早見表とFAQ" />
+    <meta property="og:description" content="GSAPで作る3Dカルーセル6タイプの使い方3ステップ、タイプ早見表、設定項目早見表、画像の差し替え方、よくある質問をまとめた使い方ガイド。" />
+    <meta property="og:image" content="https://codequest.work/generator/carousel-3d/assets/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="3Dカルーセルの使い方｜6タイプ・設定早見表とFAQ" />
+    <meta name="twitter:description" content="GSAPで作る3Dカルーセル6タイプの使い方3ステップ、設定早見表、画像の差し替え方、FAQ。" />
+    <meta name="twitter:image" content="https://codequest.work/generator/carousel-3d/assets/og.png" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "3Dカルーセル", "item": "https://codequest.work/generator/carousel-3d/" },
+          { "@type": "ListItem", "position": 4, "name": "使い方", "item": "https://codequest.work/generator/carousel-3d/howto.html" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "3Dカルーセルの使い方",
+        "description": "タイプを選び、枚数・半径・遠近・傾き・速度・色を調整して、GSAPで動く3DカルーセルのHTML/CSS/JSを生成し、カードの中身を画像へ差し替える手順。",
+        "step": [
+          { "@type": "HowToStep", "name": "タイプを選ぶ", "text": "テンプレートからメリーゴーランド・縦回転・カードスタック・フラワー・キューブ・観覧車の6タイプを選びます。" },
+          { "@type": "HowToStep", "name": "設定を調整する", "text": "枚数・半径・遠近・傾き・速度・色などをスライダーで調整します。プレビューはドラッグで回せます。" },
+          { "@type": "HowToStep", "name": "コードをコピーして画像へ差し替える", "text": "生成コード（GSAP CDN込み・完全版）をコピーし、各カードの中身を自分の画像（img）へ差し替えます。" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "どんな3Dカルーセルが作れますか？", "acceptedAnswer": { "@type": "Answer", "text": "6タイプを作れます。メリーゴーランド（横回転の輪）、縦回転（縦の輪）、カードスタック（下からせり上がって奥へ後退）、フラワー（放射状に並べて見下ろし回転）、キューブ（6面の立方体）、観覧車（円周を回るがカードは常に正面）です。いずれも自動回転とドラッグ操作つきです。" } },
+          { "@type": "Question", "name": "出力したコードはそのまま動きますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。生成コードは GSAP（および Draggable・InertiaPlugin）の読み込みまで含む自己完結スニペット（完全版）なので、HTMLに貼り付けるだけで動きます。" } },
+          { "@type": "Question", "name": "カードの中身を画像に差し替えるには？", "acceptedAnswer": { "@type": "Answer", "text": "リング系（メリーゴーランド・縦回転・フラワー・キューブ・観覧車）は各 .c3-card の中の <span> を <img src=\"...\" alt=\"\"> に置き換えます。カードスタックは各 .cs-card の .cs-img を画像に、.cs-text を見出しに差し替えます。CSSで画像は object-fit:cover にしてあるのでカードいっぱいに表示されます。" } },
+          { "@type": "Question", "name": "自動回転・自動送りは止められますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。「自動回転 / 自動送り」のON/OFFボタンで切り替えられます。OFFにすると静止し、ドラッグ（またはスワイプ）した分だけ動きます。生成コードにも設定が反映されます。" } },
+          { "@type": "Question", "name": "ドラッグやスワイプで操作できますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。GSAP の Draggable を使っており、回転系はドラッグして離すと慣性で回り続けます（InertiaPlugin）。カードスタックはスワイプ／タップで前後に送れます。プレビューでもそのまま試せます。" } },
+          { "@type": "Question", "name": "どのタイプを選べばいいですか？", "acceptedAnswer": { "@type": "Answer", "text": "写真・商品ギャラリーはメリーゴーランドや観覧車、ストーリー風の順送りはカードスタック、装飾・ヒーローはフラワーやキューブが向いています。まずは近いタイプを選び、半径・枚数・見下ろし角で雰囲気を調整してください。" } },
+          { "@type": "Question", "name": "GSAPは無料ですか？商用利用できますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。GSAP は現在すべての公式プラグイン（Draggable・InertiaPlugin を含む）が無料で、商用サイトでも利用できます。生成されるカルーセル側のコードも自由に利用できます。" } }
+        ]
+      }
+    </script>
+    <style>
+      :root { --accent: #b9c4cf; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { background: #1d1d1d; color: #cfcac5; font-family: sans-serif; line-height: 1.85; font-size: 16px; padding: 24px 20px 8px; }
+      .howto-wrap { max-width: 860px; margin: 0 auto; }
+      .howto-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+      .back-btn { display: inline-block; margin: 8px 0 16px; color: var(--accent); text-decoration: none; font-size: 16px; }
+      .back-btn:hover { text-decoration: underline; }
+      .lang-link { color: var(--accent); text-decoration: none; font-size: 16px; border: 1px solid #3a4856; border-radius: 8px; padding: 5px 14px; background: #2b3540; }
+      .lang-link:hover { background: #34414f; }
+      h1 { color: #e8e4df; font-size: 28px; line-height: 1.35; margin-bottom: 20px; }
+      h2 { color: #e8e4df; font-size: 22px; margin: 36px 0 14px; }
+      h3 { color: #e8e4df; font-size: 18px; margin-bottom: 6px; }
+      p { font-size: 16px; }
+      strong { color: #e2ddd8; }
+      code { background: #161b20; border: 1px solid #2b3540; border-radius: 5px; padding: 1px 6px; font-size: 15px; }
+      .answer-box { background: #161b20; border: 1px solid #2b3540; border-left: 4px solid #b9c4cf; border-radius: 10px; padding: 18px 20px; }
+      .steps { margin: 0 0 8px 1.3em; }
+      .steps li { margin-bottom: 8px; }
+      .howto-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+      .howto-table th, .howto-table td { border: 1px solid #2c2c2c; padding: 10px 12px; text-align: left; vertical-align: top; }
+      .howto-table th { background: #1b1b1b; color: #e8e4df; }
+      .howto-table td:first-child { color: #cfe0ef; white-space: nowrap; font-family: monospace; }
+      .faq-item { margin-bottom: 18px; }
+      .related { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+      .related a { color: #9aa6b2; text-decoration: none; border: 1px solid #2c2c2c; border-radius: 8px; padding: 8px 14px; }
+      .related a:hover { background: #262626; }
+      .ad-wrap { width: 100%; margin: 32px auto 0; text-align: center; min-height: 90px; }
+      .ad-banner { width: 728px; height: 90px; }
+      @media screen and (max-width: 727px) { .ad-wrap { min-height: 100px; } .ad-banner { width: 320px; height: 100px; } }
+      footer { margin: 40px auto 0; max-width: 860px; text-align: center; color: #6f6b68; font-size: 16px; line-height: 2; }
+      footer a { color: #9aa6b2; text-decoration: none; }
+      footer a:hover { text-decoration: underline; }
+      .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 8px; }
+    </style>
+  </head>
+  <body>
+    <div class="howto-wrap">
+      <div class="howto-top">
+        <a href="./" class="back-btn">&larr; 3Dカルーセル（ツール）に戻る</a>
+        <a href="en/howto.html" hreflang="en" class="lang-link">English</a>
+      </div>
+      <h1>3Dカルーセルの使い方</h1>
+
+      <article>
+        <div class="answer-box">
+          <p>3Dカルーセルは、<strong>GSAP</strong>で動く立体カルーセルを<strong>6タイプ</strong>（メリーゴーランド・縦回転・カードスタック・フラワー・キューブ・観覧車）作れる無料ツールです。タイプを選び、枚数・半径・遠近・傾き・速度・色をスライダーで調整して、ドラッグやスワイプで操作できる<strong>HTML/CSS/JS（完全版・GSAP CDN込み）</strong>を生成できます。</p>
+        </div>
+
+        <h2>使い方（3ステップ）</h2>
+        <ol class="steps">
+          <li><strong>タイプを選ぶ</strong>：テンプレートから6タイプのうち近いものをクリック（プレビューが切り替わります）</li>
+          <li><strong>調整する</strong>：枚数・半径・遠近・傾き・速度・色などをスライダーで調整。プレビューはドラッグで回せます</li>
+          <li><strong>コードをコピー＆画像に差し替え</strong>：生成コード（完全版）をコピーして貼り付け、各カードの中身を自分の画像に差し替え</li>
+        </ol>
+
+        <h2>6タイプの早見表</h2>
+        <table class="howto-table">
+          <thead>
+            <tr><th>タイプ</th><th>動き</th><th>向いている用途</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>メリーゴーランド</td><td>カードが横の輪になって回転（前後・横の傾きも調整可）</td><td>写真・商品ギャラリー</td></tr>
+            <tr><td>縦回転</td><td>観覧車のように縦の輪で回転</td><td>縦長カード・特集</td></tr>
+            <tr><td>カードスタック</td><td>次のカードが下からせり上がり、現カードは奥へ後退して切替（自動送り＋スワイプ）</td><td>ストーリー・順送りスライド</td></tr>
+            <tr><td>フラワー</td><td>放射状に並べ、見下ろし角で回転（花・万華鏡風）</td><td>ビジュアル・装飾・ヒーロー</td></tr>
+            <tr><td>キューブ</td><td>6面（前後左右＋天面・底面）の立方体が回転</td><td>ギャラリー・切替展示</td></tr>
+            <tr><td>観覧車</td><td>円周を回るが、カードは常に正面・正立（ゴンドラ）</td><td>サムネ一覧・回遊</td></tr>
+          </tbody>
+        </table>
+
+        <h2>設定項目 早見表</h2>
+        <p>タイプによって表示されるスライダーは変わります。主な項目は次のとおりです。</p>
+        <table class="howto-table">
+          <thead>
+            <tr><th>項目</th><th>役割</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>count</td><td>カードの枚数</td></tr>
+            <tr><td>radius</td><td>輪の半径（大きいほどカードが離れる）</td></tr>
+            <tr><td>size</td><td>立方体の一辺の大きさ（キューブ）</td></tr>
+            <tr><td>perspective</td><td>遠近の強さ（小さいほど奥行きが強調される）</td></tr>
+            <tr><td>cardW / cardH</td><td>カードの幅・高さ（px）</td></tr>
+            <tr><td>前後tilt / 横tilt</td><td>メリーゴーランドの傾き（前後＝手前に倒す、横＝左右に傾ける）</td></tr>
+            <tr><td>見下ろし</td><td>上から見下ろす角度（フラワー・キューブ・観覧車）</td></tr>
+            <tr><td>interval</td><td>自動送りの間隔（秒・カードスタック）</td></tr>
+            <tr><td>depth</td><td>後退の深さ（カードスタック）</td></tr>
+            <tr><td>speed</td><td>1回転にかかる秒数（小さいほど速い）。自動回転OFFで静止</td></tr>
+            <tr><td>hue</td><td>カードの色相（0〜360°）</td></tr>
+          </tbody>
+        </table>
+
+        <h2>カードを画像に差し替える</h2>
+        <ol class="steps">
+          <li><strong>リング系</strong>（メリーゴーランド・縦回転・フラワー・キューブ・観覧車）：各 <code>.c3-card</code> の中の <code>&lt;span&gt;1&lt;/span&gt;</code> を <code>&lt;img src="photo1.jpg" alt=""&gt;</code> に置き換える</li>
+          <li><strong>カードスタック</strong>：各 <code>.cs-card</code> の <code>.cs-img</code> を画像に、<code>.cs-text</code> の見出し・説明を編集する</li>
+          <li>画像は CSS で <code>object-fit: cover</code> 済みなのでカードいっぱいに表示されます。枚数を変えるときは <code>count</code> を調整し、その枚数ぶんのカードを用意します</li>
+        </ol>
+
+        <h2>操作とコード</h2>
+        <ol class="steps">
+          <li><strong>ドラッグ／スワイプ</strong>：回転系はドラッグして離すと慣性で回ります。カードスタックはスワイプ／タップで前後送り</li>
+          <li><strong>自動回転 / 自動送り</strong>：ボタンでON/OFF。OFFは静止＋手動操作のみ（生成コードにも反映）</li>
+          <li><strong>生成コードは完全版のみ</strong>：GSAP・Draggable（回転系は InertiaPlugin も）の読み込みを含む自己完結スニペット。コピペだけで動きます</li>
+        </ol>
+
+        <h2>よくある質問</h2>
+        <div class="faq-item">
+          <h3>どんな3Dカルーセルが作れますか？</h3>
+          <p>6タイプを作れます。メリーゴーランド（横回転の輪）、縦回転（縦の輪）、カードスタック（下からせり上がって奥へ後退）、フラワー（放射状に並べて見下ろし回転）、キューブ（6面の立方体）、観覧車（円周を回るがカードは常に正面）です。いずれも自動回転とドラッグ操作つきです。</p>
+        </div>
+        <div class="faq-item">
+          <h3>出力したコードはそのまま動きますか？</h3>
+          <p>はい。生成コードは GSAP（および Draggable・InertiaPlugin）の読み込みまで含む自己完結スニペット（完全版）なので、HTMLに貼り付けるだけで動きます。</p>
+        </div>
+        <div class="faq-item">
+          <h3>カードの中身を画像に差し替えるには？</h3>
+          <p>リング系は各 <code>.c3-card</code> の中の <code>&lt;span&gt;</code> を <code>&lt;img&gt;</code> に置き換えます。カードスタックは <code>.cs-img</code> を画像に、<code>.cs-text</code> を見出しに差し替えます。画像は <code>object-fit: cover</code> でカードいっぱいに表示されます。</p>
+        </div>
+        <div class="faq-item">
+          <h3>自動回転・自動送りは止められますか？</h3>
+          <p>はい。「自動回転 / 自動送り」のON/OFFボタンで切り替えられます。OFFにすると静止し、ドラッグ（またはスワイプ）した分だけ動きます。生成コードにも設定が反映されます。</p>
+        </div>
+        <div class="faq-item">
+          <h3>ドラッグやスワイプで操作できますか？</h3>
+          <p>はい。GSAP の Draggable を使っており、回転系はドラッグして離すと慣性で回り続けます（InertiaPlugin）。カードスタックはスワイプ／タップで前後に送れます。</p>
+        </div>
+        <div class="faq-item">
+          <h3>どのタイプを選べばいいですか？</h3>
+          <p>写真・商品ギャラリーはメリーゴーランドや観覧車、ストーリー風の順送りはカードスタック、装飾・ヒーローはフラワーやキューブが向いています。まずは近いタイプを選び、半径・枚数・見下ろし角で雰囲気を調整してください。</p>
+        </div>
+        <div class="faq-item">
+          <h3>GSAPは無料ですか？商用利用できますか？</h3>
+          <p>はい。GSAP は現在すべての公式プラグイン（Draggable・InertiaPlugin を含む）が無料で、商用サイトでも利用できます。生成されるカルーセル側のコードも自由に利用できます。</p>
+        </div>
+
+        <h2>関連ツール</h2>
+        <div class="related">
+          <a href="https://codequest.work/generator/slider-generator/" target="_blank" rel="noopener">スライダー／カルーセル ジェネレーター（平面・Swiper等）</a>
+          <a href="https://codequest.work/generator/liquid-metal-button/" target="_blank" rel="noopener">リキッドメタルボタン</a>
+          <a href="https://codequest.work/generator/clip-path/" target="_blank" rel="noopener">clip-path ジェネレーター</a>
+          <a href="https://codequest.work/generator/animation-gallery/" target="_blank" rel="noopener">CSSアニメーションギャラリー</a>
+        </div>
+      </article>
+
+      <p style="margin-top: 24px;"><a href="./" class="back-btn">&larr; 3Dカルーセル（ツール）を使う</a></p>
+    </div>
+
+    <div class="ad-wrap">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- carousel-3d howto -->
+      <ins class="adsbygoogle ad-banner" style="display:inline-block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="3140931553"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 3Dカルーセル | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>

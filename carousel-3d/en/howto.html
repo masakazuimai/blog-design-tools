@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to use the 3D Carousel Generator｜6 GSAP types, settings reference and FAQ｜CodeQuest</title>
+    <meta name="description" content="A guide to the 3D carousel generator (merry-go-round, vertical wheel, card stack, flower, cube, ferris wheel) built with GSAP. Covers the 3 steps from picking a type to adjusting settings, swapping images and copying the code, a 6-type reference, a settings reference and FAQ." />
+    <link rel="canonical" href="https://codequest.work/generator/carousel-3d/en/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/carousel-3d/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/carousel-3d/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/carousel-3d/howto.html" />
+    <!-- OGP -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/carousel-3d/en/howto.html" />
+    <meta property="og:title" content="How to use the 3D Carousel Generator｜6 types, reference and FAQ" />
+    <meta property="og:description" content="3 steps to build a GSAP 3D carousel across 6 types, a type reference, a settings reference, how to swap in images, and FAQ." />
+    <meta property="og:image" content="https://codequest.work/generator/carousel-3d/assets/og-en.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="How to use the 3D Carousel Generator｜6 types, reference and FAQ" />
+    <meta name="twitter:description" content="3 steps to build a GSAP 3D carousel across 6 types, a settings reference, how to swap in images, and FAQ." />
+    <meta name="twitter:image" content="https://codequest.work/generator/carousel-3d/assets/og-en.png" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "3D Carousel", "item": "https://codequest.work/generator/carousel-3d/en/" },
+          { "@type": "ListItem", "position": 4, "name": "How to use", "item": "https://codequest.work/generator/carousel-3d/en/howto.html" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to use the 3D Carousel Generator",
+        "description": "Pick a type, adjust the cards, radius, perspective, tilt, speed and color, generate the GSAP HTML/CSS/JS and swap each card for your own image.",
+        "step": [
+          { "@type": "HowToStep", "name": "Pick a type", "text": "Choose from the 6 templates: merry-go-round, vertical wheel, card stack, flower, cube and ferris wheel." },
+          { "@type": "HowToStep", "name": "Adjust the settings", "text": "Tune the number of cards, radius, perspective, tilt, speed and color with sliders. Drag the preview to spin it." },
+          { "@type": "HowToStep", "name": "Copy the code and swap in images", "text": "Copy the generated code (full, GSAP CDN included) and replace each card's content with your own image." }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "What kinds of 3D carousels can I build?", "acceptedAnswer": { "@type": "Answer", "text": "Six types: merry-go-round (horizontal ring), vertical wheel, card stack (the next card rises and the current one recedes), flower (radial layout viewed from above), cube (a 6-faced rotating cube) and ferris wheel (cards orbit but always face front). All of them support auto-rotation and drag." } },
+          { "@type": "Question", "name": "Does the generated code work as-is?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The generated code is a self-contained snippet (full version) that includes loading GSAP, Draggable and InertiaPlugin, so it works once you paste it into your HTML." } },
+          { "@type": "Question", "name": "How do I swap a card for my own image?", "acceptedAnswer": { "@type": "Answer", "text": "For the ring types (merry-go-round, vertical wheel, flower, cube, ferris wheel) replace the <span> inside each .c3-card with <img src=\"...\" alt=\"\">. For the card stack, replace each .cs-img with your image and edit .cs-text. Images use object-fit:cover so they fill the card." } },
+          { "@type": "Question", "name": "Can I turn off auto-rotation / auto-play?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Toggle the auto-rotate / auto-play button. When off, the carousel is static and only moves when you drag (or swipe). The setting is reflected in the generated code." } },
+          { "@type": "Question", "name": "Can users drag or swipe it?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. It uses GSAP Draggable: the rotating types keep spinning with inertia after you release (InertiaPlugin), and the card stack moves forward/back with a swipe or tap." } },
+          { "@type": "Question", "name": "Which type should I pick?", "acceptedAnswer": { "@type": "Answer", "text": "Use merry-go-round or ferris wheel for photo/product galleries, card stack for story-like sequential slides, and flower or cube for decorative hero sections. Start with the closest type and tune the radius, count and look-down angle." } },
+          { "@type": "Question", "name": "Is GSAP free? Can I use it commercially?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. GSAP and all of its official plugins (including Draggable and InertiaPlugin) are now free and can be used on commercial sites. The generated carousel code is free to use too." } }
+        ]
+      }
+    </script>
+    <style>
+      :root { --accent: #b9c4cf; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { background: #1d1d1d; color: #cfcac5; font-family: sans-serif; line-height: 1.85; font-size: 16px; padding: 24px 20px 8px; }
+      .howto-wrap { max-width: 860px; margin: 0 auto; }
+      .howto-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+      .back-btn { display: inline-block; margin: 8px 0 16px; color: var(--accent); text-decoration: none; font-size: 16px; }
+      .back-btn:hover { text-decoration: underline; }
+      .lang-link { color: var(--accent); text-decoration: none; font-size: 16px; border: 1px solid #3a4856; border-radius: 8px; padding: 5px 14px; background: #2b3540; }
+      .lang-link:hover { background: #34414f; }
+      h1 { color: #e8e4df; font-size: 28px; line-height: 1.35; margin-bottom: 20px; }
+      h2 { color: #e8e4df; font-size: 22px; margin: 36px 0 14px; }
+      h3 { color: #e8e4df; font-size: 18px; margin-bottom: 6px; }
+      p { font-size: 16px; }
+      strong { color: #e2ddd8; }
+      code { background: #161b20; border: 1px solid #2b3540; border-radius: 5px; padding: 1px 6px; font-size: 15px; }
+      .answer-box { background: #161b20; border: 1px solid #2b3540; border-left: 4px solid #b9c4cf; border-radius: 10px; padding: 18px 20px; }
+      .steps { margin: 0 0 8px 1.3em; }
+      .steps li { margin-bottom: 8px; }
+      .howto-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+      .howto-table th, .howto-table td { border: 1px solid #2c2c2c; padding: 10px 12px; text-align: left; vertical-align: top; }
+      .howto-table th { background: #1b1b1b; color: #e8e4df; }
+      .howto-table td:first-child { color: #cfe0ef; white-space: nowrap; font-family: monospace; }
+      .faq-item { margin-bottom: 18px; }
+      .related { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+      .related a { color: #9aa6b2; text-decoration: none; border: 1px solid #2c2c2c; border-radius: 8px; padding: 8px 14px; }
+      .related a:hover { background: #262626; }
+      .ad-wrap { width: 100%; margin: 32px auto 0; text-align: center; min-height: 90px; }
+      .ad-banner { width: 728px; height: 90px; }
+      @media screen and (max-width: 727px) { .ad-wrap { min-height: 100px; } .ad-banner { width: 320px; height: 100px; } }
+      footer { margin: 40px auto 0; max-width: 860px; text-align: center; color: #6f6b68; font-size: 16px; line-height: 2; }
+      footer a { color: #9aa6b2; text-decoration: none; }
+      footer a:hover { text-decoration: underline; }
+      .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 8px; }
+    </style>
+  </head>
+  <body>
+    <div class="howto-wrap">
+      <div class="howto-top">
+        <a href="./" class="back-btn">&larr; Back to the 3D Carousel tool</a>
+        <a href="../howto.html" hreflang="ja" class="lang-link">日本語</a>
+      </div>
+      <h1>How to use the 3D Carousel Generator</h1>
+
+      <article>
+        <div class="answer-box">
+          <p>The 3D Carousel Generator builds <strong>GSAP-powered</strong> 3D carousels in <strong>6 types</strong> (merry-go-round, vertical wheel, card stack, flower, cube and ferris wheel) for free. Pick a type, tune the cards, radius, perspective, tilt, speed and color with sliders, and copy <strong>drag-and-swipe HTML/CSS/JS (full, GSAP CDN included)</strong>.</p>
+        </div>
+
+        <h2>How to use it (3 steps)</h2>
+        <ol class="steps">
+          <li><strong>Pick a type</strong>: click the closest of the 6 templates (the preview switches instantly)</li>
+          <li><strong>Adjust</strong>: tune cards, radius, perspective, tilt, speed and color with sliders. Drag the preview to spin it</li>
+          <li><strong>Copy &amp; swap images</strong>: copy the generated code (full version) and replace each card's content with your own image</li>
+        </ol>
+
+        <h2>The 6 types at a glance</h2>
+        <table class="howto-table">
+          <thead>
+            <tr><th>Type</th><th>Motion</th><th>Best for</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Merry-go-round</td><td>Cards form a horizontal ring and spin (front/back and side tilt adjustable)</td><td>Photo / product galleries</td></tr>
+            <tr><td>Vertical wheel</td><td>A vertical ring that rotates like a wheel</td><td>Tall cards, features</td></tr>
+            <tr><td>Card stack</td><td>The next card rises from below while the current one recedes (auto-play + swipe)</td><td>Story-like sequential slides</td></tr>
+            <tr><td>Flower</td><td>Cards arranged radially, spun at a look-down angle (flower / kaleidoscope)</td><td>Visual / decorative heroes</td></tr>
+            <tr><td>Cube</td><td>A 6-faced cube (4 sides + top + bottom) rotates</td><td>Galleries, switching displays</td></tr>
+            <tr><td>Ferris wheel</td><td>Cards orbit a circle but always stay upright and face front (gondolas)</td><td>Thumbnail lists, browsing</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Settings reference</h2>
+        <p>The sliders shown depend on the type. The main settings are:</p>
+        <table class="howto-table">
+          <thead>
+            <tr><th>Setting</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>count</td><td>Number of cards</td></tr>
+            <tr><td>radius</td><td>Ring radius (larger = cards spread out)</td></tr>
+            <tr><td>size</td><td>Cube edge length (cube)</td></tr>
+            <tr><td>perspective</td><td>Strength of perspective (smaller = more depth)</td></tr>
+            <tr><td>cardW / cardH</td><td>Card width / height (px)</td></tr>
+            <tr><td>tilt X / tilt Z</td><td>Merry-go-round tilt (X = pitch toward you, Z = bank left/right)</td></tr>
+            <tr><td>look down</td><td>Look-down angle from above (flower, cube, ferris wheel)</td></tr>
+            <tr><td>interval</td><td>Auto-play interval in seconds (card stack)</td></tr>
+            <tr><td>depth</td><td>How far the leaving card recedes (card stack)</td></tr>
+            <tr><td>speed</td><td>Seconds per full turn (smaller = faster). Static when auto is off</td></tr>
+            <tr><td>hue</td><td>Card color hue (0–360°)</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Swapping cards for images</h2>
+        <ol class="steps">
+          <li><strong>Ring types</strong> (merry-go-round, vertical wheel, flower, cube, ferris wheel): replace <code>&lt;span&gt;1&lt;/span&gt;</code> inside each <code>.c3-card</code> with <code>&lt;img src="photo1.jpg" alt=""&gt;</code></li>
+          <li><strong>Card stack</strong>: replace each <code>.cs-img</code> with your image and edit the <code>.cs-text</code> heading and caption</li>
+          <li>Images use <code>object-fit: cover</code>, so they fill the card. To change the count, adjust <code>count</code> and provide that many cards</li>
+        </ol>
+
+        <h2>Controls &amp; code</h2>
+        <ol class="steps">
+          <li><strong>Drag / swipe</strong>: the rotating types keep spinning with inertia after you release; the card stack moves forward/back with a swipe or tap</li>
+          <li><strong>Auto-rotate / auto-play</strong>: toggle on/off. Off means static + manual control (reflected in the code)</li>
+          <li><strong>Full code only</strong>: a self-contained snippet that loads GSAP, Draggable (and InertiaPlugin for the rotating types). Just paste it in</li>
+        </ol>
+
+        <h2>FAQ</h2>
+        <div class="faq-item">
+          <h3>What kinds of 3D carousels can I build?</h3>
+          <p>Six types: merry-go-round (horizontal ring), vertical wheel, card stack (the next card rises and the current one recedes), flower (radial layout viewed from above), cube (a 6-faced rotating cube) and ferris wheel (cards orbit but always face front). All support auto-rotation and drag.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Does the generated code work as-is?</h3>
+          <p>Yes. The generated code is a self-contained snippet (full version) that includes loading GSAP, Draggable and InertiaPlugin, so it works once you paste it into your HTML.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do I swap a card for my own image?</h3>
+          <p>For the ring types, replace the <code>&lt;span&gt;</code> inside each <code>.c3-card</code> with an <code>&lt;img&gt;</code>. For the card stack, replace <code>.cs-img</code> with your image and edit <code>.cs-text</code>. Images use <code>object-fit: cover</code> so they fill the card.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I turn off auto-rotation / auto-play?</h3>
+          <p>Yes. Toggle the auto-rotate / auto-play button. When off, the carousel is static and only moves when you drag (or swipe). The setting is reflected in the generated code.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can users drag or swipe it?</h3>
+          <p>Yes. It uses GSAP Draggable: the rotating types keep spinning with inertia after you release (InertiaPlugin), and the card stack moves forward/back with a swipe or tap.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Which type should I pick?</h3>
+          <p>Use merry-go-round or ferris wheel for photo/product galleries, card stack for story-like sequential slides, and flower or cube for decorative hero sections. Start with the closest type and tune the radius, count and look-down angle.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Is GSAP free? Can I use it commercially?</h3>
+          <p>Yes. GSAP and all of its official plugins (including Draggable and InertiaPlugin) are now free and can be used on commercial sites. The generated carousel code is free to use too.</p>
+        </div>
+
+        <h2>Related tools</h2>
+        <div class="related">
+          <a href="https://codequest.work/generator/slider-generator/" target="_blank" rel="noopener">Slider / Carousel Generator (flat, Swiper etc.)</a>
+          <a href="https://codequest.work/generator/liquid-metal-button/en/" target="_blank" rel="noopener">Liquid Metal Button</a>
+          <a href="https://codequest.work/generator/clip-path/" target="_blank" rel="noopener">clip-path Generator</a>
+          <a href="https://codequest.work/generator/animation-gallery/en/" target="_blank" rel="noopener">CSS Animation Gallery</a>
+        </div>
+      </article>
+
+      <p style="margin-top: 24px;"><a href="./" class="back-btn">&larr; Use the 3D Carousel tool</a></p>
+    </div>
+
+    <div class="ad-wrap">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- carousel-3d howto en -->
+      <ins class="adsbygoogle ad-banner" style="display:inline-block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="3140931553"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <span>&copy; 2026 3D Carousel | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>
