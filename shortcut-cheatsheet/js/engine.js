@@ -69,38 +69,66 @@ export function initApp({ appId, appName, categories, templates, strings }) {
   const STORAGE_KEY = `sc:${appId}:v1`;
   let customSeq = 0;
 
-  // ---- 複合キー解決：'catId:idx' / 'custom:id' → 該当アイテム ----
+  // ---- 安定ID（キー組合せ）。'|'区切り（'|'はキートークンに存在しない）----
+  // お気に入り/並び順はこの slug で保存するため、データの並べ替え・挿入・削除に強い。
+  const slugOf = (item) => item.keys.join("|");
+
+  // カテゴリ内で参照(slug or 旧index)から item を引く（slug優先・旧index形式も移行解決）
+  const itemByRef = (cat, ref) => {
+    const r = String(ref);
+    const bySlug = cat.items.find((it) => slugOf(it) === r);
+    if (bySlug) return bySlug;
+    if (/^\d+$/.test(r)) {
+      const idx = Number(r);
+      if (idx >= 0 && idx < cat.items.length) return cat.items[idx]; // 旧 'catId:idx' 形式の移行
+    }
+    return null;
+  };
+
+  // ---- 複合キー解決：'catId:slug' / 'custom:id'（旧 'catId:idx' も移行）→ 該当アイテム ----
   const resolveKey = (key) => {
     if (typeof key !== "string") return null;
     if (key.startsWith("custom:")) {
       const id = key.slice(7);
       const item = state.custom.find((c) => c.id === id);
-      return item ? { key, cat: CUSTOM_CAT, idx: -1, item, custom: true } : null;
+      return item ? { key, cat: CUSTOM_CAT, item, custom: true } : null;
     }
-    const [catId, idxStr] = key.split(":");
-    const cat = categories.find((c) => c.id === catId);
+    const i = key.indexOf(":");
+    if (i < 0) return null;
+    const cat = categories.find((c) => c.id === key.slice(0, i));
     if (!cat) return null;
-    const idx = Number(idxStr);
-    if (!Number.isInteger(idx) || idx < 0 || idx >= cat.items.length) return null;
-    return { key, cat, idx, item: cat.items[idx], custom: false };
+    const item = itemByRef(cat, key.slice(i + 1));
+    if (!item) return null;
+    return { key: `${cat.id}:${slugOf(item)}`, cat, item, custom: false }; // 正規化キーを返す
   };
 
   // ---- 状態管理（OS・並び順・お気に入り・カスタム）----
   const defaultOrder = () => {
     const order = {};
-    for (const cat of categories) order[cat.id] = cat.items.map((_, i) => i);
+    for (const cat of categories) order[cat.id] = cat.items.map(slugOf);
     return order;
   };
 
+  // 保存済みの並び順を slug へ正規化（旧index移行）＋新規項目を末尾追加
   const mergeOrder = (saved) => {
     const base = defaultOrder();
     if (!saved || typeof saved !== "object") return base;
     const merged = {};
     for (const cat of categories) {
-      const valid = Array.isArray(saved[cat.id]) ? saved[cat.id] : [];
-      const known = valid.filter((i) => Number.isInteger(i) && i >= 0 && i < cat.items.length);
-      const missing = base[cat.id].filter((i) => !known.includes(i));
-      merged[cat.id] = [...new Set([...known, ...missing])];
+      const savedArr = Array.isArray(saved[cat.id]) ? saved[cat.id] : [];
+      const known = [];
+      const seen = new Set();
+      for (const ref of savedArr) {
+        const item = itemByRef(cat, ref);
+        if (!item) continue;
+        const s = slugOf(item);
+        if (!seen.has(s)) {
+          seen.add(s);
+          known.push(s);
+        }
+      }
+      const missing = base[cat.id].filter((s) => !seen.has(s));
+      merged[cat.id] = [...known, ...missing];
     }
     return merged;
   };
@@ -120,21 +148,29 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     return out;
   };
 
-  // 保存済みお気に入りから、現存する複合キーだけを順序保持で残す
+  // 保存済みお気に入りを slug へ正規化（旧index移行）し、現存するものだけ順序保持で残す
   const validFavorites = (favs, custom) => {
     if (!Array.isArray(favs)) return [];
     const customIds = new Set(custom.map((c) => c.id));
     const out = [];
+    const seen = new Set();
     for (const k of favs) {
-      if (typeof k !== "string" || out.includes(k)) continue;
+      if (typeof k !== "string") continue;
+      let norm = null;
       if (k.startsWith("custom:")) {
-        if (customIds.has(k.slice(7))) out.push(k);
-        continue;
+        if (customIds.has(k.slice(7))) norm = k;
+      } else {
+        const i = k.indexOf(":");
+        if (i >= 0) {
+          const cat = categories.find((c) => c.id === k.slice(0, i));
+          const item = cat && itemByRef(cat, k.slice(i + 1));
+          if (item) norm = `${cat.id}:${slugOf(item)}`;
+        }
       }
-      const [catId, idxStr] = k.split(":");
-      const cat = categories.find((c) => c.id === catId);
-      const idx = Number(idxStr);
-      if (cat && Number.isInteger(idx) && idx >= 0 && idx < cat.items.length) out.push(k);
+      if (norm && !seen.has(norm)) {
+        seen.add(norm);
+        out.push(norm);
+      }
     }
     return out;
   };
@@ -273,12 +309,12 @@ export function initApp({ appId, appName, categories, templates, strings }) {
         grid.innerHTML = `<li class="empty">${t.emptySelect}</li>`;
         return;
       }
-      entries = state.order[cat.id].map((idx) => ({
-        key: `${cat.id}:${idx}`,
-        item: cat.items[idx],
-        dragId: String(idx),
-        custom: false,
-      }));
+      entries = state.order[cat.id]
+        .map((slug) => {
+          const item = cat.items.find((it) => slugOf(it) === slug);
+          return item ? { key: `${cat.id}:${slug}`, item, dragId: slug, custom: false } : null;
+        })
+        .filter(Boolean);
     }
 
     const filtered = entries.filter(({ item }) => !q || item.label.toLowerCase().includes(q));
@@ -316,8 +352,8 @@ export function initApp({ appId, appName, categories, templates, strings }) {
   const keyByLabel = (catId, label) => {
     const cat = categories.find((c) => c.id === catId);
     if (!cat) return null;
-    const idx = cat.items.findIndex((it) => it.label === label);
-    return idx >= 0 ? `${catId}:${idx}` : null;
+    const item = cat.items.find((it) => it.label === label);
+    return item ? `${catId}:${slugOf(item)}` : null;
   };
 
   const applyTemplate = (tplId) => {
@@ -762,6 +798,7 @@ export function initApp({ appId, appName, categories, templates, strings }) {
 
   buildSidebar();
   render();
+  saveState(); // 起動時に slug 正規化済みの状態を保存（旧index形式からの移行を確定）
 
   // モーダルDOMを生成して body に挿入
   function buildModal() {
