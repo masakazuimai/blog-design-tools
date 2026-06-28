@@ -1,0 +1,95 @@
+// Visual Studio Code shortcut data (English). Same keys as the JP file; labels translated.
+
+export const CATEGORIES = [
+  {
+    id: "general",
+    name: "General",
+    items: [
+      { keys: ["mod", "shift", "P"], label: "Show Command Palette" },
+      { keys: ["mod", "P"], label: "Go to File (Quick Open)" },
+      { keys: ["mod", ","], label: "Open Settings" },
+      { keys: ["mod", "B"], label: "Toggle sidebar" },
+      { keys: ["mod", "J"], label: "Toggle panel" },
+      { keys: ["mod", "shift", "N"], label: "New window" },
+    ],
+  },
+  {
+    id: "editing",
+    name: "Editing",
+    items: [
+      { keys: ["mod", "X"], label: "Cut line (no selection)" },
+      { keys: ["mod", "C"], label: "Copy line (no selection)" },
+      { keys: ["alt", "↓"], label: "Move line down" },
+      { keys: ["alt", "↑"], label: "Move line up" },
+      { keys: ["shift", "alt", "↓"], label: "Copy line down" },
+      { keys: ["shift", "alt", "↑"], label: "Copy line up" },
+      { keys: ["mod", "shift", "K"], label: "Delete line" },
+      { keys: ["mod", "Enter"], label: "Insert line below" },
+      { keys: ["mod", "shift", "Enter"], label: "Insert line above" },
+      { keys: ["mod", "/"], label: "Toggle line comment" },
+      { keys: ["shift", "alt", "A"], label: "Toggle block comment" },
+      { keys: ["mod", "]"], label: "Indent" },
+      { keys: ["mod", "["], label: "Outdent" },
+      { keys: ["shift", "alt", "F"], label: "Format document" },
+    ],
+  },
+  {
+    id: "cursor",
+    name: "Cursor / Selection",
+    items: [
+      { keys: ["alt", "click"], label: "Insert cursor" },
+      { keys: ["mod", "alt", "↑"], label: "Add cursor above" },
+      { keys: ["mod", "alt", "↓"], label: "Add cursor below" },
+      { keys: ["mod", "D"], label: "Add next match to selection" },
+      { keys: ["mod", "shift", "L"], label: "Select all occurrences" },
+      { keys: ["mod", "L"], label: "Select current line" },
+      { keys: ["mod", "A"], label: "Select all" },
+      { keys: ["mod", "U"], label: "Undo last cursor operation" },
+    ],
+  },
+  {
+    id: "navigation",
+    name: "Code navigation",
+    items: [
+      { keys: ["mod", "shift", "O"], label: "Go to Symbol in file" },
+      { keys: ["mod", "T"], label: "Find Symbol in workspace" },
+      { keys: ["F12"], label: "Go to Definition" },
+      { keys: ["alt", "F12"], label: "Peek Definition" },
+      { keys: ["shift", "F12"], label: "Go to References" },
+      { keys: ["mod", "shift", "M"], label: "Show Problems panel" },
+    ],
+  },
+  {
+    id: "search",
+    name: "Search / Replace",
+    items: [
+      { keys: ["mod", "F"], label: "Find" },
+      { keys: ["mod", "shift", "F"], label: "Find in Files" },
+      { keys: ["mod", "shift", "H"], label: "Replace in Files" },
+    ],
+  },
+  {
+    id: "file",
+    name: "Files / Editors",
+    items: [
+      { keys: ["mod", "N"], label: "New file" },
+      { keys: ["mod", "S"], label: "Save" },
+      { keys: ["mod", "shift", "S"], label: "Save As" },
+      { keys: ["mod", "W"], label: "Close editor" },
+      { keys: ["mod", "shift", "T"], label: "Reopen closed editor" },
+      { keys: ["mod", "1"], label: "Focus editor group 1" },
+      { keys: ["mod", "2"], label: "Focus editor group 2" },
+    ],
+  },
+  {
+    id: "display",
+    name: "View",
+    items: [
+      { keys: ["mod", "shift", "E"], label: "Explorer" },
+      { keys: ["mod", "shift", "X"], label: "Extensions" },
+      { keys: ["mod", "="], label: "Zoom in" },
+      { keys: ["mod", "-"], label: "Zoom out" },
+      { keys: ["alt", "Z"], label: "Toggle word wrap" },
+    ],
+  },
+];
