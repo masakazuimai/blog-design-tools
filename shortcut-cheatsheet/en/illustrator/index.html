@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Illustrator Keyboard Shortcuts — Cheat Sheet & Custom List｜CodeQuest</title>
+    <meta
+      name="description"
+      content="Browse Illustrator keyboard shortcuts by category. Star the ones you use to build your own My List, reorder by drag, add custom shortcuts, and export to print / PDF / PNG. Mac & Windows toggle. Free, no sign-up."
+    />
+    <link rel="canonical" href="https://codequest.work/generator/shortcut-cheatsheet/en/illustrator/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/shortcut-cheatsheet/en/illustrator/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/shortcut-cheatsheet/illustrator/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/shortcut-cheatsheet/illustrator/" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codequest.work/generator/shortcut-cheatsheet/en/illustrator/" />
+    <meta property="og:title" content="Illustrator Keyboard Shortcuts — Cheat Sheet & Custom List" />
+    <meta property="og:description" content="Browse Illustrator shortcuts by category, build your own My List, add custom shortcuts, and export to print / PDF / PNG. Mac & Windows toggle. Free." />
+    <meta property="og:image" content="https://codequest.work/generator/shortcut-cheatsheet/en/illustrator/assets/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Illustrator Keyboard Shortcuts Cheat Sheet" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Illustrator Keyboard Shortcuts — Cheat Sheet & Custom List" />
+    <meta name="twitter:description" content="Browse Illustrator shortcuts by category, build your own My List, and export to print / PDF / PNG. Mac & Windows toggle." />
+    <meta name="twitter:image" content="https://codequest.work/generator/shortcut-cheatsheet/en/illustrator/assets/og.png" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Illustrator Keyboard Shortcuts Cheat Sheet",
+        "url": "https://codequest.work/generator/shortcut-cheatsheet/en/illustrator/",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web browser",
+        "inLanguage": "en",
+        "description": "Browse Illustrator keyboard shortcuts by category, build your own My List, add custom shortcuts, and export to print / PDF / PNG. Mac and Windows toggle. Free, no sign-up.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": ["Shortcuts by category", "Build your own My List and reorder", "Add custom shortcuts", "Workflow templates", "Export to print / PDF / image (PNG)", "Mac / Windows toggle, search, auto-save"],
+        "publisher": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "Shortcut Cheat Sheet", "item": "https://codequest.work/generator/shortcut-cheatsheet/en/" },
+          { "@type": "ListItem", "position": 4, "name": "Illustrator", "item": "https://codequest.work/generator/shortcut-cheatsheet/en/illustrator/" }
+        ]
+      }
+    </script>
+    <link rel="stylesheet" href="../../css/style.css?v=20260629b" />
+  </head>
+  <body>
+    <header class="ps-head">
+      <div class="ps-head-top">
+        <h1>Illustrator Keyboard <span class="accent">Shortcuts</span></h1>
+        <div class="lang-switch"><a href="../../illustrator/" hreflang="ja">日本語</a></div>
+      </div>
+      <p>
+        Browse shortcuts by category, then star the ones you use to build your own “My List”. Reorder by drag, add custom shortcuts, and export to print / PDF / image. Order and favorites are saved in this browser. Mac / Windows toggle and search included.
+      </p>
+    </header>
+
+    <div class="ps-body">
+      <aside class="ps-sidebar">
+        <div class="os-toggle" id="osToggle" role="group" aria-label="OS notation">
+          <button type="button" class="os-btn" data-os="mac">Mac</button>
+          <button type="button" class="os-btn" data-os="win">Windows</button>
+        </div>
+
+        <div class="search-wrap">
+          <input type="search" id="searchInput" placeholder="Search shortcuts" aria-label="Search shortcuts" />
+        </div>
+
+        <button type="button" class="fav-view-btn" id="favBtn">
+          <span>★ My List</span>
+          <span class="badge" id="favBadge"></span>
+        </button>
+
+        <div class="select-wrap">
+          <select id="catSelect" aria-label="Select a category">
+            <option value="" disabled selected>Select a category…</option>
+          </select>
+        </div>
+
+        <section class="tpl-box">
+          <h2 class="tpl-title">Templates</h2>
+          <div class="select-wrap">
+            <select id="tplSelect" aria-label="Pick a template to add">
+              <option value="" disabled selected>Pick a template to add…</option>
+            </select>
+          </div>
+        </section>
+
+        <button type="button" class="add-custom-btn" id="addCustomBtn">＋ Add shortcut</button>
+
+        <section class="export-box">
+          <h2 class="export-title">Export My List</h2>
+          <div class="export-btns">
+            <button type="button" class="export-btn" id="printBtn">🖨 Print / PDF</button>
+            <button type="button" class="export-btn" id="pngBtn">🖼 Image (PNG)</button>
+          </div>
+        </section>
+
+        <div class="side-controls">
+          <button type="button" class="reset-btn" id="resetBtn">Reset</button>
+        </div>
+      </aside>
+
+      <main class="ps-content">
+        <ul class="grid" id="grid"></ul>
+      </main>
+    </div>
+
+    <div class="ad-wrap" style="width: 100%; margin: 32px auto 0; text-align: center">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- shortcut-cheatsheet -->
+      <ins class="adsbygoogle ad-banner" style="display: inline-block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="1158222892"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer class="ps-foot">
+      <span>&copy; 2026 Shortcut Cheat Sheet | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <span class="ps-foot-links">
+        <a href="../howto.html">&#128214; How to use & FAQ</a>
+        <a href="../">Choose another app &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </span>
+    </footer>
+
+    <script type="module">
+      import { initApp } from "../../js/engine.js?v=20260629c";
+      import { STRINGS_EN } from "../../js/i18n/en.js?v=20260629a";
+      import { CATEGORIES } from "../../js/data/illustrator.en.js?v=20260629a";
+      import { TEMPLATES } from "../../js/templates/illustrator.en.js?v=20260629a";
+      initApp({ appId: "illustrator-en", appName: "Illustrator", categories: CATEGORIES, templates: TEMPLATES, strings: STRINGS_EN });
+    </script>
+  </body>
+</html>

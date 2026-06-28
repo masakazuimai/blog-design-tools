@@ -1,0 +1,85 @@
+// PowerPoint shortcut data (English / Windows-based). Same keys as the JP file.
+
+export const CATEGORIES = [
+  {
+    id: "basic",
+    name: "Basics / Editing",
+    items: [
+      { keys: ["mod", "N"], label: "New presentation" },
+      { keys: ["mod", "O"], label: "Open" },
+      { keys: ["mod", "S"], label: "Save" },
+      { keys: ["mod", "P"], label: "Print" },
+      { keys: ["mod", "Z"], label: "Undo" },
+      { keys: ["mod", "Y"], label: "Repeat / Redo" },
+      { keys: ["mod", "C"], label: "Copy" },
+      { keys: ["mod", "X"], label: "Cut" },
+      { keys: ["mod", "V"], label: "Paste" },
+      { keys: ["mod", "alt", "V"], label: "Paste special" },
+      { keys: ["mod", "A"], label: "Select all" },
+      { keys: ["mod", "F"], label: "Find" },
+      { keys: ["mod", "H"], label: "Replace" },
+      { keys: ["mod", "D"], label: "Duplicate object / slide" },
+    ],
+  },
+  {
+    id: "slide",
+    name: "Slide actions",
+    items: [
+      { keys: ["mod", "M"], label: "New slide" },
+      { keys: ["mod", "shift", "D"], label: "Duplicate slide" },
+      { keys: ["Tab"], label: "Select next object" },
+      { keys: ["shift", "Tab"], label: "Select previous object" },
+      { keys: ["Esc"], label: "Deselect" },
+    ],
+  },
+  {
+    id: "font",
+    name: "Text / Formatting",
+    items: [
+      { keys: ["mod", "B"], label: "Bold" },
+      { keys: ["mod", "I"], label: "Italic" },
+      { keys: ["mod", "U"], label: "Underline" },
+      { keys: ["mod", "shift", ">"], label: "Increase font size" },
+      { keys: ["mod", "shift", "<"], label: "Decrease font size" },
+      { keys: ["mod", "shift", "C"], label: "Copy formatting" },
+      { keys: ["mod", "shift", "V"], label: "Paste formatting" },
+      { keys: ["mod", "T"], label: "Open font dialog" },
+    ],
+  },
+  {
+    id: "paragraph",
+    name: "Paragraph / Align",
+    items: [
+      { keys: ["mod", "L"], label: "Align left" },
+      { keys: ["mod", "E"], label: "Align center" },
+      { keys: ["mod", "R"], label: "Align right" },
+      { keys: ["mod", "J"], label: "Justify" },
+      { keys: ["Tab"], label: "Demote list level" },
+      { keys: ["shift", "Tab"], label: "Promote list level" },
+    ],
+  },
+  {
+    id: "object",
+    name: "Objects",
+    items: [
+      { keys: ["mod", "G"], label: "Group" },
+      { keys: ["mod", "shift", "G"], label: "Ungroup" },
+      { keys: ["F4"], label: "Repeat last action" },
+      { keys: ["Arrows"], label: "Move object (arrow keys)" },
+      { keys: ["mod", "Arrows"], label: "Nudge object" },
+    ],
+  },
+  {
+    id: "show",
+    name: "Slide show",
+    items: [
+      { keys: ["F5"], label: "Start slide show from beginning" },
+      { keys: ["shift", "F5"], label: "Start from current slide" },
+      { keys: ["Esc"], label: "End slide show" },
+      { keys: ["N"], label: "Next slide" },
+      { keys: ["P"], label: "Previous slide" },
+      { keys: ["B"], label: "Black screen" },
+      { keys: ["W"], label: "White screen" },
+    ],
+  },
+];

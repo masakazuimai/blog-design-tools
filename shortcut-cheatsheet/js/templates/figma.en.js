@@ -1,0 +1,66 @@
+// Figma templates (English). Labels must match figma.en.js exactly.
+
+export const TEMPLATES = [
+  {
+    id: "staples",
+    name: "Essentials",
+    desc: "Used in every workflow",
+    items: [
+      { cat: "tools", label: "Move tool" },
+      { cat: "tools", label: "Frame tool" },
+      { cat: "tools", label: "Rectangle" },
+      { cat: "tools", label: "Text" },
+      { cat: "arrange", label: "Group" },
+      { cat: "edit", label: "Duplicate" },
+      { cat: "edit", label: "Undo" },
+      { cat: "arrange", label: "Bring to front" },
+      { cat: "view", label: "Show / hide UI" },
+      { cat: "view", label: "Zoom to fit" },
+    ],
+  },
+  {
+    id: "uidesign",
+    name: "UI design",
+    desc: "Frames & components",
+    items: [
+      { cat: "tools", label: "Frame tool" },
+      { cat: "tools", label: "Rectangle" },
+      { cat: "tools", label: "Text" },
+      { cat: "arrange", label: "Frame selection" },
+      { cat: "align", label: "Align left" },
+      { cat: "align", label: "Align horizontal centers" },
+      { cat: "component", label: "Create component" },
+      { cat: "component", label: "Detach instance" },
+      { cat: "arrange", label: "Lock / unlock" },
+    ],
+  },
+  {
+    id: "alignment",
+    name: "Align & arrange",
+    desc: "Align & order",
+    items: [
+      { cat: "align", label: "Align left" },
+      { cat: "align", label: "Align right" },
+      { cat: "align", label: "Align horizontal centers" },
+      { cat: "align", label: "Align top" },
+      { cat: "align", label: "Align bottom" },
+      { cat: "align", label: "Align vertical centers" },
+      { cat: "arrange", label: "Bring forward" },
+      { cat: "arrange", label: "Send backward" },
+    ],
+  },
+  {
+    id: "vector",
+    name: "Drawing / vector",
+    desc: "Pen & paths",
+    items: [
+      { cat: "tools", label: "Pen tool" },
+      { cat: "tools", label: "Pencil tool" },
+      { cat: "tools", label: "Line" },
+      { cat: "arrange", label: "Flatten" },
+      { cat: "arrange", label: "Outline stroke" },
+      { cat: "tools", label: "Scale tool" },
+      { cat: "arrange", label: "Group" },
+    ],
+  },
+];

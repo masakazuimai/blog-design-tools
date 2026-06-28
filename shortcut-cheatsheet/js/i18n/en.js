@@ -1,0 +1,32 @@
+// English UI strings for the shortcut cheat sheet engine.
+// Passed to initApp({ strings: STRINGS_EN }).
+
+export const STRINGS_EN = {
+  favRemove: "Remove from My List",
+  favAdd: "Add to My List",
+  editTitle: "Edit",
+  delTitle: "Delete",
+  catCustomOption: "Custom (your own)",
+  tplClearOption: "Clear (empty My List)",
+  emptySelect: 'Pick “<span class="star">★</span> My List” or a category on the left to see shortcuts here.',
+  emptyCustom: 'Use “＋ Add shortcut” to add your own shortcuts for this app.',
+  emptyFav: 'Press the <span class="star">☆</span> on any shortcut to build your own list here. Drag to reorder after adding.',
+  emptyGeneric: "No items",
+  noMatch: (q) => `No shortcuts match “${q}”`,
+  modalTitleAdd: "Add shortcut",
+  modalTitleEdit: "Edit shortcut",
+  modalLabelName: "Action name",
+  modalNamePlaceholder: "e.g. Feather selection",
+  modalKeyLabel: "Key",
+  modalCapture: "Press a key to capture",
+  modalCapturing: "Press a key…",
+  modalKeyEmpty: "(no key set)",
+  modalKeyPlaceholder: "Key (e.g. K, F5, [ )",
+  modalCancel: "Cancel",
+  modalSave: "Save",
+  emptyFavAlert: "My List is empty. Add shortcuts with ★ before exporting.",
+  exportTitleSuffix: "Shortcuts — My List",
+  exportSubtitle: (count, os) => `${count} items · ${os === "mac" ? "Mac" : "Windows"}`,
+  exportFooter: "CodeQuest.work / shortcut-cheatsheet",
+  tplOptionFormat: (name, desc) => `${name} (${desc})`,
+};

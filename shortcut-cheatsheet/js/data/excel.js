@@ -1,0 +1,87 @@
+// Excel ショートカットキー データ（Microsoft 標準ショートカット準拠 / Windows 基準）
+// keys: トークン配列。'mod'=⌘/Ctrl, 'alt'=⌥/Alt, 'shift'=⇧/Shift、それ以外はそのまま表示。
+// Mac では mod=⌘。一部 Mac 固有の差異あり。
+
+export const CATEGORIES = [
+  {
+    id: "basic",
+    name: "基本・編集",
+    items: [
+      { keys: ["mod", "N"], label: "新規ブック" },
+      { keys: ["mod", "O"], label: "開く" },
+      { keys: ["mod", "S"], label: "上書き保存" },
+      { keys: ["mod", "P"], label: "印刷" },
+      { keys: ["mod", "Z"], label: "元に戻す" },
+      { keys: ["mod", "Y"], label: "繰り返し／やり直し" },
+      { keys: ["mod", "C"], label: "コピー" },
+      { keys: ["mod", "X"], label: "切り取り" },
+      { keys: ["mod", "V"], label: "貼り付け" },
+      { keys: ["mod", "alt", "V"], label: "形式を選択して貼り付け" },
+      { keys: ["mod", "F"], label: "検索" },
+      { keys: ["mod", "H"], label: "置換" },
+      { keys: ["F2"], label: "セルを編集" },
+      { keys: ["mod", "Enter"], label: "選択範囲に一括入力" },
+      { keys: ["alt", "Enter"], label: "セル内で改行" },
+      { keys: ["mod", "D"], label: "上のセルの内容をコピー" },
+      { keys: ["mod", "R"], label: "左のセルの内容をコピー" },
+      { keys: ["mod", ";"], label: "今日の日付を入力" },
+      { keys: ["mod", "shift", ";"], label: "現在の時刻を入力" },
+    ],
+  },
+  {
+    id: "move",
+    name: "移動・選択",
+    items: [
+      { keys: ["mod", "A"], label: "ワークシート全体を選択" },
+      { keys: ["mod", "Home"], label: "先頭セル（A1）へ移動" },
+      { keys: ["mod", "End"], label: "データ範囲の末尾へ移動" },
+      { keys: ["mod", "↓"], label: "データの下端へ移動" },
+      { keys: ["mod", "↑"], label: "データの上端へ移動" },
+      { keys: ["mod", "shift", "↓"], label: "下端まで選択" },
+      { keys: ["mod", "shift", "→"], label: "右端まで選択" },
+      { keys: ["shift", "Space"], label: "行を選択" },
+      { keys: ["mod", "Space"], label: "列を選択" },
+    ],
+  },
+  {
+    id: "rowcol",
+    name: "行・列・シート",
+    items: [
+      { keys: ["mod", "shift", "="], label: "セル・行・列を挿入" },
+      { keys: ["mod", "-"], label: "セル・行・列を削除" },
+      { keys: ["mod", "9"], label: "行を非表示" },
+      { keys: ["mod", "0"], label: "列を非表示" },
+      { keys: ["shift", "F11"], label: "新しいシートを挿入" },
+      { keys: ["mod", "PageDown"], label: "次のシートへ" },
+      { keys: ["mod", "PageUp"], label: "前のシートへ" },
+    ],
+  },
+  {
+    id: "format",
+    name: "書式",
+    items: [
+      { keys: ["mod", "1"], label: "セルの書式設定" },
+      { keys: ["mod", "B"], label: "太字" },
+      { keys: ["mod", "I"], label: "斜体" },
+      { keys: ["mod", "U"], label: "下線" },
+      { keys: ["mod", "shift", "1"], label: "桁区切りスタイル" },
+      { keys: ["mod", "shift", "3"], label: "日付表示形式" },
+      { keys: ["mod", "shift", "4"], label: "通貨表示形式" },
+      { keys: ["mod", "shift", "5"], label: "パーセント表示形式" },
+      { keys: ["mod", "shift", "7"], label: "外枠罫線をつける" },
+    ],
+  },
+  {
+    id: "formula",
+    name: "数式・データ",
+    items: [
+      { keys: ["F4"], label: "参照の絶対／相対を切り替え" },
+      { keys: ["mod", "shift", "Enter"], label: "配列数式として確定" },
+      { keys: ["mod", "`"], label: "数式の表示／非表示" },
+      { keys: ["mod", "T"], label: "テーブルを作成" },
+      { keys: ["mod", "shift", "L"], label: "フィルターのオン／オフ" },
+      { keys: ["alt", "F1"], label: "グラフを作成（同じシート）" },
+      { keys: ["F11"], label: "グラフを作成（別シート）" },
+    ],
+  },
+];

@@ -1,0 +1,72 @@
+// Illustrator デザイナーテンプレート
+// 各項目は { cat: カテゴリID, label: data.js のラベル完全一致 }。
+
+export const TEMPLATES = [
+  {
+    id: "staples",
+    name: "定番セット",
+    desc: "どの作業でも使う基本",
+    items: [
+      { cat: "tools", label: "選択ツール" },
+      { cat: "tools", label: "ダイレクト選択ツール" },
+      { cat: "edit", label: "取り消し" },
+      { cat: "object", label: "グループ" },
+      { cat: "object", label: "変形の繰り返し" },
+      { cat: "object", label: "ロック" },
+      { cat: "object", label: "クリッピングマスクを作成" },
+      { cat: "tools", label: "ペンツール" },
+      { cat: "tools", label: "文字ツール" },
+      { cat: "object", label: "前面へ" },
+      { cat: "view", label: "プレビュー／アウトライン表示の切替" },
+      { cat: "file", label: "保存" },
+    ],
+  },
+  {
+    id: "logo",
+    name: "ロゴ・アイコン制作",
+    desc: "パス・パスファインダー中心",
+    items: [
+      { cat: "tools", label: "ペンツール" },
+      { cat: "tools", label: "シェイプ形成ツール" },
+      { cat: "object", label: "複合パスを作成" },
+      { cat: "type", label: "アウトラインを作成" },
+      { cat: "tools", label: "拡大・縮小ツール" },
+      { cat: "tools", label: "回転ツール" },
+      { cat: "tools", label: "リフレクトツール" },
+      { cat: "object", label: "クリッピングマスクを作成" },
+      { cat: "panel", label: "パスファインダーパネル" },
+      { cat: "object", label: "グループ" },
+    ],
+  },
+  {
+    id: "layout",
+    name: "文字・レイアウト",
+    desc: "文字・ガイド・整列中心",
+    items: [
+      { cat: "tools", label: "文字ツール" },
+      { cat: "type", label: "アウトラインを作成" },
+      { cat: "type", label: "中央揃え" },
+      { cat: "type", label: "フォントサイズを大きく" },
+      { cat: "view", label: "ガイドの表示／非表示" },
+      { cat: "view", label: "ガイドを作成" },
+      { cat: "view", label: "定規の表示／非表示" },
+      { cat: "object", label: "前面へ" },
+    ],
+  },
+  {
+    id: "paint",
+    name: "イラスト・塗り",
+    desc: "ブラシ・ライブペイント中心",
+    items: [
+      { cat: "tools", label: "鉛筆ツール" },
+      { cat: "tools", label: "ブラシツール" },
+      { cat: "tools", label: "塗りブラシツール" },
+      { cat: "tools", label: "ライブペイントツール" },
+      { cat: "tools", label: "グラデーションツール" },
+      { cat: "tools", label: "塗り／線を切り替え" },
+      { cat: "tools", label: "塗りと線を入れ替え" },
+      { cat: "object", label: "グループ" },
+      { cat: "edit", label: "取り消し" },
+    ],
+  },
+];
