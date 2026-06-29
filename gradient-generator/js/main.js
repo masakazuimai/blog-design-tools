@@ -403,12 +403,20 @@ $("png-btn").addEventListener("click", () => {
   const ctx = canvas.getContext("2d");
   paintGradient(ctx, w, h, state);
   canvas.toBlob((blob) => {
+    if (!blob) return;
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = "gradient.png";
+    a.rel = "noopener";
+    // 一部ブラウザはDOMに無いアンカーのclickを無視するため追加してから発火
+    document.body.appendChild(a);
     a.click();
-    URL.revokeObjectURL(url);
+    // clickが処理される前にURLを破棄するとDLがキャンセルされるため遅延解放
+    setTimeout(() => {
+      a.remove();
+      URL.revokeObjectURL(url);
+    }, 1000);
     toast(t.pngSaved);
   }, "image/png");
 });

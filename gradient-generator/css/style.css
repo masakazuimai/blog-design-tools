@@ -284,6 +284,8 @@ main {
 }
 .chip {
   position: relative;
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--card);
