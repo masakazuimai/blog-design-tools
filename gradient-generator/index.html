@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>グラデーション ジェネレーター｜CSS・Tailwindのグラデーションを作成（無料）</title>
+    <meta name="description" content="linear / radial / conic のCSSグラデーションを一覧から選んでモーダルで微調整できる無料ツール。カラーストップの追加・移動、角度調整に対応し、CSSとTailwindのコードをワンクリックでコピー、PNG画像も書き出せます。日本の伝統色グラデーションのプリセット付き。登録不要。" />
+    <link rel="canonical" href="https://codequest.work/generator/gradient-generator/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/gradient-generator/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/gradient-generator/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/gradient-generator/" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codequest.work/generator/gradient-generator/" />
+    <meta property="og:title" content="グラデーション ジェネレーター｜CSS・Tailwindのグラデーションを作成（無料）" />
+    <meta property="og:description" content="linear / radial / conic のCSSグラデーションを一覧から選んでモーダルで微調整。CSS・Tailwindのコードをコピーでき、日本の伝統色グラデーションのプリセットも使える無料ツールです。" />
+    <meta property="og:image" content="https://codequest.work/generator/gradient-generator/assets/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="グラデーション ジェネレーター" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="グラデーション ジェネレーター｜CSS・Tailwindのグラデーションを作成" />
+    <meta name="twitter:description" content="CSSグラデーションを一覧から選んでモーダルで微調整。CSS・Tailwindをコピーでき、伝統色プリセット付きの無料ツール。" />
+    <meta name="twitter:image" content="https://codequest.work/generator/gradient-generator/assets/og.png" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と js の両方で日付を上げる -->
+    <link rel="stylesheet" href="css/style.css?v=20260629e" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "グラデーション ジェネレーター",
+        "url": "https://codequest.work/generator/gradient-generator/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web browser",
+        "inLanguage": "ja",
+        "description": "linear / radial / conic のCSSグラデーションを一覧から選んでモーダルで微調整できる無料ツール。CSSとTailwindのコードをコピーでき、PNG書き出しと日本の伝統色プリセットに対応します。",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": ["グラデーションプリセットの一覧表示", "linear / radial / conic グラデーションに対応", "カラーストップをドラッグで追加・移動・削除", "角度・中心の調整", "CSSとTailwindのコード出力", "PNG画像の書き出し", "日本の伝統色グラデーションのプリセット", "色の辞書からの色選択"],
+        "publisher": {
+          "@type": "Organization",
+          "name": "CodeQuest.work",
+          "url": "https://codequest.work/"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "グラデーション ジェネレーター", "item": "https://codequest.work/generator/gradient-generator/" }
+        ]
+      }
+    </script>
+    <!-- 使い方・FAQは howto.html に分離（FAQPage 構造化データはそちらに記載） -->
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <header>
+      <a class="lang-switch" href="en/" hreflang="en">English</a>
+      <div class="brandmark">Gradient Generator</div>
+      <h1>グラデーション <span class="accent">ジェネレーター</span></h1>
+      <p class="lede">
+        <strong>linear・radial・conic</strong> のCSSグラデーションを一覧から選んで、モーダルで微調整。カラーストップを足して角度を回し、<strong>CSS</strong>と<strong>Tailwind</strong>のコードをそのままコピー。<strong>日本の伝統色</strong>のプリセットと<a href="../color-dictionary/" target="_blank" rel="noopener">色の辞書</a>連携つき。
+      </p>
+    </header>
+    <hr class="hairline" />
+
+    <!-- ツールバー -->
+    <div class="toolbar">
+      <div class="toolbar-inner">
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.2-3.2" /></svg>
+          <input id="search" type="search" autocomplete="off" placeholder="プリセット名・読みで検索" aria-label="プリセットを検索" />
+        </div>
+        <div class="filters">
+          <div class="hue-chips" id="hue-chips" role="group" aria-label="色で絞り込み"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 一覧 -->
+    <main>
+      <div class="count-row">
+        <span class="count" id="count"></span>
+        <span class="hint">カードをクリックで編集・コードを取得</span>
+      </div>
+      <div class="grid" id="grid"></div>
+      <p class="guide-link">
+        linear / radial / conic の違い・使い方・FAQは<a href="howto.html">グラデーションの作り方・使い方</a>をご覧ください。
+      </p>
+    </main>
+
+    <!-- 編集モーダル -->
+    <div class="modal-overlay" id="modal">
+      <div class="editor" role="dialog" aria-modal="true" aria-label="グラデーション編集">
+        <button class="editor-close" id="editor-close" type="button" aria-label="閉じる">×</button>
+        <div class="editor-preview"><div class="preview-box" id="preview-box"></div></div>
+
+        <p class="bar-label">カラーストップ</p>
+        <div class="gradient-bar-wrap">
+          <div class="gradient-bar" id="gradient-bar"><div class="gradient-bar-fill" id="bar-fill"></div></div>
+        </div>
+        <p class="drag-hint">バーをクリックで色を追加／つまみをドラッグで移動／ダブルクリックで削除</p>
+
+        <div class="ctrl">
+          <div class="ctrl-title">種別</div>
+          <div class="segmented full" id="type-seg" role="tablist" aria-label="グラデーション種別">
+            <button class="active" data-type="linear">線形</button>
+            <button data-type="radial">放射</button>
+            <button data-type="conic">扇形</button>
+          </div>
+          <div class="slider-row" id="angle-row">
+            <span class="slider-label"><span id="angle-label">角度</span> <em id="angle-val"></em></span>
+            <input type="range" id="angle" min="0" max="360" step="1" value="135" />
+          </div>
+          <div class="slider-row hidden" id="radial-row">
+            <span class="slider-label">形状</span>
+            <div class="segmented full" id="radial-shape" role="group" aria-label="放射の形状">
+              <button class="active" data-shape="circle">円</button>
+              <button data-shape="ellipse">楕円</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ctrl">
+          <div class="ctrl-title">選択中のストップ</div>
+          <div class="stop-editor">
+            <input type="color" id="stop-color" aria-label="色" />
+            <input type="text" id="stop-hex" class="hex-input" aria-label="HEX" spellcheck="false" />
+            <label class="pos-field">位置 <input type="number" id="stop-pos" min="0" max="100" />%</label>
+            <button type="button" class="del-stop" id="del-stop">削除</button>
+          </div>
+          <button type="button" class="swatch-toggle" id="swatch-toggle">🎨 色の辞書から選ぶ</button>
+          <div class="swatch-panel hidden" id="swatch-panel"></div>
+        </div>
+
+        <div class="ctrl">
+          <div class="output-head">
+            <div class="ctrl-title">コード</div>
+            <div class="segmented" id="format-seg" role="tablist" aria-label="出力フォーマット">
+              <button class="active" data-fmt="css">CSS</button>
+              <button data-fmt="tailwind">Tailwind</button>
+            </div>
+          </div>
+          <textarea id="output" class="output-code" readonly spellcheck="false"></textarea>
+          <div class="output-actions">
+            <button type="button" class="btn btn-primary" id="copy-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+              コードをコピー
+            </button>
+            <button type="button" class="btn" id="png-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              PNGで書き出し
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">広告</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="0000000000"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
+
+    <footer>
+      <span>&copy; 2026 グラデーション ジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="howto.html">📖 使い方・FAQ</a>
+        <a href="../color-dictionary/" target="_blank" rel="noopener">🎨 色の辞書</a>
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="js/main.js?v=20260629m"></script>
+  </body>
+</html>
