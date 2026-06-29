@@ -3,7 +3,7 @@
 // import先の ?v= はキャッシュバスティング用（サーバーがjsを7日キャッシュするため）。各ファイル更新時に日付を上げる
 import { preloadModel, cutoutSubject } from './cutout.js?v=20260614'
 import { renderResults, renderSummary } from './ui.js?v=20260614'
-import { downloadBlob, downloadZip } from './download.js?v=20260614'
+import { downloadBlob, downloadZip } from './download.js?v=20260629'
 import { runEditor } from './editor.js?v=20260614'
 import { t } from './i18n.js?v=20260614'
 

@@ -4,7 +4,7 @@
 import { TEMPLATES, findTemplate, computeRenderPlan } from './resize.js?v=20260614'
 import { detectFormat, decodeToBitmap, renderImageData, encodeImage, EXT_MAP } from './codecs.js?v=20260614'
 import { renderResults, renderSummary } from './ui.js?v=20260614'
-import { downloadBlob, downloadZip } from './download.js?v=20260614'
+import { downloadBlob, downloadZip } from './download.js?v=20260629'
 import { openCropEditor, openRegionEditor } from './crop-editor.js?v=20260614'
 import { removeBackground } from './bg-remove.js?v=20260614'
 import { t } from './i18n.js?v=20260614'
