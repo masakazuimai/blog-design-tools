@@ -63,7 +63,7 @@
       gtag("js", new Date());
       gtag("config", "G-7Z6M3CJEV3");
     </script>
-    <link rel="stylesheet" href="css/style.css?v=20260629c" />
+    <link rel="stylesheet" href="css/style.css?v=20260629a" />
   </head>
   <body>
     <header class="ps-head">
@@ -154,14 +154,26 @@
       </ul>
     </main>
 
-    <div class="ad-wrap" style="width: 100%; margin: 32px auto 0; text-align: center">
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">広告</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+      </div>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
-      <!-- shortcut-cheatsheet hub -->
-      <ins class="adsbygoogle ad-banner" style="display: inline-block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="1158222892"></ins>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="1158222892"></ins>
       <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
     </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
 
     <footer class="ps-foot">
       <span>&copy; 2026 ショートカットチートシート | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>

@@ -93,7 +93,7 @@
       gtag("js", new Date());
       gtag("config", "G-7Z6M3CJEV3");
     </script>
-    <link rel="stylesheet" href="css/style.css?v=20260625a" />
+    <link rel="stylesheet" href="css/style.css?v=20260629a" />
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
     <style>
@@ -178,13 +178,26 @@
       <p style="margin-top:24px;"><a href="/generator/neon-button-generator/" class="back-btn">← ネオンボタンジェネレーター（ツール）を使う</a></p>
     </div>
 
-    <div class="ad-wrap">
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">広告</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+      </div>
       <!-- neon-button-generator -->
-      <ins class="adsbygoogle ad-banner" style="display:inline-block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="5577670436"></ins>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="5577670436"></ins>
       <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
     </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
 
     <footer>
       <span>&copy; 2026 Neon Button Generator | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>

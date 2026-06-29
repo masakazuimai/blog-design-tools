@@ -34,7 +34,7 @@
       gtag("js", new Date());
       gtag("config", "G-7Z6M3CJEV3");
     </script>
-    <link rel="stylesheet" href="../css/style.css?v=20260626a" />
+    <link rel="stylesheet" href="../css/style.css?v=20260629a" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -149,15 +149,26 @@
 
     <p class="hint">For how to use it, the difference from the WebGL version, and FAQ, see the <a href="howto.html">how-to guide</a>.<br>Need the baked-background WebGL version? Try the <a href="https://codequest.work/generator/liquid-glass-generator/en/">Liquid Glass Generator</a>.</p>
 
-    <!-- AdSense -->
-    <div class="ad-wrap">
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">Sponsored</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="Close ad">×</button>
+      </div>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
-      <!-- footer-top -->
-      <ins class="adsbygoogle ad-banner" style="display:inline-block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="9941065628"></ins>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="9941065628"></ins>
       <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
     </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
 
     <footer>
       <span>&copy; 2026 Liquid Glass CSS Generator | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>

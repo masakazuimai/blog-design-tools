@@ -106,7 +106,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/style.css?v=20260625b" />
+    <link rel="stylesheet" href="../css/style.css?v=20260629a" />
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
     <style>
@@ -227,13 +227,27 @@
       <p style="margin-top:24px;"><a href="/generator/slider-generator/en/" class="back-btn">← Open the Slider Generator (tool)</a></p>
     </div>
 
-    <div class="ad-wrap" style="margin: 32px auto; text-align: center;">
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">Sponsored</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="Close ad">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
       <!-- Carousel Generator -->
-      <ins class="adsbygoogle ad-banner" style="display:inline-block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="3363053135"></ins>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="3363053135"></ins>
       <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
     </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
 
     <footer>
       <span>&copy; 2026 Slider Generator | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>

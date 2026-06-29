@@ -35,7 +35,7 @@
       gtag("config", "G-7Z6M3CJEV3");
     </script>
     <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と各JSの import 両方で日付を上げる -->
-    <link rel="stylesheet" href="css/style.css?v=20260626a" />
+    <link rel="stylesheet" href="css/style.css?v=20260629a" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -152,14 +152,26 @@
 
     <p class="hint">使い方・WebGL方式との違い・FAQは<a href="howto.html">使い方ガイド</a>をご覧ください。<br>背景画像を焼き込むWebGL版が必要なら<a href="https://codequest.work/generator/liquid-glass-generator/">Liquid Glassジェネレーター</a>もあります。</p>
 
-    <!-- AdSense -->
-    <div class="ad-wrap">
-      <!-- liquid-glass-css-generator -->
-      <ins class="adsbygoogle ad-banner" style="display:inline-block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="9941065628"></ins>
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">広告</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="9941065628"></ins>
       <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
     </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
 
     <footer>
       <span>&copy; 2026 透過リキッドガラスCSSジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
