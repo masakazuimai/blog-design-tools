@@ -1158,7 +1158,7 @@ footer a:hover {
   color: #3b82f6;
 }
 /* PCでは右下にフローティングカードとして固定表示（ChatWork風）。footerからは抜く。
-   サイズは在庫の多い300x250（ミディアムレクタングル） */
+   サイズは320x100（ラージモバイルバナー）・薄型透明枠で統一 */
 .footer-ad {
   position: fixed;
   right: 0;
@@ -1167,12 +1167,13 @@ footer a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding: 10px 12px 12px;
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
+  gap: 2px;
+  padding: 0;
+  width: 320px; /* AdSenseレスポンシブの横伸び防止＋×を右端に固定 */
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 .footer-ad.is-closed {
   display: none;
@@ -1186,18 +1187,22 @@ footer a:hover {
   z-index: 1; /* 広告iframeの上に×を出してクリックできるようにする */
 }
 .ad-widget__label {
-  color: #94a3b8;
+  color: #64748b;
+  font-size: 12px;
   letter-spacing: 0.04em;
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: 999px;
 }
 .ad-widget__close {
   appearance: none;
   border: none;
   background: #f1f5f9;
   color: #64748b;
-  width: 26px;
-  height: 26px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  font-size: 16px;
+  font-size: 12px;
   line-height: 1;
   cursor: pointer;
   display: flex;
@@ -1211,8 +1216,8 @@ footer a:hover {
 }
 .footer-ad ins.adsbygoogle {
   display: block; /* inline-blockだと行ボックスのディセンダ分の隙間が広告下にできる */
-  width: 300px;
-  height: 250px;
+  width: 320px;
+  height: 100px;
 }
 /* コピーライト＋468px広告が横並びで収まらない幅では縦積み＋広告をモバイルバナー(320x100)に */
 @media (max-width: 1040px) {
