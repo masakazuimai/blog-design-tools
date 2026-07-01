@@ -551,7 +551,7 @@ body {
   tab-size: 2;
 }
 
-/* 広告（PCは右下フローティングカード468×60＝フルバナー・薄型＋×閉じ／SPはfooter内320×100） */
+/* 広告（PCは右下フローティングカード320×100・薄型透明枠＋×閉じ／SPはfooter内320×100） */
 .footer-ad {
   position: fixed;
   right: 0;
@@ -600,7 +600,7 @@ body {
   transition: background 0.2s, color 0.2s;
 }
 .ad-widget__close:hover { background: #e2e8f0; color: #1e293b; }
-.footer-ad ins.adsbygoogle { display: block; width: 468px; height: 60px; }
+.footer-ad ins.adsbygoogle { display: block; width: 320px; height: 100px; }
 @media screen and (max-width: 768px) {
   .footer-ad {
     position: static;
