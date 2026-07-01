@@ -101,14 +101,75 @@
       .related { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
       .related a { color: #9aa6b2; text-decoration: none; border: 1px solid #2c2c2c; border-radius: 8px; padding: 8px 14px; }
       .related a:hover { background: #262626; }
-      .footer-ad { position: fixed; right: 0; bottom: 0; z-index: 90; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 12px 12px; background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; box-shadow: 0 10px 30px rgba(15,23,42,.18); }
+      /* 広告（PC/SPとも右下フローティングカード320×100・薄型透明枠＋×閉じ） */
+      .footer-ad {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        z-index: 90;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        padding: 0;
+        width: 320px;
+        overflow: hidden;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+      }
       .footer-ad.is-closed { display: none; }
-      .ad-widget__head { display: flex; align-items: center; justify-content: space-between; width: 100%; position: relative; z-index: 1; }
-      .ad-widget__label { color: #94a3b8; font-size: 16px; letter-spacing: .04em; }
-      .ad-widget__close { appearance: none; border: none; background: #f1f5f9; color: #64748b; width: 26px; height: 26px; border-radius: 50%; font-size: 16px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s, color .2s; }
+      .ad-widget__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        position: relative;
+        z-index: 1;
+      }
+      .ad-widget__label {
+        color: #64748b;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        background: #f1f5f9;
+        padding: 2px 8px;
+        border-radius: 999px;
+      }
+      .ad-widget__close {
+        appearance: none;
+        border: none;
+        background: #f1f5f9;
+        color: #64748b;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        font-size: 12px;
+        line-height: 1;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s, color 0.2s;
+      }
       .ad-widget__close:hover { background: #e2e8f0; color: #1e293b; }
-      .footer-ad ins.adsbygoogle { display: block; width: 300px; height: 250px; }
-      @media screen and (max-width: 768px) { .footer-ad { position: static; align-self: center; margin: 24px auto 0; gap: 0; padding: 0; background: none; border: none; border-radius: 0; box-shadow: none; z-index: auto; } .footer-ad.is-closed { display: flex; } .ad-widget__head { display: none; } .footer-ad ins.adsbygoogle { width: 320px; height: 100px; } }
+      .footer-ad ins.adsbygoogle { display: block; width: 320px; height: 100px; }
+      @media screen and (max-width: 768px) {
+        .footer-ad {
+          position: static;
+          align-self: center;
+          margin: 24px auto 0;
+          gap: 0;
+          padding: 0;
+          background: none;
+          border: none;
+          border-radius: 0;
+          box-shadow: none;
+          z-index: auto;
+        }
+        .footer-ad.is-closed { display: flex; }
+        .ad-widget__head { display: none; }
+        .footer-ad ins.adsbygoogle { width: 320px; height: 100px; }
+      }
       footer { margin: 40px auto 0; max-width: 860px; text-align: center; color: #6f6b68; font-size: 16px; line-height: 2; }
       footer a { color: #9aa6b2; text-decoration: none; }
       footer a:hover { text-decoration: underline; }
