@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Directory Map Maker | Free tool to draw folder structure & site map diagrams</title>
+    <meta name="description" content="Free online tool to draw directory maps and site structure diagrams. Connect folder and file nodes with arrows, add sticky notes and shapes, and pan & zoom an infinite canvas. Start from a sample. Autosave, no sign-up." />
+    <link rel="canonical" href="https://codequest.work/generator/directory-map-generator/en/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/directory-map-generator/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/directory-map-generator/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/directory-map-generator/" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codequest.work/generator/directory-map-generator/en/" />
+    <meta property="og:title" content="Directory Map Maker | Free folder structure & site map diagram tool" />
+    <meta property="og:description" content="Draw directory maps and site structure diagrams by connecting folder and file nodes with arrows. Infinite canvas, autosave, no sign-up." />
+    <meta property="og:image" content="https://codequest.work/generator/directory-map-generator/assets/og-en.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Directory Map Maker" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Directory Map Maker | Free folder structure & site map diagram tool" />
+    <meta name="twitter:description" content="Draw directory maps and site structure diagrams by connecting folder and file nodes with arrows. Infinite canvas, autosave, no sign-up." />
+    <meta name="twitter:image" content="https://codequest.work/generator/directory-map-generator/assets/og-en.png" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <script>
+      document.documentElement.setAttribute("data-theme", localStorage.getItem("dirmap:theme") || "dark");
+    </script>
+    <link rel="stylesheet" href="../css/style.css?v=20260702y" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Directory Map Maker",
+        "url": "https://codequest.work/generator/directory-map-generator/en/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web browser",
+        "inLanguage": "en",
+        "description": "Free online tool to draw directory maps and site structure diagrams by connecting folder and file nodes with arrows. Add sticky notes and shapes, pan and zoom an infinite canvas, and your work autosaves in the browser.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": ["Folder and file nodes", "Arrow connectors between nodes", "Directory tree template", "Sticky notes with colors", "Rectangle, ellipse and diamond shapes", "Infinite canvas with pan and zoom", "Autosave (localStorage)", "Export as PNG", "Save and load JSON"],
+        "publisher": {
+          "@type": "Organization",
+          "name": "CodeQuest.work",
+          "url": "https://codequest.work/"
+        }
+      }
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <header class="app-head">
+      <div class="app-kicker">~/directory-map</div>
+      <h1>Directory Map Maker</h1>
+      <div class="head-right">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.2 17.2L18.6 18.6M18.6 5.4L17.2 6.8M6.8 17.2L5.4 18.6" /></svg>
+        </button>
+        <a class="lang-switch" href="../" hreflang="ja">JA</a>
+      </div>
+    </header>
+
+    <!-- Toolbar -->
+    <div class="toolbar" id="toolbar">
+      <div class="tool-group" role="toolbar" aria-label="Tools">
+        <button class="tool" data-tool="select" title="Select / Move (V)" aria-label="Select">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3l7 17 2.5-6.5L20 11z" /></svg>
+        </button>
+        <button class="tool" data-tool="folder" title="Folder (F)" aria-label="Folder">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h6l2 2h10v10a2 2 0 0 1-2 2H3z" /></svg>
+        </button>
+        <button class="tool" data-tool="file" title="File (G)" aria-label="File">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4" /></svg>
+        </button>
+        <button class="tool" data-tool="connector" title="Connector / Arrow (C)" aria-label="Connector">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h13" /><path d="M13 7l5 5-5 5" /></svg>
+        </button>
+        <button class="tool" data-tool="sticky" title="Sticky note (S)" aria-label="Sticky note">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v10l-5 5H5z" /><path d="M19 14h-5v5" /></svg>
+        </button>
+        <button class="tool" data-tool="rect" title="Rectangle (R)" aria-label="Rectangle">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="12" rx="2" /></svg>
+        </button>
+        <button class="tool" data-tool="ellipse" title="Ellipse (O)" aria-label="Ellipse">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="8" ry="7" /></svg>
+        </button>
+        <button class="tool" data-tool="diamond" title="Diamond (D)" aria-label="Diamond">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 9-9 9-9-9z" /></svg>
+        </button>
+      </div>
+
+      <div class="tool-sep" aria-hidden="true"></div>
+
+      <div class="wire-tools" role="group" aria-label="Arrow settings">
+        <button class="tool wt" id="wt-straight" title="Straight" aria-label="Connect with a straight line">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20L20 4" /></svg>
+        </button>
+        <button class="tool wt" id="wt-elbow" title="Right-angle / branching" aria-label="Connect with right angles">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v9a3 3 0 0 0 3 3h11" /></svg>
+        </button>
+        <span class="wt-div" aria-hidden="true"></span>
+        <button class="tool wt" id="wt-end" title="One-way arrow →" aria-label="One-way arrow">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h13" /><path d="M13 7l5 5-5 5" /></svg>
+        </button>
+        <button class="tool wt" id="wt-both" title="Two-way arrow ↔" aria-label="Two-way arrow">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 12h10" /><path d="M10 7l-5 5 5 5" /><path d="M14 7l5 5-5 5" /></svg>
+        </button>
+        <button class="tool wt" id="wt-none" title="No arrow (line only)" aria-label="Line without arrows">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16" /></svg>
+        </button>
+      </div>
+
+      <div class="tool-sep" aria-hidden="true"></div>
+
+      <div class="color-picker" id="color-picker">
+        <button class="tool color-trigger" id="color-trigger" title="Choose color" aria-label="Choose color" aria-haspopup="true" aria-expanded="false">
+          <span class="color-dot" id="color-dot"></span>
+        </button>
+        <div class="color-drawer" id="color-drawer" role="group" aria-label="Choose color" hidden></div>
+      </div>
+
+      <div class="tool-sep" aria-hidden="true"></div>
+
+      <div class="tool-group">
+        <button class="tool" id="zoom-out" title="Zoom out" aria-label="Zoom out">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12" /></svg>
+        </button>
+        <button class="tool zoom-label" id="zoom-reset" title="Reset zoom to 100%" aria-label="Reset zoom"><span id="zoom-val">100%</span></button>
+        <button class="tool" id="zoom-in" title="Zoom in" aria-label="Zoom in">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v12" /><path d="M6 12h12" /></svg>
+        </button>
+      </div>
+
+      <div class="tool-sep" aria-hidden="true"></div>
+
+      <div class="tool-group actions">
+        <button class="tool" id="btn-delete" title="Delete selection (Delete)" aria-label="Delete">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14" /><path d="M9 7V5h6v2" /><path d="M7 7l1 12h8l1-12" /></svg>
+        </button>
+        <button class="tool" id="btn-png" title="Export PNG" aria-label="Export PNG">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="M7 10l5 5 5-5" /><path d="M12 15V3" /></svg>
+        </button>
+        <button class="tool" id="btn-save" title="Save as JSON" aria-label="Save JSON">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h11l3 3v15H5z" /><path d="M8 3v6h8" /></svg>
+        </button>
+        <button class="tool" id="btn-load" title="Load JSON" aria-label="Load JSON">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" /><path d="M7 10l5-5 5 5" /><path d="M12 5v12" /></svg>
+        </button>
+        <input type="file" id="file-input" accept="application/json,.json" hidden />
+        <button class="tool danger" id="btn-clear" title="Clear all" aria-label="Clear all">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18" /><path d="M8 6V4h8v2" /><path d="M6 6l1 14h10l1-14" /><path d="M10 11v6M14 11v6" /></svg>
+        </button>
+      </div>
+
+      <button class="tool tpl-btn" id="btn-template" title="Load the sample directory map (replaces current content)" aria-label="Load the sample directory map">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 6h6l2 2h10v10a2 2 0 0 1-2 2H3z" />
+          <path d="M8 13h8M8 16h5" />
+        </svg>
+        <span>Sample</span>
+      </button>
+    </div>
+
+    <!-- Canvas -->
+    <div class="stage" id="stage">
+      <div class="canvas" id="canvas">
+        <div class="world" id="world">
+          <svg class="wires" id="wires" aria-hidden="true">
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0L10 5L0 10z" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+      </div>
+      <p class="empty-hint" id="empty-hint">Load the example with <strong>Sample</strong> (top right), or pick <strong>Folder</strong>/<strong>File</strong> and click the canvas to place a node.<br />Connect nodes with the connector, drag to move, scroll to pan, ⌘/Ctrl + scroll to zoom.</p>
+    </div>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">Sponsored</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="Close ad">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="2600683533"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
+
+    <footer>
+      <span>&copy; 2026 Directory Map Maker | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="howto.html">📖 How to use &amp; FAQ</a>
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="../js/main.js?v=20260702u"></script>
+  </body>
+</html>

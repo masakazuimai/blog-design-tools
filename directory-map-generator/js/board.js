@@ -14,15 +14,17 @@ import {
   updateConnector,
   removeConnector,
   save,
-} from "./store.js?v=20260702f";
+} from "./store.js?v=20260702s";
 
 // ---- モジュール内参照 ----
 let els = {};
 let itemEls = new Map(); // id -> element
 let tool = "select";
 let color = "#fde68a";
-let selectedItemId = null;
+let selectedIds = new Set(); // 複数選択中のアイテムid
 let selectedConnId = null;
+let clipboard = null; // コピー内容 { items, conns }
+let pasteShift = 0; // 連続ペーストのずらし量
 let onChange = () => {};
 
 const MIN_SCALE = 0.2;
@@ -66,8 +68,14 @@ export function initBoard(refs, opts = {}) {
     setWireEnds,
     zoomBy,
     resetZoom,
+    fitView,
     deleteSelected,
     clearSelection,
+    selectAll,
+    copySelection,
+    pasteClipboard,
+    duplicateSelection,
+    cutSelection,
     renderAll,
     getState: () => state,
   };
@@ -111,11 +119,11 @@ export function setTool(next) {
 
 export function setColor(hex) {
   color = hex;
-  // 選択中アイテムがあれば即反映
-  if (selectedItemId) {
-    updateItem(selectedItemId, { color: hex });
-    renderItem(getItem(selectedItemId));
-  }
+  // 選択中アイテムすべてに即反映
+  selectedIds.forEach((id) => {
+    updateItem(id, { color: hex });
+    renderItem(getItem(id));
+  });
   onChange({ color });
 }
 
@@ -150,6 +158,36 @@ export function zoomBy(factor) {
 
 export function resetZoom() {
   cam().scale = 1;
+  applyCamera();
+}
+
+// 全アイテムがビューポート中央に収まるようカメラを合わせる
+export function fitView(padding = 60) {
+  if (!state.items.length) return;
+  const rect = els.canvas.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+  state.items.forEach((it) => {
+    minX = Math.min(minX, it.x);
+    minY = Math.min(minY, it.y);
+    maxX = Math.max(maxX, it.x + it.w);
+    maxY = Math.max(maxY, it.y + it.h);
+  });
+  const bw = Math.max(1, maxX - minX);
+  const bh = Math.max(1, maxY - minY);
+  const scale = clamp(
+    Math.min((rect.width - padding * 2) / bw, (rect.height - padding * 2) / bh, 1),
+    MIN_SCALE,
+    MAX_SCALE
+  );
+  const cx = (minX + maxX) / 2;
+  const cy = (minY + maxY) / 2;
+  cam().scale = scale;
+  cam().x = rect.width / 2 - cx * scale;
+  cam().y = rect.height / 2 - cy * scale;
   applyCamera();
 }
 
@@ -195,8 +233,12 @@ function onPointerDown(e) {
       return;
     }
     if (itemEl.classList.contains("editing")) return; // テキスト編集中はキャレット優先
-    selectItem(id);
-    startMoveItem(id, e);
+    if (e.shiftKey) {
+      selectItem(id, true); // Shiftクリックで選択に追加/解除（移動はしない）
+      return;
+    }
+    if (!selectedIds.has(id)) selectItem(id, false); // 未選択ならこれだけ選択
+    startMoveSelection(e); // 選択中すべてをまとめて移動
     return;
   }
 
@@ -205,9 +247,8 @@ function onPointerDown(e) {
     createItemAt(e.clientX, e.clientY);
     return;
   }
-  // 選択解除してパン
-  clearSelection();
-  startPan(e);
+  // パンは廃止 → 空きドラッグは範囲選択（マーキー）
+  startMarquee(e);
 }
 
 function isCreationTool(t) {
@@ -263,25 +304,49 @@ function beginGesture(e, onMove, onUp) {
 }
 
 // ============================================================
-// パン
+// 範囲選択（マーキー）
 // ============================================================
-function startPan(e) {
-  els.canvas.classList.add("is-panning");
-  let lastX = e.clientX;
-  let lastY = e.clientY;
+function startMarquee(e) {
+  const box = document.createElement("div");
+  box.className = "marquee";
+  els.canvas.appendChild(box);
+  const additive = e.shiftKey;
+  const base = additive ? new Set(selectedIds) : new Set();
+  if (!additive) applySelectionSet(new Set()); // 既存選択をいったん解除
+  const rect = els.canvas.getBoundingClientRect();
+  const sx0 = e.clientX - rect.left;
+  const sy0 = e.clientY - rect.top;
+  let moved = false;
+
   beginGesture(
     e,
     (ev) => {
-      cam().x += ev.clientX - lastX;
-      cam().y += ev.clientY - lastY;
-      lastX = ev.clientX;
-      lastY = ev.clientY;
-      applyCamera();
+      moved = true;
+      const sx = ev.clientX - rect.left;
+      const sy = ev.clientY - rect.top;
+      box.style.left = `${Math.min(sx0, sx)}px`;
+      box.style.top = `${Math.min(sy0, sy)}px`;
+      box.style.width = `${Math.abs(sx - sx0)}px`;
+      box.style.height = `${Math.abs(sy - sy0)}px`;
+      const p1 = screenToWorld(Math.min(e.clientX, ev.clientX), Math.min(e.clientY, ev.clientY));
+      const p2 = screenToWorld(Math.max(e.clientX, ev.clientX), Math.max(e.clientY, ev.clientY));
+      const next = new Set(base);
+      itemsInRect(p1.x, p1.y, p2.x, p2.y).forEach((id) => next.add(id));
+      applySelectionSet(next);
     },
     () => {
-      els.canvas.classList.remove("is-panning");
+      box.remove();
+      if (!moved && !additive) clearSelection(); // 単なるクリック＝選択解除
+      onChange({ selected: selectedIds.size > 0 });
     }
   );
+}
+
+// 矩形（ワールド座標）と交差するアイテムid
+function itemsInRect(x1, y1, x2, y2) {
+  return state.items
+    .filter((it) => it.x < x2 && it.x + it.w > x1 && it.y < y2 && it.y + it.h > y1)
+    .map((it) => it.id);
 }
 
 // ============================================================
@@ -310,33 +375,39 @@ function createItemAt(clientX, clientY) {
 }
 
 // ============================================================
-// アイテム移動
+// アイテム移動（選択中すべてをまとめて）
 // ============================================================
-function startMoveItem(id, e) {
-  const item = getItem(id);
-  if (!item) return;
-  const startX = item.x;
-  const startY = item.y;
+function startMoveSelection(e) {
+  const ids = [...selectedIds];
+  if (!ids.length) return;
   const start = screenToWorld(e.clientX, e.clientY);
-  const el = itemEls.get(id);
-  el.classList.add("is-dragging");
+  const targets = ids
+    .map((id) => {
+      const item = getItem(id);
+      const el = itemEls.get(id);
+      return item && el ? { id, item, el, x0: item.x, y0: item.y } : null;
+    })
+    .filter(Boolean);
+  targets.forEach((t) => t.el.classList.add("is-dragging"));
   let moved = false;
 
   beginGesture(
     e,
     (ev) => {
       const now = screenToWorld(ev.clientX, ev.clientY);
-      const nx = Math.round(startX + (now.x - start.x));
-      const ny = Math.round(startY + (now.y - start.y));
-      item.x = nx;
-      item.y = ny;
-      applyItemPosition(el, item);
+      const dx = now.x - start.x;
+      const dy = now.y - start.y;
+      targets.forEach((t) => {
+        t.item.x = Math.round(t.x0 + dx);
+        t.item.y = Math.round(t.y0 + dy);
+        applyItemPosition(t.el, t.item);
+      });
       renderWires();
       moved = true;
     },
     () => {
-      el.classList.remove("is-dragging");
-      if (moved) updateItem(id, { x: item.x, y: item.y });
+      targets.forEach((t) => t.el.classList.remove("is-dragging"));
+      if (moved) targets.forEach((t) => updateItem(t.id, { x: t.item.x, y: t.item.y }));
     }
   );
 }
@@ -449,43 +520,64 @@ function startEdit(id) {
 }
 
 // ============================================================
-// 選択
+// 選択（複数対応）
 // ============================================================
-function selectItem(id) {
-  if (selectedConnId) {
-    selectedConnId = null;
-  }
-  if (selectedItemId && selectedItemId !== id) {
-    const prev = itemEls.get(selectedItemId);
-    if (prev) {
-      prev.classList.remove("is-selected");
-      const h = prev.querySelector(".rz");
-      if (h) h.remove();
+// 選択集合をnextに揃え、DOMのis-selectedクラスとリサイズハンドルを反映
+function applySelectionSet(next) {
+  selectedIds.forEach((id) => {
+    if (!next.has(id)) {
+      const el = itemEls.get(id);
+      if (el) el.classList.remove("is-selected");
+    }
+  });
+  next.forEach((id) => {
+    const el = itemEls.get(id);
+    if (el) el.classList.add("is-selected");
+  });
+  selectedIds = next;
+  updateResizeHandle();
+}
+
+// リサイズハンドルは「単一選択のとき」だけ表示
+function updateResizeHandle() {
+  itemEls.forEach((el) => {
+    const h = el.querySelector(".rz");
+    if (h) h.remove();
+  });
+  if (selectedIds.size === 1) {
+    const el = itemEls.get([...selectedIds][0]);
+    if (el) {
+      const handle = document.createElement("div");
+      handle.className = "rz";
+      el.appendChild(handle);
     }
   }
-  selectedItemId = id;
-  const el = itemEls.get(id);
-  if (!el) return;
-  el.classList.add("is-selected");
-  if (!el.querySelector(".rz")) {
-    const handle = document.createElement("div");
-    handle.className = "rz";
-    el.appendChild(handle);
+}
+
+function selectItem(id, additive) {
+  selectedConnId = null;
+  let next;
+  if (additive) {
+    next = new Set(selectedIds);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+  } else {
+    next = new Set([id]);
   }
-  onChange({ selected: true });
+  applySelectionSet(next);
+  onChange({ selected: selectedIds.size > 0 });
+}
+
+export function selectAll() {
+  applySelectionSet(new Set(state.items.map((it) => it.id)));
+  selectedConnId = null;
+  onChange({ selected: state.items.length > 0 });
 }
 
 export function clearSelection() {
-  if (selectedItemId) {
-    const el = itemEls.get(selectedItemId);
-    if (el) {
-      el.classList.remove("is-selected");
-      const h = el.querySelector(".rz");
-      if (h) h.remove();
-    }
-  }
-  selectedItemId = null;
+  applySelectionSet(new Set());
   selectedConnId = null;
+  renderWires();
   onChange({ selected: false });
 }
 
@@ -493,12 +585,14 @@ export function clearSelection() {
 // 削除
 // ============================================================
 export function deleteSelected() {
-  if (selectedItemId) {
-    const el = itemEls.get(selectedItemId);
-    if (el) el.remove();
-    itemEls.delete(selectedItemId);
-    removeItem(selectedItemId);
-    selectedItemId = null;
+  if (selectedIds.size) {
+    selectedIds.forEach((id) => {
+      const el = itemEls.get(id);
+      if (el) el.remove();
+      itemEls.delete(id);
+      removeItem(id); // 付随コネクタも除去
+    });
+    selectedIds = new Set();
     renderWires();
     updateEmptyHint();
     onChange({ selected: false });
@@ -507,6 +601,65 @@ export function deleteSelected() {
     selectedConnId = null;
     renderWires();
   }
+}
+
+// ============================================================
+// コピー / ペースト / 複製 / 切り取り
+// ============================================================
+function collectSelection() {
+  const items = state.items.filter((it) => selectedIds.has(it.id)).map((it) => ({ ...it }));
+  const idset = new Set(items.map((it) => it.id));
+  const conns = state.connectors
+    .filter((c) => idset.has(c.from) && idset.has(c.to))
+    .map((c) => ({ ...c }));
+  return { items, conns };
+}
+
+// items/connsをdx,dyずらして複製・追加し、複製分を選択状態にする
+function addClones(items, conns, dx, dy) {
+  if (!items.length) return 0;
+  const idMap = new Map();
+  const newItems = items.map((it) => {
+    const nid = nextId("n");
+    idMap.set(it.id, nid);
+    return { ...it, id: nid, x: it.x + dx, y: it.y + dy };
+  });
+  const newConns = conns
+    .filter((c) => idMap.has(c.from) && idMap.has(c.to))
+    .map((c) => ({ ...c, id: nextId("c"), from: idMap.get(c.from), to: idMap.get(c.to) }));
+  state.items = [...state.items, ...newItems];
+  state.connectors = [...state.connectors, ...newConns];
+  save();
+  renderAll();
+  applySelectionSet(new Set(newItems.map((it) => it.id)));
+  onChange({ selected: true });
+  return newItems.length;
+}
+
+export function copySelection() {
+  if (!selectedIds.size) return 0;
+  clipboard = collectSelection();
+  pasteShift = 0;
+  return clipboard.items.length;
+}
+
+export function pasteClipboard() {
+  if (!clipboard || !clipboard.items.length) return 0;
+  pasteShift += 24;
+  return addClones(clipboard.items, clipboard.conns, pasteShift, pasteShift);
+}
+
+export function duplicateSelection() {
+  if (!selectedIds.size) return 0;
+  const { items, conns } = collectSelection();
+  return addClones(items, conns, 24, 24);
+}
+
+export function cutSelection() {
+  if (!selectedIds.size) return 0;
+  const n = copySelection();
+  deleteSelected();
+  return n;
 }
 
 // ============================================================
@@ -574,17 +727,14 @@ function applyItemSize(el, item) {
 }
 
 function applyItemColor(el, item) {
-  if (
-    item.type === "sticky" ||
-    item.type === "rect" ||
-    item.type === "ellipse" ||
-    item.type === "folder" ||
-    item.type === "file"
-  ) {
-    el.style.background = item.color;
-  } else if (item.type === "diamond") {
+  // 色未指定（auto/falsy）はインラインを空にしてCSSのテーマ既定色に委ねる
+  const themed = !item.color || item.color === "auto";
+  const val = themed ? "" : item.color;
+  if (item.type === "diamond") {
     const bg = el.querySelector(".shape-bg");
-    if (bg) bg.style.background = item.color;
+    if (bg) bg.style.background = val;
+  } else {
+    el.style.background = val;
   }
 }
 

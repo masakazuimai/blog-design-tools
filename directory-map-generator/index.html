@@ -3,13 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ディレクトリマップ作成｜サイト構成図・フォルダ構成をFigJam風に作れる無料ツール</title>
+    <title>ディレクトリマップ作成｜サイト構成図・フォルダ構成を作れる無料ツール</title>
     <meta name="description" content="フォルダ・ファイルのノードを矢印でつないでディレクトリマップ／サイト構成図を作れる無料ツール。付箋や図形も置け、無限キャンバスをパン・ズーム。テンプレから即スタート、自動保存・登録不要。" />
     <link rel="canonical" href="https://codequest.work/generator/directory-map-generator/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/directory-map-generator/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/directory-map-generator/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/directory-map-generator/" />
     <!-- OGP -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://codequest.work/generator/directory-map-generator/" />
-    <meta property="og:title" content="ディレクトリマップ作成｜サイト構成図をFigJam風に作れる無料ツール" />
+    <meta property="og:title" content="ディレクトリマップ作成｜サイト構成図を作れる無料ツール" />
     <meta property="og:description" content="フォルダ・ファイルのノードを矢印でつないでディレクトリマップ／サイト構成図を作れる無料ツール。無限キャンバス・自動保存・登録不要。" />
     <meta property="og:image" content="https://codequest.work/generator/directory-map-generator/assets/og.png" />
     <meta property="og:image:width" content="1200" />
@@ -19,7 +22,7 @@
     <meta property="og:locale" content="ja_JP" />
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ディレクトリマップ作成｜サイト構成図をFigJam風に作れる無料ツール" />
+    <meta name="twitter:title" content="ディレクトリマップ作成｜サイト構成図を作れる無料ツール" />
     <meta name="twitter:description" content="フォルダ・ファイルのノードを矢印でつないでディレクトリマップ／サイト構成図を作れる無料ツール。無限キャンバス・自動保存・登録不要。" />
     <meta name="twitter:image" content="https://codequest.work/generator/directory-map-generator/assets/og.png" />
     <!-- Google tag (gtag.js) -->
@@ -32,8 +35,12 @@
       gtag("js", new Date());
       gtag("config", "G-7Z6M3CJEV3");
     </script>
+    <!-- テーマを先に適用（既定ダーク・チラつき防止） -->
+    <script>
+      document.documentElement.setAttribute("data-theme", localStorage.getItem("dirmap:theme") || "dark");
+    </script>
     <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と js の両方で日付を上げる -->
-    <link rel="stylesheet" href="css/style.css?v=20260702j" />
+    <link rel="stylesheet" href="css/style.css?v=20260702y" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -58,9 +65,15 @@
   </head>
   <body>
     <header class="app-head">
-      <div class="brandmark">DIRECTORY MAP</div>
-      <h1><span class="accent">ディレクトリマップ</span>作成ツール</h1>
-      <p class="lede"><strong>フォルダ・ファイルのノード</strong>を矢印でつないで、ディレクトリマップ／サイト構成図をFigJam風に作成。付箋・図形も置けて、無限キャンバス・自動保存・登録不要。</p>
+      <div class="app-kicker">~/directory-map</div>
+      <h1>ディレクトリマップ作成ツール</h1>
+      <div class="head-right">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="テーマ切替">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.2 17.2L18.6 18.6M18.6 5.4L17.2 6.8M6.8 17.2L5.4 18.6" /></svg>
+        </button>
+        <a class="lang-switch" href="en/" hreflang="en">EN</a>
+      </div>
     </header>
 
     <!-- ツールバー -->
@@ -192,7 +205,7 @@
           <path d="M3 6h6l2 2h10v10a2 2 0 0 1-2 2H3z" />
           <path d="M8 13h8M8 16h5" />
         </svg>
-        <span>クリア</span>
+        <span>サンプル</span>
       </button>
     </div>
 
@@ -210,10 +223,8 @@
           <!-- 付箋・図形はここに動的追加 -->
         </div>
       </div>
-      <p class="empty-hint" id="empty-hint">右上の<strong>「クリア」</strong>で例を読み込むか、<strong>フォルダ</strong>／<strong>ファイル</strong>を選んでキャンバスをクリックして配置。<br />コネクタでノードをつなぎ、ドラッグで移動・ホイールでスクロール・⌘＋ホイールでズーム。</p>
+      <p class="empty-hint" id="empty-hint">右上の<strong>「サンプル」</strong>で例を読み込むか、<strong>フォルダ</strong>／<strong>ファイル</strong>を選んでキャンバスをクリックして配置。<br />コネクタでノードをつなぎ、ドラッグで移動・ホイールでスクロール・⌘＋ホイールでズーム。</p>
     </div>
-
-    <p class="guide-link">使い方・ショートカット・FAQは<a href="howto.html">ディレクトリマップの作り方</a>をご覧ください。</p>
 
     <div id="ad-widget" class="footer-ad">
       <div class="ad-widget__head">
@@ -221,8 +232,7 @@
         <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
       </div>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
-      <!-- TODO: data-ad-slot は本ツール用のAdSenseユニット発行値に差し替える（未発行のためプレースホルダ） -->
-      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="0000000000"></ins>
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="2600683533"></ins>
       <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
@@ -250,6 +260,6 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <script type="module" src="js/main.js?v=20260702k"></script>
+    <script type="module" src="js/main.js?v=20260702u"></script>
   </body>
 </html>

@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to make a directory map | Directory Map Maker</title>
+    <meta name="description" content="How to use Directory Map Maker: place folder and file nodes, connect them with arrows, switch right-angle or two-way arrows, marquee-select and copy-paste, and export to PNG or JSON. Steps, shortcuts and FAQ." />
+    <link rel="canonical" href="https://codequest.work/generator/directory-map-generator/en/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/directory-map-generator/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/directory-map-generator/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/directory-map-generator/howto.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://codequest.work/generator/directory-map-generator/en/howto.html" />
+    <meta property="og:title" content="How to make a directory map" />
+    <meta property="og:description" content="Steps, shortcuts and FAQ for drawing directory maps and site structure diagrams by connecting nodes with arrows." />
+    <meta property="og:image" content="https://codequest.work/generator/directory-map-generator/assets/og-en.png" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://codequest.work/generator/directory-map-generator/assets/og-en.png" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <script>
+      document.documentElement.setAttribute("data-theme", localStorage.getItem("dirmap:theme") || "dark");
+    </script>
+    <link rel="stylesheet" href="../css/style.css?v=20260702y" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to make a directory map",
+        "description": "Draw a directory map or site structure diagram by connecting folder and file nodes with arrows.",
+        "inLanguage": "en",
+        "step": [
+          { "@type": "HowToStep", "name": "Load the sample", "text": "Click the Sample button (top right). A directory tree example appears centered on the canvas — edit it to get started quickly." },
+          { "@type": "HowToStep", "name": "Add folders and files", "text": "Pick the Folder or File tool and click the canvas to place a node. Double-click a node to edit its name." },
+          { "@type": "HowToStep", "name": "Connect with arrows", "text": "Pick the Connector tool and drag from one node to another to link them. Arrows from the same parent branch automatically." },
+          { "@type": "HowToStep", "name": "Refine the look", "text": "Toggle right-angle vs straight arrows and one-way / two-way / none. Choose colors from the color wheel. Drag on empty space to marquee-select, and use Cmd+C / Cmd+V to copy and paste." },
+          { "@type": "HowToStep", "name": "Export", "text": "Export as a PNG image or JSON. JSON can be loaded back to restore your work, and everything autosaves in the browser." }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Is it free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. It is completely free with no sign-up and runs entirely in your browser." } },
+          { "@type": "Question", "name": "Is my work saved?", "acceptedAnswer": { "@type": "Answer", "text": "Your work autosaves in your browser (localStorage). You can also export it as JSON to save or share, and load it later to restore." } },
+          { "@type": "Question", "name": "Can I make right-angle or two-way arrows?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Use the arrow icons in the toolbar to switch between right-angle (branching) and straight lines, and one-way / two-way / no arrow. Nearly-aligned parent-child arrows straighten automatically." } },
+          { "@type": "Question", "name": "Can I work with multiple nodes at once?", "acceptedAnswer": { "@type": "Answer", "text": "Drag on empty space to marquee-select. Shift+click to add to the selection, Cmd+C / Cmd+V to copy and paste, and move selected nodes together." } },
+          { "@type": "Question", "name": "Is there a dark mode?", "acceptedAnswer": { "@type": "Answer", "text": "Yes (dark is the default). Use the sun/moon button at the top right to switch between light and dark." } },
+          { "@type": "Question", "name": "How do I pan and zoom?", "acceptedAnswer": { "@type": "Answer", "text": "Use the mouse wheel (or two-finger scroll) to move the canvas, and Cmd/Ctrl + wheel to zoom." } }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://codequest.work/category/generator/" },
+          { "@type": "ListItem", "position": 3, "name": "Directory Map Maker", "item": "https://codequest.work/generator/directory-map-generator/en/" },
+          { "@type": "ListItem", "position": 4, "name": "How to use", "item": "https://codequest.work/generator/directory-map-generator/en/howto.html" }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header class="app-head">
+      <a class="app-kicker back" href="./">← ~/directory-map</a>
+      <div></div>
+      <div class="head-right">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.2 17.2L18.6 18.6M18.6 5.4L17.2 6.8M6.8 17.2L5.4 18.6" /></svg>
+        </button>
+        <a class="lang-switch" href="../howto.html" hreflang="ja">JA</a>
+      </div>
+    </header>
+
+    <main class="doc">
+      <h1>How to make a directory map</h1>
+      <p class="lead">A guide to drawing directory maps and site structure diagrams by connecting folder and file nodes with arrows.</p>
+
+      <div class="answer">
+        <p>A <strong>directory map</strong> is a diagram of your folder and file hierarchy. With this tool you just place folder📁 and file📄 nodes and connect them with arrows to build a README tree or a site structure diagram. Free, no sign-up, autosave, and PNG / JSON export.</p>
+      </div>
+
+      <h2>Basic steps (5)</h2>
+      <ol>
+        <li><strong>Load the sample</strong>: click <kbd>Sample</kbd> (top right) to show a tree example centered on the canvas. Editing it is the fastest start.</li>
+        <li><strong>Add folders and files</strong>: pick the Folder / File tool and click the canvas to place a node. <strong>Double-click</strong> to edit its name.</li>
+        <li><strong>Connect with arrows</strong>: pick the Connector tool and <strong>drag</strong> from one node to another. Arrows from the same parent branch automatically.</li>
+        <li><strong>Refine the look</strong>: toggle <strong>right-angle / straight</strong> and <strong>one-way / two-way / none</strong> arrows. Choose colors from the color wheel. Drag on empty space to <strong>marquee-select</strong>.</li>
+        <li><strong>Export</strong>: save as <strong>PNG</strong> or <strong>JSON</strong>. JSON can be loaded back, and everything autosaves.</li>
+      </ol>
+
+      <h2>Toolbar overview</h2>
+      <ul>
+        <li><strong>Nodes</strong>: folder📁 / file📄 / sticky note / rectangle, ellipse, diamond</li>
+        <li><strong>Arrows</strong>: drag between nodes with the Connector. Switch shape (straight / right-angle) and ends (→ one-way / ↔ two-way / — none)</li>
+        <li><strong>Color</strong>: click the color-wheel icon and pick from the palette (theme default until you pick)</li>
+        <li><strong>Zoom</strong>: − / +, click the % to reset to 100%</li>
+        <li><strong>Actions</strong>: delete, export PNG, save JSON, load JSON, clear all</li>
+        <li><strong>Sample</strong>: far right — loads the tree example</li>
+      </ul>
+
+      <h2>Keyboard shortcuts</h2>
+      <table>
+        <thead>
+          <tr><th>Action</th><th>Keys</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Select / Move</td><td><kbd>V</kbd></td></tr>
+          <tr><td>Folder / File</td><td><kbd>F</kbd> / <kbd>G</kbd></td></tr>
+          <tr><td>Connector (arrow)</td><td><kbd>C</kbd></td></tr>
+          <tr><td>Sticky / Rectangle / Ellipse / Diamond</td><td><kbd>S</kbd> / <kbd>R</kbd> / <kbd>O</kbd> / <kbd>D</kbd></td></tr>
+          <tr><td>Delete</td><td><kbd>Delete</kbd></td></tr>
+          <tr><td>Select all</td><td><kbd>⌘</kbd>+<kbd>A</kbd></td></tr>
+          <tr><td>Copy / Paste</td><td><kbd>⌘</kbd>+<kbd>C</kbd> / <kbd>⌘</kbd>+<kbd>V</kbd></td></tr>
+          <tr><td>Cut / Duplicate</td><td><kbd>⌘</kbd>+<kbd>X</kbd> / <kbd>⌘</kbd>+<kbd>D</kbd></td></tr>
+          <tr><td>Pan (scroll)</td><td>Wheel</td></tr>
+          <tr><td>Zoom</td><td><kbd>⌘</kbd>/<kbd>Ctrl</kbd>+ Wheel</td></tr>
+        </tbody>
+      </table>
+      <p>On Windows / Linux, read <kbd>⌘</kbd> as <kbd>Ctrl</kbd>.</p>
+
+      <h2>FAQ</h2>
+      <p class="faq-q">Is it free?</p>
+      <p>Yes. It is completely free with no sign-up and runs entirely in your browser.</p>
+      <p class="faq-q">Is my work saved?</p>
+      <p>Your work autosaves in your browser (localStorage). You can also export it as JSON to save or share, and load it later to restore.</p>
+      <p class="faq-q">Can I make right-angle or two-way arrows?</p>
+      <p>Yes. Use the arrow icons to switch right-angle (branching) / straight and one-way / two-way / no arrow. Nearly-aligned parent-child arrows straighten automatically.</p>
+      <p class="faq-q">Can I work with multiple nodes at once?</p>
+      <p>Drag on empty space to marquee-select. <kbd>Shift</kbd>+click to add to the selection, <kbd>⌘</kbd>+<kbd>C</kbd> / <kbd>⌘</kbd>+<kbd>V</kbd> to copy and paste, and move selected nodes together.</p>
+      <p class="faq-q">Is there a dark mode?</p>
+      <p>Yes (dark is the default). Use the sun/moon button at the top right to switch between light and dark.</p>
+      <p class="faq-q">How do I pan and zoom?</p>
+      <p>Use the mouse wheel (or two-finger scroll) to move the canvas, and <kbd>⌘</kbd>/<kbd>Ctrl</kbd>+ wheel to zoom.</p>
+
+      <a class="cta" href="./">Open the tool →</a>
+    </main>
+
+    <footer>
+      <span>&copy; 2026 Directory Map Maker | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="./">🗂 Open the tool</a>
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var t = document.getElementById("theme-toggle");
+        if (!t) return;
+        t.addEventListener("click", function () {
+          var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          try {
+            localStorage.setItem("dirmap:theme", next);
+          } catch (e) {}
+        });
+      })();
+    </script>
+  </body>
+</html>

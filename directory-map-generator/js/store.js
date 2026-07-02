@@ -105,6 +105,15 @@ export function save() {
   }, 250);
 }
 
+// 一度でも保存されたことがあるか（初回訪問の判定に使う）
+export function hasSaved() {
+  try {
+    return localStorage.getItem(KEY) != null;
+  } catch (_) {
+    return false;
+  }
+}
+
 export function load() {
   try {
     const raw = localStorage.getItem(KEY);

@@ -2,7 +2,7 @@
 // エントリ：初期化・ツールバー配線・ショートカット
 // ============================================================
 
-import { state, load, clearAll, replaceAll, nextId, addItem, addConnector } from "./store.js?v=20260702f";
+import { state, load, hasSaved, clearAll, replaceAll, nextId, addItem, addConnector } from "./store.js?v=20260702s";
 import {
   initBoard,
   setTool,
@@ -11,7 +11,7 @@ import {
   resetZoom,
   deleteSelected,
   clearSelection,
-} from "./board.js?v=20260702k";
+} from "./board.js?v=20260702u";
 import { exportPng, exportJson, readJsonFile } from "./export.js?v=20260702f";
 
 // 色相ありの色を先頭に、無彩色（白/灰/黒）は末尾。初期色は色相のある #fde68a
@@ -31,6 +31,41 @@ const KEY_TO_TOOL = {
   d: "diamond",
   c: "connector",
 };
+
+// ---- i18n（同一JSで /en/ と出し分け。document.documentElement.lang で判定）----
+const LANG = document.documentElement.lang === "en" ? "en" : "ja";
+const STR = {
+  ja: {
+    needNodes: "先にノードや図形を置いてください",
+    pngDone: "PNGを書き出しました",
+    jsonSaved: "JSONを保存しました",
+    jsonLoaded: "JSONを読み込みました",
+    jsonError: "読み込みに失敗しました（JSON形式を確認してください）",
+    confirmSample: "現在の内容を消して、ディレクトリマップの例を読み込みます。よろしいですか？",
+    sampleLoaded: "ディレクトリマップの例を読み込みました",
+    confirmClear: "ボードのすべての内容を消去します。よろしいですか？",
+    cleared: "すべて消去しました",
+    copied: "コピーしました",
+    cut: "切り取りました",
+    pasted: (n) => `${n}件貼り付けました`,
+    duplicated: (n) => `${n}件複製しました`,
+  },
+  en: {
+    needNodes: "Add a node or shape first",
+    pngDone: "Exported PNG",
+    jsonSaved: "Saved JSON",
+    jsonLoaded: "Loaded JSON",
+    jsonError: "Import failed (check the JSON format)",
+    confirmSample: "Replace the current board with the sample directory map?",
+    sampleLoaded: "Loaded the sample directory map",
+    confirmClear: "Erase everything on the board?",
+    cleared: "Cleared the board",
+    copied: "Copied",
+    cut: "Cut",
+    pasted: (n) => `Pasted ${n} item${n > 1 ? "s" : ""}`,
+    duplicated: (n) => `Duplicated ${n} item${n > 1 ? "s" : ""}`,
+  },
+}[LANG];
 
 const $ = (id) => document.getElementById(id);
 
@@ -71,7 +106,7 @@ function init() {
   // ---- 色ピッカー（色相環トリガー＋ドロワー）----
   const colorTrigger = $("color-trigger");
   const colorDrawer = $("color-drawer");
-  let currentColor = SWATCHES[0]; // 初期は色相のある色
+  let currentColor = "auto"; // 既定はテーマ既定色（ライト/ダークに追従）。色は色相環ドロワーで選ぶ
 
   SWATCHES.forEach((hex) => {
     const btn = document.createElement("button");
@@ -110,6 +145,30 @@ function init() {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !colorDrawer.hidden) closeColorDrawer();
   });
+
+  // ---- テーマ切替（ライト/ダーク・既定ダーク・localStorage保存）----
+  const THEME_KEY = "dirmap:theme";
+  const themeToggle = $("theme-toggle");
+  const curTheme = () => (document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light");
+  const syncThemeLabel = () => {
+    if (!themeToggle) return;
+    const dark = curTheme() === "dark";
+    themeToggle.setAttribute("aria-label", dark ? (LANG === "en" ? "Switch to light mode" : "ライトモードに切替") : LANG === "en" ? "Switch to dark mode" : "ダークモードに切替");
+    themeToggle.setAttribute("title", themeToggle.getAttribute("aria-label"));
+  };
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const next = curTheme() === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try {
+        localStorage.setItem(THEME_KEY, next);
+      } catch (_) {
+        /* noop */
+      }
+      syncThemeLabel();
+    });
+    syncThemeLabel();
+  }
 
   // ---- 矢印の設定（形＝直線/直角、端＝片方向/双方向/なし）をアイコンで ----
   const wtStraight = $("wt-straight");
@@ -155,12 +214,12 @@ function init() {
   $("btn-delete").addEventListener("click", () => deleteSelected());
   $("btn-png").addEventListener("click", () => {
     const ok = exportPng(state, "directory-map.png");
-    toast(ok ? "PNGを書き出しました" : "先にノードや図形を置いてください");
+    toast(ok ? STR.pngDone : STR.needNodes);
   });
   $("btn-save").addEventListener("click", () => {
-    if (!state.items.length) return toast("先にノードや図形を置いてください");
+    if (!state.items.length) return toast(STR.needNodes);
     exportJson(state, "directory-map.json");
-    toast("JSONを保存しました");
+    toast(STR.jsonSaved);
   });
 
   const fileInput = $("file-input");
@@ -172,10 +231,10 @@ function init() {
       const data = await readJsonFile(file);
       replaceAll(data);
       board.renderAll();
-      toast("JSONを読み込みました");
+      toast(STR.jsonLoaded);
     } catch (err) {
       console.error("JSON読み込みエラー:", err);
-      toast("読み込みに失敗しました（JSON形式を確認してください）");
+      toast(STR.jsonError);
     }
     fileInput.value = "";
   });
@@ -183,19 +242,20 @@ function init() {
   // ---- テンプレ（ディレクトリツリーの例）----
   $("btn-template").addEventListener("click", () => {
     if (state.items.length || state.connectors.length) {
-      if (!confirm("現在の内容を消して、ディレクトリマップの例を読み込みます。よろしいですか？")) return;
+      if (!confirm(STR.confirmSample)) return;
     }
     loadDirectoryTemplate();
     board.renderAll();
-    toast("ディレクトリマップの例を読み込みました");
+    board.fitView();
+    toast(STR.sampleLoaded);
   });
 
   $("btn-clear").addEventListener("click", () => {
     if (!state.items.length && !state.connectors.length) return;
-    if (!confirm("ボードのすべての内容を消去します。よろしいですか？")) return;
+    if (!confirm(STR.confirmClear)) return;
     clearAll();
     board.renderAll();
-    toast("すべて消去しました");
+    toast(STR.cleared);
   });
 
   // ---- キーボードショートカット ----
@@ -206,6 +266,47 @@ function init() {
       (document.activeElement.isContentEditable ||
         ["INPUT", "TEXTAREA"].includes(document.activeElement.tagName));
     if (editing) return;
+
+    // コピー / 切り取り / 貼り付け / 複製 / 全選択（⌘ or Ctrl）
+    if (e.metaKey || e.ctrlKey) {
+      const mk = e.key.toLowerCase();
+      if (mk === "c") {
+        if (board.copySelection()) {
+          e.preventDefault();
+          toast(STR.copied);
+        }
+        return;
+      }
+      if (mk === "x") {
+        if (board.cutSelection()) {
+          e.preventDefault();
+          toast(STR.cut);
+        }
+        return;
+      }
+      if (mk === "v") {
+        const n = board.pasteClipboard();
+        if (n) {
+          e.preventDefault();
+          toast(STR.pasted(n));
+        }
+        return;
+      }
+      if (mk === "d") {
+        const n = board.duplicateSelection();
+        if (n) {
+          e.preventDefault();
+          toast(STR.duplicated(n));
+        }
+        return;
+      }
+      if (mk === "a") {
+        e.preventDefault();
+        board.selectAll();
+        return;
+      }
+      return; // その他の⌘/Ctrl系はツール切替させない
+    }
 
     const key = e.key.toLowerCase();
     if (KEY_TO_TOOL[key]) {
@@ -230,6 +331,13 @@ function init() {
   // 初期ツール表示
   board.setTool("select");
   syncToolButtons("select");
+
+  // 初回訪問（保存データなし）は、サンプルを画面中央に表示
+  if (!hasSaved()) {
+    loadDirectoryTemplate();
+    board.renderAll();
+    requestAnimationFrame(() => board.fitView());
+  }
 }
 
 // ---- ディレクトリツリーのスターターテンプレ ----
@@ -238,8 +346,8 @@ function loadDirectoryTemplate() {
   // ツリーは親→子の片方向が自然。現在の既定に関わらず片方向で生成する
   const prevEnds = state.wireEnds;
   state.wireEnds = "end";
-  const FOLDER = "#dbeafe";
-  const FILE = "#ffffff";
+  const FOLDER = "auto"; // テーマ既定色（ライト/ダーク追従）
+  const FILE = "auto";
   const mk = (type, x, y, text, color) => {
     const size = type === "folder" ? { w: 196, h: 60 } : { w: 184, h: 52 };
     const id = nextId("n");
