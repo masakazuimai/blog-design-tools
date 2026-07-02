@@ -1,0 +1,635 @@
+/* ============================================================
+   オンライン ホワイトボード
+   FigJam風UI（付箋 / 図形 / 矢印コネクタ / 無限キャンバス）
+   ============================================================ */
+
+:root {
+  --ink: #1e293b;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --bg: #f7f8fa;
+  --accent: #4f46e5; /* CTA用アクセント（1色に集約） */
+  --accent-weak: #eef2ff;
+  --shadow: 0 6px 24px rgba(15, 23, 42, 0.08);
+  --radius: 12px;
+  --canvas-bg: #f2f4f8;
+  --grid-dot: #d3d9e3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Meiryo", sans-serif;
+  font-size: 16px;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- ヘッダー ---------- */
+.app-head {
+  padding: 20px 24px 12px;
+  text-align: center;
+}
+.brandmark {
+  font-size: 0.9rem;
+  letter-spacing: 0.28em;
+  color: var(--muted);
+  font-weight: 600;
+}
+.app-head h1 {
+  margin: 6px 0 8px;
+  font-size: 1.7rem;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+}
+.app-head h1 .accent {
+  color: var(--accent);
+}
+.app-head .lede {
+  margin: 0 auto;
+  max-width: 640px;
+  color: var(--muted);
+  font-size: 1rem;
+}
+.app-head .lede strong {
+  color: var(--ink);
+}
+
+/* ---------- ツールバー ---------- */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #fff;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.tool-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.tool-sep {
+  width: 1px;
+  height: 26px;
+  background: var(--line);
+  margin: 0 4px;
+}
+.tool {
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.tool svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.tool:hover {
+  background: #f1f5f9;
+}
+.tool.is-active {
+  background: var(--accent-weak);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.tool.danger:hover {
+  background: #fef2f2;
+  color: #dc2626;
+}
+.tool.zoom-label {
+  width: auto;
+  padding: 0 10px;
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+.tool.tpl-btn {
+  width: auto;
+  gap: 6px;
+  padding: 0 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-weak);
+  margin-left: auto; /* ツールバー右端へ寄せる */
+}
+.tool.tpl-btn:hover {
+  background: #e0e7ff;
+}
+.tool.tpl-btn span {
+  white-space: nowrap;
+}
+/* 矢印の設定（アイコン並び） */
+.wire-tools {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.wt-div {
+  width: 1px;
+  height: 20px;
+  background: var(--line);
+  margin: 0 4px;
+}
+.tool.wt {
+  width: 36px;
+  height: 36px;
+}
+
+/* 色ピッカー（トリガー＋ドロワー） */
+.color-picker {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.color-trigger {
+  width: 40px;
+  height: 40px;
+}
+.color-dot {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid rgba(15, 23, 42, 0.18);
+  /* 塗りつぶしのカラーホイール（中心まで色を残す） */
+  background: conic-gradient(#ff4d4d, #ffd24d, #b6ff4d, #4dff88, #4dd2ff, #4d6bff, #b64dff, #ff4db6, #ff4d4d);
+}
+.color-drawer {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: repeat(8, 26px);
+  gap: 6px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  z-index: 60;
+}
+.color-drawer[hidden] {
+  display: none;
+}
+
+/* 色スウォッチ */
+.swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid rgba(15, 23, 42, 0.12);
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.swatch:hover {
+  transform: scale(1.12);
+}
+.swatch.is-active {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--ink);
+}
+
+/* ---------- ステージ / キャンバス ---------- */
+.stage {
+  position: relative;
+  height: calc(100vh - 260px);
+  min-height: 460px;
+  margin: 0;
+  border-bottom: 1px solid var(--line);
+}
+.canvas {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background-color: var(--canvas-bg);
+  background-image: radial-gradient(circle, var(--grid-dot) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+  background-position: 0 0;
+  cursor: grab;
+  touch-action: none;
+}
+.canvas.is-panning {
+  cursor: grabbing;
+}
+.canvas.tool-sticky,
+.canvas.tool-rect,
+.canvas.tool-ellipse,
+.canvas.tool-diamond,
+.canvas.tool-folder,
+.canvas.tool-file {
+  cursor: crosshair;
+}
+.canvas.tool-connector {
+  cursor: cell;
+}
+.world {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+}
+
+/* コネクタ用SVG（world内・overflow可視で世界座標に直接描画） */
+.wires {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  overflow: visible;
+  pointer-events: none;
+}
+.wires line,
+.wires path.wire {
+  stroke: #64748b;
+  stroke-width: 2;
+  fill: none;
+}
+.wires .wire-hit {
+  stroke: transparent;
+  stroke-width: 14;
+  fill: none; /* 直角パスは暗黙クローズで塗り面ができるため必須 */
+  pointer-events: stroke;
+  cursor: pointer;
+}
+.wires marker path {
+  fill: #64748b;
+  stroke: none;
+}
+.wires .wire.is-selected {
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+.wire-preview {
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-dasharray: 6 5;
+  fill: none;
+}
+
+/* ---------- アイテム（付箋・図形） ---------- */
+.item {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 12px;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #1f2937;
+  cursor: grab;
+  user-select: none;
+  overflow: hidden;
+}
+.item.is-dragging {
+  cursor: grabbing;
+}
+.item .txt {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  outline: none;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.item.editing {
+  cursor: text;
+}
+.item.editing .txt {
+  cursor: text;
+  user-select: text;
+}
+
+/* 付箋 */
+.item.sticky {
+  border-radius: 4px;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.14);
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.item.sticky .txt {
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+/* 図形共通 */
+.item.shape {
+  background: #ffffff;
+  border: 2px solid #334155;
+}
+.item.rect {
+  border-radius: 8px;
+}
+.item.ellipse {
+  border-radius: 50%;
+}
+.item.diamond {
+  background: transparent;
+  border: none;
+  overflow: visible; /* 回転した内側四角の角がクリップされないように */
+}
+.item.diamond .shape-bg {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  border: 2px solid #334155;
+  /* 正方形を45度回転＋0.707倍で、四隅がボックスの上下左右辺の中点に接するひし形になる */
+  transform: rotate(45deg) scale(0.707);
+  border-radius: 6px;
+  z-index: 0;
+}
+.item.diamond .txt {
+  position: relative;
+  z-index: 1;
+}
+
+/* ディレクトリマップ用ノード（フォルダ・ファイル） */
+.item.node {
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+}
+.item.node .node-ico {
+  flex: 0 0 auto;
+  font-size: 20px;
+  line-height: 1;
+  user-select: none;
+}
+.item.node .txt {
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  font-weight: 500;
+}
+.item.folder {
+  border: 2px solid #93b4e6;
+}
+.item.file {
+  border: 1px solid #cbd5e1;
+  font-weight: 400;
+}
+
+/* 選択状態 */
+.item.is-selected {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.item.is-connect-target {
+  outline: 2px dashed var(--accent);
+  outline-offset: 2px;
+}
+
+/* リサイズハンドル */
+.rz {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--accent);
+  cursor: nwse-resize;
+  z-index: 3;
+}
+
+/* 空状態ヒント */
+.empty-hint {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 1rem;
+  pointer-events: none;
+}
+.empty-hint.is-hidden {
+  display: none;
+}
+
+/* ---------- ガイドリンク ---------- */
+.guide-link {
+  text-align: center;
+  padding: 16px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+}
+.guide-link a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ---------- 広告（右下フローティング・薄型透明枠 320×100） ---------- */
+.footer-ad {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 0;
+  width: 320px;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.footer-ad.is-closed {
+  display: none;
+}
+.ad-widget__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+.ad-widget__label {
+  color: #64748b;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.ad-widget__close {
+  appearance: none;
+  border: none;
+  background: #f1f5f9;
+  color: #64748b;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.ad-widget__close:hover {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+.footer-ad ins.adsbygoogle {
+  display: block;
+  width: 320px;
+  height: 100px;
+}
+
+/* ---------- フッター ---------- */
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 40px;
+  color: #64748b;
+  font-size: 1rem;
+  border-top: 1px solid #e2e8f0;
+  background: #fff;
+}
+footer a {
+  color: #1e293b;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+footer a:hover {
+  color: #3b82f6;
+}
+.footer-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  border: 1px solid #e2e8f0;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+.footer-links a:hover {
+  border-color: #3b82f6;
+  color: #3b82f6;
+}
+
+/* ---------- トースト ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%) translateY(20px);
+  background: #1e293b;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 100;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ---------- レスポンシブ ---------- */
+@media (max-width: 768px) {
+  .app-head h1 {
+    font-size: 1.4rem;
+  }
+  .toolbar {
+    gap: 4px;
+    padding: 8px 10px;
+  }
+  .tool {
+    width: 38px;
+    height: 38px;
+  }
+  .stage {
+    height: calc(100vh - 300px);
+    min-height: 380px;
+  }
+
+  /* 広告：SPはfooter付近にインライン化 */
+  .footer-ad {
+    position: static;
+    align-self: center;
+    margin: 24px auto 0;
+    gap: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+    z-index: auto;
+  }
+  .footer-ad.is-closed {
+    display: flex;
+  }
+  .ad-widget__head {
+    display: none;
+  }
+  .footer-ad ins.adsbygoogle {
+    width: 320px;
+    height: 100px;
+  }
+
+  footer {
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px 16px;
+    text-align: center;
+  }
+  .footer-links {
+    justify-content: center;
+  }
+}

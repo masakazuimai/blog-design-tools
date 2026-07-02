@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ディレクトリマップ作成｜サイト構成図・フォルダ構成をFigJam風に作れる無料ツール</title>
+    <meta name="description" content="フォルダ・ファイルのノードを矢印でつないでディレクトリマップ／サイト構成図を作れる無料ツール。付箋や図形も置け、無限キャンバスをパン・ズーム。テンプレから即スタート、自動保存・登録不要。" />
+    <link rel="canonical" href="https://codequest.work/generator/directory-map-generator/" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codequest.work/generator/directory-map-generator/" />
+    <meta property="og:title" content="ディレクトリマップ作成｜サイト構成図をFigJam風に作れる無料ツール" />
+    <meta property="og:description" content="フォルダ・ファイルのノードを矢印でつないでディレクトリマップ／サイト構成図を作れる無料ツール。無限キャンバス・自動保存・登録不要。" />
+    <meta property="og:image" content="https://codequest.work/generator/directory-map-generator/assets/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="ディレクトリマップ作成ツール" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ディレクトリマップ作成｜サイト構成図をFigJam風に作れる無料ツール" />
+    <meta name="twitter:description" content="フォルダ・ファイルのノードを矢印でつないでディレクトリマップ／サイト構成図を作れる無料ツール。無限キャンバス・自動保存・登録不要。" />
+    <meta name="twitter:image" content="https://codequest.work/generator/directory-map-generator/assets/og.png" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と js の両方で日付を上げる -->
+    <link rel="stylesheet" href="css/style.css?v=20260702j" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "ディレクトリマップ作成ツール",
+        "url": "https://codequest.work/generator/directory-map-generator/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web browser",
+        "inLanguage": "ja",
+        "description": "フォルダ・ファイルのノードを矢印コネクタでつないでディレクトリマップやサイト構成図を作れる無料ツール。付箋や図形も置け、無限キャンバスをパン・ズームでき、内容はブラウザに自動保存されます。",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": ["フォルダ・ファイルのノード", "ノードをつなぐ矢印コネクタ", "ディレクトリツリーのテンプレート", "付箋の配置・色分け・ドラッグ", "四角・円・ひし形の図形", "無限キャンバスのパン・ズーム", "内容の自動保存（localStorage）", "PNG画像の書き出し", "JSONでの保存・読み込み"],
+        "publisher": {
+          "@type": "Organization",
+          "name": "CodeQuest.work",
+          "url": "https://codequest.work/"
+        }
+      }
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <header class="app-head">
+      <div class="brandmark">DIRECTORY MAP</div>
+      <h1><span class="accent">ディレクトリマップ</span>作成ツール</h1>
+      <p class="lede"><strong>フォルダ・ファイルのノード</strong>を矢印でつないで、ディレクトリマップ／サイト構成図をFigJam風に作成。付箋・図形も置けて、無限キャンバス・自動保存・登録不要。</p>
+    </header>
+
+    <!-- ツールバー -->
+    <div class="toolbar" id="toolbar">
+      <div class="tool-group" role="toolbar" aria-label="ツール">
+        <button class="tool" data-tool="select" title="選択・移動 (V)" aria-label="選択">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3l7 17 2.5-6.5L20 11z" /></svg>
+        </button>
+        <button class="tool" data-tool="folder" title="フォルダ (F)" aria-label="フォルダ">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h6l2 2h10v10a2 2 0 0 1-2 2H3z" /></svg>
+        </button>
+        <button class="tool" data-tool="file" title="ファイル (G)" aria-label="ファイル">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 3h8l4 4v14H6z" />
+            <path d="M14 3v4h4" />
+          </svg>
+        </button>
+        <button class="tool" data-tool="connector" title="コネクタ・矢印 (C)" aria-label="コネクタ">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 12h13" />
+            <path d="M13 7l5 5-5 5" />
+          </svg>
+        </button>
+        <button class="tool" data-tool="sticky" title="付箋 (S)" aria-label="付箋">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 4h14v10l-5 5H5z" />
+            <path d="M19 14h-5v5" />
+          </svg>
+        </button>
+        <button class="tool" data-tool="rect" title="四角 (R)" aria-label="四角">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="12" rx="2" /></svg>
+        </button>
+        <button class="tool" data-tool="ellipse" title="円 (O)" aria-label="円">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="8" ry="7" /></svg>
+        </button>
+        <button class="tool" data-tool="diamond" title="ひし形 (D)" aria-label="ひし形">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 9-9 9-9-9z" /></svg>
+        </button>
+      </div>
+
+      <div class="tool-sep" aria-hidden="true"></div>
+
+      <div class="wire-tools" role="group" aria-label="矢印の設定">
+        <button class="tool wt" id="wt-straight" title="直線" aria-label="直線でつなぐ">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20L20 4" /></svg>
+        </button>
+        <button class="tool wt" id="wt-elbow" title="直角・枝分かれ" aria-label="直角でつなぐ">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v9a3 3 0 0 0 3 3h11" /></svg>
+        </button>
+        <span class="wt-div" aria-hidden="true"></span>
+        <button class="tool wt" id="wt-end" title="片方向の矢印 →" aria-label="片方向の矢印">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h13" /><path d="M13 7l5 5-5 5" /></svg>
+        </button>
+        <button class="tool wt" id="wt-both" title="双方向の矢印 ↔" aria-label="双方向の矢印">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 12h10" /><path d="M10 7l-5 5 5 5" /><path d="M14 7l5 5-5 5" /></svg>
+        </button>
+        <button class="tool wt" id="wt-none" title="矢印なし（線のみ）" aria-label="矢印なしの線">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16" /></svg>
+        </button>
+      </div>
+
+      <div class="tool-sep" aria-hidden="true"></div>
+
+      <div class="color-picker" id="color-picker">
+        <button class="tool color-trigger" id="color-trigger" title="色を選ぶ" aria-label="色を選ぶ" aria-haspopup="true" aria-expanded="false">
+          <span class="color-dot" id="color-dot"></span>
+        </button>
+        <div class="color-drawer" id="color-drawer" role="group" aria-label="色を選ぶ" hidden></div>
+      </div>
+
+      <div class="tool-sep" aria-hidden="true"></div>
+
+      <div class="tool-group">
+        <button class="tool" id="zoom-out" title="縮小" aria-label="縮小">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12" /></svg>
+        </button>
+        <button class="tool zoom-label" id="zoom-reset" title="ズームを100%に戻す" aria-label="ズームリセット"><span id="zoom-val">100%</span></button>
+        <button class="tool" id="zoom-in" title="拡大" aria-label="拡大">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 6v12" />
+            <path d="M6 12h12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="tool-sep" aria-hidden="true"></div>
+
+      <div class="tool-group actions">
+        <button class="tool" id="btn-delete" title="選択を削除 (Delete)" aria-label="削除">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 7h14" />
+            <path d="M9 7V5h6v2" />
+            <path d="M7 7l1 12h8l1-12" />
+          </svg>
+        </button>
+        <button class="tool" id="btn-png" title="PNGで書き出し" aria-label="PNG書き出し">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <path d="M7 10l5 5 5-5" />
+            <path d="M12 15V3" />
+          </svg>
+        </button>
+        <button class="tool" id="btn-save" title="JSONで保存" aria-label="JSON保存">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 3h11l3 3v15H5z" />
+            <path d="M8 3v6h8" />
+          </svg>
+        </button>
+        <button class="tool" id="btn-load" title="JSONを読み込み" aria-label="JSON読み込み">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" />
+            <path d="M7 10l5-5 5 5" />
+            <path d="M12 5v12" />
+          </svg>
+        </button>
+        <input type="file" id="file-input" accept="application/json,.json" hidden />
+        <button class="tool danger" id="btn-clear" title="すべて消去" aria-label="すべて消去">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 6h18" />
+            <path d="M8 6V4h8v2" />
+            <path d="M6 6l1 14h10l1-14" />
+            <path d="M10 11v6M14 11v6" />
+          </svg>
+        </button>
+      </div>
+
+      <button class="tool tpl-btn" id="btn-template" title="ディレクトリマップの例を読み込む（現在の内容は置き換わります）" aria-label="ディレクトリマップの例を読み込む">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 6h6l2 2h10v10a2 2 0 0 1-2 2H3z" />
+          <path d="M8 13h8M8 16h5" />
+        </svg>
+        <span>クリア</span>
+      </button>
+    </div>
+
+    <!-- キャンバス -->
+    <div class="stage" id="stage">
+      <div class="canvas" id="canvas">
+        <div class="world" id="world">
+          <svg class="wires" id="wires" aria-hidden="true">
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0L10 5L0 10z" />
+              </marker>
+            </defs>
+          </svg>
+          <!-- 付箋・図形はここに動的追加 -->
+        </div>
+      </div>
+      <p class="empty-hint" id="empty-hint">右上の<strong>「クリア」</strong>で例を読み込むか、<strong>フォルダ</strong>／<strong>ファイル</strong>を選んでキャンバスをクリックして配置。<br />コネクタでノードをつなぎ、ドラッグで移動・ホイールでスクロール・⌘＋ホイールでズーム。</p>
+    </div>
+
+    <p class="guide-link">使い方・ショートカット・FAQは<a href="howto.html">ディレクトリマップの作り方</a>をご覧ください。</p>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">広告</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <!-- TODO: data-ad-slot は本ツール用のAdSenseユニット発行値に差し替える（未発行のためプレースホルダ） -->
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="0000000000"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () {
+          w.classList.add("is-closed");
+        });
+      })();
+    </script>
+
+    <footer>
+      <span>&copy; 2026 ディレクトリマップ作成ツール | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="howto.html">📖 使い方・FAQ</a>
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">CodeQuest.work SEO &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="js/main.js?v=20260702k"></script>
+  </body>
+</html>
