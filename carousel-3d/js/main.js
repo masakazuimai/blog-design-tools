@@ -3,12 +3,12 @@
  * テンプレート1=メリーゴーランド / 2=縦回転 / 3=カードスタック / 4=フラワー / 5=キューブ / 6=観覧車。各タイプが自分の
  * プレビュー・設定項目・生成コードを内包し、main.js は切替と配線だけを担う。
  */
-import { merryType } from "./types/merry.js?v=20260627j";
-import { cardStackType } from "./types/cardstack.js?v=20260627j";
-import { vRingType } from "./types/vring.js?v=20260627j";
-import { flowerType } from "./types/flower.js?v=20260627j";
-import { cubeType } from "./types/cube.js?v=20260627j";
-import { orbitType } from "./types/orbit.js?v=20260627j";
+import { merryType } from "./types/merry.js?v=20260710a";
+import { cardStackType } from "./types/cardstack.js?v=20260710a";
+import { vRingType } from "./types/vring.js?v=20260710a";
+import { flowerType } from "./types/flower.js?v=20260710a";
+import { cubeType } from "./types/cube.js?v=20260710a";
+import { orbitType } from "./types/orbit.js?v=20260710a";
 
 const TYPES = [merryType, vRingType, cardStackType, flowerType, cubeType, orbitType];
 const IS_EN = document.documentElement.lang === "en";

@@ -57,7 +57,7 @@ function mount(host, state, autoOn) {
 
   function tick(time, deltaTime) {
     if (s.auto && !s.active && s.speed > 0) {
-      s.rotation += (deltaTime / 1000) * (360 / s.speed);
+      s.rotation -= (deltaTime / 1000) * (360 / s.speed);
     }
     stage.style.transform = `rotateZ(${s.rotation}deg)`;
     const step = 360 / s.count;
@@ -74,7 +74,7 @@ function mount(host, state, autoOn) {
     if (typeof Draggable === "undefined") return;
     if (typeof InertiaPlugin !== "undefined") gsap.registerPlugin(InertiaPlugin);
     const proxy = document.createElement("div");
-    const apply = (self) => (s.rotation += self.deltaX * SENS);
+    const apply = (self) => (s.rotation -= self.deltaX * SENS);
     drag = Draggable.create(proxy, {
       trigger: scene,
       type: "x",
@@ -159,7 +159,7 @@ function scriptBody(p, speed) {
     card.style.transform = "rotateZ(" + i * step + "deg) translateY(" + -S.radius + "px)";
   });
   gsap.ticker.add(function (time, dt) {
-    if (!active && S.speed > 0) rotation += (dt / 1000) * (360 / S.speed);
+    if (!active && S.speed > 0) rotation -= (dt / 1000) * (360 / S.speed);
     stage.style.transform = "rotateZ(" + rotation + "deg)";
     for (var i = 0; i < cards.length; i++) {
       var f = Math.cos((rotation + i * step - 90) * Math.PI / 180);
@@ -170,8 +170,8 @@ function scriptBody(p, speed) {
   Draggable.create(proxy, {
     trigger: scene, type: "x", inertia: true,
     onPressInit: function () { active = true; },
-    onDrag: function () { rotation += this.deltaX * SENS; },
-    onThrowUpdate: function () { rotation += this.deltaX * SENS; },
+    onDrag: function () { rotation -= this.deltaX * SENS; },
+    onThrowUpdate: function () { rotation -= this.deltaX * SENS; },
     onThrowComplete: function () { active = false; }
   });
   scene.style.cursor = "grab";`;
