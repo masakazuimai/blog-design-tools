@@ -1,0 +1,87 @@
+name: Deploy to ConoHa (FTPS fallback)
+
+# SSH停止中の代替デプロイ。既定は手動実行のみ（SSH版との二重発火を防ぐ）。
+# SSH停止が長引くなら push トリガーのコメントを外して常用に切り替える。
+on:
+  workflow_dispatch: {}
+  # push:
+  #   branches: [main]
+  #   paths-ignore:
+  #     - '*.md'
+
+jobs:
+  deploy-ftps:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # git diff で変更ディレクトリを判定するため履歴を取得
+
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Determine target directories
+        id: targets
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.sha }}
+        run: |
+          set -uo pipefail
+          ZERO="0000000000000000000000000000000000000000"
+
+          # index.html を持つトップレベルディレクトリ＝デプロイ対象ツール
+          all_dirs() {
+            for d in */; do
+              [ -f "${d}index.html" ] && echo "${d%/}"
+            done
+          }
+
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            echo "判定: 手動実行 → 全ツールデプロイ"
+            TARGETS=$(all_dirs)
+          elif [ -z "${BEFORE_SHA:-}" ] || [ "$BEFORE_SHA" = "$ZERO" ]; then
+            echo "判定: 初回push（比較元なし） → 全ツールデプロイ"
+            TARGETS=$(all_dirs)
+          else
+            CHANGED=$(git diff --name-only "$BEFORE_SHA" "$AFTER_SHA")
+            if echo "$CHANGED" | grep -qE '^\.github/workflows/deploy.*\.yml$'; then
+              echo "判定: ワークフロー（共通設定）変更 → 全ツールデプロイ"
+              TARGETS=$(all_dirs)
+            else
+              # 変更ファイルのトップレベルディレクトリのうち index.html を持つものだけ
+              TARGETS=$(echo "$CHANGED" | grep '/' | cut -d/ -f1 | sort -u \
+                | while read -r d; do [ -f "${d}/index.html" ] && echo "$d"; done)
+            fi
+          fi
+
+          TARGETS=$(echo "$TARGETS" | tr '\n' ' ' | xargs)
+          echo "対象: ${TARGETS:-（なし）}"
+          echo "targets=$TARGETS" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy tool directories (FTPS)
+        if: steps.targets.outputs.targets != ''
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_DEPLOY_PATH: ${{ secrets.FTP_DEPLOY_PATH }}
+          TARGETS: ${{ steps.targets.outputs.targets }}
+        run: |
+          DEST=$(echo "${FTP_DEPLOY_PATH}" | tr -d '[:space:]')
+          for name in $TARGETS; do
+            echo "Deploying (FTPS): ${name}"
+            # ConoHa WING は明示的FTPS（ポート21・AUTH TLS）。ftp:// スキーム＋ssl-force で強制。
+            # mirror -R = ローカル→リモート。--delete は付けず現行rsync（-az）と同じ「消さない」挙動に揃える。
+            lftp -u "${FTP_USER},${FTP_PASSWORD}" "${FTP_HOST}" -e "
+              set ftp:ssl-force true;
+              set ftp:ssl-protect-data true;
+              set ssl:verify-certificate no;
+              mirror -R --verbose '${name}/' '${DEST}/${name}/';
+              bye
+            "
+          done
+
+      - name: Nothing to deploy
+        if: steps.targets.outputs.targets == ''
+        run: echo "変更されたツールディレクトリはありません。デプロイをスキップします。"
