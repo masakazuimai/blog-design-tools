@@ -1252,7 +1252,8 @@
       }
       .ad-widget__close:hover { background: #e2e8f0; color: #1e293b; }
       .footer-ad ins.adsbygoogle { display: block; width: 320px; height: 100px; }
-      @media screen and (max-width: 768px) {
+      /* SP切替BPはfooter縦積み（900px）と揃える＝769〜900pxの被り窓を解消 */
+      @media screen and (max-width: 900px) {
         .footer-ad {
           position: static;
           align-self: center;
