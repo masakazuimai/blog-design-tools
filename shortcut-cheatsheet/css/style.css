@@ -452,7 +452,9 @@ body {
   border-top: 1px solid var(--line);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start; /* 右下広告との被り回避で左寄せ */
+  flex-wrap: wrap;
+  gap: 12px 24px;
   gap: 12px;
   flex-wrap: wrap;
   color: var(--muted);

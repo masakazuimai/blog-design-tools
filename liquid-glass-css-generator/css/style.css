@@ -184,7 +184,7 @@ textarea.code { width: 100%; min-height: 200px; background: #0d1226; color: #cfe
 .related a:hover { border-color: var(--accent); color: var(--accent); }
 
 /* ===== フッター ===== */
-footer { display: flex; justify-content: space-between; align-items: center; padding: 24px 40px; color: var(--muted); font-size: 1rem; border-top: 1px solid var(--line); margin-top: 40px; }
+footer { display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 12px 24px; /* 右下広告との被り回避で左寄せ */ align-items: center; padding: 24px 40px; color: var(--muted); font-size: 1rem; border-top: 1px solid var(--line); margin-top: 40px; }
 footer a { color: var(--text); text-decoration: none; transition: color 0.2s; }
 footer a:hover { color: var(--accent); }
 .footer-links { display: flex; gap: 16px; }

@@ -430,7 +430,9 @@
 
       footer {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start; /* 右下広告との被り回避で左寄せ */
+        flex-wrap: wrap;
+        gap: 12px 24px;
         align-items: center;
         padding: 24px 40px;
         color: #64748b;
