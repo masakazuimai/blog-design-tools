@@ -1,7 +1,7 @@
 "use strict";
 
 // ?v= はキャッシュバスティング用。js更新時は index.html・en/index.html の参照とここを揃えて上げる
-import { t, lang } from "./i18n.js?v=20260724a";
+import { t, lang, CSS_COMMENT_EN } from "./i18n.js?v=20260724b";
 import { EFFECTS, CATEGORIES } from "./effects/index.js?v=20260724a";
 
 // デフォルトのアクセント色（エフェクト定義内のリテラルと一致させる）
@@ -100,8 +100,17 @@ function injectStyles() {
 }
 
 // ---- コード生成・コピー ----
+// enページではCSSコメントを英語へ差し替える（定義はja/en共有のため）
+function localizeComments(cssText) {
+  if (lang !== "en") return cssText;
+  for (const [ja, en] of Object.entries(CSS_COMMENT_EN)) {
+    cssText = cssText.replaceAll(ja, en);
+  }
+  return cssText;
+}
+
 function buildCode(effect) {
-  return "<style>\n" + applyColors(effect.css.join("\n")) + "\n</style>\n\n" + effect.html;
+  return "<style>\n" + localizeComments(applyColors(effect.css.join("\n"))) + "\n</style>\n\n" + effect.html;
 }
 
 let toastTimer = null;
