@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使い方・FAQ｜CSSホバーエフェクト ギャラリー</title>
+    <meta name="description" content="CSSホバーエフェクト ギャラリーの使い方とよくある質問。カテゴリの絞り込み・アクセント色の変更・HTML+CSSのコピー方法・ナビメニューへの適用手順を解説します。" />
+    <link rel="canonical" href="https://codequest.work/generator/hover-effects-gallery/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/hover-effects-gallery/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/hover-effects-gallery/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/hover-effects-gallery/howto.html" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- 構造化データ（FAQ） -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "コピーしたコードはどう使えばいいですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "コピーされるのは <style> タグ入りのCSSとHTMLのセットです。まず貼り付けて動きを確認し、その後 <style> の中身をご自身のCSSファイルへ移し、HTML側は既存のナビやリンクに class を付け替えるのがおすすめです。" }
+          },
+          {
+            "@type": "Question",
+            "name": "JavaScriptは必要ですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "不要です。100種類すべて :hover と transition / animation だけのCSSで動きます。外部ライブラリの読み込みもありません。" }
+          },
+          {
+            "@type": "Question",
+            "name": "色を自分のサイトに合わせられますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "サイドバーの「色の設定」でアクセント色とサブ色を変更すると、プレビューとコピーされるコードの両方に反映されます。文字色などその他の色はコピー後にCSSを直接編集してください。" }
+          },
+          {
+            "@type": "Question",
+            "name": "スマホ（タッチ端末）でも動きますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": ":hover はタッチ端末ではタップ時に発火するなど挙動が異なります。タッチ端末では装飾なし（通常表示）でも成立するデザインにしておくのが安全です。" }
+          },
+          {
+            "@type": "Question",
+            "name": "商用サイトで使えますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "はい。コピーしたコードは個人・商用を問わず自由に利用できます。クレジット表記も不要です。" }
+          },
+          {
+            "@type": "Question",
+            "name": "一部のエフェクトが動かないブラウザがあります",
+            "acceptedAnswer": { "@type": "Answer", "text": "「グラデ枠が回る」「ブラインドが閉じる」は CSS @property を使うため、最新のChrome / Edge / Safari / Firefoxが必要です。「太さが変わる」は可変フォント（variable font）の読み込みが前提です。その他のエフェクトは主要ブラウザで広く動作します。" }
+          }
+        ]
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300..900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css?v=20260724a" />
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="header">
+      <a class="lang-switch" href="en/howto.html" hreflang="en">English</a>
+      <h1>使い方・FAQ</h1>
+      <p>CSSホバーエフェクト ギャラリーの使い方とよくある質問</p>
+    </div>
+
+    <div class="howto-body">
+      <h2>🖱️ 基本の使い方</h2>
+      <ol>
+        <li>カードに<strong>マウスを乗せる</strong>と、その場でホバーエフェクトが動きます</li>
+        <li>上部の<strong>カテゴリチップ</strong>（下線・ボーダー・背景・テキスト・3D・ナビ装飾・発光・影・変形・エフェクト）で絞り込めます</li>
+        <li>気に入ったら <strong>HTML+CSS ボタン</strong>でコードをコピー。カードをクリックするとサイドバーでコード全文を確認できます</li>
+        <li>サイドバーの<strong>色の設定</strong>でアクセント色・サブ色を変更すると、プレビューとコピーコードの両方に反映されます（色は自動保存されます）</li>
+      </ol>
+
+      <h2>🧩 ナビメニューへの適用例</h2>
+      <p>コピーしたコードの class を、既存のナビのリンクに付け替えるだけで適用できます。</p>
+      <ol>
+        <li>コピーした <code>&lt;style&gt;</code> の中身をCSSファイルへ移す</li>
+        <li>ナビの <code>&lt;a&gt;</code> にコピーコードと同じ class（例: <code>he-ul-left</code>）を付ける</li>
+        <li>フォントサイズや色は既存デザインに合わせて調整する</li>
+      </ol>
+
+      <h2>❓ よくある質問</h2>
+      <dl class="faq">
+        <dt>Q. コピーしたコードはどう使えばいいですか？</dt>
+        <dd>A. コピーされるのは <code>&lt;style&gt;</code> タグ入りのCSSとHTMLのセットです。まず貼り付けて動きを確認し、その後 <code>&lt;style&gt;</code> の中身をご自身のCSSファイルへ移し、HTML側は既存のナビやリンクに class を付け替えるのがおすすめです。</dd>
+        <dt>Q. JavaScriptは必要ですか？</dt>
+        <dd>A. 不要です。100種類すべて <code>:hover</code> と <code>transition</code> / <code>animation</code> だけのCSSで動きます。外部ライブラリの読み込みもありません。</dd>
+        <dt>Q. 色を自分のサイトに合わせられますか？</dt>
+        <dd>A. サイドバーの「色の設定」でアクセント色とサブ色を変更すると、プレビューとコピーされるコードの両方に反映されます。文字色などその他の色はコピー後にCSSを直接編集してください。</dd>
+        <dt>Q. スマホ（タッチ端末）でも動きますか？</dt>
+        <dd>A. <code>:hover</code> はタッチ端末ではタップ時に発火するなど挙動が異なります。タッチ端末では装飾なし（通常表示）でも成立するデザインにしておくのが安全です。</dd>
+        <dt>Q. 商用サイトで使えますか？</dt>
+        <dd>A. はい。コピーしたコードは個人・商用を問わず自由に利用できます。クレジット表記も不要です。</dd>
+        <dt>Q. 一部のエフェクトが動かないブラウザがあります</dt>
+        <dd>A. 「グラデ枠が回る」「ブラインドが閉じる」は CSS <code>@property</code> を使うため、最新のChrome / Edge / Safari / Firefoxが必要です。「太さが変わる」は可変フォント（variable font）の読み込みが前提です。その他のエフェクトは主要ブラウザで広く動作します。</dd>
+      </dl>
+
+      <h2>🔗 関連ツール</h2>
+      <ul>
+        <li><a href="../animation-gallery/">CSSアニメーション ギャラリー</a> — キーフレーム型のアニメーション100種類以上（フェード・バウンド・3Dなど）</li>
+        <li><a href="../neon-button-generator/">ネオンボタン ジェネレーター</a> — 発光するネオンボタンを細かく調整して生成</li>
+        <li><a href="../liquid-metal-button/">リキッドメタルボタン ジェネレーター</a> — 液体金属風のボタンを生成</li>
+        <li><a href="../carousel-3d/">3Dカルーセル ジェネレーター</a> — GSAPで動く3Dカルーセルを生成</li>
+      </ul>
+
+      <a class="back-link" href="./">&larr; ギャラリーに戻る</a>
+    </div>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">広告</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="9647341564"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
+
+    <footer>
+      <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> CSSホバーエフェクト ギャラリー | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="./">&#127912; ギャラリーへ</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>
