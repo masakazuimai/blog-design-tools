@@ -2,7 +2,7 @@
 // 画面の端からメニューが滑り込むタイプ。ボタンは position: fixed で右上に固定する
 // アクセント色 #6366f1 / サブ色 #ec4899（rgbは 99,102,241 / 236,72,153）は main.js が置換する
 
-import { panelHtml, btnCss, linkCss, A11Y_HIDE_NOTE } from "./shared.js?v=20260725a";
+import { panelHtml, btnCss, linkCss, A11Y_HIDE_NOTE } from "./shared.js?v=20260725b";
 
 export const DRAWER_PANELS = [
   {

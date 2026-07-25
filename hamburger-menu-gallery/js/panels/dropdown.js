@@ -2,7 +2,7 @@
 // ヘッダー直下に小さめのメニューを出すタイプ。全画面を覆わないので情報量の少ないサイト向き
 // アクセント色 #6366f1 / サブ色 #ec4899（rgbは 99,102,241 / 236,72,153）は main.js が置換する
 
-import { panelHtml, btnCss } from "./shared.js?v=20260725a";
+import { panelHtml, btnCss } from "./shared.js?v=20260725b";
 
 // 白いカード状のドロップダウン（位置・見た目の共通部分）
 function cardCss(ns) {

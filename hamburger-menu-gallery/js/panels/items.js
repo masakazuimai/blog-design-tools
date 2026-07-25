@@ -2,7 +2,7 @@
 // パネル自体はフルスクリーンのフェードで共通化し、中のリンクの出方だけを変えている
 // アクセント色 #6366f1 / サブ色 #ec4899（rgbは 99,102,241 / 236,72,153）は main.js が置換する
 
-import { panelHtml, btnCss, linkCss } from "./shared.js?v=20260725a";
+import { panelHtml, btnCss, linkCss } from "./shared.js?v=20260725b";
 
 // リンクを時間差で動かす土台（パネルは共通のフェード）
 function itemsBase(ns) {

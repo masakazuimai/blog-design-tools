@@ -1,7 +1,7 @@
-// 変わり種の開閉パターン（4種）
+// 応用の開閉パターン（4種）＝ドロワー/フルスクリーンに当てはまらない出し方
 // アクセント色 #6366f1 / サブ色 #ec4899（rgbは 99,102,241 / 236,72,153）は main.js が置換する
 
-import { panelHtml, btnCss, A11Y_HIDE_NOTE } from "./shared.js?v=20260725a";
+import { panelHtml, btnCss, A11Y_HIDE_NOTE } from "./shared.js?v=20260725b";
 
 export const SPECIAL_PANELS = [
   {

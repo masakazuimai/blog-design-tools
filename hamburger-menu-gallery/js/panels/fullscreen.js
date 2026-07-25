@@ -2,7 +2,7 @@
 // 画面全体をメニューで覆うタイプ。閉じている間は visibility: hidden にしてフォーカスも当たらないようにする
 // アクセント色 #6366f1 / サブ色 #ec4899（rgbは 99,102,241 / 236,72,153）は main.js が置換する
 
-import { panelHtml, btnCss, linkCss, NAV_LINKS } from "./shared.js?v=20260725a";
+import { panelHtml, btnCss, linkCss, NAV_LINKS } from "./shared.js?v=20260725b";
 
 // フルスクリーンnavの土台（中央寄せ・閉じている間は非表示）
 function fullBase(ns) {
