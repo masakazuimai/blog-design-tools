@@ -1,8 +1,8 @@
 "use strict";
 
 // ?v= はキャッシュバスティング用。js更新時は index.html・en/index.html の参照とここを揃えて上げる
-import { t, lang, TEXT_EN } from "./i18n.js?v=20260725a";
-import { EFFECTS, CATEGORIES } from "./effects/index.js?v=20260725a";
+import { t, lang, TEXT_EN } from "./i18n.js?v=20260725b";
+import { EFFECTS, CATEGORIES } from "./effects/index.js?v=20260725b";
 
 // デフォルトのアクセント色（エフェクト定義内のリテラルと一致させる）
 const DEFAULT_ACCENT = "#6366f1";

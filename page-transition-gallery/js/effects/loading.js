@@ -197,9 +197,10 @@ export const LOADING_EFFECTS = [
     html: '<div class="ld-wave" role="status" aria-label="読み込み中"><i></i><i></i><i></i><i></i><i></i></div>',
     css: [
       ...shell("ld-wave", { base: "opacity 0.45s ease", done: "opacity: 0;", delay: "0.45s" }),
-      ".ld-wave { flex-direction: row; align-items: flex-end; gap: 6px; }",
+      ".ld-wave { flex-direction: row; align-items: center; gap: 6px; }",
       ".ld-wave i {",
       "  width: 8px; height: 34px; border-radius: 99px; background: #fff;",
+      "  transform-origin: bottom;",
       "  animation: ld-wave-move 1s ease-in-out infinite;",
       "}",
       ".ld-wave i:nth-child(2) { animation-delay: 0.1s; }",
