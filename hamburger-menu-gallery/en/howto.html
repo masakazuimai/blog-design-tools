@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to Use &amp; FAQ | Hamburger Menu CSS Gallery</title>
+    <meta name="description" content="How to use the Hamburger Menu CSS Gallery, plus answers to common questions: switching between icon morphs and open patterns, changing colors, and dropping the copied HTML, CSS and JS into an existing site." />
+    <link rel="canonical" href="https://codequest.work/generator/hamburger-menu-gallery/en/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/hamburger-menu-gallery/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/hamburger-menu-gallery/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/hamburger-menu-gallery/howto.html" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Structured data (FAQ) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I use the copied code?",
+            "acceptedAnswer": { "@type": "Answer", "text": "You get a set of three things: CSS wrapped in a <style> tag, the HTML, and three lines of JavaScript that handle the toggle. Paste it as-is first to confirm the animation, then move the <style> contents into your CSS file and the <script> contents into your JS file. On the HTML side, apply the same class names to the button and nav already in your header." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is JavaScript required?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Only three lines that flip aria-expanded between true and false. Every visual movement is pure CSS and no external library is loaded. A checkbox hack would remove the JavaScript entirely, but screen readers would no longer announce it as a button, so every effect here uses a real button element instead." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why use aria-expanded instead of toggling a class?",
+            "acceptedAnswer": { "@type": "Answer", "text": "aria-expanded is the attribute that tells screen readers whether the menu is open. Using it as the CSS selector too means the state lives in exactly one place, so what assistive technology announces can never drift from what is on screen. There is no need for a separate is-open class." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I match the colors to my own site?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Use the color settings in the sidebar to change the accent and secondary colors — both the preview and the copied code update. Your choice is saved in the browser for next time. Other values such as bar thickness and text color can be edited in the CSS after copying." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use the open/close patterns with position: fixed as they are?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. In the gallery each demo appears to stay inside its card, but that is only because the demo frame has a transform, which makes it the reference for fixed positioning. The copied code keeps the real position: fixed for your site. Note that the same rule applies in reverse: if you place the menu inside a parent that has transform or filter, it will not cover the whole screen, so keep it high in the document, right under your header." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use these on commercial sites?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. The copied code is free to use in personal and commercial projects, and no attribution is required." }
+          },
+          {
+            "@type": "Question",
+            "name": "Are there browsers where some animations do not run?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Accordion height reveal animates grid-template-rows, the frosted glass drawer and glass button use backdrop-filter, and the circle reveal uses clip-path. All of these work in current Chrome, Edge, Safari and Firefox, but older browsers may skip the motion. Even then the menu still opens and closes, so nothing breaks functionally." }
+          }
+        ]
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css?v=20260725a" />
+  </head>
+  <body>
+    <div class="header">
+      <a class="lang-switch" href="../howto.html" hreflang="ja">日本語</a>
+      <h1>How to use &amp; FAQ</h1>
+      <p>Using the Hamburger Menu CSS Gallery, and answers to common questions</p>
+    </div>
+
+    <div class="howto-body">
+      <h2>🖱️ Getting started</h2>
+      <ol>
+        <li>Use the tabs at the top to switch between <strong>Icon morph (60)</strong> and <strong>Open / close (30)</strong></li>
+        <li><strong>Click the hamburger button inside a card</strong> to play the animation. Click again to close it</li>
+        <li>Narrow things down with the <strong>category chips</strong> — classic, spin, slide, arrows &amp; signs, frame &amp; fill, unusual for icons; drawer, fullscreen, item reveal, dropdown, unusual for open patterns</li>
+        <li>When you find one you like, hit <strong>HTML+CSS+JS</strong> to copy it. Clicking a card shows the full code in the sidebar</li>
+        <li>Change the <strong>accent and secondary colors</strong> in the sidebar — the preview and the copied code both update, and your choice is saved</li>
+        <li>Left too many cards open? Use <strong>Close every open menu</strong> to reset them all at once</li>
+      </ol>
+
+      <h2>🧩 Dropping it into an existing site</h2>
+      <ol>
+        <li>Move the contents of the copied <code>&lt;style&gt;</code> into your CSS file</li>
+        <li>Move the contents of the copied <code>&lt;script&gt;</code> into your JS file (load it with <code>defer</code>, or just before <code>&lt;/body&gt;</code>)</li>
+        <li>Apply the same class names to the button and nav already in your header</li>
+        <li>Replace the placeholder links (<code>&lt;a href="#"&gt;Home&lt;/a&gt;</code> and friends) with your real navigation</li>
+      </ol>
+      <p>Always start the button at <code>aria-expanded="false"</code>. That attribute doubles as the CSS selector and as the announcement to assistive technology, so leaving it out means the menu starts in the open state.</p>
+      <pre><code>&lt;button class="hb-cross" aria-label="Menu" aria-expanded="false"&gt;
+  &lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;
+&lt;/button&gt;</code></pre>
+
+      <h2>📐 Combining an icon with an open pattern</h2>
+      <p>The two tabs give you separate snippets, but they are designed to be mixed. Swap the button styles of an open pattern (the <code>◯◯__btn</code> rules) for the icon morph you prefer.</p>
+      <ol>
+        <li>Copy the open pattern you want first</li>
+        <li>Copy an icon morph, then use its <code>span</code> rules to override the button part</li>
+        <li>Keep the class name from the open pattern (<code>◯◯__btn</code>)</li>
+      </ol>
+
+      <h2>❓ FAQ</h2>
+      <dl class="faq">
+        <dt>Q. How do I use the copied code?</dt>
+        <dd>A. You get a set of three things: CSS wrapped in a <code>&lt;style&gt;</code> tag, the HTML, and three lines of JavaScript that handle the toggle. Paste it as-is first to confirm the animation, then move the <code>&lt;style&gt;</code> contents into your CSS file and the <code>&lt;script&gt;</code> contents into your JS file. On the HTML side, apply the same class names to the button and nav already in your header.</dd>
+        <dt>Q. Is JavaScript required?</dt>
+        <dd>A. Only three lines that flip <code>aria-expanded</code> between true and false. Every visual movement is pure CSS and no external library is loaded. A checkbox hack would remove the JavaScript entirely, but screen readers would no longer announce it as a button, so every effect here uses a real <code>button</code> element instead.</dd>
+        <dt>Q. Why use aria-expanded instead of toggling a class?</dt>
+        <dd>A. <code>aria-expanded</code> is the attribute that tells screen readers whether the menu is open. Using it as the CSS selector too means the state lives in exactly one place, so what assistive technology announces can never drift from what is on screen. There is no need for a separate <code>is-open</code> class.</dd>
+        <dt>Q. Can I match the colors to my own site?</dt>
+        <dd>A. Use the color settings in the sidebar to change the accent and secondary colors — both the preview and the copied code update. Your choice is saved in the browser for next time. Other values such as bar thickness and text color can be edited in the CSS after copying.</dd>
+        <dt>Q. Can I use the open/close patterns with position: fixed as they are?</dt>
+        <dd>A. Yes. In the gallery each demo appears to stay inside its card, but that is only because the demo frame has a <code>transform</code>, which makes it the reference for fixed positioning. The copied code keeps the real <code>position: fixed</code> for your site. Note that the same rule applies in reverse: if you place the menu inside a parent that has <code>transform</code> or <code>filter</code>, it will not cover the whole screen, so keep it high in the document, right under your header.</dd>
+        <dt>Q. Can I use these on commercial sites?</dt>
+        <dd>A. Yes. The copied code is free to use in personal and commercial projects, and no attribution is required.</dd>
+        <dt>Q. Are there browsers where some animations do not run?</dt>
+        <dd>A. Accordion height reveal animates <code>grid-template-rows</code>, the frosted glass drawer and glass button use <code>backdrop-filter</code>, and the circle reveal uses <code>clip-path</code>. All of these work in current Chrome, Edge, Safari and Firefox, but older browsers may skip the motion. Even then the menu still opens and closes, so nothing breaks functionally.</dd>
+      </dl>
+
+      <h2>🔗 Related tools</h2>
+      <ul>
+        <li><a href="../../hover-effects-gallery/en/">CSS Hover Effects Gallery</a> — 100 hover animations for navigation and text links</li>
+        <li><a href="../../animation-gallery/en/">CSS Animation Gallery</a> — over 100 keyframe animations</li>
+        <li><a href="../../neon-button-generator/en/">Neon Button Generator</a> — build a glowing neon button with fine-grained controls</li>
+        <li><a href="../../liquid-glass-css-generator/en/">Liquid Glass CSS Generator</a> — frosted glass UI parts</li>
+      </ul>
+
+      <a class="back-link" href="./">&larr; Back to the gallery</a>
+    </div>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">Sponsored</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="Close ad">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="8994523885"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      // Close button for the floating ad (not remembered — it comes back on reload)
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
+
+    <footer>
+      <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> Hamburger Menu CSS Gallery | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="./">&#127912; Back to the gallery</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>

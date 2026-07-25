@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使い方・FAQ｜ハンバーガーメニュー CSSギャラリー</title>
+    <meta name="description" content="ハンバーガーメニュー CSSギャラリーの使い方とよくある質問。アイコン変形と開閉パターンの切り替え、色の変更、コピーしたHTML+CSS+JSを既存サイトのナビに組み込む手順を解説します。" />
+    <link rel="canonical" href="https://codequest.work/generator/hamburger-menu-gallery/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/hamburger-menu-gallery/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/hamburger-menu-gallery/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/hamburger-menu-gallery/howto.html" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- 構造化データ（FAQ） -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "コピーしたコードはどう使えばいいですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "コピーされるのは <style> タグ入りのCSS・HTML・開閉用の3行のJavaScriptのセットです。まずそのまま貼り付けて動きを確認し、その後 <style> の中身をCSSファイルへ、<script> の中身をJSファイルへ移すのがおすすめです。HTML側は既存のヘッダーにあるボタンとナビへ class を付け替えてください。" }
+          },
+          {
+            "@type": "Question",
+            "name": "JavaScriptは必要ですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "aria-expanded を true / false で切り替える3行だけ必要です。見た目の動きはすべてCSSで、外部ライブラリの読み込みはありません。チェックボックスを使えばJavaScriptなしでも作れますが、スクリーンリーダーにボタンとして認識されないため、本ツールでは button 要素を使う実装で統一しています。" }
+          },
+          {
+            "@type": "Question",
+            "name": "なぜ class の付け外しではなく aria-expanded を使うのですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "aria-expanded はメニューが開いているかどうかをスクリーンリーダーへ伝えるための属性です。これをCSSのセレクタとしても使うことで、状態の管理場所が1つになり、支援技術への通知と見た目の切り替えがずれません。is-open のようなクラスを別に持つ必要がなくなります。" }
+          },
+          {
+            "@type": "Question",
+            "name": "色を自分のサイトに合わせられますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "サイドバーの「色の設定」でアクセント色とサブ色を変更すると、プレビューとコピーされるコードの両方に反映されます。設定はブラウザに保存されるため次回も引き継がれます。線の太さや文字色などその他の値はコピー後にCSSを直接編集してください。" }
+          },
+          {
+            "@type": "Question",
+            "name": "開閉パターンの position: fixed はそのまま使えますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "そのまま使えます。ギャラリー上ではカード内に収まって見えますが、これはデモ枠に transform を指定して固定位置の基準をカードに移しているためで、コピーされるコードは実際のサイト用の position: fixed のままです。ただし transform や filter を持つ親要素の中に置くと同じ理由で画面全体には広がらないため、ヘッダー直下など浅い階層に配置してください。" }
+          },
+          {
+            "@type": "Question",
+            "name": "商用サイトで使えますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "はい。コピーしたコードは個人・商用を問わず自由に利用できます。クレジット表記も不要です。" }
+          },
+          {
+            "@type": "Question",
+            "name": "一部の動きが再現されないブラウザはありますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "「高さがアコーディオンで開く」は grid-template-rows のアニメーション、「ガラス（すりガラス）ドロワー」「ガラス風の丸ボタン」は backdrop-filter、「ボタンから円形に広がる」は clip-path を使います。いずれも最新のChrome / Edge / Safari / Firefoxで動作しますが、古いブラウザでは動きが省略されることがあります。その場合もメニュー自体は開閉するため、機能は損なわれません。" }
+          }
+        ]
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css?v=20260725a" />
+  </head>
+  <body>
+    <div class="header">
+      <a class="lang-switch" href="en/howto.html" hreflang="en">English</a>
+      <h1>使い方・FAQ</h1>
+      <p>ハンバーガーメニュー CSSギャラリーの使い方とよくある質問</p>
+    </div>
+
+    <div class="howto-body">
+      <h2>🖱️ 基本の使い方</h2>
+      <ol>
+        <li>上部のタブで<strong>「アイコン変形」（60種）</strong>と<strong>「開閉パターン」（30種）</strong>を切り替えます</li>
+        <li>カードの中の<strong>ハンバーガーボタンをクリック</strong>すると、その場で開閉の動きが再生されます。もう一度クリックで閉じます</li>
+        <li><strong>カテゴリチップ</strong>で絞り込めます（アイコン変形＝定番・回転・スライド・矢印・記号・枠・背景・変わり種／開閉パターン＝ドロワー・フルスクリーン・項目の出方・ドロップダウン・変わり種）</li>
+        <li>気に入ったら <strong>HTML+CSS+JS ボタン</strong>でコードをコピー。カードをクリックするとサイドバーでコード全文を確認できます</li>
+        <li>サイドバーの<strong>色の設定</strong>でアクセント色・サブ色を変更すると、プレビューとコピーコードの両方に反映されます（色は自動保存されます）</li>
+        <li>カードを開いたままにしすぎたら<strong>「開いているメニューを全部閉じる」</strong>で一括リセットできます</li>
+      </ol>
+
+      <h2>🧩 既存サイトへの組み込み手順</h2>
+      <ol>
+        <li>コピーした <code>&lt;style&gt;</code> の中身をCSSファイルへ移す</li>
+        <li>コピーした <code>&lt;script&gt;</code> の中身をJSファイルへ移す（読み込みは <code>defer</code> か <code>&lt;/body&gt;</code> 直前で）</li>
+        <li>HTMLは既存のヘッダーのボタンとナビに、コピーコードと同じ class を付け替える</li>
+        <li>ナビの中身（<code>&lt;a href="#"&gt;Home&lt;/a&gt;</code> など）を実際のリンクに差し替える</li>
+      </ol>
+      <p>ボタンの初期状態は必ず <code>aria-expanded="false"</code> にしてください。この属性がCSSのセレクタと支援技術への通知を兼ねているため、書き忘れると開いた状態から始まってしまいます。</p>
+      <pre><code>&lt;button class="hb-cross" aria-label="メニュー" aria-expanded="false"&gt;
+  &lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;
+&lt;/button&gt;</code></pre>
+
+      <h2>📐 アイコン変形と開閉パターンの組み合わせ方</h2>
+      <p>2つのタブは別々のコードですが、組み合わせて使えます。開閉パターンのボタン部分（<code>◯◯__btn</code> のCSS）を、好きなアイコン変形のCSSで置き換えるだけです。</p>
+      <ol>
+        <li>まず「開閉パターン」から使いたいメニューの出し方をコピーする</li>
+        <li>次に「アイコン変形」から好きなアイコンをコピーし、その <code>span</code> 関連のCSSでボタン部分を上書きする</li>
+        <li>class名は開閉パターン側（<code>◯◯__btn</code>）に合わせる</li>
+      </ol>
+
+      <h2>❓ よくある質問</h2>
+      <dl class="faq">
+        <dt>Q. コピーしたコードはどう使えばいいですか？</dt>
+        <dd>A. コピーされるのは <code>&lt;style&gt;</code> タグ入りのCSS・HTML・開閉用の3行のJavaScriptのセットです。まずそのまま貼り付けて動きを確認し、その後 <code>&lt;style&gt;</code> の中身をCSSファイルへ、<code>&lt;script&gt;</code> の中身をJSファイルへ移すのがおすすめです。HTML側は既存のヘッダーにあるボタンとナビへ class を付け替えてください。</dd>
+        <dt>Q. JavaScriptは必要ですか？</dt>
+        <dd>A. <code>aria-expanded</code> を true / false で切り替える3行だけ必要です。見た目の動きはすべてCSSで、外部ライブラリの読み込みはありません。チェックボックスを使えばJavaScriptなしでも作れますが、スクリーンリーダーにボタンとして認識されないため、本ツールでは <code>button</code> 要素を使う実装で統一しています。</dd>
+        <dt>Q. なぜ class の付け外しではなく aria-expanded を使うのですか？</dt>
+        <dd>A. <code>aria-expanded</code> はメニューが開いているかどうかをスクリーンリーダーへ伝えるための属性です。これをCSSのセレクタとしても使うことで、状態の管理場所が1つになり、支援技術への通知と見た目の切り替えがずれません。<code>is-open</code> のようなクラスを別に持つ必要がなくなります。</dd>
+        <dt>Q. 色を自分のサイトに合わせられますか？</dt>
+        <dd>A. サイドバーの「色の設定」でアクセント色とサブ色を変更すると、プレビューとコピーされるコードの両方に反映されます。設定はブラウザに保存されるため次回も引き継がれます。線の太さや文字色などその他の値はコピー後にCSSを直接編集してください。</dd>
+        <dt>Q. 開閉パターンの position: fixed はそのまま使えますか？</dt>
+        <dd>A. そのまま使えます。ギャラリー上ではカード内に収まって見えますが、これはデモ枠に <code>transform</code> を指定して固定位置の基準をカードに移しているためで、コピーされるコードは実際のサイト用の <code>position: fixed</code> のままです。ただし <code>transform</code> や <code>filter</code> を持つ親要素の中に置くと同じ理由で画面全体には広がらないため、ヘッダー直下など浅い階層に配置してください。</dd>
+        <dt>Q. 商用サイトで使えますか？</dt>
+        <dd>A. はい。コピーしたコードは個人・商用を問わず自由に利用できます。クレジット表記も不要です。</dd>
+        <dt>Q. 一部の動きが再現されないブラウザはありますか？</dt>
+        <dd>A. 「高さがアコーディオンで開く」は <code>grid-template-rows</code> のアニメーション、「ガラス（すりガラス）ドロワー」「ガラス風の丸ボタン」は <code>backdrop-filter</code>、「ボタンから円形に広がる」は <code>clip-path</code> を使います。いずれも最新のChrome / Edge / Safari / Firefoxで動作しますが、古いブラウザでは動きが省略されることがあります。その場合もメニュー自体は開閉するため、機能は損なわれません。</dd>
+      </dl>
+
+      <h2>🔗 関連ツール</h2>
+      <ul>
+        <li><a href="../hover-effects-gallery/">CSSホバーエフェクト ギャラリー</a> — ナビ・テキストリンク向けのホバーアニメーション100種類</li>
+        <li><a href="../animation-gallery/">CSSアニメーション ギャラリー</a> — キーフレーム型のアニメーション100種類以上</li>
+        <li><a href="../neon-button-generator/">ネオンボタン ジェネレーター</a> — 発光するネオンボタンを細かく調整して生成</li>
+        <li><a href="../liquid-glass-css-generator/">リキッドグラス CSSジェネレーター</a> — すりガラス風のUIパーツを生成</li>
+      </ul>
+
+      <a class="back-link" href="./">&larr; ギャラリーに戻る</a>
+    </div>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">広告</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="8994523885"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
+
+    <footer>
+      <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> ハンバーガーメニュー CSSギャラリー | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="./">&#127912; ギャラリーへ</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>
