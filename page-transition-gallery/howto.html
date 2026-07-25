@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使い方・FAQ｜ページ遷移アニメーション CSSギャラリー</title>
+    <meta name="description" content="ページ遷移アニメーション CSSギャラリーの使い方とよくある質問。カーテン・ページ遷移・ローディングの違い、コピーしたコードの組み込み手順、View Transitions API で書く場合の違いを解説します。" />
+    <link rel="canonical" href="https://codequest.work/generator/page-transition-gallery/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/page-transition-gallery/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/page-transition-gallery/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/page-transition-gallery/howto.html" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- 構造化データ（FAQ） -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "コピーしたコードはどう使えばいいですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "CSS・HTML・JavaScriptの3点セットがコピーされます。まずそのまま貼り付けて動きを確認し、その後 style の中身をCSSファイルへ、script の中身をJSファイルへ移してください。幕のHTMLは body 直下など、できるだけ浅い位置に置きます。" }
+          },
+          {
+            "@type": "Question",
+            "name": "なぜ幕は「閉じた状態」から始まるのですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "ページ遷移は「前のページで幕を閉じる」「次のページで幕を開く」の2つで1組だからです。到着したページで幕が閉じた状態から始まり、読み込み直後に開くことで、移動が1本の動きにつながって見えます。開いた状態から始めると、到着時に一瞬だけ白い画面が見えてしまいます。" }
+          },
+          {
+            "@type": "Question",
+            "name": "noscript のスタイルは何のためにありますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "幕を開くのはJavaScriptの役目なので、JavaScriptが無効だと幕が閉じたままページが見えなくなります。それを防ぐために、JavaScriptが無効な環境では幕自体を display: none で消す1行を入れています。消し忘れないでください。" }
+          },
+          {
+            "@type": "Question",
+            "name": "JavaScriptは必須ですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "ページ遷移とカーテンには必要です。リンクのクリックを一度止めて、幕が閉じ終わってから移動する必要があるためです。ローディングは window の load を待つだけなので3行で済みます。見た目の動きはすべてCSSで、外部ライブラリの読み込みはありません。" }
+          },
+          {
+            "@type": "Question",
+            "name": "View Transitions API を使う書き方との違いは何ですか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "View Transitions API なら @view-transition { navigation: auto; } と keyframes の数行で書け、JavaScriptも不要です。ただし対応ブラウザが限られ、同一オリジンのページ遷移に限られます。本ツールは全ブラウザで確実に動く従来のJavaScript方式を採用しています。どちらもCSSの見た目部分は流用できます。" }
+          },
+          {
+            "@type": "Question",
+            "name": "リンクをクリックしても遷移しない・二重に動く場合は？",
+            "acceptedAnswer": { "@type": "Answer", "text": "コピーコードは a[href^=\"/\"] というセレクタで内部リンクだけを対象にしています。相対パスやフルURLでリンクを書いているサイトでは、このセレクタを実際のリンクの書き方に合わせて変更してください。また、別タブで開くリンクや外部リンクは対象から外すのが安全です。" }
+          },
+          {
+            "@type": "Question",
+            "name": "一部の動きが再現されないブラウザはありますか？",
+            "acceptedAnswer": { "@type": "Answer", "text": "「0→100%にカウント」は CSS の @property を使うため、対応していないブラウザでは数字が0のまま止まります。「円形に開く」「対角線でスパッと切れる」は clip-path を使います。いずれも最新のChrome / Edge / Safari / Firefoxで動作します。" }
+          }
+        ]
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css?v=20260725a" />
+  </head>
+  <body>
+    <div class="header">
+      <a class="lang-switch" href="en/howto.html" hreflang="en">English</a>
+      <h1>使い方・FAQ</h1>
+      <p>ページ遷移アニメーション CSSギャラリーの使い方とよくある質問</p>
+    </div>
+
+    <div class="howto-body">
+      <h2>🖱️ 基本の使い方</h2>
+      <ol>
+        <li>カード内の<strong>ミニ画面をクリック</strong>、または<strong>▶ 再生ボタン</strong>を押すと、その場で動きが再生されます</li>
+        <li><strong>カテゴリチップ</strong>で絞り込めます（カーテン20種・ページ遷移10種・ローディング12種）</li>
+        <li>気に入ったら <strong>HTML+CSS+JS ボタン</strong>でコードをコピー。カードをクリックするとサイドバーでコード全文を確認できます</li>
+        <li>サイドバーの<strong>色の設定</strong>でアクセント色・サブ色を変更すると、プレビューとコピーコードの両方に反映されます（色は自動保存されます）</li>
+        <li><strong>▶ 表示中を順に再生</strong>を押すと、表示中のカードが少しずつずれて次々に再生されます</li>
+      </ol>
+
+      <h2>🎭 3つのカテゴリの違い</h2>
+      <p>見た目だけでなく、<strong>何をきっかけに動くか</strong>が違います。コピーされるJavaScriptもそれに合わせて変わります。</p>
+      <ul>
+        <li><strong>カーテン / ページ遷移</strong> — リンクのクリックがきっかけ。幕を閉じてから次のページへ移動します。この2つは仕組みが同じなので、自由に差し替えられます</li>
+        <li><strong>ローディング</strong> — ページの読み込み完了がきっかけ。読み込みが終わったら消えます</li>
+      </ul>
+
+      <h2>🧩 ページ遷移の組み込み手順</h2>
+      <ol>
+        <li>コピーした <code>&lt;style&gt;</code> の中身をCSSファイルへ移す</li>
+        <li>幕のHTML（<code>&lt;div class="pt-..."&gt;</code>）を <code>&lt;body&gt;</code> 直下に置く</li>
+        <li>コピーした <code>&lt;script&gt;</code> の中身をJSファイルへ移す</li>
+        <li><strong>すべてのページに同じものを入れる</strong>（移動元で閉じ、移動先で開くため）</li>
+      </ol>
+      <p>幕は「閉じた状態」から始まります。到着したページで読み込み直後に開くことで、移動が1本の動きにつながって見えます。</p>
+      <pre><code>&lt;!-- body 直下に置く。transform を持つ親の中に入れないこと --&gt;
+&lt;div class="pt-split-x" aria-hidden="true"&gt;&lt;i&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;
+&lt;noscript&gt;&lt;style&gt;.pt-split-x { display: none; }&lt;/style&gt;&lt;/noscript&gt;</code></pre>
+
+      <h2>⚡ View Transitions API で書く場合</h2>
+      <p>同一オリジンのページ遷移なら、対応ブラウザに限ればJavaScriptなしでも書けます。CSSの見た目部分は本ツールのコードをそのまま流用できます。</p>
+      <pre><code>@view-transition { navigation: auto; }
+
+::view-transition-new(root) {
+  animation: pt-open 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+}
+@keyframes pt-open {
+  from { clip-path: inset(0 0 0 100%); }
+  to   { clip-path: inset(0 0 0 0); }
+}</code></pre>
+      <p>短く書ける代わりに、未対応のブラウザでは演出が省略されます（遷移自体は普通に行われます）。確実に全ブラウザで動かしたい場合は、本ツールのJavaScript方式を使ってください。</p>
+
+      <h2>❓ よくある質問</h2>
+      <dl class="faq">
+        <dt>Q. コピーしたコードはどう使えばいいですか？</dt>
+        <dd>A. CSS・HTML・JavaScriptの3点セットがコピーされます。まずそのまま貼り付けて動きを確認し、その後 <code>&lt;style&gt;</code> の中身をCSSファイルへ、<code>&lt;script&gt;</code> の中身をJSファイルへ移してください。幕のHTMLは <code>&lt;body&gt;</code> 直下など、できるだけ浅い位置に置きます。</dd>
+        <dt>Q. なぜ幕は「閉じた状態」から始まるのですか？</dt>
+        <dd>A. ページ遷移は「前のページで幕を閉じる」「次のページで幕を開く」の2つで1組だからです。到着したページで幕が閉じた状態から始まり、読み込み直後に開くことで、移動が1本の動きにつながって見えます。開いた状態から始めると、到着時に一瞬だけ白い画面が見えてしまいます。</dd>
+        <dt>Q. noscript のスタイルは何のためにありますか？</dt>
+        <dd>A. 幕を開くのはJavaScriptの役目なので、JavaScriptが無効だと幕が閉じたままページが見えなくなります。それを防ぐために、JavaScriptが無効な環境では幕自体を <code>display: none</code> で消す1行を入れています。消し忘れないでください。</dd>
+        <dt>Q. JavaScriptは必須ですか？</dt>
+        <dd>A. ページ遷移とカーテンには必要です。リンクのクリックを一度止めて、幕が閉じ終わってから移動する必要があるためです。ローディングは <code>window</code> の <code>load</code> を待つだけなので3行で済みます。見た目の動きはすべてCSSで、外部ライブラリの読み込みはありません。</dd>
+        <dt>Q. View Transitions API を使う書き方との違いは何ですか？</dt>
+        <dd>A. View Transitions API なら <code>@view-transition { navigation: auto; }</code> と keyframes の数行で書け、JavaScriptも不要です。ただし対応ブラウザが限られ、同一オリジンのページ遷移に限られます。本ツールは全ブラウザで確実に動く従来のJavaScript方式を採用しています。どちらもCSSの見た目部分は流用できます。</dd>
+        <dt>Q. リンクをクリックしても遷移しない・二重に動く場合は？</dt>
+        <dd>A. コピーコードは <code>a[href^="/"]</code> というセレクタで内部リンクだけを対象にしています。相対パスやフルURLでリンクを書いているサイトでは、このセレクタを実際のリンクの書き方に合わせて変更してください。また、別タブで開くリンクや外部リンクは対象から外すのが安全です。</dd>
+        <dt>Q. 一部の動きが再現されないブラウザはありますか？</dt>
+        <dd>A. 「0→100%にカウント」は CSS の <code>@property</code> を使うため、対応していないブラウザでは数字が0のまま止まります。「円形に開く」「対角線でスパッと切れる」は <code>clip-path</code> を使います。いずれも最新のChrome / Edge / Safari / Firefoxで動作します。</dd>
+      </dl>
+
+      <h2>🔗 関連ツール</h2>
+      <ul>
+        <li><a href="../hamburger-menu-gallery/">ハンバーガーメニュー CSSギャラリー</a> — アイコン変形60種と開閉パターン30種</li>
+        <li><a href="../animation-gallery/">CSSアニメーション ギャラリー</a> — 単一要素の入退場アニメーション100種類以上</li>
+        <li><a href="../hover-effects-gallery/">CSSホバーエフェクト ギャラリー</a> — ナビ・テキストリンク向けのホバー100種類</li>
+        <li><a href="../liquid-glass-css-generator/">リキッドグラス CSSジェネレーター</a> — すりガラス風のUIパーツを生成</li>
+      </ul>
+
+      <a class="back-link" href="./">&larr; ギャラリーに戻る</a>
+    </div>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">広告</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="3815183545"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
+
+    <footer>
+      <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> ページ遷移アニメーション CSSギャラリー | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="./">&#127912; ギャラリーへ</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>

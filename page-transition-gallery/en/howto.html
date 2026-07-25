@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to Use &amp; FAQ | Page Transition CSS Gallery</title>
+    <meta name="description" content="How to use the Page Transition CSS Gallery, plus answers to common questions: the difference between curtain, transition and loading, dropping the copied code into a site, and how it compares to the View Transitions API." />
+    <link rel="canonical" href="https://codequest.work/generator/page-transition-gallery/en/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/page-transition-gallery/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/page-transition-gallery/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/page-transition-gallery/howto.html" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Structured data (FAQ) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I use the copied code?",
+            "acceptedAnswer": { "@type": "Answer", "text": "You get CSS, HTML and JavaScript as a set. Paste it as-is first to confirm the animation, then move the style contents into your CSS file and the script contents into your JS file. Keep the veil markup as shallow as possible — directly inside body is ideal." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does the veil start closed?",
+            "acceptedAnswer": { "@type": "Answer", "text": "A page transition is two halves: the veil closes on the page you are leaving, and opens on the page you arrive at. Starting closed and opening right after load makes the whole journey read as one continuous motion. If it started open, you would see a flash of blank page on arrival." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the noscript style for?",
+            "acceptedAnswer": { "@type": "Answer", "text": "JavaScript is what opens the veil, so without it the veil would stay closed and hide the page. The one-line noscript style removes the veil entirely when JavaScript is unavailable. Do not drop that line." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is JavaScript required?",
+            "acceptedAnswer": { "@type": "Answer", "text": "For curtains and page transitions, yes — the link click has to be intercepted so the veil can finish closing before the browser navigates. Loading screens only wait for the window load event, which takes three lines. Every visual movement is pure CSS and no external library is loaded." }
+          },
+          {
+            "@type": "Question",
+            "name": "How does this compare to the View Transitions API?",
+            "acceptedAnswer": { "@type": "Answer", "text": "With the View Transitions API you can write it in a few lines using @view-transition { navigation: auto; } and keyframes, with no JavaScript at all. The trade-off is limited browser support, and it only covers same-origin navigation. This tool uses the traditional JavaScript approach so it works everywhere. The visual CSS carries over to either method." }
+          },
+          {
+            "@type": "Question",
+            "name": "Links do not navigate, or the animation fires twice",
+            "acceptedAnswer": { "@type": "Answer", "text": "The copied code targets internal links with the selector a[href^=\"/\"]. If your site writes links as relative paths or full URLs, adjust that selector to match. It is also safer to exclude links that open in a new tab and links to other sites." }
+          },
+          {
+            "@type": "Question",
+            "name": "Are there browsers where some animations do not run?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Counts up to 100% relies on the CSS @property rule, so the number stays at 0 where that is unsupported. Circle iris opens and Diagonal cut wipe use clip-path. All of these work in current Chrome, Edge, Safari and Firefox." }
+          }
+        ]
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css?v=20260725a" />
+  </head>
+  <body>
+    <div class="header">
+      <a class="lang-switch" href="../howto.html" hreflang="ja">日本語</a>
+      <h1>How to use &amp; FAQ</h1>
+      <p>Using the Page Transition CSS Gallery, and answers to common questions</p>
+    </div>
+
+    <div class="howto-body">
+      <h2>🖱️ Getting started</h2>
+      <ol>
+        <li>Click the <strong>mini screen inside a card</strong>, or the <strong>▶ Play</strong> button, to run the animation in place</li>
+        <li>Narrow things down with the <strong>category chips</strong> — 20 curtains, 10 page transitions, 12 loading screens</li>
+        <li>When you find one you like, hit <strong>HTML+CSS+JS</strong> to copy it. Clicking a card shows the full code in the sidebar</li>
+        <li>Change the <strong>accent and secondary colors</strong> in the sidebar — the preview and the copied code both update, and your choice is saved</li>
+        <li><strong>▶ Play all shown</strong> runs every visible card in turn, slightly staggered</li>
+      </ol>
+
+      <h2>🎭 How the three categories differ</h2>
+      <p>They differ not just in looks but in <strong>what triggers them</strong>, and the copied JavaScript changes to match.</p>
+      <ul>
+        <li><strong>Curtain / Page transition</strong> — triggered by a link click. The veil closes, then the browser navigates. These two work the same way, so you can swap freely between them</li>
+        <li><strong>Loading</strong> — triggered by the page finishing loading, then it disappears</li>
+      </ul>
+
+      <h2>🧩 Adding a page transition to your site</h2>
+      <ol>
+        <li>Move the contents of the copied <code>&lt;style&gt;</code> into your CSS file</li>
+        <li>Put the veil markup (<code>&lt;div class="pt-..."&gt;</code>) directly inside <code>&lt;body&gt;</code></li>
+        <li>Move the contents of the copied <code>&lt;script&gt;</code> into your JS file</li>
+        <li><strong>Include the same set on every page</strong> — it closes on the page you leave and opens on the page you arrive at</li>
+      </ol>
+      <p>The veil starts closed. Opening it right after load is what makes the journey read as one continuous motion.</p>
+      <pre><code>&lt;!-- Directly inside body. Never nest it in a parent that has a transform --&gt;
+&lt;div class="pt-split-x" aria-hidden="true"&gt;&lt;i&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;
+&lt;noscript&gt;&lt;style&gt;.pt-split-x { display: none; }&lt;/style&gt;&lt;/noscript&gt;</code></pre>
+
+      <h2>⚡ Writing it with the View Transitions API</h2>
+      <p>For same-origin navigation you can skip JavaScript entirely in supporting browsers. The visual CSS from this tool carries straight over.</p>
+      <pre><code>@view-transition { navigation: auto; }
+
+::view-transition-new(root) {
+  animation: pt-open 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+}
+@keyframes pt-open {
+  from { clip-path: inset(0 0 0 100%); }
+  to   { clip-path: inset(0 0 0 0); }
+}</code></pre>
+      <p>It is far shorter, but unsupported browsers simply skip the effect (navigation still works normally). Use the JavaScript approach from this tool when you need it to run everywhere.</p>
+
+      <h2>❓ FAQ</h2>
+      <dl class="faq">
+        <dt>Q. How do I use the copied code?</dt>
+        <dd>A. You get CSS, HTML and JavaScript as a set. Paste it as-is first to confirm the animation, then move the <code>&lt;style&gt;</code> contents into your CSS file and the <code>&lt;script&gt;</code> contents into your JS file. Keep the veil markup as shallow as possible — directly inside <code>&lt;body&gt;</code> is ideal.</dd>
+        <dt>Q. Why does the veil start closed?</dt>
+        <dd>A. A page transition is two halves: the veil closes on the page you are leaving, and opens on the page you arrive at. Starting closed and opening right after load makes the whole journey read as one continuous motion. If it started open, you would see a flash of blank page on arrival.</dd>
+        <dt>Q. What is the noscript style for?</dt>
+        <dd>A. JavaScript is what opens the veil, so without it the veil would stay closed and hide the page. The one-line <code>noscript</code> style removes the veil entirely when JavaScript is unavailable. Do not drop that line.</dd>
+        <dt>Q. Is JavaScript required?</dt>
+        <dd>A. For curtains and page transitions, yes — the link click has to be intercepted so the veil can finish closing before the browser navigates. Loading screens only wait for the <code>window</code> <code>load</code> event, which takes three lines. Every visual movement is pure CSS and no external library is loaded.</dd>
+        <dt>Q. How does this compare to the View Transitions API?</dt>
+        <dd>A. With the View Transitions API you can write it in a few lines using <code>@view-transition { navigation: auto; }</code> and keyframes, with no JavaScript at all. The trade-off is limited browser support, and it only covers same-origin navigation. This tool uses the traditional JavaScript approach so it works everywhere. The visual CSS carries over to either method.</dd>
+        <dt>Q. Links do not navigate, or the animation fires twice</dt>
+        <dd>A. The copied code targets internal links with the selector <code>a[href^="/"]</code>. If your site writes links as relative paths or full URLs, adjust that selector to match. It is also safer to exclude links that open in a new tab and links to other sites.</dd>
+        <dt>Q. Are there browsers where some animations do not run?</dt>
+        <dd>A. Counts up to 100% relies on the CSS <code>@property</code> rule, so the number stays at 0 where that is unsupported. Circle iris opens and Diagonal cut wipe use <code>clip-path</code>. All of these work in current Chrome, Edge, Safari and Firefox.</dd>
+      </dl>
+
+      <h2>🔗 Related tools</h2>
+      <ul>
+        <li><a href="../../hamburger-menu-gallery/en/">Hamburger Menu CSS Gallery</a> — 60 icon morphs and 30 open/close patterns</li>
+        <li><a href="../../animation-gallery/en/">CSS Animation Gallery</a> — over 100 element entrance and exit animations</li>
+        <li><a href="../../hover-effects-gallery/en/">CSS Hover Effects Gallery</a> — 100 hover animations for navigation and links</li>
+        <li><a href="../../liquid-glass-css-generator/en/">Liquid Glass CSS Generator</a> — frosted glass UI parts</li>
+      </ul>
+
+      <a class="back-link" href="./">&larr; Back to the gallery</a>
+    </div>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">Sponsored</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="Close ad">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="3815183545"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      // Close button for the floating ad (not remembered — it comes back on reload)
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
+
+    <footer>
+      <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> Page Transition CSS Gallery | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="./">&#127912; Back to the gallery</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>

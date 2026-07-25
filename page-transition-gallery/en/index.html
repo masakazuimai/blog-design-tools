@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Transition CSS — 42 Curtain, Wipe &amp; Loading Animations to Copy</title>
+    <meta name="description" content="A CSS page transition gallery. 20 curtain reveals, 10 transition effects such as fade and wipe, and 12 loading screens. Play each one in place, then copy the HTML, CSS and JS in one click. Accent colors are adjustable. No libraries, no sign-up." />
+    <link rel="canonical" href="https://codequest.work/generator/page-transition-gallery/en/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/page-transition-gallery/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/page-transition-gallery/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/page-transition-gallery/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Page Transition CSS — 42 Curtain, Wipe &amp; Loading Animations to Copy" />
+    <meta property="og:description" content="20 curtain reveals, 10 transition effects and 12 loading screens. Play each one in place, then copy the HTML, CSS and JS in one click. No libraries." />
+    <meta property="og:url" content="https://codequest.work/generator/page-transition-gallery/en/" />
+    <meta property="og:image" content="https://codequest.work/generator/page-transition-gallery/assets/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Page Transition CSS Gallery" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Page Transition CSS — 42 Curtain, Wipe &amp; Loading Animations to Copy" />
+    <meta name="twitter:description" content="20 curtain reveals, 10 transition effects and 12 loading screens. Play each one in place, then copy the HTML, CSS and JS in one click. No libraries." />
+    <meta name="twitter:image" content="https://codequest.work/generator/page-transition-gallery/assets/og.png" />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "Page Transition CSS Gallery",
+            "url": "https://codequest.work/generator/page-transition-gallery/en/",
+            "description": "A free tool to play 42 curtain, page transition and loading animations and copy the HTML, CSS and JS in one click. Accent colors are adjustable. No libraries required.",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Web",
+            "browserRequirements": "Requires JavaScript.",
+            "inLanguage": "en",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+            "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+              { "@type": "ListItem", "position": 2, "name": "Generators", "item": "https://codequest.work/category/generator/" },
+              { "@type": "ListItem", "position": 3, "name": "Page Transition CSS Gallery", "item": "https://codequest.work/generator/page-transition-gallery/en/" }
+            ]
+          }
+        ]
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css?v=20260725a" />
+  </head>
+  <body>
+    <div class="header">
+      <a class="lang-switch" href="../" hreflang="ja">日本語</a>
+      <h1>Page Transition CSS Gallery</h1>
+      <p>20 curtain reveals, 10 transition effects such as fade and wipe, and 12 loading screens. Click a card to play it, then copy the HTML, CSS and JS in one click.</p>
+    </div>
+
+    <div class="container">
+      <div class="layout">
+        <aside class="sidebar">
+          <div class="input-card">
+            <h2>📋 Code preview</h2>
+            <pre class="code-box"><code id="codePreview"></code></pre>
+            <button class="copy-preview" id="copyPreview" disabled>📋 Copy this code</button>
+          </div>
+
+          <div class="input-card">
+            <h2>🎨 Colors</h2>
+            <div class="field">
+              <label for="accentColor">Accent color</label>
+              <div class="color-row">
+                <input type="color" id="accentColor" value="#6366f1" />
+                <span class="color-val" id="accentVal">#6366f1</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="subColor">Secondary color</label>
+              <div class="color-row">
+                <input type="color" id="subColor" value="#ec4899" />
+                <span class="color-val" id="subVal">#ec4899</span>
+              </div>
+            </div>
+            <button class="reset-settings" id="resetSettings">↺ Reset colors</button>
+            <button class="play-all" id="playAll">▶ Play all shown</button>
+            <div class="count-note" id="countNote"></div>
+          </div>
+        </aside>
+
+        <main class="main">
+          <div class="filters" id="filters"></div>
+          <div class="grid" id="grid"></div>
+        </main>
+      </div>
+    </div>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">Sponsored</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="Close ad">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="3815183545"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      // Close button for the floating ad (not remembered — it comes back on reload)
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
+
+    <footer>
+      <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> Page Transition CSS Gallery | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="howto.html">&#128214; How to use &amp; FAQ</a>
+        <a href="../../hamburger-menu-gallery/en/">Hamburger Menu Gallery &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast">Copied</div>
+
+    <script type="module" src="../js/main.js?v=20260725a"></script>
+  </body>
+</html>
