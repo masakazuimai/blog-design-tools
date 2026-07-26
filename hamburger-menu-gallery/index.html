@@ -107,7 +107,7 @@
               </div>
             </div>
             <button class="reset-settings" id="resetSettings">↺ 色をデフォルトに戻す</button>
-            <button class="close-all" id="closeAll">✕ 開いているメニューを全部閉じる</button>
+            <button class="close-all" id="closeAll">メニューを全部閉じる</button>
             <div class="count-note" id="countNote"></div>
           </div>
         </aside>
@@ -126,7 +126,7 @@
         <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
       </div>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
-      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="8994523885"></ins>
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="8994523885"></ins>
       <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
@@ -137,12 +137,20 @@
         var w = document.getElementById("ad-widget");
         var b = document.getElementById("ad-close");
         if (!w || !b) return;
-        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+        b.addEventListener("click", function () {
+          w.classList.add("is-closed");
+        });
       })();
     </script>
 
     <footer>
-      <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> ハンバーガーメニュー CSSギャラリー | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <span
+        >&copy; <span class="cq-year">2026</span>
+        <script>
+          document.currentScript.previousElementSibling.textContent = new Date().getFullYear();
+        </script>
+        ハンバーガーメニュー CSSギャラリー | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span
+      >
       <div class="footer-links">
         <a href="howto.html">&#128214; 使い方・FAQ</a>
         <a href="../hover-effects-gallery/">CSSホバーエフェクト ギャラリー &rarr;</a>
