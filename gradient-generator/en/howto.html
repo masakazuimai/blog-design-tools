@@ -38,7 +38,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/style.css?v=20260724a" />
+    <link rel="stylesheet" href="../css/style.css?v=20260727d" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -73,7 +73,10 @@
           { "@type": "Question", "name": "What is the difference between linear, radial and conic?", "acceptedAnswer": { "@type": "Answer", "text": "Linear blends along a straight line, radial spreads outward from a center, and conic sweeps around a center by angle. Switching the type in the modal also changes the available controls (angle or shape)." } },
           { "@type": "Question", "name": "Can it output Tailwind classes?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Select the Tailwind tab in the modal to output a bg-[...] arbitrary value class you can use directly in Tailwind CSS." } },
           { "@type": "Question", "name": "Can I make gradients with Japanese traditional colors?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. There are 273 presets including many Japanese traditional-color (wa) gradients, and the “Pick from Color Dictionary” panel lets you apply traditional colors and CSS named colors directly to a stop." } },
-          { "@type": "Question", "name": "Can I save the gradient as an image?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Use “Export PNG” in the modal to download the current gradient as a PNG image." } }
+          { "@type": "Question", "name": "Can I save the gradient as an image?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Use “Export PNG” in the modal to download the current gradient as a PNG image." } },
+          { "@type": "Question", "name": "Can I apply a gradient to text?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Set “Apply to” to Text in the modal and the output switches to gradient-text CSS using background-clip: text. A bare CSS declaration cannot work on its own, so the output bundles the HTML element and the font import too." } },
+          { "@type": "Question", "name": "Can I export gradient text as an image?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. With Text selected, Export PNG saves a transparent PNG cropped to the letter shapes, ready to drop onto banners or thumbnails." } },
+          { "@type": "Question", "name": "Can I change the font of the gradient text?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Selecting Text reveals a font picker with Google Fonts including mincho, gothic, rounded and Latin display faces. The chosen font applies to the preview, the generated code and the PNG export, and the output includes the matching link import." } }
         ]
       }
     </script>
@@ -108,8 +111,34 @@
           <li>In the modal, click the color-stop bar to add stops and drag the handles to position them. Double-click a handle to delete it.</li>
           <li>Set the selected stop's color with the picker or from the <a href="../../color-dictionary/en/" target="_blank" rel="noopener">Color Dictionary</a>.</li>
           <li>Adjust the type (linear / radial / conic) and the angle or shape.</li>
+          <li><strong>Switch “Apply to” between Background and Text.</strong> Choosing Text changes the output code to gradient-text CSS.</li>
           <li>Switch between CSS / Tailwind and copy the code, or export a PNG if you need an image.</li>
         </ol>
+
+        <h2>Switch between background and text in one click</h2>
+        <p>
+          Use the <strong>“Apply to”</strong> switch at the top of the modal to decide whether the gradient fills the <strong>background</strong> or the <strong>text itself</strong>. You never have to rebuild the gradient — and <strong>the generated code changes automatically</strong>.
+        </p>
+        <p>When Text is selected you can type your <strong>real heading</strong> into the preview, and <strong>pick a font from Google Fonts</strong> (mincho, gothic, rounded, Latin display). Longer strings and heavier faces change how the gradient falls across the letters, so it is worth checking with the exact wording and typeface you plan to ship.</p>
+        <p>Gradient text works by painting the gradient as a background, clipping it to the glyph shapes with <code>background-clip: text</code>, and making the text fill transparent. <strong>A bare CSS declaration will not work on its own</strong> — you need an element to apply it to — so the output bundles the HTML and the font import as well. Copy it and it runs:</p>
+        <pre><code>&lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&amp;display=swap" /&gt;
+
+&lt;h2 class="gradient-text"&gt;Gradient Text&lt;/h2&gt;
+
+&lt;style&gt;
+.gradient-text {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  background-image: linear-gradient(135deg, #b7282e 0%, #f6d8a8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+&lt;/style&gt;</code></pre>
+        <p>
+          <code>-webkit-background-clip</code> is still required in Safari and some other environments, so it is emitted alongside the standard property. <code>-webkit-text-fill-color</code> is used instead of <code>color: transparent</code> because it applies more reliably and keeps text selection readable. Choosing Tailwind collapses the same thing into one class-laden line: <code>font-['Zen_Maru_Gothic'] font-bold bg-[...] bg-clip-text text-transparent</code>.
+        </p>
+        <p>In text mode, “Export PNG” follows the letter shapes and saves a <strong>PNG with a transparent background</strong>, ready to drop onto banners or thumbnails.</p>
 
         <h2>Wa gradients & the Color Dictionary</h2>
         <p>
@@ -134,8 +163,21 @@
           <p>Yes — use the wa gradient presets, or apply traditional colors directly via “Pick from Color Dictionary”.</p>
         </div>
         <div class="faq-item">
+          <h3>Can I apply a gradient to text?</h3>
+          <p>Yes. Set “Apply to” to <strong>Text</strong> in the modal and the output switches to gradient-text CSS (<code>background-clip: text</code>). Any gradient you built for a background works on text as-is, and the output includes the HTML and font import so it runs as pasted.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I export gradient text as an image?</h3>
+          <p>Yes. With Text selected, “Export PNG” saves a <strong>transparent PNG</strong> cropped to the letter shapes.</p>
+        </div>
+        <div class="faq-item">
           <h3>Can I save the gradient as an image?</h3>
           <p>Yes. Use “Export PNG” to download the current gradient as a PNG image.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can I change the font of the gradient text?</h3>
+          <p>Yes. Selecting Text reveals a font picker with Google Fonts (mincho, gothic, rounded and Latin display faces). The chosen font applies to the preview, the generated code and the PNG export, and the output includes the matching <code>&lt;link&gt;</code> import.</p>
         </div>
 
         <h2>Related tools</h2>

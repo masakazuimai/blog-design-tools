@@ -1,5 +1,13 @@
 import { t, LANG } from "./i18n.js?v=20260629c";
-import { gradientValue, buildCss, buildTailwind, paintGradient, sortedStops } from "./gradient.js?v=20260629a";
+import {
+  gradientValue,
+  buildCss,
+  buildTailwind,
+  paintGradient,
+  paintGradientText,
+  measureTextBox,
+  sortedStops,
+} from "./gradient.js?v=20260727d";
 import { ALL_PRESETS } from "./presets.js?v=20260629o";
 import { buildSwatchPanel } from "./swatch.js?v=20260629b";
 
@@ -18,6 +26,7 @@ const state = {
   radialShape: "circle",
   stops: [],
   selectedId: null,
+  target: "bg", // "bg" = 背景に適用 / "text" = 文字に適用（background-clip）
 };
 
 let format = "css";
@@ -44,6 +53,31 @@ const swatchToggle = $("swatch-toggle");
 const swatchPanel = $("swatch-panel");
 const output = $("output");
 const toastEl = $("toast");
+const previewTextRow = $("preview-text-row");
+const previewTextInput = $("preview-text");
+const previewTextOut = $("preview-text-out");
+const pngBtn = $("png-btn");
+const fontRow = $("font-row");
+const fontSelect = $("text-font");
+
+// 文字モードで選べるフォント（Google Fonts）。
+// href は「コピーしたコードをそのまま動かす」ために出力へ含める。
+// 太字の見出し用途なので weight は 700 に固定する。
+const FONTS = [
+  // preloaded: ページ本体の<link>で既に読み込んでいるため追加読み込みしない
+  { id: "noto-serif-jp", family: "Noto Serif JP", stack: '"Noto Serif JP", serif', preloaded: true },
+  { id: "noto-sans-jp", family: "Noto Sans JP", stack: '"Noto Sans JP", sans-serif' },
+  { id: "shippori-mincho", family: "Shippori Mincho", stack: '"Shippori Mincho", serif' },
+  { id: "zen-maru-gothic", family: "Zen Maru Gothic", stack: '"Zen Maru Gothic", sans-serif' },
+  { id: "mplus-rounded", family: "M PLUS Rounded 1c", stack: '"M PLUS Rounded 1c", sans-serif' },
+  { id: "rocknroll-one", family: "RocknRoll One", stack: '"RocknRoll One", sans-serif' },
+  { id: "playfair-display", family: "Playfair Display", stack: '"Playfair Display", serif' },
+  { id: "montserrat", family: "Montserrat", stack: '"Montserrat", sans-serif' },
+].map((f) => ({
+  ...f,
+  href: `https://fonts.googleapis.com/css2?family=${f.family.replace(/ /g, "+")}:wght@700&display=swap`,
+  tailwind: `font-['${f.family.replace(/ /g, "_")}']`,
+}));
 
 const ANGLE_LABEL = {
   ja: { linear: "角度", conic: "開始角度" },
@@ -193,6 +227,7 @@ function openEditor(preset) {
   }
   state.selectedId = state.stops[0].id;
   format = "css";
+  state.target = "bg";
   renderEditor();
   modal.classList.add("open");
 }
@@ -211,8 +246,39 @@ document.addEventListener("keydown", (e) => {
 function selected() {
   return state.stops.find((s) => s.id === state.selectedId) || state.stops[0];
 }
+function previewText() {
+  return previewTextInput.value.trim() || previewTextInput.defaultValue;
+}
+function currentFont() {
+  return FONTS.find((f) => f.id === fontSelect.value) || FONTS[0];
+}
+// 選ばれたフォントだけを後から読み込む（初期表示を重くしないため）
+const loadedFonts = new Set();
+function ensureFontLoaded(font) {
+  if (font.preloaded || loadedFonts.has(font.id)) return;
+  loadedFonts.add(font.id);
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = font.href;
+  document.head.appendChild(link);
+}
 function renderPreview() {
-  previewBox.style.background = gradientValue(state);
+  const isText = state.target === "text";
+  previewBox.classList.toggle("is-text", isText);
+  if (!isText) {
+    previewBox.style.background = gradientValue(state);
+    return;
+  }
+  // 文字モードはボックス自体を透明にして、字面だけをグラデーションで塗る
+  const font = currentFont();
+  ensureFontLoaded(font);
+  previewBox.style.background = "none";
+  previewTextOut.style.fontFamily = font.stack;
+  previewTextOut.textContent = previewText();
+  previewTextOut.style.backgroundImage = gradientValue(state);
+  previewTextOut.style.webkitBackgroundClip = "text";
+  previewTextOut.style.backgroundClip = "text";
+  previewTextOut.style.webkitTextFillColor = "transparent";
 }
 function renderBar() {
   barFill.style.background = `linear-gradient(90deg, ${sortedStops(state.stops)
@@ -231,6 +297,11 @@ function renderBar() {
   }
 }
 function renderControls() {
+  document.querySelectorAll("#target-seg button").forEach((b) =>
+    b.classList.toggle("active", b.dataset.target === state.target)
+  );
+  previewTextRow.classList.toggle("hidden", state.target !== "text");
+  fontRow.classList.toggle("hidden", state.target !== "text");
   document.querySelectorAll("#type-seg button").forEach((b) =>
     b.classList.toggle("active", b.dataset.type === state.type)
   );
@@ -253,7 +324,10 @@ function renderControls() {
   delStop.disabled = state.stops.length <= 2;
 }
 function renderOutput() {
-  output.value = format === "tailwind" ? buildTailwind(state) : buildCss(state);
+  // 文字モードは当てる要素とフォント読み込みが分からないと動かないため、
+  // HTMLもまとめて出す（background-clip は単体のCSS宣言だけでは使えない）
+  const ctx = state.target === "text" ? { text: previewText(), font: currentFont() } : {};
+  output.value = format === "tailwind" ? buildTailwind(state, ctx) : buildCss(state, ctx);
   document.querySelectorAll("#format-seg button").forEach((b) =>
     b.classList.toggle("active", b.dataset.fmt === format)
   );
@@ -275,6 +349,20 @@ function toast(msg) {
 }
 
 // ===== エディタのイベント（初期化時に1度だけ束ねる） =====
+$("target-seg").addEventListener("click", (e) => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  state.target = b.dataset.target;
+  renderEditor();
+});
+previewTextInput.addEventListener("input", () => {
+  renderPreview();
+  renderOutput(); // 出力HTMLに文言が入るため追従させる
+});
+fontSelect.addEventListener("change", () => {
+  renderPreview();
+  renderOutput();
+});
 $("type-seg").addEventListener("click", (e) => {
   const b = e.target.closest("button");
   if (!b) return;
@@ -393,21 +481,46 @@ $("copy-btn").addEventListener("click", async () => {
   toast(t.copyDone);
 });
 
-// PNG書き出し
-$("png-btn").addEventListener("click", () => {
-  const w = 1600;
-  const h = 1000;
+// PNG書き出し。文字モードは字面だけを塗った透過PNGを出す
+const TEXT_PNG_FONT_SIZE = 220;
+const TEXT_PNG_PADDING = 40;
+
+pngBtn.addEventListener("click", async () => {
+  const isText = state.target === "text";
   const canvas = document.createElement("canvas");
-  canvas.width = w;
-  canvas.height = h;
   const ctx = canvas.getContext("2d");
-  paintGradient(ctx, w, h, state);
+  let w = 1600;
+  let h = 1000;
+  let filename = "gradient.png";
+
+  if (isText) {
+    const font = `700 ${TEXT_PNG_FONT_SIZE}px ${currentFont().stack}`;
+    // Webフォントの読み込み前に描くと代替フォントで焼き込まれるため待つ
+    try {
+      await document.fonts.load(font, previewText());
+    } catch {
+      /* 読めなくても代替フォントで書き出しは続行する */
+    }
+    // 実測にも同じctxを使う（fontを跨いで測ると寸法がずれるため）
+    const box = measureTextBox(ctx, previewText(), font, TEXT_PNG_PADDING);
+    w = box.width;
+    h = box.height;
+    canvas.width = w;
+    canvas.height = h;
+    paintGradientText(ctx, w, h, state, previewText(), font);
+    filename = "gradient-text.png";
+  } else {
+    canvas.width = w;
+    canvas.height = h;
+    paintGradient(ctx, w, h, state);
+  }
+
   canvas.toBlob((blob) => {
     if (!blob) return;
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "gradient.png";
+    a.download = filename;
     a.rel = "noopener";
     // 一部ブラウザはDOMに無いアンカーのclickを無視するため追加してから発火
     document.body.appendChild(a);

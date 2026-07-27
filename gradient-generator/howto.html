@@ -38,7 +38,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css?v=20260724a" />
+    <link rel="stylesheet" href="css/style.css?v=20260727d" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -73,7 +73,10 @@
           { "@type": "Question", "name": "linear・radial・conicの違いは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "linearは直線方向、radialは中心から放射状、conicは中心を軸に角度方向へ色が変化するグラデーションです。モーダル内の種別ボタンで切り替えると、調整できるパラメータ（角度・形状）も変わります。" } },
           { "@type": "Question", "name": "Tailwind形式でも出力できますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。モーダルの出力エリアでTailwindタブを選ぶと、任意の値（arbitrary value）形式の bg-[...] クラスを出力します。そのままTailwind CSSのクラスとして利用できます。" } },
           { "@type": "Question", "name": "日本の伝統色のグラデーションは作れますか？", "acceptedAnswer": { "@type": "Answer", "text": "和グラデーションのプリセットを273種類用意しています。さらにモーダル内の「色の辞書から選ぶ」から、日本の伝統色約250色とCSS名前付き色を直接ストップに適用できます。" } },
-          { "@type": "Question", "name": "作ったグラデーションを画像で保存できますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。モーダルの「PNGで書き出し」から、表示中のグラデーションをPNG画像としてダウンロードできます。" } }
+          { "@type": "Question", "name": "作ったグラデーションを画像で保存できますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。モーダルの「PNGで書き出し」から、表示中のグラデーションをPNG画像としてダウンロードできます。" } },
+          { "@type": "Question", "name": "文字にグラデーションをかけられますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。モーダル上部の「適用先」で「文字」を選ぶと、出力コードが文字グラデーション用（background-clip: text）に切り替わります。背景用に作ったグラデーションをそのまま文字に使えます。CSS宣言だけでは当てる要素が分からないため、出力にはHTMLとフォントの読み込みもまとめて含まれます。" } },
+          { "@type": "Question", "name": "文字グラデーションを画像として書き出せますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。「文字」を選んだ状態で「PNGで書き出し」を押すと、文字の形に合わせた背景が透明なPNGとしてダウンロードできます。バナーやサムネイルにそのまま重ねられます。" } },
+          { "@type": "Question", "name": "文字グラデーションのフォントは変えられますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。「文字」を選ぶとフォントの選択欄が表示され、Googleフォント（明朝・ゴシック・丸ゴシック・欧文など）から選べます。選んだフォントはプレビュー・出力コード・PNG書き出しのすべてに反映され、出力にはlinkタグによるフォント読み込みも含まれます。" } }
         ]
       }
     </script>
@@ -108,8 +111,34 @@
           <li>モーダルでカラーストップのバーをクリックして色を追加し、つまみをドラッグして位置を調整。つまみのダブルクリックで削除できます。</li>
           <li>選択中のストップの色は、カラーピッカーまたは<a href="../color-dictionary/" target="_blank" rel="noopener">色の辞書</a>から指定。</li>
           <li>種別（線形・放射・扇形）と角度・形状を調整。</li>
+          <li><strong>適用先を「背景」か「文字」で切り替える</strong>。文字を選ぶと出力コードが文字グラデーション用に変わります。</li>
           <li>CSS / Tailwind を切り替えてコードをコピー、または画像が必要ならPNGで書き出し。</li>
         </ol>
+
+        <h2>背景と文字をワンクリックで切り替える</h2>
+        <p>
+          同じグラデーションを<strong>背景に敷く</strong>か<strong>文字そのものに流し込む</strong>かは、モーダル上部の「適用先」で切り替えられます。作り直す必要はありません。切り替えると<strong>出力されるコードも自動で変わります</strong>。
+        </p>
+        <p>「文字」を選ぶと、プレビューに<strong>実際の見出し文言を入力</strong>して確認できます。長い文言ではグラデーションのかかり方が変わるため、本番で使う文言を入れて確かめるのが確実です。あわせて<strong>フォントもGoogleフォントから選べます</strong>（明朝・ゴシック・丸ゴシック・欧文など）。フォントによって字面の太さや隙間が変わり、グラデーションの見え方も変わります。</p>
+        <p>文字グラデーションは、グラデーションを背景として敷いたうえで <code>background-clip: text</code> で字面の形に切り抜き、文字色を透明にすることで実現します。<strong>CSS宣言だけでは「どの要素に当てるか」が分からず動かない</strong>ため、出力にはHTMLとフォントの読み込みもまとめて含めています。そのままコピーすれば動きます。</p>
+        <pre><code>&lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&amp;display=swap" /&gt;
+
+&lt;h2 class="gradient-text"&gt;グラデーション見出し&lt;/h2&gt;
+
+&lt;style&gt;
+.gradient-text {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-weight: 700;
+  background-image: linear-gradient(135deg, #b7282e 0%, #f6d8a8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+&lt;/style&gt;</code></pre>
+        <p>
+          <code>-webkit-background-clip</code> はSafariや一部の環境で必要なため、標準プロパティと併記しています。文字色を消すのに <code>color: transparent</code> ではなく <code>-webkit-text-fill-color</code> を使っているのは、こちらのほうが確実に効き、テキスト選択時の見え方も保たれるためです。Tailwindを選んだ場合は、同じ内容が <code>font-['Zen_Maru_Gothic'] font-bold bg-[...] bg-clip-text text-transparent</code> というクラス付きの1行に変わります。
+        </p>
+        <p>文字モードのときは「PNGで書き出し」も文字の形に合わせて動き、<strong>背景が透明なPNG</strong>として保存されます。バナーやサムネイルにそのまま重ねられます。</p>
 
         <h2>和グラデーションと色の辞書連携</h2>
         <p>
@@ -136,6 +165,19 @@
         <div class="faq-item">
           <h3>作ったグラデーションを画像で保存できますか？</h3>
           <p>はい。「PNGで書き出し」から、表示中のグラデーションをPNG画像としてダウンロードできます。</p>
+        </div>
+        <div class="faq-item">
+          <h3>文字にグラデーションをかけられますか？</h3>
+          <p>はい。モーダル上部の「適用先」で「文字」を選ぶと、出力コードが文字グラデーション用（<code>background-clip: text</code>）に切り替わります。背景用に作ったグラデーションをそのまま文字に使えます。出力にはHTMLとフォント読み込みも含まれるので、コピーすればそのまま動きます。</p>
+        </div>
+        <div class="faq-item">
+          <h3>文字グラデーションを画像として書き出せますか？</h3>
+          <p>はい。「文字」を選んだ状態で「PNGで書き出し」を押すと、文字の形に合わせた<strong>背景が透明なPNG</strong>としてダウンロードできます。</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>文字グラデーションのフォントは変えられますか？</h3>
+          <p>はい。「文字」を選ぶとフォントの選択欄が表示され、Googleフォント（明朝・ゴシック・丸ゴシック・欧文など）から選べます。選んだフォントはプレビュー・出力コード・PNG書き出しのすべてに反映され、出力には <code>&lt;link&gt;</code> によるフォント読み込みも含まれます。</p>
         </div>
 
         <h2>関連ツール</h2>

@@ -474,6 +474,40 @@ main {
   position: absolute;
   inset: 0;
 }
+/* 文字モードのプレビュー。背景は透明のまま（editor-preview の市松模様が透ける） */
+.preview-text {
+  display: none;
+  padding: 0 16px;
+  font-size: clamp(28px, 7vw, 64px);
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  word-break: break-word;
+}
+.preview-box.is-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.preview-box.is-text .preview-text {
+  display: block;
+}
+/* プレビュー文字の入力欄（スライダー行と同じ枠に収める） */
+.text-input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius);
+}
+.text-input:focus-visible {
+  outline: 2px solid var(--seal);
+  outline-offset: 1px;
+}
 
 /* グラデーションバー（ストップ編集） */
 .bar-label {

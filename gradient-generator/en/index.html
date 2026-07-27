@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Japanese Gradient Generator｜273 Traditional-Color CSS Gradients</title>
-    <meta name="description" content="273 CSS gradients built from Japanese traditional colors. Pick from the gallery, fine-tune in a modal, copy CSS or Tailwind, and export PNG. Integrated with the Color Dictionary. Free, no sign-up." />
+    <title>Gradient Generator｜Switch Between Background and Text in One Click</title>
+    <meta name="description" content="Free CSS gradient generator that switches between background and gradient text in one click. Linear, radial and conic support, CSS and Tailwind output, transparent PNG export for text, and 273 Japanese traditional-color presets. No sign-up." />
     <link rel="canonical" href="https://codequest.work/generator/gradient-generator/en/" />
     <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/gradient-generator/" />
     <link rel="alternate" hreflang="en" href="https://codequest.work/generator/gradient-generator/en/" />
@@ -12,8 +12,8 @@
     <!-- OGP -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://codequest.work/generator/gradient-generator/en/" />
-    <meta property="og:title" content="Japanese Gradient Generator｜273 Traditional-Color CSS Gradients" />
-    <meta property="og:description" content="273 gradients built from Japanese traditional colors. Pick, fine-tune in a modal, copy CSS or Tailwind, export PNG. Free." />
+    <meta property="og:title" content="Gradient Generator｜Switch Between Background and Text in One Click" />
+    <meta property="og:description" content="Switch between background and gradient text in one click. Fine-tune, copy CSS or Tailwind, export transparent PNG for text. 273 Japanese traditional-color presets. Free." />
     <meta property="og:image" content="https://codequest.work/generator/gradient-generator/assets/og-en.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -22,8 +22,8 @@
     <meta property="og:locale" content="en_US" />
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Japanese Gradient Generator｜Traditional-Color CSS Gradients" />
-    <meta name="twitter:description" content="273 gradients from Japanese traditional colors. Fine-tune, copy CSS or Tailwind. Free." />
+    <meta name="twitter:title" content="Gradient Generator｜Background and Text in One Click" />
+    <meta name="twitter:description" content="Background or gradient text — one click switches the output. 273 Japanese traditional colors. Free." />
     <meta name="twitter:image" content="https://codequest.work/generator/gradient-generator/assets/og-en.png" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
@@ -38,7 +38,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/style.css?v=20260724a" />
+    <link rel="stylesheet" href="../css/style.css?v=20260727d" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -48,9 +48,9 @@
         "applicationCategory": "DesignApplication",
         "operatingSystem": "Web browser",
         "inLanguage": "en",
-        "description": "Free tool to pick from 273 gradients including Japanese traditional-color presets, fine-tune linear / radial / conic gradients in a modal, copy CSS and Tailwind, and export PNG.",
+        "description": "Free tool that switches gradients between background and text (background-clip) in one click. Pick from 273 presets including Japanese traditional colors, fine-tune linear / radial / conic gradients, copy CSS and Tailwind, and export PNG.",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "featureList": ["273 gradient presets in a gallery", "Filter by color category", "Linear, radial and conic gradients", "Drag to add, move and delete color stops", "CSS and Tailwind code output", "PNG image export", "Japanese traditional-color (wa) gradients", "Pick colors from the Color Dictionary"],
+        "featureList": ["273 gradient presets in a gallery", "One-click switch between background and gradient text", "Filter by color category", "Linear, radial and conic gradients", "Drag to add, move and delete color stops", "CSS and Tailwind code output", "PNG image export (transparent PNG for text)", "Japanese traditional-color (wa) gradients", "Pick colors from the Color Dictionary"],
         "publisher": {
           "@type": "Organization",
           "name": "CodeQuest.work",
@@ -77,7 +77,7 @@
       <div class="brandmark">WA GRADIENTS</div>
       <h1>Japanese <span class="accent">Gradients</span></h1>
       <p class="lede">
-        <strong>273 CSS gradients built from Japanese traditional colors</strong> — akane, wisteria, ultramarine and more. Pick from the gallery, fine-tune in a modal, and copy as <strong>CSS</strong> or <strong>Tailwind</strong>. Integrated with the <a href="../../color-dictionary/en/" target="_blank" rel="noopener">Color Dictionary</a>.
+        <strong>273 CSS gradients built from Japanese traditional colors</strong> — akane, wisteria, ultramarine and more. Pick from the gallery, fine-tune in a modal, and copy as <strong>CSS</strong> or <strong>Tailwind</strong>. <strong>Switch between background and text in one click</strong> to get gradient-text CSS or a transparent PNG. Integrated with the <a href="../../color-dictionary/en/" target="_blank" rel="noopener">Color Dictionary</a>.
       </p>
     </header>
     <hr class="hairline" />
@@ -111,13 +111,38 @@
     <div class="modal-overlay" id="modal">
       <div class="editor" role="dialog" aria-modal="true" aria-label="Gradient editor">
         <button class="editor-close" id="editor-close" type="button" aria-label="Close">×</button>
-        <div class="editor-preview"><div class="preview-box" id="preview-box"></div></div>
+        <div class="editor-preview"><div class="preview-box" id="preview-box"><span class="preview-text" id="preview-text-out"></span></div></div>
 
         <p class="bar-label">Color stops</p>
         <div class="gradient-bar-wrap">
           <div class="gradient-bar" id="gradient-bar"><div class="gradient-bar-fill" id="bar-fill"></div></div>
         </div>
         <p class="drag-hint">Click the bar to add a stop / drag a handle to move / double-click to delete</p>
+
+        <div class="ctrl">
+          <div class="ctrl-title">Apply to</div>
+          <div class="segmented full" id="target-seg" role="tablist" aria-label="Gradient target">
+            <button class="active" data-target="bg">Background</button>
+            <button data-target="text">Text</button>
+          </div>
+          <div class="slider-row hidden" id="preview-text-row">
+            <span class="slider-label">Preview text</span>
+            <input type="text" id="preview-text" class="text-input" value="Gradient Text" aria-label="Text shown in the preview" spellcheck="false" maxlength="40" />
+          </div>
+          <div class="slider-row hidden" id="font-row">
+            <span class="slider-label">Font</span>
+            <select id="text-font" class="text-input" aria-label="Font used in the preview and output">
+              <option value="noto-serif-jp" selected>Noto Serif JP (Mincho)</option>
+              <option value="noto-sans-jp">Noto Sans JP (Gothic)</option>
+              <option value="shippori-mincho">Shippori Mincho</option>
+              <option value="zen-maru-gothic">Zen Maru Gothic</option>
+              <option value="mplus-rounded">M PLUS Rounded 1c</option>
+              <option value="rocknroll-one">RocknRoll One</option>
+              <option value="playfair-display">Playfair Display</option>
+              <option value="montserrat">Montserrat</option>
+            </select>
+          </div>
+        </div>
 
         <div class="ctrl">
           <div class="ctrl-title">Type</div>
@@ -213,6 +238,6 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <script type="module" src="../js/main.js?v=20260629n"></script>
+    <script type="module" src="../js/main.js?v=20260727d"></script>
   </body>
 </html>

@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>グラデーション ジェネレーター【無料】日本の伝統色273色のCSS・Tailwind</title>
-    <meta name="description" content="グラデーションを無料で作成。日本の伝統色273色から選び、モーダルで微調整できるCSSグラデーション ジェネレーター。linear / radial / conic に対応し、CSS・TailwindのコードをコピーしてPNGも書き出せます。色の辞書連携・登録不要。" />
+    <title>グラデーション ジェネレーター【無料】背景と文字をワンクリック切替・伝統色273色</title>
+    <meta name="description" content="グラデーションを無料で作成。背景と文字（グラデーション文字）をワンクリックで切り替えられるCSSグラデーション ジェネレーター。linear / radial / conic に対応し、CSS・Tailwindのコードをコピー、文字は透過PNGでも書き出せます。日本の伝統色273色・登録不要。" />
     <link rel="canonical" href="https://codequest.work/generator/gradient-generator/" />
     <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/gradient-generator/" />
     <link rel="alternate" hreflang="en" href="https://codequest.work/generator/gradient-generator/en/" />
@@ -12,8 +12,8 @@
     <!-- OGP -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://codequest.work/generator/gradient-generator/" />
-    <meta property="og:title" content="グラデーション ジェネレーター【無料】日本の伝統色273色のCSS・Tailwind" />
-    <meta property="og:description" content="グラデーションを無料で作成。日本の伝統色273色から選んでモーダルで微調整。CSS・Tailwindのコードをコピーでき、色の辞書連携つきのジェネレーターです。" />
+    <meta property="og:title" content="グラデーション ジェネレーター【無料】背景と文字をワンクリック切替・伝統色273色" />
+    <meta property="og:description" content="背景と文字をワンクリックで切り替えられる無料のCSSグラデーション ジェネレーター。日本の伝統色273色から選んで微調整し、CSS・Tailwindをコピー。文字は透過PNGでも書き出せます。" />
     <meta property="og:image" content="https://codequest.work/generator/gradient-generator/assets/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -22,8 +22,8 @@
     <meta property="og:locale" content="ja_JP" />
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="グラデーション ジェネレーター【無料】日本の伝統色のCSSグラデーション" />
-    <meta name="twitter:description" content="日本の伝統色273色の和グラデーション。選んで微調整、CSS・Tailwindをコピーできる無料ツール。" />
+    <meta name="twitter:title" content="グラデーション ジェネレーター【無料】背景と文字をワンクリック切替" />
+    <meta name="twitter:description" content="背景にも文字にも使える和グラデーション273色。切り替えるだけでCSS・Tailwindのコードが変わる無料ツール。" />
     <meta name="twitter:image" content="https://codequest.work/generator/gradient-generator/assets/og.png" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
@@ -39,7 +39,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と js の両方で日付を上げる -->
-    <link rel="stylesheet" href="css/style.css?v=20260724a" />
+    <link rel="stylesheet" href="css/style.css?v=20260727d" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -49,9 +49,9 @@
         "applicationCategory": "DesignApplication",
         "operatingSystem": "Web browser",
         "inLanguage": "ja",
-        "description": "linear / radial / conic のCSSグラデーションを一覧から選んでモーダルで微調整できる無料ツール。CSSとTailwindのコードをコピーでき、PNG書き出しと日本の伝統色プリセットに対応します。",
+        "description": "linear / radial / conic のCSSグラデーションを一覧から選んでモーダルで微調整できる無料ツール。背景と文字（background-clip）をワンクリックで切り替えて出力でき、CSSとTailwindのコードのコピー、PNG書き出し、日本の伝統色プリセットに対応します。",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "featureList": ["グラデーションプリセットの一覧表示", "linear / radial / conic グラデーションに対応", "カラーストップをドラッグで追加・移動・削除", "角度・中心の調整", "CSSとTailwindのコード出力", "PNG画像の書き出し", "日本の伝統色グラデーションのプリセット", "色の辞書からの色選択"],
+        "featureList": ["グラデーションプリセットの一覧表示", "背景と文字（グラデーション文字）をワンクリックで切り替え", "linear / radial / conic グラデーションに対応", "カラーストップをドラッグで追加・移動・削除", "角度・中心の調整", "CSSとTailwindのコード出力", "PNG画像の書き出し（文字は透過PNG）", "日本の伝統色グラデーションのプリセット", "色の辞書からの色選択"],
         "publisher": {
           "@type": "Organization",
           "name": "CodeQuest.work",
@@ -78,7 +78,7 @@
       <div class="brandmark">WA GRADIENTS</div>
       <h1>和の<span class="accent">グラデーション</span> ジェネレーター</h1>
       <p class="lede">
-        <strong>日本の伝統色273色</strong>の和グラデーション。茜・藤・群青…を一覧から選んでモーダルで微調整、<strong>CSS</strong>と<strong>Tailwind</strong>のコードをそのままコピー。<a href="../color-dictionary/" target="_blank" rel="noopener">色の辞書</a>連携つき。
+        <strong>日本の伝統色273色</strong>の和グラデーション。茜・藤・群青…を一覧から選んでモーダルで微調整、<strong>CSS</strong>と<strong>Tailwind</strong>のコードをそのままコピー。<strong>背景と文字はワンクリックで切り替え</strong>でき、文字グラデーションのコードも透過PNGも作れます。<a href="../color-dictionary/" target="_blank" rel="noopener">色の辞書</a>連携つき。
       </p>
     </header>
     <hr class="hairline" />
@@ -112,13 +112,38 @@
     <div class="modal-overlay" id="modal">
       <div class="editor" role="dialog" aria-modal="true" aria-label="グラデーション編集">
         <button class="editor-close" id="editor-close" type="button" aria-label="閉じる">×</button>
-        <div class="editor-preview"><div class="preview-box" id="preview-box"></div></div>
+        <div class="editor-preview"><div class="preview-box" id="preview-box"><span class="preview-text" id="preview-text-out"></span></div></div>
 
         <p class="bar-label">カラーストップ</p>
         <div class="gradient-bar-wrap">
           <div class="gradient-bar" id="gradient-bar"><div class="gradient-bar-fill" id="bar-fill"></div></div>
         </div>
         <p class="drag-hint">バーをクリックで色を追加／つまみをドラッグで移動／ダブルクリックで削除</p>
+
+        <div class="ctrl">
+          <div class="ctrl-title">適用先</div>
+          <div class="segmented full" id="target-seg" role="tablist" aria-label="グラデーションの適用先">
+            <button class="active" data-target="bg">背景</button>
+            <button data-target="text">文字</button>
+          </div>
+          <div class="slider-row hidden" id="preview-text-row">
+            <span class="slider-label">プレビュー文字</span>
+            <input type="text" id="preview-text" class="text-input" value="グラデーション見出し" aria-label="プレビューに表示する文字" spellcheck="false" maxlength="40" />
+          </div>
+          <div class="slider-row hidden" id="font-row">
+            <span class="slider-label">フォント</span>
+            <select id="text-font" class="text-input" aria-label="プレビューと出力に使うフォント">
+              <option value="noto-serif-jp" selected>Noto Serif JP（明朝）</option>
+              <option value="noto-sans-jp">Noto Sans JP（ゴシック）</option>
+              <option value="shippori-mincho">しっぽり明朝</option>
+              <option value="zen-maru-gothic">Zen丸ゴシック</option>
+              <option value="mplus-rounded">M PLUS Rounded 1c</option>
+              <option value="rocknroll-one">RocknRoll One</option>
+              <option value="playfair-display">Playfair Display（欧文）</option>
+              <option value="montserrat">Montserrat（欧文）</option>
+            </select>
+          </div>
+        </div>
 
         <div class="ctrl">
           <div class="ctrl-title">種別</div>
@@ -215,6 +240,6 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <script type="module" src="js/main.js?v=20260629n"></script>
+    <script type="module" src="js/main.js?v=20260727d"></script>
   </body>
 </html>
