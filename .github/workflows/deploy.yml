@@ -28,14 +28,14 @@ jobs:
           ZERO="0000000000000000000000000000000000000000"
 
           # index.html を持つトップレベルディレクトリ＝デプロイ対象ツール
-          # apps/ 配下は「apps/<name>」の2階層で対象化（転送先は /generator/ でなく docroot 直下の /apps/）
+          # apps/ は共有アセットを許容するため「apps」1ユニットで一括デプロイ
+          # （転送先は /generator/ でなく docroot 直下の /apps/）
           all_dirs() {
             for d in */; do
+              [ "${d}" = "apps/" ] && continue
               [ -f "${d}index.html" ] && echo "${d%/}"
             done
-            for d in apps/*/; do
-              [ -f "${d}index.html" ] && echo "${d%/}"
-            done
+            [ -d apps ] && echo "apps"
           }
 
           if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
@@ -51,10 +51,12 @@ jobs:
               TARGETS=$(all_dirs)
             else
               # 変更ファイルのトップレベルディレクトリのうち index.html を持つものだけ
-              # apps/ 配下は apps/<name> 単位で判定する
-              TARGETS=$(echo "$CHANGED" | grep '/' \
-                | awk -F/ '{ if ($1 == "apps" && NF >= 3) print $1 "/" $2; else if ($1 != "apps") print $1 }' | sort -u \
-                | while read -r d; do [ -f "${d}/index.html" ] && echo "$d"; done)
+              # apps/ 配下（共有アセット含む）はどこが変わっても「apps」1ユニットで一括デプロイ
+              TARGETS=$(echo "$CHANGED" | grep '/' | cut -d/ -f1 | sort -u \
+                | while read -r d; do
+                    if [ "$d" = "apps" ]; then [ -d apps ] && echo "apps";
+                    else [ -f "${d}/index.html" ] && echo "$d"; fi
+                  done)
             fi
           fi
 
@@ -84,9 +86,9 @@ jobs:
           REMOTE="${REMOTE_USER}@${REMOTE_HOST}"
           PORT=$(echo "${REMOTE_PORT}" | tr -d '[:space:]')
           for name in $TARGETS; do
-            # apps/ 配下は /generator/ でなく docroot 直下（DEPLOY_PATH の親）へ配置する
+            # apps は /generator/ でなく docroot 直下（DEPLOY_PATH の親）へ配置する
             case "$name" in
-              apps/*) BASE=$(dirname "${DEST}") ;;
+              apps|apps/*) BASE=$(dirname "${DEST}") ;;
               *) BASE="${DEST}" ;;
             esac
             echo "Deploying (SSH): ${name} -> ${BASE}/${name}"
@@ -111,9 +113,9 @@ jobs:
           echo "SSHデプロイ失敗を検知 → FTPSでフォールバック配信します"
           DEST=$(echo "${FTP_DEPLOY_PATH}" | tr -d '[:space:]')
           for name in $TARGETS; do
-            # apps/ 配下は /generator/ でなく docroot 直下（FTP_DEPLOY_PATH の親）へ配置する
+            # apps は /generator/ でなく docroot 直下（FTP_DEPLOY_PATH の親）へ配置する
             case "$name" in
-              apps/*) BASE=$(dirname "${DEST}") ;;
+              apps|apps/*) BASE=$(dirname "${DEST}") ;;
               *) BASE="${DEST}" ;;
             esac
             echo "Deploying (FTPS): ${name} -> ${BASE}/${name}"
