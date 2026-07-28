@@ -200,12 +200,12 @@
   footer a:hover { text-decoration: underline; }
   .footer-links { display: flex; flex-wrap: wrap; gap: 16px; }
 
-  /* 右下フローティング広告（レクタングル 300×250 / 336×280 両対応） */
+  /* 右下フローティング広告（300×250固定） */
   .footer-ad {
     position: fixed; right: 0; bottom: 0; z-index: 90;
     display: flex; flex-direction: column; align-items: center; gap: 2px;
     padding: 0;
-    width: 336px; overflow: hidden; /* AdSenseレスポンシブの横伸び防止＋×を右端に固定 */
+    width: 300px; overflow: hidden; /* AdSenseレスポンシブの横伸び防止＋×を右端に固定 */
     background: transparent; border: none; box-shadow: none;
   }
   .footer-ad.is-closed { display: none; }
@@ -218,7 +218,7 @@
     transition: background 0.2s, color 0.2s;
   }
   .ad-widget__close:hover { background: #e2e8f0; color: #1e293b; }
-  .footer-ad ins.adsbygoogle { display: block; width: 336px; min-height: 250px; }
+  .footer-ad ins.adsbygoogle { display: block; width: 300px; height: 250px; }
 
   @media screen and (max-width: 768px) {
     footer { flex-direction: column; align-items: center; text-align: center; }
@@ -323,25 +323,26 @@
   </footer>
 </div>
 
-<!-- 右下フローティング広告（レクタングル）。スロット発行後に data-ad-slot を実値へ差し替えると表示される -->
+<!-- 右下フローティング広告（300×250固定） -->
 <div id="ad-widget" class="footer-ad">
   <div class="ad-widget__head">
     <span class="ad-widget__label">広告</span>
     <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
   </div>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
-  <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-format="rectangle" data-ad-slot="REPLACE_WITH_SLOT"></ins>
+  <!-- レスポンシブユニットをコンテナ実寸(300×250)で固定配信（auto指定は使わない） -->
+  <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="3495603438"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
 </div>
 <script>
-  // スロット未発行の間は広告ウィジェットごと外す。発行後は data-ad-slot を実値にすれば有効化される
+  // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
   (function () {
     var w = document.getElementById("ad-widget");
-    var ins = w && w.querySelector("ins.adsbygoogle");
-    var slot = ins && ins.getAttribute("data-ad-slot");
-    if (!slot || slot === "REPLACE_WITH_SLOT") { if (w) w.remove(); return; }
-    (adsbygoogle = window.adsbygoogle || []).push({});
     var b = document.getElementById("ad-close");
-    if (b) b.addEventListener("click", function () { w.classList.add("is-closed"); });
+    if (!w || !b) return;
+    b.addEventListener("click", function () { w.classList.add("is-closed"); });
   })();
 </script>
 
