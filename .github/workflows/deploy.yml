@@ -28,8 +28,12 @@ jobs:
           ZERO="0000000000000000000000000000000000000000"
 
           # index.html を持つトップレベルディレクトリ＝デプロイ対象ツール
+          # apps/ 配下は「apps/<name>」の2階層で対象化（転送先は /generator/ でなく docroot 直下の /apps/）
           all_dirs() {
             for d in */; do
+              [ -f "${d}index.html" ] && echo "${d%/}"
+            done
+            for d in apps/*/; do
               [ -f "${d}index.html" ] && echo "${d%/}"
             done
           }
@@ -47,7 +51,9 @@ jobs:
               TARGETS=$(all_dirs)
             else
               # 変更ファイルのトップレベルディレクトリのうち index.html を持つものだけ
-              TARGETS=$(echo "$CHANGED" | grep '/' | cut -d/ -f1 | sort -u \
+              # apps/ 配下は apps/<name> 単位で判定する
+              TARGETS=$(echo "$CHANGED" | grep '/' \
+                | awk -F/ '{ if ($1 == "apps" && NF >= 3) print $1 "/" $2; else if ($1 != "apps") print $1 }' | sort -u \
                 | while read -r d; do [ -f "${d}/index.html" ] && echo "$d"; done)
             fi
           fi
@@ -78,9 +84,14 @@ jobs:
           REMOTE="${REMOTE_USER}@${REMOTE_HOST}"
           PORT=$(echo "${REMOTE_PORT}" | tr -d '[:space:]')
           for name in $TARGETS; do
-            echo "Deploying (SSH): ${name}"
-            ssh -p "${PORT}" "${REMOTE}" "mkdir -p ${DEST}/${name}"
-            rsync -az -e "ssh -p ${PORT}" "${name}/" "${REMOTE}:${DEST}/${name}/"
+            # apps/ 配下は /generator/ でなく docroot 直下（DEPLOY_PATH の親）へ配置する
+            case "$name" in
+              apps/*) BASE=$(dirname "${DEST}") ;;
+              *) BASE="${DEST}" ;;
+            esac
+            echo "Deploying (SSH): ${name} -> ${BASE}/${name}"
+            ssh -p "${PORT}" "${REMOTE}" "mkdir -p ${BASE}/${name}"
+            rsync -az -e "ssh -p ${PORT}" "${name}/" "${REMOTE}:${BASE}/${name}/"
           done
 
       # 第2経路: SSHが失敗したときのみFTPSで自動フォールバック（同じTARGETSを配信）。
@@ -100,9 +111,14 @@ jobs:
           echo "SSHデプロイ失敗を検知 → FTPSでフォールバック配信します"
           DEST=$(echo "${FTP_DEPLOY_PATH}" | tr -d '[:space:]')
           for name in $TARGETS; do
-            echo "Deploying (FTPS): ${name}"
+            # apps/ 配下は /generator/ でなく docroot 直下（FTP_DEPLOY_PATH の親）へ配置する
+            case "$name" in
+              apps/*) BASE=$(dirname "${DEST}") ;;
+              *) BASE="${DEST}" ;;
+            esac
+            echo "Deploying (FTPS): ${name} -> ${BASE}/${name}"
             # 明示的FTPS。SSH版 rsync(-az・削除なし)と挙動を揃える。
-            lftp -u "${FTP_USER},${FTP_PASSWORD}" "${FTP_HOST}" -e "set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no; mirror -R --verbose '${name}/' '${DEST}/${name}/'; bye"
+            lftp -u "${FTP_USER},${FTP_PASSWORD}" "${FTP_HOST}" -e "set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no; mirror -R --verbose '${name}/' '${BASE}/${name}/'; bye"
           done
 
       - name: Nothing to deploy
