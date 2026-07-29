@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript DOM操作クイズ【無料】20問をブラウザで解いて即実行</title>
+<meta name="description" content="JavaScriptのDOM操作を20問のクイズ形式で練習できる無料アプリ。問題ごとのHTMLがプレビューに用意され、書いたコードをその場で実行してボタンやフォームの動きを確認できます。解答例と見比べて答え合わせ、進捗は自動保存。登録・インストール不要です。">
+<link rel="canonical" href="https://codequest.work/apps/js-dom/">
+<link rel="alternate" hreflang="ja" href="https://codequest.work/apps/js-dom/">
+<link rel="alternate" hreflang="x-default" href="https://codequest.work/apps/js-dom/">
+<meta name="robots" content="index, follow">
+
+<!-- OGP -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CodeQuest.work">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="JavaScript DOM操作クイズ【無料】20問をブラウザで解いて即実行">
+<meta property="og:description" content="JavaScriptのDOM操作を20問のクイズ形式で練習できる無料アプリ。問題ごとのHTMLがプレビューに用意され、書いたコードをその場で実行して動きを確認できます。">
+<meta property="og:url" content="https://codequest.work/apps/js-dom/">
+<meta property="og:image" content="https://codequest.work/apps/js-dom/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="JavaScript DOM操作クイズ（20問）">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="JavaScript DOM操作クイズ【無料】20問をブラウザで解いて即実行">
+<meta name="twitter:description" content="JavaScriptのDOM操作を20問のクイズ形式で練習できる無料アプリ。書いたコードをその場で実行して、ボタンやフォームの動きをプレビューで確認できます。">
+<meta name="twitter:image" content="https://codequest.work/apps/js-dom/assets/og.png">
+
+<!-- 構造化データ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "JavaScript DOM操作クイズ（20問）",
+      "url": "https://codequest.work/apps/js-dom/",
+      "description": "JavaScriptのDOM操作を20問のクイズ形式で練習できる無料アプリ。問題ごとのHTMLがプレビューに用意され、書いたコードをその場で実行して動きを確認できる。解答例との答え合わせ・進捗の自動保存に対応。登録・インストール不要。",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web",
+      "browserRequirements": "Requires JavaScript.",
+      "inLanguage": "ja",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+      "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+        { "@type": "ListItem", "position": 2, "name": "JavaScript DOM操作クイズ", "item": "https://codequest.work/apps/js-dom/" }
+      ]
+    }
+  ]
+}
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag("js", new Date());
+  gtag("config", "G-7Z6M3CJEV3");
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css?v=20260729a">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>JavaScript DOM操作クイズ（20問）</h1>
+    <span class="free">無料</span>
+  </header>
+  <p class="lead">テキスト変更・クラス操作からタブUI・モーダルまで、JavaScriptのDOM操作を20問のクイズ形式で練習できる無料アプリです。問題ごとのHTMLがプレビューに用意され、書いたコードをその場で実行して動きを確認できます。じっくり解説を読みたい方は<a href="https://codequest.work/javascript-dom-practice-questions/" target="_blank" rel="noopener">記事版「JavaScript DOM操作の練習問題10選」</a>へ。</p>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div class="progress">
+    <div class="bar"><i id="barFill"></i></div>
+    <span id="progressText"></span>
+    <button class="ghost reset-mini" id="resetProgressBtn">進捗をリセット</button>
+  </div>
+
+  <div class="chips" id="chips"></div>
+
+  <div id="quizArea">
+    <div class="card">
+      <h2><span class="num" id="qNum"></span><span id="qTitle"></span></h2>
+      <p class="question" id="qText"></p>
+    </div>
+
+    <div class="card" id="stageCard">
+      <div class="editor-head">
+        <span>preview — 実行後にここを操作して動作を確認できます</span>
+      </div>
+      <div id="stageHolder"></div>
+      <details class="stage-src">
+        <summary>ステージのHTMLを見る</summary>
+        <pre id="stageSrc"></pre>
+      </details>
+    </div>
+
+    <div class="card">
+      <div class="editor-head">
+        <span>script.js — 上のステージのHTMLに対してコードを書けます</span>
+      </div>
+      <textarea id="editor" spellcheck="false" placeholder="// ここにコードを書いて「実行する」を押す"></textarea>
+      <div class="btns">
+        <button class="primary" id="runBtn">▶ 実行する</button>
+        <button class="ghost" id="clearBtn">リセット</button>
+      </div>
+      <div class="console" id="console">
+        <div class="label">console</div>
+        <pre id="consoleOut"></pre>
+      </div>
+      <div style="margin-top:16px">
+        <details id="answerBox">
+          <summary>解答例を見る</summary>
+          <pre id="answerCode"></pre>
+        </details>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="judge-row">
+        <span style="color:var(--text-sub)">この問題は…</span>
+        <button class="judge ok" id="okBtn">✓ できた</button>
+        <button class="judge ng" id="ngBtn">△ あとで復習</button>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="ghost" id="prevBtn">← 前の問題</button>
+      <button class="ghost" id="nextBtn">次の問題 →</button>
+    </div>
+  </div>
+
+  <div id="clearArea" style="display:none">
+    <div class="card clear-card">
+      <div class="big" id="clearScore"></div>
+      <p id="clearMsg"></p>
+      <div class="btns" style="justify-content:center">
+        <button class="primary" id="reviewBtn">復習リストを解き直す</button>
+        <button class="ghost" id="restartBtn">最初からやり直す</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="about">
+    <h2>このアプリについて</h2>
+    <ul>
+      <li>要素の取得・テキスト変更・クラス操作から、タブUI・モーダル・アコーディオンまで、DOM操作の頻出パターンを20問で総ざらいできます</li>
+      <li>Q1〜Q10は記事版と同じ問題、Q11〜Q20はアプリ限定ドリル（イベントデリゲーション / dataset / insertAdjacentHTML / cloneNode / フォームバリデーションなど）です</li>
+      <li>コードは問題ごとのHTMLが入ったプレビュー（iframe）内で実行され、ボタンやフォームを実際に操作して動作確認できます（登録・インストール不要）</li>
+      <li>「✓できた / △あとで復習」の自己判定はこの端末に自動保存され、復習リストだけを解き直せます</li>
+    </ul>
+    <p>各問題の詳しい解説は、記事版「<a href="https://codequest.work/javascript-dom-practice-questions/" target="_blank" rel="noopener">JavaScript DOM操作の練習問題10選｜解答付き！</a>」にまとめています。</p>
+  </section>
+
+  <footer>
+    <span>&copy; <span class="cq-year">2026</span>
+      <script>document.currentScript.previousElementSibling.textContent = new Date().getFullYear();</script>
+      JavaScript DOM操作クイズ | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+    <div class="footer-links">
+      <a href="https://codequest.work/javascript-dom-practice-questions/" target="_blank" rel="noopener">&#128214; 解説つき記事版</a>
+      <a href="https://codequest.work/category/elementary/e-practice/" target="_blank" rel="noopener">その他の練習問題 &rarr;</a>
+    </div>
+  </footer>
+</div>
+
+<script src="js/data.js?v=20260729a"></script>
+<script src="js/main.js?v=20260729a"></script>
+</body>
+</html>
