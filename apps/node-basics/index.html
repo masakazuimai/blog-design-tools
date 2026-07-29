@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Node.js練習問題クイズ【無料】20問をブラウザの仮想Node環境で実行</title>
+<meta name="description" content="Node.jsの練習問題20問をクイズ形式で解ける無料アプリ。fs・path・モジュール（CJS/ESM）・process・イベントループのコードを、ブラウザ内の仮想Node環境でその場で実行して確認できます。解答例と見比べて答え合わせ、進捗は自動保存。登録・インストール不要です。">
+<link rel="canonical" href="https://codequest.work/apps/node-basics/">
+<link rel="alternate" hreflang="ja" href="https://codequest.work/apps/node-basics/">
+<link rel="alternate" hreflang="x-default" href="https://codequest.work/apps/node-basics/">
+<meta name="robots" content="index, follow">
+
+<!-- OGP -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CodeQuest.work">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="Node.js練習問題クイズ【無料】20問をブラウザの仮想Node環境で実行">
+<meta property="og:description" content="Node.jsの練習問題20問をクイズ形式で解ける無料アプリ。fs・path・モジュール・process・イベントループのコードを、ブラウザ内の仮想Node環境でその場で実行して確認できます。">
+<meta property="og:url" content="https://codequest.work/apps/node-basics/">
+<meta property="og:image" content="https://codequest.work/apps/node-basics/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Node.js練習問題クイズ（20問）">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Node.js練習問題クイズ【無料】20問をブラウザの仮想Node環境で実行">
+<meta name="twitter:description" content="Node.jsの練習問題20問をクイズ形式で解ける無料アプリ。fs・path・モジュール・process・イベントループをブラウザだけで練習できます。">
+<meta name="twitter:image" content="https://codequest.work/apps/node-basics/assets/og.png">
+
+<!-- 構造化データ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Node.js練習問題クイズ（20問）",
+      "url": "https://codequest.work/apps/node-basics/",
+      "description": "Node.jsの練習問題20問をクイズ形式で解ける無料アプリ。fs・path・モジュール（CJS/ESM）・process・イベントループのコードを、ブラウザ内の仮想Node環境でその場で実行して確認できる。解答例との答え合わせ・進捗の自動保存に対応。登録・インストール不要。",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web",
+      "browserRequirements": "Requires JavaScript.",
+      "inLanguage": "ja",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+      "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+        { "@type": "ListItem", "position": 2, "name": "Node.js練習問題クイズ", "item": "https://codequest.work/apps/node-basics/" }
+      ]
+    }
+  ]
+}
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag("js", new Date());
+  gtag("config", "G-7Z6M3CJEV3");
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css?v=20260729a">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Node.js練習問題クイズ（20問）</h1>
+    <span class="free">無料</span>
+  </header>
+  <p class="lead">fs・path・モジュール（CJS/ESM）・process・イベントループまで、Node.js固有の基礎APIを20問のクイズ形式で練習できる無料アプリです。書いたコードはブラウザ内の仮想Node環境でその場で実行され、仮想ファイルへの書き込み結果も確認できます。じっくり解説を読みたい方は<a href="https://codequest.work/nodejs-practice-problems/" target="_blank" rel="noopener">記事版「Node.js練習問題集【基礎API編】」</a>へ。</p>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div class="progress">
+    <div class="bar"><i id="barFill"></i></div>
+    <span id="progressText"></span>
+    <button class="ghost reset-mini" id="resetProgressBtn">進捗をリセット</button>
+  </div>
+
+  <div class="chips" id="chips"></div>
+
+  <div id="quizArea">
+    <div class="card">
+      <h2><span class="num" id="qNum"></span><span id="qTitle"></span></h2>
+      <p class="question" id="qText"></p>
+    </div>
+
+    <div class="card" id="stageCard">
+      <div class="editor-head">
+        <span>virtual-node — 仮想Node環境（ファイルと実行コマンドはブラウザ内で再現されます）</span>
+      </div>
+      <pre class="run-cmd" id="runCmd"></pre>
+      <div class="vfs" id="vfsList"></div>
+      <div id="stageHolder" class="exec-holder" aria-hidden="true"></div>
+    </div>
+
+    <div class="card">
+      <div class="editor-head">
+        <span id="editorLabel">index.js — 仮想Node環境で実行されます</span>
+      </div>
+      <textarea id="editor" spellcheck="false" placeholder="// ここにコードを書いて「実行する」を押す"></textarea>
+      <div class="btns">
+        <button class="primary" id="runBtn">▶ 実行する</button>
+        <button class="ghost" id="clearBtn">リセット</button>
+      </div>
+      <div class="console" id="console">
+        <div class="label">console</div>
+        <pre id="consoleOut"></pre>
+      </div>
+      <div style="margin-top:16px">
+        <details id="answerBox">
+          <summary>解答例を見る</summary>
+          <pre id="answerCode"></pre>
+        </details>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="judge-row">
+        <span style="color:var(--text-sub)">この問題は…</span>
+        <button class="judge ok" id="okBtn">✓ できた</button>
+        <button class="judge ng" id="ngBtn">△ あとで復習</button>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="ghost" id="prevBtn">← 前の問題</button>
+      <button class="ghost" id="nextBtn">次の問題 →</button>
+    </div>
+  </div>
+
+  <div id="clearArea" style="display:none">
+    <div class="card clear-card">
+      <div class="big" id="clearScore"></div>
+      <p id="clearMsg"></p>
+      <div class="btns" style="justify-content:center">
+        <button class="primary" id="reviewBtn">復習リストを解き直す</button>
+        <button class="ghost" id="restartBtn">最初からやり直す</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="about">
+    <h2>このアプリについて</h2>
+    <ul>
+      <li>fs（ファイル操作）・path・モジュール（CJS/ESM）・process・イベントループ・Stream/Bufferまで、Node.js固有の基礎APIを20問で総ざらいできます</li>
+      <li>Q1・Q6・Q9・Q13・Q16は記事版のサンプル5問と同じ問題、残り15問はアプリ限定ドリルです</li>
+      <li>コードはブラウザ内の仮想Node環境（fs・path・process・requireなどの主要APIを再現した実行環境）で動き、仮想ファイルへの書き込みはファイルパネルにライブ反映されます（登録・インストール不要）</li>
+      <li>仮想環境はNode.jsの完全な再現ではありません。importはトップレベルの静的な形式のみ対応し、httpサーバーやExpressは記事版のローカル実行課題で体験できます</li>
+      <li>「✓できた / △あとで復習」の自己判定はこの端末に自動保存され、復習リストだけを解き直せます</li>
+    </ul>
+    <p>各問題の詳しい解説と、手元のNode.jsで挑戦するローカル実行課題（httpサーバー・Express）は、記事版「<a href="https://codequest.work/nodejs-practice-problems/" target="_blank" rel="noopener">Node.js練習問題集【基礎API編】</a>」にまとめています。</p>
+  </section>
+
+  <footer>
+    <span>&copy; <span class="cq-year">2026</span>
+      <script>document.currentScript.previousElementSibling.textContent = new Date().getFullYear();</script>
+      Node.js練習問題クイズ | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+    <div class="footer-links">
+      <a href="https://codequest.work/nodejs-practice-problems/" target="_blank" rel="noopener">&#128214; 解説つき記事版</a>
+      <a href="https://codequest.work/category/intermediate/i-practice/" target="_blank" rel="noopener">その他の練習問題 &rarr;</a>
+    </div>
+  </footer>
+</div>
+
+<!-- 右下フローティング広告（300×250固定） -->
+<div id="ad-widget" class="footer-ad">
+  <div class="ad-widget__head">
+    <span class="ad-widget__label">広告</span>
+    <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+  </div>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  <!-- レスポンシブユニットをコンテナ実寸(300×250)で固定配信（auto指定は使わない） -->
+  <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7997422399"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+<script>
+  // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+  (function () {
+    var w = document.getElementById("ad-widget");
+    var b = document.getElementById("ad-close");
+    if (!w || !b) return;
+    b.addEventListener("click", function () { w.classList.add("is-closed"); });
+  })();
+</script>
+
+<script src="js/data.js?v=20260729a"></script>
+<script src="js/main.js?v=20260729a"></script>
+</body>
+</html>
