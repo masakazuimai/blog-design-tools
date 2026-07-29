@@ -53,7 +53,8 @@ function renderProblem() {
   $('qNum').textContent = `Q${p.id}.`;
   $('qTitle').textContent = p.title;
   $('qText').innerHTML = p.questionHtml;
-  $('editor').value = state.drafts[p.id] || '';
+  // 下書きがなければ問題のデータ（starter）をプリセット
+  $('editor').value = state.drafts[p.id] || p.starter || '';
   $('answerCode').textContent = p.answer;
   $('answerBox').open = false;
   $('console').classList.remove('show');
@@ -108,9 +109,13 @@ $('runBtn').onclick = () => {
   $('console').classList.add('show');
 };
 
+// リセット＝下書きを破棄して問題のデータ（starter）に戻す
 $('clearBtn').onclick = () => {
-  $('editor').value = '';
-  state = { ...state, drafts: { ...state.drafts, [state.current]: '' } };
+  const p = problem(state.current);
+  $('editor').value = p.starter || '';
+  const drafts = { ...state.drafts };
+  delete drafts[state.current];
+  state = { ...state, drafts };
   save();
 };
 
