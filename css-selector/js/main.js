@@ -264,8 +264,9 @@ function init() {
     }
   });
 
-  // 初期表示は最初のセレクタを選んだ状態にする（真っ白なデモを避ける）
-  select(SELECTORS[0]);
+  // 初期表示は #header を選んだ状態にする。
+  // ヒットが1件だけで「どこに当たったか」が一目で分かるため（p だと14件光って伝わりにくい）
+  select(SELECTORS.find((s) => s.sel === "#header") || SELECTORS[0]);
 }
 
 init();
