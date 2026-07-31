@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSSセレクタ一覧｜44種をブラウザで試せるライブ辞典</title>
+    <meta
+      name="description"
+      content="CSSセレクタの一覧と実演を1ページに。タグ・クラス・ID・属性・疑似クラス・疑似要素・フォーム状態など44種を選ぶと、デモの該当要素がその場でハイライトされ、CSSをコピーできます。カスタムセレクタ入力にも対応。登録不要・ブラウザ完結。"
+    />
+    <link rel="canonical" href="https://codequest.work/generator/css-selector/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:title" content="CSSセレクタ一覧｜44種をブラウザで試せるライブ辞典" />
+    <meta
+      property="og:description"
+      content="タグ・クラス・ID・属性・疑似クラス・疑似要素・フォーム状態など44種のCSSセレクタを、デモ上でハイライトしながら学べる無料ツール。サンプルCSSはワンクリックでコピーできます。"
+    />
+    <meta property="og:url" content="https://codequest.work/generator/css-selector/" />
+    <meta property="og:image" content="https://codequest.work/generator/css-selector/assets/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="CSSセレクタ辞典" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CSSセレクタ一覧｜44種をブラウザで試せるライブ辞典" />
+    <meta
+      name="twitter:description"
+      content="タグ・クラス・ID・属性・疑似クラス・疑似要素・フォーム状態など44種のCSSセレクタを、デモ上でハイライトしながら学べる無料ツール。"
+    />
+    <meta name="twitter:image" content="https://codequest.work/generator/css-selector/assets/og.png" />
+
+    <!-- 構造化データ -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "CSSセレクタ辞典",
+            "url": "https://codequest.work/generator/css-selector/",
+            "description": "タグ・クラス・ID・属性・疑似クラス・疑似要素・フォーム状態など44種のCSSセレクタを、デモ上でハイライトしながら確認できる無料ツール。サンプルCSSのコピーとカスタムセレクタの実行に対応。",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Web",
+            "browserRequirements": "Requires JavaScript.",
+            "inLanguage": "ja",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+            "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+              { "@type": "ListItem", "position": 2, "name": "ジェネレーター", "item": "https://codequest.work/category/generator/" },
+              { "@type": "ListItem", "position": 3, "name": "CSSセレクタ辞典", "item": "https://codequest.work/generator/css-selector/" }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "CSSセレクタとは何ですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "CSSセレクタとは、スタイルを適用する対象のHTML要素を指定するための書き方です。タグ名で指定する要素セレクタ、class属性を指す「.クラス名」、id属性を指す「#ID名」が基本で、そこに階層・属性・状態の条件を組み合わせて対象を絞り込みます。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "疑似クラスと疑似要素の違いは何ですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "疑似クラス（コロン1つ・:hover や :first-child）は、既にあるHTML要素を「状態」や「位置」で絞り込みます。疑似要素（コロン2つ・::before や ::first-letter）は、HTMLには存在しない部分をCSS側で作り出して装飾します。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "子孫セレクタと子セレクタはどう使い分けますか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "半角スペースで区切る子孫セレクタ（div p）は、何階層下の要素でも対象にします。大なり記号を使う子セレクタ（div > p）は直下の子だけが対象です。意図しない深い階層まで当たるのを防ぎたいときは子セレクタを選びます。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "セレクタが効かないときは何を確認すればよいですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "まず対象要素に本当に一致しているかを確認します。次に詳細度（IDセレクタ＞クラスセレクタ＞要素セレクタ）で他のルールに負けていないか、記述順が後のルールに上書きされていないかを見ます。カンマ区切りのグループ指定は、ひとつでも解釈できない書き方が混ざるとルール全体が無視される点にも注意します。"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+    <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と js内import の日付を揃えて上げる -->
+    <link rel="stylesheet" href="css/style.css?v=20260731a" />
+  </head>
+  <body>
+    <div class="header">
+      <h1>CSSセレクタ一覧（クリックでライブ実演）</h1>
+      <p>
+        タグ・クラス・ID・属性・疑似クラス・疑似要素・フォーム状態まで44種。選ぶとデモ内の該当要素がハイライトされ、サンプルCSSがその場で適用されます。
+      </p>
+    </div>
+
+    <div class="container">
+      <div class="layout">
+        <aside class="sidebar">
+          <h2>セレクタを選ぶ</h2>
+          <input type="search" id="search" class="search-box" placeholder="セレクタ名・記号で検索（例: nth, 属性）" aria-label="セレクタを検索" />
+          <div class="filters" id="filters"></div>
+          <div class="list-count" id="listCount"></div>
+          <ul class="sel-list" id="selectorList" aria-label="CSSセレクタ一覧"></ul>
+        </aside>
+
+        <main class="main">
+          <section class="panel">
+            <div class="detail-head">
+              <h2 class="detail-name" id="detailName">セレクタを選んでください</h2>
+              <span class="hit-badge">ヒット数 <strong id="hitCount">0</strong></span>
+            </div>
+            <p class="detail-desc" id="detailDesc"></p>
+            <p class="detail-note" id="detailNote" hidden></p>
+
+            <div class="code-head">
+              <h2>サンプルCSS</h2>
+              <button type="button" class="copy-btn" id="copyBtn" disabled>コピー</button>
+            </div>
+            <pre class="code-box"><code id="cssCode"></code></pre>
+
+            <div class="custom-row">
+              <label for="customInput">カスタムセレクタを試す</label>
+              <input
+                type="text"
+                id="customInput"
+                class="custom-input"
+                placeholder="例: .dcard > ul li:nth-child(odd)"
+                spellcheck="false"
+                autocapitalize="off"
+              />
+              <button type="button" class="ghost-btn" id="customRun">実行</button>
+              <button type="button" class="ghost-btn" id="clearBtn">リセット</button>
+            </div>
+          </section>
+
+          <section class="panel demo-panel">
+            <h2>デモ</h2>
+            <p class="demo-hint">
+              選択中のセレクタに一致した要素をオレンジの枠で囲み、サンプルCSSを実際に適用しています。このデモは独立した領域で動くため、<code>*</code>
+              や <code>:hover</code> を当ててもツール本体の表示は変わりません。
+            </p>
+            <iframe id="demoFrame" class="demo-frame" title="CSSセレクタのデモ"></iframe>
+          </section>
+
+          <section class="panel about">
+            <h2>CSSセレクタの基本</h2>
+            <p>
+              CSSセレクタとは、スタイルを適用する対象のHTML要素を指定するための書き方です。タグ名で指定する要素セレクタ、class属性を指す「.クラス名」、id属性を指す「#ID名」が基本で、そこに階層・属性・状態の条件を重ねて対象を絞り込んでいきます。
+            </p>
+
+            <h3>疑似クラスと疑似要素の違い</h3>
+            <p>
+              コロン1つの疑似クラス（<code>:hover</code> / <code>:first-child</code>）は、すでにあるHTML要素を「状態」や「位置」で絞り込みます。コロン2つの疑似要素（<code>::before</code>
+              / <code>::first-letter</code>）は、HTMLには存在しない部分をCSS側で作り出して装飾します。
+            </p>
+
+            <h3>思ったところに当たらないときは</h3>
+            <ul>
+              <li>そもそも一致しているか（このツールのヒット数で確認できます）</li>
+              <li>詳細度で他のルールに負けていないか（ID &gt; クラス &gt; 要素）</li>
+              <li>後から書かれた同じ詳細度のルールに上書きされていないか</li>
+              <li>カンマ区切りのグループ指定に、解釈できない書き方が混ざっていないか（混ざるとルール全体が無視されます）</li>
+            </ul>
+
+            <h3>関連ツール</h3>
+            <ul>
+              <li><a href="../hover-effects-gallery/">CSSホバーエフェクト ギャラリー</a>（<code>:hover</code> を使った実用パターン100種）</li>
+              <li><a href="../animation-gallery/">CSSアニメーション ギャラリー</a></li>
+              <li><a href="../html-outline-checker/">HTML見出し構造チェッカー</a>（階層セレクタを組む前の構造確認に）</li>
+            </ul>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">広告</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () {
+          w.classList.add("is-closed");
+        });
+      })();
+    </script>
+
+    <footer>
+      <span
+        >&copy; <span class="cq-year">2026</span
+        ><script>
+          document.currentScript.previousElementSibling.textContent = new Date().getFullYear();
+        </script>
+        CSSセレクタ辞典 | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span
+      >
+      <div class="footer-links">
+        <a href="../hover-effects-gallery/">CSSホバーエフェクト ギャラリー &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <script type="module" src="js/main.js?v=20260731a"></script>
+  </body>
+</html>

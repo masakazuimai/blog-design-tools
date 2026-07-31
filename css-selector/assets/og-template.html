@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- OG画像の元。1200×630でヘッドレスChromeによりPNG化する
+         生成コマンド:
+         "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
+           --window-size=1200,630 --screenshot=assets/og.png assets/og-template.html -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        width: 1200px;
+        height: 630px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 32px;
+        padding: 64px 72px;
+        background: linear-gradient(135deg, #1e293b 0%, #3730a3 100%);
+        color: #fff;
+        font-family: "Noto Sans JP", sans-serif;
+        overflow: hidden;
+      }
+      .badge {
+        align-self: flex-start;
+        border: 1px solid rgba(199, 210, 254, 0.5);
+        color: #c7d2fe;
+        border-radius: 999px;
+        padding: 8px 24px;
+        font-size: 26px;
+        letter-spacing: 0.06em;
+      }
+      h1 {
+        font-size: 64px;
+        font-weight: 900;
+        line-height: 1.25;
+        letter-spacing: -0.03em;
+      }
+      h1 em {
+        font-style: normal;
+        color: #a5b4fc;
+      }
+      p {
+        font-size: 28px;
+        color: #cbd5e1;
+        line-height: 1.6;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .chip {
+        font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+        font-size: 24px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(165, 180, 252, 0.4);
+        border-radius: 10px;
+        padding: 8px 18px;
+        color: #e0e7ff;
+      }
+      .brand {
+        position: absolute;
+        right: 80px;
+        bottom: 34px;
+        font-size: 26px;
+        color: #a5b4fc;
+        letter-spacing: 0.04em;
+      }
+    </style>
+  </head>
+  <body>
+    <span class="badge">CodeQuest.work / 無料ツール</span>
+    <h1>CSSセレクタ一覧<br /><em>44種</em>をブラウザで試せる辞典</h1>
+    <p>選ぶとデモの該当要素がハイライト。サンプルCSSはワンクリックでコピー</p>
+    <div class="chips">
+      <span class="chip">.class</span>
+      <span class="chip">#id</span>
+      <span class="chip">ul &gt; li</span>
+      <span class="chip">:nth-child()</span>
+      <span class="chip">::before</span>
+      <span class="chip">:checked</span>
+    </div>
+    <span class="brand">codequest.work</span>
+  </body>
+</html>
