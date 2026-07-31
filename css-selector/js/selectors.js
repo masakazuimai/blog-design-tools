@@ -354,7 +354,7 @@ export const DEMO_HTML = `<!doctype html>
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    padding: 16px;
+    padding: 0;
     background: #f8fafc;
     color: #1e293b;
     font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
