@@ -337,13 +337,14 @@ body {
 .demo-panel {
   display: flex;
   flex-direction: column;
-  padding: 16px;
+  padding: 0;
 }
 .demo-frame {
   width: 100%;
   flex: 1;
   min-height: 320px;
-  border: 1px solid #e2e8f0;
+  /* パネルの余白を無くしたぶん、枠線はカラムの区切り線に任せる（2重線の防止） */
+  border: none;
   background: #f8fafc;
   display: block;
 }
