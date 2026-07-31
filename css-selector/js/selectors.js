@@ -364,7 +364,7 @@ export const DEMO_HTML = `<!doctype html>
   .demo-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 14px;
+    gap: 0;
   }
   .dcard {
     background: #fff;
