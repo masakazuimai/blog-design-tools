@@ -1,7 +1,7 @@
 /* CSSセレクタ辞典 メイン処理
    デモは iframe（srcdoc）に隔離してある。ライブCSS（* や a:hover など）は
    iframe の中だけで完結するので、ツール本体のUIは絶対に壊れない。 */
-import { CATEGORIES, SELECTORS, DEMO_HTML } from "./selectors.js?v=20260731a";
+import { CATEGORIES, SELECTORS, DEMO_HTML } from "./selectors.js?v=20260731c";
 
 const $ = (id) => document.getElementById(id);
 
@@ -33,16 +33,30 @@ const toHighlightQuery = (selector) => selector.replace(PSEUDO_ELEMENT, "").repl
 let currentCat = "all";
 let currentSel = null;
 let frameReady = false;
+// 初回表示の適用ではデモをスクロールさせない（開いた瞬間は先頭から見せる）
+let initialApplyDone = false;
 
 /* ========== iframe（デモ） ========== */
 
 const frameDoc = () => els.frame.contentDocument;
 
-/** デモの高さに合わせて iframe を伸縮させる（内側にスクロールバーを出さない） */
-function syncFrameHeight() {
-  const doc = frameDoc();
-  if (!doc || !doc.documentElement) return;
-  els.frame.style.height = `${doc.documentElement.scrollHeight}px`;
+/**
+ * デモ内の最初のヒット要素が見えるところまで、iframe の中だけをスクロールする。
+ * scrollIntoView は親ページまで巻き込んで動かすので使わない。
+ */
+function scrollToFirstHit(doc, el) {
+  if (!el || el === doc.documentElement || el === doc.body) return;
+  const scroller = doc.scrollingElement || doc.documentElement;
+  const rect = el.getBoundingClientRect();
+  const top = scroller.scrollTop + rect.top - (scroller.clientHeight - rect.height) / 2;
+  scroller.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+}
+
+/** ヘッダーの実測高さをCSS変数に渡す（レイアウト高 = 画面高 - ヘッダー） */
+function syncHeaderHeight() {
+  const header = document.querySelector(".header");
+  if (!header) return;
+  document.documentElement.style.setProperty("--header-h", `${header.offsetHeight}px`);
 }
 
 function initFrame() {
@@ -54,7 +68,6 @@ function initFrame() {
       hl.textContent = ".__hit { outline: 2px solid #f59e0b; outline-offset: 1px; }";
     }
     frameReady = true;
-    syncFrameHeight();
     // 読み込み完了前に選ばれていた場合はここで適用し直す
     if (currentSel) {
       const hits = applyToFrame(currentSel.sel, currentSel.css);
@@ -62,7 +75,6 @@ function initFrame() {
     }
   });
   els.frame.srcdoc = DEMO_HTML;
-  window.addEventListener("resize", syncFrameHeight);
 }
 
 /** デモ側のハイライトとライブCSSを消す */
@@ -72,7 +84,6 @@ function clearFrame() {
   doc.querySelectorAll(".__hit").forEach((el) => el.classList.remove("__hit"));
   const live = doc.getElementById("live");
   if (live) live.textContent = "";
-  syncFrameHeight();
 }
 
 /**
@@ -96,7 +107,8 @@ function applyToFrame(selector, css) {
   nodes.forEach((el) => el.classList.add("__hit"));
   const live = doc.getElementById("live");
   if (live) live.textContent = css;
-  syncFrameHeight();
+  if (initialApplyDone) scrollToFirstHit(doc, nodes[0]);
+  initialApplyDone = true;
   return nodes.length;
 }
 
@@ -169,7 +181,7 @@ function select(item) {
 function resetDetail() {
   currentSel = null;
   els.name.textContent = "セレクタを選んでください";
-  els.desc.textContent = "左の一覧から選ぶと、解説・サンプルCSS・下のデモへのライブ適用がまとめて表示されます。";
+  els.desc.textContent = "一覧から選ぶと、解説とサンプルCSSが表示され、デモにその場で適用されます。";
   els.note.hidden = true;
   els.code.textContent = "";
   els.copy.disabled = true;
@@ -235,6 +247,8 @@ async function copyCss() {
 /* ========== 起動 ========== */
 
 function init() {
+  syncHeaderHeight();
+  window.addEventListener("resize", syncHeaderHeight);
   initFrame();
   renderFilters();
   resetDetail();

@@ -117,7 +117,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
     <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と js内import の日付を揃えて上げる -->
-    <link rel="stylesheet" href="css/style.css?v=20260731b" />
+    <link rel="stylesheet" href="css/style.css?v=20260731c" />
   </head>
   <body>
     <div class="header">
@@ -131,18 +131,25 @@
       <div class="layout">
         <aside class="sidebar">
           <ul class="sel-list" id="selectorList" aria-label="CSSセレクタ一覧"></ul>
-          <!-- 検索・絞り込みは一覧の下に置く（一覧をファーストビューに出すため） -->
-          <div class="sidebar-controls">
-            <h2>セレクタを選ぶ</h2>
-            <input type="search" id="search" class="search-box" placeholder="セレクタ名・記号で検索（例: nth, 属性）" aria-label="セレクタを検索" />
-            <div class="filters" id="filters"></div>
-            <div class="list-count" id="listCount"></div>
-          </div>
+          <!-- 検索・絞り込みは一覧の下にアコーディオンで格納する（一覧の表示面積を優先） -->
+          <details class="sidebar-controls">
+            <summary>
+              <span>セレクタを選ぶ</span>
+              <span class="list-count" id="listCount"></span>
+            </summary>
+            <div class="controls-body">
+              <input type="search" id="search" class="search-box" placeholder="セレクタ名・記号で検索（例: nth, 属性）" aria-label="セレクタを検索" />
+              <div class="filters" id="filters"></div>
+            </div>
+          </details>
         </aside>
 
-        <main class="main">
-          <section class="panel">
-            <div class="detail-head">
+        <section class="panel demo-panel">
+          <iframe id="demoFrame" class="demo-frame" title="CSSセレクタのデモ"></iframe>
+        </section>
+
+        <section class="panel detail-panel">
+          <div class="detail-head">
               <h2 class="detail-name" id="detailName">セレクタを選んでください</h2>
               <span class="hit-badge">ヒット数 <strong id="hitCount">0</strong></span>
             </div>
@@ -168,21 +175,19 @@
               <button type="button" class="ghost-btn" id="customRun">実行</button>
               <button type="button" class="ghost-btn" id="clearBtn">リセット</button>
             </div>
-          </section>
+        </section>
+      </div>
 
-          <section class="panel demo-panel">
-            <h2>デモ</h2>
-            <p class="demo-hint">
-              選択中のセレクタに一致した要素をオレンジの枠で囲み、サンプルCSSを実際に適用しています。このデモは独立した領域で動くため、<code>*</code>
-              や <code>:hover</code> を当ててもツール本体の表示は変わりません。
-            </p>
-            <iframe id="demoFrame" class="demo-frame" title="CSSセレクタのデモ"></iframe>
-          </section>
-
-          <section class="panel about">
+      <section class="panel about">
             <h2>CSSセレクタの基本</h2>
             <p>
               CSSセレクタとは、スタイルを適用する対象のHTML要素を指定するための書き方です。タグ名で指定する要素セレクタ、class属性を指す「.クラス名」、id属性を指す「#ID名」が基本で、そこに階層・属性・状態の条件を重ねて対象を絞り込んでいきます。
+            </p>
+
+            <h3>デモの見方</h3>
+            <p>
+              一覧からセレクタを選ぶと、デモの中で一致した要素をオレンジの枠で囲み、サンプルCSSを実際に適用します。ヒット数で「何個に当たっているか」も確認できます。デモは独立した領域で動くので、<code>*</code>
+              や <code>:hover</code> のように広く当たるセレクタを試してもツール本体の表示は変わりません。
             </p>
 
             <h3>疑似クラスと疑似要素の違い</h3>
@@ -205,9 +210,7 @@
               <li><a href="../animation-gallery/">CSSアニメーション ギャラリー</a></li>
               <li><a href="../html-outline-checker/">HTML見出し構造チェッカー</a>（階層セレクタを組む前の構造確認に）</li>
             </ul>
-          </section>
-        </main>
-      </div>
+      </section>
     </div>
 
     <div id="ad-widget" class="footer-ad">
@@ -249,6 +252,6 @@
 
     <div class="toast" id="toast"></div>
 
-    <script type="module" src="js/main.js?v=20260731a"></script>
+    <script type="module" src="js/main.js?v=20260731c"></script>
   </body>
 </html>

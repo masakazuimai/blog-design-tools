@@ -15,36 +15,54 @@ body {
   line-height: 1.7;
 }
 
-/* ============ ヘッダー ============ */
+/* ============ ヘッダー（薄型バー） ============ */
 .header {
   background: linear-gradient(135deg, #1e293b 0%, #3730a3 100%);
   color: #fff;
-  padding: 40px 20px 36px;
-  text-align: center;
+  padding: 12px 20px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px 16px;
 }
 .header h1 {
-  font-size: clamp(1.4rem, 1.1rem + 1.5vw, 2rem);
+  font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.3rem);
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 .header p {
-  margin: 10px auto 0;
   color: #c7d2fe;
   font-size: 1rem;
-  max-width: 760px;
 }
 
-/* ============ レイアウト ============ */
+/* ============ レイアウト ============
+   ≥1400px: 一覧 / デモ（真ん中） / コード の3カラム。3つとも画面高に収めて内側スクロール
+   1000-1399px: 一覧 ＋ 右にコード→デモ の2カラム
+   <1000px: 1カラム（一覧 → コード → デモ）
+*/
 .container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 28px 20px 56px;
+  padding: 16px 20px 56px;
 }
 .layout {
   display: grid;
   grid-template-columns: 320px minmax(0, 1fr);
-  gap: 24px;
+  grid-template-areas:
+    "list detail"
+    "list demo";
+  gap: 20px;
   align-items: start;
+}
+.sidebar {
+  grid-area: list;
+}
+.demo-panel {
+  grid-area: demo;
+}
+.detail-panel {
+  grid-area: detail;
 }
 
 /* ============ サイドバー（一覧） ============ */
@@ -57,20 +75,50 @@ body {
   gap: 12px;
   background: #fff;
   border: 1px solid #e2e8f0;
-  border-radius: 14px;
   padding: 16px;
 }
 .sidebar h2 {
   font-size: 1.05rem;
 }
-/* 検索・カテゴリチップ・件数のまとまり。一覧の下に固定し、縮まないようにする */
+/* 検索・カテゴリチップのアコーディオン。一覧の下に置き、既定は閉じておく */
 .sidebar-controls {
+  flex-shrink: 0;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+}
+.sidebar-controls > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  list-style: none;
+  cursor: pointer;
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 4px 2px;
+}
+.sidebar-controls > summary::-webkit-details-marker {
+  display: none;
+}
+.sidebar-controls > summary::before {
+  content: "▸";
+  color: #6366f1;
+  transition: transform 0.15s;
+}
+.sidebar-controls[open] > summary::before {
+  transform: rotate(90deg);
+}
+.sidebar-controls > summary > span:first-of-type {
+  margin-right: auto;
+}
+.sidebar-controls > summary:hover {
+  background: #f8fafc;
+}
+.controls-body {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  flex-shrink: 0;
-  padding-top: 14px;
-  border-top: 1px solid #e2e8f0;
+  padding-top: 10px;
 }
 .search-box {
   width: 100%;
@@ -78,7 +126,6 @@ body {
   font-size: 1rem;
   font-family: inherit;
   border: 1px solid #cbd5e1;
-  border-radius: 10px;
   background: #f8fafc;
 }
 .search-box:focus {
@@ -98,7 +145,6 @@ body {
   font-family: inherit;
   font-size: 1rem;
   padding: 5px 12px;
-  border-radius: 999px;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -113,6 +159,7 @@ body {
 }
 .list-count {
   font-size: 1rem;
+  font-weight: 400;
   color: #64748b;
 }
 .sel-list {
@@ -133,7 +180,6 @@ body {
   text-align: left;
   border: 1px solid #e2e8f0;
   background: #fff;
-  border-radius: 10px;
   padding: 9px 12px;
   cursor: pointer;
   font-family: inherit;
@@ -164,16 +210,10 @@ body {
   padding: 12px 4px;
 }
 
-/* ============ メイン（詳細＋デモ） ============ */
-.main {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
+/* ============ パネル ============ */
 .panel {
   background: #fff;
   border: 1px solid #e2e8f0;
-  border-radius: 14px;
   padding: 20px;
 }
 .detail-head {
@@ -194,7 +234,6 @@ body {
   font-size: 1rem;
   color: #475569;
   background: #f1f5f9;
-  border-radius: 999px;
   padding: 4px 14px;
 }
 .hit-badge strong {
@@ -210,7 +249,6 @@ body {
   padding: 10px 14px;
   background: #fffbeb;
   border-left: 3px solid #f59e0b;
-  border-radius: 0 8px 8px 0;
   color: #78350f;
   font-size: 1rem;
 }
@@ -234,7 +272,6 @@ body {
   font-size: 1rem;
   font-weight: 700;
   padding: 8px 18px;
-  border-radius: 10px;
   cursor: pointer;
   transition: background 0.2s;
 }
@@ -248,7 +285,6 @@ body {
 .code-box {
   background: #0f172a;
   color: #e2e8f0;
-  border-radius: 10px;
   padding: 14px;
   font-size: 1rem;
   font-family: "SFMono-Regular", Consolas, Menlo, monospace;
@@ -276,7 +312,6 @@ body {
   font-size: 1rem;
   font-family: "SFMono-Regular", Consolas, Menlo, monospace;
   border: 1px solid #cbd5e1;
-  border-radius: 10px;
 }
 .custom-input:focus {
   outline: 2px solid #6366f1;
@@ -289,7 +324,6 @@ body {
   font-family: inherit;
   font-size: 1rem;
   padding: 10px 18px;
-  border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -298,28 +332,25 @@ body {
   color: #4f46e5;
 }
 
-/* デモ */
-.demo-panel h2 {
-  font-size: 1.05rem;
-  margin-bottom: 4px;
-}
-.demo-hint {
-  font-size: 1rem;
-  color: #64748b;
-  margin-bottom: 12px;
+/* デモ。パネルの高さを画面に合わせ、iframeが残りを埋めて内側でスクロールする
+   （JSで高さを測らないので「縮まない」問題が起きない） */
+.demo-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
 }
 .demo-frame {
   width: 100%;
+  flex: 1;
   min-height: 320px;
   border: 1px solid #e2e8f0;
-  border-radius: 12px;
   background: #f8fafc;
   display: block;
 }
 
 /* 解説セクション */
 .about {
-  margin-top: 24px;
+  margin-top: 20px;
 }
 .about h2 {
   font-size: 1.2rem;
@@ -346,7 +377,6 @@ body {
   background: #1e293b;
   color: #fff;
   padding: 10px 20px;
-  border-radius: 999px;
   font-size: 1rem;
   opacity: 0;
   pointer-events: none;
@@ -387,7 +417,6 @@ footer a:hover {
 .footer-links a {
   border: 1px solid #e2e8f0;
   padding: 8px 16px;
-  border-radius: 6px;
   font-size: 1rem;
   transition: all 0.2s;
 }
@@ -459,16 +488,99 @@ footer a:hover {
 }
 
 /* ============ レスポンシブ ============ */
-@media (max-width: 960px) {
+
+/* 3カラム（一覧 / デモ / コード）。デモを真ん中の最も広い列に置く */
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1600px;
+  }
+  .layout {
+    /* 左右のサイドカラムは同じ幅。真ん中のデモに残り全部を渡す */
+    grid-template-columns: 300px minmax(0, 1fr) 300px;
+    grid-template-areas: "list demo detail";
+  }
+  .detail-panel {
+    padding: 16px;
+  }
+}
+
+/* 画面高に収める（3カラム時と2カラム時）。各列が内側でスクロールする。
+   カラム同士は余白と角丸をやめ、1本のボーダーで区切る */
+@media (min-width: 1000px) {
+  .container {
+    max-width: none;
+    padding: 0 0 40px;
+  }
+  .layout {
+    height: calc(100vh - var(--header-h, 56px));
+    min-height: 520px;
+    align-items: stretch; /* デモ列を列いっぱいに伸ばす */
+    gap: 0;
+    background: #fff;
+  }
+  .sidebar,
+  .demo-panel,
+  .detail-panel {
+    border: none;
+    background: #fff;
+  }
+  .sidebar {
+    border-right: 1px solid #e2e8f0;
+  }
+  .detail-panel {
+    border-left: 1px solid #e2e8f0;
+  }
+  .about {
+    width: min(1000px, calc(100% - 40px));
+    margin: 32px auto 0;
+  }
+  .sidebar,
+  .demo-panel,
+  .detail-panel {
+    max-height: 100%;
+    min-height: 0;
+  }
+  /* コードは中身の高さのまま。余白で間延びさせない */
+  .detail-panel {
+    align-self: start;
+    overflow-y: auto;
+  }
+}
+
+/* 2カラム時は右列をコード→デモの縦積みにする。
+   コードは中身の高さ（auto）、デモが残りを取る。%指定にするとコード側が潰れる */
+@media (min-width: 1000px) and (max-width: 1399px) {
+  .layout {
+    grid-template-rows: auto minmax(280px, 1fr);
+  }
+  .detail-panel {
+    max-height: none;
+    overflow-y: visible;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .demo-panel {
+    border-left: 1px solid #e2e8f0;
+  }
+}
+
+@media (max-width: 999px) {
   .layout {
     grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "list"
+      "detail"
+      "demo";
   }
   .sidebar {
     position: static;
     max-height: none;
   }
   .sel-list {
-    max-height: 340px;
+    max-height: 300px;
+  }
+  .demo-panel {
+    height: 70vh;
+    min-height: 420px;
   }
 }
 @media screen and (max-width: 768px) {
@@ -489,7 +601,6 @@ footer a:hover {
     padding: 0;
     background: none;
     border: none;
-    border-radius: 0;
     box-shadow: none;
     z-index: auto;
   }

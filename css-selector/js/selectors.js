@@ -369,7 +369,6 @@ export const DEMO_HTML = `<!doctype html>
   .dcard {
     background: #fff;
     border: 1px solid #e2e8f0;
-    border-radius: 12px;
     padding: 14px;
   }
   .ttl {
@@ -385,12 +384,12 @@ export const DEMO_HTML = `<!doctype html>
   p { margin: 6px 0; }
   ul { margin: 6px 0; padding-left: 22px; }
   a { color: #1d4ed8; }
-  input { font-size: 16px; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 6px; }
+  input { font-size: 16px; padding: 6px 8px; border: 1px solid #cbd5e1; }
   form { display: grid; gap: 8px; }
   label { display: block; }
-  .nest, .only-parent { border: 1px dashed #94a3b8; border-radius: 8px; padding: 8px; }
+  .nest, .only-parent { border: 1px dashed #94a3b8; padding: 8px; }
   .btn-primary { display: inline-block; padding: 4px 12px; background: #e0e7ff; }
-  .empty-box { border: 1px dashed #cbd5e1; border-radius: 8px; }
+  .empty-box { border: 1px dashed #cbd5e1; }
   nav ul { list-style: none; padding: 0; display: flex; gap: 12px; flex-wrap: wrap; }
 </style>
 <style id="hl"></style>
