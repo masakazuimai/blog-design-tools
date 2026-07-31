@@ -369,8 +369,9 @@ export const DEMO_HTML = `<!doctype html>
   .dcard {
     background: #fff;
     border: 1px solid #e2e8f0;
-    /* gap:0 で隣とボーダーが2重に見えるのを防ぐ。1pxだけ食い込ませて線を重ねる */
-    margin: 0 -1px -1px 0;
+    /* gap:0 で隣とボーダーが2重に見えるのを防ぐ。1pxだけ食い込ませて線を重ねる。
+       右下でなく左上に食い込ませるのは、右へのはみ出しが横スクロールを生むため */
+    margin: -1px 0 0 -1px;
     padding: 14px;
   }
   .ttl {
