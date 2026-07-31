@@ -361,17 +361,20 @@ export const DEMO_HTML = `<!doctype html>
     font-size: 16px;
     line-height: 1.7;
   }
+  /* grid だと最終行が埋まらず「下にカードが無い」セルができて罫線が欠ける。
+     flex-wrap なら最終行のカードが伸びて必ず行を埋めるので、
+     内側だけに線を引く方式が全パターンで成立する */
   .demo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 0;
+    display: flex;
+    flex-wrap: wrap;
   }
   .dcard {
     background: #fff;
     /* 罫線は border でなく左上の box-shadow で引く。
        - 隣り合うカードの線が重ならない（2重線にならない）
-       - 外周（右端・下端）に線が残らず、左端・上端と見た目が揃う
+       - 外周（四辺）はキャンバス外に描かれて隠れるので、内側だけに線が出る
        - box-shadow はレイアウトに影響しないので横スクロールも出ない */
+    flex: 1 1 260px;
     border: none;
     box-shadow: -1px 0 0 #333, 0 -1px 0 #333;
     padding: 14px;

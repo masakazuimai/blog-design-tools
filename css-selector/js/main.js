@@ -1,7 +1,7 @@
 /* CSSセレクタ辞典 メイン処理
    デモは iframe（srcdoc）に隔離してある。ライブCSS（* や a:hover など）は
    iframe の中だけで完結するので、ツール本体のUIは絶対に壊れない。 */
-import { CATEGORIES, SELECTORS, DEMO_HTML } from "./selectors.js?v=20260731j";
+import { CATEGORIES, SELECTORS, DEMO_HTML } from "./selectors.js?v=20260731l";
 
 const $ = (id) => document.getElementById(id);
 
