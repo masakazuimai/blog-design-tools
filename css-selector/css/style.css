@@ -63,6 +63,15 @@ body {
 .sidebar h2 {
   font-size: 1.05rem;
 }
+/* 検索・カテゴリチップ・件数のまとまり。一覧の下に固定し、縮まないようにする */
+.sidebar-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0;
+  padding-top: 14px;
+  border-top: 1px solid #e2e8f0;
+}
 .search-box {
   width: 100%;
   padding: 10px 12px;

@@ -117,7 +117,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
     <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と js内import の日付を揃えて上げる -->
-    <link rel="stylesheet" href="css/style.css?v=20260731a" />
+    <link rel="stylesheet" href="css/style.css?v=20260731b" />
   </head>
   <body>
     <div class="header">
@@ -130,11 +130,14 @@
     <div class="container">
       <div class="layout">
         <aside class="sidebar">
-          <h2>セレクタを選ぶ</h2>
-          <input type="search" id="search" class="search-box" placeholder="セレクタ名・記号で検索（例: nth, 属性）" aria-label="セレクタを検索" />
-          <div class="filters" id="filters"></div>
-          <div class="list-count" id="listCount"></div>
           <ul class="sel-list" id="selectorList" aria-label="CSSセレクタ一覧"></ul>
+          <!-- 検索・絞り込みは一覧の下に置く（一覧をファーストビューに出すため） -->
+          <div class="sidebar-controls">
+            <h2>セレクタを選ぶ</h2>
+            <input type="search" id="search" class="search-box" placeholder="セレクタ名・記号で検索（例: nth, 属性）" aria-label="セレクタを検索" />
+            <div class="filters" id="filters"></div>
+            <div class="list-count" id="listCount"></div>
+          </div>
         </aside>
 
         <main class="main">
