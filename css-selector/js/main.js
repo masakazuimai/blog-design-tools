@@ -17,9 +17,6 @@ const els = {
   copy: $("copyBtn"),
   hit: $("hitCount"),
   frame: $("demoFrame"),
-  custom: $("customInput"),
-  customRun: $("customRun"),
-  clear: $("clearBtn"),
   toast: $("toast"),
 };
 
@@ -190,29 +187,6 @@ function resetDetail() {
   renderList();
 }
 
-/* ========== カスタムセレクタ ========== */
-
-function runCustom() {
-  const selector = els.custom.value.trim();
-  if (!selector) return;
-
-  const css = `${selector} {\n  outline: 2px dashed #0ea5e9;\n}`;
-  const hits = applyToFrame(selector, css);
-  if (hits === null) {
-    els.hit.textContent = "—";
-    showToast("セレクタの書き方が正しくありません");
-    return;
-  }
-  currentSel = null;
-  els.name.textContent = selector;
-  els.desc.textContent = "カスタムセレクタの実行結果です。デモ内で一致した要素をハイライトしています。";
-  els.note.hidden = true;
-  els.code.textContent = css;
-  els.copy.disabled = false;
-  els.hit.textContent = String(hits);
-  renderList();
-}
-
 /* ========== コピー・トースト ========== */
 
 let toastTimer = null;
@@ -255,14 +229,6 @@ function init() {
 
   els.search.addEventListener("input", renderList);
   els.copy.addEventListener("click", copyCss);
-  els.clear.addEventListener("click", resetDetail);
-  els.customRun.addEventListener("click", runCustom);
-  els.custom.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      runCustom();
-    }
-  });
 
   // 初期表示は #header を選んだ状態にする。
   // ヒットが1件だけで「どこに当たったか」が一目で分かるため（p だと14件光って伝わりにくい）

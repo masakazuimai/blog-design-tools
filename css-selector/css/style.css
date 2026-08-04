@@ -37,7 +37,7 @@ body {
 }
 
 /* ============ レイアウト ============
-   ≥1400px: 一覧 / デモ（真ん中） / コード の3カラム。3つとも画面高に収めて内側スクロール
+   ≥1400px: 一覧 / コード / デモ の3カラム。3つとも画面高に収めて内側スクロール
    1000-1399px: 一覧 ＋ 右にコード→デモ の2カラム
    <1000px: 1カラム（一覧 → コード → デモ）
 */
@@ -65,7 +65,7 @@ body {
   grid-area: detail;
 }
 
-/* ============ サイドバー（一覧） ============ */
+/* ============ 一覧（サイドバー）・絞り込みコントロール ============ */
 .sidebar {
   position: sticky;
   top: 16px;
@@ -80,13 +80,14 @@ body {
 .sidebar h2 {
   font-size: 1.05rem;
 }
-/* 検索・カテゴリチップのアコーディオン。一覧の下に置き、既定は閉じておく */
-.sidebar-controls {
+/* 検索・カテゴリチップのアコーディオン。コード列のサンプルCSSの下に置き、既定は開いておく */
+.detail-controls {
   flex-shrink: 0;
+  margin-top: 18px;
   padding-top: 12px;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #cbd5e1;
 }
-.sidebar-controls > summary {
+.detail-controls > summary {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -97,21 +98,21 @@ body {
   font-weight: 700;
   padding: 4px 2px;
 }
-.sidebar-controls > summary::-webkit-details-marker {
+.detail-controls > summary::-webkit-details-marker {
   display: none;
 }
-.sidebar-controls > summary::before {
+.detail-controls > summary::before {
   content: "▸";
   color: #6366f1;
   transition: transform 0.15s;
 }
-.sidebar-controls[open] > summary::before {
+.detail-controls[open] > summary::before {
   transform: rotate(90deg);
 }
-.sidebar-controls > summary > span:first-of-type {
+.detail-controls > summary > span:first-of-type {
   margin-right: auto;
 }
-.sidebar-controls > summary:hover {
+.detail-controls > summary:hover {
   background: #f8fafc;
 }
 .controls-body {
@@ -216,6 +217,10 @@ body {
   border: 1px solid #e2e8f0;
   padding: 20px;
 }
+/* コード列は薄い水色。一覧・デモの白と塗り分けて列の切り替わりを分かりやすくする */
+.detail-panel {
+  background: #e0f2fe;
+}
 .detail-head {
   display: flex;
   flex-wrap: wrap;
@@ -233,7 +238,7 @@ body {
   flex-shrink: 0;
   font-size: 1rem;
   color: #475569;
-  background: #f1f5f9;
+  background: #fff;
   padding: 4px 14px;
 }
 .hit-badge strong {
@@ -292,44 +297,6 @@ body {
   overflow-x: auto;
   white-space: pre;
   min-height: 76px;
-}
-
-/* カスタムセレクタ */
-.custom-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 18px;
-}
-.custom-row label {
-  width: 100%;
-  font-size: 1rem;
-  color: #475569;
-}
-.custom-input {
-  flex: 1 1 240px;
-  padding: 10px 12px;
-  font-size: 1rem;
-  font-family: "SFMono-Regular", Consolas, Menlo, monospace;
-  border: 1px solid #cbd5e1;
-}
-.custom-input:focus {
-  outline: 2px solid #6366f1;
-  outline-offset: 1px;
-}
-.ghost-btn {
-  border: 1px solid #cbd5e1;
-  background: #fff;
-  color: #334155;
-  font-family: inherit;
-  font-size: 1rem;
-  padding: 10px 18px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.ghost-btn:hover {
-  border-color: #6366f1;
-  color: #4f46e5;
 }
 
 /* デモ。パネルの高さを画面に合わせ、iframeが残りを埋めて内側でスクロールする
@@ -490,21 +457,6 @@ footer a:hover {
 
 /* ============ レスポンシブ ============ */
 
-/* 3カラム（一覧 / デモ / コード）。デモを真ん中の最も広い列に置く */
-@media (min-width: 1400px) {
-  .container {
-    max-width: 1600px;
-  }
-  .layout {
-    /* 左右のサイドカラムは同じ幅。真ん中のデモに残り全部を渡す */
-    grid-template-columns: 300px minmax(0, 1fr) 300px;
-    grid-template-areas: "list demo detail";
-  }
-  .detail-panel {
-    padding: 16px;
-  }
-}
-
 /* 画面高に収める（3カラム時と2カラム時）。各列が内側でスクロールする。
    カラム同士は余白と角丸をやめ、1本のボーダーで区切る */
 @media (min-width: 1000px) {
@@ -523,6 +475,10 @@ footer a:hover {
   .demo-panel,
   .detail-panel {
     border: none;
+  }
+  /* コード列だけは薄い水色を残す */
+  .sidebar,
+  .demo-panel {
     background: #fff;
   }
   .sidebar {
@@ -561,6 +517,25 @@ footer a:hover {
   }
   .demo-panel {
     border-left: 1px solid #e2e8f0;
+  }
+}
+
+/* 3カラム（一覧 / コード / デモ）。一覧とコードを左に並べ、デモに残り全部を渡す。
+   共通ブロックの border / align-self を上書きするので、この位置（後ろ）に置く */
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1600px;
+  }
+  .layout {
+    grid-template-columns: 300px 300px minmax(0, 1fr);
+    grid-template-areas: "list detail demo";
+  }
+  .detail-panel {
+    padding: 16px;
+    /* 中央列になるので区切り線は右側。デモ列との境目が途切れないよう縦いっぱいに伸ばす */
+    border-left: none;
+    border-right: 1px solid #e2e8f0;
+    align-self: stretch;
   }
 }
 

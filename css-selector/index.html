@@ -117,7 +117,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
     <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と js内import の日付を揃えて上げる -->
-    <link rel="stylesheet" href="css/style.css?v=20260731d" />
+    <link rel="stylesheet" href="css/style.css?v=20260804f" />
   </head>
   <body>
     <div class="header">
@@ -131,17 +131,6 @@
       <div class="layout">
         <aside class="sidebar">
           <ul class="sel-list" id="selectorList" aria-label="CSSセレクタ一覧"></ul>
-          <!-- 検索・絞り込みは一覧の下にアコーディオンで格納する（一覧の表示面積を優先） -->
-          <details class="sidebar-controls">
-            <summary>
-              <span>セレクタを選ぶ</span>
-              <span class="list-count" id="listCount"></span>
-            </summary>
-            <div class="controls-body">
-              <input type="search" id="search" class="search-box" placeholder="セレクタ名・記号で検索（例: nth, 属性）" aria-label="セレクタを検索" />
-              <div class="filters" id="filters"></div>
-            </div>
-          </details>
         </aside>
 
         <section class="panel demo-panel">
@@ -162,19 +151,17 @@
             </div>
             <pre class="code-box"><code id="cssCode"></code></pre>
 
-            <div class="custom-row">
-              <label for="customInput">カスタムセレクタを試す</label>
-              <input
-                type="text"
-                id="customInput"
-                class="custom-input"
-                placeholder="例: .dcard > ul li:nth-child(odd)"
-                spellcheck="false"
-                autocapitalize="off"
-              />
-              <button type="button" class="ghost-btn" id="customRun">実行</button>
-              <button type="button" class="ghost-btn" id="clearBtn">リセット</button>
-            </div>
+            <!-- 検索・絞り込みはコードの下にアコーディオンで格納する（一覧の表示面積を優先） -->
+            <details class="detail-controls" open>
+              <summary>
+                <span>セレクタを選ぶ</span>
+                <span class="list-count" id="listCount"></span>
+              </summary>
+              <div class="controls-body">
+                <input type="search" id="search" class="search-box" placeholder="セレクタ名・記号で検索（例: nth, 属性）" aria-label="セレクタを検索" />
+                <div class="filters" id="filters"></div>
+              </div>
+            </details>
         </section>
       </div>
 
@@ -252,6 +239,6 @@
 
     <div class="toast" id="toast"></div>
 
-    <script type="module" src="js/main.js?v=20260731m"></script>
+    <script type="module" src="js/main.js?v=20260804a"></script>
   </body>
 </html>
