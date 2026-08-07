@@ -519,10 +519,12 @@
       margin: 0 auto;
     }
 
-    .preview-content h1 {
+    /* プレビュー内の記事タイトル。ページのh1と重複させないためh2＋クラスで指定する */
+    .preview-content .preview-title {
       font-size: 32px;
       font-weight: 700;
       line-height: 1.3;
+      margin-top: 0;
       margin-bottom: 16px;
     }
 
@@ -867,7 +869,7 @@
             <span class="pairing-label" id="pairing-label">Noto Serif JP × Noto Sans JP</span>
           </div>
           <article class="preview-content" id="preview-content">
-            <h1>フォントの選び方でブログの印象は大きく変わる</h1>
+            <h2 class="preview-title">フォントの選び方でブログの印象は大きく変わる</h2>
             <p class="preview-meta">2026年5月7日 · 5分で読める</p>
             <p>フォント選びはブログデザインの中でも最も重要な要素のひとつです。見出しと本文の組み合わせ次第で、読者に与える印象は大きく変わります。この記事では、効果的なフォントペアリングの基本を解説します。</p>
             <h2>フォントペアリングの基本ルール</h2>
@@ -1079,10 +1081,10 @@
 
       const content = document.getElementById('preview-content');
 
-      content.querySelector('h1').style.fontFamily = headingFont.family;
-      content.querySelector('h1').style.fontSize = hSize + 'px';
+      content.querySelector('.preview-title').style.fontFamily = headingFont.family;
+      content.querySelector('.preview-title').style.fontSize = hSize + 'px';
 
-      content.querySelectorAll('h2').forEach(function(h) {
+      content.querySelectorAll('h2:not(.preview-title)').forEach(function(h) {
         h.style.fontFamily = headingFont.family;
         h.style.fontSize = Math.round(hSize * 0.8) + 'px';
       });
