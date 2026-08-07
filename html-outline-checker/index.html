@@ -76,11 +76,36 @@
       header {
         background: #0ea5e9;
         color: #fff;
-        padding: 14px 16px;
+        padding: clamp(16px, 3vw, 28px) 16px;
+      }
+      .header-inner {
+        max-width: 960px;
+        margin: 0 auto;
       }
       header h1 {
+        margin: 0 0 8px;
+        font-size: clamp(20px, 2.4vw, 26px);
+        letter-spacing: -0.02em;
+      }
+      header p {
         margin: 0;
         font-size: 16px;
+        line-height: 1.7;
+      }
+      .header-privacy {
+        margin-top: 8px;
+        opacity: 0.9;
+      }
+      .hint {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 12px 24px;
+        font-size: 16px;
+        line-height: 1.8;
+        color: #475569;
+      }
+      .hint a {
+        color: #0369a1;
       }
       .wrap {
         display: grid;
@@ -296,7 +321,13 @@
     </style>
   </head>
   <body>
-    <header><h1>HTML Outline Checker</h1></header>
+    <header>
+      <div class="header-inner">
+        <h1>HTMLアウトラインチェッカー</h1>
+        <p>HTMLを貼り付けるだけで、見出し階層（h1〜h6）の飛び級や h1 の重複に加えて、閉じタグの過不足・リストの入れ子・id/class の重複・alt や charset の欠落まで検証できる無料ツールです。</p>
+        <p class="header-privacy">貼り付けたコードはサーバーに送信されず、すべてブラウザ内で処理されます</p>
+      </div>
+    </header>
     <main>
       <div class="wrap">
         <div class="card">
@@ -315,6 +346,7 @@
           <div class="content" id="results"></div>
         </div>
       </div>
+      <p class="hint">検出項目の一覧・エラーの直し方・よくある質問は<a href="/html-outline-checker/">HTMLアウトラインチェッカーの使い方</a>で解説しています。セレクタの書き方を確かめたいときは<a href="../css-selector/">CSSセレクタ一覧</a>もどうぞ。</p>
     </main>
     <div id="ad-widget" class="footer-ad">
       <div class="ad-widget__head">
