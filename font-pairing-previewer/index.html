@@ -95,14 +95,27 @@
       padding: 32px 20px 64px;
     }
 
-    .tool-note {
-      margin: 32px auto 0;
+    .usage {
+      margin: 40px auto 0;
       font-size: 1rem;
-      line-height: 1.8;
-      color: #475569;
+      line-height: 1.9;
+      color: #334155;
     }
 
-    .tool-note a { color: #1d4ed8; }
+    .usage h2 {
+      margin: 32px 0 8px;
+      font-size: 1.2rem;
+      letter-spacing: -0.01em;
+      color: #1e293b;
+    }
+
+    .usage ol,
+    .usage ul {
+      margin: 0;
+      padding-left: 1.4em;
+    }
+
+    .usage a { color: #1d4ed8; }
 
     .layout {
       display: grid;
@@ -776,7 +789,6 @@
 <body>
   <header class="header">
     <h1>フォントペアリング プレビューア</h1>
-    <p>Google Fontsの見出し×本文を実際のブログ記事風にプレビュー。CSSをコピーしてすぐ使えます。</p>
   </header>
 
   <div class="container">
@@ -890,7 +902,21 @@
       </main>
     </div>
 
-    <p class="tool-note">ペアリングの選び方・おすすめの組み合わせ・CSSの適用手順は<a href="/font-pairing-previewer/">フォントペアリング プレビューアの使い方</a>で解説しています。見出しそのもののデザインを決めたいときは<a href="../heading-design-previewer/">見出しデザイン プレビューア</a>もどうぞ。</p>
+    <section class="usage">
+      <h2>このツールでできること</h2>
+      <p>Google Fontsの見出しフォントと本文フォントの組み合わせを、実際のブログ記事風のレイアウトでプレビューできる無料ツールです。フォントサイズ・行間・背景色を変えながら見え方を比べ、決まった組み合わせは @import と link タグの両方の形でコピーできます。</p>
+
+      <h2>使い方</h2>
+      <ol>
+        <li>左のパネルで見出しフォントと本文フォントを選ぶ（「おすすめペアリング」から選ぶこともできます）</li>
+        <li>見出しサイズ・本文サイズ・行間・プレビュー背景を調整して、実際の記事に近い状態で確認する</li>
+        <li>気に入った組み合わせは「+」で保存しておくと、後から呼び出して比較できる</li>
+        <li>「CSSをコピー」または「linkタグ」を選んでコピーし、自分のサイトに貼り付ける</li>
+      </ol>
+
+      <h2>関連ページ</h2>
+      <p>ペアリングの選び方・おすすめの組み合わせ・CSSの適用手順は<a href="/font-pairing-previewer/">フォントペアリング プレビューアの使い方</a>で解説しています。見出しそのもののデザインを決めたいときは<a href="../heading-design-previewer/">見出しデザイン プレビューア</a>もどうぞ。</p>
+    </section>
   </div>
 
   <div id="ad-widget" class="footer-ad">

@@ -95,14 +95,27 @@
       padding: 32px 20px 64px;
     }
 
-    .tool-note {
-      margin: 32px auto 0;
+    .usage {
+      margin: 40px auto 0;
       font-size: 1rem;
-      line-height: 1.8;
-      color: #475569;
+      line-height: 1.9;
+      color: #334155;
     }
 
-    .tool-note a { color: #1d4ed8; }
+    .usage h2 {
+      margin: 32px 0 8px;
+      font-size: 1.2rem;
+      letter-spacing: -0.01em;
+      color: #1e293b;
+    }
+
+    .usage ol,
+    .usage ul {
+      margin: 0;
+      padding-left: 1.4em;
+    }
+
+    .usage a { color: #1d4ed8; }
 
     /* 2カラムレイアウト */
     .layout {
@@ -718,8 +731,6 @@
 <body>
   <header class="header">
     <h1>見出しデザイン プレビューア</h1>
-    <p>マーカー風・下線グラデーション・リボン・角かっこ囲み・枠線ドローなど、ブログの見出しデザイン14種をその場でプレビュー。h2 / h3 / h4 を切り替えて、HTMLとCSSをまとめてコピーできる無料ツールです。</p>
-    <p>WordPressの「カスタムHTML」ブロックにそのまま貼れます。</p>
   </header>
 
   <div class="container">
@@ -748,7 +759,22 @@
       <main class="main" id="cards"></main>
     </div>
 
-    <p class="tool-note">このツールをClaude Codeで作った過程とプロンプトは<a href="/claude-code-heading-design-tool/">ブログ見出しデザインツールを作ってみた</a>で公開しています。見出しと本文のフォントの組み合わせを決めたいときは<a href="../font-pairing-previewer/">フォントペアリング プレビューア</a>もどうぞ。</p>
+    <section class="usage">
+      <h2>このツールでできること</h2>
+      <p>マーカー風・下線グラデーション・リボン・角かっこ囲み・枠線ドローなど、ブログの見出しデザイン14種をその場でプレビューできる無料ツールです。h2 / h3 / h4 を切り替えながら見え方を確かめ、HTMLとCSSをまとめてコピーできます。</p>
+
+      <h2>使い方</h2>
+      <ol>
+        <li>左の「見出しテキスト」に、実際に使う文言を入力する</li>
+        <li>HTMLタグ（h2 / h3 / h4）を選ぶ</li>
+        <li>気に入ったデザインのカードで「コピー」を押す</li>
+        <li>WordPressの「カスタムHTML」ブロックに貼り付ける</li>
+      </ol>
+      <p>コピーされる内容にはHTMLとCSSの両方が含まれるので、別途スタイルを書き足す必要はありません。</p>
+
+      <h2>関連ページ</h2>
+      <p>このツールをClaude Codeで作った過程とプロンプトは<a href="/claude-code-heading-design-tool/">ブログ見出しデザインツールを作ってみた</a>で公開しています。見出しと本文のフォントの組み合わせを決めたいときは<a href="../font-pairing-previewer/">フォントペアリング プレビューア</a>もどうぞ。</p>
+    </section>
   </div>
 
   <div id="ad-widget" class="footer-ad">

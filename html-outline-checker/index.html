@@ -83,28 +83,33 @@
         margin: 0 auto;
       }
       header h1 {
-        margin: 0 0 8px;
+        margin: 0;
         font-size: clamp(20px, 2.4vw, 26px);
         letter-spacing: -0.02em;
       }
-      header p {
-        margin: 0;
-        font-size: 16px;
-        line-height: 1.7;
-      }
-      .header-privacy {
-        margin-top: 8px;
-        opacity: 0.9;
-      }
-      .hint {
+      .usage {
         max-width: 960px;
         margin: 0 auto;
-        padding: 0 12px 24px;
+        padding: 8px 12px 40px;
         font-size: 16px;
-        line-height: 1.8;
-        color: #475569;
+        line-height: 1.9;
+        color: #334155;
       }
-      .hint a {
+      .usage h2 {
+        margin: 32px 0 8px;
+        font-size: 19px;
+        letter-spacing: -0.01em;
+      }
+      .usage h3 {
+        margin: 20px 0 4px;
+        font-size: 16px;
+      }
+      .usage ol,
+      .usage ul {
+        margin: 0;
+        padding-left: 1.4em;
+      }
+      .usage a {
         color: #0369a1;
       }
       .wrap {
@@ -324,8 +329,6 @@
     <header>
       <div class="header-inner">
         <h1>HTMLアウトラインチェッカー</h1>
-        <p>HTMLを貼り付けるだけで、見出し階層（h1〜h6）の飛び級や h1 の重複に加えて、閉じタグの過不足・リストの入れ子・id/class の重複・alt や charset の欠落まで検証できる無料ツールです。</p>
-        <p class="header-privacy">貼り付けたコードはサーバーに送信されず、すべてブラウザ内で処理されます</p>
       </div>
     </header>
     <main>
@@ -346,7 +349,39 @@
           <div class="content" id="results"></div>
         </div>
       </div>
-      <p class="hint">検出項目の一覧・エラーの直し方・よくある質問は<a href="/html-outline-checker/">HTMLアウトラインチェッカーの使い方</a>で解説しています。セレクタの書き方を確かめたいときは<a href="../css-selector/">CSSセレクタ一覧</a>もどうぞ。</p>
+      <section class="usage">
+        <h2>このツールでできること</h2>
+        <p>HTMLを貼り付けるだけで、見出し階層（h1〜h6）の飛び級や h1 の重複に加えて、閉じタグの過不足・リストの入れ子・id/class の重複・alt や charset の欠落まで検証できる無料ツールです。貼り付けたコードはサーバーに送信されず、すべてブラウザ内で処理されます。</p>
+
+        <h2>使い方</h2>
+        <ol>
+          <li>チェックしたいHTMLをコピーして、上の入力欄に貼り付ける</li>
+          <li>「検証する」ボタンを押す（入力中は自動で走りません）</li>
+          <li>検証結果に出た該当箇所がコード内でハイライトされるので、そこを直す</li>
+        </ol>
+        <p>どう書けばよいか分からないときは「サンプル」ボタンで、わざと崩したHTMLを読み込んで挙動を確認できます。</p>
+
+        <h2>検出できる項目</h2>
+        <h3>エラー</h3>
+        <ul>
+          <li>閉じタグが足りない／閉じタグが余分にある</li>
+          <li>&lt;ul&gt; や &lt;ol&gt; の直下に &lt;li&gt; 以外がある（&lt;li&gt; の親が不正な場合も含む）</li>
+          <li>id 属性の重複</li>
+          <li>&lt;!DOCTYPE&gt; / &lt;html&gt; / &lt;head&gt; がない</li>
+        </ul>
+        <h3>警告</h3>
+        <ul>
+          <li>見出しレベルの飛び級（h2 の次に h4 が来るなど）</li>
+          <li>&lt;h1&gt; が複数ある</li>
+          <li>&lt;title&gt; / &lt;meta charset&gt; / &lt;meta name="viewport"&gt; がない</li>
+          <li>&lt;html lang&gt; が未設定</li>
+          <li>&lt;img&gt; に alt がない</li>
+          <li>class 属性の中で同じクラス名が重複している</li>
+        </ul>
+
+        <h2>関連ページ</h2>
+        <p>エラーの直し方やよくある質問は<a href="/html-outline-checker/">HTMLアウトラインチェッカーの使い方</a>で解説しています。セレクタの書き方を確かめたいときは<a href="../css-selector/">CSSセレクタ一覧</a>もどうぞ。</p>
+      </section>
     </main>
     <div id="ad-widget" class="footer-ad">
       <div class="ad-widget__head">
