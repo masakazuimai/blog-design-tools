@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSAPアニメーション サンプル集 100種｜ScrollTriggerもコピペで動く</title>
+    <meta name="description" content="GSAPのアニメーションを100種類まとめたサンプル集。基本のトゥイーンからタイムライン、ScrollTriggerのスクロール連動、横スクロール、テキスト分割、SVGの線描画まで、カードで動きを確かめてCDN読み込み込みのコードをそのままコピペできます。有料プラグインなし・登録不要。" />
+    <link rel="canonical" href="https://codequest.work/generator/gsap-animation-gallery/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/gsap-animation-gallery/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/gsap-animation-gallery/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/gsap-animation-gallery/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:title" content="GSAPアニメーション サンプル集 100種｜ScrollTriggerもコピペで動く" />
+    <meta property="og:description" content="基本トゥイーン・タイムライン・ScrollTrigger・テキスト分割・SVG線描画まで、GSAPのサンプル100種。カードで動きを確かめてCDN込みのコードをコピペできます。" />
+    <meta property="og:url" content="https://codequest.work/generator/gsap-animation-gallery/" />
+    <meta property="og:image" content="https://codequest.work/generator/gsap-animation-gallery/assets/og.png?v=20260809b" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="GSAPアニメーション ギャラリー" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="GSAPアニメーション サンプル集 100種｜ScrollTriggerもコピペで動く" />
+    <meta name="twitter:description" content="基本トゥイーン・タイムライン・ScrollTrigger・テキスト分割・SVG線描画まで、GSAPのサンプル100種。カードで動きを確かめてCDN込みのコードをコピペできます。" />
+    <meta name="twitter:image" content="https://codequest.work/generator/gsap-animation-gallery/assets/og.png?v=20260809b" />
+
+    <!-- 構造化データ -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "GSAPアニメーション ギャラリー",
+            "url": "https://codequest.work/generator/gsap-animation-gallery/",
+            "description": "GSAPのアニメーション100種類を実際に動かして確認し、CDNの読み込みを含む完全版コードをワンクリックでコピーできる無料ツール。ScrollTriggerによるスクロール連動、タイムライン、テキスト分割、SVGの線描画に対応。",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Web",
+            "browserRequirements": "Requires JavaScript.",
+            "inLanguage": "ja",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+            "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+              { "@type": "ListItem", "position": 2, "name": "ジェネレーター", "item": "https://codequest.work/category/generator/" },
+              { "@type": "ListItem", "position": 3, "name": "GSAPアニメーション ギャラリー", "item": "https://codequest.work/generator/gsap-animation-gallery/" }
+            ]
+          }
+        ]
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+    <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html・en/index.html と js内import の日付を揃えて上げる -->
+    <link rel="stylesheet" href="css/style.css?v=20260809b" />
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Draggable.min.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <a class="lang-switch" href="en/" hreflang="en">English</a>
+      <h1>GSAPアニメーション ギャラリー</h1>
+      <p>基本トゥイーンからScrollTriggerのスクロール連動まで100種類。カードで動きを確かめる → 気に入ったらCDN読み込み込みの完全版コードをワンクリックでコピペ。有料プラグインは使いません</p>
+    </div>
+
+    <div class="container">
+      <div class="layout">
+        <aside class="sidebar">
+          <div class="input-card">
+            <h2>📋 コードプレビュー</h2>
+            <pre class="code-box"><code id="codePreview"></code></pre>
+            <button class="copy-preview" id="copyPreview" disabled>📋 このコードをコピー</button>
+            <p class="note">CDNの読み込みを含む完全版です。HTMLに貼るだけで動きます。</p>
+          </div>
+
+          <div class="input-card">
+            <h2>🎨 色の設定</h2>
+            <div class="field">
+              <label for="accentColor">アクセント色</label>
+              <div class="color-row">
+                <input type="color" id="accentColor" value="#6366f1" />
+                <span class="color-val" id="accentVal">#6366f1</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="subColor">サブ色</label>
+              <div class="color-row">
+                <input type="color" id="subColor" value="#ec4899" />
+                <span class="color-val" id="subVal">#ec4899</span>
+              </div>
+            </div>
+            <button class="reset-settings" id="resetColors">↺ 色をデフォルトに戻す</button>
+            <div class="count-note" id="countNote"></div>
+          </div>
+
+          <div class="input-card">
+            <h2>🔍 検索</h2>
+            <label class="sr-only" for="search">サンプルを検索</label>
+            <input type="search" id="search" class="search" placeholder="サンプル名で検索" />
+          </div>
+        </aside>
+
+        <main class="main">
+          <div class="filters" id="filters"></div>
+          <div class="grid" id="grid"></div>
+        </main>
+      </div>
+    </div>
+
+    <section class="usage">
+      <h2>このツールでできること</h2>
+      <p>
+        GSAPで書けるアニメーションを100種類まとめたサンプル集です。カード上で実際に動かして確認し、気に入ったものはGSAP本体のCDN読み込みまで含んだ完全版コードをワンクリックでコピーできます。貼り付けたその場で動くので、動作確認のための下ごしらえが要りません。
+      </p>
+      <p>
+        収録しているのは、基本のトゥイーン（<code>to</code> / <code>from</code> / <code>fromTo</code>）、複数の動きを繋ぐタイムライン、スクロールに連動するScrollTrigger、縦スクロールで横に流す演出、1文字ずつ立ち上がるテキスト、SVGの線が描かれる表現、マウス追従などのインタラクションです。アクセント色とサブ色は左のパネルから変更でき、カード上のデモに即座に反映されます（コピーするコードには、そのサンプルが色指定を含む場合のみ反映されます）。
+      </p>
+
+      <h2>使い方</h2>
+      <ol>
+        <li>カテゴリのチップか検索で、目当てのサンプルを絞り込む</li>
+        <li>カードで動きを確認する（「▶ もう一度」で最初から再生し直せます）</li>
+        <li>「📋 コードをコピー」を押して、自分のHTMLに貼り付ける</li>
+      </ol>
+      <p>
+        ScrollTriggerのサンプルは、カードの中に独立したスクロール領域を用意しています。カード内を上下にスクロールすると、ページ全体を動かさずに挙動を確認できます。コピーされるコードの方はページ全体をスクロール対象とした通常の書き方になっているため、そのまま実際のページで使えます。
+      </p>
+
+      <h2>有料プラグインは使っていません</h2>
+      <p>
+        GSAPは2025年以降すべてのプラグインが無償で使えるようになりましたが、本ギャラリーではさらに導入の手間を減らすため、SplitText・DrawSVG・MorphSVG・ScrambleTextの各プラグインに相当する表現を、標準機能だけで再現しています。文字の分割は素のJavaScript、SVGの線描画は <code>stroke-dasharray</code> と <code>stroke-dashoffset</code>、図形の変形は <code>polygon</code> の頂点補間という具合です。読み込むのは <code>gsap.min.js</code> と、必要な場合のみ <code>ScrollTrigger.min.js</code> / <code>Draggable.min.js</code> だけです。
+      </p>
+
+      <h2>カテゴリ一覧</h2>
+      <ul>
+        <li><strong>基本トゥイーン（16種）</strong> — フェード、スライド、スタガー、イージング比較、ぼかし、ランダム散開、キーフレーム</li>
+        <li><strong>タイムライン（12種）</strong> — 順次再生、ラベル、入れ子、再生制御、速度変更、シーク、無限マーキー</li>
+        <li><strong>ScrollTrigger（20種）</strong> — フェードイン、scrub、パララックス、プログレスバー、batch、snap、クラス付与、markers</li>
+        <li><strong>スクロール演出（16種）</strong> — 横スクロール、カードの重なり、コマ送り、突き抜けズーム、読了ハイライト、目次連動</li>
+        <li><strong>テキスト・数値（14種）</strong> — 1文字ずつ、タイプライター、シャッフル、グリッチ、カウントアップ、通貨表示</li>
+        <li><strong>SVG・図形（11種）</strong> — 線描画、チェックマーク、円グラフ、図形変形、棒グラフ、折れ線、署名、波</li>
+        <li><strong>インタラクション（11種）</strong> — マグネットボタン、カーソル追従、チルト、ドラッグ、画像比較、モーダル</li>
+      </ul>
+
+      <h2>関連ページ</h2>
+      <p>
+        設定項目やよくある質問は<a href="howto.html">GSAPアニメーション ギャラリーの使い方</a>で解説しています。JavaScriptを使わずCSSだけで完結させたい場合は<a href="../animation-gallery/">CSSアニメーション ギャラリー</a>、GSAPで動く3Dカルーセルを作りたい場合は<a href="../carousel-3d/">3Dカルーセル ジェネレーター</a>もあわせてどうぞ。
+      </p>
+    </section>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">広告</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="4842647575"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
+
+    <footer>
+      <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> GSAPアニメーション ギャラリー | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="howto.html">&#128214; 使い方・FAQ</a>
+        <a href="../animation-gallery/">CSSアニメーション ギャラリー &rarr;</a>
+        <a href="../carousel-3d/">3Dカルーセル &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast">コピーしました</div>
+
+    <script type="module" src="js/main.js?v=20260809b"></script>
+  </body>
+</html>

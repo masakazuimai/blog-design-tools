@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>100 GSAP Animation Examples｜Copy-paste ScrollTrigger &amp; Timeline</title>
+    <meta name="description" content="A gallery of 100 GSAP animation examples: basic tweens, timelines, ScrollTrigger scroll effects, horizontal scroll, split text, SVG line drawing and mouse interactions. Preview each one on the card, then copy a complete snippet that already includes the CDN. No paid plugins, no sign-up." />
+    <link rel="canonical" href="https://codequest.work/generator/gsap-animation-gallery/en/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/gsap-animation-gallery/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/gsap-animation-gallery/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/gsap-animation-gallery/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="100 GSAP Animation Examples｜Copy-paste ScrollTrigger &amp; Timeline" />
+    <meta property="og:description" content="Basic tweens, timelines, ScrollTrigger, split text and SVG line drawing — 100 GSAP examples you can preview and copy with the CDN already included." />
+    <meta property="og:url" content="https://codequest.work/generator/gsap-animation-gallery/en/" />
+    <meta property="og:image" content="https://codequest.work/generator/gsap-animation-gallery/assets/og-en.png?v=20260809b" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="GSAP Animation Gallery" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="100 GSAP Animation Examples｜Copy-paste ScrollTrigger &amp; Timeline" />
+    <meta name="twitter:description" content="Basic tweens, timelines, ScrollTrigger, split text and SVG line drawing — 100 GSAP examples you can preview and copy with the CDN already included." />
+    <meta name="twitter:image" content="https://codequest.work/generator/gsap-animation-gallery/assets/og-en.png?v=20260809b" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "GSAP Animation Gallery",
+            "url": "https://codequest.work/generator/gsap-animation-gallery/en/",
+            "description": "A free tool to preview 100 GSAP animations and copy complete snippets that already include the CDN. Covers ScrollTrigger scroll effects, timelines, split text and SVG line drawing.",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Web",
+            "browserRequirements": "Requires JavaScript.",
+            "inLanguage": "en",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+            "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+              { "@type": "ListItem", "position": 2, "name": "Generators", "item": "https://codequest.work/category/generator/" },
+              { "@type": "ListItem", "position": 3, "name": "GSAP Animation Gallery", "item": "https://codequest.work/generator/gsap-animation-gallery/en/" }
+            ]
+          }
+        ]
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css?v=20260809b" />
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Draggable.min.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <a class="lang-switch" href="../" hreflang="ja">日本語</a>
+      <h1>GSAP Animation Gallery</h1>
+      <p>100 examples, from basic tweens to ScrollTrigger scroll effects. Preview each one on its card, then copy a complete snippet with the CDN included. No paid plugins required</p>
+    </div>
+
+    <div class="container">
+      <div class="layout">
+        <aside class="sidebar">
+          <div class="input-card">
+            <h2>📋 Code preview</h2>
+            <pre class="code-box"><code id="codePreview"></code></pre>
+            <button class="copy-preview" id="copyPreview" disabled>📋 Copy this code</button>
+            <p class="note">A complete snippet including the CDN. Paste it into your HTML and it runs.</p>
+          </div>
+
+          <div class="input-card">
+            <h2>🎨 Colors</h2>
+            <div class="field">
+              <label for="accentColor">Accent color</label>
+              <div class="color-row">
+                <input type="color" id="accentColor" value="#6366f1" />
+                <span class="color-val" id="accentVal">#6366f1</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="subColor">Sub color</label>
+              <div class="color-row">
+                <input type="color" id="subColor" value="#ec4899" />
+                <span class="color-val" id="subVal">#ec4899</span>
+              </div>
+            </div>
+            <button class="reset-settings" id="resetColors">↺ Reset colors</button>
+            <div class="count-note" id="countNote"></div>
+          </div>
+
+          <div class="input-card">
+            <h2>🔍 Search</h2>
+            <label class="sr-only" for="search">Search samples</label>
+            <input type="search" id="search" class="search" placeholder="Search samples" />
+          </div>
+        </aside>
+
+        <main class="main">
+          <div class="filters" id="filters"></div>
+          <div class="grid" id="grid"></div>
+        </main>
+      </div>
+    </div>
+
+    <section class="usage">
+      <h2>What this tool does</h2>
+      <p>
+        A gallery of 100 animations you can build with GSAP. Play each one on its card, and when you find the one you
+        want, copy a complete snippet that already includes the GSAP CDN. It runs the moment you paste it, so there is
+        no setup before you can see it working.
+      </p>
+      <p>
+        The collection covers basic tweens (<code>to</code> / <code>from</code> / <code>fromTo</code>), timelines that
+        chain several movements, ScrollTrigger effects driven by scroll position, horizontal scroll sections, text that
+        rises one character at a time, SVG lines that draw themselves, and mouse-following interactions. The accent and
+        sub colors can be changed from the left panel and apply to the live demos immediately (they also reach the copied
+        code whenever that sample declares colors of its own).
+      </p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Narrow the list down with the category chips or the search box</li>
+        <li>Watch the animation on the card (press “▶ Replay” to run it again from the start)</li>
+        <li>Press “📋 Copy code” and paste it into your own HTML</li>
+      </ol>
+      <p>
+        Each ScrollTrigger sample has its own scrollable area inside the card, so you can scroll within a card to see
+        the behaviour without moving the whole page. The copied code uses the normal setup where the page itself is the
+        scroller, so it works as-is on a real page.
+      </p>
+
+      <h2>No paid plugins</h2>
+      <p>
+        Every GSAP plugin became free in 2025, but this gallery goes one step further and reproduces SplitText, DrawSVG,
+        MorphSVG and ScrambleText using only core features — plain JavaScript for splitting characters,
+        <code>stroke-dasharray</code> and <code>stroke-dashoffset</code> for line drawing, and
+        <code>polygon</code> point interpolation for shape morphing. The only files loaded are
+        <code>gsap.min.js</code> plus <code>ScrollTrigger.min.js</code> or <code>Draggable.min.js</code> where needed.
+      </p>
+
+      <h2>Categories</h2>
+      <ul>
+        <li><strong>Basic tweens (16)</strong> — fades, slides, stagger, easing comparison, blur, scatter, keyframes</li>
+        <li><strong>Timeline (12)</strong> — sequencing, labels, nesting, playback control, timeScale, seeking, marquee</li>
+        <li><strong>ScrollTrigger (20)</strong> — fade in, scrub, parallax, progress bar, batch, snap, class toggling, markers</li>
+        <li><strong>Scroll scenes (16)</strong> — horizontal scroll, stacking cards, frame sequence, zoom through, reading highlight</li>
+        <li><strong>Text &amp; numbers (14)</strong> — per character, typewriter, scramble, glitch, count up, currency</li>
+        <li><strong>SVG &amp; shapes (11)</strong> — line drawing, checkmark, circular progress, morph, bar and line charts, waves</li>
+        <li><strong>Interaction (11)</strong> — magnetic button, cursor follower, tilt, drag, before/after slider, modal</li>
+      </ul>
+
+      <h2>Related pages</h2>
+      <p>
+        Settings and common questions are covered in the <a href="howto.html">GSAP Animation Gallery guide</a>. If you
+        would rather stay in CSS without JavaScript, see the
+        <a href="../../animation-gallery/en/">CSS Animation Gallery</a>, and for a GSAP-powered 3D carousel try the
+        <a href="../../carousel-3d/en/">3D Carousel Generator</a>.
+      </p>
+    </section>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">Sponsored</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="Close ad">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="4842647575"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      // Close button for the bottom-right floating ad (not remembered; it returns on reload)
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
+
+    <footer>
+      <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> GSAP Animation Gallery | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="howto.html">&#128214; Guide &amp; FAQ</a>
+        <a href="../../animation-gallery/en/">CSS Animation Gallery &rarr;</a>
+        <a href="../../carousel-3d/en/">3D Carousel &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast">Copied</div>
+
+    <script type="module" src="../js/main.js?v=20260809b"></script>
+  </body>
+</html>

@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSAPアニメーション ギャラリーの使い方・FAQ｜CodeQuest.work</title>
+    <meta name="description" content="GSAPアニメーション ギャラリーの使い方と、GSAPを実際のページに組み込むときのつまずきどころ。コピーしたコードが動かない原因、ScrollTriggerのstart/endの読み方、React環境での注意点、ライセンスについてまとめています。" />
+    <link rel="canonical" href="https://codequest.work/generator/gsap-animation-gallery/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/gsap-animation-gallery/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/gsap-animation-gallery/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/gsap-animation-gallery/howto.html" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:title" content="GSAPアニメーション ギャラリーの使い方・FAQ" />
+    <meta property="og:description" content="コピーしたコードが動かない原因、ScrollTriggerのstart/endの読み方、React環境での注意点、ライセンスまで。" />
+    <meta property="og:url" content="https://codequest.work/generator/gsap-animation-gallery/howto.html" />
+    <meta property="og:image" content="https://codequest.work/generator/gsap-animation-gallery/assets/og.png?v=20260809b" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://codequest.work/generator/gsap-animation-gallery/assets/og.png?v=20260809b" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "GSAPは無料で使えますか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "はい。2025年にWebflowがGSAPを買収した際、従来Club GreenSock会員向けだった有料プラグインを含め、すべてが無償で利用できるようになりました。商用サイトでも追加費用なしで使えます。ただし配布形態によってライセンス条件は変わり得るため、最新の条件は公式サイトで確認してください。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "コピーしたコードが動きません。何を確認すればいいですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "多くはスクリプトの実行順です。GSAPのコードは対象の要素がHTMLに存在してから実行する必要があるため、script要素を閉じbodyタグの直前に置くか、defer属性を付けてください。次に多いのがセレクタの不一致で、コピー元のクラス名を自分のHTMLに合わせて書き換える必要があります。ScrollTriggerを使うサンプルではgsap.registerPlugin(ScrollTrigger)の行と、ScrollTrigger.min.jsの読み込みが両方必要です。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "ScrollTriggerのサンプルが、カードの中だけでスクロールするのはなぜですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "1画面に複数のスクロール演出を並べて見比べられるように、カードごとに独立したスクロール領域を作り、ScrollTriggerのscrollerオプションでその領域を指定しているためです。コピーされるコードにはscroller指定は含まれず、ページ全体をスクロール対象とする通常の書き方になっているので、そのまま実際のページで使えます。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "SplitTextやDrawSVGなどのプラグインは必要ですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "このギャラリーでは必要ありません。文字の分割は素のJavaScriptでspan要素に分ける方法、SVGの線描画はstroke-dasharrayとstroke-dashoffsetを動かす方法、図形の変形は頂点数を揃えたpolygonのpoints属性を補間する方法で再現しています。読み込むのはgsap.min.jsと、必要な場合のみScrollTrigger.min.jsまたはDraggable.min.jsだけです。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "ReactやNext.jsでも使えますか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "使えます。ただしDOMを直接触るため、useEffectやuseLayoutEffect（Next.jsのApp Routerではクライアントコンポーネント）の中で初期化してください。アンマウント時にトゥイーンやScrollTriggerが残ると二重に動く原因になるので、gsap.context()とその戻り値のrevert()、またはuseGSAPフックでまとめて破棄するのが安全です。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "スマホでスクロール連動がガタつきます。どうすればいいですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "スマホではアドレスバーの表示・非表示で画面の高さが変わり、start/endの位置がずれることが原因になりやすいです。100vhではなく100svhやdvhを使う、ScrollTriggerのinvalidateOnRefreshをtrueにする、画像の読み込み完了後にScrollTrigger.refresh()を呼ぶ、の3点で多くは改善します。また、scrubに数値を指定すると描画の負荷が下がって滑らかになります。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "アニメーションを控えめにしたいユーザーへの配慮は必要ですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "必要です。OS側で視差効果を減らす設定をしている利用者に配慮するため、prefers-reduced-motionがreduceのときはアニメーションを止めるか、動きの少ない表現に切り替えてください。GSAPにはgsap.matchMedia()があり、メディアクエリごとに異なるアニメーションを登録して自動で切り替えられます。"
+                }
+              }
+            ]
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+              { "@type": "ListItem", "position": 2, "name": "GSAPアニメーション ギャラリー", "item": "https://codequest.work/generator/gsap-animation-gallery/" },
+              { "@type": "ListItem", "position": 3, "name": "使い方・FAQ", "item": "https://codequest.work/generator/gsap-animation-gallery/howto.html" }
+            ]
+          }
+        ]
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css?v=20260809b" />
+  </head>
+  <body>
+    <div class="header">
+      <a class="lang-switch" href="en/howto.html" hreflang="en">English</a>
+      <h1>GSAPアニメーション ギャラリーの使い方</h1>
+    </div>
+
+    <section class="usage">
+      <p><a href="./">&larr; ギャラリーに戻る</a></p>
+
+      <h2>基本の流れ</h2>
+      <ol>
+        <li>左のカテゴリチップ、または検索でサンプルを絞り込む</li>
+        <li>カード上で動きを確認する。「▶ もう一度」で最初から再生し直せる</li>
+        <li>「📋 コードをコピー」で、CDNの読み込みを含む完全版コードを取得する</li>
+        <li>自分のHTMLに貼り付け、クラス名を自分のマークアップに合わせて書き換える</li>
+      </ol>
+
+      <h2>画面の見方</h2>
+      <h3>コードプレビュー</h3>
+      <p>
+        カードのタイトル部分をクリックすると、左のパネルにそのサンプルのコードが表示されます。カードを離れても表示は残るので、複数のサンプルを見比べながら選べます。
+      </p>
+      <h3>色の設定</h3>
+      <p>
+        アクセント色とサブ色を変えると、カード上のデモに即座に反映されます。コピーされるコードにも反映されますが、コード側の <code>&lt;style&gt;</code> は構造に必要な指定だけに絞っているため、色指定を含まないサンプルでは変化しません。設定はブラウザに保存され、次回アクセス時も維持されます。「↺
+        色をデフォルトに戻す」で初期値に戻せます。
+      </p>
+      <h3>ScrollTriggerのカード</h3>
+      <p>
+        「↓ この中をスクロール」と表示されているカードは、カード内部が独立したスクロール領域になっています。ページ全体を動かさずに、その場でスクロール連動の挙動を確認できます。
+      </p>
+
+      <h2>ScrollTriggerのstartとendの読み方</h2>
+      <p>
+        ScrollTriggerでいちばん最初につまずくのが <code>start</code> と <code>end</code> の書式です。値は空白区切りの2つで、<strong>左がトリガー要素の位置、右が画面の位置</strong>を表します。
+      </p>
+      <ul>
+        <li><code>"top 88%"</code> … 要素の上端が、画面の上から88%の位置に来たとき</li>
+        <li><code>"top top"</code> … 要素の上端が画面の上端に来たとき（固定演出の開始点によく使う）</li>
+        <li><code>"bottom bottom"</code> … 要素の下端が画面の下端に来たとき</li>
+        <li><code>"center center"</code> … 要素の中央が画面の中央に来たとき</li>
+      </ul>
+      <p>
+        位置が思ったとおりにならないときは、<code>markers: true</code> を付けると開始線と終了線が画面に描画されます。ギャラリー内の「位置をデバッグする（markers）」のカードで実際の見え方を確認できます。
+      </p>
+
+      <h2>よくある質問</h2>
+
+      <h3>GSAPは無料で使えますか？</h3>
+      <p>
+        はい。2025年にWebflowがGSAPを買収した際、従来Club GreenSock会員向けだった有料プラグインを含め、すべてが無償で利用できるようになりました。商用サイトでも追加費用なしで使えます。ただし配布形態によってライセンス条件は変わり得るため、最新の条件は<a href="https://gsap.com/" target="_blank" rel="noopener">GSAP公式サイト</a>で確認してください。
+      </p>
+
+      <h3>コピーしたコードが動きません。何を確認すればいいですか？</h3>
+      <p>
+        多くはスクリプトの実行順です。GSAPのコードは対象の要素がHTMLに存在してから実行する必要があるため、<code>&lt;script&gt;</code> を閉じ <code>&lt;/body&gt;</code> の直前に置くか、<code>defer</code> 属性を付けてください。次に多いのがセレクタの不一致で、コピー元のクラス名を自分のHTMLに合わせて書き換える必要があります。ScrollTriggerを使うサンプルでは、<code>ScrollTrigger.min.js</code> の読み込みと <code>gsap.registerPlugin(ScrollTrigger)</code> の行が両方必要です。
+      </p>
+
+      <h3>ScrollTriggerのサンプルが、カードの中だけでスクロールするのはなぜですか？</h3>
+      <p>
+        1画面に複数のスクロール演出を並べて見比べられるように、カードごとに独立したスクロール領域を作り、ScrollTriggerの <code>scroller</code> オプションでその領域を指定しているためです。コピーされるコードに <code>scroller</code> 指定は含まれず、ページ全体をスクロール対象とする通常の書き方になっているので、そのまま実際のページで使えます。
+      </p>
+
+      <h3>SplitTextやDrawSVGなどのプラグインは必要ですか？</h3>
+      <p>
+        このギャラリーでは必要ありません。文字の分割は素のJavaScriptで <code>span</code> に分ける方法、SVGの線描画は <code>stroke-dasharray</code> と <code>stroke-dashoffset</code> を動かす方法、図形の変形は頂点数を揃えた <code>polygon</code> の <code>points</code> 属性を補間する方法で再現しています。読み込むのは <code>gsap.min.js</code> と、必要な場合のみ <code>ScrollTrigger.min.js</code> または <code>Draggable.min.js</code> だけです。
+      </p>
+
+      <h3>ReactやNext.jsでも使えますか？</h3>
+      <p>
+        使えます。ただしDOMを直接触るため、<code>useEffect</code> や <code>useLayoutEffect</code>（Next.jsのApp Routerではクライアントコンポーネント）の中で初期化してください。アンマウント時にトゥイーンやScrollTriggerが残ると二重に動く原因になるので、<code>gsap.context()</code> とその戻り値の <code>revert()</code>、または <code>useGSAP</code> フックでまとめて破棄するのが安全です。
+      </p>
+
+      <h3>スマホでスクロール連動がガタつきます。どうすればいいですか？</h3>
+      <p>
+        スマホではアドレスバーの表示・非表示で画面の高さが変わり、<code>start</code> / <code>end</code> の位置がずれることが原因になりやすいです。<code>100vh</code> ではなく <code>100svh</code> や <code>dvh</code> を使う、ScrollTriggerの <code>invalidateOnRefresh</code> を <code>true</code> にする、画像の読み込み完了後に <code>ScrollTrigger.refresh()</code> を呼ぶ、の3点で多くは改善します。また <code>scrub</code> に数値を指定すると描画の負荷が下がって滑らかになります。
+      </p>
+
+      <h3>アニメーションを控えめにしたいユーザーへの配慮は必要ですか？</h3>
+      <p>
+        必要です。OS側で視差効果を減らす設定をしている利用者に配慮するため、<code>prefers-reduced-motion</code> が <code>reduce</code> のときはアニメーションを止めるか、動きの少ない表現に切り替えてください。GSAPには <code>gsap.matchMedia()</code> があり、メディアクエリごとに異なるアニメーションを登録して自動で切り替えられます。
+      </p>
+
+      <h2>関連ページ</h2>
+      <p>
+        JavaScriptを使わずCSSだけで動かしたい場合は<a href="../animation-gallery/">CSSアニメーション ギャラリー</a>、リンクやナビの装飾は<a href="../hover-effects-gallery/">CSSホバーエフェクト ギャラリー</a>、GSAPで動く3Dカルーセルは<a href="../carousel-3d/">3Dカルーセル ジェネレーター</a>にまとめています。
+      </p>
+    </section>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">広告</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="4842647575"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
+
+    <footer>
+      <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> GSAPアニメーション ギャラリー | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+      <div class="footer-links">
+        <a href="./">&larr; ギャラリーに戻る</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>
