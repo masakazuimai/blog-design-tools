@@ -1,5 +1,5 @@
 // インタラクション（マウス追従・クリック・開閉）。イベントのたびにトゥイーンを作り直さないのが共通のコツ。
-import { CDN, CDN_DRAG, repeat } from "./_shared.js?v=20260809b";
+import { CDN, CDN_DRAG, repeat } from "./_shared.js?v=20260811a";
 
 export const INTERACTION = [
   {

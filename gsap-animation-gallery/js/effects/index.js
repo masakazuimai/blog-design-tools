@@ -1,13 +1,13 @@
 // エフェクト定義の集約。カテゴリの並び順もここで決める。
-import { BASIC } from "./basic.js?v=20260809b";
-import { TIMELINE } from "./timeline.js?v=20260809b";
-import { SCROLLTRIGGER } from "./scrolltrigger.js?v=20260809b";
-import { SCROLLTRIGGER_REVEAL } from "./scrolltrigger-reveal.js?v=20260809b";
-import { SCROLL_ADVANCED } from "./scroll-advanced.js?v=20260809b";
-import { SCROLL_SCENES } from "./scroll-scenes.js?v=20260809b";
-import { TEXT } from "./text.js?v=20260809b";
-import { SVG } from "./svg.js?v=20260809b";
-import { INTERACTION } from "./interaction.js?v=20260809b";
+import { BASIC } from "./basic.js?v=20260811a";
+import { TIMELINE } from "./timeline.js?v=20260811a";
+import { SCROLLTRIGGER } from "./scrolltrigger.js?v=20260811a";
+import { SCROLLTRIGGER_REVEAL } from "./scrolltrigger-reveal.js?v=20260811a";
+import { SCROLL_ADVANCED } from "./scroll-advanced.js?v=20260811a";
+import { SCROLL_SCENES } from "./scroll-scenes.js?v=20260811a";
+import { TEXT } from "./text.js?v=20260811a";
+import { SVG } from "./svg.js?v=20260811a";
+import { INTERACTION } from "./interaction.js?v=20260811a";
 
 export const CATEGORIES = [
   { key: "all", label: { ja: "すべて", en: "All" } },

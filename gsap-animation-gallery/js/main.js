@@ -1,6 +1,6 @@
 // GSAPアニメーション ギャラリー UI配線
-import { EFFECTS, CATEGORIES } from "./effects/index.js?v=20260809b";
-import { LANG, t, tf, localizeCode } from "./i18n.js?v=20260809b";
+import { EFFECTS, CATEGORIES } from "./effects/index.js?v=20260811a";
+import { LANG, t, tf, localizeCode } from "./i18n.js?v=20260811a";
 
 gsap.registerPlugin(ScrollTrigger, Draggable);
 

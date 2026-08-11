@@ -1,5 +1,5 @@
 // SVG・図形。DrawSVG / MorphSVG（有料）を使わず、標準の属性トゥイーンで同じ表現を作る。
-import { CDN } from "./_shared.js?v=20260809b";
+import { CDN } from "./_shared.js?v=20260811a";
 
 export const SVG = [
   {
@@ -186,8 +186,8 @@ export const SVG = [
     cat: "svg",
     label: { ja: "波が流れ続ける", en: "Endless wave" },
     stage: `<svg class="wv2" viewBox="0 0 200 80" preserveAspectRatio="none">
-  <path class="wv2-p wv2-back" d="M0,40 C25,15 50,65 100,40 C150,15 175,65 200,40 L200,80 L0,80 Z" fill="#c7d2fe" />
-  <path class="wv2-p wv2-front" d="M0,45 C25,20 50,70 100,45 C150,20 175,70 200,45 L200,80 L0,80 Z" fill="#6366f1" />
+  <path class="wv2-p wv2-back" d="M0,40 C25,15 50,65 100,40 C150,15 175,65 200,40 C225,15 250,65 300,40 C350,15 375,65 400,40 L400,80 L0,80 Z" fill="#c7d2fe" />
+  <path class="wv2-p wv2-front" d="M0,45 C25,20 50,70 100,45 C150,20 175,70 200,45 C225,20 250,70 300,45 C350,20 375,70 400,45 L400,80 L0,80 Z" fill="#6366f1" />
 </svg>`,
     css: `.fx-svg-wave .wv2 { width: 100%; height: 120px; }
 .fx-svg-wave .wv2-p { transform-box: fill-box; }`,
@@ -198,13 +198,13 @@ export const SVG = [
     code: `${CDN}
 
 <svg viewBox="0 0 200 80" preserveAspectRatio="none">
-  <path class="wv2-back"  d="M0,40 C25,15 50,65 100,40 C150,15 175,65 200,40 L200,80 L0,80 Z" fill="#c7d2fe" />
-  <path class="wv2-front" d="M0,45 C25,20 50,70 100,45 C150,20 175,70 200,45 L200,80 L0,80 Z" fill="#6366f1" />
+  <path class="wv2-back"  d="M0,40 C25,15 50,65 100,40 C150,15 175,65 200,40 C225,15 250,65 300,40 C350,15 375,65 400,40 L400,80 L0,80 Z" fill="#c7d2fe" />
+  <path class="wv2-front" d="M0,45 C25,20 50,70 100,45 C150,20 175,70 200,45 C225,20 250,70 300,45 C350,20 375,70 400,45 L400,80 L0,80 Z" fill="#6366f1" />
 </svg>
 
 <script>
+  // 同じ波形を横に2つ並べて幅2倍（400）のパスにしておき、
   // 1周期ぶん（この例では200）ちょうど動かすと、継ぎ目なく無限ループする
-  // 実際は同じ波形を横に2つ並べて幅を2倍にしておくと途切れない
   gsap.to(".wv2-back",  { x: -200, duration: 4,   ease: "none", repeat: -1 });
   gsap.to(".wv2-front", { x: -200, duration: 2.6, ease: "none", repeat: -1 });  // 速度差で奥行きが出る
 <\/script>`,

@@ -1,5 +1,5 @@
 // タイムライン（順次再生・位置指定・入れ子・再生制御）
-import { CDN } from "./_shared.js?v=20260809b";
+import { CDN } from "./_shared.js?v=20260811a";
 
 export const TIMELINE = [
   {

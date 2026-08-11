@@ -1,6 +1,6 @@
 // スクロール演出のうち、ページ全体の見せ方に関わるもの（背景色・積み重ね・目次追従など）。
 // 固定して見せる大きな演出は scroll-advanced.js を参照。
-import { CDN_ST, repeat } from "./_shared.js?v=20260809b";
+import { CDN_ST, repeat } from "./_shared.js?v=20260811a";
 
 export const SCROLL_SCENES = [
   {

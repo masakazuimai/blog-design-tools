@@ -1,6 +1,6 @@
 // ScrollTrigger の登場演出と奥行き（フェード/マスク/クリップ/パララックス）。
 // 基本形は scrolltrigger.js を参照。デモの scroller 指定などの前提も同じ。
-import { CDN_ST, repeat } from "./_shared.js?v=20260809b";
+import { CDN_ST, repeat } from "./_shared.js?v=20260811a";
 
 export const SCROLLTRIGGER_REVEAL = [
   {

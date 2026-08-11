@@ -2,7 +2,7 @@
 // デモはカード内の独立したスクロール領域で動かすため、すべて scroller に stage を渡している。
 // コピー用コードではページ全体をスクローラーにする（= scroller 指定なし）。
 // 登場演出・奥行き系は scrolltrigger-reveal.js に分けてある。
-import { CDN_ST, repeat } from "./_shared.js?v=20260809b";
+import { CDN_ST, repeat } from "./_shared.js?v=20260811a";
 
 export const SCROLLTRIGGER = [
   {

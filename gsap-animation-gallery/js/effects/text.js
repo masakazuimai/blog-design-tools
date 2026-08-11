@@ -1,5 +1,5 @@
 // テキスト・数値。有料の SplitText / ScrambleText を使わず、素のJSで同じ表現を作る。
-import { CDN } from "./_shared.js?v=20260809b";
+import { CDN } from "./_shared.js?v=20260811a";
 
 /** 文字列を1文字ずつ span に分解する（半角スペースは &nbsp; で潰さない） */
 const splitChars = (el, text) => {
