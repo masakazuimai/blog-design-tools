@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animated Icon Generator｜Free Animated SVG &amp; PNG Downloads</title>
+    <meta
+      name="description"
+      content="Create animated icons in your browser and download them as animated SVG, static SVG or PNG. Change the color, size, speed and loop count before you export. Free for commercial use, no attribution, no sign-up."
+    />
+    <link rel="canonical" href="https://codequest.work/generator/animated-icon-generator/en/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/animated-icon-generator/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/animated-icon-generator/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/animated-icon-generator/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Animated Icon Generator｜Free Animated SVG &amp; PNG Downloads" />
+    <meta
+      property="og:description"
+      content="Animated icons you can customize and download as animated SVG, static SVG or PNG. Free for commercial use, no attribution required."
+    />
+    <meta property="og:url" content="https://codequest.work/generator/animated-icon-generator/en/" />
+    <meta property="og:image" content="https://codequest.work/generator/animated-icon-generator/assets/og-en.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Animated Icon Generator" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Animated Icon Generator｜Free Animated SVG &amp; PNG Downloads" />
+    <meta
+      name="twitter:description"
+      content="Animated icons you can customize and download as animated SVG, static SVG or PNG. Free for commercial use, no attribution required."
+    />
+    <meta name="twitter:image" content="https://codequest.work/generator/animated-icon-generator/assets/og-en.png" />
+
+    <!-- 構造化データ -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "Animated Icon Generator",
+            "url": "https://codequest.work/generator/animated-icon-generator/en/",
+            "description": "Create animated icons in your browser and download them as animated SVG, static SVG or PNG. Free for commercial use with no attribution required.",
+            "applicationCategory": "DesignApplication",
+            "operatingSystem": "Web",
+            "browserRequirements": "Requires JavaScript.",
+            "inLanguage": "en",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+            "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+              { "@type": "ListItem", "position": 2, "name": "Generators", "item": "https://codequest.work/category/generator/" },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Animated Icon Generator",
+                "item": "https://codequest.work/generator/animated-icon-generator/en/"
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css?v=20260814f" />
+  </head>
+  <body>
+    <div class="header">
+      <a class="lang-switch" href="../" hreflang="ja">日本語</a>
+      <h1><span class="title-icon" id="titleIcon" aria-hidden="true"></span>Animated Icon Generator</h1>
+      <p>
+        Customize an animated icon &mdash; color, size and speed &mdash; then download it. Animated SVG, static SVG and
+        PNG. Free for commercial use, no attribution required
+      </p>
+    </div>
+
+    <div class="container">
+      <div class="layout">
+        <aside class="sidebar">
+          <div class="input-card">
+            <div class="preview-bar">
+              <span class="preview-name" id="previewName"></span>
+              <button class="btn btn-ghost" id="replay" type="button">↻ Replay</button>
+            </div>
+            <div class="preview" id="preview"></div>
+            <div class="dl-group">
+              <button class="btn btn-primary" id="dlAnimSvg" type="button">⬇ Download animated SVG</button>
+              <button class="btn" id="dlStaticSvg" type="button">⬇ Download static SVG</button>
+              <button class="btn" id="dlPng" type="button">⬇ Download PNG</button>
+            </div>
+            <p class="dl-note">
+              The animated SVG is fully self-contained, so <code>&lt;img src="icon.svg"&gt;</code> is all you need. The
+              static SVG and PNG are the finished shape with no animation applied.
+            </p>
+          </div>
+
+          <div class="input-card">
+            <h2>⚙️ Settings</h2>
+            <div class="field">
+              <label for="iconColor">Icon color</label>
+              <div class="color-row">
+                <input type="color" id="iconColor" value="#6366f1" />
+                <span class="color-val" id="colorVal">#6366f1</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="sizeSel">Export size</label>
+              <select id="sizeSel">
+                <option value="64">64px (small)</option>
+                <option value="128">128px (medium)</option>
+                <option value="256">256px (large)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="speedSel">Speed</label>
+              <select id="speedSel">
+                <option value="1.6">Slow</option>
+                <option value="1">Normal</option>
+                <option value="0.6">Fast</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="loopSel">Loop</label>
+              <select id="loopSel">
+                <option value="infinite">Loop forever</option>
+                <option value="3">3 times</option>
+                <option value="1">Once</option>
+              </select>
+            </div>
+            <button class="btn" id="resetSettings" type="button">↺ Reset to defaults</button>
+          </div>
+
+          <div class="input-card">
+            <h2>📄 License</h2>
+            <ul class="license">
+              <li>✅ Free for commercial use</li>
+              <li>✅ No attribution required</li>
+              <li>✅ Modification allowed (color, size, shape)</li>
+              <li>❌ Redistributing or selling the icons themselves as an icon pack is not allowed</li>
+            </ul>
+          </div>
+        </aside>
+
+        <main class="main">
+          <div class="toolbar">
+            <input type="search" id="search" placeholder="Search icons" aria-label="Search icons" />
+            <button class="btn btn-ghost" id="playAll" type="button">▶ Play all</button>
+          </div>
+          <div class="filters" id="filters"></div>
+          <div class="grid" id="grid"></div>
+          <div class="count-note" id="countNote"></div>
+        </main>
+      </div>
+    </div>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">Sponsored</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="Close ad">×</button>
+      </div>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288"
+        crossorigin="anonymous"
+      ></script>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="9640243337"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () {
+          w.classList.add("is-closed");
+        });
+      })();
+    </script>
+
+    <footer>
+      <span
+        >&copy; <span class="cq-year">2026</span
+        ><script>
+          document.currentScript.previousElementSibling.textContent = new Date().getFullYear();
+        </script>
+        Animated Icon Generator | Created by
+        <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span
+      >
+      <div class="footer-links">
+        <a href="howto.html">&#128214; How to use &amp; FAQ</a>
+        <a href="../../animation-gallery/en/">CSS Animation Gallery &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <script type="module" src="../js/main.js?v=20260814f"></script>
+  </body>
+</html>

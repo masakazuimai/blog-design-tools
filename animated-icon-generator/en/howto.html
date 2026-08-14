@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to Use &amp; FAQ｜Animated Icon Generator</title>
+    <meta
+      name="description"
+      content="How to use the Animated Icon Generator. The difference between animated SVG, static SVG and PNG, how to embed icons in a blog or WordPress, and the license (free for commercial use, no attribution)."
+    />
+    <link rel="canonical" href="https://codequest.work/generator/animated-icon-generator/en/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/animated-icon-generator/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/animated-icon-generator/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/animated-icon-generator/howto.html" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="How to Use &amp; FAQ｜Animated Icon Generator" />
+    <meta property="og:description" content="Animated SVG vs static SVG vs PNG, how to embed the icons, and the license." />
+    <meta property="og:url" content="https://codequest.work/generator/animated-icon-generator/en/howto.html" />
+    <meta property="og:image" content="https://codequest.work/generator/animated-icon-generator/assets/og-en.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="How to Use &amp; FAQ｜Animated Icon Generator" />
+    <meta name="twitter:description" content="Animated SVG vs static SVG vs PNG, how to embed the icons, and the license." />
+    <meta name="twitter:image" content="https://codequest.work/generator/animated-icon-generator/assets/og-en.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the difference between the animated SVG and the static SVG or PNG?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The animated SVG carries its animation inside the file, so it plays as soon as you reference it from an img element. The static SVG and PNG are the finished shape with no animation applied, which suits print or any place where movement is not wanted."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use the animated SVG in WordPress?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "WordPress does not allow SVG uploads by default because an SVG can contain scripts. You need a plugin such as Safe SVG, or you have to add SVG to upload_mimes in your theme. If you cannot change that, use the PNG instead."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I change the icon color?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Use the icon color setting in the panel and the exported file picks it up. You can also open the downloaded SVG in a text editor and edit the stroke and color values."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is commercial use allowed? Do I need to credit you?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The icons are free for personal and commercial use and no attribution is required. You may also modify them. The only restriction is that you may not redistribute or sell the icons themselves as an icon pack."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do the speed and loop settings apply to the downloaded file?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Both are written into the CSS inside the animated SVG, so the icon behaves the same wherever you embed it. Note that cards in the gallery always stop after three plays regardless of the setting."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Will more icons be added?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, more icons are added over time. Anything added later is covered by the same license."
+            }
+          }
+        ]
+      }
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css?v=20260814f" />
+  </head>
+  <body>
+    <div class="header">
+      <a class="lang-switch" href="../howto.html" hreflang="ja">日本語</a>
+      <h1>How to Use &amp; FAQ</h1>
+      <p>Getting started with the Animated Icon Generator, and common questions</p>
+    </div>
+
+    <div class="container">
+      <article class="doc">
+        <h2>The basic flow</h2>
+        <ol>
+          <li>Click an icon in the gallery to select it</li>
+          <li>Set the color, export size, speed and loop count in the panel on the left</li>
+          <li>Download it as an animated SVG, a static SVG or a PNG</li>
+        </ol>
+        <p>
+          Cards in the gallery play three times when they scroll into view, then stop. Hover a card, or press
+          &ldquo;Play all&rdquo;, to watch again.
+        </p>
+
+        <h2>Which format to pick</h2>
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>Format</th>
+              <th>Animated</th>
+              <th>Best for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Animated SVG</td>
+              <td>Yes</td>
+              <td>Sites where you can host files. Around 1KB and scales without losing quality</td>
+            </tr>
+            <tr>
+              <td>Static SVG</td>
+              <td>No</td>
+              <td>Design tools and print. Stays editable as a vector</td>
+            </tr>
+            <tr>
+              <td>PNG</td>
+              <td>No</td>
+              <td>Anywhere SVG is not available. The background is transparent</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Embedding the animated SVG</h2>
+        <p>Upload the file to your server and reference it from an <code>img</code> element. That is all it takes.</p>
+        <pre class="doc-code"><code>&lt;img src="/assets/check-animated.svg" alt="" width="48" height="48"&gt;</code></pre>
+        <p>
+          The animation lives inside the file, so there is no extra CSS or JavaScript to add. It also animates when
+          loaded through a CSS <code>background-image</code>.
+        </p>
+
+        <h2>Using it in WordPress</h2>
+        <p>
+          <strong>WordPress blocks SVG uploads by default.</strong> This is deliberate, because an SVG file can contain
+          scripts. To allow it you need one of the following.
+        </p>
+        <ul>
+          <li>Install a plugin such as Safe SVG</li>
+          <li>Add SVG to <code>upload_mimes</code> in your theme&rsquo;s <code>functions.php</code></li>
+        </ul>
+        <p>If you cannot change that setting, use the PNG instead (it does not animate).</p>
+
+        <h2>License</h2>
+        <p>Icons generated with this tool are free to use, for personal and commercial projects alike.</p>
+        <ul class="license">
+          <li>✅ Free for commercial use</li>
+          <li>✅ No attribution required</li>
+          <li>✅ Modification allowed (color, size, shape)</li>
+          <li>❌ Redistributing or selling the icons themselves as an icon pack is not allowed</li>
+        </ul>
+        <p>
+          The only thing that is off limits is handing out or selling the icons as a product in their own right. Using
+          them inside client work or your own service is completely fine.
+        </p>
+
+        <h2>FAQ</h2>
+
+        <h3>Can I change the icon color?</h3>
+        <p>
+          Yes. Use the icon color setting and the exported file picks it up. You can also open the downloaded SVG in a
+          text editor and edit the <code>stroke</code> and <code>color</code> values.
+        </p>
+
+        <h3>Do the speed and loop settings apply to the downloaded file?</h3>
+        <p>
+          They do. Both are written into the CSS inside the animated SVG, so the icon behaves the same wherever you
+          embed it. Cards in the gallery always stop after three plays regardless of the setting.
+        </p>
+
+        <h3>Can I change the stroke width?</h3>
+        <p>
+          Not from the tool, but you can edit <code>stroke-width="2"</code> in the downloaded SVG to adjust it.
+        </p>
+
+        <h3>Will more icons be added?</h3>
+        <p>Yes, more are added over time, and they are covered by the same license.</p>
+
+        <h3>I want CSS code rather than a file</h3>
+        <p>
+          This tool focuses on downloadable files. If you want code to copy and paste, try the
+          <a href="../../animation-gallery/en/">CSS Animation Gallery</a> or the
+          <a href="../../hover-effects-gallery/en/">CSS Hover Effects Gallery</a>. That said, opening a downloaded
+          animated SVG in a text editor shows you the <code>@keyframes</code> directly.
+        </p>
+
+        <p class="doc-back"><a href="./">&larr; Back to the tool</a></p>
+      </article>
+    </div>
+
+    <footer>
+      <span
+        >&copy; <span class="cq-year">2026</span
+        ><script>
+          document.currentScript.previousElementSibling.textContent = new Date().getFullYear();
+        </script>
+        Animated Icon Generator | Created by
+        <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span
+      >
+      <div class="footer-links">
+        <a href="./">&#127912; Back to the tool</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,146 @@
+<!doctype html>
+<!-- OG画像(1200×630)の生成元。ヘッドレスChromeでスクリーンショットして assets/og.png を作る。
+     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
+       --screenshot=assets/og.png --window-size=1200,630 --default-background-color=0 assets/og-template.html -->
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        width: 1200px;
+        height: 630px;
+        font-family: "Noto Sans JP", sans-serif;
+        background: linear-gradient(135deg, #0f172a 0%, #312e81 60%, #4338ca 100%);
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 78px 132px;
+      }
+
+      /* 背景: 再生の周回を思わせる同心円 */
+      .ring { position: absolute; border: 2px solid rgba(199, 210, 254, 0.14); border-radius: 50%; }
+      .ring-1 { width: 700px; height: 700px; right: -210px; top: -170px; }
+      .ring-2 { width: 960px; height: 960px; right: -330px; top: -300px; }
+      .ring-3 { width: 440px; height: 440px; right: -80px; top: -40px; border-color: rgba(129, 140, 248, 0.3); }
+
+      .badge {
+        align-self: flex-start;
+        border: 1px solid rgba(165, 180, 252, 0.55);
+        background: rgba(99, 102, 241, 0.2);
+        color: #c7d2fe;
+        border-radius: 999px;
+        padding: 8px 24px;
+        font-size: 25px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        margin-bottom: 26px;
+        position: relative;
+        z-index: 2;
+      }
+      h1 {
+        font-size: 76px;
+        font-weight: 900;
+        line-height: 1.18;
+        letter-spacing: -0.035em;
+        position: relative;
+        z-index: 2;
+      }
+      h1 .accent {
+        background: linear-gradient(90deg, #a5b4fc, #f9a8d4);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .tags { display: flex; gap: 12px; margin-top: 28px; position: relative; z-index: 2; }
+      .tag {
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        padding: 9px 18px;
+        font-size: 25px;
+        font-weight: 500;
+      }
+
+      /* 実際に収録しているアイコンを並べる */
+      .strip {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 52px;
+        display: flex;
+        justify-content: center;
+        gap: 34px;
+        opacity: 0.9;
+      }
+      .strip svg { width: 62px; height: 62px; color: #c7d2fe; }
+
+      .site {
+        position: absolute;
+        left: 78px;
+        top: 42px;
+        font-size: 26px;
+        font-weight: 700;
+        color: #a5b4fc;
+        letter-spacing: 0.02em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ring ring-1"></div>
+    <div class="ring ring-2"></div>
+    <div class="ring ring-3"></div>
+
+    <span class="badge">アニメSVG / 静止SVG / PNG</span>
+    <h1>動くアイコン<br /><span class="accent">ジェネレーター</span></h1>
+    <div class="tags">
+      <span class="tag">商用利用可</span>
+      <span class="tag">クレジット不要</span>
+      <span class="tag">登録不要</span>
+    </div>
+
+    <div class="strip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9" /><path d="M7.8 12.4 L10.7 15.3 L16.4 9.2" />
+      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 16.4V10.6a5 5 0 0 1 10 0v5.8 M4.8 16.4h14.4" /><path d="M10 19.4a2 2 0 0 0 4 0" />
+      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 20.4 C12 20.4 3.6 15 3.6 9.4 A4.6 4.6 0 0 1 12 6.8 A4.6 4.6 0 0 1 20.4 9.4 C20.4 15 12 20.4 12 20.4 Z" />
+      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3.6 L14.6 9.3 L20.8 10.1 L16.2 14.3 L17.5 20.4 L12 17.4 L6.5 20.4 L7.8 14.3 L3.2 10.1 L9.4 9.3 Z" />
+      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3.6 15.4v3.2a2 2 0 0 0 2 2h12.8a2 2 0 0 0 2-2v-3.2" /><path d="M12 3.4V15" /><path d="M7.4 10.6 L12 15.2 L16.6 10.6" />
+      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5.4" />
+        <path d="M17.4 12h3 M15.8 15.8l2.1 2.1 M12 17.4v3 M8.2 15.8l-2.1 2.1 M6.6 12h-3 M8.2 8.2L6.1 6.1 M12 6.6v-3 M15.8 8.2l2.1-2.1" />
+      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9" /><path d="M10 8.2 L16.2 12 L10 15.8 Z" />
+      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2.6" y="5.4" width="18.8" height="13.2" rx="2" /><path d="M3.2 7 L12 13.4 L20.8 7" />
+      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2.6 9.6a2 2 0 0 1 2-2h2.4l1.6-2.6h6.8l1.6 2.6h2.4a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.6a2 2 0 0 1-2-2z" />
+        <circle cx="12" cy="13.4" r="3.8" />
+      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 3.4v2.8 M12 17.8v2.8 M3.4 12h2.8 M17.8 12h2.8 M5.5 5.5l2 2 M16.5 16.5l2 2 M18.5 5.5l-2 2 M7.5 16.5l-2 2" />
+      </svg>
+    </div>
+
+    <span class="site">CodeQuest.work</span>
+  </body>
+</html>
