@@ -1,6 +1,6 @@
 // 状態・通知カテゴリの追加分（共通ルールは status.js のヘッダーを参照）
 
-import { DRAW, drawKeys, spinKeys, pulseKeys, popInKeys, blinkKeys, bounceKeys } from "./_shared.js?v=20260814f";
+import { DRAW, drawKeys, spinKeys, pulseKeys, popInKeys, blinkKeys, bounceKeys } from "./_shared.js?v=20260815a";
 
 export const STATUS_ICONS_2 = [
   {

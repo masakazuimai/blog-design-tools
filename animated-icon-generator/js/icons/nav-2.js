@@ -2,7 +2,7 @@
 //
 // ⚠️ 移動するアイコンは図形を内側に描くこと（nav.js のヘッダー参照）
 
-import { DRAW, drawKeys, bounceKeys, slideKeys, popInKeys } from "./_shared.js?v=20260814f";
+import { DRAW, drawKeys, bounceKeys, slideKeys, popInKeys } from "./_shared.js?v=20260815a";
 
 export const NAV_ICONS_2 = [
   {

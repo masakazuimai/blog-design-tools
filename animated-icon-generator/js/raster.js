@@ -3,7 +3,7 @@
 // アイコンは外部リソースもテキストも含まないため、data URI 経由で読み込んでも
 // canvas は汚染されず toBlob() がそのまま使える。
 
-import { t } from "./i18n.js?v=20260814f";
+import { t } from "./i18n.js?v=20260815a";
 
 export async function renderPng(svgText, size) {
   const image = new Image();

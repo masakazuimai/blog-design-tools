@@ -1,6 +1,6 @@
 // コミュニケーションカテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
 
-import { DRAW, drawKeys, swingKeys, popInKeys, bounceKeys } from "./_shared.js?v=20260814f";
+import { DRAW, drawKeys, swingKeys, popInKeys, bounceKeys } from "./_shared.js?v=20260815a";
 
 export const COMM_ICONS = [
   {

@@ -1,6 +1,6 @@
 // 天気・自然カテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
 
-import { DRAW, drawKeys, spinKeys, swingKeys } from "./_shared.js?v=20260814f";
+import { DRAW, drawKeys, spinKeys, swingKeys } from "./_shared.js?v=20260815a";
 
 // 雲の共通シルエット（雨・雷と使い回す）
 const CLOUD_D = "M7 17.6a3.9 3.9 0 0 1 .4-7.8 6 6 0 0 1 11.3 1.2 3.4 3.4 0 0 1-.5 6.6z";

@@ -1,6 +1,6 @@
 // メディアカテゴリの追加分（共通ルールは status.js のヘッダーを参照）
 
-import { DRAW, drawKeys, spinKeys, pulseKeys, bounceKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260814f";
+import { DRAW, drawKeys, spinKeys, pulseKeys, bounceKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815a";
 
 export const MEDIA_ICONS_2 = [
   {
@@ -42,9 +42,10 @@ export const MEDIA_ICONS_2 = [
     cat: "media",
     label: { ja: "リピート", en: "Repeat" },
     parts: [
-      { tag: "path", part: "top", attrs: { d: "M6.4 8.4h11.2v3.2" } },
+      // 折り返しの角は矢じりと反対側の端に置く（同じ端に重ねると入れ替えアイコンに見える）
+      { tag: "path", part: "top", attrs: { d: "M6.4 11.6V8.4h11.2" } },
       { tag: "path", part: "topHead", attrs: { d: "M14.6 5.4 L17.6 8.4 L14.6 11.4" } },
-      { tag: "path", part: "bottom", attrs: { d: "M17.6 15.6H6.4v-3.2" } },
+      { tag: "path", part: "bottom", attrs: { d: "M17.6 12.4v3.2H6.4" } },
       { tag: "path", part: "bottomHead", attrs: { d: "M9.4 18.6 L6.4 15.6 L9.4 12.6" } },
     ],
     anim: {

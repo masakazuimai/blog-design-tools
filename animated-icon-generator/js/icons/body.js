@@ -1,6 +1,6 @@
 // 人・体・健康カテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
 
-import { DRAW, drawKeys, pulseKeys, swingKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260814f";
+import { DRAW, drawKeys, pulseKeys, swingKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815a";
 
 export const BODY_ICONS = [
   {
@@ -112,12 +112,14 @@ export const BODY_ICONS = [
   {
     id: "ok-hand",
     cat: "body",
-    label: { ja: "OKサイン", en: "OK hand" },
+    label: { ja: "OKサイン", en: "OK sign" },
     parts: [
-      { tag: "circle", part: "ring", attrs: { cx: 8.8, cy: 8.8, r: 3.6 } },
-      { tag: "path", part: "fingers", attrs: { d: "M11.8 11.2 L15.4 7.6a1.5 1.5 0 0 1 2.2 2.2l-2.2 2.4 M13.4 13.4l3.6-1.2a1.4 1.4 0 0 1 1 2.6l-4.6 3.2a6 6 0 0 1-7.6-.8l-2-2" } },
+      // 手の形ではなく「OK」の文字（K を斜体にしたスラント体）
+      { tag: "ellipse", part: "o", attrs: { cx: 8.6, cy: 11.8, rx: 4, ry: 6 } },
+      { tag: "path", part: "stem", attrs: { d: "M15.4 5.8 L13.4 18.2" } },
+      { tag: "path", part: "arm", attrs: { d: "M20.6 7.8 L14.6 13 L17.8 18.2" } },
     ],
-    anim: { duration: 1.3, easing: "ease-out", tracks: [{ part: ["ring", "fingers"], origin: "12px 12px", keys: pulseKeys(1.08) }] },
+    anim: { duration: 1.3, easing: "ease-out", tracks: [{ part: ["o", "stem", "arm"], origin: "12px 12px", keys: pulseKeys(1.08) }] },
   },
   {
     id: "heartbeat",
@@ -178,15 +180,17 @@ export const BODY_ICONS = [
     cat: "body",
     label: { ja: "ランニング", en: "Running" },
     parts: [
-      { tag: "circle", part: "head", attrs: { cx: 15.4, cy: 5.6, r: 2.2 } },
-      { tag: "path", part: "body", attrs: { d: "M16.4 9.4 L12.6 11.6l1.6 3.4-2.6 4.6 M14.2 15h3.6l1.6 4.4 M16.4 9.4h-4l-3 3.6H5.6" } },
+      // 首を胴体につなげて頭が浮かないようにする。胴体を斜めに倒し、腕・脚を肘と膝で折って疾走の姿勢を出す
+      { tag: "circle", part: "head", attrs: { cx: 17.4, cy: 5.8, r: 2.6 } },
+      { tag: "path", part: "body", attrs: { d: "M14.8 8.8 L13.2 14 M14.8 8.8 L11.8 6.4 L10.8 9.4 M14.6 9.6 L16.6 13.4 L19.2 11.4 M13.2 14 L17.8 15.4 L12.4 16.8 M13.2 14 L7.6 18.6" } },
+      { tag: "path", part: "speed", attrs: { d: "M2.8 12.4h3.4 M2.4 14.6h3.2 M3.4 16.8h2.8" } },
     ],
     anim: {
       duration: 1,
       easing: "ease-in-out",
       tracks: [
         {
-          part: ["head", "body"],
+          part: ["head", "body", "speed"],
           origin: "12px 12px",
           keys: [
             { at: 0, transform: "translate(0, 0)" },

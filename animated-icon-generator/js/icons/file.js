@@ -1,6 +1,6 @@
 // ファイル・データカテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
 
-import { DRAW, drawKeys, pulseKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260814f";
+import { DRAW, drawKeys, pulseKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815a";
 
 // 底辺を軸に伸び上がる（棒グラフ用）
 const growKeys = (delay) => [
