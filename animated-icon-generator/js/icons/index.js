@@ -1,27 +1,27 @@
 // 全カテゴリのアイコン定義を集約する
 // ?v= はキャッシュバスティング用。icons配下を更新したら日付を揃えて上げる
 
-import { STATUS_ICONS } from "./status.js?v=20260815a";
-import { ACTION_ICONS } from "./action.js?v=20260815a";
-import { NAV_ICONS } from "./nav.js?v=20260815a";
-import { MEDIA_ICONS } from "./media.js?v=20260815a";
-import { FILE_ICONS } from "./file.js?v=20260815a";
-import { COMM_ICONS } from "./comm.js?v=20260815a";
-import { UI_ICONS } from "./ui.js?v=20260815a";
-import { WEATHER_ICONS } from "./weather.js?v=20260815a";
-import { COMMERCE_ICONS } from "./commerce.js?v=20260815a";
-import { DEV_ICONS } from "./dev.js?v=20260815a";
-import { DEVICE_ICONS } from "./device.js?v=20260815a";
-import { BODY_ICONS } from "./body.js?v=20260815a";
+import { STATUS_ICONS } from "./status.js?v=20260815b";
+import { ACTION_ICONS } from "./action.js?v=20260815b";
+import { NAV_ICONS } from "./nav.js?v=20260815b";
+import { MEDIA_ICONS } from "./media.js?v=20260815b";
+import { FILE_ICONS } from "./file.js?v=20260815b";
+import { COMM_ICONS } from "./comm.js?v=20260815b";
+import { UI_ICONS } from "./ui.js?v=20260815b";
+import { WEATHER_ICONS } from "./weather.js?v=20260815b";
+import { COMMERCE_ICONS } from "./commerce.js?v=20260815b";
+import { DEV_ICONS } from "./dev.js?v=20260815b";
+import { DEVICE_ICONS } from "./device.js?v=20260815b";
+import { BODY_ICONS } from "./body.js?v=20260815b";
 // 各カテゴリの追加分。1ファイル800行の上限に収めるため -2 として分けている
-import { STATUS_ICONS_2 } from "./status-2.js?v=20260815a";
-import { ACTION_ICONS_2 } from "./action-2.js?v=20260815a";
-import { NAV_ICONS_2 } from "./nav-2.js?v=20260815a";
-import { MEDIA_ICONS_2 } from "./media-2.js?v=20260815a";
-import { FILE_ICONS_2 } from "./file-2.js?v=20260815a";
-import { COMM_ICONS_2 } from "./comm-2.js?v=20260815a";
-import { UI_ICONS_2 } from "./ui-2.js?v=20260815a";
-import { WEATHER_ICONS_2 } from "./weather-2.js?v=20260815a";
+import { STATUS_ICONS_2 } from "./status-2.js?v=20260815b";
+import { ACTION_ICONS_2 } from "./action-2.js?v=20260815b";
+import { NAV_ICONS_2 } from "./nav-2.js?v=20260815b";
+import { MEDIA_ICONS_2 } from "./media-2.js?v=20260815b";
+import { FILE_ICONS_2 } from "./file-2.js?v=20260815b";
+import { COMM_ICONS_2 } from "./comm-2.js?v=20260815b";
+import { UI_ICONS_2 } from "./ui-2.js?v=20260815b";
+import { WEATHER_ICONS_2 } from "./weather-2.js?v=20260815b";
 
 // アイコン定義スキーマ
 // {

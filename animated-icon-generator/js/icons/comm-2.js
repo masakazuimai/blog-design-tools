@@ -1,6 +1,6 @@
 // コミュニケーションカテゴリの追加分（共通ルールは status.js のヘッダーを参照）
 
-import { DRAW, drawKeys, spinKeys, pulseKeys, swingKeys, bounceKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815a";
+import { DRAW, drawKeys, spinKeys, pulseKeys, swingKeys, bounceKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815b";
 
 export const COMM_ICONS_2 = [
   {

@@ -1,6 +1,6 @@
 // 天気・自然カテゴリの追加分（共通ルールは status.js のヘッダーを参照）
 
-import { DRAW, drawKeys, spinKeys, pulseKeys, bounceKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815a";
+import { DRAW, drawKeys, spinKeys, pulseKeys, bounceKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815b";
 
 const CLOUD_D = "M7 17.6a3.9 3.9 0 0 1 .4-7.8 6 6 0 0 1 11.3 1.2 3.4 3.4 0 0 1-.5 6.6z";
 

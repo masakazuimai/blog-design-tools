@@ -1,6 +1,6 @@
 // デバイスカテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
 
-import { DRAW, drawKeys, pulseKeys, bounceKeys, popInKeys, blinkKeys, spinKeys } from "./_shared.js?v=20260815a";
+import { DRAW, drawKeys, pulseKeys, bounceKeys, popInKeys, blinkKeys, spinKeys } from "./_shared.js?v=20260815b";
 
 export const DEVICE_ICONS = [
   {

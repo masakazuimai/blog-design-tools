@@ -1,12 +1,12 @@
 // 動くアイコン ジェネレーター
 // 一覧の再生制御・設定の反映・3形式のダウンロードを担当する
 
-import { ICONS, CATEGORIES, CATEGORY_LABELS } from "./icons/index.js?v=20260815a";
-import { buildKeyframes, buildRules } from "./anim.js?v=20260815a";
-import { createIconSvg, buildSvgFile } from "./svg.js?v=20260815a";
-import { renderPng } from "./raster.js?v=20260815a";
-import { downloadBlob, downloadText } from "./download.js?v=20260815a";
-import { LANG, t } from "./i18n.js?v=20260815a";
+import { ICONS, CATEGORIES, CATEGORY_LABELS } from "./icons/index.js?v=20260815b";
+import { buildKeyframes, buildRules } from "./anim.js?v=20260815b";
+import { createIconSvg, buildSvgFile } from "./svg.js?v=20260815b";
+import { renderPng } from "./raster.js?v=20260815b";
+import { downloadBlob, downloadText } from "./download.js?v=20260815b";
+import { LANG, t } from "./i18n.js?v=20260815b";
 
 const STORAGE_KEY = "aig:v1";
 const DEFAULTS = { color: "#6366f1", size: 128, speed: 1, loop: "infinite" };

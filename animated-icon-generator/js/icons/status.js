@@ -8,7 +8,7 @@
 //    （実際のパス長を測らずに済み、どのアイコンでも同じ書き方で通る）
 //  - 動きの語彙は draw / spin / pulse / swing / bounce / blink / slide に統一する
 
-import { DRAW, drawKeys, spinKeys, swingKeys } from "./_shared.js?v=20260815a";
+import { DRAW, drawKeys, spinKeys, swingKeys } from "./_shared.js?v=20260815b";
 
 export const STATUS_ICONS = [
   {

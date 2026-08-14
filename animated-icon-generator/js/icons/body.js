@@ -1,6 +1,6 @@
 // 人・体・健康カテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
 
-import { DRAW, drawKeys, pulseKeys, swingKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815a";
+import { DRAW, drawKeys, pulseKeys, swingKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815b";
 
 export const BODY_ICONS = [
   {
@@ -183,7 +183,8 @@ export const BODY_ICONS = [
       // 首を胴体につなげて頭が浮かないようにする。胴体を斜めに倒し、腕・脚を肘と膝で折って疾走の姿勢を出す
       { tag: "circle", part: "head", attrs: { cx: 17.4, cy: 5.8, r: 2.6 } },
       { tag: "path", part: "body", attrs: { d: "M14.8 8.8 L13.2 14 M14.8 8.8 L11.8 6.4 L10.8 9.4 M14.6 9.6 L16.6 13.4 L19.2 11.4 M13.2 14 L17.8 15.4 L12.4 16.8 M13.2 14 L7.6 18.6" } },
-      { tag: "path", part: "speed", attrs: { d: "M2.8 12.4h3.4 M2.4 14.6h3.2 M3.4 16.8h2.8" } },
+      // スピード線だけは体の線と差をつけたいので、共通の stroke-width 2 から細くする
+      { tag: "path", part: "speed", attrs: { d: "M2.8 12.4h3.4 M2.4 14.6h3.2 M3.4 16.8h2.8", "stroke-width": 1.2 } },
     ],
     anim: {
       duration: 1,
