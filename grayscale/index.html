@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>グレースケール変換ツール【無料】画像を送らずブラウザで白黒化</title>
+    <meta
+      name="description"
+      content="画像をドラッグ＆ドロップするだけでグレースケール（白黒）に変換できる無料ツール。スライダーで色を抜く強さを0〜100%で調整し、PNGで保存できます。変換はブラウザ内で完結し、画像はサーバーへ送信されません。"
+    />
+    <link rel="canonical" href="https://codequest.work/generator/grayscale/" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="CodeQuest" />
+    <!-- OGP設定 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:title" content="グレースケール変換ツール【無料】画像を送らずブラウザで白黒化" />
+    <meta
+      property="og:description"
+      content="画像をドラッグ＆ドロップするだけでグレースケールに変換。強さをスライダーで調整してPNG保存できます。変換はブラウザ内で完結し、画像は外部に送信されません。"
+    />
+    <meta property="og:url" content="https://codequest.work/generator/grayscale/" />
+    <meta property="og:image" content="https://codequest.work/wp-content/uploads/2024/11/120120logo.png" />
+
+    <!-- Twitterカード設定 -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="グレースケール変換ツール【無料】画像を送らずブラウザで白黒化" />
+    <meta
+      name="twitter:description"
+      content="画像をドラッグ＆ドロップするだけでグレースケールに変換。強さをスライダーで調整してPNG保存できます。画像は外部に送信されません。"
+    />
+    <meta name="twitter:image" content="https://codequest.work/wp-content/uploads/2024/11/120120logo.png" />
+    <meta name="twitter:site" content="@CodeQuest_work" />
+    <!-- 構造化データ -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "グレースケール変換ツール",
+            "url": "https://codequest.work/generator/grayscale/",
+            "description": "画像をドラッグ＆ドロップするだけでグレースケールに変換し、強さを0〜100%で調整してPNG保存できる無料ツール。変換はブラウザ内で完結し、画像はサーバーへ送信されない。",
+            "applicationCategory": "MultimediaApplication",
+            "operatingSystem": "Web",
+            "browserRequirements": "Requires JavaScript.",
+            "inLanguage": "ja",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+            "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+              { "@type": "ListItem", "position": 2, "name": "ジェネレーター", "item": "https://codequest.work/category/generator/" },
+              { "@type": "ListItem", "position": 3, "name": "グレースケール変換ツール", "item": "https://codequest.work/generator/grayscale/" }
+            ]
+          }
+        ]
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <script>
+      let originalImageData = null;
+
+      function handleDrop(event) {
+        event.preventDefault();
+        const file = event.dataTransfer.files[0];
+        if (file) {
+          processImage(file);
+        }
+      }
+
+      function handleFileSelect(event) {
+        const file = event.target.files[0];
+        if (file) {
+          processImage(file);
+        }
+      }
+
+      function processImage(file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = new Image();
+          img.onload = function () {
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            applyGrayscale(document.getElementById("grayscale-slider").value);
+            // 画像が入るまで空のcanvasと保存ボタンは出さない
+            document.getElementById("result-area").hidden = false;
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function allowDrop(event) {
+        event.preventDefault();
+      }
+
+      function applyGrayscale(level) {
+        if (!originalImageData) return;
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        const imageData = new ImageData(new Uint8ClampedArray(originalImageData.data), originalImageData.width, originalImageData.height);
+        const data = imageData.data;
+
+        for (let i = 0; i < data.length; i += 4) {
+          let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+          let factor = level / 100;
+          data[i] = avg * factor + data[i] * (1 - factor);
+          data[i + 1] = avg * factor + data[i + 1] * (1 - factor);
+          data[i + 2] = avg * factor + data[i + 2] * (1 - factor);
+        }
+        ctx.putImageData(imageData, 0, 0);
+      }
+
+      function updateGrayscale(event) {
+        const level = event.target.value;
+        document.getElementById("grayscale-value").textContent = level + "%";
+        applyGrayscale(level);
+      }
+
+      function downloadImage() {
+        if (!originalImageData) return;
+        const canvas = document.getElementById("canvas");
+        const link = document.createElement("a");
+        link.download = "grayscale_image.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      }
+    </script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        width: 100%;
+        background-color: gray;
+        padding: 20px;
+      }
+
+      header h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 8px #fff;
+      }
+
+      header p {
+        margin-top: 8px;
+        font-size: 16px;
+        color: #fff;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        align-items: center;
+      }
+
+      #drop-zone {
+        width: 90%;
+        max-width: 800px;
+        height: 150px;
+        border: 2px dashed #666;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        cursor: pointer;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        padding: 10px;
+        margin: 20px auto;
+      }
+
+      canvas {
+        width: 90%;
+        max-width: 800px;
+        height: auto;
+        background: #fff;
+        border-radius: 10px;
+        margin-top: 10px;
+      }
+
+      .slider-container {
+        width: 20%;
+        max-width: 800px;
+        margin: 10px auto;
+      }
+
+      @media (max-width: 767px) {
+        .slider-container {
+          width: 80%;
+        }
+      }
+
+      input[type="range"] {
+        width: 100%;
+      }
+
+      button {
+        background: #333;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        transition: background 0.3s;
+        width: 90%;
+        max-width: 800px;
+        margin-top: 10px;
+        margin-bottom: 3rem;
+      }
+      button:hover {
+        background: #555;
+      }
+
+      /* 使い方・注意書き */
+      .note {
+        width: 90%;
+        max-width: 800px;
+        margin: 0 auto 3rem;
+        padding: 24px;
+        background: #fff;
+        border-radius: 10px;
+        text-align: left;
+        font-size: 16px;
+        line-height: 1.8;
+        color: #333;
+      }
+      .note h2 {
+        font-size: 1.25rem;
+        margin-bottom: 12px;
+      }
+      .note ol,
+      .note ul {
+        padding-left: 1.4em;
+      }
+      .note li + li {
+        margin-top: 8px;
+      }
+      .note + .note {
+        margin-top: -1.5rem;
+      }
+
+      footer {
+        padding: 20px;
+        font-size: 16px;
+      }
+      footer a {
+        color: #333;
+      }
+      .footer-links {
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+      }
+      .footer-links a {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 8px 16px;
+        text-decoration: none;
+        background: #fff;
+        transition: border-color 0.2s, color 0.2s;
+      }
+      .footer-links a:hover {
+        border-color: #333;
+        color: #000;
+      }
+
+      /* 広告（PC/SPとも右下フローティングカード320×100・薄型透明枠＋×閉じ） */
+      .footer-ad {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        z-index: 90;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        padding: 0;
+        width: 320px;
+        overflow: hidden;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+      }
+      .footer-ad.is-closed { display: none; }
+      .ad-widget__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        position: relative;
+        z-index: 1;
+      }
+      .ad-widget__label {
+        color: #64748b;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        background: #f1f5f9;
+        padding: 2px 8px;
+        border-radius: 999px;
+      }
+      .ad-widget__close {
+        appearance: none;
+        border: none;
+        /* このページは素の button に幅・余白を当てているため打ち消す */
+        width: 18px;
+        height: 18px;
+        min-width: 0;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        background: #f1f5f9;
+        color: #64748b;
+        border-radius: 50%;
+        font-size: 12px;
+        line-height: 1;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s, color 0.2s;
+      }
+      .ad-widget__close:hover { background: #e2e8f0; color: #1e293b; }
+      .footer-ad ins.adsbygoogle { display: block; width: 320px; height: 100px; }
+
+      @media screen and (max-width: 768px) {
+        .footer-ad {
+          position: static;
+          margin: 24px auto 0;
+          gap: 0;
+          padding: 0;
+          background: none;
+          border: none;
+          border-radius: 0;
+          box-shadow: none;
+          z-index: auto;
+        }
+        .footer-ad.is-closed { display: flex; }
+        .ad-widget__head { display: none; }
+        .footer-ad ins.adsbygoogle { width: 320px; height: 100px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Gray Scale Generator</h1>
+      <p>画像をドラッグ＆ドロップするだけで白黒化。変換はブラウザ内で完結し、画像は外部に送信されません。</p>
+    </header>
+
+    <div id="drop-zone" ondrop="handleDrop(event)" ondragover="allowDrop(event)">
+      <p>ここに画像をドラッグ＆ドロップするか、ファイルを選択してください。</p>
+      <br />
+      <input type="file" accept="image/*" onchange="handleFileSelect(event)" />
+    </div>
+
+    <div id="result-area" hidden>
+      <canvas id="canvas"></canvas>
+      <div class="slider-container">
+        <label for="grayscale-slider">グレースケール強度: <span id="grayscale-value">100%</span></label>
+        <input type="range" id="grayscale-slider" min="0" max="100" value="100" oninput="updateGrayscale(event)" />
+      </div>
+
+      <button onclick="downloadImage()">ダウンロード</button>
+    </div>
+
+    <section class="note">
+      <h2>使い方</h2>
+      <ol>
+        <li>変換したい画像を上の枠へドラッグ＆ドロップするか、「ファイルを選択」から選びます。</li>
+        <li>スライダーで色を抜く強さを 0〜100% で調整します。0%が元の色、100%が完全な白黒です。</li>
+        <li>「ダウンロード」を押すと、表示中の状態が PNG で保存されます。</li>
+      </ol>
+    </section>
+
+    <section class="note">
+      <h2>このツールについて</h2>
+      <ul>
+        <li><strong>画像はアップロードされません。</strong>読み込みも変換も保存もブラウザの中（canvas）だけで行うため、画像がサーバーへ送られることはありません。</li>
+        <li>保存形式は <strong>PNG</strong> です。元がJPEGでもPNGとして保存されるため、写真ではファイルサイズが大きくなることがあります。</li>
+        <li>変換後の画像は<strong>元の画像サイズのまま</strong>です。画面上では縮小表示されますが、保存されるのは原寸です。</li>
+        <li>とても大きな画像はブラウザのメモリを使います。うまく表示されないときは、先に縮小してからお試しください。</li>
+      </ul>
+    </section>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">広告</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
+
+    <footer>
+      <p>
+        &copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script>
+        Gray Scale Generator | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a>
+      </p>
+      <div class="footer-links">
+        <a href="https://codequest.work/grayscale-converter-online/" target="_blank" rel="noopener">&#128214; 使い方の解説記事</a>
+        <a href="../image-compressor/">画像圧縮ツール &rarr;</a>
+        <a href="../image-color-picker/">画像カラーピッカー &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>
