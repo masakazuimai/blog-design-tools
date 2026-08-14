@@ -1,0 +1,476 @@
+/* カウンターアプリ 共通スタイル（generator 標準トンマナ） */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f1f5f9;
+  color: #1e293b;
+  font-size: 16px;
+  line-height: 1.7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============ ヘッダー ============ */
+.header {
+  background: linear-gradient(135deg, #1e293b 0%, #3730a3 100%);
+  color: #fff;
+  padding: 40px 20px 36px;
+  text-align: center;
+}
+.header h1 {
+  font-size: clamp(1.4rem, 1.1rem + 1.5vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.header p {
+  margin: 10px auto 0;
+  max-width: 720px;
+  color: #c7d2fe;
+}
+
+/* ============ レイアウト ============ */
+.container {
+  flex: 1;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 28px 20px 56px;
+}
+
+/* ============ ツールバー ============ */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  padding: 16px;
+  margin-bottom: 20px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+#add-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: #3730a3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#add-counter:hover {
+  background: #312e81;
+}
+#add-counter span {
+  font-size: 1.125rem;
+  line-height: 1;
+}
+
+#total-container {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 8px 18px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+}
+.total-label {
+  color: #64748b;
+  font-size: 1rem;
+}
+#total-sum {
+  font-size: clamp(1.25rem, 1.1rem + 0.8vw, 1.6rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #1e293b;
+}
+
+/* ============ カウンターカード ============ */
+#counter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.button {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px 16px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.button:hover {
+  border-color: #c7d2fe;
+}
+
+/* 並べ替えハンドル */
+.drag-handle {
+  color: #cbd5e1;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: grab;
+  padding: 4px;
+  user-select: none;
+}
+.drag-handle:active {
+  cursor: grabbing;
+}
+.button:hover .drag-handle {
+  color: #94a3b8;
+}
+
+/* 名称入力 */
+.counter-label {
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 1rem;
+  background: #fff;
+  color: #1e293b;
+}
+.counter-label::placeholder {
+  color: #94a3b8;
+}
+.counter-label:focus {
+  outline: 2px solid #a5b4fc;
+  outline-offset: 1px;
+  border-color: #3730a3;
+}
+
+/* 単価入力 */
+.counter-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.counter-field-label {
+  color: #64748b;
+  white-space: nowrap;
+}
+.counter-name {
+  width: 8ch;
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 1rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  background: #fff;
+  color: #1e293b;
+}
+.counter-name:focus {
+  outline: 2px solid #a5b4fc;
+  outline-offset: 1px;
+  border-color: #3730a3;
+}
+
+/* 数量表示 */
+.counter-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #64748b;
+}
+.counter {
+  min-width: 3ch;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #1e293b;
+  text-align: right;
+}
+
+/* 操作ボタン */
+.counter-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.button button {
+  padding: 8px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: #fff;
+  color: #1e293b;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.button button:hover:not(:disabled) {
+  border-color: #3730a3;
+  color: #3730a3;
+}
+.button button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.increment,
+.decrement {
+  min-width: 48px;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+.increment {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+  color: #3730a3;
+}
+.increment:hover:not(:disabled) {
+  background: #e0e7ff;
+}
+
+.remove {
+  margin-left: auto;
+  color: #b91c1c;
+}
+.button button.remove:hover:not(:disabled) {
+  border-color: #b91c1c;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+/* 並べ替え中のプレースホルダー */
+.counter-placeholder {
+  height: 88px;
+  border: 2px dashed #c7d2fe;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+/* ============ 空の状態 ============ */
+.empty-state {
+  padding: 48px 24px;
+  text-align: center;
+  background: #fff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+}
+.empty-state.is-hidden {
+  display: none;
+}
+.empty-state-title {
+  font-weight: 700;
+}
+.empty-state-desc {
+  margin-top: 4px;
+  color: #64748b;
+}
+.empty-state-steps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+  list-style: none;
+}
+.empty-state-steps li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  color: #475569;
+}
+.step-num {
+  font-weight: 700;
+  color: #3730a3;
+}
+
+/* ============ 補足 ============ */
+.note {
+  margin-top: 40px;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+.note h2 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.note ul {
+  padding-left: 1.25em;
+  color: #475569;
+}
+.note li + li {
+  margin-top: 8px;
+}
+.inline-handle {
+  color: #94a3b8;
+}
+
+/* ============ フッター ============ */
+footer {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  align-items: center;
+  padding: 24px 40px;
+  color: #64748b;
+  border-top: 1px solid #e2e8f0;
+  background: #fff;
+}
+footer a {
+  color: #1e293b;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+footer a:hover {
+  color: #3730a3;
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-links a {
+  border: 1px solid #e2e8f0;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.footer-links a:hover {
+  border-color: #3730a3;
+  color: #3730a3;
+}
+
+/* ============ レスポンシブ ============ */
+@media (max-width: 600px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #add-counter {
+    justify-content: center;
+    white-space: nowrap;
+  }
+  #total-container {
+    justify-content: space-between;
+    border-radius: 8px;
+  }
+  .button {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .counter-field,
+  .counter-title {
+    grid-column: 2 / -1;
+    justify-content: flex-end;
+  }
+  footer {
+    padding: 24px 20px;
+  }
+}
+
+/* ============ 広告（PC/SPとも右下フローティングカード320×100・薄型透明枠＋×閉じ） ============ */
+.footer-ad {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 0;
+  width: 320px;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.footer-ad.is-closed { display: none; }
+.ad-widget__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+.ad-widget__label {
+  color: #64748b;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.ad-widget__close {
+  appearance: none;
+  border: none;
+  background: #f1f5f9;
+  color: #64748b;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.ad-widget__close:hover { background: #e2e8f0; color: #1e293b; }
+.footer-ad ins.adsbygoogle { display: block; width: 320px; height: 100px; }
+
+@media screen and (max-width: 768px) {
+  .footer-ad {
+    position: static;
+    align-self: center;
+    margin: 24px auto 0;
+    gap: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    z-index: auto;
+  }
+  .footer-ad.is-closed { display: flex; }
+  .ad-widget__head { display: none; }
+  .footer-ad ins.adsbygoogle { width: 320px; height: 100px; }
+}

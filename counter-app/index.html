@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>カウンターアプリ【無料】複数カウンターの合計を自動集計</title>
+    <meta
+      name="description"
+      content="カウンターをいくつでも並べて、数量と単価の合計をその場で集計できる無料ツール。棚卸し・在庫チェック・点呼・集計作業をブラウザだけで完結できます。インストール不要、データは外部に送信されません。"
+    />
+    <link rel="canonical" href="https://codequest.work/generator/counter-app/" />
+    <meta name="robots" content="index, follow" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:title" content="カウンターアプリ【無料】複数カウンターの合計を自動集計" />
+    <meta
+      property="og:description"
+      content="カウンターをいくつでも並べて、数量と単価の合計をその場で集計できる無料ツール。棚卸し・在庫チェック・点呼をブラウザだけで完結。"
+    />
+    <meta property="og:url" content="https://codequest.work/generator/counter-app/" />
+    <meta property="og:image" content="https://codequest.work/wp-content/uploads/2024/11/120120logo.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="カウンターアプリ【無料】複数カウンターの合計を自動集計" />
+    <meta
+      name="twitter:description"
+      content="カウンターをいくつでも並べて、数量と単価の合計をその場で集計できる無料ツール。ブラウザ完結・インストール不要。"
+    />
+    <meta name="twitter:image" content="https://codequest.work/wp-content/uploads/2024/11/120120logo.png" />
+    <!-- 構造化データ -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "カウンターアプリ",
+            "url": "https://codequest.work/generator/counter-app/",
+            "description": "カウンターをいくつでも並べて、数量と単価の合計をその場で集計できる無料ツール。ブラウザ完結で動作し、データは外部に送信されません。",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Web",
+            "browserRequirements": "Requires JavaScript.",
+            "inLanguage": "ja",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+            "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+              { "@type": "ListItem", "position": 2, "name": "ジェネレーター", "item": "https://codequest.work/category/generator/" },
+              { "@type": "ListItem", "position": 3, "name": "カウンターアプリ", "item": "https://codequest.work/generator/counter-app/" }
+            ]
+          }
+        ]
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/style.css?v=20260814" />
+  </head>
+
+  <body>
+    <header class="header">
+      <h1>カウンターアプリ</h1>
+      <p>カウンターをいくつでも並べて、数量と単価の合計をその場で集計。棚卸し・在庫チェック・点呼にそのまま使えます。</p>
+    </header>
+
+    <div class="container">
+      <div class="toolbar">
+        <button id="add-counter" type="button">
+          <span aria-hidden="true">＋</span>
+          カウンターを追加
+        </button>
+        <div id="total-container">
+          <span class="total-label">合計</span>
+          <span id="total-sum">0</span>
+        </div>
+      </div>
+
+      <div id="counter-list"></div>
+
+      <div class="empty-state" id="empty-state">
+        <p class="empty-state-title">カウンターがまだありません</p>
+        <p class="empty-state-desc">「カウンターを追加」を押すと、1つ目のカウンターが並びます。</p>
+        <ul class="empty-state-steps">
+          <li><span class="step-num">01</span>カウンターを追加する</li>
+          <li><span class="step-num">02</span>名称と単価を入れて ＋ / − で数える</li>
+          <li><span class="step-num">03</span>単価 × 数量の合計が自動で出る</li>
+        </ul>
+      </div>
+
+      <section class="note">
+        <h2>使い方のポイント</h2>
+        <ul>
+          <li><strong>名称</strong>は数え上げる対象の覚え書きです（例: りんご）。合計の計算には使いません。</li>
+          <li><strong>単価は数字だけ</strong>入力します。全角で入れても半角に自動変換されます。空欄のままでも数えられます（合計には加算されません）。</li>
+          <li>合計は <strong>すべてのカウンターの「単価 × 数量」の総和</strong>です。単価を空欄にすれば、純粋な回数カウンターとして使えます。</li>
+          <li>カードは左端の <span class="inline-handle" aria-hidden="true">⠿</span> をつかんで <strong>並べ替え</strong>できます。</li>
+          <li>入力内容はブラウザの外に送信されません。<strong>ページを再読み込みするとリセット</strong>されます。</li>
+        </ul>
+      </section>
+    </div>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">広告</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
+
+    <footer>
+      <span
+        >&copy; <span class="cq-year">2026</span
+        ><script>
+          document.currentScript.previousElementSibling.textContent = new Date().getFullYear();
+        </script>
+        カウンターアプリ | Created by
+        <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span
+      >
+      <div class="footer-links">
+        <a href="https://codequest.work/html-css-jquery-counter-app/" target="_blank" rel="noopener">&#128214; 作り方の解説記事</a>
+        <a href="../check-list/">チェックリスト &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js" integrity="sha256-sw0iNNXmOJbQhYFuC9OF2kOlD5KQKe1y5lfBn4C9Sjg=" crossorigin="anonymous"></script>
+    <script src="./js/script.js?v=20260814"></script>
+  </body>
+</html>

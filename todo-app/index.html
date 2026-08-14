@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>TODOアプリ【無料】ドラッグ＆ドロップで進捗を動かせるカンバン</title>
+    <meta
+      name="description"
+      content="アイデア・進行中・完了の3レーンにタスクを並べ、ドラッグ＆ドロップで進捗を動かせる無料のTODOアプリ。追加・編集・削除に対応し、登録不要でブラウザだけで動作します。"
+    />
+    <link rel="canonical" href="https://codequest.work/generator/todo-app/" />
+    <meta name="robots" content="index, follow" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:title" content="TODOアプリ【無料】ドラッグ＆ドロップで進捗を動かせるカンバン" />
+    <meta
+      property="og:description"
+      content="アイデア・進行中・完了の3レーンにタスクを並べ、ドラッグ＆ドロップで進捗を動かせる無料のTODOアプリ。登録不要・ブラウザ完結。"
+    />
+    <meta property="og:url" content="https://codequest.work/generator/todo-app/" />
+    <meta property="og:image" content="https://codequest.work/wp-content/uploads/2024/11/120120logo.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="TODOアプリ【無料】ドラッグ＆ドロップで進捗を動かせるカンバン" />
+    <meta
+      name="twitter:description"
+      content="アイデア・進行中・完了の3レーンにタスクを並べ、ドラッグ＆ドロップで進捗を動かせる無料のTODOアプリ。"
+    />
+    <meta name="twitter:image" content="https://codequest.work/wp-content/uploads/2024/11/120120logo.png" />
+    <!-- 構造化データ -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "TODOアプリ（ドラッグ＆ドロップ）",
+            "url": "https://codequest.work/generator/todo-app/",
+            "description": "アイデア・進行中・完了の3レーンにタスクを並べ、ドラッグ＆ドロップで進捗を動かせる無料のTODOアプリ。Reactで実装されており、ブラウザだけで動作します。",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Web",
+            "browserRequirements": "Requires JavaScript.",
+            "inLanguage": "ja",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+            "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+              { "@type": "ListItem", "position": 2, "name": "ジェネレーター", "item": "https://codequest.work/category/generator/" },
+              { "@type": "ListItem", "position": 3, "name": "TODOアプリ", "item": "https://codequest.work/generator/todo-app/" }
+            ]
+          }
+        ]
+      }
+    </script>
+    <!-- GA4 は React バンドル側が react-ga4 で初期化・pageview送信している（G-7Z6M3CJEV3）。
+         ここで gtag スニペットを足すと二重計測になるため置かない。 -->
+    <link rel="icon" href="/generator/todo-app/favicon.ico" />
+    <link rel="apple-touch-icon" href="/generator/todo-app/logo192.png" />
+    <link rel="manifest" href="/generator/todo-app/manifest.json" />
+    <meta name="theme-color" content="#1e293b" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/generator/todo-app/css/style.css?v=20260814" />
+    <script defer="defer" src="/generator/todo-app/static/js/main.226e930c.js"></script>
+  </head>
+  <body>
+    <header class="page-header">
+      <h1>TODOアプリ</h1>
+      <p>アイデア・進行中・完了の3レーンにタスクを並べ、カードをドラッグして進捗を動かせます。</p>
+    </header>
+
+    <main class="page-main">
+      <noscript>このアプリを動かすにはJavaScriptを有効にしてください。</noscript>
+      <div id="root"></div>
+
+      <section class="note">
+        <h2>使い方のポイント</h2>
+        <ul>
+          <li>入力欄にタスクを書いて<strong>「追加」</strong>を押すと、いちばん左の<strong>アイデア</strong>レーンに積まれます。</li>
+          <li>カード左の <span class="inline-handle" aria-hidden="true">⋮⋮</span> をつかんで、<strong>レーンをまたいでドラッグ</strong>できます。同じレーン内での並べ替えも可能です。</li>
+          <li><strong>編集</strong>で本文を書き換え、<strong>保存</strong>で確定します。<strong>削除</strong>は1件ずつ消えます。</li>
+          <li>タスクはブラウザのメモリ上だけで扱われます。<strong>ページを再読み込みするとリセット</strong>されます。</li>
+        </ul>
+      </section>
+    </main>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">広告</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
+
+    <footer class="page-footer">
+      <span
+        >&copy; <span class="cq-year">2026</span
+        ><script>
+          document.currentScript.previousElementSibling.textContent = new Date().getFullYear();
+        </script>
+        TODOアプリ | Created by
+        <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span
+      >
+      <div class="footer-links">
+        <a href="https://codequest.work/react-todo-app-drag-drop/" target="_blank" rel="noopener">&#128214; 作り方の解説記事</a>
+        <a href="/generator/check-list/">チェックリスト &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>

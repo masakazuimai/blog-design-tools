@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>チェックリスト作成ツール【無料】ブラウザに自動保存・編集もできる</title>
+    <meta
+      name="description"
+      content="タスクを打ち込むだけで使えるチェックリストツール。チェック・編集・削除に対応し、入力内容はブラウザのローカルストレージへ自動保存されるので、閉じても消えません。登録不要・ブラウザ完結で動作します。"
+    />
+    <link rel="canonical" href="https://codequest.work/generator/check-list/" />
+    <meta name="robots" content="index, follow" />
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:title" content="チェックリスト作成ツール【無料】ブラウザに自動保存・編集もできる" />
+    <meta
+      property="og:description"
+      content="タスクを打ち込むだけで使えるチェックリストツール。入力内容はブラウザに自動保存されるので、閉じても消えません。登録不要・ブラウザ完結。"
+    />
+    <meta property="og:url" content="https://codequest.work/generator/check-list/" />
+    <meta property="og:image" content="https://codequest.work/wp-content/uploads/2024/11/120120logo.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="チェックリスト作成ツール【無料】ブラウザに自動保存・編集もできる" />
+    <meta
+      name="twitter:description"
+      content="タスクを打ち込むだけで使えるチェックリストツール。入力内容はブラウザに自動保存されるので、閉じても消えません。"
+    />
+    <meta name="twitter:image" content="https://codequest.work/wp-content/uploads/2024/11/120120logo.png" />
+    <!-- 構造化データ -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "チェックリスト作成ツール",
+            "url": "https://codequest.work/generator/check-list/",
+            "description": "チェック・編集・削除に対応したチェックリストツール。入力内容はブラウザのローカルストレージへ自動保存され、外部には送信されません。",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Web",
+            "browserRequirements": "Requires JavaScript.",
+            "inLanguage": "ja",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+            "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+              { "@type": "ListItem", "position": 2, "name": "ジェネレーター", "item": "https://codequest.work/category/generator/" },
+              { "@type": "ListItem", "position": 3, "name": "チェックリスト作成ツール", "item": "https://codequest.work/generator/check-list/" }
+            ]
+          }
+        ]
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-7Z6M3CJEV3");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css?v=20260814" />
+  </head>
+  <body>
+    <header class="header">
+      <h1>チェックリスト作成ツール</h1>
+      <p>打ち込んだタスクはブラウザに自動保存されます。閉じても、次に開いたときに続きから使えます。</p>
+    </header>
+
+    <div class="container">
+      <div class="input-area">
+        <textarea id="taskInput" placeholder="タスクを入力（Enterで追加 / Shift+Enterで改行）" rows="1"></textarea>
+        <button id="addBtn">add</button>
+      </div>
+
+      <ul id="taskList"></ul>
+
+      <section class="note">
+        <h2>使い方のポイント</h2>
+        <ul>
+          <li><strong>Enter</strong> で追加、<strong>Shift + Enter</strong> で改行できます。</li>
+          <li>チェックを付けた項目は自動で<strong>リストの下へ移動</strong>します。</li>
+          <li><strong>edit</strong> で本文を書き換え、Enterで確定・Escでキャンセルできます。<strong>del</strong> で1件削除します。</li>
+          <li>データは<strong>お使いのブラウザの中だけ</strong>に保存されます。外部には送信されないため、別の端末やシークレットウィンドウには引き継がれません。</li>
+        </ul>
+      </section>
+    </div>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">広告</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="7493033745"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+      (function () {
+        var w = document.getElementById("ad-widget");
+        var b = document.getElementById("ad-close");
+        if (!w || !b) return;
+        b.addEventListener("click", function () { w.classList.add("is-closed"); });
+      })();
+    </script>
+
+    <footer>
+      <span
+        >&copy; <span class="cq-year">2026</span
+        ><script>
+          document.currentScript.previousElementSibling.textContent = new Date().getFullYear();
+        </script>
+        チェックリスト作成ツール | Created by
+        <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span
+      >
+      <div class="footer-links">
+        <a href="https://codequest.work/typescript-checklist-app/" target="_blank" rel="noopener">&#128214; 作り方の解説記事</a>
+        <a href="../counter-app/">カウンターアプリ &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <!-- 読み込むのは src/app.ts ではなく、コンパイル後の dist/app.js -->
+    <script type="module" src="./dist/app.js"></script>
+  </body>
+</html>

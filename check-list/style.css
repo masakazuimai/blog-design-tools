@@ -1,0 +1,317 @@
+/* チェックリスト作成ツール 共通スタイル（generator 標準トンマナ） */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f1f5f9;
+  color: #1e293b;
+  font-size: 16px;
+  line-height: 1.7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============ ヘッダー ============ */
+.header {
+  background: linear-gradient(135deg, #1e293b 0%, #3730a3 100%);
+  color: #fff;
+  padding: 40px 20px 36px;
+  text-align: center;
+}
+.header h1 {
+  font-size: clamp(1.4rem, 1.1rem + 1.5vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.header p {
+  margin: 10px auto 0;
+  max-width: 720px;
+  color: #c7d2fe;
+}
+
+/* ============ レイアウト ============ */
+.container {
+  flex: 1;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 28px 20px 56px;
+}
+
+/* ============ 入力エリア ============ */
+.input-area {
+  display: flex;
+  gap: 8px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+#taskInput {
+  flex: 1;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  color: #1e293b;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.6;
+  resize: none;
+}
+#taskInput::placeholder {
+  color: #94a3b8;
+}
+#taskInput:focus {
+  outline: 2px solid #a5b4fc;
+  outline-offset: 1px;
+  border-color: #3730a3;
+}
+
+#addBtn {
+  flex-shrink: 0;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  background: #3730a3;
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#addBtn:hover {
+  background: #312e81;
+}
+
+/* ============ タスクリスト ============ */
+#taskList {
+  list-style: none;
+  margin-top: 20px;
+}
+
+#taskList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  transition: border-color 0.2s, opacity 0.2s;
+}
+#taskList li + li {
+  margin-top: 8px;
+}
+#taskList li:hover {
+  border-color: #c7d2fe;
+}
+#taskList li.done {
+  background: #f8fafc;
+  opacity: 0.65;
+}
+
+#taskList input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 3px;
+  accent-color: #3730a3;
+  cursor: pointer;
+}
+
+#taskList span {
+  flex: 1;
+  min-width: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+#taskList span.done {
+  text-decoration: line-through;
+  color: #64748b;
+}
+
+#taskList button {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: #fff;
+  color: #64748b;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+#taskList button:hover {
+  border-color: #3730a3;
+  color: #3730a3;
+}
+/* 各liの最後のボタン＝del */
+#taskList button:last-child:hover {
+  border-color: #b91c1c;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+/* 編集中の入力欄 */
+.edit-input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid #3730a3;
+  border-radius: 6px;
+  background: #fff;
+  color: #1e293b;
+  font-family: inherit;
+  font-size: 16px;
+}
+.edit-input:focus {
+  outline: 2px solid #a5b4fc;
+  outline-offset: 1px;
+}
+
+/* ============ 補足 ============ */
+.note {
+  margin-top: 40px;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+.note h2 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.note ul {
+  padding-left: 1.25em;
+  color: #475569;
+}
+.note li + li {
+  margin-top: 8px;
+}
+
+/* ============ フッター ============ */
+footer {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  align-items: center;
+  padding: 24px 40px;
+  color: #64748b;
+  border-top: 1px solid #e2e8f0;
+  background: #fff;
+}
+footer a {
+  color: #1e293b;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+footer a:hover {
+  color: #3730a3;
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-links a {
+  border: 1px solid #e2e8f0;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.footer-links a:hover {
+  border-color: #3730a3;
+  color: #3730a3;
+}
+
+@media (max-width: 600px) {
+  footer {
+    padding: 24px 20px;
+  }
+}
+
+/* ============ 広告（PC/SPとも右下フローティングカード320×100・薄型透明枠＋×閉じ） ============ */
+.footer-ad {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 0;
+  width: 320px;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.footer-ad.is-closed { display: none; }
+.ad-widget__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+.ad-widget__label {
+  color: #64748b;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.ad-widget__close {
+  appearance: none;
+  border: none;
+  background: #f1f5f9;
+  color: #64748b;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.ad-widget__close:hover { background: #e2e8f0; color: #1e293b; }
+.footer-ad ins.adsbygoogle { display: block; width: 320px; height: 100px; }
+
+@media screen and (max-width: 768px) {
+  .footer-ad {
+    position: static;
+    align-self: center;
+    margin: 24px auto 0;
+    gap: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    z-index: auto;
+  }
+  .footer-ad.is-closed { display: flex; }
+  .ad-widget__head { display: none; }
+  .footer-ad ins.adsbygoogle { width: 320px; height: 100px; }
+}
