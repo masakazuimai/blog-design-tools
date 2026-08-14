@@ -142,9 +142,25 @@
       function downloadImage() {
         if (!originalImageData) return;
         const canvas = document.getElementById("canvas");
+        const format = document.querySelector('input[name="format"]:checked').value;
         const link = document.createElement("a");
-        link.download = "grayscale_image.png";
-        link.href = canvas.toDataURL();
+
+        if (format === "jpeg") {
+          // JPEGは透明を扱えないため、白で塗りつぶしてから書き出す
+          const out = document.createElement("canvas");
+          out.width = canvas.width;
+          out.height = canvas.height;
+          const ctx = out.getContext("2d");
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, out.width, out.height);
+          ctx.drawImage(canvas, 0, 0);
+          link.download = "grayscale_image.jpg";
+          link.href = out.toDataURL("image/jpeg", 0.92);
+        } else {
+          link.download = "grayscale_image.png";
+          link.href = canvas.toDataURL("image/png");
+        }
+
         link.click();
       }
     </script>
@@ -243,6 +259,33 @@
       }
       button:hover {
         background: #555;
+      }
+
+      /* 保存形式の選択 */
+      .format-row {
+        width: 90%;
+        max-width: 800px;
+        margin: 16px auto 0;
+        padding: 12px 16px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: #fff;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px 24px;
+        font-size: 16px;
+      }
+      .format-row legend {
+        padding: 0 8px;
+        font-weight: 600;
+        color: #333;
+      }
+      .format-row label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
       }
 
       /* 使い方・注意書き */
@@ -395,6 +438,12 @@
         <input type="range" id="grayscale-slider" min="0" max="100" value="100" oninput="updateGrayscale(event)" />
       </div>
 
+      <fieldset class="format-row">
+        <legend>保存形式</legend>
+        <label><input type="radio" name="format" value="png" checked /> PNG（透明を保てる・高画質）</label>
+        <label><input type="radio" name="format" value="jpeg" /> JPG（写真向け・軽い）</label>
+      </fieldset>
+
       <button onclick="downloadImage()">ダウンロード</button>
     </div>
 
@@ -403,7 +452,7 @@
       <ol>
         <li>変換したい画像を上の枠へドラッグ＆ドロップするか、「ファイルを選択」から選びます。</li>
         <li>スライダーで色を抜く強さを 0〜100% で調整します。0%が元の色、100%が完全な白黒です。</li>
-        <li>「ダウンロード」を押すと、表示中の状態が PNG で保存されます。</li>
+        <li>保存形式を PNG か JPG から選び、「ダウンロード」を押すと表示中の状態が保存されます。</li>
       </ol>
     </section>
 
@@ -411,7 +460,10 @@
       <h2>このツールについて</h2>
       <ul>
         <li><strong>画像はアップロードされません。</strong>読み込みも変換も保存もブラウザの中（canvas）だけで行うため、画像がサーバーへ送られることはありません。</li>
-        <li>保存形式は <strong>PNG</strong> です。元がJPEGでもPNGとして保存されるため、写真ではファイルサイズが大きくなることがあります。</li>
+        <li>
+          保存形式は <strong>PNG</strong> と <strong>JPG</strong> から選べます。写真は JPG のほうが軽く、ロゴやイラストなど透明部分を残したい画像は PNG が向いています。
+          <strong>JPGは透明を扱えない</strong>ため、透明部分は白で塗りつぶして保存します。
+        </li>
         <li>変換後の画像は<strong>元の画像サイズのまま</strong>です。画面上では縮小表示されますが、保存されるのは原寸です。</li>
         <li>とても大きな画像はブラウザのメモリを使います。うまく表示されないときは、先に縮小してからお試しください。</li>
       </ul>

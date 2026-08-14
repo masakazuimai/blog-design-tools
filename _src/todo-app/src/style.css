@@ -1,6 +1,4 @@
-/* TODOアプリ 共通スタイル（generator 標準トンマナ）
-   アプリ本体は React のビルド（static/js/main.*.js）が描画する。
-   ここではそのマークアップを外側から整えるため、React 側のクラス名に合わせて指定している。 */
+/* TODOアプリ 共通スタイル（generator 標準トンマナ） */
 
 * {
   margin: 0;
@@ -48,19 +46,12 @@ body {
   padding: 28px 20px 56px;
 }
 
-/* ============ アプリ本体（React が描画する領域） ============ */
 .app {
   display: flex;
   flex-direction: column;
 }
 
-/* React 側のヘッダー・フッターはページ側と重複するため隠す */
-.app .app-header,
-.app .footer {
-  display: none;
-}
-
-/* 入力フォーム */
+/* ============ 入力フォーム ============ */
 .todo-form {
   display: flex;
   flex-wrap: wrap;
@@ -105,17 +96,14 @@ body {
   color: #fff;
 }
 
-/* 3レーン */
+/* ============ 3レーン ============ */
 .container {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
-  padding: 0;
-  overflow-x: visible;
 }
 
 .todo-list {
-  width: auto;
   min-height: 320px;
   padding: 14px;
   background: #fff;
@@ -123,42 +111,62 @@ body {
   border-top: 3px solid #cbd5e1;
   border-radius: 12px;
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-  overflow-y: visible;
+  transition: background 0.2s, border-color 0.2s;
+}
+.todo-list.is-dragging-over {
+  background: #eef2ff;
+  border-color: #c7d2fe;
 }
 
-/* React 側にレーン見出しが無いため、CSSで補う（描画順は idea → inProgress → done） */
-.container > .todo-list::before {
-  display: block;
+.todo-list-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   margin-bottom: 12px;
   padding-bottom: 10px;
   border-bottom: 1px solid #f1f5f9;
-  font-weight: 700;
   font-size: 1rem;
+  font-weight: 700;
   letter-spacing: 0.02em;
 }
+.todo-list-count {
+  min-width: 24px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+.todo-list-empty {
+  padding: 24px 0;
+  color: #94a3b8;
+  text-align: center;
+}
+
+/* レーンごとの色分け（描画順は idea → inProgress → done） */
 .container > .todo-list:nth-child(1) {
   border-top-color: #94a3b8;
 }
-.container > .todo-list:nth-child(1)::before {
-  content: "アイデア";
+.container > .todo-list:nth-child(1) .todo-list-title {
   color: #475569;
 }
 .container > .todo-list:nth-child(2) {
   border-top-color: #6366f1;
 }
-.container > .todo-list:nth-child(2)::before {
-  content: "進行中";
+.container > .todo-list:nth-child(2) .todo-list-title {
   color: #3730a3;
 }
 .container > .todo-list:nth-child(3) {
   border-top-color: #10b981;
 }
-.container > .todo-list:nth-child(3)::before {
-  content: "完了";
+.container > .todo-list:nth-child(3) .todo-list-title {
   color: #047857;
 }
 
-/* カード */
+/* ============ カード ============ */
 .todo-item {
   display: flex;
   flex-direction: column;
@@ -169,7 +177,6 @@ body {
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
-  box-shadow: none;
   transition: border-color 0.2s, background 0.2s;
 }
 .todo-item:hover {
@@ -181,13 +188,10 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  margin-bottom: 0;
 }
 
 .drag-handle {
   flex-shrink: 0;
-  float: none;
-  margin-right: 0;
   padding: 2px 4px;
   border-radius: 4px;
   color: #94a3b8;
@@ -209,7 +213,6 @@ body {
   min-width: 0;
   font-size: 1rem;
   line-height: 1.6;
-  text-align: left;
   overflow-wrap: anywhere;
 }
 
@@ -235,7 +238,7 @@ body {
   outline-offset: 1px;
 }
 
-/* ボタン共通（React 側は class を持たない button も出す） */
+/* ============ ボタン ============ */
 button {
   padding: 6px 12px;
   border: 1px solid #e2e8f0;
@@ -250,15 +253,7 @@ button {
 }
 button:hover {
   border-color: #3730a3;
-  background: #fff;
   color: #3730a3;
-}
-
-.edit-btn,
-.save-btn {
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  color: #475569;
 }
 .save-btn {
   background: #3730a3;
@@ -380,7 +375,9 @@ noscript {
   border: none;
   box-shadow: none;
 }
-.footer-ad.is-closed { display: none; }
+.footer-ad.is-closed {
+  display: none;
+}
 .ad-widget__head {
   display: flex;
   align-items: center;
@@ -400,7 +397,7 @@ noscript {
 .ad-widget__close {
   appearance: none;
   border: none;
-  /* このファイルは素の button にも余白を当てているため、ここで打ち消す */
+  /* このファイルは素の button にも余白を当てているため打ち消す */
   padding: 0;
   background: #f1f5f9;
   color: #64748b;
@@ -415,8 +412,15 @@ noscript {
   justify-content: center;
   transition: background 0.2s, color 0.2s;
 }
-.ad-widget__close:hover { background: #e2e8f0; color: #1e293b; }
-.footer-ad ins.adsbygoogle { display: block; width: 320px; height: 100px; }
+.ad-widget__close:hover {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+.footer-ad ins.adsbygoogle {
+  display: block;
+  width: 320px;
+  height: 100px;
+}
 
 @media screen and (max-width: 768px) {
   .footer-ad {
@@ -431,7 +435,14 @@ noscript {
     box-shadow: none;
     z-index: auto;
   }
-  .footer-ad.is-closed { display: flex; }
-  .ad-widget__head { display: none; }
-  .footer-ad ins.adsbygoogle { width: 320px; height: 100px; }
+  .footer-ad.is-closed {
+    display: flex;
+  }
+  .ad-widget__head {
+    display: none;
+  }
+  .footer-ad ins.adsbygoogle {
+    width: 320px;
+    height: 100px;
+  }
 }
