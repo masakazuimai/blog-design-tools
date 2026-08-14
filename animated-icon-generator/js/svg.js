@@ -1,7 +1,7 @@
 // アイコン定義から SVG を組み立てる
 // 画面表示用は DOM要素、ダウンロード用は整形済みの文字列を返す（属性の作り方は共有する）
 
-import { buildInlineCss } from "./anim.js?v=20260815b";
+import { buildInlineCss } from "./anim.js?v=20260815c";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 

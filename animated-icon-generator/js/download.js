@@ -3,7 +3,7 @@
 // アンカーをDOMに挿入してからclickし、revokeObjectURL は遅延させる。
 // 未挿入のclickや同期revokeは一部環境でダウンロードが発火しない／中断されるため。
 
-import { t } from "./i18n.js?v=20260815b";
+import { t } from "./i18n.js?v=20260815c";
 
 export function downloadBlob(blob, filename) {
   if (!blob) throw new Error(t("buildFailed"));

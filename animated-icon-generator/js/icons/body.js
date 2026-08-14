@@ -1,6 +1,6 @@
 // 人・体・健康カテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
 
-import { DRAW, drawKeys, pulseKeys, swingKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815b";
+import { DRAW, drawKeys, pulseKeys, swingKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815c";
 
 export const BODY_ICONS = [
   {
@@ -282,9 +282,13 @@ export const BODY_ICONS = [
     cat: "body",
     label: { ja: "マスク", en: "Face mask" },
     parts: [
-      { tag: "path", part: "body", attrs: { d: "M5.4 8.4h13.2v5.2a6.6 6.6 0 0 1-13.2 0z" } },
-      { tag: "path", part: "strap", attrs: { d: "M5.4 9.4 L3.4 7.4 M18.6 9.4 L20.6 7.4" } },
-      { tag: "path", part: "folds", attrs: { d: "M5.4 11.4h13.2 M6.4 14h11.2" } },
+      // 輪郭が4本（本体・ひも左右・ひだ）近接するアイコンなので、共通の stroke-width 2 では潰れる。
+      // このアイコンだけ全パーツ 1.4 に落とす
+      { tag: "path", part: "body", attrs: { d: "M7 7.6C10 6.2 14 6.2 17 7.6v8.8c-3 1.4-7 1.4-10 0z", "stroke-width": 1.4 } },
+      // 耳ひもは角丸2.2の四角。本体の左右へ4.0ずつ張り出させる
+      { tag: "path", part: "strap", attrs: { d: "M7 8.4H5.2a2.2 2.2 0 0 0-2.2 2.2v2.8a2.2 2.2 0 0 0 2.2 2.2H7 M17 8.4H18.8a2.2 2.2 0 0 1 2.2 2.2v2.8a2.2 2.2 0 0 1-2.2 2.2H17", "stroke-width": 1.4 } },
+      // ひだは2本まで（3本だと線の間隔が線幅を下回り、小サイズで塊に見える）
+      { tag: "path", part: "folds", attrs: { d: "M9 10.6h6 M9 13.4h6", "stroke-width": 1.4 } },
     ],
     anim: { duration: 1.4, easing: "ease-out", tracks: [{ part: ["body", "strap", "folds"], origin: "12px 12px", keys: pulseKeys(1.06) }] },
   },

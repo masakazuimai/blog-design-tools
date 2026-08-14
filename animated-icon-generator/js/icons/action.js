@@ -1,6 +1,6 @@
 // 操作カテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
 
-import { DRAW, drawKeys, spinKeys, pulseKeys, bounceKeys, slideKeys } from "./_shared.js?v=20260815b";
+import { DRAW, drawKeys, spinKeys, pulseKeys, bounceKeys, slideKeys } from "./_shared.js?v=20260815c";
 
 export const ACTION_ICONS = [
   {
