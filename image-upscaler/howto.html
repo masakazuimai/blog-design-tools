@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>画像高画質化ツールの使い方｜AI超解像と標準モードの使い分け・よくある質問</title>
+    <meta
+      name="description"
+      content="画像の解像度を上げる手順と、AI超解像モードと標準モードの使い分けを解説します。ボケ補正をいつ使うべきか、どこまで直せてどこからは直せないのかも、JPEG写真で実測した数値で説明します。"
+    />
+    <link rel="canonical" href="https://codequest.work/generator/image-upscaler/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/image-upscaler/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/image-upscaler/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/image-upscaler/howto.html" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:title" content="画像高画質化ツールの使い方とよくある質問" />
+    <meta property="og:description" content="AI超解像と標準モードの使い分け、ボケ補正を使うべき場面、直せる限界を実測値で解説します。" />
+    <meta property="og:url" content="https://codequest.work/generator/image-upscaler/howto.html" />
+    <meta property="og:image" content="https://codequest.work/generator/image-upscaler/assets/og.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "HowTo",
+            "name": "画像の解像度を上げてボケを補正する手順",
+            "inLanguage": "ja",
+            "step": [
+              { "@type": "HowToStep", "name": "画像を読み込む", "text": "画像をドラッグ＆ドロップするか、クリックしてファイルを選びます。処理はブラウザ内で行われ、画像は送信されません。" },
+              { "@type": "HowToStep", "name": "拡大倍率と処理方式を選ぶ", "text": "倍率は1.5倍から4倍。処理方式は高速な標準モードと、時間はかかるが細部が戻るAI超解像モード（2倍・4倍）から選びます。" },
+              { "@type": "HowToStep", "name": "必要ならボケ補正を掛ける", "text": "ピントの甘い写真のときだけ標準モードでボケ補正を上げます。ピントが合った写真ではオフのままにします。" },
+              { "@type": "HowToStep", "name": "結果を比較して保存する", "text": "仕切り線をドラッグしてブラウザ標準の拡大と見比べ、PNGまたはJPEGで保存します。" }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "画像はサーバーにアップロードされますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "アップロードされません。読み込みから拡大処理、保存まですべてブラウザ内で完結します。オフラインでも動作します。" }
+              },
+              {
+                "@type": "Question",
+                "name": "AI超解像とは何が違いますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "両方使えます。標準モードは1秒前後で終わります。AI超解像モードは学習モデルをブラウザ内で動かし、JPEG写真の4倍拡大でPSNRが23.24dBから24.02dBに上がりました。モデルは初回だけ7.7MBまたは50MBを取得し、以降はブラウザに保存されます。どちらのモードでも画像は送信されません。" }
+              },
+              {
+                "@type": "Question",
+                "name": "ピンボケや手ブレの写真は直りますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "軽度のボケであれば標準モードのボケ補正で改善します。ぼかしたJPEG写真の実測では、PSNRが23.22dBから24.21dBへ改善しました。ただし失われた情報を復元しているわけではないため、強い手ブレや大きく外したピントが完全に元通りになることはありません。" }
+              },
+              {
+                "@type": "Question",
+                "name": "ボケ補正はどのくらいに設定すればよいですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "初期値はオフで、ピントが合った写真ではオフのままが正解です。JPEG写真のノイズも一緒に増幅されるため、ピントの合った写真に掛けると画質が下がります。実測では弱い設定でもPSNRが26.78dBから25.45dBに低下しました。ボケた写真のときだけ、比較ビューを見ながら上げてください。" }
+              },
+              {
+                "@type": "Question",
+                "name": "どのくらいの大きさまで拡大できますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "出力1600万画素までです。これを超える組み合わせを選んだ場合は倍率が自動的に引き下げられ、画面に表示されます。ブラウザのメモリを使い切らないための制限です。" }
+              },
+              {
+                "@type": "Question",
+                "name": "AIモードが選べません",
+                "acceptedAnswer": { "@type": "Answer", "text": "AI超解像モードにはWebGPUが必要です。対応していないブラウザや環境では自動的に無効になり、標準モードだけが使えます。Chrome・Edgeの新しいバージョンやSafari 18以降で利用できます。" }
+              },
+              {
+                "@type": "Question",
+                "name": "商用利用できますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "ご自身の画像を処理した結果は自由にお使いいただけます。登録もクレジット表記も不要です。なお画面上のサンプル画像はUnsplashの写真で、動作確認用です。" }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-7Z6M3CJEV3');
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css?v=20260818b" />
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <a class="lang-switch" href="en/howto.html">English</a>
+        <h1>使い方と<span class="accent">よくある質問</span></h1>
+        <p>画像高画質化ツール</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="prose">
+        <p class="lead">
+          画像の解像度を上げるには、拡大したい画像を読み込み、倍率と処理方式を選んで「高画質化する」を押します。
+          処理方式は<strong>標準モード</strong>（1秒前後で完了）と<strong>AI超解像モード</strong>（細部が戻る・時間がかかる）の2つ。
+          どちらもブラウザ内で完結し、画像がサーバーに送られることはありません。
+        </p>
+
+        <h2>使い方</h2>
+        <ol>
+          <li><strong>画像を読み込む</strong> — ドラッグ＆ドロップ、またはクリックしてファイルを選びます。JPEG / PNG / WebP / AVIF に対応しています。</li>
+          <li><strong>拡大倍率を選ぶ</strong> — 1.5倍〜4倍から選びます。出力サイズと所要時間の目安がその場に表示されます。</li>
+          <li><strong>処理方式を選ぶ</strong> — 迷ったら標準モード。きれいな写真をできるだけ細部まで戻したいときはAI超解像モード（2倍・4倍のみ）。</li>
+          <li><strong>必要ならボケ補正を掛ける</strong> — ピントの甘い写真のときだけ、標準モードで値を上げます。ピントが合った写真ではオフのままにしてください。</li>
+          <li><strong>比較して保存する</strong> — 中央の仕切り線をドラッグすると、ブラウザ標準の拡大と結果を見比べられます。PNGかJPEGで保存します。</li>
+        </ol>
+        <p>
+          違いは全体表示ではほとんど分かりません。「等倍(100%)」を押して拡大表示にすると、輪郭の差がはっきり見えます。
+        </p>
+
+        <h2>標準モードとAI超解像モードの使い分け</h2>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th></th><th>標準モード</th><th>AI超解像モード</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>仕組み</td><td>数値計算による拡大</td><td>学習モデルをブラウザ内で実行</td></tr>
+              <tr><td>倍率</td><td>1.5 / 2 / 3 / 4倍</td><td>2 / 4倍</td></tr>
+              <tr><td>時間</td><td>1秒前後</td><td>数秒〜数十秒＋初回のモデル取得（2倍 7.7MB／4倍 50MB）</td></tr>
+              <tr><td>向く写真</td><td>ボケた写真（ボケ補正が使える）、大きい画像、急ぎのとき</td><td>ピントの合った写真の細部復元、とくに4倍拡大</td></tr>
+              <tr><td>必要な環境</td><td>どのブラウザでも</td><td>WebGPU対応ブラウザ（Chrome / Edge / Safari 18以降）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          AIモデルは初回だけ取得し、2回目以降はブラウザのキャッシュから読み込みます。
+          モデルの学習データに含まれない細部を「それらしく」描くことがあるので、正確さが求められる用途（証拠写真・計測画像など）には標準モードをお使いください。
+        </p>
+
+        <h2>それぞれの設定について</h2>
+
+        <h3>ボケ補正（標準モードのみ）</h3>
+        <p>
+          元画像のボケを逆算して戻す処理です。ボケた写真には効きますが、<strong>ピントが合った写真に掛けると逆効果になります</strong>。
+          JPEG写真に含まれるわずかなノイズまで一緒に強調してしまうためで、実測でも弱い設定ですらPSNRが26.78dBから25.45dBへ下がりました。
+          初期値はオフです。ピントの甘い写真のときだけ、比較ビューを見ながら上げてください。
+        </p>
+
+        <h3>補正の品質（標準モードのみ）</h3>
+        <p>
+          ボケ補正の計算を何回繰り返すかの設定です。ボケ補正がオフのときは効きません。
+          「高品質」ほど効きますが時間がかかります。所要時間の目安は設定を変えるたびに更新されます。
+        </p>
+
+        <h3>仕上げシャープ（標準モードのみ）</h3>
+        <p>
+          最後に輪郭を整える処理です。ボケ補正とは違い、こちらは<strong>もともと写っていた情報を強調するだけ</strong>です。
+          強くするほど見た目はくっきりしますが正確さは少しずつ下がるので、初期値の15%前後で控えめに使うのがおすすめです。
+        </p>
+
+        <h2>どこまで直せるのか</h2>
+        <p>
+          1600pxの写真を縮小してJPEG（品質88）で保存し、それを拡大して元の写真とどれだけ一致するかを計測しました。
+          実際に扱う写真の大半がJPEGなので、無圧縮画像ではなくJPEGを入力にしています。数値が大きいほど元の写真に近いことを意味します。
+        </p>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th>条件</th><th>ブラウザ標準</th><th>標準モード</th><th>AI超解像</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>2倍拡大 PSNR (dB)</td><td>26.62</td><td><strong>26.71</strong></td><td>26.59</td></tr>
+              <tr><td>2倍拡大 SSIM</td><td>0.8312</td><td>0.8377</td><td><strong>0.8413</strong></td></tr>
+              <tr><td>4倍拡大 PSNR (dB)</td><td>23.24</td><td>23.21</td><td><strong>24.02</strong></td></tr>
+              <tr><td>4倍拡大 SSIM</td><td>0.6316</td><td>0.6381</td><td><strong>0.6665</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          2倍では標準モードとAIがほぼ並び、4倍ではAIがはっきり上回ります。倍率が大きく失われた情報が多いほど、AIの「学習した写真の傾向で埋める」力が効くためです。
+        </p>
+        <p>
+          ぼかしたJPEG写真を2倍にする条件では、標準モードのボケ補正でPSNRが23.22dBから24.21dBまで改善しました。
+          一方で、どの方式でも<strong>拡大は情報を増やす処理ではない</strong>ため、元の写真が持っていた細部が丸ごと戻ることはありません。これは原理的な限界です。
+        </p>
+
+        <h2>向いているケース・向いていないケース</h2>
+        <ul>
+          <li><strong>向いている</strong>：ブログやSNS用の小さい画像を印刷・大きな表示に使いたい（AIモード）、少しピントが甘い写真を締めたい（標準モード＋ボケ補正）、古いサイトから持ってきた小さな画像を作り直したい</li>
+          <li><strong>向いていない</strong>：大きく手ブレした写真、文字がつぶれて読めない画像、顔の質感を作り直したい場合（顔専用の補正モデルの領域で、本ツールのAIは汎用の超解像です）</li>
+        </ul>
+
+        <h2>よくある質問</h2>
+
+        <h3>画像はサーバーにアップロードされますか？</h3>
+        <p>されません。読み込みから処理、保存まですべてブラウザ内で完結します。読み込み後は通信を切っても動作します。</p>
+
+        <h3>AI超解像とは何が違いますか？</h3>
+        <p>
+          両方使えます。標準モードは1秒前後で終わり、AI超解像モードは学習モデルをブラウザ内で動かします。
+          JPEG写真の4倍拡大でPSNRが23.24dBから24.02dBに上がりました。モデルは初回だけ取得し（2倍7.7MB／4倍50MB）、以降はブラウザに保存されます。
+          どちらのモードでも画像は送信されません。
+        </p>
+
+        <h3>ピンボケや手ブレの写真は直りますか？</h3>
+        <p>軽度のボケなら標準モードのボケ補正で改善します（実測+1.0dB）。強い手ブレや大きく外したピントは元に戻りません。</p>
+
+        <h3>ボケ補正はどのくらいに設定すればよいですか？</h3>
+        <p>
+          初期値はオフで、ピントが合った写真ではオフのままが正解です。JPEGのノイズも一緒に増幅されるため、
+          実測では弱い設定でもPSNRが26.78dBから25.45dBに下がりました。ボケた写真のときだけ、比較ビューを見ながら上げてください。
+        </p>
+
+        <h3>AIモードが選べません</h3>
+        <p>
+          AI超解像モードにはWebGPUが必要です。対応していない環境では自動的に無効になり、標準モードだけが使えます。
+          Chrome・Edgeの新しいバージョン、Safari 18以降で利用できます。
+        </p>
+
+        <h3>どのくらいの大きさまで拡大できますか？</h3>
+        <p>出力1600万画素までです。超える場合は倍率が自動的に引き下げられ、その旨が画面に表示されます。</p>
+
+        <h3>商用利用できますか？</h3>
+        <p>
+          ご自身の画像を処理した結果は自由にお使いいただけます。登録もクレジット表記も不要です。
+          画面上のサンプル画像はUnsplashの写真で、動作確認のために置いています。
+        </p>
+
+        <h2>関連ツール</h2>
+        <ul>
+          <li><a href="https://codequest.work/generator/image-compressor/">画像圧縮・変換ツール</a> — JPG / PNG / WebP / AVIF の相互変換とリサイズ</li>
+          <li><a href="https://codequest.work/generator/bg-remover/">背景透過ツール</a> — 被写体を自動で切り抜き</li>
+          <li><a href="https://codequest.work/generator/image-color-picker/">画像カラーパレット抽出</a> — 写真から配色を取り出す</li>
+        </ul>
+
+        <a class="back-link" href="./">&larr; ツールに戻る</a>
+      </div>
+    </div>
+
+    <footer>
+      <span
+        >&copy; 2026 画像高画質化ツール | Created by
+        <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span
+      >
+      <div class="footer-links">
+        <a href="./">ツールを使う &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">広告</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+      </div>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288"
+        crossorigin="anonymous"
+      ></script>
+      <ins
+        class="adsbygoogle"
+        style="display: block"
+        data-ad-client="ca-pub-4871781946658288"
+        data-ad-slot="9562195590"
+      ></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      (function () {
+        var w = document.getElementById('ad-widget');
+        var b = document.getElementById('ad-close');
+        if (!w || !b) return;
+        b.addEventListener('click', function () {
+          w.classList.add('is-closed');
+        });
+      })();
+    </script>
+  </body>
+</html>

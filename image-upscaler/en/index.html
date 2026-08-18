@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Upscaler — Enlarge Photos &amp; Fix Blur Without Uploading</title>
+    <meta
+      name="description"
+      content="Free image upscaler that runs entirely in your browser. Enlarge photos up to 4x with a fast standard mode or an AI super-resolution mode, and recover blur. Your files never leave your device — no upload, no sign-up, no watermark."
+    />
+    <link rel="canonical" href="https://codequest.work/generator/image-upscaler/en/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/image-upscaler/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/image-upscaler/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/image-upscaler/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Image Upscaler — Enlarge Photos & Fix Blur Without Uploading" />
+    <meta
+      property="og:description"
+      content="Enlarge photos up to 4x and recover blur, entirely in your browser. No upload, no sign-up, no watermark."
+    />
+    <meta property="og:url" content="https://codequest.work/generator/image-upscaler/en/" />
+    <meta property="og:image" content="https://codequest.work/generator/image-upscaler/assets/og-en.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Image Upscaler" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Image Upscaler — Enlarge Photos & Fix Blur Without Uploading" />
+    <meta
+      name="twitter:description"
+      content="Enlarge photos up to 4x and recover blur, entirely in your browser. No upload, no sign-up, no watermark."
+    />
+    <meta name="twitter:image" content="https://codequest.work/generator/image-upscaler/assets/og-en.png" />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "Image Upscaler",
+            "url": "https://codequest.work/generator/image-upscaler/en/",
+            "description": "Free browser-based image upscaler with a fast standard mode and an AI super-resolution mode. Images are processed locally and never uploaded.",
+            "applicationCategory": "MultimediaApplication",
+            "operatingSystem": "Web",
+            "browserRequirements": "Requires JavaScript.",
+            "inLanguage": "en",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+            "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+              { "@type": "ListItem", "position": 2, "name": "Generators", "item": "https://codequest.work/category/generator/" },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Image Upscaler",
+                "item": "https://codequest.work/generator/image-upscaler/en/"
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-7Z6M3CJEV3');
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css?v=20260818b" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Draggable.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <a class="lang-switch" href="../">日本語</a>
+        <h1>Image <span class="accent">Upscaler</span></h1>
+        <p>Enlarge photos and recover blur — every step runs inside your browser</p>
+        <span class="header-privacy">🔒 Your images are never uploaded · No sign-up · Free</span>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="note">
+        <strong>Standard mode</strong> finishes in about a second and can also recover blur in slightly soft photos.
+        <strong>AI super-resolution mode</strong> takes longer but brings back finer detail, especially at 4x.
+        Both are shown side by side with your browser's own enlargement, so you can compare before you save.
+        Neither can invent detail that was never captured, so severe motion blur or badly missed focus will not be fully restored.
+        <a href="howto.html">See how to use it and the FAQ</a>
+      </div>
+
+      <!-- Input -->
+      <div class="dropzone" id="dropzone">
+        <h2>Drop an image here, or click to choose</h2>
+        <p>JPEG / PNG / WebP / AVIF supported</p>
+        <input type="file" id="fileInput" accept="image/*" hidden />
+      </div>
+
+      <div class="samples">
+        <span class="samples-label">Try a sample:</span>
+        <button type="button" class="sample-btn" data-sample="forest">
+          <img src="../samples/forest-thumb.jpg" alt="" width="80" height="53" /><span>Forest</span>
+        </button>
+        <button type="button" class="sample-btn" data-sample="lake">
+          <img src="../samples/lake-thumb.jpg" alt="" width="80" height="53" /><span>Lake</span>
+        </button>
+        <button type="button" class="sample-btn" data-sample="mountain">
+          <img src="../samples/mountain-thumb.jpg" alt="" width="80" height="53" /><span>Mountain</span>
+        </button>
+        <button type="button" class="sample-btn" data-sample="soft">
+          <img src="../samples/soft-thumb.jpg" alt="" width="80" height="53" /><span>Blurry</span>
+        </button>
+        <span class="samples-credit">
+          Photos: <a href="https://unsplash.com/" target="_blank" rel="noopener">Unsplash</a> (resized to 480px)
+        </span>
+      </div>
+
+      <!-- Settings -->
+      <div class="panel" id="settings" hidden>
+        <h2>Settings</h2>
+        <div class="grid2">
+          <div>
+            <div class="field">
+              <span class="label">Scale</span>
+              <div class="seg" id="scaleSeg">
+                <button type="button" data-scale="1.5">1.5&times;</button>
+                <button type="button" data-scale="2" class="is-active">2&times;</button>
+                <button type="button" data-scale="3">3&times;</button>
+                <button type="button" data-scale="4">4&times;</button>
+              </div>
+            </div>
+            <div class="field">
+              <span class="label">Method <span class="hint">AI is sharper but slower</span></span>
+              <div class="seg" id="modeSeg">
+                <button type="button" data-mode="standard" class="is-active">Standard (fast)</button>
+                <button type="button" data-mode="ai">AI super-resolution</button>
+              </div>
+              <p class="ai-note" id="aiNote"></p>
+            </div>
+            <div class="field standard-only">
+              <label for="deblur">Blur recovery <span class="hint">solves the blur backwards</span></label>
+              <div class="slider-row">
+                <input type="range" id="deblur" min="0" max="100" step="5" value="0" />
+                <output id="deblurOut">0</output>
+              </div>
+              <p class="field-note" id="deblurNote"></p>
+            </div>
+          </div>
+          <div>
+            <div class="field standard-only">
+              <span class="label">Quality <span class="hint">stronger effect, longer wait</span></span>
+              <div class="seg" id="qualitySeg">
+                <button type="button" data-iters="10">Fast</button>
+                <button type="button" data-iters="20" class="is-active">Standard</button>
+                <button type="button" data-iters="40">Best</button>
+              </div>
+            </div>
+            <div class="field standard-only">
+              <label for="amount">Final sharpening <span class="hint">tidies up the edges</span></label>
+              <div class="slider-row">
+                <input type="range" id="amount" min="0" max="200" step="5" value="15" />
+                <output id="amountOut">15%</output>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <details class="adv standard-only">
+          <summary>Advanced</summary>
+          <div class="grid2" style="margin-top: 14px">
+            <div class="field">
+              <label for="radius">Sharpen radius <span class="hint">follows the scale</span></label>
+              <div class="slider-row">
+                <input type="range" id="radius" min="0.3" max="3" step="0.1" value="0.6" />
+                <output id="radiusOut">0.6px</output>
+              </div>
+            </div>
+            <div class="field">
+              <label for="threshold">Threshold <span class="hint">higher values spare noise</span></label>
+              <div class="slider-row">
+                <input type="range" id="threshold" min="0" max="30" step="1" value="3" />
+                <output id="thresholdOut">3</output>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <div class="meta-line" id="metaLine"></div>
+
+        <div style="margin-top: 18px">
+          <button type="button" class="btn-run" id="runBtn">Enhance</button>
+        </div>
+
+        <div class="progress-wrap" id="progressWrap" hidden>
+          <div class="progress-bar"><i id="progressFill"></i></div>
+          <div class="progress-label" id="progressLabel">Working…</div>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div class="panel" id="result" hidden>
+        <div class="compare-head">
+          <h2 style="margin: 0">Compare</h2>
+          <div class="compare-legend">
+            <span><b>Left:</b> browser's own enlargement</span>
+            <span><b>Right:</b> this tool</span>
+          </div>
+        </div>
+
+        <div class="viewport" id="viewport">
+          <canvas id="view"></canvas>
+          <span class="tag l">Browser</span>
+          <span class="tag r">Enhanced</span>
+          <div class="cp-handle" id="cpHandle"><span class="cp-grip">&#8660;</span></div>
+        </div>
+        <p class="viewport-hint">
+          Drag the divider to move the split, drag elsewhere to pan, scroll to zoom.
+          <span id="zoomLabel"></span>
+        </p>
+
+        <div class="actions">
+          <button type="button" id="fitBtn">Fit</button>
+          <button type="button" id="oneToOneBtn">100%</button>
+          <label class="dl-format">
+            <span>Format</span>
+            <select id="dlFormat">
+              <option value="png">PNG</option>
+              <option value="jpeg">JPEG</option>
+              <option value="webp">WebP</option>
+              <option value="avif">AVIF</option>
+            </select>
+          </label>
+          <button type="button" class="primary" id="dlBtn">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <span
+        >&copy; 2026 Image Upscaler | Created by
+        <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span
+      >
+      <div class="footer-links">
+        <a href="howto.html">How to use &amp; FAQ &rarr;</a>
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">Sponsored</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="Close ad">×</button>
+      </div>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288"
+        crossorigin="anonymous"
+      ></script>
+      <ins
+        class="adsbygoogle"
+        style="display: block"
+        data-ad-client="ca-pub-4871781946658288"
+        data-ad-slot="9562195590"
+      ></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      (function () {
+        var w = document.getElementById('ad-widget');
+        var b = document.getElementById('ad-close');
+        if (!w || !b) return;
+        b.addEventListener('click', function () {
+          w.classList.add('is-closed');
+        });
+      })();
+    </script>
+
+    <script type="module" src="../js/main.js?v=20260818b"></script>
+  </body>
+</html>

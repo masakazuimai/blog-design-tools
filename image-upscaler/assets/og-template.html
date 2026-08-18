@@ -1,0 +1,70 @@
+<!doctype html>
+<!-- OG画像(1200×630)の生成元。ヘッドレスChromeでスクリーンショットして assets/og.png を作る。
+     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
+       --screenshot=assets/og.png --window-size=1200,630 --default-background-color=0 assets/og-template.html -->
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        width: 1200px; height: 630px;
+        font-family: "Noto Sans JP", sans-serif;
+        background: linear-gradient(135deg, #0f2027 0%, #1f3b4d 55%, #2c5364 100%);
+        color: #fff; position: relative; overflow: hidden;
+        display: flex; flex-direction: column; justify-content: center;
+        padding: 0 78px;
+      }
+
+      /* 背景: 解像度が上がる様子を表すピクセルグリッド */
+      .grid { position: absolute; top: 50%; transform: translateY(-50%); display: grid; }
+      .grid-coarse { left: 700px; grid-template-columns: repeat(3, 58px); gap: 6px; }
+      .grid-fine { left: 960px; grid-template-columns: repeat(9, 20px); gap: 3px; }
+      .grid i { display: block; border-radius: 5px; background: rgba(94, 234, 212, 0.15); }
+      .grid-coarse i { height: 58px; }
+      .grid-fine i { height: 20px; border-radius: 2px; background: rgba(94, 234, 212, 0.3); }
+      .arrow {
+        position: absolute; left: 898px; top: 50%; transform: translateY(-50%);
+        font-size: 50px; color: rgba(94, 234, 212, 0.75); font-weight: 700;
+      }
+
+      .badge {
+        align-self: flex-start;
+        border: 1px solid rgba(94, 234, 212, 0.55);
+        background: rgba(13, 148, 136, 0.22);
+        color: #5eead4; border-radius: 999px;
+        padding: 8px 24px; font-size: 25px; font-weight: 700;
+        margin-bottom: 30px; position: relative; z-index: 2;
+      }
+      h1 {
+        font-size: 70px; font-weight: 900; line-height: 1.22;
+        letter-spacing: -0.035em; position: relative; z-index: 2;
+        text-shadow: 0 4px 24px rgba(0,0,0,0.35);
+      }
+      h1 .accent { color: #5eead4; }
+      p {
+        margin-top: 26px; font-size: 30px; font-weight: 500;
+        color: rgba(255,255,255,0.82); line-height: 1.6;
+        position: relative; z-index: 2; max-width: 590px;
+      }
+      .site {
+        position: absolute; left: 78px; bottom: 46px;
+        font-size: 26px; font-weight: 700; color: rgba(255,255,255,0.6);
+        letter-spacing: 0.02em; z-index: 2;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid grid-coarse"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="arrow">&rarr;</div>
+    <div class="grid grid-fine"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+    <span class="badge">無料・登録不要</span>
+    <h1>画像<span class="accent">高画質化</span>ツール</h1>
+    <p>写真の解像度を上げて、ボケも補正。<br />画像は送信されません</p>
+    <span class="site">CodeQuest.work</span>
+  </body>
+</html>

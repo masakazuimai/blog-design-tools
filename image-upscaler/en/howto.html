@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to Upscale an Image Without Uploading It — Standard vs AI Mode, Guide &amp; FAQ</title>
+    <meta
+      name="description"
+      content="How to enlarge a photo in your browser with no upload and no sign-up. Covers when to use the fast standard mode versus AI super-resolution, when blur recovery helps, and measured numbers on JPEG photos showing what can and cannot be restored."
+    />
+    <link rel="canonical" href="https://codequest.work/generator/image-upscaler/en/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/image-upscaler/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/image-upscaler/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/image-upscaler/howto.html" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="How to Upscale an Image Without Uploading It" />
+    <meta property="og:description" content="Standard mode vs AI super-resolution, when blur recovery helps, and what can actually be restored — with measured numbers." />
+    <meta property="og:url" content="https://codequest.work/generator/image-upscaler/en/howto.html" />
+    <meta property="og:image" content="https://codequest.work/generator/image-upscaler/assets/og-en.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "HowTo",
+            "name": "How to upscale a photo and recover blur in the browser",
+            "inLanguage": "en",
+            "step": [
+              { "@type": "HowToStep", "name": "Load an image", "text": "Drag and drop a file, or click to choose one. Everything runs locally and nothing is uploaded." },
+              { "@type": "HowToStep", "name": "Choose a scale and a mode", "text": "Pick 1.5x to 4x. Choose the fast standard mode, or AI super-resolution (2x and 4x) for finer detail at the cost of time." },
+              { "@type": "HowToStep", "name": "Use blur recovery only if needed", "text": "Raise it in standard mode only when the photo is soft. Leave it off for photos that are already in focus." },
+              { "@type": "HowToStep", "name": "Compare and save", "text": "Drag the divider to compare against your browser's own enlargement, then save as PNG or JPEG." }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Are my images uploaded to a server?",
+                "acceptedAnswer": { "@type": "Answer", "text": "No. Loading, processing and saving all happen inside your browser. Once the page has loaded you can disconnect from the internet and it still works." }
+              },
+              {
+                "@type": "Question",
+                "name": "How is this different from an AI upscaler?",
+                "acceptedAnswer": { "@type": "Answer", "text": "You get both. Standard mode finishes in about a second. AI super-resolution mode runs a learned model inside your browser and, on JPEG photos enlarged 4x, raised PSNR from 23.24 dB to 24.02 dB. The model is fetched once (7.7 MB for 2x, 50 MB for 4x) and then cached by the browser. In both modes your image never leaves your device." }
+              },
+              {
+                "@type": "Question",
+                "name": "Can it fix a blurry or out-of-focus photo?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Mild blur improves noticeably with blur recovery in standard mode. On a blurred JPEG photo PSNR rose from 23.22 dB to 24.21 dB. Severe motion blur or badly missed focus cannot be recovered, because the detail was never recorded." }
+              },
+              {
+                "@type": "Question",
+                "name": "What should I set blur recovery to?",
+                "acceptedAnswer": { "@type": "Answer", "text": "The default is off, and off is correct for photos that are already in focus: JPEG noise gets amplified along with the detail, and even a gentle setting lowered PSNR from 26.78 dB to 25.45 dB in our tests. Raise it only for soft photos, while watching the comparison view." }
+              },
+              {
+                "@type": "Question",
+                "name": "How large an image can it handle?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Up to 16 megapixels of output. If your choice would exceed that, the scale is reduced automatically and the page tells you. The limit keeps the browser from running out of memory." }
+              },
+              {
+                "@type": "Question",
+                "name": "Why can't I select AI mode?",
+                "acceptedAnswer": { "@type": "Answer", "text": "AI super-resolution needs WebGPU. Where the browser does not support it, the option is disabled automatically and standard mode remains available. Recent versions of Chrome and Edge, and Safari 18 or later, support it." }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I use the results commercially?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Yes. Results from your own images are yours to use, with no sign-up and no attribution required. The sample photos shown on the page come from Unsplash and are there for testing." }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-7Z6M3CJEV3');
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css?v=20260818b" />
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <a class="lang-switch" href="../howto.html">日本語</a>
+        <h1>Guide &amp; <span class="accent">FAQ</span></h1>
+        <p>Image Upscaler</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="prose">
+        <p class="lead">
+          To enlarge a photo, load it into the tool, choose a scale and a mode, and press Enhance.
+          <strong>Standard mode</strong> finishes in about a second; <strong>AI super-resolution mode</strong> takes longer but brings back finer detail.
+          Every step runs inside your browser — your image is never sent to a server.
+        </p>
+
+        <h2>How to use it</h2>
+        <ol>
+          <li><strong>Load an image</strong> — drag and drop, or click to choose a file. JPEG, PNG, WebP and AVIF are supported.</li>
+          <li><strong>Choose a scale</strong> — anything from 1.5x to 4x. The output size and an estimated time appear right away.</li>
+          <li><strong>Choose a mode</strong> — standard mode when in doubt; AI super-resolution (2x and 4x only) when you want as much detail as possible from a clean photo.</li>
+          <li><strong>Use blur recovery only if needed</strong> — in standard mode, raise it for soft photos. Leave it off for photos that are already in focus.</li>
+          <li><strong>Compare, then save</strong> — drag the divider in the middle to compare against your browser's own enlargement, and save as PNG or JPEG.</li>
+        </ol>
+        <p>
+          At fit-to-screen size the difference is nearly invisible. Press <strong>100%</strong> to view actual pixels —
+          that is where the change in the edges becomes obvious.
+        </p>
+
+        <h2>Standard mode vs AI super-resolution</h2>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th></th><th>Standard mode</th><th>AI super-resolution</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>How it works</td><td>Numerical enlargement</td><td>A learned model running inside your browser</td></tr>
+              <tr><td>Scales</td><td>1.5 / 2 / 3 / 4x</td><td>2 / 4x</td></tr>
+              <tr><td>Time</td><td>About a second</td><td>Seconds to tens of seconds, plus a one-time model download (7.7 MB for 2x, 50 MB for 4x)</td></tr>
+              <tr><td>Best for</td><td>Soft photos (blur recovery is available), large images, when you are in a hurry</td><td>Recovering fine detail in photos that are already in focus, especially at 4x</td></tr>
+              <tr><td>Requires</td><td>Any browser</td><td>A WebGPU-capable browser (Chrome, Edge, Safari 18+)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          The model is fetched once and served from the browser cache afterwards.
+          Because it can render plausible detail that was not in the original, use standard mode when accuracy matters (evidence photos, measurement images and the like).
+        </p>
+
+        <h2>What each setting does</h2>
+
+        <h3>Blur recovery (standard mode only)</h3>
+        <p>
+          This solves the blur backwards instead of just boosting edges. It helps soft photos, but
+          <strong>on a photo that is already sharp it makes things worse</strong>: the faint noise in any JPEG gets amplified too,
+          and even a gentle setting lowered PSNR from 26.78 dB to 25.45 dB in our tests.
+          The default is off. Raise it only for soft photos, while watching the comparison view.
+        </p>
+
+        <h3>Quality (standard mode only)</h3>
+        <p>
+          This is how many times the blur-recovery calculation repeats, so it has no effect while blur recovery is off.
+          Higher settings work harder and take longer, and the time estimate updates whenever you change a setting.
+        </p>
+
+        <h3>Final sharpening (standard mode only)</h3>
+        <p>
+          A last pass that tidies up the edges. Unlike blur recovery, this only <strong>emphasises detail that is already
+          there</strong>. Turning it up makes an image look crisper while making it slightly less faithful, so the default of
+          about 15% is a good place to stay.
+        </p>
+
+        <h2>What it can and cannot restore</h2>
+        <p>
+          We shrank a 1600px photo, saved it as a JPEG (quality 88), enlarged it back, and measured how closely the result matched
+          the original. We used JPEG rather than lossless input because that is what real photos are. Higher numbers mean a closer match.
+        </p>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th>Condition</th><th>Browser</th><th>Standard mode</th><th>AI super-resolution</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>2x PSNR (dB)</td><td>26.62</td><td><strong>26.71</strong></td><td>26.59</td></tr>
+              <tr><td>2x SSIM</td><td>0.8312</td><td>0.8377</td><td><strong>0.8413</strong></td></tr>
+              <tr><td>4x PSNR (dB)</td><td>23.24</td><td>23.21</td><td><strong>24.02</strong></td></tr>
+              <tr><td>4x SSIM</td><td>0.6316</td><td>0.6381</td><td><strong>0.6665</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          At 2x the two modes are roughly level; at 4x the AI pulls clearly ahead. The more that has been lost, the more its
+          knowledge of what photos usually look like helps to fill the gap.
+        </p>
+        <p>
+          On a deliberately blurred JPEG enlarged 2x, blur recovery in standard mode raised PSNR from 23.22 dB to 24.21 dB.
+          Even so, <strong>enlarging does not create information</strong> in any mode, and the original's fine detail never comes back in full. That is a limit no amount of processing removes.
+        </p>
+
+        <h2>When to use it — and when not to</h2>
+        <ul>
+          <li><strong>Good fit</strong>: small blog or social images you now need at print or large-display size (AI mode); slightly soft shots that need tightening (standard mode with blur recovery); small legacy images from an old site.</li>
+          <li><strong>Poor fit</strong>: heavy camera shake; text that has already smeared into illegibility; rebuilding facial texture. Those need dedicated face-restoration models — the AI here is a general-purpose upscaler.</li>
+        </ul>
+
+        <h2>FAQ</h2>
+
+        <h3>Are my images uploaded to a server?</h3>
+        <p>No. Everything happens in your browser, and the tool keeps working after you disconnect from the internet.</p>
+
+        <h3>How is this different from an AI upscaler?</h3>
+        <p>
+          You get both. Standard mode finishes in about a second; AI super-resolution runs a learned model inside your browser
+          and raised PSNR from 23.24 dB to 24.02 dB on JPEG photos enlarged 4x. The model is fetched once (7.7 MB for 2x, 50 MB for 4x)
+          and cached. In both modes your image never leaves your device.
+        </p>
+
+        <h3>Can it fix a blurry or out-of-focus photo?</h3>
+        <p>Mild blur improves clearly with blur recovery in standard mode (+1.0 dB in our tests). Severe shake or badly missed focus will not come back.</p>
+
+        <h3>What should I set blur recovery to?</h3>
+        <p>
+          The default is off, and off is correct for photos that are already in focus — JPEG noise gets amplified too, and even
+          a gentle setting lowered PSNR from 26.78 dB to 25.45 dB. Raise it only for soft photos, while watching the comparison view.
+        </p>
+
+        <h3>Why can't I select AI mode?</h3>
+        <p>
+          AI super-resolution needs WebGPU. Where the browser does not support it, the option is disabled automatically and
+          standard mode remains available. Recent Chrome and Edge, and Safari 18 or later, support it.
+        </p>
+
+        <h3>How large an image can it handle?</h3>
+        <p>Up to 16 megapixels of output. Beyond that the scale is reduced automatically and the page tells you.</p>
+
+        <h3>Can I use the results commercially?</h3>
+        <p>
+          Yes — no sign-up, no watermark, no attribution required. The sample photos on the page come from Unsplash and
+          are only there so you can test the tool.
+        </p>
+
+        <h2>Related tools</h2>
+        <ul>
+          <li><a href="https://codequest.work/generator/image-compressor/en/">Image Compressor</a> — convert and resize between JPG, PNG, WebP and AVIF</li>
+          <li><a href="https://codequest.work/generator/bg-remover/">Background Remover</a> — cut out the subject automatically</li>
+          <li><a href="https://codequest.work/generator/image-color-picker/en/">Image Color Picker</a> — pull a palette out of a photo</li>
+        </ul>
+
+        <a class="back-link" href="./">&larr; Back to the tool</a>
+      </div>
+    </div>
+
+    <footer>
+      <span
+        >&copy; 2026 Image Upscaler | Created by
+        <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span
+      >
+      <div class="footer-links">
+        <a href="./">Open the tool &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+
+    <div id="ad-widget" class="footer-ad">
+      <div class="ad-widget__head">
+        <span class="ad-widget__label">Sponsored</span>
+        <button id="ad-close" class="ad-widget__close" type="button" aria-label="Close ad">×</button>
+      </div>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288"
+        crossorigin="anonymous"
+      ></script>
+      <ins
+        class="adsbygoogle"
+        style="display: block"
+        data-ad-client="ca-pub-4871781946658288"
+        data-ad-slot="9562195590"
+      ></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <script>
+      (function () {
+        var w = document.getElementById('ad-widget');
+        var b = document.getElementById('ad-close');
+        if (!w || !b) return;
+        b.addEventListener('click', function () {
+          w.classList.add('is-closed');
+        });
+      })();
+    </script>
+  </body>
+</html>
