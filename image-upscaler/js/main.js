@@ -1,10 +1,10 @@
 
-import { t, isEN } from './i18n.js?v=20260818b';
-import { AI_MODELS, AI_SCALES, webgpuAvailable, isModelLoaded, aiUpscale, estimateSeconds as aiEstimate } from './ai-upscale.js?v=20260818b';
-import { FORMATS, encodeCanvas, formatFromMime } from './export.js?v=20260818b';
+import { t, isEN } from './i18n.js?v=20260818c';
+import { AI_MODELS, AI_SCALES, webgpuAvailable, isModelLoaded, aiUpscale, estimateSeconds as aiEstimate } from './ai-upscale.js?v=20260818c';
+import { FORMATS, encodeCanvas, formatFromMime } from './export.js?v=20260818c';
 
 /* js/ 配下のローカル参照に付けるキャッシュバスティング用の版番号 */
-const ASSET_VERSION = '20260818b';
+const ASSET_VERSION = '20260818c';
 
 /* サンプル画像は日本語版の直下にだけ置き、/en/ からは1階層上を参照する */
 const SAMPLE_BASE = isEN ? '../samples/' : 'samples/';
@@ -38,7 +38,6 @@ let worker = null;
 let scale = 2;
 let deconvIters = 20;
 let mode = 'standard';   // 'standard' = 数値計算 / 'ai' = Swin2SR
-let cancelRequested = false;
 const view = { zoom: 1, panX: 0, panY: 0, split: 0.5, fit: true };
 
 /* ---------- 入力 ---------- */
@@ -257,7 +256,9 @@ function updateMeta() {
     ' (' + mp.toFixed(1) + ' MP) &nbsp;/&nbsp; ' + t.estimate +
     (sec < 1 ? t.under1s : Math.round(sec) + t.seconds);
   if (tgt.clamped) {
-    html += '<br><span class="warn">' + t.clamped(tgt.scale.toFixed(2)) + '</span>';
+    html += '<br><span class="warn">' +
+      (mode === 'ai' ? t.aiTooLarge(MAX_OUT_PIXELS / 1000000) : t.clamped(tgt.scale.toFixed(2))) +
+      '</span>';
   }
   metaLine.innerHTML = html;
 }
@@ -267,6 +268,13 @@ function updateMeta() {
 runBtn.addEventListener('click', function () {
   if (!sourceCanvas) return;
   const tgt = targetSize();
+
+  // AIモデルは倍率固定（2倍/4倍）で標準モードのように倍率を切り下げられない。
+  // 上限を超える場合は走らせず、別の倍率か標準モードを案内する
+  if (mode === 'ai' && tgt.clamped) {
+    alert(t.aiTooLarge(MAX_OUT_PIXELS / 1000000));
+    return;
+  }
 
   runBtn.disabled = true;
   runBtn.textContent = t.runningLabel;
@@ -323,7 +331,6 @@ runBtn.addEventListener('click', function () {
 });
 
 async function runAI(imgData) {
-  cancelRequested = false;
   const t0 = Date.now();
   try {
     const res = await aiUpscale({
@@ -331,17 +338,10 @@ async function runAI(imgData) {
       width: sourceCanvas.width,
       height: sourceCanvas.height,
       scale: scale,
-      onProgress: setProgress,
-      shouldCancel: function () { return cancelRequested; }
+      onProgress: setProgress
     });
     finish({ buffer: res.data.buffer, w: res.width, h: res.height, ms: Date.now() - t0 });
   } catch (err) {
-    if (err && err.message === 'CANCELLED') {
-      progressWrap.hidden = true;
-      runBtn.disabled = false;
-      runBtn.textContent = t.runLabel;
-      return;
-    }
     fail(err && err.message === 'WEBGPU_UNAVAILABLE' ? t.aiNoWebGPU : String(err && err.message ? err.message : err));
   }
 }
@@ -553,11 +553,14 @@ function triggerDownload(blob, ext) {
   const a = document.createElement('a');
   a.href = url;
   a.download = sourceName + '_upscaled_' + outputCanvas.width + 'x' + outputCanvas.height + '.' + ext;
-  // 一部環境では DOM に挿入しないと click が効かないため必ず append する
+  // 一部環境では DOM に挿入しないと click が効かないため必ず append する。
+  // 削除と revoke は同期で行うと一部環境で DL が始まらないため遅らせる
   document.body.appendChild(a);
   a.click();
-  document.body.removeChild(a);
-  setTimeout(function () { URL.revokeObjectURL(url); }, 10000);
+  setTimeout(function () {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, 10000);
 }
 
 dlBtn.addEventListener('click', async function () {

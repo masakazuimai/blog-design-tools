@@ -76,7 +76,7 @@ function cropImageData(src, srcW, x0, y0, w, h) {
  * 画像をAIで拡大する。タイルに割って順に推論し、1枚に貼り合わせる。
  * @returns {Promise<{data: Uint8ClampedArray, width: number, height: number}>}
  */
-export async function aiUpscale({ data, width, height, scale, onProgress, shouldCancel }) {
+export async function aiUpscale({ data, width, height, scale, onProgress }) {
   if (!webgpuAvailable()) throw new Error('WEBGPU_UNAVAILABLE');
   const model = AI_MODELS[scale];
   if (!model) throw new Error('UNSUPPORTED_SCALE');
@@ -96,8 +96,6 @@ export async function aiUpscale({ data, width, height, scale, onProgress, should
 
   for (let ty = 0; ty < rows; ty++) {
     for (let tx = 0; tx < cols; tx++) {
-      if (shouldCancel && shouldCancel()) throw new Error('CANCELLED');
-
       const x = tx * TILE;
       const y = ty * TILE;
       // 余白付きで切り出す。モデルに周囲を見せてタイル境界の段差を防ぐ

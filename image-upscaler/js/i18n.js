@@ -36,10 +36,11 @@ const DICT = {
       'AIモデル（約' + mb + 'MB）を初回のみ取得します。以降はブラウザに保存され再取得しません。' +
       'きれいな画像の拡大に強く、ボケた写真には標準モードのほうが向いています。',
     aiNoWebGPU: 'この環境ではWebGPUが使えないため、AIモードは利用できません（標準モードをお使いください）。',
+    aiTooLarge: (mp) => 'この画像と倍率の組み合わせは出力が上限（' + mp * 100 + '万画素）を超えるため、AIモードでは処理できません。倍率を下げるか、標準モードをお使いください。',
 
     deblurOff: 'オフ（推奨）。ピントが合っている写真はこのままで十分です。',
-    deblurWeak: (sig) => 'σ ' + sig + '（弱め）ボケた写真向け。JPEGのノイズも一緒に強調されるため、ピントが合った写真には使わないでください。',
-    deblurStrong: (sig) => 'σ ' + sig + '（強め）はっきりボケた写真向け。元がシャープだと輪郭が不自然になり、ノイズも目立ちます。',
+    deblurWeak: (sig) => '弱め（強さ ' + sig + '）ボケた写真向け。JPEGのノイズも一緒に強調されるため、ピントが合った写真には使わないでください。',
+    deblurStrong: (sig) => '強め（強さ ' + sig + '）はっきりボケた写真向け。元がシャープだと輪郭が不自然になり、ノイズも目立ちます。',
 
     zoomLabel: '現在の表示倍率: '
   },
@@ -58,9 +59,9 @@ const DICT = {
 
     srcSize: 'Source: ',
     outSize: 'Output: ',
-    estimate: 'Estimated time: about ',
+    estimate: 'Estimated time: ',
     under1s: 'under 1 second',
-    seconds: ' seconds',
+    seconds: ' seconds or so',
     clamped: (s) => 'Scale was reduced to ' + s + '× to stay within the memory limit.',
 
     phase: {
@@ -78,10 +79,11 @@ const DICT = {
       'The AI model (about ' + mb + ' MB) is downloaded once and then cached by your browser. ' +
       'It excels at enlarging clean images; for blurry photos the standard mode works better.',
     aiNoWebGPU: 'WebGPU is not available here, so AI mode is disabled. Please use the standard mode.',
+    aiTooLarge: (mp) => 'This image and scale would exceed the ' + mp + ' megapixel output limit, so AI mode cannot process it. Pick a lower scale or use the standard mode.',
 
     deblurOff: 'Off (recommended). Photos that are already in focus need nothing more.',
-    deblurWeak: (sig) => 'σ ' + sig + ' (gentle) — for soft photos. JPEG noise is amplified too, so avoid it on photos that are already sharp.',
-    deblurStrong: (sig) => 'σ ' + sig + ' (strong) — for clearly blurred photos. Sharp originals get unnatural edges and visible noise.',
+    deblurWeak: (sig) => 'Gentle (strength ' + sig + ') — for soft photos. JPEG noise is amplified too, so avoid it on photos that are already sharp.',
+    deblurStrong: (sig) => 'Strong (strength ' + sig + ') — for clearly blurred photos. Sharp originals get unnatural edges and visible noise.',
 
     zoomLabel: 'Zoom: '
   }

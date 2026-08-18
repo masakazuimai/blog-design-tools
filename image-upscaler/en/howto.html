@@ -32,7 +32,8 @@
             "inLanguage": "en",
             "step": [
               { "@type": "HowToStep", "name": "Load an image", "text": "Drag and drop a file, or click to choose one. Everything runs locally and nothing is uploaded." },
-              { "@type": "HowToStep", "name": "Choose a scale and a mode", "text": "Pick 1.5x to 4x. Choose the fast standard mode, or AI super-resolution (2x and 4x) for finer detail at the cost of time." },
+              { "@type": "HowToStep", "name": "Choose a scale", "text": "Pick from 1.5x to 4x. The output size and an estimated processing time appear immediately." },
+              { "@type": "HowToStep", "name": "Choose a mode", "text": "Standard mode when in doubt; AI super-resolution (2x and 4x only) when you want as much detail as possible from a clean photo." },
               { "@type": "HowToStep", "name": "Use blur recovery only if needed", "text": "Raise it in standard mode only when the photo is soft. Leave it off for photos that are already in focus." },
               { "@type": "HowToStep", "name": "Compare and save", "text": "Drag the divider to compare against your browser's own enlargement, then save as PNG or JPEG." }
             ]
@@ -43,7 +44,7 @@
               {
                 "@type": "Question",
                 "name": "Are my images uploaded to a server?",
-                "acceptedAnswer": { "@type": "Answer", "text": "No. Loading, processing and saving all happen inside your browser. Once the page has loaded you can disconnect from the internet and it still works." }
+                "acceptedAnswer": { "@type": "Answer", "text": "No. Loading, processing and saving all happen inside your browser. Standard mode keeps working offline once the page has loaded; only the AI model and the AVIF encoder are fetched on first use." }
               },
               {
                 "@type": "Question",
@@ -62,13 +63,13 @@
               },
               {
                 "@type": "Question",
-                "name": "How large an image can it handle?",
-                "acceptedAnswer": { "@type": "Answer", "text": "Up to 16 megapixels of output. If your choice would exceed that, the scale is reduced automatically and the page tells you. The limit keeps the browser from running out of memory." }
+                "name": "Why can't I select AI mode?",
+                "acceptedAnswer": { "@type": "Answer", "text": "AI super-resolution needs WebGPU. Where the browser does not support it, the option is disabled automatically and standard mode remains available. Recent versions of Chrome and Edge, and Safari 18 or later, support it." }
               },
               {
                 "@type": "Question",
-                "name": "Why can't I select AI mode?",
-                "acceptedAnswer": { "@type": "Answer", "text": "AI super-resolution needs WebGPU. Where the browser does not support it, the option is disabled automatically and standard mode remains available. Recent versions of Chrome and Edge, and Safari 18 or later, support it." }
+                "name": "How large an image can it handle?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Up to 16 megapixels of output. In standard mode the scale is reduced automatically when a choice would exceed it; in AI mode the scale is fixed, so the page tells you it cannot run. The limit keeps the browser from running out of memory." }
               },
               {
                 "@type": "Question",
@@ -94,7 +95,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/style.css?v=20260818b" />
+    <link rel="stylesheet" href="../css/style.css?v=20260818c" />
   </head>
   <body>
     <header>
@@ -205,7 +206,7 @@
         <h2>FAQ</h2>
 
         <h3>Are my images uploaded to a server?</h3>
-        <p>No. Everything happens in your browser, and the tool keeps working after you disconnect from the internet.</p>
+        <p>No. Everything happens in your browser. Standard mode keeps working after you disconnect; only the AI model and the AVIF encoder are fetched on first use.</p>
 
         <h3>How is this different from an AI upscaler?</h3>
         <p>
@@ -230,7 +231,7 @@
         </p>
 
         <h3>How large an image can it handle?</h3>
-        <p>Up to 16 megapixels of output. Beyond that the scale is reduced automatically and the page tells you.</p>
+        <p>Up to 16 megapixels of output. In standard mode the scale is reduced automatically beyond that; in AI mode the scale is fixed, so the page tells you it cannot run.</p>
 
         <h3>Can I use the results commercially?</h3>
         <p>
@@ -241,7 +242,7 @@
         <h2>Related tools</h2>
         <ul>
           <li><a href="https://codequest.work/generator/image-compressor/en/">Image Compressor</a> — convert and resize between JPG, PNG, WebP and AVIF</li>
-          <li><a href="https://codequest.work/generator/bg-remover/">Background Remover</a> — cut out the subject automatically</li>
+          <li><a href="https://codequest.work/generator/bg-remover/en/">Background Remover</a> — cut out the subject automatically</li>
           <li><a href="https://codequest.work/generator/image-color-picker/en/">Image Color Picker</a> — pull a palette out of a photo</li>
         </ul>
 
