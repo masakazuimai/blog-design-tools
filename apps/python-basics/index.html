@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python練習問題【無料】ブラウザで実行できる基礎ドリル20問</title>
+<meta name="description" content="Pythonの基礎文法の練習問題20問をクイズ形式で解ける無料アプリ。ブラウザ上のエディタでコードを書いてその場で実行でき、インストールもアカウント登録も不要です。解答例と見比べて答え合わせでき、進捗は自動保存されます。">
+<link rel="canonical" href="https://codequest.work/apps/python-basics/">
+<link rel="alternate" hreflang="ja" href="https://codequest.work/apps/python-basics/">
+<link rel="alternate" hreflang="x-default" href="https://codequest.work/apps/python-basics/">
+<meta name="robots" content="index, follow">
+
+<!-- OGP -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CodeQuest.work">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="Python練習問題【無料】ブラウザで実行できる基礎ドリル20問">
+<meta property="og:description" content="Pythonの基礎文法の練習問題20問をクイズ形式で解ける無料アプリ。ブラウザのエディタでコードを書いてその場で実行でき、インストール不要で手を動かせます。">
+<meta property="og:url" content="https://codequest.work/apps/python-basics/">
+<meta property="og:image" content="https://codequest.work/apps/python-basics/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Python練習問題（全20問）">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Python練習問題【無料】ブラウザで実行できる基礎ドリル20問">
+<meta name="twitter:description" content="Pythonの基礎文法の練習問題20問をクイズ形式で解ける無料アプリ。ブラウザのエディタでコードを書いてその場で実行でき、インストール不要で手を動かせます。">
+<meta name="twitter:image" content="https://codequest.work/apps/python-basics/assets/og.png">
+
+<!-- 構造化データ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Python練習問題（全20問）",
+      "url": "https://codequest.work/apps/python-basics/",
+      "description": "Pythonの基礎文法の練習問題20問（記事版6問＋アプリ限定14問）をクイズ形式で解ける無料アプリ。ブラウザ上のエディタでPythonコードを書いてその場で実行し、解答例と見比べて自己採点できる。進捗は自動保存。登録・インストール不要。",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web",
+      "browserRequirements": "Requires JavaScript.",
+      "inLanguage": "ja",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+      "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+        { "@type": "ListItem", "position": 2, "name": "Python練習問題", "item": "https://codequest.work/apps/python-basics/" }
+      ]
+    }
+  ]
+}
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7Z6M3CJEV3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag("js", new Date());
+  gtag("config", "G-7Z6M3CJEV3");
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css?v=20260821a">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Python練習問題（全20問）</h1>
+    <span class="free">無料</span>
+  </header>
+  <p class="lead">Pythonの基礎文法を20問のクイズ形式で練習できる無料アプリです。エディタにコードを書いて実行すると、その場で出力とエラーが表示されます。インストールもアカウント登録も要りません。解説つきで読みたい方は<a href="https://codequest.work/python-basics-guide/" target="_blank" rel="noopener">記事版「Python入門」</a>へ。</p>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div class="progress">
+    <div class="bar"><i id="barFill"></i></div>
+    <span id="progressText"></span>
+    <button class="ghost reset-mini" id="resetProgressBtn">進捗をリセット</button>
+  </div>
+
+  <div class="chips" id="chips"></div>
+
+  <div id="quizArea">
+    <div class="card">
+      <h2><span class="num" id="qNum"></span><span id="qTitle"></span></h2>
+      <p class="question" id="qText"></p>
+    </div>
+
+    <div class="card">
+      <div class="editor-head">
+        <span>editor.py — 自由に書いて実行できます</span>
+      </div>
+      <textarea id="editor" spellcheck="false" placeholder="# ここにコードを書いて「実行する」を押す"></textarea>
+      <div class="btns">
+        <button class="primary" id="runBtn">▶ 実行する</button>
+        <button class="ghost" id="clearBtn">リセット</button>
+      </div>
+      <div class="console" id="console">
+        <div class="label">output</div>
+        <pre id="consoleOut"></pre>
+      </div>
+      <div style="margin-top:16px">
+        <details id="answerBox">
+          <summary>解答例を見る</summary>
+          <pre id="answerCode"></pre>
+        </details>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="judge-row">
+        <span style="color:var(--text-sub)">この問題は…</span>
+        <button class="judge ok" id="okBtn">✓ できた</button>
+        <button class="judge ng" id="ngBtn">△ あとで復習</button>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="ghost" id="prevBtn">← 前の問題</button>
+      <button class="ghost" id="nextBtn">次の問題 →</button>
+    </div>
+  </div>
+
+  <div id="clearArea" style="display:none">
+    <div class="card clear-card">
+      <div class="big" id="clearScore"></div>
+      <p id="clearMsg"></p>
+      <div class="btns" style="justify-content:center">
+        <button class="primary" id="reviewBtn">復習リストを解き直す</button>
+        <button class="ghost" id="restartBtn">最初からやり直す</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="about">
+    <h2>このアプリについて</h2>
+    <ul>
+      <li>変数・条件分岐・繰り返し・リスト・辞書・関数から、f文字列・内包表記・例外処理まで、Pythonの基礎文法を全20問（記事版と同じ6問＋アプリ限定ドリル14問）で総ざらいできます</li>
+      <li>コードはブラウザ内でそのまま実行され、print()の出力とエラーメッセージを行番号つきで確認できます（登録・インストール不要）</li>
+      <li>「✓できた / △あとで復習」の自己判定はこの端末に自動保存され、復習リストだけを解き直せます</li>
+    </ul>
+    <p>JavaScriptとの構文の違い・環境構築・つまずきやすい箇所は、記事版「<a href="https://codequest.work/python-basics-guide/" target="_blank" rel="noopener">Python入門｜Web制作者が最短で書けるようになる基礎とできること</a>」にまとめています。</p>
+  </section>
+
+  <footer>
+    <span>&copy; <span class="cq-year">2026</span>
+      <script>document.currentScript.previousElementSibling.textContent = new Date().getFullYear();</script>
+      Python練習問題 | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+    <div class="footer-links">
+      <a href="https://codequest.work/python-basics-guide/" target="_blank" rel="noopener">&#128214; 解説つき記事版</a>
+      <a href="https://codequest.work/category/practice-apps/" target="_blank" rel="noopener">その他の練習アプリ &rarr;</a>
+    </div>
+  </footer>
+</div>
+
+<!-- 右下フローティング広告（300×250固定） -->
+<div id="ad-widget" class="footer-ad">
+  <div class="ad-widget__head">
+    <span class="ad-widget__label">広告</span>
+    <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+  </div>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  <!-- レスポンシブユニットをコンテナ実寸(300×250)で固定配信（auto指定は使わない） -->
+  <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="8645140685"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+<script>
+  // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+  (function () {
+    var w = document.getElementById("ad-widget");
+    var b = document.getElementById("ad-close");
+    if (!w || !b) return;
+    b.addEventListener("click", function () { w.classList.add("is-closed"); });
+  })();
+</script>
+
+<!-- Python実行エンジン（Skulpt・自前ホスト） -->
+<script src="js/skulpt.min.js?v=20260821a"></script>
+<script src="js/skulpt-stdlib.js?v=20260821a"></script>
+<script src="js/data.js?v=20260821a"></script>
+<script src="js/main.js?v=20260821a"></script>
+</body>
+</html>
