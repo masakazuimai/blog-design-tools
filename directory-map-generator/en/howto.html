@@ -31,7 +31,7 @@
     <script>
       document.documentElement.setAttribute("data-theme", localStorage.getItem("dirmap:theme") || "dark");
     </script>
-    <link rel="stylesheet" href="../css/style.css?v=20260724a" />
+    <link rel="stylesheet" href="../css/style.css?v=20260824c" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -44,7 +44,7 @@
           { "@type": "HowToStep", "name": "Add folders and files", "text": "Pick the Folder or File tool and click the canvas to place a node. Double-click a node to edit its name." },
           { "@type": "HowToStep", "name": "Connect with arrows", "text": "Pick the Connector tool and drag from one node to another to link them. Arrows from the same parent branch automatically." },
           { "@type": "HowToStep", "name": "Refine the look", "text": "Toggle right-angle vs straight arrows and one-way / two-way / none. Choose colors from the color wheel. Drag on empty space to marquee-select, and use Cmd+C / Cmd+V to copy and paste." },
-          { "@type": "HowToStep", "name": "Export", "text": "Export as a PNG image or JSON. JSON can be loaded back to restore your work, and everything autosaves in the browser." }
+          { "@type": "HowToStep", "name": "Export", "text": "Export as a PNG image, a Markdown tree, or JSON. Markdown and JSON can be loaded back. JSON can be loaded back to restore your work, and everything autosaves in the browser." }
         ]
       }
     </script>
@@ -102,7 +102,7 @@
         <li><strong>Add folders and files</strong>: pick the Folder / File tool and click the canvas to place a node. <strong>Double-click</strong> to edit its name.</li>
         <li><strong>Connect with arrows</strong>: pick the Connector tool and <strong>drag</strong> from one node to another. Arrows from the same parent branch automatically.</li>
         <li><strong>Refine the look</strong>: toggle <strong>right-angle / straight</strong> and <strong>one-way / two-way / none</strong> arrows. Choose colors from the color wheel. Drag on empty space to <strong>marquee-select</strong>.</li>
-        <li><strong>Export</strong>: save as <strong>PNG</strong> or <strong>JSON</strong>. JSON can be loaded back, and everything autosaves.</li>
+        <li><strong>Export</strong>: save as <strong>PNG</strong>, as a <strong>Markdown</strong> tree you can paste into a README, or as <strong>JSON</strong>. Both JSON and Markdown can be loaded back (Markdown restores the structure only and lays it out again). Everything autosaves.</li>
       </ol>
 
       <h2>Toolbar overview</h2>
@@ -111,7 +111,7 @@
         <li><strong>Arrows</strong>: drag between nodes with the Connector. Switch shape (straight / right-angle) and ends (→ one-way / ↔ two-way / — none)</li>
         <li><strong>Color</strong>: click the color-wheel icon and pick from the palette (theme default until you pick)</li>
         <li><strong>Zoom</strong>: − / +, click the % to reset to 100%</li>
-        <li><strong>Actions</strong>: delete, export PNG, save JSON, load JSON, clear all</li>
+        <li><strong>Actions</strong>: delete, export (PNG / Markdown / JSON — hover the button to pick a format), load (JSON / Markdown), clear all</li>
         <li><strong>Sample</strong>: far right — loads the tree example</li>
       </ul>
 

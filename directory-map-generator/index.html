@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ディレクトリマップ作成ツール【無料】サイト構成図・フォルダ構成を生成</title>
-    <meta name="description" content="フォルダ・ファイルのノードを矢印でつないでディレクトリマップ／サイト構成図を作れる無料ツール。付箋や図形も置け、無限キャンバスをパン・ズーム。テンプレから即スタート、自動保存・登録不要。" />
+    <meta name="description" content="フォルダ・ファイルのノードを矢印でつないでディレクトリマップ／サイト構成図を作れる無料ツール。READMEに貼れるMarkdownのツリー図で書き出せ、Markdownを貼り戻して図にもできます。テンプレから即スタート、自動保存・登録不要。" />
     <link rel="canonical" href="https://codequest.work/generator/directory-map-generator/" />
     <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/directory-map-generator/" />
     <link rel="alternate" hreflang="en" href="https://codequest.work/generator/directory-map-generator/en/" />
@@ -13,7 +13,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://codequest.work/generator/directory-map-generator/" />
     <meta property="og:title" content="ディレクトリマップ作成ツール【無料】サイト構成図・フォルダ構成を生成" />
-    <meta property="og:description" content="フォルダ・ファイルのノードを矢印でつないでディレクトリマップ／サイト構成図を作れる無料ツール。無限キャンバス・自動保存・登録不要。" />
+    <meta property="og:description" content="フォルダ・ファイルのノードを矢印でつないでディレクトリマップ／サイト構成図を作れる無料ツール。READMEに貼れるMarkdownのツリー図で書き出せます。自動保存・登録不要。" />
     <meta property="og:image" content="https://codequest.work/generator/directory-map-generator/assets/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -40,7 +40,7 @@
       document.documentElement.setAttribute("data-theme", localStorage.getItem("dirmap:theme") || "dark");
     </script>
     <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と js の両方で日付を上げる -->
-    <link rel="stylesheet" href="css/style.css?v=20260724a" />
+    <link rel="stylesheet" href="css/style.css?v=20260824c" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -50,9 +50,9 @@
         "applicationCategory": "DesignApplication",
         "operatingSystem": "Web browser",
         "inLanguage": "ja",
-        "description": "フォルダ・ファイルのノードを矢印コネクタでつないでディレクトリマップやサイト構成図を作れる無料ツール。付箋や図形も置け、無限キャンバスをパン・ズームでき、内容はブラウザに自動保存されます。",
+        "description": "フォルダ・ファイルのノードを矢印コネクタでつないでディレクトリマップやサイト構成図を作れる無料ツール。付箋や図形も置け、無限キャンバスをパン・ズームでき、内容はブラウザに自動保存されます。READMEに貼れるMarkdownのツリー図としても書き出せます。",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "featureList": ["フォルダ・ファイルのノード", "ノードをつなぐ矢印コネクタ", "ディレクトリツリーのテンプレート", "付箋の配置・色分け・ドラッグ", "四角・円・ひし形の図形", "無限キャンバスのパン・ズーム", "内容の自動保存（localStorage）", "PNG画像の書き出し", "JSONでの保存・読み込み"],
+        "featureList": ["フォルダ・ファイルのノード", "ノードをつなぐ矢印コネクタ", "ディレクトリツリーのテンプレート", "付箋の配置・色分け・ドラッグ", "四角・円・ひし形の図形", "無限キャンバスのパン・ズーム", "内容の自動保存（localStorage）", "PNG画像の書き出し", "Markdown（ツリー図）の書き出し", "Markdownツリーの読み込み（図に変換）", "JSONでの保存・読み込み"],
         "publisher": {
           "@type": "Organization",
           "name": "CodeQuest.work",
@@ -167,27 +167,24 @@
             <path d="M7 7l1 12h8l1-12" />
           </svg>
         </button>
-        <button class="tool" id="btn-png" title="PNGで書き出し" aria-label="PNG書き出し">
+        <div class="export-menu" id="export-menu">
+          <button class="tool" id="export-trigger" title="書き出し" aria-label="書き出し" aria-haspopup="true" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" /><path d="M7 10l5-5 5 5" /><path d="M12 5v12" /></svg>
+          </button>
+          <div class="export-drawer" id="export-drawer" role="menu" aria-label="書き出し形式" hidden>
+            <button type="button" class="export-item" id="btn-png" role="menuitem"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" /><circle cx="8.5" cy="9.5" r="1.5" /><path d="M20 16l-5-5-6 6-2-2-4 4" /></svg><span>PNG画像</span></button>
+            <button type="button" class="export-item" id="btn-md" role="menuitem"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2" /><path d="M6 15V9l2.5 3L11 9v6" /><path d="M15 9v4" /><path d="M13 12.5l2 2.5 2-2.5" /></svg><span>Markdown（ツリー図）</span></button>
+            <button type="button" class="export-item" id="btn-save" role="menuitem"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h11l3 3v15H5z" /><path d="M8 3v6h8" /></svg><span>JSON（保存）</span></button>
+          </div>
+        </div>
+        <button class="tool" id="btn-load" title="JSON・Markdownを読み込み" aria-label="ファイル読み込み">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
             <path d="M7 10l5 5 5-5" />
             <path d="M12 15V3" />
           </svg>
         </button>
-        <button class="tool" id="btn-save" title="JSONで保存" aria-label="JSON保存">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M5 3h11l3 3v15H5z" />
-            <path d="M8 3v6h8" />
-          </svg>
-        </button>
-        <button class="tool" id="btn-load" title="JSONを読み込み" aria-label="JSON読み込み">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" />
-            <path d="M7 10l5-5 5 5" />
-            <path d="M12 5v12" />
-          </svg>
-        </button>
-        <input type="file" id="file-input" accept="application/json,.json" hidden />
+        <input type="file" id="file-input" accept="application/json,.json,text/markdown,.md,.markdown,.txt" hidden />
         <button class="tool danger" id="btn-clear" title="すべて消去" aria-label="すべて消去">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M3 6h18" />
@@ -251,13 +248,31 @@
       <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> ディレクトリマップ作成ツール | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
       <div class="footer-links">
         <a href="howto.html">📖 使い方・FAQ</a>
+        <a href="https://codequest.work/directory-map-guide/" target="_blank" rel="noopener">📝 ディレクトリマップの作り方</a>
         <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
         <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
       </div>
     </footer>
 
+    <dialog class="md-dialog" id="md-dialog" aria-labelledby="md-dialog-title">
+      <div class="md-dialog__head">
+        <h2 id="md-dialog-title">Markdownで書き出す</h2>
+        <button type="button" class="md-dialog__close" id="md-close" aria-label="閉じる">&times;</button>
+      </div>
+      <p class="md-dialog__note">READMEにそのまま貼れるツリー図です。矢印の向き（向きの無い線は上にあるノード）を親、左右の並びを兄弟の順として組み立てます。</p>
+      <label class="md-dialog__opt">
+        <input type="checkbox" id="md-shapes" checked />
+        <span>付箋・図形も含める</span>
+      </label>
+      <pre class="md-dialog__preview" id="md-preview" tabindex="0"></pre>
+      <div class="md-dialog__actions">
+        <button type="button" class="md-btn" id="md-copy">📋 コピー</button>
+        <button type="button" class="md-btn is-primary" id="md-save">💾 .md を保存</button>
+      </div>
+    </dialog>
+
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <script type="module" src="js/main.js?v=20260702u"></script>
+    <script type="module" src="js/main.js?v=20260824c"></script>
   </body>
 </html>

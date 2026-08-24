@@ -13,6 +13,7 @@ import {
   clearSelection,
 } from "./board.js?v=20260702u";
 import { exportPng, exportJson, readJsonFile } from "./export.js?v=20260702f";
+import { toMarkdown, downloadMarkdown, copyMarkdown, parseMarkdown, readTextFile } from "./markdown.js?v=20260824b";
 
 // 色相ありの色を先頭に、無彩色（白/灰/黒）は末尾。初期色は色相のある #fde68a
 const SWATCHES = [
@@ -49,6 +50,13 @@ const STR = {
     cut: "切り取りました",
     pasted: (n) => `${n}件貼り付けました`,
     duplicated: (n) => `${n}件複製しました`,
+    mdNoNodes: "先にフォルダ・ファイルのノードを置いてください",
+    mdSaved: "Markdownを保存しました",
+    mdCopied: "Markdownをコピーしました",
+    mdCopyFailed: "コピーできませんでした。選択してあるので手動でコピーしてください",
+    mdLoaded: "Markdownから読み込みました",
+    mdParseError: "ツリーとして読み取れませんでした（ディレクトリツリーか箇条書きの形式にしてください）",
+    autoColor: "自動（テーマ既定色）",
   },
   en: {
     needNodes: "Add a node or shape first",
@@ -64,6 +72,13 @@ const STR = {
     cut: "Cut",
     pasted: (n) => `Pasted ${n} item${n > 1 ? "s" : ""}`,
     duplicated: (n) => `Duplicated ${n} item${n > 1 ? "s" : ""}`,
+    mdNoNodes: "Add a folder or file node first",
+    mdSaved: "Saved Markdown",
+    mdCopied: "Copied Markdown",
+    mdCopyFailed: "Could not copy. The text is selected — copy it manually",
+    mdLoaded: "Loaded from Markdown",
+    mdParseError: "Could not read that as a tree (use a directory tree or a nested list)",
+    autoColor: "Automatic (theme default)",
   },
 }[LANG];
 
@@ -108,22 +123,26 @@ function init() {
   const colorDrawer = $("color-drawer");
   let currentColor = "auto"; // 既定はテーマ既定色（ライト/ダークに追従）。色は色相環ドロワーで選ぶ
 
-  SWATCHES.forEach((hex) => {
+  // value は "auto"（テーマ既定色）またはhex。auto は board.js 側でインライン色を空にして扱う
+  const addSwatch = (value, { className = "swatch", label }) => {
     const btn = document.createElement("button");
-    btn.className = "swatch" + (hex === currentColor ? " is-active" : "");
+    btn.className = className + (value === currentColor ? " is-active" : "");
     btn.type = "button";
-    btn.style.background = hex;
-    btn.title = hex;
-    btn.setAttribute("aria-label", `色 ${hex}`);
+    if (value !== "auto") btn.style.background = value;
+    btn.title = label;
+    btn.setAttribute("aria-label", label);
     btn.addEventListener("click", () => {
-      currentColor = hex;
-      board.setColor(hex);
+      currentColor = value;
+      board.setColor(value);
       [...colorDrawer.children].forEach((c) => c.classList.remove("is-active"));
       btn.classList.add("is-active");
       closeColorDrawer();
     });
     colorDrawer.appendChild(btn);
-  });
+  };
+
+  addSwatch("auto", { className: "swatch swatch-auto", label: STR.autoColor });
+  SWATCHES.forEach((hex) => addSwatch(hex, { label: `色 ${hex}` }));
 
   const openColorDrawer = () => {
     colorDrawer.hidden = false;
@@ -212,11 +231,61 @@ function init() {
 
   // ---- アクション ----
   $("btn-delete").addEventListener("click", () => deleteSelected());
+
+  // 書き出しメニュー（ホバーで開く。タッチ・キーボード用にクリックでも開閉できる）
+  const exportMenu = $("export-menu");
+  const exportTrigger = $("export-trigger");
+  const exportDrawer = $("export-drawer");
+  const openExportDrawer = () => {
+    exportDrawer.hidden = false;
+    exportTrigger.setAttribute("aria-expanded", "true");
+  };
+  const closeExportDrawer = () => {
+    exportDrawer.hidden = true;
+    exportTrigger.setAttribute("aria-expanded", "false");
+  };
+  exportMenu.addEventListener("mouseenter", openExportDrawer);
+  exportMenu.addEventListener("mouseleave", closeExportDrawer);
+  exportTrigger.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (exportDrawer.hidden) openExportDrawer();
+    else closeExportDrawer();
+  });
+  document.addEventListener("click", (e) => {
+    if (!exportDrawer.hidden && !e.target.closest("#export-menu")) closeExportDrawer();
+  });
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !exportDrawer.hidden) closeExportDrawer();
+  });
   $("btn-png").addEventListener("click", () => {
+    closeExportDrawer();
     const ok = exportPng(state, "directory-map.png");
     toast(ok ? STR.pngDone : STR.needNodes);
   });
+  const renderMarkdown = () => {
+    const md = toMarkdown(state, LANG, $("md-shapes").checked);
+    mdText = md || "";
+    $("md-preview").textContent = md || "";
+    return md;
+  };
+  $("btn-md").addEventListener("click", () => {
+    closeExportDrawer();
+    if (!renderMarkdown()) return toast(STR.mdNoNodes);
+    $("md-dialog").showModal();
+  });
+  $("md-shapes").addEventListener("change", renderMarkdown);
+  $("md-copy").addEventListener("click", async () => {
+    const ok = await copyMarkdown(mdText, $("md-preview"));
+    toast(ok ? STR.mdCopied : STR.mdCopyFailed);
+  });
+  $("md-save").addEventListener("click", () => {
+    downloadMarkdown(mdText, "directory-map.md");
+    toast(STR.mdSaved);
+  });
+  $("md-close").addEventListener("click", () => $("md-dialog").close());
+
   $("btn-save").addEventListener("click", () => {
+    closeExportDrawer();
     if (!state.items.length) return toast(STR.needNodes);
     exportJson(state, "directory-map.json");
     toast(STR.jsonSaved);
@@ -227,14 +296,21 @@ function init() {
   fileInput.addEventListener("change", async (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    const isJson = /\.json$/i.test(file.name);
     try {
-      const data = await readJsonFile(file);
-      replaceAll(data);
-      board.renderAll();
-      toast(STR.jsonLoaded);
+      // JSONは色や座標ごと復元できる。Markdownは木構造だけなので自動レイアウトで置き直す
+      const data = isJson ? await readJsonFile(file) : parseMarkdown(await readTextFile(file));
+      if (!data) {
+        toast(STR.mdParseError);
+      } else {
+        replaceAll(data);
+        board.renderAll();
+        if (!isJson) board.fitView();
+        toast(isJson ? STR.jsonLoaded : STR.mdLoaded);
+      }
     } catch (err) {
-      console.error("JSON読み込みエラー:", err);
-      toast(STR.jsonError);
+      console.error("ファイル読み込みエラー:", err);
+      toast(isJson ? STR.jsonError : STR.mdParseError);
     }
     fileInput.value = "";
   });
@@ -376,6 +452,8 @@ function loadDirectoryTemplate() {
 }
 
 // ---- トースト ----
+let mdText = "";
+
 let toastTimer = null;
 function toast(msg) {
   const el = $("toast");

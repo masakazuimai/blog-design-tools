@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ディレクトリマップの作り方・使い方｜ディレクトリマップ作成ツール</title>
-    <meta name="description" content="ディレクトリマップ作成ツールの使い方ガイド。フォルダ・ファイルのノードを置いて矢印でつなぎ、直角・双方向の矢印や範囲選択・コピペ、PNG／JSON書き出しまでの手順とショートカット、よくある質問をまとめました。" />
+    <title>ディレクトリマップ作成ツールの使い方｜ツールバー・ショートカット一覧</title>
+    <meta name="description" content="ディレクトリマップ作成ツールの操作リファレンス。ツールバー各ボタンの役割、ノードとコネクタの操作、範囲選択・コピペ、PNG／Markdown／JSONの書き出しと読み込み、キーボードショートカット一覧をまとめました。" />
     <link rel="canonical" href="https://codequest.work/generator/directory-map-generator/howto.html" />
     <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/directory-map-generator/howto.html" />
     <link rel="alternate" hreflang="en" href="https://codequest.work/generator/directory-map-generator/en/howto.html" />
@@ -31,7 +31,7 @@
     <script>
       document.documentElement.setAttribute("data-theme", localStorage.getItem("dirmap:theme") || "dark");
     </script>
-    <link rel="stylesheet" href="css/style.css?v=20260724a" />
+    <link rel="stylesheet" href="css/style.css?v=20260824c" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -44,7 +44,7 @@
           { "@type": "HowToStep", "name": "フォルダ・ファイルを追加する", "text": "ツールバーでフォルダ📁またはファイル📄を選び、キャンバスをクリックして配置します。ダブルクリックで名前を編集できます。" },
           { "@type": "HowToStep", "name": "矢印でつなぐ", "text": "コネクタツールを選び、あるノードから別のノードへドラッグすると矢印でつながります。同じ親から出た線は自動で枝分かれします。" },
           { "@type": "HowToStep", "name": "見た目を整える", "text": "矢印は直角／直線、片方向／双方向／なしをアイコンで切替。色は色相環から選べます。空きスペースのドラッグで範囲選択し、⌘C/ ⌘Vでまとめてコピー＆ペーストできます。" },
-          { "@type": "HowToStep", "name": "書き出す", "text": "PNG画像またはJSONで書き出せます。JSONは読み込みで復元できます。内容はブラウザに自動保存されます。" }
+          { "@type": "HowToStep", "name": "書き出す", "text": "PNG画像・Markdownのツリー図・JSONで書き出せます。JSONとMarkdownは読み込みで図に戻せます。内容はブラウザに自動保存されます。" }
         ]
       }
     </script>
@@ -89,11 +89,11 @@
     </header>
 
     <main class="doc">
-      <h1>ディレクトリマップの作り方・使い方</h1>
+      <h1>ディレクトリマップ作成ツールの使い方</h1>
       <p class="lead">フォルダ・ファイルのノードを矢印でつないで、ディレクトリマップ／サイト構成図を作るためのガイドです。</p>
 
       <div class="answer">
-        <p><strong>ディレクトリマップ</strong>とは、フォルダとファイルの階層構造を図で表したものです。本ツールでは、フォルダ📁・ファイル📄のノードを置いて矢印でつなぐだけで、README用のツリーやサイト構成図を作れます。登録不要・自動保存・PNG／JSON書き出し対応です。</p>
+        <p><strong>ディレクトリマップ</strong>とは、フォルダとファイルの階層構造を図で表したものです。本ツールでは、フォルダ📁・ファイル📄のノードを置いて矢印でつなぐだけで、README用のツリーやサイト構成図を作れます。登録不要・自動保存で、PNG／Markdown／JSONの書き出しに対応しています。</p>
       </div>
 
       <h2>基本の使い方（5ステップ）</h2>
@@ -102,7 +102,7 @@
         <li><strong>フォルダ・ファイルを追加</strong>：ツールバーでフォルダ／ファイルを選び、キャンバスをクリックして配置。<strong>ダブルクリック</strong>で名前を編集できます。</li>
         <li><strong>矢印でつなぐ</strong>：コネクタツールを選び、あるノードから別のノードへ<strong>ドラッグ</strong>。同じ親から出た線は自動で枝分かれします。</li>
         <li><strong>見た目を整える</strong>：矢印は<strong>直角／直線</strong>・<strong>片方向／双方向／なし</strong>をアイコンで切替。色は色相環から選択。空きスペースをドラッグで<strong>範囲選択</strong>できます。</li>
-        <li><strong>書き出す</strong>：<strong>PNG</strong>画像、または<strong>JSON</strong>で保存。JSONは読み込みで復元でき、内容は自動保存されます。</li>
+        <li><strong>書き出す</strong>：<strong>PNG</strong>画像、READMEにそのまま貼れる<strong>Markdown</strong>のツリー図、または<strong>JSON</strong>で保存。JSONとMarkdownは読み込みで図に戻せます（Markdownは木構造のみ復元し、色や配置は自動で置き直します）。内容は自動保存されます。</li>
       </ol>
 
       <h2>ツールバーの見かた</h2>
@@ -111,7 +111,7 @@
         <li><strong>矢印</strong>：コネクタでノード間をドラッグ。形（直線／直角）と端（→ 片方向／↔ 双方向／— なし）を切替</li>
         <li><strong>色</strong>：色相環アイコンをクリックしてパレットから選択（未選択時はテーマ既定色）</li>
         <li><strong>ズーム</strong>：−／＋、表示%クリックで100%に戻す</li>
-        <li><strong>アクション</strong>：削除・PNG書き出し・JSON保存・JSON読み込み・全消去</li>
+        <li><strong>アクション</strong>：削除・書き出し（PNG／Markdown／JSON。ボタンにカーソルを合わせると形式を選べます）・読み込み（JSON／Markdown）・全消去</li>
         <li><strong>サンプル</strong>：右端。ツリーの例を読み込む</li>
       </ul>
 
@@ -156,6 +156,7 @@
       <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> ディレクトリマップ作成ツール | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
       <div class="footer-links">
         <a href="./">🗂 ツールを開く</a>
+        <a href="https://codequest.work/directory-map-guide/" target="_blank" rel="noopener">📝 ディレクトリマップの作り方</a>
         <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
         <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
       </div>
