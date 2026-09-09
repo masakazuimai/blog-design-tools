@@ -6,7 +6,7 @@ export function L(obj) { return (obj && obj[lang]) || (obj && obj.ja) || ""; }
 
 const DICT = {
   ja: {
-    loading: function (name, mb) { return name + " を読み込み中…（" + mb + "）"; },
+    loading: function (name) { return name + " を読み込み中…"; },
     loadFailed: function (msg) { return "フォントの読み込みに失敗しました（" + msg + "）"; },
     drawFailed: function (msg) { return "描画に失敗しました：" + msg; },
     saveFailed: "書き出しに失敗しました",
@@ -16,7 +16,7 @@ const DICT = {
     shrunk: function (size) { return "／自動縮小: 文字サイズ " + size; }
   },
   en: {
-    loading: function (name, mb) { return "Loading " + name + "… (" + mb + ")"; },
+    loading: function (name) { return "Loading " + name + "…"; },
     loadFailed: function (msg) { return "Failed to load the font (" + msg + ")"; },
     drawFailed: function (msg) { return "Failed to render: " + msg; },
     saveFailed: "Failed to export the image",

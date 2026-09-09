@@ -1,9 +1,9 @@
-import { FONTS, findFont, loadFont } from "./fonts.js?v=20260909b";
-import { buildLayout } from "./layout.js?v=20260909b";
-import { PAPERS, PENS, findPaper, findPen } from "./presets.js?v=20260909b";
-import { drawCanvas, buildSVG } from "./render.js?v=20260909b";
-import { TEMPLATES, findTemplate } from "./templates.js?v=20260909b";
-import { T, L } from "./i18n.js?v=20260909b";
+import { FONTS, findFont, loadFont } from "./fonts.js?v=20260910a";
+import { buildLayout } from "./layout.js?v=20260910a";
+import { PAPERS, PENS, findPaper, findPen } from "./presets.js?v=20260910a";
+import { drawCanvas, buildSVG } from "./render.js?v=20260910a";
+import { TEMPLATES, findTemplate } from "./templates.js?v=20260910a";
+import { T, L } from "./i18n.js?v=20260910a";
 
 const $ = function (id) { return document.getElementById(id); };
 let currentFont = null;
@@ -75,7 +75,7 @@ function render() {
 async function selectFont(id) {
   const meta = findFont(id);
   ["dlPng", "dlJpg", "dlSvg"].forEach(function (i) { $(i).disabled = true; });
-  setStatus(T.loading(L(meta.name), meta.mb));
+  setStatus(T.loading(L(meta.name)));
   try {
     currentFont = await loadFont(id);
     render();
@@ -175,7 +175,7 @@ const sel = $("font");
 FONTS.forEach(function (f) {
   const op = document.createElement("option");
   op.value = f.id;
-  op.textContent = L(f.name) + "  /  " + f.mb;
+  op.textContent = L(f.name);
   sel.appendChild(op);
 });
 sel.addEventListener("change", function () { selectFont(sel.value); });

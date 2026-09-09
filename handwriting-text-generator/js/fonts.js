@@ -2,16 +2,16 @@
 const GF = "https://cdn.jsdelivr.net/gh/google/fonts@main/";
 
 export const FONTS = [
-  { id: "yomogi",    name: { ja: "Yomogi（ゆる手書き・日本語）", en: "Yomogi (casual, Japanese)" },     file: "ofl/yomogi/Yomogi-Regular.ttf",                        mb: "4.0MB" },
-  { id: "kurenaido", name: { ja: "Zen Kurenaido（ペン字風・日本語）", en: "Zen Kurenaido (pen style, Japanese)" }, file: "ofl/zenkurenaido/ZenKurenaido-Regular.ttf",             mb: "4.3MB" },
-  { id: "yusei",     name: { ja: "Yusei Magic（マジック風・日本語）", en: "Yusei Magic (marker, Japanese)" }, file: "ofl/yuseimagic/YuseiMagic-Regular.ttf",                 mb: "3.1MB" },
-  { id: "hachimaru", name: { ja: "Hachi Maru Pop（丸文字・日本語）", en: "Hachi Maru Pop (round, Japanese)" },  file: "ofl/hachimarupop/HachiMaruPop-Regular.ttf",             mb: "4.4MB" },
-  { id: "klee",      name: { ja: "Klee One（硬筆・楷書・日本語）", en: "Klee One (upright, Japanese)" },    file: "ofl/kleeone/KleeOne-Regular.ttf",                       mb: "8.7MB" },
-  { id: "caveat",    name: { ja: "Caveat（英字）", en: "Caveat (Latin)" },                    file: "ofl/caveat/Caveat%5Bwght%5D.ttf",                       mb: "0.4MB" },
-  { id: "indie",     name: { ja: "Indie Flower（英字）", en: "Indie Flower (Latin)" },              file: "ofl/indieflower/IndieFlower-Regular.ttf",               mb: "0.1MB" },
-  { id: "patrick",   name: { ja: "Patrick Hand（英字）", en: "Patrick Hand (Latin)" },              file: "ofl/patrickhand/PatrickHand-Regular.ttf",               mb: "0.2MB" },
-  { id: "architect", name: { ja: "Architects Daughter（英字）", en: "Architects Daughter (Latin)" },       file: "ofl/architectsdaughter/ArchitectsDaughter-Regular.ttf", mb: "0.1MB" },
-  { id: "kalam",     name: { ja: "Kalam（英字）", en: "Kalam (Latin)" },                     file: "ofl/kalam/Kalam-Regular.ttf",                           mb: "0.4MB" }
+  { id: "yomogi",    name: { ja: "Yomogi（ゆる手書き・日本語）", en: "Yomogi (casual, Japanese)" },     file: "ofl/yomogi/Yomogi-Regular.ttf" },
+  { id: "kurenaido", name: { ja: "Zen Kurenaido（ペン字風・日本語）", en: "Zen Kurenaido (pen style, Japanese)" }, file: "ofl/zenkurenaido/ZenKurenaido-Regular.ttf" },
+  { id: "yusei",     name: { ja: "Yusei Magic（マジック風・日本語）", en: "Yusei Magic (marker, Japanese)" }, file: "ofl/yuseimagic/YuseiMagic-Regular.ttf" },
+  { id: "hachimaru", name: { ja: "Hachi Maru Pop（丸文字・日本語）", en: "Hachi Maru Pop (round, Japanese)" },  file: "ofl/hachimarupop/HachiMaruPop-Regular.ttf" },
+  { id: "klee",      name: { ja: "Klee One（硬筆・楷書・日本語）", en: "Klee One (upright, Japanese)" },    file: "ofl/kleeone/KleeOne-Regular.ttf" },
+  { id: "caveat",    name: { ja: "Caveat（英字）", en: "Caveat (Latin)" },                    file: "ofl/caveat/Caveat%5Bwght%5D.ttf" },
+  { id: "indie",     name: { ja: "Indie Flower（英字）", en: "Indie Flower (Latin)" },              file: "ofl/indieflower/IndieFlower-Regular.ttf" },
+  { id: "patrick",   name: { ja: "Patrick Hand（英字）", en: "Patrick Hand (Latin)" },              file: "ofl/patrickhand/PatrickHand-Regular.ttf" },
+  { id: "architect", name: { ja: "Architects Daughter（英字）", en: "Architects Daughter (Latin)" },       file: "ofl/architectsdaughter/ArchitectsDaughter-Regular.ttf" },
+  { id: "kalam",     name: { ja: "Kalam（英字）", en: "Kalam (Latin)" },                     file: "ofl/kalam/Kalam-Regular.ttf" }
 ];
 
 const cache = {};
