@@ -1,0 +1,56 @@
+<!doctype html>
+<!-- OG画像の生成元。ヘッドレスChromeで1200×630のスクリーンショットを撮る -->
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yomogi&family=Noto+Sans+JP:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box; margin:0}
+  body{width:1200px; height:630px; overflow:hidden; font-family:"Noto Sans JP",sans-serif}
+  .paper{
+    position:relative; width:1200px; height:630px; background:#fffdf7;
+    padding:78px 90px; display:flex; flex-direction:column; justify-content:center;
+  }
+  /* 罫線ノートの見立て */
+  .paper::before{
+    content:""; position:absolute; inset:0;
+    background:repeating-linear-gradient(to bottom, transparent 0 109px, rgba(126,162,201,.45) 109px 110px);
+  }
+  .paper::after{
+    content:""; position:absolute; top:0; bottom:0; left:64px; width:1px; background:rgba(217,128,128,.8);
+  }
+  .inner{position:relative; z-index:1}
+  .badge{
+    display:inline-block; font-size:22px; letter-spacing:.08em; color:#b14730;
+    border:1px solid rgba(177,71,48,.4); border-radius:999px; padding:6px 18px; margin-bottom:26px; background:#fff;
+  }
+  h1{
+    font-family:"Yomogi",sans-serif; font-size:88px; line-height:1.25; color:#2b3a4a;
+    letter-spacing:-0.01em; margin-bottom:26px;
+  }
+  p{font-size:30px; color:#4b5563; line-height:1.6; font-weight:500}
+  .formats{margin-top:34px; display:flex; gap:14px}
+  .formats span{
+    font-family:"Yomogi",sans-serif; font-size:30px; color:#2b3a4a;
+    border:2px solid #2b3a4a; border-radius:12px; padding:6px 22px; background:#fff;
+  }
+  .brand{
+    position:absolute; right:56px; bottom:40px; z-index:1;
+    font-size:24px; color:#6b675f; letter-spacing:.02em; font-weight:700;
+  }
+</style>
+</head>
+<body>
+  <div class="paper">
+    <div class="inner">
+      <span class="badge">無料・登録不要</span>
+      <h1>手書き風文字<br>ジェネレーター</h1>
+      <p>入力した文字を手書きフォントに変換して画像で保存。<br>縦書き・原稿用紙・YouTubeサムネイルにも対応。</p>
+      <div class="formats"><span>PNG</span><span>JPG</span><span>SVG</span></div>
+    </div>
+    <div class="brand">CodeQuest.work</div>
+  </div>
+</body>
+</html>

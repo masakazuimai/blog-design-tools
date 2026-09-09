@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
+</script>
+<!-- End Google Tag Manager -->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>使い方・FAQ｜手書き風文字ジェネレーター</title>
+<meta name="description" content="手書き風文字ジェネレーターの使い方。YouTubeサムネイルやブログのアイキャッチの作り方、縦書き・原稿用紙の使い方、PNG・JPG・SVGの使い分け、フォントの商用利用可否などをまとめています。">
+<link rel="canonical" href="https://codequest.work/generator/handwriting-text-generator/howto.html">
+<link rel="alternate" hreflang="ja" href="https://codequest.work/generator/handwriting-text-generator/howto.html">
+<link rel="alternate" hreflang="en" href="https://codequest.work/generator/handwriting-text-generator/en/howto.html">
+<link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/handwriting-text-generator/howto.html">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CodeQuest.work">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="使い方・FAQ｜手書き風文字ジェネレーター">
+<meta property="og:description" content="YouTubeサムネイルやアイキャッチの作り方、縦書き・原稿用紙の使い方、PNG・JPG・SVGの使い分け、フォントの商用利用可否。">
+<meta property="og:url" content="https://codequest.work/generator/handwriting-text-generator/howto.html">
+<meta property="og:image" content="https://codequest.work/generator/handwriting-text-generator/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "HowTo",
+      "name": "手書き風の文字を画像で書き出す手順",
+      "inLanguage": "ja",
+      "step": [
+        { "@type": "HowToStep", "name": "テキストを入力する", "text": "書きたい文章を入力します。改行するとそのまま行が分かれます。" },
+        { "@type": "HowToStep", "name": "用途テンプレートを選ぶ", "text": "YouTubeサムネイル1280×720やブログのアイキャッチ1200×630など、用途に合ったキャンバスサイズを選びます。" },
+        { "@type": "HowToStep", "name": "フォント・紙・ペンを選ぶ", "text": "手書きフォントを選び、紙（罫線・原稿用紙など）とペン（万年筆・鉛筆など）を切り替えます。" },
+        { "@type": "HowToStep", "name": "手書きらしさを調整する", "text": "行の傾き・うねり・字ごとの揺らぎを調整して、機械的な並びを崩します。" },
+        { "@type": "HowToStep", "name": "PNG・JPG・SVGで保存する", "text": "用途に合わせて書き出します。透過が必要ならPNG、印刷や拡大が必要ならSVGを選びます。" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "作った画像は商用利用できますか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "できます。このツールで使っている書体はすべてSIL Open Font License（OFL）のフォントで、作った画像や動画サムネイルを商用の場面で使うことに制限はありません。フォントファイル自体を単独で販売することだけが禁止されています。" } },
+        { "@type": "Question", "name": "YouTubeのサムネイルは作れますか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "作れます。用途テンプレートの「YouTubeサムネイル 1280×720」を選ぶと、YouTubeの推奨サイズちょうどのキャンバスになります。文字が大きすぎる場合は自動で縮小されます。" } },
+        { "@type": "Question", "name": "SVGはIllustratorやFigmaで編集できますか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "できます。書き出すSVGは文字をすべてアウトライン（パス）に変換しているため、フォントが入っていない環境でも同じ形で開けます。文字としての再編集はできませんが、線や塗りの変更、拡大縮小は自由です。" } },
+        { "@type": "Question", "name": "背景を透過にできますか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "紙を「なし（透過）」にしてPNGで保存すると背景が透過になります。JPGは仕様上、透過を持てないため紙の色で塗りつぶして書き出します。" } },
+        { "@type": "Question", "name": "縦書きや原稿用紙に対応していますか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "対応しています。組み方向を「縦書き」にすると右の列から左へ流れます。紙で「原稿用紙」を選ぶと文字が等幅になり、1マスに1文字ずつぴったり収まります。" } },
+        { "@type": "Question", "name": "日本語フォントの読み込みに少し時間がかかるのはなぜですか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "日本語の書体は収録している文字数が多く、1書体あたり3〜9MBあります。文字をアウトライン化するためにフォントファイル本体を読み込む必要があるため、書体を切り替えた最初の1回だけ待ち時間が発生します。2回目以降は即座に切り替わります。" } },
+        { "@type": "Question", "name": "入力した文章はどこかに送信されますか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "送信されません。文字の配置も画像の書き出しもすべてブラウザの中だけで処理しています。サーバーへ送るのはフォントファイルの取得だけです。" } }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="css/style.css?v=20260909b">
+<style>
+  .doc{max-width:820px; margin:0 auto; padding:24px clamp(16px,4vw,32px)}
+  .doc h2{font-size:20px; letter-spacing:-0.01em; margin:32px 0 12px; border-bottom:1px solid var(--line); padding-bottom:8px}
+  .doc h3{font-size:17px; margin:24px 0 8px}
+  .doc p, .doc li{font-size:16px}
+  .doc ol, .doc ul{padding-left:1.4em}
+  .doc li{margin-bottom:8px}
+  .doc .card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:20px; margin-bottom:16px}
+  .doc table{width:100%; border-collapse:collapse; margin:12px 0}
+  .doc th, .doc td{border:1px solid var(--line); padding:10px 12px; text-align:left; font-size:16px}
+  .doc th{background:#faf9f6}
+  .back{display:inline-block; margin-top:8px; color:var(--accent); text-decoration:none}
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<header>
+  <a class="lang-switch" href="en/howto.html" hreflang="en">English</a>
+  <h1>使い方・FAQ</h1>
+  <p>手書き風文字ジェネレーターの使い方と、よくある質問。</p>
+</header>
+
+<div class="doc">
+  <a class="back" href="./">&larr; ツールに戻る</a>
+
+  <h2>🖱️ 基本の使い方</h2>
+  <div class="card">
+    <ol>
+      <li><strong>テキストを入力</strong>する。改行するとそのまま行が分かれます。</li>
+      <li><strong>用途テンプレートを選ぶ</strong>。YouTubeサムネイル1280×720、ブログのアイキャッチ1200×630など、用途ぴったりのキャンバスサイズになります。</li>
+      <li><strong>フォント・紙・ペンを選ぶ</strong>。日本語5書体・英字5書体から選べます。</li>
+      <li><strong>手書きらしさを調整</strong>する。行の傾きとうねりを少し上げると、一気に「人が書いた感じ」になります。</li>
+      <li><strong>PNG / JPG / SVG で保存</strong>する。</li>
+    </ol>
+  </div>
+
+  <h2>🎬 YouTubeサムネイル・アイキャッチの作り方</h2>
+  <p>用途テンプレートで「YouTubeサムネイル 1280×720」または「ブログのアイキャッチ 1200×630」を選ぶと、そのサイズのキャンバスに文字が中央配置されます。文字がはみ出す場合は<strong>自動で縮小</strong>されるので、長い見出しでもそのまま書き出せます。</p>
+  <p>サムネイル用途では、ペンを「マーカー」や「サインペン」にして線を太くすると、小さく表示されたときも読みやすくなります。紙を「なし（透過）」にしてPNGで書き出せば、動画の静止画やイラストの上に重ねられます。</p>
+
+  <h2>🖋️ 縦書き・原稿用紙で書く</h2>
+  <p>組み方向を「縦書き」にすると、右の列から左へ文字が流れます。紙で「原稿用紙」を選ぶと文字が<strong>等幅</strong>になり、1マスに1文字ずつ収まります。俳句・短歌・引用・和風のバナーに向いています。</p>
+
+  <h2>🎨 紙とペンの使い分け</h2>
+  <table>
+    <tr><th>やりたいこと</th><th>おすすめの組み合わせ</th></tr>
+    <tr><td>ノートのメモ風</td><td>レポート用紙 × 鉛筆</td></tr>
+    <tr><td>手紙・サンクスカード</td><td>無地 × 万年筆</td></tr>
+    <tr><td>サムネイルの見出し</td><td>なし（透過） × マーカー</td></tr>
+    <tr><td>和風の引用</td><td>原稿用紙 × 万年筆 ＋ 縦書き</td></tr>
+    <tr><td>ふせんメモ</td><td>付箋 × サインペン</td></tr>
+  </table>
+
+  <h2>💾 PNG / JPG / SVG の使い分け</h2>
+  <table>
+    <tr><th>形式</th><th>向いている用途</th></tr>
+    <tr><td>PNG</td><td>背景を透過したいとき。サムネイルやバナーに重ねる用途。</td></tr>
+    <tr><td>JPG</td><td>写真と一緒に扱うとき。ファイルを軽くしたいとき。透過は不可。</td></tr>
+    <tr><td>SVG</td><td>印刷や大きな拡大が必要なとき。IllustratorやFigmaで色や形を編集したいとき。</td></tr>
+  </table>
+  <p>3つとも同じアウトラインデータから描いているので、見た目は一致します（にじみ・かすれのあるペンだけは、SVGがフィルタ表現になるため細部が変わります）。</p>
+
+  <h2>❓ よくある質問</h2>
+  <div class="card">
+    <h3>作った画像は商用利用できますか？</h3>
+    <p>できます。使っている書体はすべてSIL Open Font License（OFL）のフォントで、作った画像や動画サムネイルを商用の場面で使うことに制限はありません。フォントファイル自体を単独で販売することだけが禁止されています。</p>
+
+    <h3>YouTubeのサムネイルは作れますか？</h3>
+    <p>作れます。用途テンプレートの「YouTubeサムネイル 1280×720」がYouTubeの推奨サイズちょうどです。文字が大きすぎる場合は自動で縮小されます。</p>
+
+    <h3>SVGはIllustratorやFigmaで編集できますか？</h3>
+    <p>できます。書き出すSVGは文字をすべてアウトライン（パス）に変換しているため、フォントが入っていない環境でも同じ形で開けます。文字としての再編集はできませんが、線や塗りの変更、拡大縮小は自由です。</p>
+
+    <h3>背景を透過にできますか？</h3>
+    <p>紙を「なし（透過）」にしてPNGで保存すると透過になります。JPGは仕様上、透過を持てないため紙の色で塗りつぶして書き出します。</p>
+
+    <h3>縦書きや原稿用紙に対応していますか？</h3>
+    <p>対応しています。縦書きは右の列から左へ流れ、原稿用紙は文字が等幅になって1マスに1文字ずつ収まります。</p>
+
+    <h3>日本語フォントの読み込みに少し時間がかかるのはなぜですか？</h3>
+    <p>日本語の書体は収録文字数が多く、1書体あたり3〜9MBあります。文字をアウトライン化するためにフォントファイル本体が必要なので、書体を切り替えた最初の1回だけ待ち時間が出ます。2回目以降は即座に切り替わります。</p>
+
+    <h3>入力した文章はどこかに送信されますか？</h3>
+    <p>送信されません。文字の配置も画像の書き出しも、すべてブラウザの中だけで処理しています。サーバーへ送るのはフォントファイルの取得だけです。</p>
+  </div>
+
+  <h2>🔗 関連ツール</h2>
+  <ul>
+    <li><a href="../font-pairing-previewer/">フォントペアリング プレビュー</a> — 見出しと本文のフォントの組み合わせを試す</li>
+    <li><a href="../heading-design-previewer/">見出しデザイン プレビュー</a> — CSSの見出し装飾を選ぶ</li>
+    <li><a href="../image-compressor/">画像圧縮・変換</a> — 書き出した画像を軽くする</li>
+  </ul>
+
+  <a class="back" href="./">&larr; ツールに戻る</a>
+</div>
+
+<div id="ad-widget" class="footer-ad">
+  <div class="ad-widget__head">
+    <span class="ad-widget__label">広告</span>
+    <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+  </div>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="5215458724"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+<script>
+  // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+  (function () {
+    var w = document.getElementById("ad-widget");
+    var b = document.getElementById("ad-close");
+    if (!w || !b) return;
+    b.addEventListener("click", function () { w.classList.add("is-closed"); });
+  })();
+</script>
+
+<footer>
+  <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> 手書き風文字ジェネレーター | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+  <div class="footer-links">
+    <a href="./">&#9998; ツールに戻る</a>
+    <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+  </div>
+</footer>
+</body>
+</html>
