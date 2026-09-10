@@ -59,6 +59,10 @@ jobs:
                       apps) [ -d "$d" ] && echo "$d" ;;
                       *) [ -f "${d}/index.html" ] && echo "$d" ;;
                     esac
+                    # 配信対象が1つも無いと case の判定が偽のまま while が終わり、
+                    # pipefail + bash -e でステップごと落ちる（_src/ だけを変更した
+                    # コミットで発生）。必ず真で終えて「対象なし」を下流に渡す
+                    true
                   done)
             fi
           fi
