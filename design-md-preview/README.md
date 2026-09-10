@@ -10,7 +10,14 @@ DESIGN.md（Google Labs のオープン仕様）のテーマを切り替えて�
 
 | パス | 役割 |
 |---|---|
-| `index.html` | 本体。14テーマを埋め込み済みの1ファイル |
+| `index.html` | HTMLシェル（meta・JSON-LD・レイアウト・広告・フッター） |
+| `css/style.css` | ツールUI（ダークシェル）とLPプレビューのスタイル |
+| `js/presets.js` | 14テーマの埋め込みデータ |
+| `js/parser.js` | DESIGN.md パーサとトークン参照の解決 |
+| `js/fonts.js` | Google Fonts の読み込みと未読込書体の報告 |
+| `js/render.js` | LPプレビュー・書体見本・トークン一覧の描画 |
+| `js/prompt.js` | AIへ渡すプロンプトの生成 |
+| `js/main.js` | 起動とイベント配線 |
 | `assets/og.png` | OGP画像 1200×630 |
 | `themes/*.md` | CodeQuest製テーマ6本の元ファイル（日本語書体つき） |
 | `tools/gen.py` | `themes/*.md` を生成するスクリプト |
@@ -24,9 +31,10 @@ DESIGN.md（Google Labs のオープン仕様）のテーマを切り替えて�
 
 1. `themes/<name>.md` を編集（または `tools/gen.py` を編集して再生成）
 2. `npx @google/design.md lint themes/<name>.md` で E0 W0 を確認
-3. `index.html` の `const PRESETS = [...]` にある該当テーマの `text` を更新
+3. `js/presets.js` の `PRESETS` にある該当テーマの `text` を更新
+4. `index.html` と `js/*.js` の `?v=` を当日の日付に上げる（本番はjs/cssを7日キャッシュするため必須）
 
-⚠️ 現状 `index.html` へのテーマ反映は手作業。頻繁に触るなら埋め込みスクリプトを用意すること。
+⚠️ 現状 `js/presets.js` へのテーマ反映は手作業。頻繁に触るなら埋め込みスクリプトを用意すること。
 
 ## デプロイ
 
