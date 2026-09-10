@@ -31,3 +31,28 @@ npm run dev       # ローカル確認（http://localhost:5173/generator/todo-ap
 CRA の初期テンプレートのままだった（本番と別物）。実ソースは本番に残っていた sourcemap から
 復元し、2026-08-14 に Vite で作り直した。復元した元ソースは
 `~/.claude/projects/<slug>/docs/todo-app-recovered-src/` に保管してある。
+
+## design-md-preview
+
+`/generator/design-md-preview/` のテーマ素材。**ビルドは不要**で、ここにあるのは
+公開する必要のない元ファイルだけ（配信対象から外すためにこの下へ置いている）。
+
+- `themes/*.md` — CodeQuest製テーマ6本の元ファイル（日本語書体つき）
+- `tools/gen.py` — `themes/*.md` を生成するスクリプト。**カレントディレクトリへ書き出す**ので
+  `themes/` の中で実行すること
+
+```bash
+cd _src/design-md-preview/themes
+python3 ../tools/gen.py                    # themes/*.md を再生成
+npx @google/design.md lint <name>.md       # E0 W0 を確認
+```
+
+テーマを直したら、`design-md-preview/js/presets.js` の `PRESETS` にある該当テーマの
+`text` を手で更新し、`index.html` と `js/*.js` の `?v=` を上げる（本番はjs/cssを7日キャッシュする）。
+
+### 経緯
+
+当初はツール直下に `themes/` `tools/` を置いていたが、`design-md-preview/` ごと
+rsyncされるため本番で公開されていた（2026-09-10にサーバー上の実ファイルを削除）。
+`_src/` へ移して配信対象から外した。**`index.html` はツール直下に残すこと**＝
+ツールごと `_src/` へ移すと配信対象から外れて公開が止まる（2026-09-10に一度発生し revert 済み）。
