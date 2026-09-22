@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHP練習問題【無料】コードを読んで出力を当てる基礎ドリル20問</title>
+<meta name="description" content="PHPの基礎文法の練習問題20問を、コードを読んで出力を4択で当てるクイズ形式で解ける無料アプリ。echo・配列・関数からWordPressのテンプレートの読み解きまで、環境構築なしでブラウザだけで練習できます。解説つきで、進捗は自動保存されます。">
+<link rel="canonical" href="https://codequest.work/apps/php-basics/">
+<link rel="alternate" hreflang="ja" href="https://codequest.work/apps/php-basics/">
+<link rel="alternate" hreflang="x-default" href="https://codequest.work/apps/php-basics/">
+<meta name="robots" content="index, follow">
+
+<!-- OGP -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CodeQuest.work">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="PHP練習問題【無料】コードを読んで出力を当てる基礎ドリル20問">
+<meta property="og:description" content="PHPの基礎文法の練習問題20問を、コードを読んで出力を4択で当てるクイズ形式で解ける無料アプリ。環境構築なしで、WordPressのテンプレートが読めるところまで練習できます。">
+<meta property="og:url" content="https://codequest.work/apps/php-basics/">
+<meta property="og:image" content="https://codequest.work/apps/php-basics/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="PHP練習問題（全20問）">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PHP練習問題【無料】コードを読んで出力を当てる基礎ドリル20問">
+<meta name="twitter:description" content="PHPの基礎文法の練習問題20問を、コードを読んで出力を4択で当てるクイズ形式で解ける無料アプリ。環境構築なしで、WordPressのテンプレートが読めるところまで練習できます。">
+<meta name="twitter:image" content="https://codequest.work/apps/php-basics/assets/og.png">
+
+<!-- 構造化データ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "PHP練習問題（全20問）",
+      "url": "https://codequest.work/apps/php-basics/",
+      "description": "PHPの基礎文法の練習問題20問（記事版6問＋アプリ限定14問）を、コードを読んで出力を4択で当てるクイズ形式で解ける無料アプリ。解答すると正誤と解説が表示され、進捗は自動保存。環境構築・登録・インストール不要。",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web",
+      "browserRequirements": "Requires JavaScript.",
+      "inLanguage": "ja",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+      "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+        { "@type": "ListItem", "position": 2, "name": "PHP練習問題", "item": "https://codequest.work/apps/php-basics/" }
+      ]
+    }
+  ]
+}
+</script>
+
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
+    </script>
+    <!-- End Google Tag Manager -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css?v=20260922a">
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+<div class="wrap">
+  <header>
+    <h1>PHP練習問題（全20問）</h1>
+    <span class="free">無料</span>
+  </header>
+  <p class="lead">PHPのコードを読んで、出力を4択で当てる練習問題20問です。PHPはブラウザでは動かないため、このアプリは「読んで結果を予想する」形にしています。環境構築もアカウント登録も要りません。解説つきで読みたい方は<a href="https://codequest.work/php-basics-guide/" target="_blank" rel="noopener">記事版「PHP入門」</a>へ。</p>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div class="progress">
+    <div class="bar"><i id="barFill"></i></div>
+    <span id="progressText"></span>
+    <button class="ghost reset-mini" id="resetProgressBtn">進捗をリセット</button>
+  </div>
+
+  <div class="chips" id="chips"></div>
+
+  <div id="quizArea">
+    <div class="card">
+      <h2><span class="num" id="qNum"></span><span id="qTitle"></span></h2>
+      <p class="question" id="qText"></p>
+    </div>
+
+    <div class="card">
+      <div class="code-head"><span>sample.php — このコードの出力は？</span></div>
+      <pre class="code" id="qCode"></pre>
+      <div class="choices" id="choices"></div>
+      <div class="feedback" id="feedback">
+        <p class="verdict" id="verdict"></p>
+        <p class="explain" id="explain"></p>
+        <button class="ghost" id="retryBtn">もう一度解く</button>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="ghost" id="prevBtn">← 前の問題</button>
+      <button class="ghost" id="nextBtn">次の問題 →</button>
+    </div>
+  </div>
+
+  <div id="clearArea" style="display:none">
+    <div class="card clear-card">
+      <div class="big" id="clearScore"></div>
+      <p id="clearMsg"></p>
+      <div class="btns" style="justify-content:center">
+        <button class="primary" id="reviewBtn">復習リストを解き直す</button>
+        <button class="ghost" id="restartBtn">最初からやり直す</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="about">
+    <h2>このアプリについて</h2>
+    <ul>
+      <li>echo・変数・条件分岐・繰り返し・配列・関数から、WordPressのテンプレートでよく見る書き方まで、PHPの基礎を全20問（記事版と同じ6問＋アプリ限定ドリル14問）で練習できます</li>
+      <li>PHPはサーバーで動く言語で、ブラウザでは実行できません。そのためコードを書いて動かす形ではなく、<strong>コードを読んで出力を当てる</strong>形にしています。正解の出力はすべて PHP 8 で実際に動かして確かめています</li>
+      <li>答えを選ぶとその場で正誤と解説が出ます。正解は「できた」、不正解は「復習」としてこの端末に自動保存され、復習リストだけを解き直せます</li>
+    </ul>
+    <p>PHPで何ができるか・手元で動かす方法・WordPressとの関係は、記事版「<a href="https://codequest.work/php-basics-guide/" target="_blank" rel="noopener">PHP入門</a>」にまとめています。</p>
+  </section>
+
+  <footer>
+    <span>&copy; <span class="cq-year">2026</span>
+      <script>document.currentScript.previousElementSibling.textContent = new Date().getFullYear();</script>
+      PHP練習問題 | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+    <div class="footer-links">
+      <a href="https://codequest.work/php-basics-guide/" target="_blank" rel="noopener">&#128214; 解説つき記事版</a>
+      <a href="https://codequest.work/category/practice-apps/" target="_blank" rel="noopener">その他の練習アプリ &rarr;</a>
+    </div>
+  </footer>
+</div>
+
+<!-- 右下フローティング広告（300×250固定） -->
+<div id="ad-widget" class="footer-ad">
+  <div class="ad-widget__head">
+    <span class="ad-widget__label">広告</span>
+    <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+  </div>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  <!-- レスポンシブユニットをコンテナ実寸(300×250)で固定配信（auto指定は使わない） -->
+  <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="PHP_BASICS_SLOT_TODO"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+<script>
+  // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+  (function () {
+    var w = document.getElementById("ad-widget");
+    var b = document.getElementById("ad-close");
+    if (!w || !b) return;
+    b.addEventListener("click", function () { w.classList.add("is-closed"); });
+  })();
+</script>
+
+<script src="js/data.js?v=20260922a"></script>
+<script src="js/main.js?v=20260922a"></script>
+</body>
+</html>

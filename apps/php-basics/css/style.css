@@ -1,0 +1,166 @@
+:root {
+  --bg: #0a0a0a;
+  --card: #141414;
+  --elevated: #1a1a1a;
+  --border: #2e2e2e;
+  --text: #ededed;
+  --text-sub: #888888;
+  --amber: #e7c59a;
+  --green: #00ac5c;
+  --red: #eb5757;
+  --mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans JP', Inter, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+.wrap { max-width: 860px; margin: 0 auto; padding: clamp(16px, 4vw, 40px); }
+
+/* ヘッダー */
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; margin-bottom: 12px; }
+header h1 { font-size: clamp(22px, 4vw, 32px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; }
+header .free { font-family: var(--mono); font-size: 16px; color: var(--amber); border: 1px solid var(--border); border-radius: 20px; padding: 2px 12px; }
+.lead { color: var(--text-sub); margin-bottom: 24px; }
+.lead a, .about a { color: var(--amber); }
+
+/* レベルタブ */
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.tabs button {
+  font-size: 16px; font-family: inherit; cursor: pointer;
+  background: var(--card); color: var(--text-sub);
+  border: 1px solid var(--border); border-radius: 20px; padding: 6px 16px;
+  transition: color .15s, border-color .15s;
+}
+.tabs button:hover { color: var(--text); }
+.tabs button.active { color: #0a0a0a; background: var(--amber); border-color: var(--amber); font-weight: 600; }
+
+/* 進捗 */
+.progress { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.bar { flex: 1; height: 6px; background: var(--elevated); border-radius: 99px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 99px; transition: width .3s; }
+.progress span { font-family: var(--mono); font-size: 16px; color: var(--text-sub); white-space: nowrap; }
+.progress .reset-mini { padding: 6px 14px; white-space: nowrap; }
+
+/* 問題番号チップ */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+.chips button {
+  width: 40px; height: 40px; font-family: var(--mono); font-size: 16px; cursor: pointer;
+  background: var(--card); color: var(--text-sub);
+  border: 1px solid var(--border); border-radius: 8px;
+}
+.chips button.current { border-color: var(--amber); color: var(--amber); }
+.chips button.done { background: rgba(0,172,92,.15); border-color: var(--green); color: var(--green); }
+.chips button.review { background: rgba(235,87,87,.12); border-color: var(--red); color: var(--red); }
+
+/* カード共通 */
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: clamp(16px, 3vw, 24px); margin-bottom: 16px; }
+.card h2 { font-size: clamp(18px, 3vw, 24px); font-weight: 600; letter-spacing: -0.01em; margin-bottom: 12px; line-height: 1.2; }
+.card h2 .num { color: var(--amber); font-family: var(--mono); margin-right: 8px; }
+.question { color: var(--text); }
+.question code { font-family: var(--mono); background: var(--elevated); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; font-size: 16px; }
+
+/* コード表示（読み取り専用）。=> や !== が合字で別の記号に見えないよう合字を切る */
+pre, code { font-variant-ligatures: none; }
+.code-head { margin-bottom: 8px; }
+.code-head span { font-family: var(--mono); font-size: 16px; color: var(--text-sub); }
+pre.code {
+  background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px;
+  padding: 14px; font-family: var(--mono); font-size: 16px; line-height: 1.6;
+  overflow-x: auto; tab-size: 4; color-scheme: dark;
+}
+
+/* 選択肢 */
+.choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 8px; margin-top: 16px; }
+button.choice {
+  display: flex; gap: 12px; align-items: flex-start; text-align: left;
+  font-size: 16px; font-family: inherit; cursor: pointer;
+  background: var(--elevated); color: var(--text);
+  border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px;
+  transition: border-color .15s;
+}
+button.choice:hover:not(:disabled) { border-color: var(--amber); }
+button.choice:disabled { cursor: default; opacity: .55; }
+button.choice .mark { font-family: var(--mono); color: var(--amber); font-weight: 700; flex-shrink: 0; }
+button.choice pre { font-family: var(--mono); font-size: 16px; line-height: 1.5; white-space: pre-wrap; word-break: break-all; }
+button.choice.correct { opacity: 1; border-color: var(--green); background: rgba(0,172,92,.12); }
+button.choice.wrong { opacity: 1; border-color: var(--red); background: rgba(235,87,87,.12); }
+
+/* 正誤と解説 */
+.feedback { display: none; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+.feedback.show { display: block; }
+.verdict { font-weight: 700; margin-bottom: 8px; }
+.verdict.ok { color: var(--green); }
+.verdict.ng { color: var(--red); }
+.explain { color: var(--text); margin-bottom: 12px; }
+.explain code { font-family: var(--mono); background: var(--elevated); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; font-size: 16px; }
+
+button.primary, button.ghost {
+  font-size: 16px; font-family: inherit; cursor: pointer;
+  border-radius: 8px; padding: 10px 20px; transition: opacity .15s;
+}
+button.primary { background: #ffffff; color: #0a0a0a; border: 1px solid #ffffff; font-weight: 600; }
+button.primary:hover { opacity: .85; }
+button.ghost { background: transparent; color: var(--text-sub); border: 1px solid var(--border); }
+button.ghost:hover { color: var(--text); }
+button.ghost:disabled { opacity: .4; cursor: default; }
+.btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+/* ナビ */
+.nav { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; }
+
+/* クリア画面 */
+.clear-card { text-align: center; padding: clamp(24px, 5vw, 48px); }
+.clear-card .big { font-family: var(--mono); font-size: clamp(32px, 6vw, 48px); color: var(--green); font-weight: 700; letter-spacing: -0.02em; }
+.clear-card p { color: var(--text-sub); margin: 12px 0 20px; }
+
+/* このアプリについて */
+.about { margin-top: 40px; color: var(--text-sub); }
+.about h2 { font-size: clamp(18px, 3vw, 24px); font-weight: 600; letter-spacing: -0.01em; color: var(--text); margin-bottom: 12px; }
+.about ul { margin: 0 0 12px 1.4em; }
+.about li { margin-bottom: 6px; }
+
+/* フッター（左寄せ規約） */
+footer {
+  display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 12px 24px; align-items: center;
+  margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border);
+  color: var(--text-sub); font-size: 16px;
+}
+footer a { color: var(--amber); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 16px; }
+
+/* 右下フローティング広告（300×250固定） */
+.footer-ad {
+  position: fixed; right: 0; bottom: 0; z-index: 90;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 0;
+  width: 300px; overflow: hidden; /* AdSenseレスポンシブの横伸び防止＋×を右端に固定 */
+  background: transparent; border: none; box-shadow: none;
+}
+.footer-ad.is-closed { display: none; }
+.ad-widget__head { display: flex; align-items: center; justify-content: space-between; width: 100%; position: relative; z-index: 1; }
+.ad-widget__label { color: #64748b; font-size: 12px; letter-spacing: 0.04em; background: #f1f5f9; padding: 2px 8px; border-radius: 999px; }
+.ad-widget__close {
+  appearance: none; border: none; background: #f1f5f9; color: #64748b;
+  width: 18px; height: 18px; border-radius: 50%; font-size: 12px; line-height: 1;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.ad-widget__close:hover { background: #e2e8f0; color: #1e293b; }
+.footer-ad ins.adsbygoogle { display: block; width: 300px; height: 250px; }
+
+@media screen and (max-width: 768px) {
+  footer { flex-direction: column; align-items: center; text-align: center; }
+  .footer-ad {
+    position: static; align-self: center; margin: 24px auto 0;
+    gap: 0; padding: 0; background: none; border: none; border-radius: 0; box-shadow: none; z-index: auto;
+    max-width: 100%;
+  }
+  .footer-ad.is-closed { display: flex; } /* PCで閉じてもSPでは表示 */
+  .ad-widget__head { display: none; }     /* SPはラベル・×を隠す */
+}
