@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
+</script>
+<!-- End Google Tag Manager -->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>無料の動画シナリオ作成ツール｜シーン別にSora・Veo向け動画プロンプトを生成</title>
+<meta name="description" content="シーンごとに秒数・画像・セリフ・カメラワークを入力して、動画のシナリオを作れる無料ツール。プレビュー再生で尺を確認し、AI動画生成に貼れる英語プロンプト、BGM生成用プロンプト、SRT字幕をコピーできます。登録不要。">
+<link rel="canonical" href="https://codequest.work/generator/video-scenario-maker/">
+<meta name="robots" content="index, follow">
+
+<!-- OGP -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CodeQuest.work">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="無料の動画シナリオ作成ツール｜シーン別にSora・Veo向け動画プロンプトを生成">
+<meta property="og:description" content="シーンごとに秒数・画像・セリフ・カメラワークを入力して動画のシナリオを作成。プレビュー再生で尺を確認し、AI動画生成用の英語プロンプト・BGMプロンプト・SRT字幕をコピー。">
+<meta property="og:url" content="https://codequest.work/generator/video-scenario-maker/">
+<meta property="og:image" content="https://codequest.work/generator/video-scenario-maker/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="動画シナリオ作成ツール">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="無料の動画シナリオ作成ツール｜シーン別にSora・Veo向け動画プロンプトを生成">
+<meta name="twitter:description" content="シーンごとに秒数・画像・セリフ・カメラワークを入力して動画のシナリオを作成。AI動画生成用の英語プロンプト・BGMプロンプト・SRT字幕をコピー。">
+<meta name="twitter:image" content="https://codequest.work/generator/video-scenario-maker/assets/og.png">
+
+<!-- 構造化データ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "動画シナリオ作成ツール",
+      "url": "https://codequest.work/generator/video-scenario-maker/",
+      "description": "シーンごとに秒数・参照画像・セリフ・ショットやカメラワークを入力して動画のシナリオを作る無料ツール。画像と字幕とBGMを秒数どおりにプレビュー再生でき、AI動画生成に貼れる英語プロンプト（シーン別・タイムライン一括）、BGM生成用プロンプト、SRT字幕ファイルを出力します。データはブラウザ内に保存され、サーバーへは送信されません。",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web",
+      "browserRequirements": "Requires JavaScript.",
+      "inLanguage": "ja",
+      "isAccessibleForFree": true,
+      "featureList": ["シーンごとの秒数・画像・セリフ・カメラワークの指定", "タイムラインで全体の尺を確認", "画像・字幕・BGMのプレビュー再生", "AI動画生成向けの英語プロンプト（シーン別・タイムライン一括）をコピー", "BGM生成AI向けのプロンプトをコピー", "SRT字幕ファイルの書き出し", "JSONでの保存・読み込み"],
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+      "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+        { "@type": "ListItem", "position": 2, "name": "ジェネレーター", "item": "https://codequest.work/category/generator/" },
+        { "@type": "ListItem", "position": 3, "name": "動画シナリオ作成ツール", "item": "https://codequest.work/generator/video-scenario-maker/" }
+      ]
+    }
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="css/style.css?v=20260928a">
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<header class="topbar">
+  <div class="brand">
+    <h1>動画シナリオ作成ツール</h1>
+    <p>シーンごとに秒数・画像・セリフ・カメラワークを決めて、AI動画生成に貼れる英語プロンプトを作ります。データはブラウザ内だけに保存されます。</p>
+  </div>
+  <a class="topbar-link" href="howto.html">使い方</a>
+</header>
+
+<main class="workspace">
+  <!-- 左：プロジェクト設定 -->
+  <aside class="pane pane-left" aria-label="プロジェクト設定">
+    <div class="pane-tabs" role="tablist" data-group="left">
+      <button type="button" role="tab" data-pane="project" aria-selected="true">プロジェクト</button>
+      <button type="button" role="tab" data-pane="voice" aria-selected="false">声</button>
+      <button type="button" role="tab" data-pane="bgm" aria-selected="false">BGM</button>
+      <button type="button" role="tab" data-pane="file" aria-selected="false">保存</button>
+    </div>
+
+    <div class="pane-body" data-pane-body="project">
+      <div class="field">
+        <label for="title">タイトル（書き出すファイル名）</label>
+        <input type="text" id="title" placeholder="例: 商品紹介ショート">
+      </div>
+      <div class="field">
+        <span class="label">画面比率</span>
+        <div class="chips" id="aspect" data-single></div>
+      </div>
+      <div class="field">
+        <span class="label">画風</span>
+        <div class="chips" id="style" data-single></div>
+      </div>
+      <div class="field">
+        <span class="label">色・雰囲気</span>
+        <div class="chips" id="mood" data-single></div>
+      </div>
+      <div class="field">
+        <label for="styleNote">画風の補足（任意）</label>
+        <input type="text" id="styleNote" placeholder="例: soft pastel colors, 35mm film">
+      </div>
+      <div class="field">
+        <span class="label">セリフの言語</span>
+        <div class="chips" id="speechLang" data-single></div>
+      </div>
+      <div class="field">
+        <span class="label">セリフの扱い</span>
+        <div class="chips" id="dialogue" data-single></div>
+      </div>
+      <div class="field">
+        <label class="check"><input type="checkbox" id="noText">画面に文字を出さない指示を入れる</label>
+      </div>
+      <div class="field">
+        <label for="target">目標の長さ（秒・0で指定なし）</label>
+        <input type="number" id="target" min="0" max="3600" step="1">
+      </div>
+      <p class="note">選択肢は英語に変換して出力します。映像の説明・セリフなどの自由記述は<strong>入力した言語のまま</strong>出力されるので、映像の説明は英語で書くと意図が伝わりやすくなります。</p>
+    </div>
+
+    <div class="pane-body" data-pane-body="voice" hidden>
+      <p class="note voice-lead">シーンに登場する話す人ごとに、声の性別・年代・雰囲気を決めます。セリフの行に反映されます。</p>
+      <div id="voices"></div>
+    </div>
+
+    <div class="pane-body" data-pane-body="bgm" hidden>
+      <div class="field">
+        <span class="label">ジャンル（複数選択可）</span>
+        <div class="chips" id="bgmGenres"></div>
+      </div>
+      <div class="field">
+        <span class="label">雰囲気（複数選択可）</span>
+        <div class="chips" id="bgmMoods"></div>
+      </div>
+      <div class="field">
+        <label for="bpm">テンポ<span class="val" id="bpmV"></span></label>
+        <input type="range" id="bpm" min="40" max="200" step="5">
+      </div>
+      <div class="field">
+        <label class="check"><input type="checkbox" id="vocals">ボーカルあり</label>
+      </div>
+      <div class="field">
+        <label for="instruments">使いたい楽器（任意）</label>
+        <input type="text" id="instruments" placeholder="例: ukulele, soft claps">
+      </div>
+      <h3>プレビュー用の音源</h3>
+      <div class="field">
+        <label class="file">
+          <input type="file" id="bgmFile" accept="audio/*" class="sr-only">
+          <span class="file-btn">音源ファイルを選ぶ</span>
+          <span class="file-name" id="bgmName">未選択</span>
+        </label>
+        <button type="button" class="link" id="bgmClear" hidden>音源を外す</button>
+      </div>
+      <div class="field">
+        <label for="bgmVol">音量<span class="val" id="bgmVolV"></span></label>
+        <input type="range" id="bgmVol" min="0" max="100">
+      </div>
+      <div class="field">
+        <label for="bgmOffset">音源の再生開始位置（秒）</label>
+        <input type="number" id="bgmOffset" min="0" max="3600" step="0.5">
+      </div>
+      <p class="note">音源はプレビュー再生だけに使い、プロンプトには含めません。</p>
+    </div>
+
+    <div class="pane-body" data-pane-body="file" hidden>
+      <div class="stack">
+        <button type="button" class="btn" id="saveJson">JSONで保存</button>
+        <label class="btn">JSONを読み込む<input type="file" id="loadJson" accept="application/json,.json" class="sr-only"></label>
+        <button type="button" class="btn danger" id="reset">最初からやり直す</button>
+      </div>
+      <p class="note">入力内容は画像・音源も含めてこのブラウザに自動保存されます。JSONには画像と音源は含まれません。</p>
+    </div>
+  </aside>
+
+  <!-- 中央：プレビューモニター -->
+  <section class="pane pane-monitor" aria-label="プレビュー">
+    <div class="pane-title"><span>プレビュー</span><span class="aspect-tag" id="aspectTag"></span></div>
+    <div class="stage" id="stage">
+      <div class="frame" id="frame">
+        <img id="pvImg" alt="" hidden>
+        <span class="empty" id="pvEmpty"></span>
+        <div class="caption-box">
+          <span class="speaker" id="pvSpeaker" hidden></span>
+          <span class="caption" id="pvCaption" hidden></span>
+        </div>
+      </div>
+    </div>
+    <div class="transport">
+      <button type="button" class="tbtn" id="toStart" aria-label="先頭へ">⏮</button>
+      <button type="button" class="tbtn play" id="play" aria-pressed="false" aria-label="再生">▶</button>
+      <span class="timecode" id="time">0:00 / 0:00</span>
+    </div>
+  </section>
+
+  <!-- 右：インスペクター（選択中のシーン） -->
+  <aside class="pane pane-inspector" aria-label="シーンの編集">
+    <div class="pane-title"><span id="insTitle">シーン</span><span class="ins-time" id="insTime"></span></div>
+    <div class="pane-body" id="inspector">
+      <div class="ins-row">
+        <label class="thumb" title="画像を選ぶ">
+          <img id="fImgPreview" alt="" hidden>
+          <span id="fImgEmpty">＋画像</span>
+          <input type="file" accept="image/*" id="fImage" class="sr-only">
+        </label>
+        <div class="ins-side">
+          <label for="fDur" class="label">長さ（秒）</label>
+          <input type="number" id="fDur" min="0.5" max="60" step="0.5">
+          <button type="button" class="link" id="fImgClear" hidden>画像を外す</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="fDesc">映像の説明（被写体・動き・場所）</label>
+        <textarea id="fDesc" rows="3" placeholder="例: A person walks along the beach at sunset"></textarea>
+      </div>
+      <div class="field">
+        <label for="fSpeaker">話す人</label>
+        <input type="text" id="fSpeaker" placeholder="空欄＝ナレーション" list="speakerList">
+        <datalist id="speakerList"></datalist>
+      </div>
+      <div class="field">
+        <label for="fLine">セリフ・字幕</label>
+        <textarea id="fLine" rows="2"></textarea>
+      </div>
+      <div class="grid2">
+        <div class="field"><label for="fShot">ショット</label><select id="fShot"></select></div>
+        <div class="field"><label for="fAngle">アングル</label><select id="fAngle"></select></div>
+        <div class="field"><label for="fMove">カメラワーク</label><select id="fMove"></select></div>
+        <div class="field"><label for="fLight">光</label><select id="fLight"></select></div>
+        <div class="field"><label for="fTrans">次への切替</label><select id="fTrans"></select></div>
+      </div>
+      <div class="field">
+        <label for="fSfx">効果音（任意）</label>
+        <input type="text" id="fSfx" placeholder="例: birds chirping, cup clinks">
+      </div>
+      <div class="ins-tools">
+        <button type="button" class="btn" data-act="up">← 前へ</button>
+        <button type="button" class="btn" data-act="down">後へ →</button>
+        <button type="button" class="btn" data-act="dup">複製</button>
+        <button type="button" class="btn danger" data-act="del">削除</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- 下：タイムライン -->
+  <section class="pane pane-timeline" aria-label="タイムライン">
+    <div class="tl-toolbar">
+      <button type="button" class="btn primary" id="addScene">＋ シーン追加</button>
+      <span class="total" id="total"></span>
+      <label class="zoom">ズーム<input type="range" id="zoom" min="10" max="120" step="5" value="40"></label>
+    </div>
+    <p class="warn" id="warn" hidden></p>
+    <div class="tl-body">
+      <div class="tl-heads">
+        <span class="tl-head ruler-head"></span>
+        <span class="tl-head">映像</span>
+        <span class="tl-head">字幕</span>
+        <span class="tl-head">BGM</span>
+      </div>
+      <div class="tl-scroll" id="tlScroll">
+        <div class="tl-inner" id="tlInner">
+          <div class="ruler" id="ruler"></div>
+          <div class="lane lane-video" id="laneVideo"></div>
+          <div class="lane lane-sub" id="laneSub"></div>
+          <div class="lane lane-audio" id="laneAudio"></div>
+          <div class="target-line" id="targetLine" hidden></div>
+          <div class="playhead" id="playhead"></div>
+        </div>
+      </div>
+    </div>
+    <p class="hint">クリップを選ぶと右のインスペクターで編集できます。クリップの右端をドラッグすると長さを変えられます。</p>
+  </section>
+
+  <!-- 最下段：プロンプト書き出し -->
+  <section class="pane pane-output" aria-label="プロンプト">
+    <div class="pane-tabs" role="tablist" data-group="out">
+      <button type="button" role="tab" data-tab="scene" aria-selected="true">シーン別</button>
+      <button type="button" role="tab" data-tab="timeline" aria-selected="false">一括</button>
+      <button type="button" role="tab" data-tab="bgm" aria-selected="false">BGM</button>
+      <button type="button" role="tab" data-tab="srt" aria-selected="false">字幕 SRT</button>
+      <div class="out-actions">
+        <div class="seg" id="outLang" role="group" aria-label="プロンプトの言語">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="ja" aria-pressed="false">日本語</button>
+        </div>
+        <div class="out-buttons" id="outActions"></div>
+      </div>
+    </div>
+    <p class="tab-note" id="tabNote"></p>
+    <div class="out" id="out"></div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<footer>
+  <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> 動画シナリオ作成ツール | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+  <div class="footer-links">
+    <a href="howto.html">&#128214; 使い方・FAQ</a>
+    <a href="https://www.domoai.app/home?via=video-scenario-maker" target="_blank" rel="sponsored noopener">DomoAIで動画を作る（PR）&rarr;</a>
+    <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
+    <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+  </div>
+</footer>
+
+<div id="ad-widget" class="footer-ad">
+  <div class="ad-widget__head">
+    <span class="ad-widget__label">広告</span>
+    <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+  </div>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="2232000919"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+<script>
+  // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+  (function () {
+    var w = document.getElementById("ad-widget");
+    var b = document.getElementById("ad-close");
+    if (!w || !b) return;
+    b.addEventListener("click", function () { w.classList.add("is-closed"); });
+  })();
+</script>
+
+<script type="module" src="js/main.js?v=20260928a"></script>
+</body>
+</html>

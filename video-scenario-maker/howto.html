@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
+</script>
+<!-- End Google Tag Manager -->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>使い方・FAQ｜動画シナリオ作成ツール</title>
+<meta name="description" content="動画シナリオ作成ツールの使い方。シーンの秒数・画像・セリフの入れ方、タイムラインの操作、AI動画生成に貼るプロンプトの使い分け、BGMプロンプトとSRT字幕の書き出し方をまとめています。">
+<link rel="canonical" href="https://codequest.work/generator/video-scenario-maker/howto.html">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CodeQuest.work">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="使い方・FAQ｜動画シナリオ作成ツール">
+<meta property="og:description" content="シーンの秒数・画像・セリフの入れ方、タイムラインの操作、AI動画生成に貼るプロンプトの使い分け、BGMプロンプトとSRT字幕の書き出し方。">
+<meta property="og:url" content="https://codequest.work/generator/video-scenario-maker/howto.html">
+<meta property="og:image" content="https://codequest.work/generator/video-scenario-maker/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="動画シナリオ作成ツール">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="使い方・FAQ｜動画シナリオ作成ツール">
+<meta name="twitter:description" content="シーンの秒数・画像・セリフの入れ方、タイムラインの操作、AI動画生成に貼るプロンプトの使い分け、BGMプロンプトとSRT字幕の書き出し方。">
+<meta name="twitter:image" content="https://codequest.work/generator/video-scenario-maker/assets/og.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+        { "@type": "ListItem", "position": 2, "name": "ジェネレーター", "item": "https://codequest.work/category/generator/" },
+        { "@type": "ListItem", "position": 3, "name": "動画シナリオ作成ツール", "item": "https://codequest.work/generator/video-scenario-maker/" },
+        { "@type": "ListItem", "position": 4, "name": "使い方・FAQ", "item": "https://codequest.work/generator/video-scenario-maker/howto.html" }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "動画シナリオを作ってAI動画生成用のプロンプトを書き出す手順",
+      "inLanguage": "ja",
+      "step": [
+        { "@type": "HowToStep", "name": "全体の設定を決める", "text": "画面比率・画風・色や雰囲気・セリフの言語を選びます。すべてのシーンのプロンプトに共通で入ります。" },
+        { "@type": "HowToStep", "name": "シーンを並べる", "text": "「シーン追加」でクリップを増やし、タイムラインで順番と長さを整えます。クリップの右端をドラッグすると0.5秒単位で長さが変わります。" },
+        { "@type": "HowToStep", "name": "シーンの中身を入れる", "text": "クリップを選び、右のインスペクターで参照画像・映像の説明・セリフ・ショットやカメラワークを指定します。" },
+        { "@type": "HowToStep", "name": "プレビューで尺を確かめる", "text": "再生ボタン（またはスペースキー）で、画像と字幕とBGMを秒数どおりに流して全体の流れを確認します。" },
+        { "@type": "HowToStep", "name": "プロンプトをコピーする", "text": "「シーン別」「一括」「BGM」「字幕 SRT」から用途に合う形式を選んでコピーし、動画生成AIや音楽生成AIに貼ります。" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "どの動画生成AIで使えますか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "特定のサービスの記法に依存しない汎用の英語プロンプトを出力するので、SoraやVeoなど、テキストで指示を受け付ける動画生成AIであれば使えます。1カットずつ生成するサービスには「シーン別」、時間の指定を含めて長めに生成できるサービスには「一括」が向いています。" } },
+        { "@type": "Question", "name": "映像の説明は日本語で書いてもいいですか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "書けますが、自由記述の欄は入力した言語のまま出力されます。ショットやカメラワークなどの選択肢は英語に変換されるので、映像の説明も英語で書くとプロンプト全体が英語でそろい、意図が伝わりやすくなります。セリフは話してほしい言語のまま書いてください。" } },
+        { "@type": "Question", "name": "1シーンは何秒にすればいいですか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "1回の生成で作れる動画の長さは、サービスやプランごとに上限が決まっています。使うサービスの上限に合わせてシーンを分けてください。10秒を超えるシーンがあるとツールが注意を表示します。" } },
+        { "@type": "Question", "name": "声の性別や年代は指定できますか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "できます。左の「声」タブに、シーンに登場する話す人が自動で並びます。話す人ごとに性別・年代・雰囲気・話す速さと補足を選ぶと、その人のセリフの行に声の指定が入ります（例: a calm, middle-aged male voice）。話す人が空欄のセリフはナレーションとしてまとめて設定できます。" } },
+        { "@type": "Question", "name": "参照画像はどう使われますか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "画像を指定したシーンのプロンプトには「添付した参照画像を使う」という一文が入ります。画像そのものはプロンプトに含まれないので、動画生成AIに貼るときに同じ画像を添付してください。プレビュー再生ではその画像が表示されます。" } },
+        { "@type": "Question", "name": "SRT字幕は何に使えますか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "セリフのあるシーンだけを、シーンの開始・終了時刻つきの字幕ファイルにします。YouTubeの字幕アップロードや、SRTの読み込みに対応した動画編集ソフトでそのまま使えます。" } },
+        { "@type": "Question", "name": "BGMの音源ファイルはどう使われますか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "プレビュー再生で映像と一緒に流すためだけに使い、プロンプトには含めません。BGMタブのプロンプトは、ジャンル・雰囲気・テンポと動画の尺・カットの位置から作るので、音楽生成AIに貼ってBGMを作るときに使えます。" } },
+        { "@type": "Question", "name": "入力した内容や画像はサーバーに送信されますか？",
+          "acceptedAnswer": { "@type": "Answer", "text": "送信されません。入力内容・画像・音源はすべてお使いのブラウザの中（IndexedDB）に自動保存されます。別の端末へ移すときは「保存」タブからJSONで書き出してください。JSONには画像と音源は含まれません。" } }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="css/style.css?v=20260928a">
+<style>
+  .doc{max-width:820px; margin:0 auto; padding:24px clamp(16px,4vw,32px)}
+  .doc h2{font-size:clamp(19px,2vw,21px); letter-spacing:-0.01em; margin:32px 0 12px; border-bottom:1px solid var(--line); padding-bottom:8px}
+  .doc h3{font-size:17px; margin:24px 0 8px}
+  .doc ol, .doc ul{padding-left:1.4em}
+  .doc li{margin-bottom:8px}
+  .doc a{color:var(--accent)}
+  .doc .card{background:var(--pane); border:1px solid var(--line); border-radius:var(--radius); padding:20px; margin-bottom:16px}
+  .doc .card h3:first-child{margin-top:0}
+  .doc table{width:100%; border-collapse:collapse; margin:12px 0}
+  .doc th, .doc td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top}
+  .doc th{background:var(--pane-2)}
+  .table-wrap{overflow-x:auto}
+  .back{display:inline-block; margin-top:8px; text-decoration:none}
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<header class="topbar">
+  <div class="brand">
+    <h1>使い方・FAQ</h1>
+    <p>動画シナリオ作成ツールの使い方と、よくある質問。</p>
+  </div>
+  <a class="topbar-link" href="./">ツールを開く</a>
+</header>
+
+<div class="doc">
+  <a class="back" href="./">&larr; ツールに戻る</a>
+
+  <p>動画シナリオ作成ツールは、シーンごとに秒数・参照画像・セリフ・カメラワークを決めて、<strong>AI動画生成にそのまま貼れる英語プロンプト</strong>を作るツールです。タイムラインで尺を確かめながら組み立て、BGM生成用のプロンプトとSRT字幕も書き出せます。</p>
+
+  <h2>🎬 画面の見方</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>場所</th><th>できること</th></tr>
+      <tr><td>左：プロジェクト</td><td>画面比率・画風・雰囲気・セリフの言語など、全シーン共通の設定。声・BGM・保存のタブもここにあります</td></tr>
+      <tr><td>中央：プレビュー</td><td>画像と字幕とBGMを秒数どおりに再生します。スペースキーでも再生・停止できます</td></tr>
+      <tr><td>右：インスペクター</td><td>タイムラインで選んだシーンの中身（画像・映像の説明・セリフ・ショット・カメラワークなど）を編集します</td></tr>
+      <tr><td>下：タイムライン</td><td>映像・字幕・BGMの3トラック。クリップを選ぶと編集、右端をドラッグすると長さの変更、ルーラーをクリックするとその位置へ移動します</td></tr>
+      <tr><td>最下段：プロンプト</td><td>シーン別・一括・BGM・字幕SRTの4形式で出力し、コピーできます</td></tr>
+    </table>
+  </div>
+
+  <h2>🖱️ 基本の使い方</h2>
+  <div class="card">
+    <ol>
+      <li><strong>全体の設定を決める</strong>。画面比率・画風・色や雰囲気・セリフの言語を選びます。すべてのシーンのプロンプトに共通で入ります。</li>
+      <li><strong>シーンを並べる</strong>。「＋ シーン追加」でクリップを増やし、クリップの右端をドラッグして長さを整えます（0.5秒単位）。</li>
+      <li><strong>シーンの中身を入れる</strong>。クリップを選び、右のインスペクターで参照画像・映像の説明・セリフ・ショットやカメラワークを指定します。順番は「← 前へ」「後へ →」で入れ替えられます。</li>
+      <li><strong>声を決める</strong>。セリフがあるなら、左の「声」タブで話す人ごとに性別・年代・雰囲気を選びます。</li>
+      <li><strong>プレビューで尺を確かめる</strong>。再生して、セリフが読み切れる長さか、カットの切り替えが早すぎないかを確認します。</li>
+      <li><strong>プロンプトをコピーする</strong>。用途に合う形式を選んで、動画生成AIや音楽生成AIに貼ります。</li>
+    </ol>
+  </div>
+
+  <h2>📋 4つの出力形式の使い分け</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>形式</th><th>中身</th><th>向いている使い方</th></tr>
+      <tr><td>シーン別</td><td>1シーン＝1プロンプト。共通設定も毎回含むので、単体で貼っても意味が通ります</td><td>1カットずつ生成して、あとで編集ソフトでつなぐ</td></tr>
+      <tr><td>一括</td><td>全シーンを <code>[0:00–0:03]</code> のような時間つきで1つにまとめたもの</td><td>時間の指定を含めて長めに生成できるサービスに貼る</td></tr>
+      <tr><td>BGM</td><td>ジャンル・雰囲気・テンポ・尺・カットの位置</td><td>音楽生成AIでBGMを作る</td></tr>
+      <tr><td>字幕 SRT</td><td>セリフのあるシーンだけの字幕ファイル</td><td>YouTubeの字幕アップロード、動画編集ソフトへの読み込み</td></tr>
+    </table>
+  </div>
+  <p>出力欄の右上の「EN／日本語」で表示する言語を切り替えられます。既定は英語で、日本語は内容を確認するための表示です（選択肢の部分だけが日本語になり、映像の説明やセリフは入力したとおりに出ます）。動画生成AIには英語版を貼るのがおすすめです。</p>
+
+  <h2>✍️ 伝わるプロンプトにするコツ</h2>
+  <ul>
+    <li><strong>映像の説明は英語で書く</strong>。選択肢は英語に変換されますが、自由記述は入力した言語のまま出力されます。</li>
+    <li><strong>1シーンの動きは1つに絞る</strong>。「歩いて、振り返って、手を振る」のように詰め込むより、シーンを分けた方が狙いどおりになりやすくなります。</li>
+    <li><strong>カメラワークと光は選択肢で指定する</strong>。「寄っていく」「夕暮れ」などを選ぶと、動画生成AIが解釈しやすい定番の英語表現で出力されます。</li>
+    <li><strong>文字を入れたくないときは「画面に文字を出さない」をオン</strong>にします。字幕はSRTで後から付ける方が確実です。</li>
+  </ul>
+  <p>指示の出し方で結果がどう変わるかは、記事「<a href="https://codequest.work/ai-video-prompt-verification/">AI動画生成は指示の出し方で9割決まる｜DomoAIで6本検証</a>」で実際に生成して比べています。</p>
+
+  <h2>❓ よくある質問</h2>
+  <div class="card">
+    <h3>どの動画生成AIで使えますか？</h3>
+    <p>特定のサービスの記法に依存しない汎用の英語プロンプトを出力するので、SoraやVeoなど、テキストで指示を受け付ける動画生成AIであれば使えます。1カットずつ生成するサービスには「シーン別」、時間の指定を含めて長めに生成できるサービスには「一括」が向いています。</p>
+
+    <h3>映像の説明は日本語で書いてもいいですか？</h3>
+    <p>書けますが、自由記述の欄は入力した言語のまま出力されます。ショットやカメラワークなどの選択肢は英語に変換されるので、映像の説明も英語で書くとプロンプト全体が英語でそろい、意図が伝わりやすくなります。セリフは話してほしい言語のまま書いてください。</p>
+
+    <h3>1シーンは何秒にすればいいですか？</h3>
+    <p>1回の生成で作れる動画の長さは、サービスやプランごとに上限が決まっています。使うサービスの上限に合わせてシーンを分けてください。10秒を超えるシーンがあるとツールが注意を表示します。</p>
+
+    <h3>声の性別や年代は指定できますか？</h3>
+    <p>できます。左の「声」タブに、シーンに登場する話す人が自動で並びます。話す人ごとに性別・年代・雰囲気・話す速さと補足を選ぶと、その人のセリフの行に声の指定が入ります（例: a calm, middle-aged male voice）。話す人が空欄のセリフはナレーションとしてまとめて設定できます。</p>
+
+    <h3>参照画像はどう使われますか？</h3>
+    <p>画像を指定したシーンのプロンプトには「添付した参照画像を使う」という一文が入ります。画像そのものはプロンプトに含まれないので、動画生成AIに貼るときに同じ画像を添付してください。プレビュー再生ではその画像が表示されます。</p>
+
+    <h3>SRT字幕は何に使えますか？</h3>
+    <p>セリフのあるシーンだけを、シーンの開始・終了時刻つきの字幕ファイルにします。YouTubeの字幕アップロードや、SRTの読み込みに対応した動画編集ソフトでそのまま使えます。</p>
+
+    <h3>BGMの音源ファイルはどう使われますか？</h3>
+    <p>プレビュー再生で映像と一緒に流すためだけに使い、プロンプトには含めません。BGMタブのプロンプトは、ジャンル・雰囲気・テンポと動画の尺・カットの位置から作るので、音楽生成AIに貼ってBGMを作るときに使えます。</p>
+
+    <h3>入力した内容や画像はサーバーに送信されますか？</h3>
+    <p>送信されません。入力内容・画像・音源はすべてお使いのブラウザの中（IndexedDB）に自動保存されます。別の端末へ移すときは「保存」タブからJSONで書き出してください。JSONには画像と音源は含まれません。</p>
+  </div>
+
+  <h2>🔗 関連ツール</h2>
+  <ul>
+    <li><a href="../handwriting-text-generator/">手書き風文字ジェネレーター</a> — YouTubeサムネイルの文字を作る</li>
+    <li><a href="../image-compressor/">画像圧縮・変換</a> — 参照画像を軽くする</li>
+    <li><a href="../image-upscaler/">画像高画質化ツール</a> — 小さい参照画像を拡大する</li>
+  </ul>
+
+  <a class="back" href="./">&larr; ツールに戻る</a>
+</div>
+
+<div id="ad-widget" class="footer-ad">
+  <div class="ad-widget__head">
+    <span class="ad-widget__label">広告</span>
+    <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+  </div>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="2232000919"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+<script>
+  // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+  (function () {
+    var w = document.getElementById("ad-widget");
+    var b = document.getElementById("ad-close");
+    if (!w || !b) return;
+    b.addEventListener("click", function () { w.classList.add("is-closed"); });
+  })();
+</script>
+
+<footer>
+  <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> 動画シナリオ作成ツール | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+  <div class="footer-links">
+    <a href="./">&#9998; ツールに戻る</a>
+    <a href="https://www.domoai.app/home?via=video-scenario-maker" target="_blank" rel="sponsored noopener">DomoAIで動画を作る（PR）&rarr;</a>
+    <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
+    <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+  </div>
+</footer>
+</body>
+</html>
