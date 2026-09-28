@@ -69,7 +69,7 @@
       "@type": "FAQPage",
       "mainEntity": [
         { "@type": "Question", "name": "Which AI video generators does it work with?",
-          "acceptedAnswer": { "@type": "Answer", "text": "It writes general-purpose English prompts that don't depend on any one service's syntax, so they work with text-driven video generators such as Sora and Veo. Use Per scene for services that generate one shot at a time, and Full timeline for services that can handle longer clips with time cues." } },
+          "acceptedAnswer": { "@type": "Answer", "text": "It writes general-purpose English prompts that don't depend on any one service's syntax, so they work with text-driven video generators such as Sora, Veo, Seedance, Kling and DomoAI. Use Per scene for services that generate one shot at a time, and Full timeline for services that can generate several shots in one longer clip. See the table under \"Working with popular AI video generators\" for each service." } },
         { "@type": "Question", "name": "Can I write descriptions in another language?",
           "acceptedAnswer": { "@type": "Answer", "text": "Yes, but free-text fields are output exactly as you type them; the tool does not translate. Menu options such as shot size and camera movement are always written as standard English phrasing. Write dialogue in the language you want it spoken in." } },
         { "@type": "Question", "name": "How long should each scene be?",
@@ -160,6 +160,20 @@
     </table>
   </div>
 
+  <h2>🤖 Working with popular AI video generators</h2>
+  <p>What each service supports as of September 2026, and which output suits it best.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Service</th><th>Length per generation</th><th>Audio &amp; dialogue</th><th>Multiple shots at once</th><th>Recommended output</th></tr>
+      <tr><td>Sora 2 (OpenAI)</td><td>Up to 15 s (25 s on the web with ChatGPT Pro)</td><td>Yes</td><td>Storyboard feature (Pro)</td><td>Per scene, or Full timeline up to 15 s</td></tr>
+      <tr><td>Veo 3.1 (Google)</td><td>8 s (join clips with scene extension)</td><td>Yes</td><td>One shot per clip</td><td>Per scene</td></tr>
+      <tr><td>Seedance 2.0 / 2.5 (ByteDance)</td><td>2.0: 15 s, 2.5: 30 s</td><td>Yes</td><td>Yes (multi-shot)</td><td>Full timeline</td></tr>
+      <tr><td>Kling 3.0</td><td>3–15 s</td><td>Yes</td><td>Yes</td><td>Full timeline or Per scene</td></tr>
+      <tr><td>DomoAI</td><td>5 s or 10 s</td><td>Video only</td><td>One shot per clip</td><td>Per scene + SRT subtitles</td></tr>
+    </table>
+  </div>
+  <p>Length limits and features change with plans and updates, so check each service's latest information before you start.</p>
+
   <h2>✍️ Tips for prompts that work</h2>
   <ul>
     <li><strong>Keep one action per scene.</strong> Split "walks in, turns around and waves" into separate scenes for more reliable results.</li>
@@ -171,7 +185,7 @@
   <h2>❓ FAQ</h2>
   <div class="card">
     <h3>Which AI video generators does it work with?</h3>
-    <p>It writes general-purpose English prompts that don't depend on any one service's syntax, so they work with text-driven video generators such as Sora and Veo. Use Per scene for services that generate one shot at a time, and Full timeline for services that can handle longer clips with time cues.</p>
+    <p>It writes general-purpose English prompts that don't depend on any one service's syntax, so they work with text-driven video generators such as Sora, Veo, Seedance, Kling and DomoAI. Use Per scene for services that generate one shot at a time, and Full timeline for services that can generate several shots in one longer clip. See the table under "Working with popular AI video generators" for each service.</p>
 
     <h3>Can I write descriptions in another language?</h3>
     <p>Yes, but free-text fields are output exactly as you type them; the tool does not translate. Menu options such as shot size and camera movement are always written as standard English phrasing. Write dialogue in the language you want it spoken in.</p>
