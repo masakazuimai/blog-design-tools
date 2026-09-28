@@ -1,6 +1,7 @@
 // プレビュー再生：画像＋字幕＋BGMを秒数どおりに流す
-import { withTimes, totalDuration } from "./store.js?v=20260928a";
-import { fmtTime } from "./prompt.js?v=20260928a";
+import { withTimes, totalDuration } from "./store.js?v=20260928b";
+import { fmtTime } from "./prompt.js?v=20260928b";
+import { T } from "./i18n.js?v=20260928b";
 
 const FADE_SEC = 0.5;
 
@@ -46,7 +47,7 @@ export const createPlayer = (el, { onScene, onTime } = {}) => {
       el.img.hidden = !src;
       if (src) el.img.src = src;
       el.empty.hidden = Boolean(src);
-      el.empty.textContent = `シーン${i + 1}（画像なし）`;
+      el.empty.textContent = T.noImage(i + 1);
       el.caption.hidden = !s.line;
       el.caption.textContent = s.line;
       el.speaker.textContent = s.speaker;
@@ -87,7 +88,7 @@ export const createPlayer = (el, { onScene, onTime } = {}) => {
     startedAt = performance.now();
     el.play.textContent = "❚❚";
     el.play.setAttribute("aria-pressed", "true");
-    el.play.setAttribute("aria-label", "一時停止");
+    el.play.setAttribute("aria-label", T.pause);
     syncAudio();
     raf = requestAnimationFrame(tick);
   }
@@ -98,7 +99,7 @@ export const createPlayer = (el, { onScene, onTime } = {}) => {
     audio.pause();
     el.play.textContent = "▶";
     el.play.setAttribute("aria-pressed", "false");
-    el.play.setAttribute("aria-label", "再生");
+    el.play.setAttribute("aria-label", T.play);
   }
 
   const seek = (t) => {

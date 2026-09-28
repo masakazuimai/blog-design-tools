@@ -1,16 +1,17 @@
 // 配線：状態の更新 → 保存 → プレビュー・タイムライン・インスペクター・出力の再描画
 import {
   ASPECTS, STYLES, MOODS, SPEECH_LANGS, DIALOGUE_MODES, BGM_GENRES, BGM_MOODS, pick,
-} from "./vocab.js?v=20260928a";
+} from "./vocab.js?v=20260928b";
 import {
   createProject, createScene, loadProject, saveProject, normalize, totalDuration,
   updateScene, removeScene, moveScene, duplicateScene,
-} from "./store.js?v=20260928a";
-import { createPlayer } from "./preview.js?v=20260928a";
-import { createTimeline } from "./timeline.js?v=20260928a";
-import { renderInspector, bindInspector } from "./inspector.js?v=20260928a";
-import { renderOutput, bindOutput } from "./output.js?v=20260928a";
-import { renderVoices, bindVoices } from "./voices.js?v=20260928a";
+} from "./store.js?v=20260928b";
+import { createPlayer } from "./preview.js?v=20260928b";
+import { createTimeline } from "./timeline.js?v=20260928b";
+import { renderInspector, bindInspector } from "./inspector.js?v=20260928b";
+import { renderOutput, bindOutput } from "./output.js?v=20260928b";
+import { renderVoices, bindVoices } from "./voices.js?v=20260928b";
+import { T, label } from "./i18n.js?v=20260928b";
 
 const $ = (id) => document.getElementById(id);
 const MAX_AUDIO_BYTES = 50 * 1024 * 1024;
@@ -52,7 +53,7 @@ const player = createPlayer(
 const commit = (next) => {
   project = next;
   if (!project.scenes.some((s) => s.id === selectedId)) selectedId = project.scenes[0].id;
-  saveProject(project, () => toast("ブラウザへの保存に失敗しました（容量不足の可能性があります）"));
+  saveProject(project, () => toast(T.saveFailed));
   player.setProject(project);
   timeline.update(project, selectedId);
   renderInspector(project, selectedId);
@@ -76,13 +77,13 @@ bindVoices($("voices"), (name, patch) =>
 
 const renderStatus = () => {
   const total = totalDuration(project.scenes);
-  $("total").textContent = `${project.scenes.length}シーン・合計 ${total}秒${project.target ? ` / 目標 ${project.target}秒` : ""}`;
-  $("aspectTag").textContent = pick(ASPECTS, project.aspect).ja;
+  $("total").textContent = T.total(project.scenes.length, total, project.target);
+  $("aspectTag").textContent = label(pick(ASPECTS, project.aspect));
   const over = project.target && total > project.target;
   const long = project.scenes.some((s) => s.dur > 10);
   const warn = [
-    over ? `目標の${project.target}秒を${Math.round((total - project.target) * 10) / 10}秒超えています。` : "",
-    long ? "10秒を超えるシーンがあります。1回の生成で作れる長さはサービスごとに上限があるので、分割も検討してください。" : "",
+    over ? T.over(project.target, Math.round((total - project.target) * 10) / 10) : "",
+    long ? T.long : "",
   ].filter(Boolean).join(" ");
   $("warn").hidden = !warn;
   $("warn").textContent = warn;
@@ -97,7 +98,7 @@ const mountChips = (el, list, get, set) => {
       b.type = "button";
       b.className = "chip";
       b.dataset.v = o.v;
-      b.textContent = o.ja;
+      b.textContent = label(o);
       return b;
     })
   );
@@ -157,7 +158,7 @@ const fillForm = () => {
   $("bgmVol").value = String(Math.round(project.bgm.volume * 100));
   $("bgmVolV").textContent = `${Math.round(project.bgm.volume * 100)}%`;
   $("bgmOffset").value = String(project.bgm.offset);
-  $("bgmName").textContent = project.bgm.fileName || "未選択";
+  $("bgmName").textContent = project.bgm.fileName || T.noFile;
   $("bgmClear").hidden = !project.bgm.file;
   painters.forEach((p) => p());
 };
@@ -184,8 +185,8 @@ $("bgmFile").addEventListener("change", (e) => {
   const file = e.target.files?.[0];
   e.target.value = "";
   if (!file) return;
-  if (!file.type.startsWith("audio/")) return toast("音声ファイルを選んでください");
-  if (file.size > MAX_AUDIO_BYTES) return toast("音源は50MB以下にしてください");
+  if (!file.type.startsWith("audio/")) return toast(T.notAudio);
+  if (file.size > MAX_AUDIO_BYTES) return toast(T.audioTooBig);
   setBgm({ file, fileName: file.name });
   fillForm();
 });
@@ -267,10 +268,10 @@ $("loadJson").addEventListener("change", async (e) => {
     commit(normalize(raw));
     renderVoices($("voices"), project, { force: true });
     fillForm();
-    toast("読み込みました");
+    toast(T.loaded);
   } catch (error) {
     console.error("JSONの読み込みに失敗しました", error);
-    toast("このツールで保存したJSONファイルを選んでください");
+    toast(T.badJson);
   }
 });
 
@@ -279,22 +280,22 @@ let resetArmed = 0;
 $("reset").addEventListener("click", (e) => {
   const btn = e.currentTarget;
   if (!resetArmed) {
-    btn.textContent = "もう一度押すとリセット";
+    btn.textContent = T.resetConfirm;
     resetArmed = setTimeout(() => {
       resetArmed = 0;
-      btn.textContent = "最初からやり直す";
+      btn.textContent = T.reset;
     }, 3000);
     return;
   }
   clearTimeout(resetArmed);
   resetArmed = 0;
-  btn.textContent = "最初からやり直す";
+  btn.textContent = T.reset;
   player.pause();
   player.seek(0);
   commit(createProject());
   renderVoices($("voices"), project, { force: true });
   fillForm();
-  toast("リセットしました");
+  toast(T.resetDone);
 });
 
 bindOutput({ toast, download, fileBase });

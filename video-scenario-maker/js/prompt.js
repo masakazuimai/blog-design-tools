@@ -2,8 +2,8 @@
 import {
   ASPECTS, STYLES, MOODS, SHOTS, ANGLES, MOVES, LIGHTS, TRANSITIONS,
   SPEECH_LANGS, BGM_GENRES, BGM_MOODS, VOICE_GENDERS, VOICE_AGES, VOICE_TONES, VOICE_SPEEDS, pick,
-} from "./vocab.js?v=20260928a";
-import { withTimes, totalDuration } from "./store.js?v=20260928a";
+} from "./vocab.js?v=20260928b";
+import { withTimes, totalDuration } from "./store.js?v=20260928b";
 
 const str = (v) => (typeof v === "string" ? v.trim() : "");
 // 選択肢の語。「指定なし」（en が空）は出力しない。ja は確認用の表示ラベル

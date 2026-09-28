@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
+</script>
+<!-- End Google Tag Manager -->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Scenario Maker – Free AI Video Prompt & Storyboard Tool</title>
+<meta name="description" content="Plan an AI video scene by scene: set each shot's length, reference image, dialogue, camera and lighting, preview it on a timeline, then copy English prompts for Sora, Veo and more, plus a music prompt and SRT subtitles. Free, no sign-up.">
+<link rel="canonical" href="https://codequest.work/generator/video-scenario-maker/en/">
+<link rel="alternate" hreflang="ja" href="https://codequest.work/generator/video-scenario-maker/">
+<link rel="alternate" hreflang="en" href="https://codequest.work/generator/video-scenario-maker/en/">
+<link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/video-scenario-maker/">
+<meta name="robots" content="index, follow">
+
+<!-- OGP -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CodeQuest.work">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Video Scenario Maker – Free AI Video Prompt & Storyboard Tool">
+<meta property="og:description" content="Plan an AI video scene by scene on a timeline and copy English prompts for Sora, Veo and more — plus a music prompt and SRT subtitles.">
+<meta property="og:url" content="https://codequest.work/generator/video-scenario-maker/en/">
+<meta property="og:image" content="https://codequest.work/generator/video-scenario-maker/assets/og-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Video Scenario Maker">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Video Scenario Maker – Free AI Video Prompt & Storyboard Tool">
+<meta name="twitter:description" content="Plan an AI video scene by scene and copy English prompts for Sora, Veo and more — plus a music prompt and SRT subtitles.">
+<meta name="twitter:image" content="https://codequest.work/generator/video-scenario-maker/assets/og-en.png">
+
+<!-- 構造化データ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Video Scenario Maker",
+      "url": "https://codequest.work/generator/video-scenario-maker/en/",
+      "description": "A free storyboard tool for AI video. Set each scene's duration, reference image, dialogue, shot size and camera movement, preview images, subtitles and music in sync, and export English prompts (per scene or as one timecoded prompt), a music-generation prompt and an SRT subtitle file. Your data stays in your browser and is never uploaded.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web",
+      "browserRequirements": "Requires JavaScript.",
+      "inLanguage": "en",
+      "isAccessibleForFree": true,
+      "featureList": ["Set duration, reference image, dialogue and camera per scene", "See the total length on a timeline", "Preview images, subtitles and music in sync", "Copy English prompts for AI video generators (per scene or full timeline)", "Set a voice per speaker", "Copy a prompt for AI music generators", "Export SRT subtitles", "Save and load projects as JSON"],
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+        { "@type": "ListItem", "position": 2, "name": "Generators", "item": "https://codequest.work/category/generator/" },
+        { "@type": "ListItem", "position": 3, "name": "Video Scenario Maker", "item": "https://codequest.work/generator/video-scenario-maker/en/" }
+      ]
+    }
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="../css/style.css?v=20260928b">
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<header class="topbar">
+  <div class="brand">
+    <h1>Video Scenario Maker</h1>
+    <p>Plan each scene's length, image, dialogue and camera, then copy English prompts for AI video generators. Your data stays in your browser.</p>
+  </div>
+  <div class="topbar-links">
+    <a class="topbar-link" href="../" hreflang="ja">日本語</a>
+    <a class="topbar-link" href="howto.html">How to use</a>
+  </div>
+</header>
+
+<main class="workspace">
+  <!-- 左：プロジェクト設定 -->
+  <aside class="pane pane-left" aria-label="Project settings">
+    <div class="pane-tabs" role="tablist" data-group="left">
+      <button type="button" role="tab" data-pane="project" aria-selected="true">Project</button>
+      <button type="button" role="tab" data-pane="voice" aria-selected="false">Voices</button>
+      <button type="button" role="tab" data-pane="bgm" aria-selected="false">Music</button>
+      <button type="button" role="tab" data-pane="file" aria-selected="false">File</button>
+    </div>
+
+    <div class="pane-body" data-pane-body="project">
+      <div class="field">
+        <label for="title">Title (used for file names)</label>
+        <input type="text" id="title" placeholder="e.g. Product teaser">
+      </div>
+      <div class="field">
+        <span class="label">Aspect ratio</span>
+        <div class="chips" id="aspect" data-single></div>
+      </div>
+      <div class="field">
+        <span class="label">Visual style</span>
+        <div class="chips" id="style" data-single></div>
+      </div>
+      <div class="field">
+        <span class="label">Color &amp; mood</span>
+        <div class="chips" id="mood" data-single></div>
+      </div>
+      <div class="field">
+        <label for="styleNote">Style notes (optional)</label>
+        <input type="text" id="styleNote" placeholder="e.g. soft pastel colors, 35mm film">
+      </div>
+      <div class="field">
+        <span class="label">Dialogue language</span>
+        <div class="chips" id="speechLang" data-single></div>
+      </div>
+      <div class="field">
+        <span class="label">Dialogue</span>
+        <div class="chips" id="dialogue" data-single></div>
+      </div>
+      <div class="field">
+        <label class="check"><input type="checkbox" id="noText">Tell the model not to render on-screen text</label>
+      </div>
+      <div class="field">
+        <label for="target">Target length (seconds, 0 = none)</label>
+        <input type="number" id="target" min="0" max="3600" step="1">
+      </div>
+      <p class="note">Menu options are written out as standard English phrasing. Free-text fields such as scene descriptions and dialogue are <strong>output exactly as you type them</strong>.</p>
+    </div>
+
+    <div class="pane-body" data-pane-body="voice" hidden>
+      <p class="note voice-lead">Set the gender, age and tone of each speaker's voice. It is added to that speaker's dialogue lines.</p>
+      <div id="voices"></div>
+    </div>
+
+    <div class="pane-body" data-pane-body="bgm" hidden>
+      <div class="field">
+        <span class="label">Genre (multiple)</span>
+        <div class="chips" id="bgmGenres"></div>
+      </div>
+      <div class="field">
+        <span class="label">Mood (multiple)</span>
+        <div class="chips" id="bgmMoods"></div>
+      </div>
+      <div class="field">
+        <label for="bpm">Tempo<span class="val" id="bpmV"></span></label>
+        <input type="range" id="bpm" min="40" max="200" step="5">
+      </div>
+      <div class="field">
+        <label class="check"><input type="checkbox" id="vocals">With vocals</label>
+      </div>
+      <div class="field">
+        <label for="instruments">Instruments (optional)</label>
+        <input type="text" id="instruments" placeholder="e.g. ukulele, soft claps">
+      </div>
+      <h3>Audio for preview</h3>
+      <div class="field">
+        <label class="file">
+          <input type="file" id="bgmFile" accept="audio/*" class="sr-only">
+          <span class="file-btn">Choose audio file</span>
+          <span class="file-name" id="bgmName">No file selected</span>
+        </label>
+        <button type="button" class="link" id="bgmClear" hidden>Remove audio</button>
+      </div>
+      <div class="field">
+        <label for="bgmVol">Volume<span class="val" id="bgmVolV"></span></label>
+        <input type="range" id="bgmVol" min="0" max="100">
+      </div>
+      <div class="field">
+        <label for="bgmOffset">Start the audio at (seconds)</label>
+        <input type="number" id="bgmOffset" min="0" max="3600" step="0.5">
+      </div>
+      <p class="note">The audio file is only used for the preview and is not included in any prompt.</p>
+    </div>
+
+    <div class="pane-body" data-pane-body="file" hidden>
+      <div class="stack">
+        <button type="button" class="btn" id="saveJson">Save as JSON</button>
+        <label class="btn">Load JSON<input type="file" id="loadJson" accept="application/json,.json" class="sr-only"></label>
+        <button type="button" class="btn danger" id="reset">Start over</button>
+      </div>
+      <p class="note">Everything, including images and audio, is saved automatically in this browser. JSON files do not include images or audio.</p>
+    </div>
+  </aside>
+
+  <!-- 中央：プレビューモニター -->
+  <section class="pane pane-monitor" aria-label="Preview">
+    <div class="pane-title"><span>Preview</span><span class="aspect-tag" id="aspectTag"></span></div>
+    <div class="stage" id="stage">
+      <div class="frame" id="frame">
+        <img id="pvImg" alt="" hidden>
+        <span class="empty" id="pvEmpty"></span>
+        <div class="caption-box">
+          <span class="speaker" id="pvSpeaker" hidden></span>
+          <span class="caption" id="pvCaption" hidden></span>
+        </div>
+      </div>
+    </div>
+    <div class="transport">
+      <button type="button" class="tbtn" id="toStart" aria-label="Go to start">⏮</button>
+      <button type="button" class="tbtn play" id="play" aria-pressed="false" aria-label="Play">▶</button>
+      <span class="timecode" id="time">0:00 / 0:00</span>
+    </div>
+  </section>
+
+  <!-- 右：インスペクター（選択中のシーン） -->
+  <aside class="pane pane-inspector" aria-label="Edit scene">
+    <div class="pane-title"><span id="insTitle">Scene</span><span class="ins-time" id="insTime"></span></div>
+    <div class="pane-body" id="inspector">
+      <div class="ins-row">
+        <label class="thumb" title="Choose an image">
+          <img id="fImgPreview" alt="" hidden>
+          <span id="fImgEmpty">+ Image</span>
+          <input type="file" accept="image/*" id="fImage" class="sr-only">
+        </label>
+        <div class="ins-side">
+          <label for="fDur" class="label">Length (s)</label>
+          <input type="number" id="fDur" min="0.5" max="60" step="0.5">
+          <button type="button" class="link" id="fImgClear" hidden>Remove image</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="fDesc">What happens (subject, action, place)</label>
+        <textarea id="fDesc" rows="3" placeholder="e.g. A person walks along the beach at sunset"></textarea>
+      </div>
+      <div class="field">
+        <label for="fSpeaker">Speaker</label>
+        <input type="text" id="fSpeaker" placeholder="Leave empty for narration" list="speakerList">
+        <datalist id="speakerList"></datalist>
+      </div>
+      <div class="field">
+        <label for="fLine">Dialogue / subtitle</label>
+        <textarea id="fLine" rows="2"></textarea>
+      </div>
+      <div class="grid2">
+        <div class="field"><label for="fShot">Shot</label><select id="fShot"></select></div>
+        <div class="field"><label for="fAngle">Angle</label><select id="fAngle"></select></div>
+        <div class="field"><label for="fMove">Camera</label><select id="fMove"></select></div>
+        <div class="field"><label for="fLight">Lighting</label><select id="fLight"></select></div>
+        <div class="field"><label for="fTrans">Transition</label><select id="fTrans"></select></div>
+      </div>
+      <div class="field">
+        <label for="fSfx">Sound effects (optional)</label>
+        <input type="text" id="fSfx" placeholder="e.g. birds chirping, cup clinks">
+      </div>
+      <div class="ins-tools">
+        <button type="button" class="btn" data-act="up">← Earlier</button>
+        <button type="button" class="btn" data-act="down">Later →</button>
+        <button type="button" class="btn" data-act="dup">Duplicate</button>
+        <button type="button" class="btn danger" data-act="del">Delete</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- 下：タイムライン -->
+  <section class="pane pane-timeline" aria-label="Timeline">
+    <div class="tl-toolbar">
+      <button type="button" class="btn primary" id="addScene">+ Add scene</button>
+      <span class="total" id="total"></span>
+      <label class="zoom">Zoom<input type="range" id="zoom" min="10" max="120" step="5" value="40"></label>
+    </div>
+    <p class="warn" id="warn" hidden></p>
+    <div class="tl-body">
+      <div class="tl-heads">
+        <span class="tl-head ruler-head"></span>
+        <span class="tl-head">Video</span>
+        <span class="tl-head">Subs</span>
+        <span class="tl-head">Music</span>
+      </div>
+      <div class="tl-scroll" id="tlScroll">
+        <div class="tl-inner" id="tlInner">
+          <div class="ruler" id="ruler"></div>
+          <div class="lane lane-video" id="laneVideo"></div>
+          <div class="lane lane-sub" id="laneSub"></div>
+          <div class="lane lane-audio" id="laneAudio"></div>
+          <div class="target-line" id="targetLine" hidden></div>
+          <div class="playhead" id="playhead"></div>
+        </div>
+      </div>
+    </div>
+    <p class="hint">Select a clip to edit it in the inspector. Drag the right edge of a clip to change its length.</p>
+  </section>
+
+  <!-- 最下段：プロンプト書き出し -->
+  <section class="pane pane-output" aria-label="Prompts">
+    <div class="pane-tabs" role="tablist" data-group="out">
+      <button type="button" role="tab" data-tab="scene" aria-selected="true">Per scene</button>
+      <button type="button" role="tab" data-tab="timeline" aria-selected="false">Full timeline</button>
+      <button type="button" role="tab" data-tab="bgm" aria-selected="false">Music</button>
+      <button type="button" role="tab" data-tab="srt" aria-selected="false">SRT subtitles</button>
+      <div class="out-actions">
+        <div class="seg" id="outLang" role="group" aria-label="Prompt language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="ja" aria-pressed="false">日本語</button>
+        </div>
+        <div class="out-buttons" id="outActions"></div>
+      </div>
+    </div>
+    <p class="tab-note" id="tabNote"></p>
+    <div class="out" id="out"></div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<footer>
+  <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> Video Scenario Maker | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+  <div class="footer-links">
+    <a href="howto.html">&#128214; How to use &amp; FAQ</a>
+    <a href="https://www.domoai.app/home?via=video-scenario-maker" target="_blank" rel="sponsored noopener">Make videos with DomoAI (Sponsored) &rarr;</a>
+    <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
+    <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+  </div>
+</footer>
+
+<div id="ad-widget" class="footer-ad">
+  <div class="ad-widget__head">
+    <span class="ad-widget__label">Sponsored</span>
+    <button id="ad-close" class="ad-widget__close" type="button" aria-label="Close ad">×</button>
+  </div>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="2232000919"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+<script>
+  // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+  (function () {
+    var w = document.getElementById("ad-widget");
+    var b = document.getElementById("ad-close");
+    if (!w || !b) return;
+    b.addEventListener("click", function () { w.classList.add("is-closed"); });
+  })();
+</script>
+
+<script type="module" src="../js/main.js?v=20260928b"></script>
+</body>
+</html>

@@ -1,8 +1,9 @@
 // インスペクター：選択中のシーン1件を編集する。入力中は作り直さず値だけ差し替える
-import { SHOTS, ANGLES, MOVES, LIGHTS, TRANSITIONS } from "./vocab.js?v=20260928a";
-import { withTimes } from "./store.js?v=20260928a";
-import { fmtTime } from "./prompt.js?v=20260928a";
-import { blobUrl } from "./preview.js?v=20260928a";
+import { SHOTS, ANGLES, MOVES, LIGHTS, TRANSITIONS } from "./vocab.js?v=20260928b";
+import { withTimes } from "./store.js?v=20260928b";
+import { fmtTime } from "./prompt.js?v=20260928b";
+import { blobUrl } from "./preview.js?v=20260928b";
+import { T, label } from "./i18n.js?v=20260928b";
 
 const MAX_IMAGE_BYTES = 20 * 1024 * 1024;
 const $ = (id) => document.getElementById(id);
@@ -12,7 +13,7 @@ const TEXTS = { fDesc: "desc", fSpeaker: "speaker", fLine: "line", fSfx: "sfx" }
 const SELECT_FIELDS = { fShot: "shot", fAngle: "angle", fMove: "move", fLight: "light", fTrans: "trans" };
 
 Object.entries(SELECTS).forEach(([id, list]) => {
-  $(id).replaceChildren(...list.map((o) => new Option(o.ja, o.v)));
+  $(id).replaceChildren(...list.map((o) => new Option(label(o), o.v)));
 });
 
 // フォーカス中の欄は上書きしない（入力中のカーソル位置を守る）
@@ -24,7 +25,7 @@ export const renderInspector = (project, selectedId) => {
   const scenes = withTimes(project.scenes);
   const i = Math.max(0, scenes.findIndex((s) => s.id === selectedId));
   const s = scenes[i];
-  $("insTitle").textContent = `シーン ${i + 1} / ${scenes.length}`;
+  $("insTitle").textContent = T.sceneOf(i + 1, scenes.length);
   $("insTime").textContent = `${fmtTime(s.start)} – ${fmtTime(s.end)}`;
   setValue($("fDur"), String(s.dur));
   Object.entries(TEXTS).forEach(([id, key]) => setValue($(id), s[key]));
@@ -54,8 +55,8 @@ export const bindInspector = ({ onField, onAction, onError }) => {
     const file = e.target.files?.[0];
     e.target.value = "";
     if (!file) return;
-    if (!file.type.startsWith("image/")) return onError("画像ファイルを選んでください");
-    if (file.size > MAX_IMAGE_BYTES) return onError("画像は20MB以下にしてください");
+    if (!file.type.startsWith("image/")) return onError(T.notImage);
+    if (file.size > MAX_IMAGE_BYTES) return onError(T.imageTooBig);
     onField({ image: file, imageName: file.name });
   });
   $("fImgClear").addEventListener("click", () => onField({ image: null, imageName: "" }));

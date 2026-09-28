@@ -1,12 +1,13 @@
 // 声タブ：シーンに登場する話者ごとに性別・年代・雰囲気・速さを設定する
-import { VOICE_GENDERS, VOICE_AGES, VOICE_TONES, VOICE_SPEEDS } from "./vocab.js?v=20260928a";
-import { speakersOf, createVoice } from "./store.js?v=20260928a";
+import { VOICE_GENDERS, VOICE_AGES, VOICE_TONES, VOICE_SPEEDS } from "./vocab.js?v=20260928b";
+import { speakersOf, createVoice } from "./store.js?v=20260928b";
+import { T, label as optLabel } from "./i18n.js?v=20260928b";
 
 const FIELDS = [
-  { key: "gender", label: "性別", list: VOICE_GENDERS },
-  { key: "age", label: "年代", list: VOICE_AGES },
-  { key: "tone", label: "雰囲気", list: VOICE_TONES },
-  { key: "speed", label: "話す速さ", list: VOICE_SPEEDS },
+  { key: "gender", label: T.voiceFields.gender, list: VOICE_GENDERS },
+  { key: "age", label: T.voiceFields.age, list: VOICE_AGES },
+  { key: "tone", label: T.voiceFields.tone, list: VOICE_TONES },
+  { key: "speed", label: T.voiceFields.speed, list: VOICE_SPEEDS },
 ];
 
 let shownKey = null; // 表示中の話者一覧（変わった時だけ描き直す＝入力中のフォーカスを守る）
@@ -17,7 +18,7 @@ const card = (name, voice) => {
   wrap.dataset.name = name;
   const title = document.createElement("div");
   title.className = "voice-name";
-  title.textContent = name || "ナレーション（話す人が空欄）";
+  title.textContent = name || T.narrator;
   const grid = document.createElement("div");
   grid.className = "grid2";
   FIELDS.forEach(({ key, label, list }) => {
@@ -27,19 +28,19 @@ const card = (name, voice) => {
     cap.textContent = label;
     const sel = document.createElement("select");
     sel.dataset.key = key;
-    sel.append(...list.map((o) => new Option(o.ja, o.v, false, o.v === voice[key])));
+    sel.append(...list.map((o) => new Option(optLabel(o), o.v, false, o.v === voice[key])));
     field.append(cap, sel);
     grid.append(field);
   });
   const note = document.createElement("label");
   note.className = "field mini";
   const cap = document.createElement("span");
-  cap.textContent = "補足（任意）";
+  cap.textContent = T.voiceNote;
   const input = document.createElement("input");
   input.type = "text";
   input.dataset.key = "note";
   input.value = voice.note;
-  input.placeholder = "例: slight Kansai accent";
+  input.placeholder = T.voiceNotePh;
   note.append(cap, input);
   wrap.append(title, grid, note);
   return wrap;
@@ -56,7 +57,7 @@ export const renderVoices = (el, project, { force = false } = {}) => {
   if (!names.length) {
     const p = document.createElement("p");
     p.className = "note";
-    p.textContent = "セリフのあるシーンがまだありません。シーンにセリフを入れると、話す人ごとに声を設定できます。";
+    p.textContent = T.noSpeakers;
     el.replaceChildren(p);
     return;
   }

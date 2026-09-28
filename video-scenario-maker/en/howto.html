@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
+</script>
+<!-- End Google Tag Manager -->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Use & FAQ | Video Scenario Maker</title>
+<meta name="description" content="How to use Video Scenario Maker: setting scene length, images and dialogue, working with the timeline, choosing between per-scene and full-timeline prompts, and exporting music prompts and SRT subtitles.">
+<link rel="canonical" href="https://codequest.work/generator/video-scenario-maker/en/howto.html">
+<link rel="alternate" hreflang="ja" href="https://codequest.work/generator/video-scenario-maker/howto.html">
+<link rel="alternate" hreflang="en" href="https://codequest.work/generator/video-scenario-maker/en/howto.html">
+<link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/video-scenario-maker/howto.html">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CodeQuest.work">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="How to Use & FAQ | Video Scenario Maker">
+<meta property="og:description" content="Setting scene length, images and dialogue, working with the timeline, per-scene vs. full-timeline prompts, music prompts and SRT subtitles.">
+<meta property="og:url" content="https://codequest.work/generator/video-scenario-maker/en/howto.html">
+<meta property="og:image" content="https://codequest.work/generator/video-scenario-maker/assets/og-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Video Scenario Maker">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to Use & FAQ | Video Scenario Maker">
+<meta name="twitter:description" content="Setting scene length, images and dialogue, working with the timeline, per-scene vs. full-timeline prompts, music prompts and SRT subtitles.">
+<meta name="twitter:image" content="https://codequest.work/generator/video-scenario-maker/assets/og-en.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+        { "@type": "ListItem", "position": 2, "name": "Generators", "item": "https://codequest.work/category/generator/" },
+        { "@type": "ListItem", "position": 3, "name": "Video Scenario Maker", "item": "https://codequest.work/generator/video-scenario-maker/en/" },
+        { "@type": "ListItem", "position": 4, "name": "How to Use & FAQ", "item": "https://codequest.work/generator/video-scenario-maker/en/howto.html" }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to plan a video and export prompts for AI video generators",
+      "inLanguage": "en",
+      "step": [
+        { "@type": "HowToStep", "name": "Set the project", "text": "Choose the aspect ratio, visual style, mood and dialogue language. These settings are included in every scene's prompt." },
+        { "@type": "HowToStep", "name": "Lay out the scenes", "text": "Add clips with \"Add scene\" and arrange their order and length on the timeline. Drag the right edge of a clip to change its length in 0.5-second steps." },
+        { "@type": "HowToStep", "name": "Fill in each scene", "text": "Select a clip and set its reference image, description, dialogue, shot size, camera movement and lighting in the inspector." },
+        { "@type": "HowToStep", "name": "Check the timing", "text": "Press play (or the space bar) to run images, subtitles and music in sync and check the pacing." },
+        { "@type": "HowToStep", "name": "Copy the prompts", "text": "Pick Per scene, Full timeline, Music or SRT subtitles, copy the output and paste it into an AI video or music generator." }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Which AI video generators does it work with?",
+          "acceptedAnswer": { "@type": "Answer", "text": "It writes general-purpose English prompts that don't depend on any one service's syntax, so they work with text-driven video generators such as Sora and Veo. Use Per scene for services that generate one shot at a time, and Full timeline for services that can handle longer clips with time cues." } },
+        { "@type": "Question", "name": "Can I write descriptions in another language?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes, but free-text fields are output exactly as you type them; the tool does not translate. Menu options such as shot size and camera movement are always written as standard English phrasing. Write dialogue in the language you want it spoken in." } },
+        { "@type": "Question", "name": "How long should each scene be?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Each service and plan limits how long a single generation can be. Split your scenes to fit the limit of the service you use. The tool shows a warning when a scene is longer than 10 seconds." } },
+        { "@type": "Question", "name": "Can I set the voice for each speaker?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. The Voices tab lists every speaker in your scenes. Choose a gender, age, tone and pace, plus optional notes, and the voice is added to that speaker's lines (for example: a calm, middle-aged male voice). Lines without a speaker are grouped as the narrator." } },
+        { "@type": "Question", "name": "How are reference images used?",
+          "acceptedAnswer": { "@type": "Answer", "text": "When a scene has an image, its prompt says to use the attached reference image. The image itself is not part of the prompt, so attach the same image when you paste the prompt into a video generator. The preview shows the image as well." } },
+        { "@type": "Question", "name": "What can I do with the SRT subtitles?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Scenes with dialogue become a subtitle file with each scene's start and end times. You can upload it to YouTube as captions or import it into any video editor that supports SRT." } },
+        { "@type": "Question", "name": "Are my inputs and images uploaded anywhere?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Everything, including images and audio, is stored only in your browser (IndexedDB). To move a project to another device, save it as JSON from the File tab. JSON files do not include images or audio." } }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="../css/style.css?v=20260928b">
+<style>
+  .doc{max-width:820px; margin:0 auto; padding:24px clamp(16px,4vw,32px)}
+  .doc h2{font-size:clamp(19px,2vw,21px); letter-spacing:-0.01em; margin:32px 0 12px; border-bottom:1px solid var(--line); padding-bottom:8px}
+  .doc h3{font-size:17px; margin:24px 0 8px}
+  .doc ol, .doc ul{padding-left:1.4em}
+  .doc li{margin-bottom:8px}
+  .doc a{color:var(--accent)}
+  .doc .card{background:var(--pane); border:1px solid var(--line); border-radius:var(--radius); padding:20px; margin-bottom:16px}
+  .doc .card h3:first-child{margin-top:0}
+  .doc table{width:100%; border-collapse:collapse; margin:12px 0}
+  .doc th, .doc td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top}
+  .doc th{background:var(--pane-2)}
+  .table-wrap{overflow-x:auto}
+  .back{display:inline-block; margin-top:8px; text-decoration:none}
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<header class="topbar">
+  <div class="brand">
+    <h1>How to Use &amp; FAQ</h1>
+    <p>How to use Video Scenario Maker, plus frequently asked questions.</p>
+  </div>
+  <div class="topbar-links">
+    <a class="topbar-link" href="../howto.html" hreflang="ja">日本語</a>
+    <a class="topbar-link" href="./">Open the tool</a>
+  </div>
+</header>
+
+<div class="doc">
+  <a class="back" href="./">&larr; Back to the tool</a>
+
+  <p>Video Scenario Maker helps you plan an AI video scene by scene. Set each scene's length, reference image, dialogue and camera, check the pacing on a timeline, and copy <strong>English prompts you can paste straight into AI video generators</strong>. It also exports a prompt for AI music generators and SRT subtitles.</p>
+
+  <h2>🎬 The workspace</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Area</th><th>What it does</th></tr>
+      <tr><td>Left: Project</td><td>Settings shared by every scene: aspect ratio, visual style, mood and dialogue language. The Voices, Music and File tabs are here too</td></tr>
+      <tr><td>Center: Preview</td><td>Plays images, subtitles and music in sync. The space bar also plays and pauses</td></tr>
+      <tr><td>Right: Inspector</td><td>Edits the scene you selected on the timeline: image, description, dialogue, shot, camera and more</td></tr>
+      <tr><td>Bottom: Timeline</td><td>Video, subtitle and music tracks. Select a clip to edit it, drag its right edge to change the length, or click the ruler to jump to that point</td></tr>
+      <tr><td>Bottom row: Prompts</td><td>Four outputs to copy: Per scene, Full timeline, Music and SRT subtitles</td></tr>
+    </table>
+  </div>
+
+  <h2>🖱️ Basic steps</h2>
+  <div class="card">
+    <ol>
+      <li><strong>Set the project.</strong> Choose the aspect ratio, visual style, mood and dialogue language. These are included in every scene's prompt.</li>
+      <li><strong>Lay out the scenes.</strong> Add clips with "+ Add scene" and drag the right edge of a clip to set its length (0.5-second steps).</li>
+      <li><strong>Fill in each scene.</strong> Select a clip and set its reference image, description, dialogue, shot size and camera in the inspector. Reorder with "← Earlier" and "Later →".</li>
+      <li><strong>Pick the voices.</strong> If there is dialogue, open the Voices tab and set a gender, age and tone for each speaker.</li>
+      <li><strong>Check the timing.</strong> Play the preview to make sure each line has time to be read and cuts aren't too quick.</li>
+      <li><strong>Copy the prompts</strong> and paste them into an AI video or music generator.</li>
+    </ol>
+  </div>
+
+  <h2>📋 Choosing an output</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Output</th><th>What's in it</th><th>Best for</th></tr>
+      <tr><td>Per scene</td><td>One prompt per scene. Shared settings are repeated in each one, so every prompt works on its own</td><td>Generating one shot at a time and joining them in an editor</td></tr>
+      <tr><td>Full timeline</td><td>All scenes combined with time codes such as <code>[0:00–0:03]</code></td><td>Services that can generate longer clips with time cues</td></tr>
+      <tr><td>Music</td><td>Genre, mood, tempo, length and cut points</td><td>Making background music with an AI music generator</td></tr>
+      <tr><td>SRT subtitles</td><td>A subtitle file for the scenes that have dialogue</td><td>YouTube captions or importing into a video editor</td></tr>
+    </table>
+  </div>
+
+  <h2>✍️ Tips for prompts that work</h2>
+  <ul>
+    <li><strong>Keep one action per scene.</strong> Split "walks in, turns around and waves" into separate scenes for more reliable results.</li>
+    <li><strong>Use the menus for camera and lighting.</strong> Options like "Dolly in" or "Golden hour" are written as phrasing video models understand well.</li>
+    <li><strong>Want the subject to move? Keep the camera static.</strong> When the camera moves, the model can use that motion instead of animating the subject.</li>
+    <li><strong>Turn on "no on-screen text"</strong> if you don't want the model to draw text. Adding subtitles later from the SRT file is more reliable.</li>
+  </ul>
+
+  <h2>❓ FAQ</h2>
+  <div class="card">
+    <h3>Which AI video generators does it work with?</h3>
+    <p>It writes general-purpose English prompts that don't depend on any one service's syntax, so they work with text-driven video generators such as Sora and Veo. Use Per scene for services that generate one shot at a time, and Full timeline for services that can handle longer clips with time cues.</p>
+
+    <h3>Can I write descriptions in another language?</h3>
+    <p>Yes, but free-text fields are output exactly as you type them; the tool does not translate. Menu options such as shot size and camera movement are always written as standard English phrasing. Write dialogue in the language you want it spoken in.</p>
+
+    <h3>How long should each scene be?</h3>
+    <p>Each service and plan limits how long a single generation can be. Split your scenes to fit the limit of the service you use. The tool shows a warning when a scene is longer than 10 seconds.</p>
+
+    <h3>Can I set the voice for each speaker?</h3>
+    <p>Yes. The Voices tab lists every speaker in your scenes. Choose a gender, age, tone and pace, plus optional notes, and the voice is added to that speaker's lines (for example: a calm, middle-aged male voice). Lines without a speaker are grouped as the narrator.</p>
+
+    <h3>How are reference images used?</h3>
+    <p>When a scene has an image, its prompt says to use the attached reference image. The image itself is not part of the prompt, so attach the same image when you paste the prompt into a video generator. The preview shows the image as well.</p>
+
+    <h3>What can I do with the SRT subtitles?</h3>
+    <p>Scenes with dialogue become a subtitle file with each scene's start and end times. You can upload it to YouTube as captions or import it into any video editor that supports SRT.</p>
+
+    <h3>Are my inputs and images uploaded anywhere?</h3>
+    <p>No. Everything, including images and audio, is stored only in your browser (IndexedDB). To move a project to another device, save it as JSON from the File tab. JSON files do not include images or audio.</p>
+  </div>
+
+  <h2>🔗 Related tools</h2>
+  <ul>
+    <li><a href="../../handwriting-text-generator/en/">Handwriting Text Generator</a> — make lettering for YouTube thumbnails</li>
+    <li><a href="../../image-compressor/en/">Image Compressor</a> — shrink your reference images</li>
+    <li><a href="../../image-upscaler/en/">Image Upscaler</a> — enlarge small reference images</li>
+  </ul>
+
+  <a class="back" href="./">&larr; Back to the tool</a>
+</div>
+
+<div id="ad-widget" class="footer-ad">
+  <div class="ad-widget__head">
+    <span class="ad-widget__label">Sponsored</span>
+    <button id="ad-close" class="ad-widget__close" type="button" aria-label="Close ad">×</button>
+  </div>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4871781946658288" data-ad-slot="2232000919"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+<script>
+  // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+  (function () {
+    var w = document.getElementById("ad-widget");
+    var b = document.getElementById("ad-close");
+    if (!w || !b) return;
+    b.addEventListener("click", function () { w.classList.add("is-closed"); });
+  })();
+</script>
+
+<footer>
+  <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> Video Scenario Maker | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+  <div class="footer-links">
+    <a href="./">&#9998; Back to the tool</a>
+    <a href="https://www.domoai.app/home?via=video-scenario-maker" target="_blank" rel="sponsored noopener">Make videos with DomoAI (Sponsored) &rarr;</a>
+    <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
+    <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+  </div>
+</footer>
+</body>
+</html>

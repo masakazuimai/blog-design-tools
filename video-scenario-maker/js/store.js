@@ -1,8 +1,11 @@
 // プロジェクトの状態と保存（IndexedDB）。状態は常に新しいオブジェクトで置き換える
 
+import { LANG } from "./i18n.js?v=20260928b";
+
 const DB_NAME = "video-scenario-maker";
 const STORE = "project";
-const KEY = "current";
+// 日本語版と英語版で作業データを分ける（サンプルもセリフの言語も違うため）
+const KEY = LANG === "en" ? "current-en" : "current";
 const SAVE_DELAY = 400;
 
 let seq = 0;
@@ -25,20 +28,26 @@ export const createScene = (patch = {}) => ({
   ...patch,
 });
 
+// 初回表示のサンプル（汎用的な例）。画面の言語に合わせてセリフと話者名を変える
+const SAMPLE = {
+  ja: { speaker: "話し手A", hello: "こんにちは。今日はこれを紹介します。", more: "詳しくは概要欄へ", speechLang: "ja" },
+  en: { speaker: "Speaker A", hello: "Hi! Today I want to show you this.", more: "Find out more in the description.", speechLang: "en" },
+}[LANG];
+
 export const createProject = () => ({
   title: "",
   aspect: "9:16",
   style: "photo",
   mood: "",
   styleNote: "",
-  speechLang: "ja",
+  speechLang: SAMPLE.speechLang,
   dialogue: "speak",
   noText: true,
   target: 30,
   // 声は話者名ごと（キー "" はナレーション＝話す人が空欄のセリフ）
   voices: {
     "": { gender: "male", age: "adult", tone: "calm", speed: "", note: "" },
-    話し手A: { gender: "female", age: "young", tone: "bright", speed: "", note: "" },
+    [SAMPLE.speaker]: { gender: "female", age: "young", tone: "bright", speed: "", note: "" },
   },
   bgm: {
     genres: ["acoustic"],
@@ -53,8 +62,8 @@ export const createProject = () => ({
   },
   scenes: [
     createScene({ dur: 3, desc: "A person walks toward the camera on a quiet street in the morning", shot: "ws", move: "in", light: "day" }),
-    createScene({ dur: 4, speaker: "話し手A", line: "こんにちは。今日はこれを紹介します。", desc: "The person smiles and talks to the camera, holding a small item", shot: "ms", move: "static" }),
-    createScene({ dur: 3, line: "詳しくは概要欄へ", desc: "Close-up of the item placed on a table", shot: "cu", angle: "high", light: "studio", trans: "fade" }),
+    createScene({ dur: 4, speaker: SAMPLE.speaker, line: SAMPLE.hello, desc: "The person smiles and talks to the camera, holding a small item", shot: "ms", move: "static" }),
+    createScene({ dur: 3, line: SAMPLE.more, desc: "Close-up of the item placed on a table", shot: "cu", angle: "high", light: "studio", trans: "fade" }),
   ],
 });
 

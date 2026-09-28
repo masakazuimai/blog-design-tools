@@ -1,0 +1,63 @@
+<!doctype html>
+<!-- OG画像の生成元。ヘッドレスChromeで1200×630のスクリーンショットを撮る -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box; margin:0}
+  body{width:1200px; height:630px; overflow:hidden; background:#0f1013; color:#e7e7ea; font-family:"Noto Sans JP",sans-serif}
+  .wrap{padding:48px 72px 0}
+  .badge{
+    display:inline-block; font-size:22px; letter-spacing:.06em; color:#a9c1ff;
+    border:1px solid #3f6fe0; border-radius:6px; padding:6px 16px; margin-bottom:18px; background:#18203a;
+  }
+  h1{font-size:70px; font-weight:900; letter-spacing:-0.03em; line-height:1.15; margin-bottom:16px}
+  p{font-size:28px; color:#a0a2ab; font-weight:500}
+  .prompt{
+    position:absolute; right:72px; top:64px; width:360px; background:#121317; border:1px solid #2b2d34;
+    border-radius:8px; padding:16px 18px; font-family:"JetBrains Mono",monospace; font-size:17px; line-height:1.55; color:#c9cbd4;
+  }
+  .prompt b{color:#7fa3ff; font-weight:500}
+  .tl{position:absolute; left:72px; right:72px; bottom:56px; background:#18191d; border:1px solid #2b2d34; border-radius:8px; overflow:hidden}
+  .ruler{height:30px; border-bottom:1px solid #2b2d34; background-image:linear-gradient(to right,#3a3c45 1px,transparent 1px); background-size:44px 8px; background-repeat:repeat-x; background-position:0 100%}
+  .lane{position:relative; border-bottom:1px solid #2b2d34}
+  .v{height:78px} .s,.a{height:44px}
+  .clip{position:absolute; top:6px; bottom:6px; border-radius:5px; padding:4px 10px; font-size:20px; font-weight:700; white-space:nowrap; overflow:hidden}
+  .v .clip{background:#4b4fa8; border:1px solid #6e73d6}
+  .s .clip{background:#8a5a1f; border:1px solid #b27a32; font-weight:500; line-height:28px; padding-top:0}
+  .a .clip{background:#256b4d; border:1px solid #33936a; font-weight:500; line-height:28px; padding-top:0;
+    background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.1) 0 2px,transparent 2px 6px)}
+  .head{position:absolute; top:0; bottom:0; left:47%; width:3px; background:#ff4d4d}
+  .head::before{content:""; position:absolute; top:0; left:-7px; border:8px solid transparent; border-top:11px solid #ff4d4d}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="badge">Free · No sign-up</span>
+    <h1>Video Scenario<br>Maker</h1>
+    <p>Plan scenes by the second, copy AI video prompts</p>
+  </div>
+  <div class="prompt">
+    <b>[0:00–0:03]</b> Wide shot,<br>slow dolly-in. A person<br>walks toward the camera…<br>
+    <b>[0:03–0:07]</b> Medium shot.<br>"Hi! Today I want…"
+  </div>
+  <div class="tl">
+    <div class="ruler"></div>
+    <div class="lane v">
+      <div class="clip" style="left:0.5%; width:22%">1 Opening</div>
+      <div class="clip" style="left:23%; width:30%">2 Talk</div>
+      <div class="clip" style="left:53.5%; width:20%">3 Close-up</div>
+      <div class="clip" style="left:74%; width:25.5%">4 Ending</div>
+    </div>
+    <div class="lane s">
+      <div class="clip" style="left:23%; width:30%">Hi! Today I want…</div>
+      <div class="clip" style="left:74%; width:25.5%">More in the description</div>
+    </div>
+    <div class="lane a"><div class="clip" style="left:0.5%; width:99%">♪ BGM  acoustic · 100 BPM</div></div>
+    <div class="head"></div>
+  </div>
+</body>
+</html>

@@ -1,8 +1,9 @@
 // タイムライン：ルーラー／映像・字幕・BGMの3トラック／再生ヘッド。クリップ右端のドラッグで長さを変える
-import { withTimes, totalDuration } from "./store.js?v=20260928a";
-import { fmtTime } from "./prompt.js?v=20260928a";
-import { blobUrl } from "./preview.js?v=20260928a";
-import { BGM_GENRES, pick } from "./vocab.js?v=20260928a";
+import { withTimes, totalDuration } from "./store.js?v=20260928b";
+import { fmtTime } from "./prompt.js?v=20260928b";
+import { blobUrl } from "./preview.js?v=20260928b";
+import { BGM_GENRES, pick } from "./vocab.js?v=20260928b";
+import { T, label } from "./i18n.js?v=20260928b";
 
 const LABEL_MIN_PX = 64; // 目盛りラベル同士の最小間隔
 const STEPS = [0.5, 1, 2, 5, 10, 15, 30, 60];
@@ -43,9 +44,9 @@ export const createTimeline = (el, { onSelect, onSeek, onResize }) => {
     const src = blobUrl(s.image);
     if (src) c.style.backgroundImage = `url("${src}")`;
     const label = div("clip-label");
-    label.append(div("clip-no", String(i + 1)), div("clip-text", s.desc || `${s.dur}秒`));
+    label.append(div("clip-no", String(i + 1)), div("clip-text", s.desc || T.sec(s.dur)));
     c.append(label, div("handle"));
-    c.title = `シーン${i + 1}（${fmtTime(s.start)}–${fmtTime(s.end)}）`;
+    c.title = T.sceneTitle(i + 1, `${fmtTime(s.start)}–${fmtTime(s.end)}`);
     return c;
   };
 
@@ -59,7 +60,7 @@ export const createTimeline = (el, { onSelect, onSeek, onResize }) => {
 
   const audioClip = (p, total) => {
     const b = p.bgm;
-    const name = b.fileName || b.genres.map((v) => pick(BGM_GENRES, v).ja).join("・");
+    const name = b.fileName || b.genres.map((v) => label(pick(BGM_GENRES, v))).join(T.listSep);
     if (!name) return [];
     const c = div("clip clip-audio", `♪ ${name}`);
     c.style.left = "0px";
