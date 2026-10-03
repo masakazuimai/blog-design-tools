@@ -1,12 +1,13 @@
 // PC上のファイルを開く・上書き保存する
 // Chrome / Edge は File System Access API で元ファイルへ直接書き戻す。非対応ブラウザはダウンロードで代替
-import { formatOf } from './format.js?v=20261003a';
+import { formatOf } from './format.js?v=20261003b';
+import { t } from './i18n.js?v=20261003b';
 
 export const canOverwrite = typeof window.showOpenFilePicker === 'function';
 
 const PICKER_TYPES = [
-  { description: '問題集（CSV）', accept: { 'text/csv': ['.csv'] } },
-  { description: '問題集（JSON）', accept: { 'application/json': ['.json'] } },
+  { description: t('pickerCsv'), accept: { 'text/csv': ['.csv'] } },
+  { description: t('pickerJson'), accept: { 'application/json': ['.json'] } },
 ];
 
 function isAbort(e) {
@@ -53,7 +54,7 @@ async function ensureWritable(handle) {
 }
 
 async function writeHandle(handle, text) {
-  if (!(await ensureWritable(handle))) throw new Error('ファイルへの書き込みが許可されませんでした');
+  if (!(await ensureWritable(handle))) throw new Error(t('writeDenied'));
   const writable = await handle.createWritable();
   await writable.write(text);
   await writable.close();
@@ -82,7 +83,7 @@ export async function saveFile({ handle, name, buildText }) {
     await writeHandle(handle, buildText(formatOf(name)));
     return { name, handle, downloaded: false };
   }
-  const fileName = name || '問題集.csv';
+  const fileName = name || t('defaultFileName');
   download(fileName, buildText(formatOf(fileName)), formatOf(fileName));
   return { name: fileName, handle: null, downloaded: true };
 }

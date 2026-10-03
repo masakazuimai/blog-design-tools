@@ -1,5 +1,5 @@
 // アプリの状態。更新は必ず新しいオブジェクトで置き換え、購読者（描画）へ通知する
-import { saveBackup } from './backup.js?v=20261003a';
+import { saveBackup } from './backup.js?v=20261003b';
 
 const initial = {
   questions: null,   // null＝未読み込み。配列＝問題集を開いている

@@ -238,9 +238,11 @@ footer a:hover { text-decoration: underline; }
 .about ol { margin: 0 0 12px 1.4em; }
 .faq dt { font-weight: 600; margin-top: 12px; }
 .faq dd { margin: 4px 0 0; }
-.header-link { margin-left: auto; color: var(--accent); text-decoration: none; }
+.header-links { margin-left: auto; display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.header-link { color: var(--accent); text-decoration: none; }
 .header-link:hover { text-decoration: underline; }
 .about--page { margin-top: 0; color: var(--text); }
 .about--page h2:first-child { margin-top: 8px; }
 .howto-cta { margin-top: 32px; }
 .howto-cta .btn { display: inline-block; text-decoration: none; }
+.csv-pre { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; font-family: var(--mono); font-size: 16px; overflow-x: auto; color: var(--accent); margin-bottom: 12px; }

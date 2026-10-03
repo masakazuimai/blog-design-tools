@@ -1,22 +1,23 @@
 // 画面から呼ぶ操作（ファイル入出力・出題の開始）
-import { getState, setState, resetState } from './store.js?v=20261003a';
-import { openFile, saveFile, saveFileAs, downloadText, readFile } from './file.js?v=20261003a';
-import { parseDeck, serializeDeck, decodeText, templateCsv, baseName } from './format.js?v=20261003a';
-import { isDue } from './srs.js?v=20261003a';
-import { SAMPLE_QUESTIONS } from './sample.js?v=20261003a';
-import { shuffle, today, toast, uid, track } from './util.js?v=20261003a';
+import { getState, setState, resetState } from './store.js?v=20261003b';
+import { openFile, saveFile, saveFileAs, downloadText, readFile } from './file.js?v=20261003b';
+import { parseDeck, serializeDeck, decodeText, templateCsv, baseName } from './format.js?v=20261003b';
+import { isDue } from './srs.js?v=20261003b';
+import { SAMPLE_QUESTIONS } from './sample.js?v=20261003b';
+import { shuffle, today, toast, uid, track } from './util.js?v=20261003b';
+import { t } from './i18n.js?v=20261003b';
 
 // 未保存の変更を捨ててよいか確認する
 function confirmDiscard() {
   const { questions, dirty } = getState();
   if (!questions || !dirty) return true;
-  return window.confirm('保存していない変更があります。破棄して続けますか？');
+  return window.confirm(t('confirmDiscard'));
 }
 
 export function newDeck() {
   if (!confirmDiscard()) return;
   resetState({ questions: [], view: 'edit', editId: 'new' });
-  toast('新しい問題集を作りました。問題を追加してください');
+  toast(t('createdDeck'));
   track('new_deck');
 }
 
@@ -24,18 +25,18 @@ export function loadSample() {
   if (!confirmDiscard()) return;
   const questions = SAMPLE_QUESTIONS.map(q => ({ ...q, id: uid(), level: 0, next: '', ok: 0, ng: 0 }));
   resetState({ questions, view: 'home', dirty: true });
-  toast('サンプルの問題集を読み込みました');
+  toast(t('sampleLoaded'));
   track('load_sample');
 }
 
 function applyLoaded({ name, buffer, handle }) {
   const { questions, errors } = parseDeck(name, decodeText(buffer));
   if (!questions.length && errors.length) {
-    throw new Error(`問題を読み込めませんでした（${errors[0]}）`);
+    throw new Error(t('loadFailed', { error: errors[0] }));
   }
   resetState({ questions, fileName: name, handle, view: 'home' });
-  const skipped = errors.length ? `（${errors.length}行は空欄があるため読み飛ばしました：${errors[0]} ほか）` : '';
-  toast(`${questions.length}問を読み込みました${skipped}`);
+  const skipped = errors.length ? t('skipped', { count: errors.length, first: errors[0] }) : '';
+  toast(t('loaded', { count: questions.length, skipped }));
   track('open_file', { question_count: questions.length, file_format: name.split('.').pop().toLowerCase() });
 }
 
@@ -46,13 +47,13 @@ export async function openDeck() {
     if (loaded) applyLoaded(loaded);
   } catch (e) {
     console.error('ファイルを開けませんでした', e);
-    toast(e.message || 'ファイルを開けませんでした');
+    toast(e.message || t('openFailed'));
   }
 }
 
 export async function openDroppedFile(file) {
   if (!/\.(csv|json)$/i.test(file.name)) {
-    toast('CSVかJSONのファイルを選んでください');
+    toast(t('chooseCsvJson'));
     return;
   }
   if (!confirmDiscard()) return;
@@ -60,7 +61,7 @@ export async function openDroppedFile(file) {
     applyLoaded(await readFile(file));
   } catch (e) {
     console.error('ファイルを開けませんでした', e);
-    toast(e.message || 'ファイルを開けませんでした');
+    toast(e.message || t('openFailed'));
   }
 }
 
@@ -73,17 +74,17 @@ function afterSave(saved) {
   setState({ fileName: saved.name, handle: saved.handle, dirty: false });
   track('save_file', { question_count: getState().questions.length, save_method: saved.downloaded ? 'download' : 'overwrite' });
   toast(saved.downloaded
-    ? `「${saved.name}」をダウンロードしました。Googleドライブのフォルダへ移しておくと安心です`
-    : `「${saved.name}」に保存しました`);
+    ? t('savedDownload', { name: saved.name })
+    : t('savedOverwrite', { name: saved.name }));
 }
 
 export async function saveDeckAs() {
   const { fileName } = getState();
   try {
-    afterSave(await saveFileAs({ suggestedName: fileName || '問題集.csv', buildText }));
+    afterSave(await saveFileAs({ suggestedName: fileName || t('defaultFileName'), buildText }));
   } catch (e) {
     console.error('保存に失敗しました', e);
-    toast(e.message || '保存に失敗しました');
+    toast(e.message || t('saveFailed'));
   }
 }
 
@@ -94,12 +95,12 @@ export async function saveDeck() {
     afterSave(await saveFile({ handle, name: fileName, buildText }));
   } catch (e) {
     console.error('保存に失敗しました', e);
-    toast(e.message || '保存に失敗しました');
+    toast(e.message || t('saveFailed'));
   }
 }
 
 export function downloadTemplate() {
-  downloadText('問題集のひな形.csv', templateCsv());
+  downloadText(t('templateFileName'), templateCsv());
   track('download_template');
 }
 
@@ -118,7 +119,7 @@ export function startQuiz(mode, { count = 0, ids = [] } = {}) {
   const order = shuffle(pool.map(q => q.id));
   const picked = count > 0 ? order.slice(0, count) : order;
   if (!picked.length) {
-    toast('出題できる問題がありません');
+    toast(t('noQuestionsToAsk'));
     return;
   }
   setState({

@@ -1,7 +1,8 @@
 // ③-A 新規追加 ／ ③-B 編集（左に問題一覧、右に入力フォーム）
-import { h, uid, shortDate, track, toast } from '../util.js?v=20261003a';
-import { getState, setState, updateQuestions } from '../store.js?v=20261003a';
-import { MAX_LEVEL } from '../srs.js?v=20261003a';
+import { h, uid, shortDate, track, toast } from '../util.js?v=20261003b';
+import { getState, setState, updateQuestions } from '../store.js?v=20261003b';
+import { MAX_LEVEL } from '../srs.js?v=20261003b';
+import { t } from '../i18n.js?v=20261003b';
 
 let searchText = '';
 
@@ -24,7 +25,7 @@ function renderList(state, listEl) {
         h('span', { class: 't', text: `${no}. ${q.q}` }),
         levelBadge(q),
       )))
-    : [h('li', { class: 'qlist__empty', text: state.questions.length ? '該当する問題がありません' : 'まだ問題がありません' })]));
+    : [h('li', { class: 'qlist__empty', text: state.questions.length ? t('noMatch') : t('noQuestions') })]));
 }
 
 function field(label, mod, control) {
@@ -39,11 +40,11 @@ function readForm(inputs) {
     wrong: inputs.wrong.map(w => w.value.trim()),
     explain: inputs.explain.value.trim(),
   };
-  if (!values.q) return { error: '問題を入力してください' };
-  if (!values.correct) return { error: '正解を入力してください' };
-  if (values.wrong.some(w => !w)) return { error: '誤答を3つとも入力してください' };
+  if (!values.q) return { error: t('errNoQuestion') };
+  if (!values.correct) return { error: t('errNoCorrect') };
+  if (values.wrong.some(w => !w)) return { error: t('errNoWrong') };
   const choices = [values.correct, ...values.wrong];
-  if (new Set(choices).size !== choices.length) return { error: '選択肢に同じ内容が重複しています' };
+  if (new Set(choices).size !== choices.length) return { error: t('errDuplicate') };
   return { values };
 }
 
@@ -51,10 +52,10 @@ function renderForm(state) {
   const isNew = state.editId === 'new';
   const current = isNew ? null : state.questions.find(q => q.id === state.editId);
   if (!isNew && !current) {
-    return h('div', { class: 'card qform' }, h('p', { class: 'muted', text: '左の一覧から問題を選ぶか、「＋ 問題を追加」を押してください。' }));
+    return h('div', { class: 'card qform' }, h('p', { class: 'muted', text: t('pickFromList') }));
   }
   const ph = isNew
-    ? { q: '例：光の三原色に含まれない色は？', correct: '例：黄', wrong: ['例：赤', '例：緑', '例：青'], explain: '例：光の三原色は赤・緑・青（RGB）' }
+    ? { q: t('phQuestion'), correct: t('phCorrect'), wrong: t('phWrong'), explain: t('phExplain') }
     : { q: '', correct: '', wrong: ['', '', ''], explain: '' };
   const inputs = {
     q: h('textarea', { rows: '3', placeholder: ph.q, value: current?.q || '' }),
@@ -77,16 +78,16 @@ function renderForm(state) {
       track('question_add', { question_count: getState().questions.length });
       if (stay) {
         setState({ addedCount: state.addedCount + 1, editId: 'new' });
-        toast('追加しました。続けて次の問題をどうぞ');
+        toast(t('addedNext'));
         requestAnimationFrame(() => document.querySelector('.qform textarea')?.focus());
       } else {
         setState({ addedCount: 0, view: 'home', editId: null });
-        toast('問題を追加しました');
+        toast(t('added'));
       }
       return;
     }
     updateQuestions(list => list.map(q => (q.id === current.id ? { ...q, ...values } : q)));
-    toast('変更を保存しました');
+    toast(t('changesSaved'));
   };
 
   const onKeydown = (e) => {
@@ -98,51 +99,51 @@ function renderForm(state) {
 
   let armed = false;
   const deleteBtn = h('button', {
-    class: 'btn btn--danger', type: 'button', text: 'この問題を削除',
+    class: 'btn btn--danger', type: 'button', text: t('deleteQuestion'),
     onclick: () => {
       if (!armed) {
         armed = true;
         deleteBtn.classList.add('is-armed');
-        deleteBtn.textContent = 'もう一度押すと削除します';
+        deleteBtn.textContent = t('deleteConfirm');
         return;
       }
       updateQuestions(list => list.filter(q => q.id !== current.id));
       setState({ editId: null });
-      toast('問題を削除しました');
+      toast(t('deleted'));
     },
   });
 
   const title = isNew
-    ? h('h2', {}, '＋ 新しい問題を追加 ', state.addedCount ? h('span', { class: 'muted small', text: `（今回 ${state.addedCount}問追加）` }) : null)
-    : h('h2', {}, '✏ 問題を編集 ', h('span', { class: 'muted small', text: `#${state.questions.indexOf(current) + 1}` }));
+    ? h('h2', {}, t('titleNew'), state.addedCount ? h('span', { class: 'muted small', text: t('addedThisTime', { n: state.addedCount }) }) : null)
+    : h('h2', {}, t('titleEdit'), h('span', { class: 'muted small', text: `#${state.questions.indexOf(current) + 1}` }));
 
   const actions = isNew
     ? h('div', { class: 'btns' },
-      h('button', { class: 'btn btn--primary', type: 'button', onclick: () => submit(true), text: '追加して次の問題へ（Ctrl+Enter）' }),
-      h('button', { class: 'btn', type: 'button', onclick: () => submit(false), text: '追加して閉じる' }),
-      h('button', { class: 'btn', type: 'button', onclick: () => setState({ view: 'home', editId: null, addedCount: 0 }), text: 'キャンセル' }))
+      h('button', { class: 'btn btn--primary', type: 'button', onclick: () => submit(true), text: t('addAndNext') }),
+      h('button', { class: 'btn', type: 'button', onclick: () => submit(false), text: t('addAndClose') }),
+      h('button', { class: 'btn', type: 'button', onclick: () => setState({ view: 'home', editId: null, addedCount: 0 }), text: t('cancel') }))
     : h('div', { class: 'btns' },
-      h('button', { class: 'btn btn--primary', type: 'button', onclick: () => submit(false), text: '保存（Ctrl+Enter）' }),
+      h('button', { class: 'btn btn--primary', type: 'button', onclick: () => submit(false), text: t('saveEdit') }),
       deleteBtn);
 
   const meta = isNew ? null : h('div', { class: 'form-meta' },
-    h('span', { text: `Lv${current.level}${current.next ? ` ／ 次回 ${shortDate(current.next)}` : ' ／ すぐ出題'}` }),
-    h('span', { text: `正解 ${current.ok}回・不正解 ${current.ng}回` }),
+    h('span', { text: `Lv${current.level}${current.next ? t('metaNext', { date: shortDate(current.next) }) : t('metaNow')}` }),
+    h('span', { text: t('metaCounts', { ok: current.ok, ng: current.ng }) }),
     h('button', {
-      class: 'btn', type: 'button', text: '習熟度をリセット',
+      class: 'btn', type: 'button', text: t('resetLevel'),
       onclick: () => {
         updateQuestions(list => list.map(q => (q.id === current.id ? { ...q, level: 0, next: '' } : q)));
-        toast('習熟度をLv0に戻しました（すぐ出題されます）');
+        toast(t('levelReset'));
       },
     }));
 
   return h('div', { class: 'card qform', onkeydown: onKeydown },
-    h('button', { class: 'btn editor-back', type: 'button', onclick: () => setState({ editId: null }), text: '← 一覧へ' }),
+    h('button', { class: 'btn editor-back', type: 'button', onclick: () => setState({ editId: null }), text: t('backToList') }),
     title,
-    field('問題', '', inputs.q),
-    field('✅ 正解', 'field--ok', inputs.correct),
-    ...inputs.wrong.map((input, i) => field(`❌ 誤答${i + 1}`, 'field--ng', input)),
-    field('解説（任意）', '', inputs.explain),
+    field(t('fieldQuestion'), '', inputs.q),
+    field(t('fieldCorrect'), 'field--ok', inputs.correct),
+    ...inputs.wrong.map((input, i) => field(t('fieldWrong', { n: i + 1 }), 'field--ng', input)),
+    field(t('fieldExplain'), '', inputs.explain),
     meta,
     errorEl,
     actions,
@@ -153,19 +154,19 @@ export function renderEditor(state) {
   const listEl = h('ul', { class: 'qlist__items' });
   renderList(state, listEl);
   const search = h('input', {
-    type: 'search', placeholder: '🔍 問題を検索', value: searchText, 'aria-label': '問題を検索',
+    type: 'search', placeholder: t('searchPlaceholder'), value: searchText, 'aria-label': t('searchLabel'),
     oninput: (e) => { searchText = e.target.value; renderList(getState(), listEl); },
   });
   const editing = state.editId !== null;
   return h('div', {},
     h('div', { class: 'editor-top' },
-      h('button', { class: 'btn', type: 'button', onclick: () => setState({ view: 'home', editId: null, addedCount: 0 }), text: '← ホームへ戻る' }),
+      h('button', { class: 'btn', type: 'button', onclick: () => setState({ view: 'home', editId: null, addedCount: 0 }), text: t('backHome') }),
     ),
     h('div', { class: `editor${editing ? ' is-editing' : ''}` },
       h('div', { class: 'qlist' },
         h('div', { class: 'qlist__head' },
           search,
-          h('button', { class: 'btn btn--primary', type: 'button', onclick: () => setState({ editId: 'new', addedCount: 0 }), text: '＋ 問題を追加' }),
+          h('button', { class: 'btn btn--primary', type: 'button', onclick: () => setState({ editId: 'new', addedCount: 0 }), text: t('addQuestion') }),
         ),
         listEl,
       ),

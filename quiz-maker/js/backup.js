@@ -1,7 +1,10 @@
 // 作業中の自動バックアップ（IndexedDB）。正本はPCのファイルで、こちらは保存し忘れの保険
+import { LANG } from './i18n.js?v=20261003b';
+
 const DB_NAME = 'cq-quiz-maker';
 const STORE = 'kv';
-const KEY = 'current';
+// 日本語版と英語版で別々に保存する（日本語版は公開時からのキーを維持）
+const KEY = LANG === 'en' ? 'current-en' : 'current';
 
 function openDb() {
   return new Promise((resolve, reject) => {

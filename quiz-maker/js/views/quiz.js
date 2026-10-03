@@ -1,10 +1,11 @@
 // ④ 出題 ／ ⑤ 結果
-import { h, shuffle, today, track } from '../util.js?v=20261003a';
-import { getState, setState } from '../store.js?v=20261003a';
-import { applyAnswer, describeDays, MAX_LEVEL } from '../srs.js?v=20261003a';
-import { startQuiz } from '../actions.js?v=20261003a';
+import { h, shuffle, today, track } from '../util.js?v=20261003b';
+import { getState, setState } from '../store.js?v=20261003b';
+import { applyAnswer, describeDays, MAX_LEVEL } from '../srs.js?v=20261003b';
+import { startQuiz } from '../actions.js?v=20261003b';
+import { t } from '../i18n.js?v=20261003b';
 
-const MODE_LABEL = { due: '今日の復習', all: '全問から出題', retry: '間違えた問題をもう一度' };
+const MODE_LABEL = { due: t('modeDue'), all: t('modeAll'), retry: t('modeRetry') };
 
 function currentQuestion(state) {
   const { quiz, questions } = state;
@@ -69,15 +70,15 @@ export function handleQuizKey(e) {
 function feedback(q, answered) {
   const { isCorrect, info } = answered;
   let lvText;
-  if (!isCorrect) lvText = `${info.from ? `Lv${info.from} → Lv0` : 'Lv0のまま'}（明日もう一度出題）`;
-  else if (info.advanced) lvText = `Lv${info.from} → Lv${info.to}（次回は${describeDays(info.days)}）${info.to === MAX_LEVEL ? ' ✅ 覚えた！' : ''}`;
-  else lvText = `Lv${info.from}のまま（出題日前の問題なので習熟度は上げません）`;
+  if (!isCorrect) lvText = t('lvWrong', { from: info.from ? `Lv${info.from} → Lv0` : t('lvStay0') });
+  else if (info.advanced) lvText = t('lvUp', { from: info.from, to: info.to, days: describeDays(info.days) }) + (info.to === MAX_LEVEL ? t('lvMastered') : '');
+  else lvText = t('lvNotDue', { from: info.from });
   return h('div', { class: 'feedback' },
-    h('div', { class: `feedback__head ${isCorrect ? 'ok' : 'ng'}`, text: isCorrect ? '⭕ 正解！' : `❌ 不正解 — 正解は「${q.correct}」` }),
+    h('div', { class: `feedback__head ${isCorrect ? 'ok' : 'ng'}`, text: isCorrect ? t('correct') : t('wrongAnswer', { answer: q.correct }) }),
     h('div', { class: 'feedback__lv', text: lvText }),
     q.explain ? h('div', { class: 'feedback__explain', text: q.explain }) : null,
     h('div', { class: 'btns' },
-      h('button', { class: 'btn btn--primary', type: 'button', onclick: next, text: '次の問題へ →（Enter）' })),
+      h('button', { class: 'btn btn--primary', type: 'button', onclick: next, text: t('nextQuestion') })),
   );
 }
 
@@ -106,9 +107,9 @@ export function renderQuiz(state) {
       h('div', { class: 'choices' }, choiceButtons),
       quiz.answered ? feedback(q, quiz.answered) : null,
     ),
-    h('p', { class: 'key-hint', text: 'キーボードの 1〜4 でも回答できます。選択肢の並びは毎回シャッフルされます。' }),
+    h('p', { class: 'key-hint', text: t('keyHint') }),
     h('div', { class: 'quiz-quit' },
-      h('button', { class: 'btn', type: 'button', onclick: () => setState({ view: 'home', quiz: null }), text: '中断してホームへ（ここまでの記録は残ります）' })),
+      h('button', { class: 'btn', type: 'button', onclick: () => setState({ view: 'home', quiz: null }), text: t('quit') })),
   );
 }
 
@@ -120,20 +121,20 @@ export function renderResult(state) {
   const byId = new Map(state.questions.map(q => [q.id, q]));
   const wrongList = wrongIds.map(id => byId.get(id)).filter(Boolean);
   return h('div', { class: 'card result' },
-    h('div', { class: 'result__score', text: `${correct} / ${results.length} 問正解` }),
-    h('p', { class: 'result__sub', text: `正答率 ${Math.round((correct / results.length) * 100)}%` }),
-    mastered ? h('p', { class: 'result__mastered', text: `🎉 新しく「覚えた」に到達：${mastered}問` }) : null,
+    h('div', { class: 'result__score', text: t('score', { correct, total: results.length }) }),
+    h('p', { class: 'result__sub', text: t('rate', { rate: Math.round((correct / results.length) * 100) }) }),
+    mastered ? h('p', { class: 'result__mastered', text: t('newlyMastered', { n: mastered }) }) : null,
     wrongList.length
       ? h('div', { class: 'result__wrong' },
-        h('h3', { text: '間違えた問題（明日もう一度出題されます）' }),
+        h('h3', { text: t('wrongListTitle') }),
         h('ul', {}, wrongList.map(q => h('li', { text: q.q }))))
-      : h('p', { class: 'result__sub', text: '全問正解です！' }),
+      : h('p', { class: 'result__sub', text: t('allCorrect') }),
     h('div', { class: 'btns' },
       wrongList.length
-        ? h('button', { class: 'btn btn--primary', type: 'button', onclick: () => startQuiz('retry', { ids: wrongList.map(q => q.id) }), text: `間違えた${wrongList.length}問だけもう一度` })
+        ? h('button', { class: 'btn btn--primary', type: 'button', onclick: () => startQuiz('retry', { ids: wrongList.map(q => q.id) }), text: t('retryWrong', { n: wrongList.length }) })
         : null,
-      h('button', { class: 'btn', type: 'button', onclick: () => setState({ view: 'home', result: null }), text: 'ホームへ' }),
+      h('button', { class: 'btn', type: 'button', onclick: () => setState({ view: 'home', result: null }), text: t('home') }),
     ),
-    state.dirty ? h('p', { class: 'result__warn', text: '⚠ 学習記録を残すには「上書き保存」を押してください' }) : null,
+    state.dirty ? h('p', { class: 'result__warn', text: t('saveReminder') }) : null,
   );
 }

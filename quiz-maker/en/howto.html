@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
+    </script>
+    <!-- End Google Tag Manager -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to use · FAQ | Quiz Maker (multiple-choice flashcards)</title>
+<meta name="description" content="How to use Quiz Maker: create a quiz set, add multiple-choice questions, take today's review, save and open CSV / JSON files, how spaced repetition decides when questions come back, and answers to common questions.">
+<link rel="canonical" href="https://codequest.work/generator/quiz-maker/en/howto.html">
+<link rel="alternate" hreflang="ja" href="https://codequest.work/generator/quiz-maker/howto.html">
+<link rel="alternate" hreflang="en" href="https://codequest.work/generator/quiz-maker/en/howto.html">
+<link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/quiz-maker/howto.html">
+<meta name="robots" content="index, follow">
+
+<!-- OGP -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CodeQuest.work">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="How to use · FAQ | Quiz Maker">
+<meta property="og:description" content="Create a quiz set, add multiple-choice questions, take today's review, save to CSV / JSON, and how spaced repetition works.">
+<meta property="og:url" content="https://codequest.work/generator/quiz-maker/en/howto.html">
+<meta property="og:image" content="https://codequest.work/generator/quiz-maker/assets/og-en.png?v=20261003a">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Quiz Maker — build a multiple-choice quiz and drill it until you remember">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to use · FAQ | Quiz Maker">
+<meta name="twitter:description" content="Create a quiz set, add multiple-choice questions, take today's review, save to CSV / JSON, and how spaced repetition works.">
+<meta name="twitter:image" content="https://codequest.work/generator/quiz-maker/assets/og-en.png?v=20261003a">
+
+<!-- 構造化データ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://codequest.work/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tools",
+          "item": "https://codequest.work/category/generator/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Quiz Maker",
+          "item": "https://codequest.work/generator/quiz-maker/en/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "How to use · FAQ",
+          "item": "https://codequest.work/generator/quiz-maker/en/howto.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to use Quiz Maker",
+      "description": "How to build a multiple-choice quiz and get quizzed until you remember it.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Create or open a quiz set",
+          "text": "Press \"New\" to start a quiz set, or open a CSV / JSON file. You can also drag a file onto the page."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Add questions",
+          "text": "Enter the question, the correct answer, three wrong choices and an optional explanation. \"Add & next\" (Ctrl+Enter) lets you keep adding."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Take today's review",
+          "text": "Only questions that are due are asked. Both the question order and the order of the choices are shuffled every time. You can answer with keys 1–4."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Save to your file",
+          "text": "Press \"Save\" when you finish. Your questions and progress (level, next due date, correct count) are written to the file. Keep it in a Google Drive folder to continue on a new computer."
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Where are my questions saved?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In a file on your computer (CSV or JSON). Nothing is sent to a server. Your work in progress is also backed up in the browser automatically, so if you close the tab without saving, it is restored the next time you open the tool."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I continue on a new computer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Your questions and progress (level, next due date, correct count) are all written into the file, so opening that file on a new computer picks up where you left off. Saving it in a Google Drive folder protects you if your computer breaks."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do mastered questions stop appearing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not completely. Each correct answer raises the level and spreads the question out: tomorrow → 3 days → 1 week → 2 weeks → 1 month. Questions that reach the top level, Lv5 (mastered), still come back for a check after 3 months, and drop back to Lv0 if you miss them."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I import questions I made in Excel or Google Sheets?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Open a CSV with the columns in this order: Question, Answer, Wrong 1, Wrong 2, Wrong 3, Explanation. The progress columns can be left blank. In Excel, saving as \"CSV UTF-8\" is the safest choice."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there a limit on the number of questions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Questions are stored in a file on your computer, so you can add as many as you like."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css?v=20261003d">
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+<div class="wrap">
+  <header>
+    <h1>How to use · FAQ</h1>
+    <nav class="header-links">
+      <a class="header-link" href="./">← Back to Quiz Maker</a>
+      <a class="header-link" href="../howto.html" hreflang="ja">日本語</a>
+    </nav>
+  </header>
+  <p class="lead">How to use Quiz Maker, a tool where you write your own questions with four choices (1 correct, 3 wrong) and get quizzed until you remember them.</p>
+  <section class="about about--page">
+    <h2>How to use</h2>
+    <ol>
+      <li>Press "New" to start a quiz set, or open a CSV / JSON file</li>
+      <li>Add the question, the correct answer, three wrong choices and an optional explanation. "Add & next" (Ctrl+Enter) lets you keep going</li>
+      <li>Use "Today's review" to answer only the questions that are due. The question order and the choices are shuffled every time</li>
+      <li>Press "Save" when you finish. Your progress (level, next due date, correct count) is written to the file too</li>
+    </ol>
+
+    <h2>How it quizzes you until you remember</h2>
+    <table>
+      <thead><tr><th scope="col">Level</th><th scope="col">If you answer correctly, it comes back</th></tr></thead>
+      <tbody>
+        <tr><td>Lv0</td><td>Tomorrow</td></tr>
+        <tr><td>Lv1</td><td>In 3 days</td></tr>
+        <tr><td>Lv2</td><td>In 1 week</td></tr>
+        <tr><td>Lv3</td><td>In 2 weeks</td></tr>
+        <tr><td>Lv4</td><td>In 1 month</td></tr>
+        <tr><td>Lv5 (mastered)</td><td>A check in 3 months</td></tr>
+      </tbody>
+    </table>
+    <p>A question you miss drops back to Lv0 and comes back tomorrow. In "Quiz from all", answering a question correctly before it is due does not raise its level early (missing it still resets it to Lv0).</p>
+
+    <h2>CSV format</h2>
+    <p>One question per row. The first row is the header. The progress columns (Level onward) can be left blank.</p>
+    <pre class="csv-pre">Question,Answer,Wrong 1,Wrong 2,Wrong 3,Explanation,Level,Next due,Correct count,Wrong count</pre>
+
+    <h2>FAQ</h2>
+    <dl class="faq">
+      <dt>Where are my questions saved?</dt>
+      <dd>In a file on your computer (CSV or JSON). Nothing is sent to a server. Your work in progress is also backed up in the browser automatically, so if you close the tab without saving, it is restored the next time you open the tool.</dd>
+      <dt>Can I continue on a new computer?</dt>
+      <dd>Yes. Your questions and progress (level, next due date, correct count) are all written into the file, so opening that file on a new computer picks up where you left off. Saving it in a Google Drive folder protects you if your computer breaks.</dd>
+      <dt>Do mastered questions stop appearing?</dt>
+      <dd>Not completely. Each correct answer raises the level and spreads the question out: tomorrow → 3 days → 1 week → 2 weeks → 1 month. Questions that reach the top level, Lv5 (mastered), still come back for a check after 3 months, and drop back to Lv0 if you miss them.</dd>
+      <dt>Can I import questions I made in Excel or Google Sheets?</dt>
+      <dd>Yes. Open a CSV with the columns in this order: Question, Answer, Wrong 1, Wrong 2, Wrong 3, Explanation. The progress columns can be left blank. In Excel, saving as "CSV UTF-8" is the safest choice.</dd>
+      <dt>Is there a limit on the number of questions?</dt>
+      <dd>No. Questions are stored in a file on your computer, so you can add as many as you like.</dd>
+    </dl>
+  </section>
+
+  <p class="howto-cta"><a class="btn btn--primary btn--big" href="./">▶ Build a quiz</a></p>
+
+  <footer>
+    <span>&copy; <span class="cq-year">2026</span>
+      <script>document.currentScript.previousElementSibling.textContent = new Date().getFullYear();</script>
+      Quiz Maker | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+    <div class="footer-links">
+      <a href="./">&#128221; Quiz Maker</a>
+      <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
+      <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+    </div>
+  </footer>
+</div>
+
+<!-- 右下フローティング広告（ツール規格 320×100） -->
+<div id="ad-widget" class="footer-ad">
+  <div class="ad-widget__head">
+    <span class="ad-widget__label">Sponsored</span>
+    <button id="ad-close" class="ad-widget__close" type="button" aria-label="Close ad">×</button>
+  </div>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  <ins class="adsbygoogle" style="display:block"
+       data-ad-client="ca-pub-4871781946658288"
+       data-ad-slot="3105116344"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+<script>
+  // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+  (function () {
+    var w = document.getElementById("ad-widget");
+    var b = document.getElementById("ad-close");
+    if (!w || !b) return;
+    b.addEventListener("click", function () { w.classList.add("is-closed"); });
+  })();
+</script>
+
+</body>
+</html>

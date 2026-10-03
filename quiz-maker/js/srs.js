@@ -1,6 +1,7 @@
 // 間隔反復（段階式＝ライトナー方式）
 // 現在の習熟度で正解したら INTERVALS[習熟度] 日後に出題し、習熟度を1上げる。間違えたら Lv0・翌日
-import { addDays } from './util.js?v=20261003a';
+import { addDays } from './util.js?v=20261003b';
+import { t } from './i18n.js?v=20261003b';
 
 export const MAX_LEVEL = 5;
 export const INTERVALS = [1, 3, 7, 14, 30, 90];
@@ -53,10 +54,5 @@ export function deckStats(questions, todayYmd) {
 
 // 「◯日後」を読みやすい言葉にする
 export function describeDays(days) {
-  if (days === 1) return '明日';
-  if (days === 7) return '1週間後';
-  if (days === 14) return '2週間後';
-  if (days === 30) return '1か月後';
-  if (days === 90) return '3か月後';
-  return `${days}日後`;
+  return [1, 7, 14, 30, 90].includes(days) ? t(`days${days}`) : t('daysN', { n: days });
 }
