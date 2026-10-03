@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
+    </script>
+    <!-- End Google Tag Manager -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>使い方・FAQ｜自分だけの問題集（4択の暗記ツール）</title>
+<meta name="description" content="自分だけの問題集の使い方。問題集の作り方、4択問題の登録、今日の復習の解き方、CSV／JSONでの保存と読み込み、覚えるまで出題する間隔反復の仕組み、よくある質問をまとめています。">
+<link rel="canonical" href="https://codequest.work/generator/quiz-maker/howto.html">
+<meta name="robots" content="index, follow">
+
+<!-- OGP -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="CodeQuest.work">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="使い方・FAQ｜自分だけの問題集">
+<meta property="og:description" content="問題集の作り方、4択問題の登録、今日の復習の解き方、CSV／JSONでの保存、覚えるまで出題する仕組みとよくある質問。">
+<meta property="og:url" content="https://codequest.work/generator/quiz-maker/howto.html">
+<meta property="og:image" content="https://codequest.work/generator/quiz-maker/assets/og.png?v=20261003a">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="自分だけの問題集 — 4択問題を作って覚えるまで出題">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="使い方・FAQ｜自分だけの問題集">
+<meta name="twitter:description" content="問題集の作り方、4択問題の登録、今日の復習の解き方、CSV／JSONでの保存、覚えるまで出題する仕組みとよくある質問。">
+<meta name="twitter:image" content="https://codequest.work/generator/quiz-maker/assets/og.png?v=20261003a">
+
+<!-- 構造化データ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+        { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://codequest.work/category/generator/" },
+        { "@type": "ListItem", "position": 3, "name": "自分だけの問題集", "item": "https://codequest.work/generator/quiz-maker/" },
+        { "@type": "ListItem", "position": 4, "name": "使い方・FAQ", "item": "https://codequest.work/generator/quiz-maker/howto.html" }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "自分だけの問題集の使い方",
+      "description": "4択問題を登録して、覚えるまで出題する暗記ツールの使い方。",
+      "step": [
+        { "@type": "HowToStep", "name": "問題集を作る・開く", "text": "「新規作成」で問題集を作るか、CSV／JSONファイルを開きます。ファイルを画面にドラッグしても開けます。" },
+        { "@type": "HowToStep", "name": "問題を登録する", "text": "問題・正解・誤答3つ・解説（任意）を入力します。「追加して次の問題へ」（Ctrl+Enter）で続けて登録できます。" },
+        { "@type": "HowToStep", "name": "今日の復習を解く", "text": "出題日が来た問題だけが出題されます。問題の順番も選択肢の並びも毎回シャッフルされます。キーボードの1〜4でも回答できます。" },
+        { "@type": "HowToStep", "name": "ファイルに保存する", "text": "終わったら「上書き保存」を押します。問題と学習記録（習熟度・次回出題日・正解回数）がファイルに書き込まれます。Googleドライブのフォルダに保存しておくと、PCを買い替えても続きから使えます。" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "作った問題はどこに保存されますか？", "acceptedAnswer": { "@type": "Answer", "text": "PCのファイル（CSVまたはJSON）に保存されます。サーバーには送信されません。作業中の内容はブラウザ内にも自動でバックアップされるため、保存し忘れてタブを閉じても次に開いたときに復元されます。" } },
+        { "@type": "Question", "name": "PCを買い替えても続きから使えますか？", "acceptedAnswer": { "@type": "Answer", "text": "使えます。問題と学習記録（習熟度・次回出題日・正解回数）はすべてファイルに書き込まれるため、新しいPCでそのファイルを開けば続きから再開できます。故障に備えてGoogleドライブのフォルダに保存しておくのがおすすめです。" } },
+        { "@type": "Question", "name": "覚えた問題はもう出題されませんか？", "acceptedAnswer": { "@type": "Answer", "text": "完全には消えません。正解するたびに習熟度が上がり、出題の間隔が翌日→3日後→1週間後→2週間後→1か月後と空いていきます。最上位のLv5（覚えた）に達した問題も3か月後に確認として出題され、間違えるとLv0に戻ります。" } },
+        { "@type": "Question", "name": "Excelで作った問題を読み込めますか？", "acceptedAnswer": { "@type": "Answer", "text": "読み込めます。「問題, 正解, 誤答1, 誤答2, 誤答3, 解説」の順に列を並べたCSVを開いてください。学習記録の列は空欄で構いません。Excelでは「CSV UTF-8」形式で保存すると確実です。" } },
+        { "@type": "Question", "name": "問題の数に上限はありますか？", "acceptedAnswer": { "@type": "Answer", "text": "上限は設けていません。問題はPCのファイルに保存されるため、何問でも登録できます。" } }
+      ]
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=20261003b">
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+<div class="wrap">
+  <header>
+    <h1>使い方・FAQ</h1>
+    <a class="header-link" href="./">← 自分だけの問題集へ戻る</a>
+  </header>
+  <p class="lead">問題と4択（正解1・誤答3）を自分で登録して、覚えるまで出題する暗記ツール「自分だけの問題集」の使い方です。</p>
+  <section class="about about--page">
+    <h2>使い方</h2>
+    <ol>
+      <li>「新規作成」で問題集を作るか、CSV／JSONファイルを開きます</li>
+      <li>問題・正解・誤答3つ・解説（任意）を登録します。「追加して次の問題へ」（Ctrl+Enter）で続けて入力できます</li>
+      <li>「今日の復習」で、出題日が来た問題だけを解きます。問題の順番も選択肢の並びも毎回シャッフルされます</li>
+      <li>終わったら「上書き保存」。学習記録（習熟度・次回出題日・正解回数）もファイルに書き込まれます</li>
+    </ol>
+
+    <h2>覚えるまで出題する仕組み</h2>
+    <table>
+      <thead><tr><th scope="col">習熟度</th><th scope="col">正解したら次に出すのは</th></tr></thead>
+      <tbody>
+        <tr><td>Lv0</td><td>翌日</td></tr>
+        <tr><td>Lv1</td><td>3日後</td></tr>
+        <tr><td>Lv2</td><td>1週間後</td></tr>
+        <tr><td>Lv3</td><td>2週間後</td></tr>
+        <tr><td>Lv4</td><td>1か月後</td></tr>
+        <tr><td>Lv5（覚えた）</td><td>3か月後に確認</td></tr>
+      </tbody>
+    </table>
+    <p>間違えた問題はLv0に戻り、翌日にもう一度出題されます。「全問から出題」で出題日前の問題を正解しても、習熟度は先取りで上がりません（間違えた場合はLv0に戻ります）。</p>
+
+    <h2>よくある質問</h2>
+    <dl class="faq">
+      <dt>作った問題はどこに保存されますか？</dt>
+      <dd>PCのファイル（CSVまたはJSON）に保存されます。サーバーには送信されません。作業中の内容はブラウザ内にも自動でバックアップされるため、保存し忘れてタブを閉じても次に開いたときに復元されます。</dd>
+      <dt>PCを買い替えても続きから使えますか？</dt>
+      <dd>使えます。問題と学習記録はすべてファイルに書き込まれるため、新しいPCでそのファイルを開けば続きから再開できます。故障に備えてGoogleドライブのフォルダに保存しておくのがおすすめです。</dd>
+      <dt>覚えた問題はもう出題されませんか？</dt>
+      <dd>完全には消えません。最上位のLv5（覚えた）に達した問題も3か月後に確認として出題され、間違えるとLv0に戻ります。</dd>
+      <dt>Excelで作った問題を読み込めますか？</dt>
+      <dd>読み込めます。「問題, 正解, 誤答1, 誤答2, 誤答3, 解説」の順に列を並べたCSVを開いてください。学習記録の列は空欄で構いません。Excelでは「CSV UTF-8」形式で保存すると確実です。</dd>
+      <dt>問題の数に上限はありますか？</dt>
+      <dd>上限は設けていません。問題はPCのファイルに保存されるため、何問でも登録できます。</dd>
+    </dl>
+  </section>
+
+  <p class="howto-cta"><a class="btn btn--primary btn--big" href="./">▶ 問題集を作ってみる</a></p>
+
+  <footer>
+    <span>&copy; <span class="cq-year">2026</span>
+      <script>document.currentScript.previousElementSibling.textContent = new Date().getFullYear();</script>
+      自分だけの問題集 | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+    <div class="footer-links">
+      <a href="./">&#128221; 自分だけの問題集</a>
+      <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
+      <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+    </div>
+  </footer>
+</div>
+
+<!-- 右下フローティング広告（ツール規格 320×100） -->
+<div id="ad-widget" class="footer-ad">
+  <div class="ad-widget__head">
+    <span class="ad-widget__label">広告</span>
+    <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
+  </div>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  <ins class="adsbygoogle" style="display:block"
+       data-ad-client="ca-pub-4871781946658288"
+       data-ad-slot="3105116344"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+<script>
+  // 右下フローティング広告の「×で閉じる」（記憶せず再読込で再表示）
+  (function () {
+    var w = document.getElementById("ad-widget");
+    var b = document.getElementById("ad-close");
+    if (!w || !b) return;
+    b.addEventListener("click", function () { w.classList.add("is-closed"); });
+  })();
+</script>
+
+</body>
+</html>
