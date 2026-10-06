@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1200px; height: 630px; background: #fafafa; color: #0a0a0a; font-family: 'Geist', 'Noto Sans JP', sans-serif; display: flex; align-items: center; padding: 0 64px 0 72px; gap: 48px; }
+  .left { flex: 1; }
+  .badge { display: inline-block; border: 2px solid #d4d4d4; border-radius: 40px; padding: 6px 22px; font-size: 26px; font-weight: 700; color: #4d4d4d; margin-bottom: 28px; background: #fff; }
+  h1 { font-size: 72px; font-weight: 700; letter-spacing: -0.04em; line-height: 1.15; }
+  p { margin-top: 24px; font-size: 28px; color: #4d4d4d; line-height: 1.55; }
+  .site { margin-top: 32px; font-family: 'Geist Mono', monospace; font-size: 24px; color: #737373; }
+  /* 右側の絵コンテ1コマ（SZ03 アップ） */
+  .panel { width: 540px; background: #fff; border: 2px solid #d4d4d4; border-radius: 16px; padding: 18px; }
+  .shot { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 8px; }
+  .meta { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+  .id { font-family: 'Geist Mono', monospace; font-size: 22px; color: #737373; }
+  .name { font-size: 26px; font-weight: 700; }
+  .tags { display: flex; gap: 8px; margin-top: 12px; }
+  .tag { border: 2px solid #e5e5e5; border-radius: 30px; padding: 2px 14px; font-size: 20px; color: #4d4d4d; }
+</style>
+</head>
+<body>
+  <div class="left">
+    <span class="badge">Free · No sign-up</span>
+    <h1>Storyboard<br>Shots</h1>
+    <p>38 essential film shots.<br>Copy prompts for AI video.</p>
+    <div class="site">CodeQuest.work</div>
+  </div>
+  <div class="panel">
+    <img class="shot" src="../img/sz03.webp" alt="">
+    <div class="meta"><span class="id">SZ03</span><span class="name">Close-up (face)</span></div>
+    <div class="tags"><span class="tag">Close-up</span><span class="tag">Eye level</span><span class="tag">Static</span></div>
+  </div>
+</body>
+</html>
