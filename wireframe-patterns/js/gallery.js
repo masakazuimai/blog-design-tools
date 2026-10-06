@@ -1,11 +1,12 @@
 // パターン一覧（カテゴリ絞り込み＋カード）
-import { CATEGORIES, PATTERNS, categoryName } from "./patterns/index.js?v=20261006f";
-import { createPreview } from "./preview.js?v=20261006f";
-import { addItem } from "./builder.js?v=20261006f";
-import { toast, track } from "./ui.js?v=20261006f";
+import { CATEGORIES, PATTERNS, categoryName } from "./patterns/index.js?v=20261006h";
+import { createPreview } from "./preview.js?v=20261006h";
+import { addItem } from "./builder.js?v=20261006h";
+import { toast, track } from "./ui.js?v=20261006h";
+import { t } from "./i18n.js?v=20261006h";
 
 const renderChips = (wrap, onSelect) => {
-  const all = [{ id: "all", name: "すべて", count: PATTERNS.length }]
+  const all = [{ id: "all", name: t("all"), count: PATTERNS.length }]
     .concat(CATEGORIES.map((c) => ({ ...c, count: PATTERNS.filter((p) => p.cat === c.id).length })));
   wrap.innerHTML = all
     .map((c, i) => `<button class="chip" type="button" data-cat="${c.id}" aria-pressed="${i === 0}">${c.name}<span>${c.count}</span></button>`)
@@ -19,7 +20,7 @@ const renderChips = (wrap, onSelect) => {
 };
 
 const cardHtml = (p) => `<article class="card" data-cat="${p.cat}">
-  <button class="card__thumb" type="button" data-open="${p.id}" aria-label="${p.name}を詳しく見る">
+  <button class="card__thumb" type="button" data-open="${p.id}" aria-label="${t("openDetail")(p.name)}">
     <div class="frame"><div class="frame__stage"></div></div>
   </button>
   <div class="card__body">
@@ -28,8 +29,8 @@ const cardHtml = (p) => `<article class="card" data-cat="${p.cat}">
     <p class="card__use">${p.use}</p>
   </div>
   <div class="card__actions">
-    <button class="btn btn--ghost" type="button" data-open="${p.id}">詳しく見る</button>
-    <button class="btn" type="button" data-add="${p.id}">＋ページに追加</button>
+    <button class="btn btn--ghost" type="button" data-open="${p.id}">${t("learnMore")}</button>
+    <button class="btn" type="button" data-add="${p.id}">${t("addToPage")}</button>
   </div>
 </article>`;
 
@@ -48,7 +49,7 @@ export const initGallery = ({ onOpen }) => {
     if (add) {
       addItem(add.dataset.add);
       track("add", { from: "card", pattern_id: add.dataset.add });
-      toast("ページに追加しました");
+      toast(t("added"));
     }
   });
 

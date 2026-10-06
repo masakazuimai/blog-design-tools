@@ -1,11 +1,12 @@
 // ビルダー画面（構成リスト＋ページ全体のプレビュー＋書き出し）
-import { CATEGORIES, PATTERNS, categoryName, getPattern } from "./patterns/index.js?v=20261006f";
-import { createPreview } from "./preview.js?v=20261006f";
-import { buildCss, buildDocument, buildHtml } from "./code.js?v=20261006f";
-import { buildPrompt } from "./prompt.js?v=20261006f";
-import * as store from "./builder.js?v=20261006f";
-import { bindSeg, copyText, exportPng, exportSvg, toast, track } from "./ui.js?v=20261006f";
-import { downloadText } from "./download.js?v=20261006f";
+import { CATEGORIES, PATTERNS, categoryName, getPattern } from "./patterns/index.js?v=20261006h";
+import { createPreview } from "./preview.js?v=20261006h";
+import { buildCss, buildDocument, buildHtml } from "./code.js?v=20261006h";
+import { buildPrompt } from "./prompt.js?v=20261006h";
+import * as store from "./builder.js?v=20261006h";
+import { bindSeg, copyText, exportPng, exportSvg, toast, track } from "./ui.js?v=20261006h";
+import { downloadText } from "./download.js?v=20261006h";
+import { t } from "./i18n.js?v=20261006h";
 
 const $ = (id) => document.getElementById(id);
 const SEED = ["hd01", "fv02", "fa01", "cs01", "st01", "pr01", "fq01", "ft03"];
@@ -20,12 +21,12 @@ const rowHtml = (item, i, total) => {
     <span class="stack__no">${String(i + 1).padStart(2, "0")}</span>
     <div class="stack__main">
       <span class="stack__cat">${categoryName(p.cat)}</span>
-      <select data-swap aria-label="${categoryName(p.cat)}のパターン">${optionsFor(p.cat, p.id)}</select>
+      <select data-swap aria-label="${t("patternOf")(categoryName(p.cat))}">${optionsFor(p.cat, p.id)}</select>
     </div>
     <div class="stack__ops">
-      <button type="button" data-move="-1" aria-label="上へ"${i === 0 ? " disabled" : ""}>▲</button>
-      <button type="button" data-move="1" aria-label="下へ"${i === total - 1 ? " disabled" : ""}>▼</button>
-      <button type="button" data-remove aria-label="外す">×</button>
+      <button type="button" data-move="-1" aria-label="${t("moveUp")}"${i === 0 ? " disabled" : ""}>▲</button>
+      <button type="button" data-move="1" aria-label="${t("moveDown")}"${i === total - 1 ? " disabled" : ""}>▼</button>
+      <button type="button" data-remove aria-label="${t("remove")}">×</button>
     </div>
   </li>`;
 };
@@ -67,9 +68,9 @@ export const initBuilderView = () => {
   bindSeg($("builder-device"), (w) => preview.setWidth(w));
 
   const exporters = {
-    html: (ps) => copyText(buildHtml(ps), "HTMLをコピーしました"),
-    css: (ps) => copyText(buildCss(ps), "CSSをコピーしました"),
-    prompt: (ps) => copyText(buildPrompt(ps), "プロンプトをコピーしました"),
+    html: (ps) => copyText(buildHtml(ps), t("copiedHtml")),
+    css: (ps) => copyText(buildCss(ps), t("copiedCss")),
+    prompt: (ps) => copyText(buildPrompt(ps), t("copiedPrompt")),
     svg: (ps) => exportSvg(ps, preview.getWidth(), "wireframe-page"),
     png: (ps) => exportPng(ps, preview.getWidth(), "wireframe-page"),
     file: (ps) => downloadText(buildDocument(ps), "wireframe.html", "text/html"),
@@ -78,7 +79,7 @@ export const initBuilderView = () => {
     const btn = e.target.closest("[data-export]");
     if (!btn) return;
     const ps = store.getBuilderPatterns();
-    if (ps.length === 0) return toast("先にセクションを追加してください");
+    if (ps.length === 0) return toast(t("addFirst"));
     exporters[btn.dataset.export](ps);
     track(["html", "css", "prompt"].includes(btn.dataset.export) ? "copy" : "export", {
       scope: "page",

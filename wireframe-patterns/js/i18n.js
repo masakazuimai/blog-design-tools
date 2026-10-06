@@ -1,0 +1,51 @@
+// UI文言の辞書。<html lang> で日本語／英語を切り替える（/ と /en/ で同じJSを共有）
+export const LANG = typeof document !== "undefined" && document.documentElement.lang === "en" ? "en" : "ja";
+
+const STR = {
+  ja: {
+    all: "すべて",
+    learnMore: "詳しく見る",
+    openDetail: (name) => `${name}を詳しく見る`,
+    addToPage: "＋ページに追加",
+    added: "ページに追加しました",
+    copied: "コピーしました",
+    copyFailed: "コピーできませんでした。コードを選択してコピーしてください",
+    svgFailed: "SVGを書き出せませんでした",
+    pngFailed: "PNGを書き出せませんでした",
+    copiedHtml: "HTMLをコピーしました",
+    copiedCss: "CSSをコピーしました",
+    copiedPrompt: "プロンプトをコピーしました",
+    addFirst: "先にセクションを追加してください",
+    patternOf: (cat) => `${cat}のパターン`,
+    moveUp: "上へ",
+    moveDown: "下へ",
+    remove: "外す",
+    docTitle: "ワイヤーフレーム",
+    baseCssComment: "ワイヤーフレーム共通",
+    idSep: "：",
+  },
+  en: {
+    all: "All",
+    learnMore: "Details",
+    openDetail: (name) => `See details of ${name}`,
+    addToPage: "+ Add to page",
+    added: "Added to your page",
+    copied: "Copied",
+    copyFailed: "Couldn't copy. Please select the code and copy it manually",
+    svgFailed: "Couldn't export the SVG",
+    pngFailed: "Couldn't export the PNG",
+    copiedHtml: "HTML copied",
+    copiedCss: "CSS copied",
+    copiedPrompt: "Prompt copied",
+    addFirst: "Add a section first",
+    patternOf: (cat) => `${cat} pattern`,
+    moveUp: "Move up",
+    moveDown: "Move down",
+    remove: "Remove",
+    docTitle: "Wireframe",
+    baseCssComment: "Wireframe base",
+    idSep: ": ",
+  },
+};
+
+export const t = (key) => STR[LANG][key];

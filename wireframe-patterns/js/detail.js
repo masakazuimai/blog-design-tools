@@ -1,10 +1,11 @@
 // パターン詳細（モーダル）
-import { getPattern, categoryName } from "./patterns/index.js?v=20261006f";
-import { createPreview } from "./preview.js?v=20261006f";
-import { buildCss } from "./code.js?v=20261006f";
-import { buildPrompt } from "./prompt.js?v=20261006f";
-import { addItem } from "./builder.js?v=20261006f";
-import { bindSeg, copyText, exportPng, exportSvg, toast, track } from "./ui.js?v=20261006f";
+import { getPattern, categoryName } from "./patterns/index.js?v=20261006h";
+import { createPreview } from "./preview.js?v=20261006h";
+import { buildCss } from "./code.js?v=20261006h";
+import { buildPrompt } from "./prompt.js?v=20261006h";
+import { addItem } from "./builder.js?v=20261006h";
+import { bindSeg, copyText, exportPng, exportSvg, toast, track } from "./ui.js?v=20261006h";
+import { t } from "./i18n.js?v=20261006h";
 
 const $ = (id) => document.getElementById(id);
 
@@ -53,7 +54,7 @@ export const initDetail = () => {
   $("detail-add").addEventListener("click", () => {
     addItem(current.id);
     track("add", { from: "detail", pattern_id: current.id });
-    toast("ページに追加しました");
+    toast(t("added"));
   });
 
   return (id) => {

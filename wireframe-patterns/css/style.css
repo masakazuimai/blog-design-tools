@@ -237,7 +237,7 @@ main { max-width: 1440px; margin: 0 auto; padding: 24px clamp(16px, 3vw, 32px) 6
   .footer-links { flex-wrap: wrap; justify-content: center; }
   .detail__head, .detail__preview, .detail__info { padding: 16px; }
   .site-head__inner { grid-template-columns: 1fr; }
-  .howto-link { justify-self: start; }
+  .head-links { justify-self: start; }
   .footer-ad {
     position: static; align-self: center; margin: 24px auto;
     gap: 0; padding: 0; background: none; border: none; border-radius: 0; box-shadow: none; z-index: auto;
@@ -281,3 +281,4 @@ main { max-width: 1440px; margin: 0 auto; padding: 24px clamp(16px, 3vw, 32px) 6
 .doc-links { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; color: var(--text-2); }
 .doc-cta { margin-top: 48px; text-align: center; }
 .doc-cta .btn { text-decoration: none; color: #fff; min-height: 52px; padding: 12px 28px; }
+.head-links { display: flex; flex-wrap: wrap; gap: 8px; }

@@ -1,18 +1,21 @@
 // パターン定義の集約。カテゴリの並びはページの上から下の順
-import header from "./header.js?v=20261006f";
-import hero from "./hero.js?v=20261006f";
-import pricing from "./pricing.js?v=20261006f";
-import footer from "./footer.js?v=20261006f";
-import features from "./features.js?v=20261006f";
-import cases from "./cases.js?v=20261006f";
-import cards from "./cards.js?v=20261006f";
-import steps from "./steps.js?v=20261006f";
-import faq from "./faq.js?v=20261006f";
-import cta from "./cta.js?v=20261006f";
-import form from "./form.js?v=20261006f";
-import company from "./company.js?v=20261006f";
+import header from "./header.js?v=20261006h";
+import hero from "./hero.js?v=20261006h";
+import pricing from "./pricing.js?v=20261006h";
+import footer from "./footer.js?v=20261006h";
+import features from "./features.js?v=20261006h";
+import cases from "./cases.js?v=20261006h";
+import cards from "./cards.js?v=20261006h";
+import steps from "./steps.js?v=20261006h";
+import faq from "./faq.js?v=20261006h";
+import cta from "./cta.js?v=20261006h";
+import form from "./form.js?v=20261006h";
+import company from "./company.js?v=20261006h";
+import { CATEGORY_EN } from "./en-meta.js?v=20261006h";
+import { localizePattern } from "./localize.js?v=20261006h";
+import { LANG } from "../i18n.js?v=20261006h";
 
-export const CATEGORIES = [
+const CATEGORIES_JA = [
   { id: "header", name: "ヘッダー" },
   { id: "hero", name: "ファーストビュー" },
   { id: "features", name: "特長・メリット" },
@@ -27,7 +30,14 @@ export const CATEGORIES = [
   { id: "footer", name: "フッター" },
 ];
 
-export const PATTERNS = [...header, ...hero, ...features, ...cases, ...cards, ...steps, ...pricing, ...faq, ...cta, ...form, ...company, ...footer];
+const PATTERNS_JA = [...header, ...hero, ...features, ...cases, ...cards, ...steps, ...pricing, ...faq, ...cta, ...form, ...company, ...footer];
+
+// 英語ページでは、カテゴリ名とパターン（説明文・HTML/CSS内の文言）を英語に差し替える
+export const CATEGORIES = LANG === "en"
+  ? CATEGORIES_JA.map((c) => ({ ...c, name: CATEGORY_EN[c.id] }))
+  : CATEGORIES_JA;
+
+export const PATTERNS = LANG === "en" ? PATTERNS_JA.map(localizePattern) : PATTERNS_JA;
 
 const BY_ID = new Map(PATTERNS.map((p) => [p.id, p]));
 

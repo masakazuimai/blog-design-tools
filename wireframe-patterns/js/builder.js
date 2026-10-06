@@ -1,5 +1,5 @@
 // ビルダー（ページ構成）の状態。配列は毎回作り直し、変更のたびに保存して購読者へ通知する
-import { getPattern } from "./patterns/index.js?v=20261006f";
+import { getPattern } from "./patterns/index.js?v=20261006h";
 
 const KEY = "wfp:builder:v1";
 const listeners = new Set();

@@ -150,8 +150,8 @@ export default [
 .fq04__popular li { padding: 12px 0; border-bottom: 1px solid #ddd; }
 .fq04__contact { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 40px 0 0; }
 @container (max-width: 760px) {
-  .fq04__cats { grid-template-columns: 1fr 1fr; }
-  .fq04__cats li { grid-template-columns: 1fr; justify-items: start; gap: 8px; }
+  .fq04__cats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fq04__cats li { grid-template-columns: 1fr; justify-items: start; gap: 8px; min-width: 0; overflow-wrap: anywhere; }
   .fq04__popular { grid-template-columns: 1fr; }
   .fq04__contact { flex-direction: column; }
 }

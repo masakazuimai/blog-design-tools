@@ -1,5 +1,5 @@
 // 描画済みのワイヤーフレームを測って、Figma 等に貼れる SVG（rect / line / text）に変換する
-import { mountPatterns } from "./render.js?v=20261006f";
+import { mountPatterns } from "./render.js?v=20261006h";
 
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const round = (n) => Math.round(n * 10) / 10;
