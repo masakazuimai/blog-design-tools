@@ -1,5 +1,5 @@
 // 表示枠（.frame）にワイヤーフレームを描画し、枠の幅に合わせて縮小する
-import { mountPatterns, fitToFrame } from "./render.js?v=20261006e";
+import { mountPatterns, fitToFrame } from "./render.js?v=20261006f";
 
 export const createPreview = (frame, stage) => {
   let width = 1200;

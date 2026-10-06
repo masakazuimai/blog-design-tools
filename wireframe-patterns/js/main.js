@@ -1,8 +1,8 @@
 // 画面の配線（一覧／ビルダーの切り替え）
-import { initGallery } from "./gallery.js?v=20261006e";
-import { initDetail } from "./detail.js?v=20261006e";
-import { initBuilderView } from "./builder-view.js?v=20261006e";
-import { track } from "./ui.js?v=20261006e";
+import { initGallery } from "./gallery.js?v=20261006f";
+import { initDetail } from "./detail.js?v=20261006f";
+import { initBuilderView } from "./builder-view.js?v=20261006f";
+import { track } from "./ui.js?v=20261006f";
 
 const openDetail = initDetail();
 const builder = initBuilderView();

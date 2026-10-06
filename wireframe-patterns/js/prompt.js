@@ -1,5 +1,5 @@
 // AIツール（ChatGPT・Claude・v0 など）に渡すプロンプトを作る
-import { categoryName } from "./patterns/index.js?v=20261006e";
+import { categoryName } from "./patterns/index.js?v=20261006f";
 
 const describe = (p, i) => [
   `${i + 1}. ${categoryName(p.cat)}：${p.name}`,

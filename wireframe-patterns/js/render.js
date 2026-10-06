@@ -1,5 +1,5 @@
 // パターンを Shadow DOM に描画する（ツール側のCSSとパターンのCSSを互いに干渉させない）
-import { buildCss, buildHtml } from "./code.js?v=20261006e";
+import { buildCss, buildHtml } from "./code.js?v=20261006f";
 
 const HOST_CSS = `:host { display: block; }
 a, button { pointer-events: none; }`;

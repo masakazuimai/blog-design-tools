@@ -1,11 +1,14 @@
 // 画面共通の小物（トースト・コピー・セグメント切り替え・書き出し）
-import { buildSvg } from "./svg-export.js?v=20261006e";
-import { downloadSvgAsPng, downloadText } from "./download.js?v=20261006e";
+import { buildSvg } from "./svg-export.js?v=20261006f";
+import { downloadSvgAsPng, downloadText } from "./download.js?v=20261006f";
 
 // GA4計測：GTM の dataLayer へイベントを送る（GTM側でカスタムイベントとしてGA4へ転送）
+// データレイヤー変数は前回の値を引き継ぐため、使わないパラメータも毎回 undefined で上書きする
+const TRACK_KEYS = ["scope", "format", "pattern_id", "section_count", "from"];
 export const track = (event, params = {}) => {
   window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event: `wireframe_patterns_${event}`, ...params });
+  const reset = Object.fromEntries(TRACK_KEYS.map((key) => [key, undefined]));
+  window.dataLayer.push({ event: `wireframe_patterns_${event}`, ...reset, ...params });
 };
 
 let toastTimer = 0;

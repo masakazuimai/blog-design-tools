@@ -1,16 +1,16 @@
 // パターン定義の集約。カテゴリの並びはページの上から下の順
-import header from "./header.js?v=20261006e";
-import hero from "./hero.js?v=20261006e";
-import pricing from "./pricing.js?v=20261006e";
-import footer from "./footer.js?v=20261006e";
-import features from "./features.js?v=20261006e";
-import cases from "./cases.js?v=20261006e";
-import cards from "./cards.js?v=20261006e";
-import steps from "./steps.js?v=20261006e";
-import faq from "./faq.js?v=20261006e";
-import cta from "./cta.js?v=20261006e";
-import form from "./form.js?v=20261006e";
-import company from "./company.js?v=20261006e";
+import header from "./header.js?v=20261006f";
+import hero from "./hero.js?v=20261006f";
+import pricing from "./pricing.js?v=20261006f";
+import footer from "./footer.js?v=20261006f";
+import features from "./features.js?v=20261006f";
+import cases from "./cases.js?v=20261006f";
+import cards from "./cards.js?v=20261006f";
+import steps from "./steps.js?v=20261006f";
+import faq from "./faq.js?v=20261006f";
+import cta from "./cta.js?v=20261006f";
+import form from "./form.js?v=20261006f";
+import company from "./company.js?v=20261006f";
 
 export const CATEGORIES = [
   { id: "header", name: "ヘッダー" },

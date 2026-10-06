@@ -1,8 +1,8 @@
 // パターン一覧（カテゴリ絞り込み＋カード）
-import { CATEGORIES, PATTERNS, categoryName } from "./patterns/index.js?v=20261006e";
-import { createPreview } from "./preview.js?v=20261006e";
-import { addItem } from "./builder.js?v=20261006e";
-import { toast, track } from "./ui.js?v=20261006e";
+import { CATEGORIES, PATTERNS, categoryName } from "./patterns/index.js?v=20261006f";
+import { createPreview } from "./preview.js?v=20261006f";
+import { addItem } from "./builder.js?v=20261006f";
+import { toast, track } from "./ui.js?v=20261006f";
 
 const renderChips = (wrap, onSelect) => {
   const all = [{ id: "all", name: "すべて", count: PATTERNS.length }]

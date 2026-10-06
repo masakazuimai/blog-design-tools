@@ -1,5 +1,5 @@
 // コピー・ダウンロード用のHTML/CSSを組み立てる
-import { BASE_CSS } from "./wf-base.js?v=20261006e";
+import { BASE_CSS } from "./wf-base.js?v=20261006f";
 
 // 同じパターンを複数回置いても CSS は1回だけ出す
 const uniqueCss = (patterns) => [...new Map(patterns.map((p) => [p.id, p])).values()]

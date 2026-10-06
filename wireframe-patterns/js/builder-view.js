@@ -1,11 +1,11 @@
 // ビルダー画面（構成リスト＋ページ全体のプレビュー＋書き出し）
-import { CATEGORIES, PATTERNS, categoryName, getPattern } from "./patterns/index.js?v=20261006e";
-import { createPreview } from "./preview.js?v=20261006e";
-import { buildCss, buildDocument, buildHtml } from "./code.js?v=20261006e";
-import { buildPrompt } from "./prompt.js?v=20261006e";
-import * as store from "./builder.js?v=20261006e";
-import { bindSeg, copyText, exportPng, exportSvg, toast, track } from "./ui.js?v=20261006e";
-import { downloadText } from "./download.js?v=20261006e";
+import { CATEGORIES, PATTERNS, categoryName, getPattern } from "./patterns/index.js?v=20261006f";
+import { createPreview } from "./preview.js?v=20261006f";
+import { buildCss, buildDocument, buildHtml } from "./code.js?v=20261006f";
+import { buildPrompt } from "./prompt.js?v=20261006f";
+import * as store from "./builder.js?v=20261006f";
+import { bindSeg, copyText, exportPng, exportSvg, toast, track } from "./ui.js?v=20261006f";
+import { downloadText } from "./download.js?v=20261006f";
 
 const $ = (id) => document.getElementById(id);
 const SEED = ["hd01", "fv02", "fa01", "cs01", "st01", "pr01", "fq01", "ft03"];
