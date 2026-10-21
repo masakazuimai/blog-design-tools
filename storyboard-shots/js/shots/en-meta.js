@@ -5,6 +5,7 @@ export const CATEGORY_EN = {
   relation: "Relationships & Dialogue",
   angle: "Angle & Viewpoint",
   move: "Camera Movement",
+  advanced: "Advanced Moves",
   effect: "Effects & Transitions",
 };
 
@@ -236,5 +237,77 @@ export const META_EN = {
     use: "Mirroring feelings in the weather, bridging scenes",
     intent: "Expresses a character's feelings through weather and scenery. It leaves more room than showing a face directly.",
     tips: "Write \"raindrops on a window\" and what lies beyond (blurred city lights). No people needed.",
+  },
+  pr01: {
+    name: "Dolly zoom (vertigo effect)",
+    use: "A sudden realization, shock, reality warping",
+    intent: "The person stays the same size while the background stretches or shrinks. Pulling the camera back while zooming in makes viewers feel the ground shift under them too.",
+    tips: "Write \"dolly zoom (vertigo effect)\" and that only the background changes, not the person's size. Video AI reproduces it unreliably, so keep the cut to about 3 seconds and expect a few retakes.",
+  },
+  pr02: {
+    name: "Crane up reveal",
+    use: "Closing shots, resolve, showing how big the world is",
+    intent: "Rising from the character's eye level reveals the surroundings. It suits feelings opening up, or the end of a story.",
+    tips: "Write \"crane up\" with where it starts (eye level) and ends (high enough to see the whole town). Keep the person in the center of the frame.",
+  },
+  pr03: {
+    name: "Crane down",
+    use: "Opening a scene, introducing the lead",
+    intent: "Descending from up high and settling at eye level takes viewers from a wide place to one person. Good for starting a scene or introducing a lead.",
+    tips: "Write \"crane down from ... to eye level\" and what is in frame when it lands (the person's face). Fix the person's position so they don't drop out of frame on the way down.",
+  },
+  pr04: {
+    name: "Lateral slider shot",
+    use: "Products, food, anything that needs depth",
+    intent: "As the camera glides sideways, near objects move faster than far ones, adding depth to a flat frame. A classic move for making products and hands look premium.",
+    tips: "Write \"slow lateral tracking shot (slider)\" and a direction (left to right), with one object in the foreground. It doesn't follow a person, so keep the subject still.",
+  },
+  pr05: {
+    name: "Leading shot",
+    use: "Talking while walking, striding forward, someone coming toward you",
+    intent: "The camera keeps backing up in front of a walking person, moving with them while showing their face. Their size stays the same, so attention stays on what they say and feel.",
+    tips: "Write \"the camera moves backward in front of her as she walks toward it\" and ask for a constant distance. Keep the background motion modest.",
+  },
+  pr06: {
+    name: "Crash zoom",
+    use: "Shock, comedy, a jolt of surprise",
+    intent: "Snapping in on a face or object drags the viewer's eye there in an instant. It punches up surprise or sets up a comic beat.",
+    tips: "Write \"a fast crash zoom into ...\" with a single target (his face, etc.). Don't mix it with a \"slow dolly-in\".",
+  },
+  pr07: {
+    name: "Whip pan",
+    use: "Fast scene changes, things happening at the same time",
+    intent: "A fast sideways swing blurs the frame and carries straight into the next scene. It changes place or time without losing momentum.",
+    tips: "Write \"a fast whip pan with motion blur\" and what is in frame before and after. If you cut it in editing, add blur to both shots.",
+  },
+  pr08: {
+    name: "Snorricam (body-mounted)",
+    use: "Confusion, drunkenness, feeling cornered",
+    intent: "With the camera strapped to the person, their face stays still in frame while the world sways around them. Viewers physically feel the character's inner turmoil.",
+    tips: "Write \"snorricam (body-mounted camera)\" and that the face stays fixed in the center. Specify how the surroundings move (swaying, spinning).",
+  },
+  pr09: {
+    name: "Pull-back reveal",
+    use: "A punchline, a twist, showing isolation",
+    intent: "Pulling back from a tight shot reveals the situation and flips its meaning. What you couldn't see at first is shown at the end.",
+    tips: "Write \"pull back to reveal ...\" and always name what is revealed (the whole empty stadium, etc.). Unlike a plain dolly-out, it ends on something you want to show.",
+  },
+  pr10: {
+    name: "Foreground wipe reveal",
+    use: "A character's entrance, hiding a cut",
+    intent: "Something in the foreground, like a pillar or a passerby, crosses the frame and then the person behind appears. It builds up an entrance, or uses the foreground as a seam to the next cut.",
+    tips: "Write \"the camera tracks past a pillar in the foreground to reveal ...\" with what crosses and who appears. Blur the foreground object.",
+  },
+  pr11: {
+    name: "FPV drone dive",
+    use: "Openings, speed, introducing a place",
+    intent: "A small drone threads between buildings or trees and dives. It has more speed and immersion than a normal aerial shot and pulls viewers straight into the scene.",
+    tips: "Write \"FPV drone shot diving down ... and flying through ...\" with the places it passes. Show the person only at the end, and small.",
+  },
+  pr12: {
+    name: "Bullet time",
+    use: "The hero moment, action highlights",
+    intent: "Time freezes mid-action while only the camera circles the person. It shows the coolest moment from many angles.",
+    tips: "Write \"bullet time, frozen moment, the camera orbits around him\" and include one frozen element (splashing water, flying hair). Video AI tends to let the person start moving, so repeat \"frozen\".",
   },
 };

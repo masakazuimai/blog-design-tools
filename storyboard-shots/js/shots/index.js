@@ -1,6 +1,7 @@
-import MORE_SHOTS from "./more.js?v=20261006l";
-import { CATEGORY_EN, META_EN } from "./en-meta.js?v=20261006l";
-import { LANG } from "../i18n.js?v=20261006l";
+import MORE_SHOTS from "./more.js?v=20261021e";
+import ADVANCED_SHOTS from "./advanced.js?v=20261021e";
+import { CATEGORY_EN, META_EN } from "./en-meta.js?v=20261021e";
+import { LANG } from "../i18n.js?v=20261021e";
 
 // ショットの定義。vocab は video-scenario-maker の語彙コード（shot/angle/move/light）と共通
 // desc は動画生成AIに渡す場面の英語説明（video-scenario-maker の scene.desc にもそのまま入る）
@@ -11,6 +12,7 @@ const CATEGORIES_JA = [
   { id: "relation", name: "関係・会話" },
   { id: "angle", name: "角度・視点" },
   { id: "move", name: "カメラの動き" },
+  { id: "advanced", name: "応用のカメラワーク" },
   { id: "effect", name: "演出・つなぎ" },
 ];
 
@@ -206,7 +208,7 @@ const localize = (s) => (LANG === "en" ? { ...s, ...META_EN[s.id] } : s);
 
 // 各ショットの写真（ChatGPTで生成し、16:9のWebPにしたもの）。/ と /en/ の両方から同じ画像を指すよう、このファイル基準で解決する
 const imageUrl = (id) => new URL(`../../img/${id}.webp`, import.meta.url).href;
-export const SHOTS = [...RAW_SHOTS, ...MORE_SHOTS].map((s) => ({ ...localize(s), image: imageUrl(s.id) }));
+export const SHOTS = [...RAW_SHOTS, ...MORE_SHOTS, ...ADVANCED_SHOTS].map((s) => ({ ...localize(s), image: imageUrl(s.id) }));
 
 const BY_ID = new Map(SHOTS.map((s) => [s.id, s]));
 export const getShot = (id) => BY_ID.get(id);

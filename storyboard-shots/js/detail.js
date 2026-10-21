@@ -1,11 +1,11 @@
 // ショット詳細（モーダル）
-import { getShot, categoryName } from "./shots/index.js?v=20261006l";
-import { frameHtml } from "./frame.js?v=20261006l";
-import { VOCAB, vocabLabel } from "./vocab.js?v=20261006l";
-import { shotPrompt } from "./output.js?v=20261006l";
-import { addItem } from "./builder.js?v=20261006l";
-import { copyText, toast, track } from "./ui.js?v=20261006l";
-import { t } from "./i18n.js?v=20261006l";
+import { getShot, categoryName } from "./shots/index.js?v=20261021e";
+import { frameHtml } from "./frame.js?v=20261021e";
+import { VOCAB, vocabLabel } from "./vocab.js?v=20261021e";
+import { shotPrompt } from "./output.js?v=20261021e";
+import { addItem } from "./builder.js?v=20261021e";
+import { copyText, toast, track } from "./ui.js?v=20261021e";
+import { t } from "./i18n.js?v=20261021e";
 
 const $ = (id) => document.getElementById(id);
 
@@ -36,8 +36,10 @@ export const initDetail = () => {
     $("detail-use").textContent = current.use;
     $("detail-intent").textContent = current.intent;
     $("detail-tips").textContent = current.tips;
+    // 応用のカメラワークは動きを語彙でなくプロンプトの説明文で指定している
+    const inDesc = (key) => key === "move" && current.cat === "advanced" && !current.vocab.move;
     $("detail-vocab").innerHTML = VOCAB
-      .map((v) => `<tr><th>${v.label}</th><td>${vocabLabel(v.key, current.vocab[v.key]) || t("none")}</td></tr>`)
+      .map((v) => `<tr><th>${v.label}</th><td>${inDesc(v.key) ? t("moveInDesc") : vocabLabel(v.key, current.vocab[v.key]) || t("none")}</td></tr>`)
       .join("");
     $("detail-prompt").textContent = shotPrompt(current);
     dialog.showModal();

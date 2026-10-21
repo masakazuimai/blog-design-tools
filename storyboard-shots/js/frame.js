@@ -191,13 +191,16 @@ const moveLayer = (move, uid) => {
 
 let seq = 0;
 
+// 応用のカメラワークは語彙に無い動きなので、frame.move で絵のアニメだけ指定する
+const frameMove = (shot) => shot.frame?.move ?? shot.vocab?.move;
+
 // shot.frame と shot.vocab から SVG 文字列を作る。animate=false で静止画（書き出し用）
 // attrs は外側の svg に付ける位置・サイズ（シートに埋め込むときに x/y/width/height を渡す）
 export const frameSvg = (shot, { animate = true, attrs = 'width="100%"', theme = "clean" } = {}) => {
   T = THEMES[theme] ?? THEMES.clean;
   U = `fr${(seq += 1)}`;
   const f = shot.frame ?? {};
-  const move = shot.vocab?.move;
+  const move = frameMove(shot);
   const layer = moveLayer(move, U);
   const style = animate ? layer.style : "";
   // シネマは上下に黒帯（シネスコ風）を入れる
@@ -224,14 +227,14 @@ const overlaySvg = (shot) => {
   U = `fr${(seq += 1)}`;
   return `<svg class="photo-frame__overlay" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" aria-hidden="true">
 ${angleInset(shot.vocab?.angle)}
-${moveLayer(shot.vocab?.move, U).icon}
+${moveLayer(frameMove(shot), U).icon}
 </svg>`;
 };
 
 // 画面表示用：写真があれば <img>（遅延読み込み）＋重ね描き、無ければ SVG の絵
 export const frameHtml = (shot, { eager = false } = {}) => {
   if (!shot.image) return frameSvg(shot);
-  const move = shot.vocab?.move || "static";
+  const move = frameMove(shot) || "static";
   return `<div class="photo-frame mv-${move}">
   <img class="photo-frame__img" src="${shot.image}?v=20261006a" alt="${shot.name}" width="1280" height="720" ${eager ? "" : 'loading="lazy"'} decoding="async">
   ${overlaySvg(shot)}
@@ -245,7 +248,7 @@ export const frameSvgWithPhoto = (shot, dataUrl, attrs) => {
   return `<svg id="${U}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" ${attrs}>
 <image href="${dataUrl}" width="${W}" height="${H}" preserveAspectRatio="xMidYMid slice"/>
 ${angleInset(shot.vocab?.angle)}
-${moveLayer(shot.vocab?.move, U).icon}
+${moveLayer(frameMove(shot), U).icon}
 <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" fill="none" stroke="#2b2b2b" stroke-width="1"/>
 </svg>`;
 };

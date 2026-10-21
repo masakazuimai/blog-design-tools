@@ -25,6 +25,7 @@ const STR = {
     sheetSep: "　",
     boardTitle: "絵コンテ",
     none: "指定なし",
+    moveInDesc: "プロンプトの説明文で指定",
     vocabLabels: { shot: "大きさ", angle: "アングル", move: "カメラの動き", light: "光" },
   },
   en: {
@@ -50,6 +51,7 @@ const STR = {
     sheetSep: "  ",
     boardTitle: "Storyboard",
     none: "None",
+    moveInDesc: "Set in the prompt text",
     vocabLabels: { shot: "Size", angle: "Angle", move: "Camera move", light: "Light" },
   },
 };
