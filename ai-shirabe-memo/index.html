@@ -165,33 +165,8 @@
       <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
       <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
     </div>
-    <div id="ad-widget" class="footer-ad">
-      <div class="ad-widget__head">
-        <span class="ad-widget__label">広告</span>
-        <button id="ad-close" class="ad-widget__close" type="button" aria-label="広告を閉じる">×</button>
-      </div>
-      <!-- ai-shirabe-memo -->
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-4871781946658288"
-           data-ad-slot="4850594890"></ins>
-      <script>
-           (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
-    </div>
+    <!-- 広告テスト（2026-10-24〜6週間）: 右下広告を停止中。全画面広告用にローダーのみ残す -->
   </footer>
-  <script>
-    // PCの右下フローティング広告カードの「×で閉じる」。
-    // 閉じても記憶はせず、再読み込みすると再表示する
-    (function () {
-      var widget = document.getElementById('ad-widget');
-      var closeBtn = document.getElementById('ad-close');
-      if (!widget || !closeBtn) return;
-      closeBtn.addEventListener('click', function () {
-        widget.classList.add('is-closed');
-      });
-    })();
-  </script>
 
   <script type="module" src="js/main.js?v=20260624ad"></script>
 </body>
