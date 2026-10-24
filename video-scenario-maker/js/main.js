@@ -1,17 +1,17 @@
 // 配線：状態の更新 → 保存 → プレビュー・タイムライン・インスペクター・出力の再描画
 import {
   ASPECTS, STYLES, MOODS, SPEECH_LANGS, DIALOGUE_MODES, BGM_GENRES, BGM_MOODS, pick,
-} from "./vocab.js?v=20260928b";
+} from "./vocab.js?v=20261024a";
 import {
   createProject, createScene, loadProject, saveProject, normalize, totalDuration,
   updateScene, removeScene, moveScene, duplicateScene,
-} from "./store.js?v=20260928b";
-import { createPlayer } from "./preview.js?v=20260928b";
-import { createTimeline } from "./timeline.js?v=20260928b";
-import { renderInspector, bindInspector } from "./inspector.js?v=20260928b";
-import { renderOutput, bindOutput } from "./output.js?v=20260928b";
-import { renderVoices, bindVoices } from "./voices.js?v=20260928b";
-import { T, label } from "./i18n.js?v=20260928b";
+} from "./store.js?v=20261024a";
+import { createPlayer } from "./preview.js?v=20261024a";
+import { createTimeline } from "./timeline.js?v=20261024a";
+import { renderInspector, bindInspector } from "./inspector.js?v=20261024a";
+import { renderOutput, bindOutput } from "./output.js?v=20261024a";
+import { renderVoices, bindVoices } from "./voices.js?v=20261024a";
+import { T, label } from "./i18n.js?v=20261024a";
 
 const $ = (id) => document.getElementById(id);
 const MAX_AUDIO_BYTES = 50 * 1024 * 1024;
@@ -43,7 +43,7 @@ const timeline = createTimeline(
 
 const player = createPlayer(
   {
-    stage: $("stage"), frame: $("frame"), img: $("pvImg"), empty: $("pvEmpty"),
+    stage: $("stage"), frame: $("frame"), img: $("pvImg"), empty: $("pvEmpty"), demo: $("pvDemo"), demoTag: $("pvDemoTag"),
     caption: $("pvCaption"), speaker: $("pvSpeaker"), play: $("play"), toStart: $("toStart"), time: $("time"),
   },
   { onScene: (id) => timeline.markPlaying(id), onTime: (t) => timeline.setPlayhead(t) }

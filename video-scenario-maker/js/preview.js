@@ -1,9 +1,16 @@
 // プレビュー再生：画像＋字幕＋BGMを秒数どおりに流す
-import { withTimes, totalDuration } from "./store.js?v=20260928b";
-import { fmtTime } from "./prompt.js?v=20260928b";
-import { T } from "./i18n.js?v=20260928b";
+import { withTimes, totalDuration } from "./store.js?v=20261024a";
+import { fmtTime } from "./prompt.js?v=20261024a";
+import { MOVES } from "./vocab.js?v=20261024a";
+import { T, label } from "./i18n.js?v=20261024a";
 
 const FADE_SEC = 0.5;
+
+// カメラの動きの見本（Blenderの粘土風ループ）。画像がまだ無いシーンだけ枠に仮表示する
+const DEMO_MOVES = new Set(["pan", "tilt", "in", "out", "track", "orbit", "hand", "drone"]);
+const DEMO_VER = "20261024a";
+const demoUrl = (file) => new URL(`../video/${file}?v=${DEMO_VER}`, import.meta.url).href;
+const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // Blob → objectURL を使い回す（同じBlobに何度もURLを発行しない）
 const urls = new WeakMap();
@@ -30,6 +37,27 @@ export const createPlayer = (el, { onScene, onTime } = {}) => {
     return i < 0 ? scenes.length - 1 : i;
   };
 
+  // move が空なら見本を隠す。同じ動きのまま次のシーンへ移った時は読み込み直さない
+  const showDemo = (move) => {
+    const v = el.demo;
+    el.demoTag.hidden = !move;
+    if (!move) {
+      v.pause();
+      v.hidden = true;
+      return;
+    }
+    if (v.dataset.move !== move) {
+      v.dataset.move = move;
+      v.poster = demoUrl(`move-${move}-poster.webp`);
+      // Safari 等で webm が再生できない場合に備えて mp4 も並べる
+      v.innerHTML = `<source src="${demoUrl(`move-${move}.webm`)}" type="video/webm"><source src="${demoUrl(`move-${move}.mp4`)}" type="video/mp4">`;
+      v.load();
+      el.demoTag.textContent = T.moveDemo(label(MOVES.find((m) => m.v === move)));
+    }
+    v.hidden = false;
+    v.play().catch((error) => console.error("カメラの動きの見本を再生できませんでした", error));
+  };
+
   const renderFrame = () => {
     el.time.textContent = `${fmtTime(time)} / ${fmtTime(total)}`;
     onTime?.(time);
@@ -37,6 +65,7 @@ export const createPlayer = (el, { onScene, onTime } = {}) => {
       el.img.hidden = true;
       el.caption.hidden = true;
       el.empty.hidden = false;
+      showDemo("");
       return;
     }
     const i = sceneAt(time);
@@ -46,7 +75,9 @@ export const createPlayer = (el, { onScene, onTime } = {}) => {
       const src = blobUrl(s.image);
       el.img.hidden = !src;
       if (src) el.img.src = src;
-      el.empty.hidden = Boolean(src);
+      const demo = !src && DEMO_MOVES.has(s.move) && !reducedMotion() ? s.move : "";
+      showDemo(demo);
+      el.empty.hidden = Boolean(src) || Boolean(demo);
       el.empty.textContent = T.noImage(i + 1);
       el.caption.hidden = !s.line;
       el.caption.textContent = s.line;
