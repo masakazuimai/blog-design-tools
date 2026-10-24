@@ -12,3 +12,6 @@ mobile-view.png
 
 # ビルド用ソース（_src/）の依存パッケージ
 _src/*/node_modules/
+
+# storyboard-shots の作例写真の元PNG（105MB・公開用webpは storyboard-shots/ 側）。手元にだけ置く
+_src/storyboard-shots/images/
