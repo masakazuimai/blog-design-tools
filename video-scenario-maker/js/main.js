@@ -1,17 +1,17 @@
 // 配線：状態の更新 → 保存 → プレビュー・タイムライン・インスペクター・出力の再描画
 import {
   ASPECTS, STYLES, MOODS, SPEECH_LANGS, DIALOGUE_MODES, BGM_GENRES, BGM_MOODS, pick,
-} from "./vocab.js?v=20261024a";
+} from "./vocab.js?v=20261025a";
 import {
   createProject, createSampleProject, createScene, loadProject, saveProject, normalize, totalDuration,
   updateScene, removeScene, moveScene, duplicateScene,
-} from "./store.js?v=20261024a";
-import { createPlayer } from "./preview.js?v=20261024a";
-import { createTimeline } from "./timeline.js?v=20261024a";
-import { renderInspector, bindInspector } from "./inspector.js?v=20261024a";
-import { renderOutput, bindOutput } from "./output.js?v=20261024a";
-import { renderVoices, bindVoices } from "./voices.js?v=20261024a";
-import { T, label } from "./i18n.js?v=20261024a";
+} from "./store.js?v=20261025a";
+import { createPlayer } from "./preview.js?v=20261025a";
+import { createTimeline } from "./timeline.js?v=20261025a";
+import { renderInspector, bindInspector } from "./inspector.js?v=20261025a";
+import { renderOutput, bindOutput } from "./output.js?v=20261025a";
+import { renderVoices, bindVoices } from "./voices.js?v=20261025a";
+import { T, label } from "./i18n.js?v=20261025a";
 
 const $ = (id) => document.getElementById(id);
 const MAX_AUDIO_BYTES = 50 * 1024 * 1024;
@@ -197,18 +197,24 @@ $("bgmClear").addEventListener("click", () => {
 });
 
 // ── シーン（インスペクター） ──
+// 選択中のシーンを消し、次（末尾なら前）のシーンを選ぶ。最後の1件は消さない
+const deleteSelected = () => {
+  const s = project.scenes;
+  const i = s.findIndex((x) => x.id === selectedId);
+  if (s.length < 2 || i < 0) return;
+  const neighbor = s[i + 1] || s[i - 1];
+  commit({ ...project, scenes: removeScene(s, selectedId) });
+  select(neighbor.id);
+  toast(T.sceneDeleted(i + 1));
+};
+
 bindInspector({
   onField: (patch) => commit({ ...project, scenes: updateScene(project.scenes, selectedId, patch) }),
   onError: toast,
   onAction: (act) => {
     const s = project.scenes;
     const i = s.findIndex((x) => x.id === selectedId);
-    if (act === "del" && s.length > 1) {
-      const neighbor = s[i + 1] || s[i - 1];
-      commit({ ...project, scenes: removeScene(s, selectedId) });
-      select(neighbor.id);
-      return;
-    }
+    if (act === "del") return deleteSelected();
     if (act === "dup") {
       const next = duplicateScene(s, selectedId);
       commit({ ...project, scenes: next });
@@ -230,6 +236,14 @@ $("addScene").addEventListener("click", () => {
   select(scene.id, { seek: true });
   timeline.reveal(scene.id);
   $("fDesc").focus();
+});
+$("delScene").addEventListener("click", deleteSelected);
+// Delete / Backspace でも削除（入力欄の文字消しとは区別する）
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Delete" && e.key !== "Backspace") return;
+  if (e.target.closest("input, textarea, select, [contenteditable]")) return;
+  e.preventDefault();
+  deleteSelected();
 });
 
 // ── 保存・読み込み ──

@@ -1,9 +1,9 @@
 // インスペクター：選択中のシーン1件を編集する。入力中は作り直さず値だけ差し替える
-import { SHOTS, ANGLES, MOVES, LIGHTS, TRANSITIONS } from "./vocab.js?v=20261024a";
-import { withTimes } from "./store.js?v=20261024a";
-import { fmtTime } from "./prompt.js?v=20261024a";
-import { blobUrl } from "./preview.js?v=20261024a";
-import { T, label } from "./i18n.js?v=20261024a";
+import { SHOTS, ANGLES, MOVES, LIGHTS, TRANSITIONS } from "./vocab.js?v=20261025a";
+import { withTimes } from "./store.js?v=20261025a";
+import { fmtTime } from "./prompt.js?v=20261025a";
+import { blobUrl } from "./preview.js?v=20261025a";
+import { T, label } from "./i18n.js?v=20261025a";
 
 const MAX_IMAGE_BYTES = 20 * 1024 * 1024;
 const $ = (id) => document.getElementById(id);
@@ -38,6 +38,7 @@ export const renderInspector = (project, selectedId) => {
   document.querySelector('[data-act="up"]').disabled = i === 0;
   document.querySelector('[data-act="down"]').disabled = i === scenes.length - 1;
   document.querySelector('[data-act="del"]').disabled = scenes.length === 1;
+  $("delScene").disabled = scenes.length === 1;
 };
 
 export const bindInspector = ({ onField, onAction, onError }) => {
