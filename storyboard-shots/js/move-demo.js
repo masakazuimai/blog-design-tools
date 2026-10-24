@@ -1,17 +1,20 @@
 // カメラの動きの見本動画（Blenderで作った粘土風のループ）。一覧のホバーと詳細画面で使う
+// 動画はショットごとに、写真と同じ場面・向き・画の大きさで作っている
 
-// 見本がある動き（固定・指定なしは出さない）
-const MOVE_DEMOS = ["pan", "tilt", "in", "out", "track", "orbit", "hand", "drone"];
-const DEMO_VER = "20261024a";
+// 見本があるショット（カメラが動くショットと、応用のカメラワーク全部。sz04 は目元の写真をそのまま拡大する方が伝わるので除く）
+const DEMO_SHOTS = new Set([
+  "es01", "ag04", "mv01", "mv02", "mv03", "rl04", "mv04", "mv05", "mv06", "mv07", "mv08",
+  "pr01", "pr02", "pr03", "pr04", "pr05", "pr06", "pr07", "pr08", "pr09", "pr10", "pr11", "pr12",
+]);
+const DEMO_VER = "20261024b";
 const demoUrl = (file) => new URL(`../video/${file}?v=${DEMO_VER}`, import.meta.url).href;
 
-// ショットの動きに見本があればその動きを、無ければ null を返す
-export const demoMove = (shot) => (MOVE_DEMOS.includes(shot?.vocab?.move) ? shot.vocab.move : null);
+export const hasDemo = (shot) => DEMO_SHOTS.has(shot?.id);
 
-export const demoPoster = (move) => demoUrl(`move-${move}-poster.webp`);
+export const demoPoster = (shot) => demoUrl(`shot-${shot.id}-poster.webp`);
 
 // Safari 等で webm が再生できない場合に備えて mp4 も並べる
-export const demoSources = (move) =>
-  `<source src="${demoUrl(`move-${move}.webm`)}" type="video/webm"><source src="${demoUrl(`move-${move}.mp4`)}" type="video/mp4">`;
+export const demoSources = (shot) =>
+  `<source src="${demoUrl(`shot-${shot.id}.webm`)}" type="video/webm"><source src="${demoUrl(`shot-${shot.id}.mp4`)}" type="video/mp4">`;
 
 export const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;

@@ -1,12 +1,12 @@
 // ショット詳細（モーダル）
-import { getShot, categoryName } from "./shots/index.js?v=20261024a";
-import { frameHtml } from "./frame.js?v=20261024a";
-import { VOCAB, vocabLabel } from "./vocab.js?v=20261024a";
-import { shotPrompt } from "./output.js?v=20261024a";
-import { addItem } from "./builder.js?v=20261024a";
-import { copyText, toast, track } from "./ui.js?v=20261024a";
-import { t } from "./i18n.js?v=20261024a";
-import { demoMove, demoPoster, demoSources, reducedMotion } from "./move-demo.js?v=20261024a";
+import { getShot, categoryName } from "./shots/index.js?v=20261024b";
+import { frameHtml } from "./frame.js?v=20261024b";
+import { VOCAB, vocabLabel } from "./vocab.js?v=20261024b";
+import { shotPrompt } from "./output.js?v=20261024b";
+import { addItem } from "./builder.js?v=20261024b";
+import { copyText, toast, track } from "./ui.js?v=20261024b";
+import { t } from "./i18n.js?v=20261024b";
+import { hasDemo, demoPoster, demoSources, reducedMotion } from "./move-demo.js?v=20261024b";
 
 const $ = (id) => document.getElementById(id);
 
@@ -14,16 +14,16 @@ const $ = (id) => document.getElementById(id);
 const showMoveDemo = (shot) => {
   const box = $("detail-move");
   const video = $("detail-move-video");
-  const move = demoMove(shot);
-  if (!move) {
+  if (!hasDemo(shot)) {
     stopMoveDemo();
     box.hidden = true;
     return;
   }
-  video.poster = demoPoster(move);
-  video.innerHTML = demoSources(move);
+  video.poster = demoPoster(shot);
+  video.innerHTML = demoSources(shot);
   video.load();
-  $("detail-move-cap").textContent = t("moveDemo")(vocabLabel("move", move));
+  // 応用のカメラワークは動きを語彙で持たないので、ショット名を出す
+  $("detail-move-cap").textContent = t("moveDemo")(shot.vocab?.move ? vocabLabel("move", shot.vocab.move) : shot.name);
   box.hidden = false;
   if (!reducedMotion()) video.play().catch(() => {});
 };
@@ -41,7 +41,10 @@ export const initDetail = () => {
   let current = null;
 
   $("detail-close").addEventListener("click", () => dialog.close());
-  dialog.addEventListener("close", stopMoveDemo);
+  // close は後から届くので、その間に次のショットを開いていたら止めない
+  dialog.addEventListener("close", () => {
+    if (!dialog.open) stopMoveDemo();
+  });
   dialog.addEventListener("click", (e) => {
     if (e.target === dialog) dialog.close();
   });

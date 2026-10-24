@@ -1,11 +1,11 @@
 // ショット一覧（カテゴリ絞り込み＋カード）
-import { CATEGORIES, SHOTS, categoryName, getShot } from "./shots/index.js?v=20261024a";
-import { frameHtml } from "./frame.js?v=20261024a";
-import { vocabLabel } from "./vocab.js?v=20261024a";
-import { addItem } from "./builder.js?v=20261024a";
-import { toast, track } from "./ui.js?v=20261024a";
-import { t } from "./i18n.js?v=20261024a";
-import { demoMove, demoPoster, demoSources, reducedMotion } from "./move-demo.js?v=20261024a";
+import { CATEGORIES, SHOTS, categoryName, getShot } from "./shots/index.js?v=20261024b";
+import { frameHtml } from "./frame.js?v=20261024b";
+import { vocabLabel } from "./vocab.js?v=20261024b";
+import { addItem } from "./builder.js?v=20261024b";
+import { toast, track } from "./ui.js?v=20261024b";
+import { t } from "./i18n.js?v=20261024b";
+import { hasDemo, demoPoster, demoSources, reducedMotion } from "./move-demo.js?v=20261024b";
 
 const renderChips = (wrap, onSelect) => {
   const all = [{ id: "all", name: t("all"), count: SHOTS.length }]
@@ -47,12 +47,12 @@ const canHover = window.matchMedia("(hover: hover) and (pointer: fine)");
 
 const startDemo = (card) => {
   const thumb = card.querySelector(".card__thumb");
-  const move = demoMove(getShot(thumb.dataset.open));
+  const shot = getShot(thumb.dataset.open);
   const img = thumb.querySelector(".photo-frame__img");
-  if (!move || !img || !canHover.matches || reducedMotion() || thumb.querySelector(".photo-frame__demo")) return;
+  if (!hasDemo(shot) || !img || !canHover.matches || reducedMotion() || thumb.querySelector(".photo-frame__demo")) return;
   // 写真の直後に置き、アイコンの重ね描き（SVG）は動画の上に残す
   img.insertAdjacentHTML("afterend",
-    `<video class="photo-frame__demo" muted loop playsinline autoplay poster="${demoPoster(move)}" aria-hidden="true">${demoSources(move)}</video>`);
+    `<video class="photo-frame__demo" muted loop playsinline autoplay poster="${demoPoster(shot)}" aria-hidden="true">${demoSources(shot)}</video>`);
   thumb.querySelector(".photo-frame__demo").play().catch(() => {});
 };
 
