@@ -67,6 +67,29 @@ export const createProject = () => ({
   ],
 });
 
+// サンプルのシーン2・3に作例画像を入れる（シーン1は動きの見本を見せるため画像なし）。読み込めなければ画像なしのまま
+const SAMPLE_IMAGES = { 1: "scene2.webp", 2: "scene3.webp" };
+
+const fetchSampleImage = async (name) => {
+  try {
+    const res = await fetch(new URL(`../assets/sample/${name}`, import.meta.url));
+    return res.ok ? await res.blob() : null;
+  } catch {
+    return null;
+  }
+};
+
+export const createSampleProject = async () => {
+  const project = createProject();
+  const scenes = await Promise.all(
+    project.scenes.map(async (s, i) => {
+      const image = SAMPLE_IMAGES[i] ? await fetchSampleImage(SAMPLE_IMAGES[i]) : null;
+      return image ? { ...s, image, imageName: SAMPLE_IMAGES[i] } : s;
+    }),
+  );
+  return { ...project, scenes };
+};
+
 // 開始秒を積み上げで計算（小数誤差を避けるため0.1秒単位で丸める）
 export const withTimes = (scenes) =>
   scenes.reduce((acc, s) => {

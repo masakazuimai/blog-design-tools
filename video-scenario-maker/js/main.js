@@ -3,7 +3,7 @@ import {
   ASPECTS, STYLES, MOODS, SPEECH_LANGS, DIALOGUE_MODES, BGM_GENRES, BGM_MOODS, pick,
 } from "./vocab.js?v=20261024a";
 import {
-  createProject, createScene, loadProject, saveProject, normalize, totalDuration,
+  createProject, createSampleProject, createScene, loadProject, saveProject, normalize, totalDuration,
   updateScene, removeScene, moveScene, duplicateScene,
 } from "./store.js?v=20261024a";
 import { createPlayer } from "./preview.js?v=20261024a";
@@ -277,7 +277,7 @@ $("loadJson").addEventListener("change", async (e) => {
 
 // 誤操作防止：1回目で確認表示、3秒以内の2回目で実行
 let resetArmed = 0;
-$("reset").addEventListener("click", (e) => {
+$("reset").addEventListener("click", async (e) => {
   const btn = e.currentTarget;
   if (!resetArmed) {
     btn.textContent = T.resetConfirm;
@@ -292,7 +292,7 @@ $("reset").addEventListener("click", (e) => {
   btn.textContent = T.reset;
   player.pause();
   player.seek(0);
-  commit(createProject());
+  commit(await createSampleProject());
   renderVoices($("voices"), project, { force: true });
   fillForm();
   toast(T.resetDone);
@@ -302,7 +302,7 @@ bindOutput({ toast, download, fileBase });
 
 // ── 起動 ──
 const saved = await loadProject();
-if (saved?.scenes.length) project = saved;
+project = saved?.scenes.length ? saved : await createSampleProject();
 selectedId = project.scenes[0].id;
 fillForm();
 commit(project);
