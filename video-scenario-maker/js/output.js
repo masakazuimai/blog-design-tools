@@ -1,6 +1,6 @@
 // 出力タブ：シーン別／一括／BGM／SRT。設定が変わるたびに作り直す
-import { scenePrompts, timelinePrompt, bgmPrompt, toSrt } from "./prompt.js?v=20261025a";
-import { LANG, T } from "./i18n.js?v=20261025a";
+import { scenePrompts, timelinePrompt, bgmPrompt, toSrt } from "./prompt.js?v=20261025b";
+import { LANG, T } from "./i18n.js?v=20261025b";
 
 let tab = "scene";
 let lang = "en"; // 既定は英語（貼る用）。日本語は確認用

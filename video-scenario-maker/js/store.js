@@ -1,6 +1,6 @@
 // プロジェクトの状態と保存（IndexedDB）。状態は常に新しいオブジェクトで置き換える
 
-import { LANG } from "./i18n.js?v=20261025a";
+import { LANG } from "./i18n.js?v=20261025b";
 
 const DB_NAME = "video-scenario-maker";
 const STORE = "project";

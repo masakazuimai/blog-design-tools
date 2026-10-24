@@ -177,6 +177,7 @@ input[type="range"]{width:100%; accent-color:var(--accent)}
 .total{color:var(--sub); font-variant-numeric:tabular-nums}
 .zoom{display:flex; align-items:center; gap:8px; color:var(--sub)}
 .zoom input{width:140px}
+.tl-reset{margin-left:auto}
 .warn{margin:0; padding:6px 12px; color:var(--warn); border-bottom:1px solid var(--line)}
 .tl-body{display:grid; grid-template-columns:72px minmax(0,1fr)}
 .tl-heads{display:flex; flex-direction:column; border-right:1px solid var(--line); background:var(--pane-2)}

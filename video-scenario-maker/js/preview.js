@@ -1,8 +1,8 @@
 // プレビュー再生：画像＋字幕＋BGMを秒数どおりに流す
-import { withTimes, totalDuration } from "./store.js?v=20261025a";
-import { fmtTime } from "./prompt.js?v=20261025a";
-import { MOVES } from "./vocab.js?v=20261025a";
-import { T, label } from "./i18n.js?v=20261025a";
+import { withTimes, totalDuration } from "./store.js?v=20261025b";
+import { fmtTime } from "./prompt.js?v=20261025b";
+import { MOVES } from "./vocab.js?v=20261025b";
+import { T, label } from "./i18n.js?v=20261025b";
 
 const FADE_SEC = 0.5;
 

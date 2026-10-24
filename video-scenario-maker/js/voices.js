@@ -1,7 +1,7 @@
 // 声タブ：シーンに登場する話者ごとに性別・年代・雰囲気・速さを設定する
-import { VOICE_GENDERS, VOICE_AGES, VOICE_TONES, VOICE_SPEEDS } from "./vocab.js?v=20261025a";
-import { speakersOf, createVoice } from "./store.js?v=20261025a";
-import { T, label as optLabel } from "./i18n.js?v=20261025a";
+import { VOICE_GENDERS, VOICE_AGES, VOICE_TONES, VOICE_SPEEDS } from "./vocab.js?v=20261025b";
+import { speakersOf, createVoice } from "./store.js?v=20261025b";
+import { T, label as optLabel } from "./i18n.js?v=20261025b";
 
 const FIELDS = [
   { key: "gender", label: T.voiceFields.gender, list: VOICE_GENDERS },

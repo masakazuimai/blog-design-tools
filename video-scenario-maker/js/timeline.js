@@ -1,9 +1,9 @@
 // タイムライン：ルーラー／映像・字幕・BGMの3トラック／再生ヘッド。クリップ右端のドラッグで長さを変える
-import { withTimes, totalDuration } from "./store.js?v=20261025a";
-import { fmtTime } from "./prompt.js?v=20261025a";
-import { blobUrl } from "./preview.js?v=20261025a";
-import { BGM_GENRES, pick } from "./vocab.js?v=20261025a";
-import { T, label } from "./i18n.js?v=20261025a";
+import { withTimes, totalDuration } from "./store.js?v=20261025b";
+import { fmtTime } from "./prompt.js?v=20261025b";
+import { blobUrl } from "./preview.js?v=20261025b";
+import { BGM_GENRES, pick } from "./vocab.js?v=20261025b";
+import { T, label } from "./i18n.js?v=20261025b";
 
 const LABEL_MIN_PX = 64; // 目盛りラベル同士の最小間隔
 const STEPS = [0.5, 1, 2, 5, 10, 15, 30, 60];

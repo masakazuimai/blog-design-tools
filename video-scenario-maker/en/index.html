@@ -75,7 +75,7 @@
 }
 </script>
 
-<link rel="stylesheet" href="../css/style.css?v=20261025a">
+<link rel="stylesheet" href="../css/style.css?v=20261025b">
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -191,7 +191,6 @@
       <div class="stack">
         <button type="button" class="btn" id="saveJson">Save as JSON</button>
         <label class="btn">Load JSON<input type="file" id="loadJson" accept="application/json,.json" class="sr-only"></label>
-        <button type="button" class="btn danger" id="reset">Start over</button>
       </div>
       <p class="note">Everything, including images and audio, is saved automatically in this browser. JSON files do not include images or audio.</p>
     </div>
@@ -275,6 +274,7 @@
       <button type="button" class="btn danger" id="delScene" title="Delete the selected scene (or press Delete)">− Delete scene</button>
       <span class="total" id="total"></span>
       <label class="zoom">Zoom<input type="range" id="zoom" min="10" max="120" step="5" value="40"></label>
+      <button type="button" class="btn danger tl-reset" id="reset" title="Clear every scene and go back to the sample (press twice)">Reset</button>
     </div>
     <p class="warn" id="warn" hidden></p>
     <div class="tl-body">
@@ -333,6 +333,6 @@
 <!-- 広告テスト（2026-10-24〜6週間）: 右下広告を停止中。全画面広告用にローダーのみ残す -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
 
-<script type="module" src="../js/main.js?v=20261025a"></script>
+<script type="module" src="../js/main.js?v=20261025b"></script>
 </body>
 </html>
