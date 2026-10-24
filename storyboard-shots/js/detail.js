@@ -1,19 +1,47 @@
 // ショット詳細（モーダル）
-import { getShot, categoryName } from "./shots/index.js?v=20261021e";
-import { frameHtml } from "./frame.js?v=20261021e";
-import { VOCAB, vocabLabel } from "./vocab.js?v=20261021e";
-import { shotPrompt } from "./output.js?v=20261021e";
-import { addItem } from "./builder.js?v=20261021e";
-import { copyText, toast, track } from "./ui.js?v=20261021e";
-import { t } from "./i18n.js?v=20261021e";
+import { getShot, categoryName } from "./shots/index.js?v=20261024a";
+import { frameHtml } from "./frame.js?v=20261024a";
+import { VOCAB, vocabLabel } from "./vocab.js?v=20261024a";
+import { shotPrompt } from "./output.js?v=20261024a";
+import { addItem } from "./builder.js?v=20261024a";
+import { copyText, toast, track } from "./ui.js?v=20261024a";
+import { t } from "./i18n.js?v=20261024a";
+import { demoMove, demoPoster, demoSources, reducedMotion } from "./move-demo.js?v=20261024a";
 
 const $ = (id) => document.getElementById(id);
+
+// 開いたショットの動きに合わせて見本を差し替える（動画は開いたときだけ読み込む）
+const showMoveDemo = (shot) => {
+  const box = $("detail-move");
+  const video = $("detail-move-video");
+  const move = demoMove(shot);
+  if (!move) {
+    stopMoveDemo();
+    box.hidden = true;
+    return;
+  }
+  video.poster = demoPoster(move);
+  video.innerHTML = demoSources(move);
+  video.load();
+  $("detail-move-cap").textContent = t("moveDemo")(vocabLabel("move", move));
+  box.hidden = false;
+  if (!reducedMotion()) video.play().catch(() => {});
+};
+
+const stopMoveDemo = () => {
+  const video = $("detail-move-video");
+  video.pause();
+  video.innerHTML = "";
+  video.removeAttribute("poster");
+  video.load();
+};
 
 export const initDetail = () => {
   const dialog = $("detail");
   let current = null;
 
   $("detail-close").addEventListener("click", () => dialog.close());
+  dialog.addEventListener("close", stopMoveDemo);
   dialog.addEventListener("click", (e) => {
     if (e.target === dialog) dialog.close();
   });
@@ -43,6 +71,7 @@ export const initDetail = () => {
       .join("");
     $("detail-prompt").textContent = shotPrompt(current);
     dialog.showModal();
+    showMoveDemo(current);
     track("open", { shot_id: current.id });
   };
 };

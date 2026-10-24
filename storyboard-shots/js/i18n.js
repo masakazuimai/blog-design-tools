@@ -26,6 +26,7 @@ const STR = {
     boardTitle: "絵コンテ",
     none: "指定なし",
     moveInDesc: "プロンプトの説明文で指定",
+    moveDemo: (name) => `カメラの動きの見本：${name}`,
     vocabLabels: { shot: "大きさ", angle: "アングル", move: "カメラの動き", light: "光" },
   },
   en: {
@@ -52,6 +53,7 @@ const STR = {
     boardTitle: "Storyboard",
     none: "None",
     moveInDesc: "Set in the prompt text",
+    moveDemo: (name) => `Camera move example: ${name}`,
     vocabLabels: { shot: "Size", angle: "Angle", move: "Camera move", light: "Light" },
   },
 };

@@ -1,8 +1,8 @@
 // 書き出し：動画生成AI向けプロンプト・絵コンテPNG・video-scenario-maker 用JSON
-import { getShot, categoryName } from "./shots/index.js?v=20261021e";
-import { frameSvg, frameSvgWithPhoto } from "./frame.js?v=20261021e";
-import { vocabEn } from "./vocab.js?v=20261021e";
-import { t } from "./i18n.js?v=20261021e";
+import { getShot, categoryName } from "./shots/index.js?v=20261024a";
+import { frameSvg, frameSvgWithPhoto } from "./frame.js?v=20261024a";
+import { vocabEn } from "./vocab.js?v=20261024a";
+import { t } from "./i18n.js?v=20261024a";
 
 const sentence = (s) => (s ? `${s.replace(/[.\s]+$/, "")}.` : "");
 const camera = (v) => ["shot", "angle", "move"].map((k) => vocabEn(k, v[k])).filter(Boolean).join(", ");
