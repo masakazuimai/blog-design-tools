@@ -53,7 +53,7 @@ jobs:
             else
               # 変更ファイルのトップレベルディレクトリのうち index.html を持つものだけ
               # apps/ 配下（共有アセット含む）はどこが変わっても1ユニットで一括デプロイ
-              TARGETS=$(echo "$CHANGED" | grep '/' | cut -d/ -f1 | sort -u \
+              TARGETS=$(echo "$CHANGED" | { grep '/' || true; } | cut -d/ -f1 | sort -u \
                 | while read -r d; do
                     case "$d" in
                       apps) [ -d "$d" ] && echo "$d" ;;
