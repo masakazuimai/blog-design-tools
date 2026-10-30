@@ -8,10 +8,12 @@ const DEMO_SHOTS = new Set([
   "pr13", "pr14", "pr15", "pr16", "pr17",
   // 会話の切り返し（rl07）は After Effects でつないだもの、対談の2ショット（rl08）は Blender だけ
   "rl07", "rl08",
+  // 第5弾（2026-10-30）。フィックス（pr22）は動かないので動画にしない
+  "pr18", "pr19", "pr20", "pr21", "pr23", "pr24", "pr25", "pr26", "pr27", "pr28", "pr29", "pr30",
   // つなぎ・編集は、Blenderの素材カットを After Effects でつないだもの
   "ed01", "ed02", "ed03", "ed04", "ed05", "ed06",
 ]);
-const DEMO_VER = "20261030c";
+const DEMO_VER = "20261030e";
 const demoUrl = (file) => new URL(`../video/${file}?v=${DEMO_VER}`, import.meta.url).href;
 
 export const hasDemo = (shot) => DEMO_SHOTS.has(shot?.id);

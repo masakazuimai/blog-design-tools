@@ -183,7 +183,8 @@ export default [
     dur: 3, frame: { subject: "person", size: "fs" },
   },
   {
-    id: "ef02", cat: "effect", name: "ピント送り",
+    // 2026-10-30 に「ピント・レンズ」へ移した（保存済みの絵コンテや計測と合わせるため ID は ef のまま）
+    id: "ef02", cat: "lens", name: "ピント送り",
     use: "視線や注意を手前から奥へ移す",
     intent: "手前の物から奥の人物へピントを移し、見る人の注意を誘導する。物と人物の関係（誰の物か）を1カットで見せられる。",
     tips: "rack focus from ... to ... と書く。生成AIでは動きが出にくいので、起点（手前にピント）の画を作り、動きはプロンプトで指定する。",
@@ -228,7 +229,7 @@ export default [
     dur: 3, frame: { subject: "landscape", size: "ews", horizon: 50 },
   },
   {
-    id: "ef07", cat: "effect", name: "手前も奥もくっきり（ディープフォーカス）",
+    id: "ef07", cat: "lens", name: "手前も奥もくっきり（ディープフォーカス）",
     use: "手前と奥の両方に意味がある場面・人物と状況を同時に見せる",
     intent: "手前の人物から奥の景色まで、全部にピントを合わせる。どこを見るかを見る人に任せられ、手前と奥の関係（見張る人と見張られる人など）を1枚で伝えられる。",
     tips: "deep focus, everything in sharp focus from foreground to background と書く。ぼかしの語（shallow depth of field, bokeh）を混ぜない。手前と奥に置く物を1つずつ書く。",
