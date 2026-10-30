@@ -1,8 +1,8 @@
-import MORE_SHOTS from "./more.js?v=20261030b";
-import ADVANCED_SHOTS from "./advanced.js?v=20261030b";
-import EDIT_SHOTS from "./edit.js?v=20261030b";
-import { CATEGORY_EN, META_EN } from "./en-meta.js?v=20261030b";
-import { LANG } from "../i18n.js?v=20261030b";
+import MORE_SHOTS from "./more.js?v=20261030c";
+import ADVANCED_SHOTS from "./advanced.js?v=20261030c";
+import EDIT_SHOTS from "./edit.js?v=20261030c";
+import { CATEGORY_EN, META_EN } from "./en-meta.js?v=20261030c";
+import { LANG } from "../i18n.js?v=20261030c";
 
 // ショットの定義。vocab は video-scenario-maker の語彙コード（shot/angle/move/light）と共通
 // desc は動画生成AIに渡す場面の英語説明（video-scenario-maker の scene.desc にもそのまま入る）

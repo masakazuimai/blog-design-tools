@@ -1,5 +1,5 @@
 // 画面共通の小物（トースト・コピー・計測）
-import { t } from "./i18n.js?v=20261030b";
+import { t } from "./i18n.js?v=20261030c";
 
 let toastTimer = 0;
 export const toast = (message) => {

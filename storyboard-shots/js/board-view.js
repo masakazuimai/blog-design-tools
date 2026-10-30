@@ -1,11 +1,11 @@
 // 絵コンテを組む画面（ショットの並び＋シートのプレビュー＋書き出し）
-import { CATEGORIES, SHOTS, getShot } from "./shots/index.js?v=20261030b";
-import { frameHtml } from "./frame.js?v=20261030b";
-import { boardPrompt, scenarioJson, sheetSvg } from "./output.js?v=20261030b";
-import * as store from "./builder.js?v=20261030b";
-import { copyText, toast, track } from "./ui.js?v=20261030b";
-import { downloadSvgAsPng, downloadText } from "./download.js?v=20261030b";
-import { t } from "./i18n.js?v=20261030b";
+import { CATEGORIES, SHOTS, getShot } from "./shots/index.js?v=20261030c";
+import { frameHtml } from "./frame.js?v=20261030c";
+import { boardPrompt, scenarioJson, sheetSvg } from "./output.js?v=20261030c";
+import * as store from "./builder.js?v=20261030c";
+import { copyText, toast, track } from "./ui.js?v=20261030c";
+import { downloadSvgAsPng, downloadText } from "./download.js?v=20261030c";
+import { t } from "./i18n.js?v=20261030c";
 
 const $ = (id) => document.getElementById(id);
 const SEED = ["es01", "es02", "sz02", "rl01", "mv01", "sz03", "mv02"];

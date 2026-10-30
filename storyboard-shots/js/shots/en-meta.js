@@ -112,6 +112,18 @@ export const META_EN = {
     intent: "Three or more people in one frame convey the mood of the group. Whoever sits at the center becomes the focus of the moment.",
     tips: "Give the number of people (four friends, etc.) and how they are arranged. Faces break more with more people, so stay around four.",
   },
+  rl07: {
+    name: "Cutting between speakers",
+    use: "Vlogs, interviews, two people talking face to face",
+    intent: "Two people sitting face to face are shown in turn, cutting to whoever is speaking. Viewers see each line and each reaction in order, which carries the rhythm of the talk and makes them feel they are sitting at the table too.",
+    tips: "Make each person a separate clip with the same light and seats, and only swap the camera to over the other person's shoulder. Do not cross the line between the two (keep the left person on the left and the right person on the right) so they still feel face to face. In a single prompt, write \"cutting back and forth between ... and ... as each one speaks\".",
+  },
+  rl08: {
+    name: "Interview two-shot (armchairs)",
+    use: "Talks, interview videos, podcast recordings",
+    intent: "Two armchairs are angled slightly inward and both people are shown wide from the front. They face each other yet stay open to the viewer, so you see their relationship and expressions at once, with the calm feel of a sit-down talk.",
+    tips: "Write \"two people sitting in armchairs angled slightly toward each other\" and a wide front view that includes their full bodies. Describe each person's clothes and hair differently so the faces do not merge. For talking scenes, use this wide shot as the base and cut in closer shots of each person.",
+  },
   ag01: {
     name: "High angle",
     use: "Weakness, loneliness, being overwhelmed",
