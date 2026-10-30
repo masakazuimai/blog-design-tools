@@ -1,8 +1,8 @@
-import MORE_SHOTS from "./more.js?v=20261030a";
-import ADVANCED_SHOTS from "./advanced.js?v=20261030a";
-import EDIT_SHOTS from "./edit.js?v=20261030a";
-import { CATEGORY_EN, META_EN } from "./en-meta.js?v=20261030a";
-import { LANG } from "../i18n.js?v=20261030a";
+import MORE_SHOTS from "./more.js?v=20261030b";
+import ADVANCED_SHOTS from "./advanced.js?v=20261030b";
+import EDIT_SHOTS from "./edit.js?v=20261030b";
+import { CATEGORY_EN, META_EN } from "./en-meta.js?v=20261030b";
+import { LANG } from "../i18n.js?v=20261030b";
 
 // ショットの定義。vocab は video-scenario-maker の語彙コード（shot/angle/move/light）と共通
 // desc は動画生成AIに渡す場面の英語説明（video-scenario-maker の scene.desc にもそのまま入る）
@@ -12,8 +12,7 @@ const CATEGORIES_JA = [
   { id: "size", name: "人物の大きさ" },
   { id: "relation", name: "関係・会話" },
   { id: "angle", name: "角度・視点" },
-  { id: "move", name: "カメラの動き" },
-  { id: "advanced", name: "応用のカメラワーク" },
+  { id: "move", name: "カメラワーク" },
   { id: "effect", name: "演出" },
   { id: "edit", name: "つなぎ・編集" },
 ];

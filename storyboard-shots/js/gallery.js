@@ -1,11 +1,11 @@
 // ショット一覧（カテゴリ絞り込み＋カード）
-import { CATEGORIES, SHOTS, categoryName, getShot } from "./shots/index.js?v=20261030a";
-import { frameHtml } from "./frame.js?v=20261030a";
-import { vocabLabel } from "./vocab.js?v=20261030a";
-import { addItem } from "./builder.js?v=20261030a";
-import { toast, track } from "./ui.js?v=20261030a";
-import { t } from "./i18n.js?v=20261030a";
-import { hasDemo, demoPoster, demoSources, reducedMotion } from "./move-demo.js?v=20261030a";
+import { CATEGORIES, SHOTS, categoryName, getShot } from "./shots/index.js?v=20261030b";
+import { frameHtml } from "./frame.js?v=20261030b";
+import { vocabLabel } from "./vocab.js?v=20261030b";
+import { addItem } from "./builder.js?v=20261030b";
+import { toast, track } from "./ui.js?v=20261030b";
+import { t } from "./i18n.js?v=20261030b";
+import { hasDemo, demoPoster, demoSources, reducedMotion } from "./move-demo.js?v=20261030b";
 
 const renderChips = (wrap, onSelect) => {
   const all = [{ id: "all", name: t("all"), count: SHOTS.length }]

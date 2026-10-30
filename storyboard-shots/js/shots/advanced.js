@@ -1,10 +1,11 @@
 // 応用のカメラワーク（2026-10-21 第3弾）。項目の意味は index.js と同じ
+// 2026-10-30 に「カメラの動き」とまとめて1つのカテゴリ「カメラワーク」（cat: "move"）にした
 // 共通の語彙（move）に無い動きなので vocab.move は空にし、動きは desc で指定する
 // frame.move は一覧の絵を動かすアニメだけに使う（近い基本の動きを借りる）
 
 export default [
   {
-    id: "pr01", cat: "advanced", name: "めまいショット（ドリーズーム）",
+    id: "pr01", cat: "move", name: "めまいショット（ドリーズーム）",
     use: "気づいた瞬間・動揺・現実がゆがむ感覚",
     intent: "人物の大きさはそのままで、背景だけが伸びたり縮んだりする。カメラを引きながらズームで寄ることで起きる、見る人まで足元がぐらつくような感覚を作れる。",
     tips: "dolly zoom (vertigo effect) と、人物の大きさは変えず背景だけが変わることを書く。動画AIでは再現が不安定なので、1カット3秒前後に短くして何回か作り直す前提にする。",
@@ -13,7 +14,7 @@ export default [
     dur: 3, frame: { subject: "person", size: "ms", move: "in" },
   },
   {
-    id: "pr02", cat: "advanced", name: "上昇して見せる（クレーンアップ）",
+    id: "pr02", cat: "move", name: "上昇して見せる（クレーンアップ）",
     use: "締めのカット・決意・世界の広がりを見せる",
     intent: "人物の目線の高さから上へ昇り、周りの景色まで見せていく。気持ちが開けていく流れや、話の締めくくりに向く。",
     tips: "crane up と、昇り始め（人物の目線の高さ）と終わり（街全体が見える高さ）を書く。人物は画面の中央に置いたままにする。",
@@ -22,7 +23,7 @@ export default [
     dur: 5, frame: { subject: "landscape", size: "ws", horizon: 62, move: "tilt" },
   },
   {
-    id: "pr03", cat: "advanced", name: "降りてきて始まる（クレーンダウン）",
+    id: "pr03", cat: "move", name: "降りてきて始まる（クレーンダウン）",
     use: "場面の始まり・主人公の登場",
     intent: "高い位置から降りてきて人物の目線の高さで止まり、広い場所から1人の人物へ見る人を連れていく。場面の始まりや主人公の紹介に使える。",
     tips: "crane down from ... to eye level と、降りきった所で何が映るか（人物の顔の高さ）を書く。降りる途中で人物が画面から外れないよう、人物の位置を固定して書く。",
@@ -31,7 +32,7 @@ export default [
     dur: 5, frame: { subject: "landscape", size: "ws", horizon: 48, move: "tilt" },
   },
   {
-    id: "pr04", cat: "advanced", name: "横に滑る（トラック・スライダー）",
+    id: "pr04", cat: "move", name: "横に滑る（トラック・スライダー）",
     use: "商品・料理・立体感を見せたい場面",
     intent: "カメラが横にゆっくり滑ると、手前の物は速く、奥の物は遅く動いて見え、平らな画面に奥行きが出る。商品や手元を上質に見せる定番の動き。",
     tips: "slow lateral tracking shot (slider) と方向（left to right）を書き、手前に物を1つ置く。人物を追う動きではないので、被写体は止めておく。",
@@ -40,7 +41,7 @@ export default [
     dur: 4, frame: { subject: "object", move: "track" },
   },
   {
-    id: "pr05", cat: "advanced", name: "前から後ずさりで撮る（リーディング）",
+    id: "pr05", cat: "move", name: "前から後ずさりで撮る（リーディング）",
     use: "歩きながら話す・決意して進む・向かってくる人物",
     intent: "歩く人物の正面でカメラが後ろへ下がり続け、人物の表情を見ながら一緒に進む。人物の大きさが変わらないので、話や表情に集中させられる。",
     tips: "the camera moves backward in front of her as she walks toward it と書き、人物とカメラの距離を一定に保つよう指定する。背景の流れは控えめにする。",
@@ -49,7 +50,7 @@ export default [
     dur: 4, frame: { subject: "person", size: "ms", move: "track" },
   },
   {
-    id: "pr06", cat: "advanced", name: "一気に寄る（クラッシュズーム）",
+    id: "pr06", cat: "move", name: "一気に寄る（クラッシュズーム）",
     use: "衝撃・ギャグ・ハッとする瞬間",
     intent: "一瞬で顔や物に寄り、見る人の視線を強引に連れていく。驚きを強調したり、コミカルな間を作ったりできる。",
     tips: "a fast crash zoom into ... と、寄る先（his face など）を1つだけ書く。ゆっくり寄る slow dolly-in と混ぜない。",
@@ -58,7 +59,7 @@ export default [
     dur: 2, frame: { subject: "person", size: "cu", move: "in" },
   },
   {
-    id: "pr07", cat: "advanced", name: "振って切り替える（ウィップパン）",
+    id: "pr07", cat: "move", name: "振って切り替える（ウィップパン）",
     use: "テンポよく場面を変える・同時に起きていること",
     intent: "カメラを素早く横に振って画面を流し、流れたまま次の場面へつなぐ。勢いを落とさずに場所や時間を切り替えられる。",
     tips: "a fast whip pan with motion blur と、振る前と振った後に映るものを書く。編集でつなぐなら、前後のカットの両方にぶれを入れておく。",
@@ -67,7 +68,7 @@ export default [
     dur: 2, frame: { subject: "landscape", size: "ws", horizon: 58, move: "pan" },
   },
   {
-    id: "pr08", cat: "advanced", name: "体に固定（スノーリカム）",
+    id: "pr08", cat: "move", name: "体に固定（スノーリカム）",
     use: "混乱・酔い・追い詰められた気持ち",
     intent: "カメラを人物の体に固定して、顔は画面の中で止まったまま周りの景色だけが揺れる。人物の内側の混乱を、見る人に体で感じさせる。",
     tips: "snorricam (body-mounted camera) と、顔が画面の中央で動かないことを書く。周りの景色の揺れ方（swaying, spinning）を指定する。",
@@ -76,7 +77,7 @@ export default [
     dur: 3, frame: { subject: "person", size: "ms", move: "hand" },
   },
   {
-    id: "pr09", cat: "advanced", name: "引いて明かす（プルバック・リビール）",
+    id: "pr09", cat: "move", name: "引いて明かす（プルバック・リビール）",
     use: "状況のオチ・意外な真相・孤立を見せる",
     intent: "寄った画から引いていき、最後に周りの状況を見せて意味をひっくり返す。最初の画で見えなかったものを、引いた先で明かす。",
     tips: "pull back to reveal ... と、最後に見せるもの（the whole empty stadium など）を必ず書く。ゆっくり引くドリーアウトとの違いは、最後に「見せたいもの」があること。",
@@ -85,7 +86,7 @@ export default [
     dur: 5, frame: { subject: "landscape", size: "ws", horizon: 55, move: "out" },
   },
   {
-    id: "pr10", cat: "advanced", name: "手前を横切って明かす（ワイプ）",
+    id: "pr10", cat: "move", name: "手前を横切って明かす（ワイプ）",
     use: "人物の登場・カットを隠してつなぐ",
     intent: "柱や人など手前の物が画面を横切った後に、奥の人物が見える。登場をもったいぶったり、手前の物を境目にして次のカットへつないだりできる。",
     tips: "the camera tracks past a pillar in the foreground to reveal ... と、横切る物と、その後に見える人物を書く。手前の物はぼかす（blurred）。",
@@ -94,7 +95,7 @@ export default [
     dur: 3, frame: { subject: "person", size: "ms", move: "track" },
   },
   {
-    id: "pr11", cat: "advanced", name: "FPVドローン（急降下・すり抜け）",
+    id: "pr11", cat: "move", name: "FPVドローン（急降下・すり抜け）",
     use: "オープニング・スピード感・場所の紹介",
     intent: "小型ドローンで建物や木の間をすり抜け、急降下する。普通の空撮よりスピードと没入感が強く、見る人を一気に場面へ引き込む。",
     tips: "FPV drone shot diving down ... and flying through ... と、すり抜ける場所を書く。人物は最後にだけ小さく映す。",
@@ -103,7 +104,7 @@ export default [
     dur: 4, frame: { subject: "landscape", size: "ews", horizon: 34, move: "drone" },
   },
   {
-    id: "pr12", cat: "advanced", name: "時間が止まって回り込む（バレットタイム）",
+    id: "pr12", cat: "move", name: "時間が止まって回り込む（バレットタイム）",
     use: "決めの一瞬・アクションの見せ場",
     intent: "動きの途中で時間が止まり、カメラだけが人物の周りを回る。一番かっこいい瞬間を、いろいろな角度から見せられる。",
     tips: "bullet time, frozen moment, the camera orbits around him と書き、止まっている物（splashing water, flying hair）を1つ入れる。動画AIでは人物まで動き出しやすいので、frozen を繰り返し書く。",
@@ -112,7 +113,7 @@ export default [
     dur: 4, frame: { subject: "person", size: "fs", move: "orbit" },
   },
   {
-    id: "pr13", cat: "advanced", name: "真上・真下へ平行に動く（ペデスタル）",
+    id: "pr13", cat: "move", name: "真上・真下へ平行に動く（ペデスタル）",
     use: "物や人物を下から上まで順に見せる・高さを伝える",
     intent: "カメラの向きは変えずに、高さだけを上げ下げする。見上げたり見下ろしたりしないので、被写体の形がゆがまず、背の高い物を足元から順に紹介できる。",
     tips: "pedestal up と、動き始め（足元）と終わり（顔の高さ）を書く。首を振る tilt と混同されやすいので、camera keeps facing forward, no tilt と添える。",
@@ -121,7 +122,7 @@ export default [
     dur: 4, frame: { subject: "person", size: "fs", move: "tilt" },
   },
   {
-    id: "pr14", cat: "advanced", name: "画面が1回転する（バレルロール）",
+    id: "pr14", cat: "move", name: "画面が1回転する（バレルロール）",
     use: "混乱・めまい・場面の切り替わり・アクション",
     intent: "レンズの軸を中心に画面そのものがぐるりと回る。上下の感覚が崩れるので、気持ちの混乱や、別の世界へ入る瞬間を強く印象づけられる。",
     tips: "barrel roll, the camera rotates 360 degrees around its lens axis と書く。回転の向き（clockwise）と速さを1つずつ指定し、人物は画面の中央に置く。",
@@ -130,7 +131,7 @@ export default [
     dur: 3, frame: { subject: "person", size: "ms", move: "orbit" },
   },
   {
-    id: "pr15", cat: "advanced", name: "動きながら時間を早送り（ハイパーラプス）",
+    id: "pr15", cat: "move", name: "動きながら時間を早送り（ハイパーラプス）",
     use: "移動・時間の経過・街の活気を短く見せる",
     intent: "カメラが進みながら、周りの人や車、空の流れだけが早回しになる。長い道のりや1日の流れを、数秒に縮めて見せられる。",
     tips: "hyperlapse, moving forward through ... と、早く流れる物（crowds, clouds, traffic）を書く。景色が飛びやすいので、進む道筋は1本のまっすぐな道にする。",
@@ -139,7 +140,7 @@ export default [
     dur: 4, frame: { subject: "landscape", size: "ws", horizon: 55, move: "drone" },
   },
   {
-    id: "pr16", cat: "advanced", name: "揺れずに滑らかに追う（ステディカム）",
+    id: "pr16", cat: "move", name: "揺れずに滑らかに追う（ステディカム）",
     use: "人物について歩く・階段や室内を通り抜ける",
     intent: "手持ちのように人物の近くについていきながら、揺れだけを消す。見る人が一緒に歩いているような没入感と、映画らしい落ち着きを両方出せる。",
     tips: "smooth steadicam shot following ... と書き、手持ちの揺れ（handheld, shaky）とは書かない。曲がる・上るなど、通る道筋を1つ書くと滑らかさが伝わる。",
@@ -148,7 +149,7 @@ export default [
     dur: 4, frame: { subject: "person", size: "ms", move: "track" },
   },
   {
-    id: "pr17", cat: "advanced", name: "カットを割らずに撮り続ける（長回し）",
+    id: "pr17", cat: "move", name: "カットを割らずに撮り続ける（長回し）",
     use: "緊張を途切れさせない・場所の移動をつなげて見せる",
     intent: "カメラを止めずに1カットで撮り続ける。途中で画面が切り替わらないので、本当にその場にいるような臨場感と、緊張がずっと続く感覚が生まれる。",
     tips: "one continuous take, no cuts と書き、通る場所の順番（kitchen → hallway → street）を書く。動画AIは1回で作れる長さに限りがあるので、場所を2〜3か所に絞る。",

@@ -4,8 +4,7 @@ export const CATEGORY_EN = {
   size: "Shot Size",
   relation: "Relationships & Dialogue",
   angle: "Angle & Viewpoint",
-  move: "Camera Movement",
-  advanced: "Advanced Moves",
+  move: "Camera Work",
   effect: "Effects",
   edit: "Transitions & Editing",
 };

@@ -1,8 +1,8 @@
 // 画面の配線（ショット一覧／絵コンテの切り替え）
-import { initGallery } from "./gallery.js?v=20261030a";
-import { initDetail } from "./detail.js?v=20261030a";
-import { initBoardView } from "./board-view.js?v=20261030a";
-import { track } from "./ui.js?v=20261030a";
+import { initGallery } from "./gallery.js?v=20261030b";
+import { initDetail } from "./detail.js?v=20261030b";
+import { initBoardView } from "./board-view.js?v=20261030b";
+import { track } from "./ui.js?v=20261030b";
 
 const openDetail = initDetail();
 initBoardView();

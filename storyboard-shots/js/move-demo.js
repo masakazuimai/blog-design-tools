@@ -9,7 +9,7 @@ const DEMO_SHOTS = new Set([
   // つなぎ・編集は、Blenderの素材カットを After Effects でつないだもの
   "ed01", "ed02", "ed03", "ed04", "ed05", "ed06",
 ]);
-const DEMO_VER = "20261030a";
+const DEMO_VER = "20261030b";
 const demoUrl = (file) => new URL(`../video/${file}?v=${DEMO_VER}`, import.meta.url).href;
 
 export const hasDemo = (shot) => DEMO_SHOTS.has(shot?.id);
