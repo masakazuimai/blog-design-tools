@@ -1,12 +1,12 @@
 // ショット詳細（モーダル）
-import { getShot, categoryName } from "./shots/index.js?v=20261024b";
-import { frameHtml } from "./frame.js?v=20261024b";
-import { VOCAB, vocabLabel } from "./vocab.js?v=20261024b";
-import { shotPrompt } from "./output.js?v=20261024b";
-import { addItem } from "./builder.js?v=20261024b";
-import { copyText, toast, track } from "./ui.js?v=20261024b";
-import { t } from "./i18n.js?v=20261024b";
-import { hasDemo, demoPoster, demoSources, reducedMotion } from "./move-demo.js?v=20261024b";
+import { getShot, categoryName } from "./shots/index.js?v=20261030a";
+import { frameHtml } from "./frame.js?v=20261030a";
+import { VOCAB, vocabLabel } from "./vocab.js?v=20261030a";
+import { shotPrompt } from "./output.js?v=20261030a";
+import { addItem } from "./builder.js?v=20261030a";
+import { copyText, toast, track } from "./ui.js?v=20261030a";
+import { t } from "./i18n.js?v=20261030a";
+import { hasDemo, demoPoster, demoSources, reducedMotion } from "./move-demo.js?v=20261030a";
 
 const $ = (id) => document.getElementById(id);
 

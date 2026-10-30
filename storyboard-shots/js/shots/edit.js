@@ -1,0 +1,60 @@
+// つなぎ・編集（2026-10-30 第4弾）。項目の意味は index.js と同じ
+// 1カットの撮り方ではなく、カットとカットのつなぎ方。desc は動画AIに1本で作らせるときの書き方にしている
+// frame.move は一覧の絵を動かすアニメだけに使う（近い基本の動きを借りる）
+
+export default [
+  {
+    id: "ed01", cat: "edit", name: "暗くなって終わる（フェードアウト）",
+    use: "物語や場面の終わり・時間が大きく飛ぶ前",
+    intent: "画面が少しずつ暗くなり、真っ黒で終わる。ここで一区切りだと見る人に伝わり、余韻を残したまま次の場面へ移れる。",
+    tips: "the shot slowly fades to black と、暗くなり始める前の動作（she turns off the lamp など）を書く。動画AIで暗くなりきらないときは、編集ソフトで最後の1秒を暗くする方が確実。",
+    vocab: { shot: "ws", angle: "eye", move: "static", light: "golden" },
+    desc: "A woman sitting alone on a pier at sunset as the shot slowly fades to black",
+    dur: 4, frame: { subject: "landscape", size: "ws", horizon: 55 },
+  },
+  {
+    id: "ed02", cat: "edit", name: "丸く閉じて終わる（アイリスアウト）",
+    use: "コミカルな締め・昔の映画風・1点に注目させて終える",
+    intent: "画面が丸い窓の形に閉じていき、最後に残した1点で真っ暗になる。古い映画やアニメのような味が出て、最後に何を見せたいかがはっきりする。",
+    tips: "iris out, a black circle closes in on ... と、最後に円の中に残す物（his face, the dog）を書く。生成で形が崩れやすいので、円を閉じる処理は編集ソフトで足すのが確実。",
+    vocab: { shot: "fs", angle: "eye", move: "static", light: "day" },
+    desc: "An iris out: a black circle closes in on a man tipping his hat on a sunny street until only his smiling face remains, then the screen goes black",
+    dur: 3, frame: { subject: "person", size: "fs" },
+  },
+  {
+    id: "ed03", cat: "edit", name: "途中を切っても滑らかにつなぐ（モーフカット）",
+    use: "インタビューや話し言葉の言い直しを切ったとき",
+    intent: "同じ画角で話している途中を切り取ると、人物の顔や姿勢が一瞬飛ぶ。その継ぎ目を形が変わるように滑らかにつなぎ、切ったことを目立たなくする。",
+    tips: "動画AIで作る技ではなく、編集ソフトの機能（Premiere Pro のモーフカットなど）で行う。生成するときは同じ人物・同じ画角・同じ背景（static camera, same framing）で2カット作っておく。",
+    vocab: { shot: "ms", angle: "eye", move: "static", light: "studio" },
+    desc: "A static medium shot of a man being interviewed in a studio, same framing throughout, talking calmly to someone off-screen",
+    dur: 4, frame: { subject: "person", size: "ms" },
+  },
+  {
+    id: "ed04", cat: "edit", name: "別の物を挟んで戻る（カットアウェイ）",
+    use: "時間の経過・人物が見ている物・話の補足",
+    intent: "人物のカットの途中で、その場の別の物（時計・窓の外・手元）を短く挟み、また人物に戻る。間がのびず、見ている物や時間の流れを説明なしで伝えられる。",
+    tips: "挟む物のカットを別に作る。wall clock, the second hand moving のように、動きが1つある物を選ぶ。前後の人物のカットと光の色（night, warm lamp）をそろえる。",
+    vocab: { shot: "cu", angle: "eye", move: "static", light: "night" },
+    desc: "A close-up of a wall clock ticking past midnight in a dimly lit apartment, cut in while a woman waits by the phone",
+    dur: 2, frame: { subject: "object" },
+  },
+  {
+    id: "ed05", cat: "edit", name: "2つの場面を交互に見せる（クロスカッティング）",
+    use: "同じ時刻に別の場所で起きていること・追う側と追われる側",
+    intent: "別々の場所で同時に進む2つの出来事を、短く交互に見せる。2つがいつ交わるのかという緊張が生まれ、切り替えを早めるほど盛り上がる。",
+    tips: "場面Aと場面Bを別々のカットで作り、交互に並べる。1本で作るときは intercut between ... and ... と書く。AとBで光の色を変える（cold blue / warm orange）と見分けやすい。",
+    vocab: { shot: "fs", angle: "eye", move: "track", light: "night" },
+    desc: "Intercut between a man running through a rainy station under cold blue light and a train with warm orange windows about to leave the platform",
+    dur: 4, frame: { subject: "two" },
+  },
+  {
+    id: "ed06", cat: "edit", name: "短いカットを重ねて時間を縮める（モンタージュ）",
+    use: "練習・準備・成長など長い期間を短く見せる",
+    intent: "同じ目的の短いカットを次々につなぎ、何日・何か月もの流れを数十秒にまとめる。積み重ねていく感覚が出て、その後の本番の場面が引き立つ。",
+    tips: "1カット1〜2秒で4〜6カットを並べる。どのカットにも同じ人物・同じ服を書き、季節や時刻だけを変えると時間が進んで見える。",
+    vocab: { shot: "ms", angle: "eye", move: "", light: "day" },
+    desc: "A montage of a young woman training for a marathon: running at dawn, stretching in the rain, drinking water on a hot afternoon, and crossing a finish line",
+    dur: 6, frame: { subject: "person", size: "ms" },
+  },
+];

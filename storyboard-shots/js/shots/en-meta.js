@@ -6,7 +6,8 @@ export const CATEGORY_EN = {
   angle: "Angle & Viewpoint",
   move: "Camera Movement",
   advanced: "Advanced Moves",
-  effect: "Effects & Transitions",
+  effect: "Effects",
+  edit: "Transitions & Editing",
 };
 
 export const META_EN = {
@@ -309,5 +310,77 @@ export const META_EN = {
     use: "The hero moment, action highlights",
     intent: "Time freezes mid-action while only the camera circles the person. It shows the coolest moment from many angles.",
     tips: "Write \"bullet time, frozen moment, the camera orbits around him\" and include one frozen element (splashing water, flying hair). Video AI tends to let the person start moving, so repeat \"frozen\".",
+  },
+  pr13: {
+    name: "Pedestal",
+    use: "Revealing a person or object from bottom to top, showing height",
+    intent: "The camera rises or lowers without changing its direction. Because it never looks up or down, the subject keeps its shape, so you can introduce something tall from the ground up.",
+    tips: "Write \"pedestal up\" with the start (feet) and end (face height). It is easily confused with a tilt, so add \"camera keeps facing forward, no tilt\".",
+  },
+  pr14: {
+    name: "Barrel roll",
+    use: "Confusion, dizziness, scene changes, action",
+    intent: "The whole frame spins around the lens axis. Up and down stop making sense, which makes inner chaos or the moment of entering another world hit hard.",
+    tips: "Write \"barrel roll, the camera rotates 360 degrees around its lens axis\". Give one direction (clockwise) and one speed, and keep the person in the center of the frame.",
+  },
+  pr15: {
+    name: "Hyperlapse",
+    use: "Travel, the passing of time, a lively city in a few seconds",
+    intent: "The camera moves forward while people, cars and the sky race by in fast motion. A long journey or a whole day shrinks into a few seconds.",
+    tips: "Write \"hyperlapse, moving forward through ...\" and what speeds by (crowds, clouds, traffic). The scenery tends to jump, so keep the path to one straight street.",
+  },
+  pr16: {
+    name: "Steadicam",
+    use: "Walking with a character, moving through stairs or rooms",
+    intent: "The camera stays close to the person like a handheld shot, but without the shake. Viewers feel they are walking along, with the calm of a film.",
+    tips: "Write \"smooth steadicam shot following ...\" and avoid \"handheld\" or \"shaky\". Describing one path (turning a corner, climbing stairs) shows off the smoothness.",
+  },
+  pr17: {
+    name: "Long take",
+    use: "Keeping tension unbroken, linking moves between places",
+    intent: "The camera keeps rolling in a single shot. With no cuts, it feels as if you are really there, and the tension never lets up.",
+    tips: "Write \"one continuous take, no cuts\" and the order of places (kitchen → hallway → street). Video AI can only make clips so long, so keep it to two or three places.",
+  },
+  ef07: {
+    name: "Deep focus",
+    use: "When both foreground and background matter, showing a person and their situation together",
+    intent: "Everything from the person in front to the scenery behind is in focus. Viewers choose where to look, and one frame shows how the near and far relate (the watcher and the watched, for example).",
+    tips: "Write \"deep focus, everything in sharp focus from foreground to background\". Do not mix in blur words like \"shallow depth of field\" or \"bokeh\". Name one thing for the front and one for the back.",
+  },
+  ed01: {
+    name: "Fade to black",
+    use: "The end of a story or scene, before a big time jump",
+    intent: "The picture slowly darkens and ends in black. It tells viewers this is a stopping point and carries the mood into the next scene.",
+    tips: "Write \"the shot slowly fades to black\" and the action before it darkens (she turns off the lamp). If the AI does not go fully black, darkening the last second in an editor is more reliable.",
+  },
+  ed02: {
+    name: "Iris out",
+    use: "A comic ending, an old-film feel, ending on one point",
+    intent: "The frame closes into a shrinking circle and goes black on the last thing left inside. It has the charm of old films and cartoons and makes clear what you want seen last.",
+    tips: "Write \"iris out, a black circle closes in on ...\" and what stays inside the circle (his face, the dog). The shape often breaks in generation, so adding the circle in an editor is safer.",
+  },
+  ed03: {
+    name: "Morph cut",
+    use: "After cutting out a restart or stumble in an interview or talk",
+    intent: "Cutting out the middle of a talking shot makes the face or posture jump. A morph cut blends that seam so the cut is hard to notice.",
+    tips: "This is an editing feature (such as Morph Cut in Premiere Pro), not something to generate. When generating, make two clips with the same person, framing and background (static camera, same framing).",
+  },
+  ed04: {
+    name: "Cutaway",
+    use: "Showing time passing, what a character sees, or extra context",
+    intent: "In the middle of a shot of a person, you cut briefly to something else in the scene (a clock, the window, their hands) and come back. It keeps the pace up and explains without words.",
+    tips: "Make the cutaway as a separate clip. Pick something with one movement, like \"wall clock, the second hand moving\". Match the light (night, warm lamp) with the shots before and after.",
+  },
+  ed05: {
+    name: "Cross-cutting",
+    use: "Things happening at the same time in different places, the chaser and the chased",
+    intent: "Two events in different places are shown in short, alternating cuts. Viewers wait for them to meet, and faster switching builds more excitement.",
+    tips: "Make scene A and scene B as separate clips and alternate them. In a single prompt, write \"intercut between ... and ...\". Different light colors for A and B (cold blue / warm orange) keep them easy to tell apart.",
+  },
+  ed06: {
+    name: "Montage",
+    use: "Showing training, preparation or growth over a long time",
+    intent: "Short shots with one goal are joined one after another, turning days or months into seconds. The sense of building up makes the big scene afterward land harder.",
+    tips: "Line up four to six shots of 1–2 seconds each. Describe the same person in the same clothes every time and change only the season or time of day so time feels like it is passing.",
   },
 };

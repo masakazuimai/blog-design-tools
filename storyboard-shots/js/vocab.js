@@ -1,6 +1,6 @@
 // 選択肢の語彙は video-scenario-maker と共通（受け渡しのコードと表記をずらさないため、同じファイルを読む）
 import { SHOTS as SIZES, ANGLES, MOVES, LIGHTS } from "../../video-scenario-maker/js/vocab.js?v=20260928b";
-import { LANG, t } from "./i18n.js?v=20261024b";
+import { LANG, t } from "./i18n.js?v=20261030a";
 
 const find = (list, v) => list.find((o) => o.v === v);
 

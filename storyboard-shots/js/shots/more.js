@@ -209,4 +209,13 @@ export default [
     desc: "Raindrops running down a window at night with blurred city lights behind",
     dur: 3, frame: { subject: "landscape", size: "ews", horizon: 50 },
   },
+  {
+    id: "ef07", cat: "effect", name: "手前も奥もくっきり（ディープフォーカス）",
+    use: "手前と奥の両方に意味がある場面・人物と状況を同時に見せる",
+    intent: "手前の人物から奥の景色まで、全部にピントを合わせる。どこを見るかを見る人に任せられ、手前と奥の関係（見張る人と見張られる人など）を1枚で伝えられる。",
+    tips: "deep focus, everything in sharp focus from foreground to background と書く。ぼかしの語（shallow depth of field, bokeh）を混ぜない。手前と奥に置く物を1つずつ書く。",
+    vocab: { shot: "ws", angle: "eye", move: "static", light: "day" },
+    desc: "A deep focus shot: a young woman sitting at a kitchen table in the foreground and an older man working in the garden through the window, everything in sharp focus",
+    dur: 3, frame: { subject: "two" },
+  },
 ];

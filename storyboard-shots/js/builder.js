@@ -1,5 +1,5 @@
 // 絵コンテ（ショットの並び）の状態。配列は毎回作り直し、変更のたびに保存して購読者へ通知する
-import { getShot } from "./shots/index.js?v=20261024b";
+import { getShot } from "./shots/index.js?v=20261030a";
 
 const KEY = "sbs:board:v1";
 const listeners = new Set();
