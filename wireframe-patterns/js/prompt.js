@@ -1,4 +1,3 @@
-// AIツール（ChatGPT・Claude・v0 など）に渡すプロンプトを作る
 import { categoryName } from "./patterns/index.js?v=20261006h";
 import { LANG } from "./i18n.js?v=20261006h";
 

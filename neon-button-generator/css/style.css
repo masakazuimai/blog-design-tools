@@ -1,4 +1,3 @@
-/* 縁(リム)が光源パラメータで光るSVGボタンのデモ */
 * {
   box-sizing: border-box;
 }
@@ -21,12 +20,10 @@ body {
   color: #e8eaf0;
 }
 
-/* ヘッダー高さ。固定プレビューの top と共有して隙間なく密着させる */
 :root {
   --header-h: 60px;
 }
 
-/* ヘッダー（ブランド＋他ツールへの導線） */
 header {
   display: flex;
   justify-content: space-between;
@@ -68,36 +65,31 @@ header .brand span {
   color: #22d3ee;
 }
 
-/* 中央のステージ（ボタン＋パネル） */
 .stage {
   flex: 1;
   display: grid;
   justify-items: center;
   align-content: start;
   gap: 40px;
-  /* 上パディングは0＝プレビューバーをヘッダーに密着させる。左右0は全幅バー用、下48は余白 */
   padding: 0 0 48px;
 }
 
-/* プレビュー：スクロール中もボタンが見えるよう上部に固定するバー */
 .preview {
   position: sticky;
-  top: var(--header-h); /* ヘッダーと同じ高さ＝隙間なく密着 */
+  top: var(--header-h);
   z-index: 10;
   justify-self: stretch;
   display: grid;
   justify-items: center;
   padding: 20px 16px;
-  /* 後ろを流れるコントロールを隠すため、ヘッダーと同系の半透明＋ぼかし */
   background: rgba(10, 11, 15, 0.85);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid #232833;
 }
 
-/* フッター */
 footer {
   display: flex;
-  justify-content: flex-start; /* 右下広告との被り回避で左寄せ */
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 12px 24px;
   align-items: center;
@@ -139,7 +131,6 @@ footer a:hover {
 }
 
 @media (max-width: 520px) {
-  /* ヘッダーを低くする分、共有変数も更新（preview の top も自動で追従し密着を維持） */
   :root {
     --header-h: 52px;
   }
@@ -165,7 +156,6 @@ footer a:hover {
   }
 }
 
-/* ボタン本体（SVGを背面、ラベルを前面に重ねる） */
 .rim-btn {
   position: relative;
   width: 320px;
@@ -181,17 +171,14 @@ footer a:hover {
   transform: translateY(2px) scale(0.99);
 }
 
-/* SVGはボタンと同じ実寸で描画（サイズはscript.jsが管理） */
-/* セレクタを .rim-btn 子孫にしてUAの svg:not(:root){overflow:hidden} に勝たせる */
 .rim-btn .rim-btn__svg {
   position: absolute;
   top: 0;
   left: 0;
   display: block;
-  overflow: visible; /* ネオンのブルームがボタン外までにじめるように */
+  overflow: visible;
 }
 
-/* ラベルはSVGの上に重ねて常にくっきり */
 .rim-btn__label {
   position: absolute;
   inset: 0;
@@ -206,7 +193,6 @@ footer a:hover {
   pointer-events: none;
 }
 
-/* 光パターン選択セクション（ボタン）。設定パネルの上に独立配置 */
 .patterns {
   width: min(840px, 92vw);
   padding: 20px 24px;
@@ -254,7 +240,6 @@ footer a:hover {
   font-weight: 700;
 }
 
-/* コントロールパネル（3列） */
 .panel {
   width: min(840px, 92vw);
   display: grid;
@@ -266,7 +251,6 @@ footer a:hover {
   background: rgba(255, 255, 255, 0.03);
 }
 
-/* タブレット＝2列、スマホ＝1列 */
 @media (max-width: 760px) {
   .panel {
     grid-template-columns: repeat(2, 1fr);
@@ -285,7 +269,6 @@ footer a:hover {
   gap: 8px;
 }
 
-/* 全幅フィールド（ボタンテキスト等） */
 .field--wide {
   grid-column: 1 / -1;
 }
@@ -307,7 +290,6 @@ footer a:hover {
   border-color: #22d3ee;
 }
 
-/* パターン選択（field__text を流用しつつネイティブselectの体裁を整える） */
 .field__select {
   appearance: none;
   -webkit-appearance: none;
@@ -322,7 +304,6 @@ footer a:hover {
   padding-right: 34px;
 }
 
-/* 選択中パターンに無関係なフィールドは非表示 */
 .field[hidden] {
   display: none;
 }
@@ -340,7 +321,6 @@ footer a:hover {
   font-weight: 700;
 }
 
-/* スライダーはシアン */
 .field__slider {
   width: 100%;
   height: 22px;
@@ -358,7 +338,6 @@ footer a:hover {
   cursor: pointer;
 }
 
-/* アクション行（自動回転・リセット）はパネル全幅 */
 .panel__actions {
   grid-column: 1 / -1;
   display: flex;
@@ -388,7 +367,6 @@ footer a:hover {
   color: #22d3ee;
 }
 
-/* 生成コード出力（HTML/CSSの2カラム） */
 .output {
   width: min(840px, 92vw);
   display: grid;
@@ -442,7 +420,6 @@ footer a:hover {
   border-color: #22d3ee;
 }
 
-/* ── 記事（SEO/AIO可視コンテンツ）──────────────────── */
 .article {
   width: min(840px, 92vw);
   margin: 56px auto 0;
@@ -551,7 +528,6 @@ footer a:hover {
   color: #22d3ee;
 }
 
-/* 広告（PC/SPとも右下フローティングカード320×100・薄型透明枠＋×閉じ） */
 .footer-ad {
   position: fixed;
   right: 0;

@@ -1,4 +1,3 @@
-// ハブ（アプリ選択トップ）のカードをドラッグで並べ替え。順番は localStorage に保存。
 
 const grid = document.getElementById("hubGrid");
 if (grid) {
@@ -24,7 +23,6 @@ if (grid) {
     }
   };
 
-  // 保存済みの順に並べ替え（未知の新規アプリは末尾に残す）
   const applySaved = () => {
     const saved = load();
     if (!saved) return;
@@ -70,7 +68,6 @@ if (grid) {
     grid.insertBefore(moved, from < to ? li.nextSibling : li);
     items().forEach((x) => x.classList.remove("over"));
 
-    // ドロップ確定の軽いアニメーション
     moved.classList.add("just-dropped");
     moved.addEventListener("animationend", () => moved.classList.remove("just-dropped"), { once: true });
     save();

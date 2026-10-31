@@ -6,8 +6,6 @@ import LENS_COMP_SHOTS from "./lens-comp.js?v=20261030e";
 import { CATEGORY_EN, META_EN } from "./en-meta.js?v=20261030e";
 import { LANG } from "../i18n.js?v=20261030e";
 
-// ショットの定義。vocab は video-scenario-maker の語彙コード（shot/angle/move/light）と共通
-// desc は動画生成AIに渡す場面の英語説明（video-scenario-maker の scene.desc にもそのまま入る）
 
 const CATEGORIES_JA = [
   { id: "establish", name: "状況説明" },
@@ -208,10 +206,8 @@ export const CATEGORIES = LANG === "en"
   ? CATEGORIES_JA.map((c) => ({ ...c, name: CATEGORY_EN[c.id] }))
   : CATEGORIES_JA;
 
-// 英語版は名前・使いどころ・伝わること・コツを差し替える（desc は元から英語）
 const localize = (s) => (LANG === "en" ? { ...s, ...META_EN[s.id] } : s);
 
-// 各ショットの写真（ChatGPTで生成し、16:9のWebPにしたもの）。/ と /en/ の両方から同じ画像を指すよう、このファイル基準で解決する
 const imageUrl = (id) => new URL(`../../img/${id}.webp`, import.meta.url).href;
 export const SHOTS = [...RAW_SHOTS, ...MORE_SHOTS, ...ADVANCED_SHOTS, ...FIFTH_SHOTS, ...LENS_COMP_SHOTS, ...EDIT_SHOTS].map((s) => ({ ...localize(s), image: imageUrl(s.id) }));
 

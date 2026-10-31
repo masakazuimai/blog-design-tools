@@ -1,14 +1,9 @@
-/* ============================================================
-   オンライン ホワイトボード
-   ノードUI（付箋 / 図形 / 矢印コネクタ / 無限キャンバス）
-   ============================================================ */
 
-/* Precision White（Vercel/shadcn系）＝ライト。ダークは data-theme="dark" で上書き */
 :root {
   --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Menlo", "Consolas", monospace;
   --radius: 12px;
-  --bg: #ffffff; /* ページ背景 */
-  --surface: #ffffff; /* ツールバー/フッター/ドロワー */
+  --bg: #ffffff;
+  --surface: #ffffff;
   --canvas-bg: #fafafa;
   --grid-line: #ededed;
   --ink: #0a0a0a;
@@ -28,7 +23,6 @@
   --marquee-bg: rgba(0, 112, 243, 0.07);
   --toast-bg: #0a0a0a;
   --toast-fg: #ffffff;
-  /* ノード（未指定色=テーマ既定） */
   --node-folder: #f4f4f5;
   --node-file: #ffffff;
   --node-shape: #ffffff;
@@ -49,7 +43,7 @@
   --line-strong: #3a3a40;
   --accent: #3b9dff;
   --accent-weak: #16283e;
-  --cta-bg: #ffffff; /* ダークは白ボタン */
+  --cta-bg: #ffffff;
   --cta-fg: #0a0a0a;
   --cta-hover: #d9d9d9;
   --hover: #1e1e22;
@@ -89,9 +83,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ---------- ヘッダー ---------- */
 .app-head {
-  /* 横並び1行。中央列(h1)を厳密にセンタリングし、キッカーはその左に添える */
   padding: 10px 24px;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -115,7 +107,6 @@ body {
   letter-spacing: -0.03em;
   font-weight: 800;
   white-space: nowrap;
-  /* 白文字＋黒の縁取り（中抜きアウトライン） */
   color: var(--bg);
   -webkit-text-stroke: 1.5px var(--ink);
   paint-order: stroke fill;
@@ -141,7 +132,6 @@ body {
   color: var(--ink);
   border-color: var(--line-strong);
 }
-/* テーマ切替（言語ボタンの左） */
 .theme-toggle {
   appearance: none;
   background: transparent;
@@ -179,7 +169,6 @@ body {
   display: none;
 }
 
-/* ---------- ツールバー ---------- */
 .toolbar {
   position: sticky;
   top: 0;
@@ -248,7 +237,6 @@ body {
   color: var(--muted);
 }
 .tool.tpl-btn {
-  /* 右端に絶対配置＝他アイコンは justify-content:center で中央寄せのまま */
   position: absolute;
   right: 16px;
   top: 50%;
@@ -269,7 +257,6 @@ body {
 .tool.tpl-btn span {
   white-space: nowrap;
 }
-/* 矢印の設定（アイコン並び） */
 .wire-tools {
   display: flex;
   align-items: center;
@@ -286,7 +273,6 @@ body {
   height: 36px;
 }
 
-/* 色ピッカー（トリガー＋ドロワー） */
 .color-picker {
   position: relative;
   display: flex;
@@ -302,7 +288,6 @@ body {
   height: 24px;
   border-radius: 50%;
   border: 1px solid rgba(15, 23, 42, 0.18);
-  /* 塗りつぶしのカラーホイール（中心まで色を残す） */
   background: conic-gradient(#ff4d4d, #ffd24d, #b6ff4d, #4dff88, #4dd2ff, #4d6bff, #b64dff, #ff4db6, #ff4d4d);
 }
 .color-drawer {
@@ -324,7 +309,6 @@ body {
   display: none;
 }
 
-/* 色スウォッチ */
 .swatch {
   width: 26px;
   height: 26px;
@@ -342,11 +326,10 @@ body {
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--ink);
 }
 
-/* ---------- ステージ / キャンバス ---------- */
 .stage {
   position: relative;
-  height: calc(100vh - 190px); /* dvh非対応ブラウザ用フォールバック */
-  height: calc(100dvh - 190px); /* モバイルのアドレスバー変動に追従 */
+  height: calc(100vh - 190px);
+  height: calc(100dvh - 190px);
   min-height: 460px;
   margin: 0;
   border-bottom: 1px solid var(--line);
@@ -356,7 +339,6 @@ body {
   inset: 0;
   overflow: hidden;
   background-color: var(--canvas-bg);
-  /* 方眼（graph paper）グリッド＝schematic感。applyCameraでsize/positionを動的更新 */
   background-image: linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 24px 24px;
@@ -364,7 +346,6 @@ body {
   cursor: default;
   touch-action: none;
 }
-/* 範囲選択（マーキー）の矩形 */
 .marquee {
   position: absolute;
   border: 1px solid var(--accent);
@@ -392,7 +373,6 @@ body {
   transform-origin: 0 0;
 }
 
-/* コネクタ用SVG（world内・overflow可視で世界座標に直接描画） */
 .wires {
   position: absolute;
   top: 0;
@@ -411,7 +391,7 @@ body {
 .wires .wire-hit {
   stroke: transparent;
   stroke-width: 14;
-  fill: none; /* 直角パスは暗黙クローズで塗り面ができるため必須 */
+  fill: none;
   pointer-events: stroke;
   cursor: pointer;
 }
@@ -430,7 +410,6 @@ body {
   fill: none;
 }
 
-/* ---------- アイテム（付箋・図形） ---------- */
 .item {
   position: absolute;
   display: flex;
@@ -466,7 +445,6 @@ body {
   user-select: text;
 }
 
-/* 付箋 */
 .item.sticky {
   background: var(--node-sticky);
   border-radius: 4px;
@@ -480,7 +458,6 @@ body {
   text-align: left;
 }
 
-/* 図形共通 */
 .item.shape {
   background: var(--node-shape);
   border: 1.5px solid var(--shape-border);
@@ -494,14 +471,13 @@ body {
 .item.diamond {
   background: transparent;
   border: none;
-  overflow: visible; /* 回転した内側四角の角がクリップされないように */
+  overflow: visible;
 }
 .item.diamond .shape-bg {
   position: absolute;
   inset: 0;
   background: var(--node-shape);
   border: 1.5px solid var(--shape-border);
-  /* 正方形を45度回転＋0.707倍で、四隅がボックスの上下左右辺の中点に接するひし形になる */
   transform: rotate(45deg) scale(0.707);
   border-radius: 6px;
   z-index: 0;
@@ -511,7 +487,6 @@ body {
   z-index: 1;
 }
 
-/* ディレクトリマップ用ノード（フォルダ・ファイル） */
 .item.node {
   justify-content: flex-start;
   gap: 8px;
@@ -546,7 +521,6 @@ body {
   font-weight: 400;
 }
 
-/* 選択状態 */
 .item.is-selected {
   outline: 2px solid var(--select-outline);
   outline-offset: 2px;
@@ -556,7 +530,6 @@ body {
   outline-offset: 2px;
 }
 
-/* リサイズハンドル */
 .rz {
   position: absolute;
   right: -6px;
@@ -570,7 +543,6 @@ body {
   z-index: 3;
 }
 
-/* 空状態ヒント */
 .empty-hint {
   position: absolute;
   left: 50%;
@@ -587,7 +559,6 @@ body {
 }
 
 
-/* ---------- 広告（右下フローティング・薄型透明枠 320×100） ---------- */
 .footer-ad {
   position: fixed;
   right: 0;
@@ -649,10 +620,9 @@ body {
   height: 100px;
 }
 
-/* ---------- フッター ---------- */
 footer {
   display: flex;
-  justify-content: flex-start; /* 右下広告との被り回避で左寄せ */
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 12px 24px;
   align-items: center;
@@ -687,7 +657,6 @@ footer a:hover {
   color: var(--accent);
 }
 
-/* ---------- トースト ---------- */
 .toast {
   position: fixed;
   left: 50%;
@@ -708,7 +677,6 @@ footer a:hover {
   transform: translateX(-50%) translateY(0);
 }
 
-/* ---------- レスポンシブ ---------- */
 @media (max-width: 768px) {
   .app-head h1 {
     font-size: 1.4rem;
@@ -721,7 +689,6 @@ footer a:hover {
     width: 38px;
     height: 38px;
   }
-  /* 狭幅では「サンプル」を絶対配置解除して折り返しに参加させる（重なり防止） */
   .tool.tpl-btn {
     position: static;
     transform: none;
@@ -732,7 +699,6 @@ footer a:hover {
     min-height: 380px;
   }
 
-  /* 広告：SPはfooter付近にインライン化 */
   .footer-ad {
     position: static;
     align-self: center;
@@ -766,7 +732,6 @@ footer a:hover {
   }
 }
 
-/* ---------- howto / doc ページ ---------- */
 .doc {
   max-width: 820px;
   margin: 0 auto;
@@ -882,13 +847,10 @@ footer a:hover {
   color: var(--ink);
 }
 
-/* ---------- 自動（テーマ既定色）のスウォッチ ---------- */
-/* ライト/ダークに追従することが伝わるよう、白と暗色を斜めに分けた見た目にする */
 .swatch-auto {
   background: linear-gradient(135deg, #ffffff 0 50%, #1f1f24 50% 100%);
 }
 
-/* ---------- Markdown書き出しダイアログ ---------- */
 .md-dialog {
   width: min(680px, calc(100vw - 32px));
   padding: 20px;
@@ -997,7 +959,6 @@ footer a:hover {
   }
 }
 
-/* ---------- 書き出しドロップダウン ---------- */
 .export-menu {
   position: relative;
   display: flex;

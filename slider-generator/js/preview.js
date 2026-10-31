@@ -1,5 +1,3 @@
-// 選択中ライブラリのCDNを必要時にだけ読み込み、ライブプレビューを描画する。
-// jQuery依存のSlickは、Slickタブを開いたときに初めて読み込む。
 import {
   CDN,
   swiperOptions,
@@ -48,15 +46,15 @@ async function ensureLibrary(name, state) {
     await Promise.all([loadCss(CDN.swiper.css), loadScript(CDN.swiper.js)]);
   } else if (name === "splide") {
     await Promise.all([loadCss(CDN.splide.css), loadScript(CDN.splide.js)]);
-    if (state && state.effect === "marquee") await loadScript(CDN.splide.autoScroll); // 無限スクロール用拡張
+    if (state && state.effect === "marquee") await loadScript(CDN.splide.autoScroll);
   } else if (name === "slick") {
     await Promise.all([loadCss(CDN.slick.css), loadCss(CDN.slick.theme)]);
-    await loadScript(CDN.slick.jquery); // slickより先にjQueryを確定
+    await loadScript(CDN.slick.jquery);
     await loadScript(CDN.slick.js);
   }
 }
 
-let current = null; // { name, instances: [], host }（ギャラリーはメイン＋サムネの2つ）
+let current = null;
 
 function destroyCurrent() {
   if (!current) return;
@@ -77,7 +75,6 @@ function destroyCurrent() {
   current = null;
 }
 
-// Slickの余白用CSSをプレビューにも反映（1つだけ保持）
 function applySlickGap(gap) {
   let tag = document.getElementById("slick-gap-style");
   if (!tag) {
@@ -126,10 +123,9 @@ export async function renderPreview(name, state, host) {
   }
 }
 
-// 無限スクロール（連続・マーキー）のライブプレビュー
 function renderMarquee(name, state, host) {
   const plain = { ...state, arrows: false, pagination: false };
-  const vertical = state.direction === "vertical"; // 縦はSwiper/Splideのみ対応（Slickは横で表示）
+  const vertical = state.direction === "vertical";
   if (name === "swiper") {
     host.innerHTML = swiperPreviewMarkup(state.slideCount, plain);
     const opt = {
@@ -182,12 +178,11 @@ function renderMarquee(name, state, host) {
   }
 }
 
-// サムネイル連動ギャラリー（メイン＋サムネの2スライダー）のライブプレビュー
 function renderGallery(name, state, host) {
   host.innerHTML = galleryPreviewMarkup(name, state);
   const fade = state.effect === "fade";
   const per = thumbsPerView(state);
-  const loop = state.loop; // ループON=最後のスライド後も一定方向に連続。OFF=端で停止
+  const loop = state.loop;
 
   if (name === "swiper") {
     const thumbs = new window.Swiper(host.querySelector(".thumb-slider"), {
@@ -212,7 +207,6 @@ function renderGallery(name, state, host) {
     const main = new window.Swiper(host.querySelector(".main-slider"), mainOpt);
     current = { name, instances: [main, thumbs], host };
   } else if (name === "splide") {
-    // fadeはloop type不可なのでrewindで巡回。それ以外はtype:'loop'で連続
     const mainOpt = { type: fade ? "fade" : loop ? "loop" : "slide", pagination: false, arrows: state.arrows };
     if (fade && loop) mainOpt.rewind = true;
     if (state.autoplay) {

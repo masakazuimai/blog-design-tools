@@ -1,4 +1,3 @@
-// 英語版：カテゴリ名と、ショットごとの名前・使いどころ・伝わること・AIで生成するときのコツ（id ごと）
 export const CATEGORY_EN = {
   establish: "Establishing",
   size: "Shot Size",

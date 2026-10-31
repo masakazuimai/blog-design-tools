@@ -1,5 +1,3 @@
-// 用途テンプレート。キャンバスサイズと紙・ペン・組み方をまとめて設定する
-// text は入れない（利用者が入力した文章を勝手に置き換えないため）
 export const TEMPLATES = [
   { id: "free",     label: { ja: "フリー（自動サイズ）", en: "Free (auto size)" }, w: 0,    h: 0,
     dir: "h", paper: "rule",   pen: "ballpoint", size: 64, lh: 16, pad: 40, tilt: 10, wave: 8 },

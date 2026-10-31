@@ -1,4 +1,3 @@
-// コミュニケーションカテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
 
 import { DRAW, drawKeys, swingKeys, popInKeys, bounceKeys } from "./_shared.js?v=20260815c";
 
@@ -36,7 +35,6 @@ export const COMM_ICONS = [
       duration: 1.5,
       easing: "ease-in-out",
       tracks: [
-        // 3点の上下だけでは変化が小さいので、吹き出しごと現れる動きを足す
         { part: "bubble", origin: "12px 20.4px", keys: popInKeys(0) },
         { part: "dot1", origin: "8.6px 11.9px", keys: typingKeys(0.3) },
         { part: "dot2", origin: "12px 11.9px", keys: typingKeys(0.42) },
@@ -189,7 +187,6 @@ export const COMM_ICONS = [
     parts: [
       { tag: "rect", part: "frame", attrs: { x: 3.4, y: 5.4, width: 17.2, height: 15.2, rx: 2 } },
       { tag: "path", part: "rings", attrs: { d: "M8.2 3.4v4 M15.8 3.4v4 M3.4 10.2h17.2" } },
-      // 日付を並べて順に埋める。点1つの点滅では動きが読み取れない
       { tag: "path", part: "day1", attrs: { d: "M7.6 13.8 L7.6 13.81" } },
       { tag: "path", part: "day2", attrs: { d: "M12 13.8 L12 13.81" } },
       { tag: "path", part: "day3", attrs: { d: "M16.4 13.8 L16.4 13.81" } },
@@ -200,7 +197,6 @@ export const COMM_ICONS = [
       duration: 1.8,
       easing: "ease-out",
       tracks: [
-        // 本体も現れる動きにして、全体として変化が伝わるようにする
         { part: ["frame", "rings"], origin: "12px 12px", keys: popInKeys(0) },
         { part: "day1", origin: "7.6px 13.8px", keys: popInKeys(0.3) },
         { part: "day2", origin: "12px 13.8px", keys: popInKeys(0.4) },
@@ -216,7 +212,6 @@ export const COMM_ICONS = [
     cat: "comm",
     label: { ja: "地図ピン", en: "Map pin" },
     parts: [
-      // 跳ねる余白を残すため一回り小さく描く（4.3 - 線幅1 - 2.4 = 0.9 で枠内）
       { tag: "path", part: "pin", attrs: { d: "M12 20.6s6.2-5.8 6.2-10.1a6.2 6.2 0 0 0-12.4 0c0 4.3 6.2 10.1 6.2 10.1z" } },
       { tag: "circle", part: "dot", attrs: { cx: 12, cy: 10.5, r: 2.3 } },
     ],
@@ -228,7 +223,6 @@ export const COMM_ICONS = [
   },
 ];
 
-// 打っている最中のように上下する（吹き出しの3点用）
 function typingKeys(delay) {
   return [
     { at: 0, transform: "translateY(0)", opacity: 0.3 },

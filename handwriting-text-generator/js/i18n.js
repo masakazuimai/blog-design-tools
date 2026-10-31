@@ -1,7 +1,5 @@
-// UI文言の辞書。/ と /en/ は同じcss/jsを共有し、htmlのlang属性で切り替える
 export const lang = document.documentElement.lang === "en" ? "en" : "ja";
 
-// {ja, en} 形式のラベルから現在の言語を取り出す
 export function L(obj) { return (obj && obj[lang]) || (obj && obj.ja) || ""; }
 
 const DICT = {

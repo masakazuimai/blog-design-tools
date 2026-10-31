@@ -1,6 +1,3 @@
-// 問題データ（Q1-10は記事版 id1339 と同期・Q11-20はアプリ限定ドリル）
-// stageHtml: プレビューiframeに描画するHTML。answerはiframe内で実行される
-// ※ alert() はアプリ内では console 欄に [alert] として表示される
 const PROBLEMS = [
   {"id":1,"title":"fetchでAPIからデータ取得（Promise）","questionHtml":"ボタンをクリックすると、JSONPlaceholderのAPIからデータを取得し、タイトルをアラート表示してください（<code>fetch</code>＋<code>.then</code>）。","stageHtml":"<button id=\"btn1\">データ取得（then）</button>","answer":"document.getElementById('btn1').addEventListener('click', () => {\n  fetch('https://jsonplaceholder.typicode.com/todos/1')\n    .then(response => response.json())\n    .then(data => {\n      alert('タイトル: ' + data.title);\n    })\n    .catch(error => {\n      alert('エラーが発生しました');\n    });\n});"},
   {"id":2,"title":"async/awaitでAPI取得","questionHtml":"Q1と同じ処理を、<code>async/await</code> を使用して書き換えてください（<code>try-catch</code> でエラー処理）。","stageHtml":"<button id=\"btn2\">データ取得（async/await）</button>","answer":"document.getElementById('btn2').addEventListener('click', async () => {\n  try {\n    const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');\n    const data = await response.json();\n    alert('タイトル: ' + data.title);\n  } catch (error) {\n    alert('エラーが発生しました');\n  }\n});"},

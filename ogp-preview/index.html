@@ -6,7 +6,6 @@
     <title>OGPプレビュー【無料】X・Facebook・LINE・はてブ等のシェア表示を確認</title>
     <meta name="description" content="OGP（Open Graph Protocol）の設定をリアルタイムでプレビュー。X・Facebook・LINE・はてなブックマーク・LinkedIn・Pinterest・noteでの表示を確認し、メタタグをワンクリックでコピーできます。" />
     <link rel="canonical" href="https://codequest.work/generator/ogp-preview/" />
-    <!-- OGP（このページ自体のシェア表示用。下部のプレビュー機能が生成するタグとは別） -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://codequest.work/generator/ogp-preview/" />
     <meta property="og:title" content="OGPプレビュー【無料】X・Facebook・LINE・はてブ等のシェア表示を確認" />
@@ -17,7 +16,6 @@
     <meta property="og:image:alt" content="OGPプレビューツール" />
     <meta property="og:site_name" content="CodeQuest.work" />
     <meta property="og:locale" content="ja_JP" />
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="OGPプレビュー【無料】X・Facebook・LINE・はてブ等のシェア表示を確認" />
     <meta name="twitter:description" content="OGPの設定をリアルタイムでプレビュー。各SNSでの表示を確認し、メタタグをワンクリックでコピーできる無料ツール。" />
@@ -48,7 +46,6 @@
         ]
       }
     </script>
-    <!-- Google Tag Manager -->
     <script>
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
@@ -61,7 +58,6 @@
         f.parentNode.insertBefore(j, f);
       })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
     </script>
-    <!-- End Google Tag Manager -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -170,7 +166,6 @@
         flex-shrink: 0;
       }
 
-      /* サイドバータブ */
       .sidebar-tabs {
         display: flex;
         border-bottom: 2px solid var(--color-border);
@@ -356,7 +351,6 @@
         background: var(--color-border);
       }
 
-      /* URL取得ボタン */
       .fetch-row {
         display: flex;
         gap: 8px;
@@ -428,7 +422,6 @@
         color: #166534;
       }
 
-      /* 取得結果の一覧 */
       .fetched-tags {
         margin-top: 16px;
         display: none;
@@ -529,7 +522,6 @@
         overflow: hidden;
       }
 
-      /* Twitter/X - Summary Large Image */
       .preview-twitter-large {
         width: 506px;
         max-width: 100%;
@@ -593,7 +585,6 @@
         overflow: hidden;
       }
 
-      /* Twitter/X - Summary (small) */
       .preview-twitter-summary {
         width: 506px;
         max-width: 100%;
@@ -664,7 +655,6 @@
         overflow: hidden;
       }
 
-      /* Facebook */
       .preview-facebook {
         width: 500px;
         max-width: 100%;
@@ -729,7 +719,6 @@
         overflow: hidden;
       }
 
-      /* LINE */
       .preview-line {
         width: 340px;
         max-width: 100%;
@@ -785,7 +774,6 @@
         overflow: hidden;
       }
 
-      /* はてなブックマーク */
       .preview-hatena {
         width: 500px;
         max-width: 100%;
@@ -852,7 +840,6 @@
         color: #999;
       }
 
-      /* LinkedIn */
       .preview-linkedin {
         width: 500px;
         max-width: 100%;
@@ -907,7 +894,6 @@
         margin-top: 4px;
       }
 
-      /* Pinterest */
       .preview-pinterest {
         width: 320px;
         max-width: 100%;
@@ -962,7 +948,6 @@
         color: #767676;
       }
 
-      /* note */
       .preview-note {
         width: 500px;
         max-width: 100%;
@@ -1029,7 +1014,6 @@
         font-weight: 500;
       }
 
-      /* コード出力 */
       .code-card {
         position: relative;
       }
@@ -1083,7 +1067,6 @@
         background: var(--color-success);
       }
 
-      /* バリデーション */
       .validation-list {
         list-style: none;
         display: flex;
@@ -1133,7 +1116,7 @@
         padding: 0 24px;
         display: flex;
         align-items: center;
-        justify-content: flex-start; /* 右下広告との被り回避で左寄せ */
+        justify-content: flex-start;
         flex-wrap: wrap;
         gap: 12px 24px;
       }
@@ -1202,7 +1185,6 @@
       }
     </style>
     <style>
-      /* 広告（PC/SPとも右下フローティングカード320×100・薄型透明枠＋×閉じ） */
       .footer-ad {
         position: fixed;
         right: 0;
@@ -1254,7 +1236,6 @@
       }
       .ad-widget__close:hover { background: #e2e8f0; color: #1e293b; }
       .footer-ad ins.adsbygoogle { display: block; width: 320px; height: 100px; }
-      /* SP切替BPはfooter縦積み（900px）と揃える＝769〜900pxの被り窓を解消 */
       @media screen and (max-width: 900px) {
         .footer-ad {
           position: static;
@@ -1275,7 +1256,6 @@
     </style>
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe
         src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2"
@@ -1284,7 +1264,6 @@
         style="display: none; visibility: hidden"
       ></iframe
     ></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <header>
       <h1>OGP プレビューツール</h1>
       <p>SNSでシェアされたときの表示をリアルタイムで確認</p>
@@ -1292,10 +1271,8 @@
 
     <div class="container">
       <div class="layout">
-        <!-- サイドバー -->
         <div class="sidebar">
           <div class="card">
-            <!-- サイドバータブ -->
             <div class="sidebar-tabs">
               <button class="sidebar-tab active" data-panel="urlPanel">
                 <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1310,7 +1287,6 @@
               </button>
             </div>
 
-            <!-- URL確認パネル -->
             <div class="tab-panel active" id="urlPanel">
               <div class="form-group">
                 <div class="form-label"><span>確認したいURL</span></div>
@@ -1330,7 +1306,6 @@
               <div class="fetched-tags" id="fetchedTags"></div>
             </div>
 
-            <!-- 手動入力パネル -->
             <div class="tab-panel" id="manualPanel">
               <div class="form-group">
                 <div class="form-label">
@@ -1403,7 +1378,6 @@
           </div>
         </div>
 
-        <!-- メインエリア -->
         <div class="main-area">
           <div class="platform-tabs" id="platformTabs">
             <button class="platform-tab active" data-platform="twitter">
@@ -1440,7 +1414,6 @@
             </button>
           </div>
 
-          <!-- プレビュー -->
           <div class="card">
             <div class="card-title">
               <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1452,7 +1425,6 @@
             <div class="preview-container" id="previewContainer"></div>
           </div>
 
-          <!-- チェック結果 -->
           <div class="card">
             <div class="card-title">
               <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -1461,7 +1433,6 @@
             <ul class="validation-list" id="validationList"></ul>
           </div>
 
-          <!-- メタタグ -->
           <div class="card code-card">
             <div class="card-title">
               <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1483,7 +1454,6 @@
       </div>
     </div>
 
-    <!-- 広告テスト（2026-10-24〜6週間）: 右下広告を停止中。全画面広告用にローダーのみ残す -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
 
     <footer>
@@ -1524,7 +1494,6 @@
         imageFile: $("imageFile"),
       };
 
-      // サイドバータブ切り替え
       document.querySelectorAll(".sidebar-tab").forEach((tab) => {
         tab.addEventListener("click", () => {
           document.querySelectorAll(".sidebar-tab").forEach((t) => t.classList.remove("active"));
@@ -1534,12 +1503,10 @@
         });
       });
 
-      // URL入力でEnterキー対応
       $("fetchUrl").addEventListener("keydown", (e) => {
         if (e.key === "Enter") fetchOgp();
       });
 
-      // OGP取得
       function fetchWithTimeout(url, timeoutMs) {
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -1659,7 +1626,6 @@
           try {
             image = new URL(image, pageUrl).href;
           } catch {
-            /* そのまま */
           }
         }
 
@@ -2012,7 +1978,6 @@
         updateAll();
       }
 
-      // 手動入力イベント
       inputs.title.addEventListener("input", () => {
         state.title = inputs.title.value;
         updateCharCount("titleCount", state.title.length, 60);
@@ -2089,7 +2054,6 @@
         if (file) handleImageFile(file);
       });
 
-      // プラットフォームタブ
       document.querySelectorAll(".platform-tab").forEach((tab) => {
         tab.addEventListener("click", () => {
           document.querySelectorAll(".platform-tab").forEach((t) => t.classList.remove("active"));

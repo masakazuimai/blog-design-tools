@@ -1,4 +1,3 @@
-// エフェクト定義の集約。カテゴリの並び順もここで決める。
 import { BASIC } from "./basic.js?v=20260811a";
 import { TIMELINE } from "./timeline.js?v=20260811a";
 import { SCROLLTRIGGER } from "./scrolltrigger.js?v=20260811a";

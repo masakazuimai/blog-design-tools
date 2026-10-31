@@ -1,9 +1,6 @@
-// リムの光ジェネレーター
-// 状態(state)を単一の真実の源とし、選択中の光パターンに応じてSVGフィルタを再構築する。
-// ライブ描画と出力コードは同じ buildSvgInner() を使うため、見た目と出力は常に一致する。
 
-const VIEW_H = 120; // ボタンの高さ（viewBox単位・固定）
-const MARGIN = 14; // リム矩形の左右上下マージン
+const VIEW_H = 120;
+const MARGIN = 14;
 
 const panel = document.querySelector(".panel");
 const patternsGrid = document.querySelector(".patterns__grid");
@@ -14,8 +11,6 @@ const outHtmlArea = document.getElementById("outHtml");
 const outCssArea = document.getElementById("outCss");
 const spinBtn = document.getElementById("spin");
 
-// ── 言語（ja / en）──────────────────────────────────────
-// HTMLの lang 属性で判定。UIボタン文言と出力コードのコメントを切り替える（ロジックは共通）。
 const LANG = document.documentElement.lang === "en" ? "en" : "ja";
 const T = {
   ja: {
@@ -64,27 +59,19 @@ const T = {
   },
 }[LANG];
 
-// ── 状態 ──────────────────────────────────────────────
-// 初期値はHTML側のコントロール(value/selected)から読み取る（既定値の二重管理を避ける）
 let state = {};
 document.querySelectorAll("[data-key]").forEach((el) => {
   state[el.dataset.key] = el.type === "range" ? Number(el.value) : el.value;
 });
-// パターンはボタンUI（data-key外）。アクティブなボタンから初期値を読む
 state.pattern =
   document.querySelector("[data-pattern-btn].is-active")?.dataset.patternBtn ?? "distant";
 
-// ラベルのHTMLエスケープ（出力コードにそのまま貼れる形へ）
 const escapeHtml = (s) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-// ── SVGフィルタ生成（パターン別）─────────────────────────
-// feSpecularLighting 共通属性
 const specAttrs = (s) =>
   `surfaceScale="${s.surfaceScale}" specularConstant="${s.constant}" specularExponent="${s.exponent}"`;
 
-// グロー発光フィルタ（パルス/フリッカー/アンダーグローで共用）。
-// feFuncA(class=rim-btn__breath)のslopeを揺らして明滅させる。offsetYで下方向の床光に。
 function buildGlowFilter(s, offsetY) {
   const gi = s.glowIntensity;
   const bl = (s.blur * 3 + 3).toFixed(2);
@@ -100,7 +87,6 @@ function buildGlowFilter(s, offsetY) {
 
 function buildFilterMarkup(s, w) {
   switch (s.pattern) {
-    // 方向ライト：縁の片側を照らすスイープ
     case "distant":
       return `<feGaussianBlur in="SourceAlpha" stdDeviation="${s.blur}" result="height" />
         <feSpecularLighting in="height" ${specAttrs(s)} lighting-color="${s.lightColor}" result="spec">
@@ -108,9 +94,6 @@ function buildFilterMarkup(s, w) {
         </feSpecularLighting>
         <feComposite in="spec" in2="SourceAlpha" operator="in" />`;
 
-    // ネオン：光源なし。小・中・大の3段ブラーで縁全体を発光。
-    // 細いリムだと広ブラーは薄くなるため、各層のアルファを feComponentTransfer で増幅して
-    // 外側まで強くにじませる。増幅率は強度スライダーに比例。
     case "neon": {
       const b = s.blur;
       const gi = s.glowIntensity;
@@ -135,7 +118,6 @@ function buildFilterMarkup(s, w) {
         </feMerge>`;
     }
 
-    // デュアル：対向2灯（左右で別色）を合成
     case "dual":
       return `<feGaussianBlur in="SourceAlpha" stdDeviation="${s.blur}" result="height" />
         <feSpecularLighting in="height" ${specAttrs(s)} lighting-color="${s.leftColor}" result="spec1">
@@ -151,7 +133,6 @@ function buildFilterMarkup(s, w) {
           <feMergeNode in="r2" />
         </feMerge>`;
 
-    // トライ：3灯（120°差・3色）をfeMerge
     case "tri": {
       const d = Math.round(s.azimuth);
       return `<feGaussianBlur in="SourceAlpha" stdDeviation="${s.blur}" result="height" />
@@ -174,12 +155,10 @@ function buildFilterMarkup(s, w) {
         </feMerge>`;
     }
 
-    // パルス／フリッカー：縁全体の均一発光（明滅はアニメ側で制御）
     case "pulse":
     case "flicker":
       return buildGlowFilter(s, 0);
 
-    // アンダーグロー：発光を下方向へオフセットして床に反射する光に
     case "under":
       return buildGlowFilter(s, (s.thickness * 0.6 + 8).toFixed(1));
 
@@ -188,14 +167,12 @@ function buildFilterMarkup(s, w) {
   }
 }
 
-// ポイント専用：放射状グラデーションで塗ったストローク＝光源位置だけが強く光る1点。
-// （細いリムではspecularがどこも均一に反射し局所化できないため、グラデ方式で点を作る）
 function buildPointRim(s) {
   const w = s.width;
   const rectW = w - MARGIN * 2;
   const cx = (s.pointXPct / 100 * w).toFixed(1);
   const cy = (s.pointYPct / 100 * VIEW_H).toFixed(1);
-  const r = (s.pointZ * 2 + s.thickness).toFixed(1); // 光の広がり（高さスライダーで調整）
+  const r = (s.pointZ * 2 + s.thickness).toFixed(1);
   return `
       <defs>
         <radialGradient id="rimPtGrad" class="rim-btn__ptgrad" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="${r}">
@@ -218,11 +195,9 @@ function buildPointRim(s) {
       </g>`;
 }
 
-// specular方式（方向/デュアル/トライ）＋ネオン：フィルタで縁を発光させる
 function buildSpecularRim(s) {
   const w = s.width;
   const rectW = w - MARGIN * 2;
-  // 大きなブルームが切れないよう、グロー系パターンはフィルタ領域を広げる
   const glowPatterns = ["neon", "pulse", "flicker", "under"];
   const region = glowPatterns.includes(s.pattern)
     ? `x="-120%" y="-120%" width="340%" height="340%"`
@@ -239,9 +214,6 @@ function buildSpecularRim(s) {
       </g>`;
 }
 
-// アークシャイン：縁の一部が滑らかに艶めく「艶掃き」（位置=周回角度・広さ=弧長で操作）。
-// チェイス（ハードな端の帯）と差別化するため、ダッシュではなく放射グラデを縁に乗せる。
-// 縁全体を淡く光らせつつ、周回角度の位置を中心に明→暗へ滑らかに減衰させる（端が溶ける）。
 function buildArcShineRim(s) {
   const w = s.width;
   const rectW = w - MARGIN * 2;
@@ -249,7 +221,7 @@ function buildArcShineRim(s) {
   const th = s.orbitAngle * Math.PI / 180;
   const cx = (w / 2 + (rectW / 2) * Math.cos(th)).toFixed(1);
   const cy = (VIEW_H / 2 + 46 * Math.sin(th)).toFixed(1);
-  const r = (s.thickness + (s.arcLen / 100) * perim * 0.5).toFixed(1); // 弧の長さ→広い半径で長く滑らかに掃く
+  const r = (s.thickness + (s.arcLen / 100) * perim * 0.5).toFixed(1);
   return `
       <defs>
         <radialGradient id="rimArcGrad" class="rim-btn__arc" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="${r}">
@@ -269,8 +241,6 @@ function buildArcShineRim(s) {
       </g>`;
 }
 
-// ビームグロー：焦点を持つ光だまりを縁の一点に集める（位置=周回角度・広がり=光の広がりで操作）。
-// 放射状グラデの中心を、ボタンの縁に沿った楕円上に周回角度で配置する。
 function buildBeamGlowRim(s) {
   const w = s.width;
   const rectW = w - MARGIN * 2;
@@ -296,8 +266,6 @@ function buildBeamGlowRim(s) {
       </g>`;
 }
 
-// グロスシャイン：ガラスのような対角の艶反射を縁に走らせる（角度・幅で操作）。
-// 線形グラデに2本の明帯を置き、gradientTransformで角度を回す。
 function buildGlossShineRim(s) {
   const w = s.width;
   const rectW = w - MARGIN * 2;
@@ -325,7 +293,6 @@ function buildGlossShineRim(s) {
       </g>`;
 }
 
-// グラデーション：左→右→左の多色グラデで塗ったストローク（回転で色が縁を流れる）
 function buildGradientRim(s) {
   const w = s.width;
   const rectW = w - MARGIN * 2;
@@ -347,7 +314,6 @@ function buildGradientRim(s) {
       </g>`;
 }
 
-// 二重リム：外側(lightColor)＋内側(glowColor)の2層ストローク
 function buildDoubleRim(s) {
   const w = s.width;
   const rectW = w - MARGIN * 2;
@@ -369,17 +335,15 @@ function buildDoubleRim(s) {
       </g>`;
 }
 
-// コーナーグロー：四隅に放射状グラデの光（ボタン形状にクリップ）＋淡いベースリム
-// グロー強度(glowIntensity)で四隅グローと縁の明るさ（不透明度）を調整する。
 function buildCornerRim(s) {
   const w = s.width;
   const rectW = w - MARGIN * 2;
   const x0 = MARGIN, y0 = 14, x1 = MARGIN + rectW, y1 = 14 + 92;
   const gi = s.glowIntensity;
-  const inner = Math.min(1, gi).toFixed(2); // 四隅グロー中心の明るさ
-  const mid = Math.min(1, gi * 0.55).toFixed(2); // 中間の減衰（高強度ほど明るく残す）
-  const rimOp = (gi * 0.32).toFixed(2); // ベースリムの淡い明るさ
-  const r = (s.thickness * 2 + 14 + gi * 20).toFixed(1); // 強度で光の広がりも拡大（1ではっきり）
+  const inner = Math.min(1, gi).toFixed(2);
+  const mid = Math.min(1, gi * 0.55).toFixed(2);
+  const rimOp = (gi * 0.32).toFixed(2);
+  const r = (s.thickness * 2 + 14 + gi * 20).toFixed(1);
   const corner = (cx, cy) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#cornerGrad)" />`;
   return `
       <defs>
@@ -401,7 +365,6 @@ function buildCornerRim(s) {
       </g>`;
 }
 
-// チェイス：淡いベースリム＋短い光の帯（dasharray）を周回させる
 function buildChaseRim(s) {
   const w = s.width;
   const rectW = w - MARGIN * 2;
@@ -422,7 +385,6 @@ function buildChaseRim(s) {
       </g>`;
 }
 
-// defs＋リム矩形のSVG中身を返す（ライブ・出力で共用）
 function buildSvgInner(s) {
   switch (s.pattern) {
     case "point":
@@ -446,9 +408,6 @@ function buildSvgInner(s) {
   }
 }
 
-// ── ライブ描画 ────────────────────────────────────────
-// camelCase属性(specularExponent等)がHTMLパーサで小文字化されるのを防ぐため、
-// SVGとしてパースしてから差し込む。
 function applyLive() {
   const w = state.width;
   btnEl.style.width = `${w}px`;
@@ -470,10 +429,9 @@ function applyLive() {
   );
 
   labelEl.textContent = state.label;
-  if (spinning) cacheTargets(); // 再描画でノードが入れ替わるため、回転中は対象を取り直す
+  if (spinning) cacheTargets();
 }
 
-// ── コントロールの出し分け ────────────────────────────
 function syncControlVisibility(pattern) {
   document.querySelectorAll(".field[data-pattern]").forEach((field) => {
     const patterns = field.dataset.pattern.split(/\s+/);
@@ -481,7 +439,6 @@ function syncControlVisibility(pattern) {
   });
 }
 
-// 値表示（data-out スパン）を更新
 function updateReadout(key) {
   const out = document.querySelector(`[data-out="${key}"]`);
   if (!out) return;
@@ -491,18 +448,15 @@ function updateReadout(key) {
   out.textContent = `${v}${unit}`;
 }
 
-// スライダーのつまみ＋表示を現在のstateへ追従（自動回転中に使用）
 function syncSlider(key) {
   const el = document.querySelector(`[data-key="${key}"]`);
   if (el) el.value = state[key];
   updateReadout(key);
 }
 
-// ── 出力コード生成 ────────────────────────────────────
 function buildSpinScript(s) {
   const w = s.width;
   if (s.pattern === "neon" || s.pattern === "double" || s.pattern === "corner") {
-    // 脈動：にじみ(stdDeviation)をsinで揺らす
     return `\n<script>
   // ${T.cmt.pulseBlur}
   document.querySelectorAll(".rim-btn .rim-btn__pulse").forEach((blur) => {
@@ -518,7 +472,6 @@ function buildSpinScript(s) {
 <\/script>`;
   }
   if (s.pattern === "point") {
-    // 光の点(放射状グラデの中心)をリムに沿って周回
     return `\n<script>
   // ${T.cmt.point}
   document.querySelectorAll(".rim-btn .rim-btn__ptgrad").forEach((grad) => {
@@ -535,7 +488,6 @@ function buildSpinScript(s) {
 <\/script>`;
   }
   if (s.pattern === "arcshine") {
-    // 艶掃き(放射状グラデの中心)を縁の楕円上で周回
     return `\n<script>
   // ${T.cmt.arcshine}
   document.querySelectorAll(".rim-btn .rim-btn__arc").forEach((grad) => {
@@ -553,7 +505,6 @@ function buildSpinScript(s) {
 <\/script>`;
   }
   if (s.pattern === "beamglow") {
-    // 焦点を持つ光だまり(放射状グラデの中心)を縁の楕円上で周回
     return `\n<script>
   // ${T.cmt.beamglow}
   document.querySelectorAll(".rim-btn .rim-btn__beam").forEach((grad) => {
@@ -571,7 +522,6 @@ function buildSpinScript(s) {
 <\/script>`;
   }
   if (s.pattern === "glossshine") {
-    // 対角の艶反射(線形グラデ)を回転させて縁に走らせる
     return `\n<script>
   // ${T.cmt.glossshine}
   document.querySelectorAll(".rim-btn .rim-btn__gloss").forEach((g) => {
@@ -586,7 +536,6 @@ function buildSpinScript(s) {
 <\/script>`;
   }
   if (s.pattern === "dual") {
-    // 対向2灯のazimuthを180°差を保って回す
     return `\n<script>
   // ${T.cmt.dual}
   document.querySelectorAll(".rim-btn").forEach((btn) => {
@@ -604,7 +553,6 @@ function buildSpinScript(s) {
 <\/script>`;
   }
   if (s.pattern === "tri") {
-    // 3灯を120°差で回転
     return `\n<script>
   // ${T.cmt.tri}
   document.querySelectorAll(".rim-btn").forEach((btn) => {
@@ -624,7 +572,6 @@ function buildSpinScript(s) {
 <\/script>`;
   }
   if (s.pattern === "pulse" || s.pattern === "under") {
-    // ブリージング：発光のアルファ(slope)をsinで明滅
     return `\n<script>
   // ${T.cmt.breath}
   document.querySelectorAll(".rim-btn .rim-btn__breath").forEach((fn) => {
@@ -640,7 +587,6 @@ function buildSpinScript(s) {
 <\/script>`;
   }
   if (s.pattern === "flicker") {
-    // ネオン管のランダム明滅
     return `\n<script>
   // ${T.cmt.flicker}
   document.querySelectorAll(".rim-btn .rim-btn__breath").forEach((fn) => {
@@ -653,7 +599,6 @@ function buildSpinScript(s) {
 <\/script>`;
   }
   if (s.pattern === "gradient") {
-    // グラデーションを回転させ色が縁を流れるように
     return `\n<script>
   // ${T.cmt.gradient}
   document.querySelectorAll(".rim-btn .rim-btn__gradient").forEach((g) => {
@@ -668,7 +613,6 @@ function buildSpinScript(s) {
 <\/script>`;
   }
   if (s.pattern === "chase") {
-    // 光の帯を縁に沿って走らせる
     return `\n<script>
   // ${T.cmt.chase}
   document.querySelectorAll(".rim-btn .rim-btn__chase").forEach((seg) => {
@@ -682,7 +626,6 @@ function buildSpinScript(s) {
   });
 <\/script>`;
   }
-  // distant：azimuthを回す
   return `\n<script>
   // ${T.cmt.distant}
   document.querySelectorAll(".rim-btn .rim-btn__light").forEach((light) => {
@@ -742,13 +685,11 @@ function updateOutput() {
   outCssArea.value = buildCss(w);
 }
 
-// ── 自動回転（パターン別）─────────────────────────────
 let spinning = false;
 let rafId = 0;
-let spinT = 0; // 軌道アニメ用の位相
-let targets = {}; // ライブSVG内の更新対象要素
+let spinT = 0;
+let targets = {};
 
-// ポイントの現在位置から軌道の開始位相を求める（回転開始時の連続性確保）
 function pointStartT(s) {
   const w = s.width;
   const cx = w / 2, cy = VIEW_H / 2, rx = w * 0.4, ry = 40;
@@ -872,14 +813,14 @@ function tick() {
 }
 
 function startSpin() {
-  cancelAnimationFrame(rafId); // 既存ループを止めてから開始（二重tick防止）
+  cancelAnimationFrame(rafId);
   spinning = true;
   spinBtn.textContent = T.spinOn;
   spinBtn.setAttribute("aria-pressed", "true");
-  applyLive(); // 最新ノードを生成してから対象をキャッシュ
+  applyLive();
   cacheTargets();
   spinT = state.pattern === "point" ? pointStartT(state) : 0;
-  updateOutput(); // 出力にアニメ用<script>を添付（回転中は再生成しないので安定）
+  updateOutput();
   tick();
 }
 
@@ -898,25 +839,23 @@ spinBtn.addEventListener("click", () => {
   else startSpin();
 });
 
-// パターン切替時に適用する既定値（そのパターンで見栄えの良い値へ寄せる）
 const PATTERN_DEFAULTS = {
-  point: { thickness: 1, pointZ: 30, blur: 0 }, // ポイントは細いリムで広がり広め・ボカシなしが締まる
-  neon: { thickness: 4, blur: 1 }, // ネオンは細めのリム＋弱めのボカシが締まる
-  arcshine: { thickness: 10, blur: 2 }, // アークは中細リムで艶の帯がくっきり締まる
-  beamglow: { thickness: 14, blur: 3, pointZ: 24 }, // ビームは中太＋やや広めの焦点で光だまりが映える
-  glossshine: { thickness: 12, blur: 2 }, // グロスは中太リムで対角の艶反射が分かれて映える
-  dual: { constant: 1.5, thickness: 15 }, // デュアルは強めの光＋やや太めで両色が映える
-  gradient: { thickness: 8, blur: 2 }, // グラデは中太リム＋軽いにじみで色がきれいに乗る
-  tri: { thickness: 14, constant: 1.5 }, // トライは太め＋強め光で3色が分かれて映える
-  pulse: { thickness: 4, blur: 2, glowIntensity: 0.5 }, // パルスは細リム＋発光やや強めで明滅が映える
-  chase: { thickness: 6, blur: 2 }, // チェイスは中細リムで帯がくっきり走る
-  flicker: { thickness: 4, blur: 1, glowIntensity: 0.4 }, // フリッカーは細リム＋ネオン管らしい控えめ発光
-  double: { thickness: 8, blur: 2 }, // 二重リムは中太で2層が分離して見える
-  under: { thickness: 8, blur: 4, glowIntensity: 0.5 }, // アンダーは太め＋広いにじみで床光が広がる
-  corner: { thickness: 8, blur: 3, glowIntensity: 0.9 }, // コーナーは中太＋にじみで四隅の光が柔らかい
+  point: { thickness: 1, pointZ: 30, blur: 0 },
+  neon: { thickness: 4, blur: 1 },
+  arcshine: { thickness: 10, blur: 2 },
+  beamglow: { thickness: 14, blur: 3, pointZ: 24 },
+  glossshine: { thickness: 12, blur: 2 },
+  dual: { constant: 1.5, thickness: 15 },
+  gradient: { thickness: 8, blur: 2 },
+  tri: { thickness: 14, constant: 1.5 },
+  pulse: { thickness: 4, blur: 2, glowIntensity: 0.5 },
+  chase: { thickness: 6, blur: 2 },
+  flicker: { thickness: 4, blur: 1, glowIntensity: 0.4 },
+  double: { thickness: 8, blur: 2 },
+  under: { thickness: 8, blur: 4, glowIntensity: 0.5 },
+  corner: { thickness: 8, blur: 3, glowIntensity: 0.9 },
 };
 
-// 指定キーの値をstateとスライダー・表示に反映
 function applyPatternDefaults(pattern) {
   const defs = PATTERN_DEFAULTS[pattern];
   if (!defs) return;
@@ -928,7 +867,6 @@ function applyPatternDefaults(pattern) {
   });
 }
 
-// ── 光パターン切替（ボタン）──────────────────────────
 function selectPattern(pattern) {
   if (pattern === state.pattern) return;
   state = { ...state, pattern };
@@ -937,7 +875,7 @@ function selectPattern(pattern) {
   );
   applyPatternDefaults(pattern);
   syncControlVisibility(pattern);
-  if (spinning) startSpin(); // 回転を維持したまま新パターンへ切替（applyLive/updateOutputも内包）
+  if (spinning) startSpin();
   else {
     applyLive();
     updateOutput();
@@ -949,7 +887,6 @@ patternsGrid.addEventListener("click", (e) => {
   if (btn) selectPattern(btn.dataset.patternBtn);
 });
 
-// ── コントロール入力 ──────────────────────────────────
 panel.addEventListener("input", (e) => {
   const el = e.target;
   const key = el.dataset.key;
@@ -960,26 +897,24 @@ panel.addEventListener("input", (e) => {
   updateReadout(key);
 });
 
-// リセット：全コントロールを初期値へ戻す
 document.getElementById("reset").addEventListener("click", () => {
   stopSpin();
   document.querySelectorAll("[data-key]").forEach((el) => {
-    if (el.tagName === "SELECT") return; // パターンは維持（リセットしない）
+    if (el.tagName === "SELECT") return;
     el.value = el.defaultValue;
     state[el.dataset.key] = el.type === "range" ? Number(el.value) : el.value;
   });
   state = { ...state };
-  applyPatternDefaults(state.pattern); // ポイント/ネオンは太さ1など、パターン既定を再適用
+  applyPatternDefaults(state.pattern);
   syncControlVisibility(state.pattern);
   applyLive();
   document.querySelectorAll("[data-out]").forEach((o) => updateReadout(o.dataset.out));
-  startSpin(); // 既定の自動回転ONへ戻す
+  startSpin();
 });
 
-// ── コピー ────────────────────────────────────────────
 const bindCopy = (btnId, area, label) => {
   const btn = document.getElementById(btnId);
-  btn.textContent = label; // 言語に合わせてラベルを確定（HTML側と二重管理しない）
+  btn.textContent = label;
   btn.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(area.value);
@@ -994,9 +929,8 @@ const bindCopy = (btnId, area, label) => {
 bindCopy("copyHtml", outHtmlArea, T.copyHtml);
 bindCopy("copyCss", outCssArea, T.copyCss);
 
-// ── 初期化 ────────────────────────────────────────────
 syncControlVisibility(state.pattern);
 applyLive();
 document.querySelectorAll("[data-out]").forEach((o) => updateReadout(o.dataset.out));
 updateOutput();
-startSpin(); // 既定で自動回転ON
+startSpin();

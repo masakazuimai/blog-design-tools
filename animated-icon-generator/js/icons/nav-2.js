@@ -1,6 +1,3 @@
-// ナビゲーションカテゴリの追加分（共通ルールは status.js のヘッダーを参照）
-//
-// ⚠️ 移動するアイコンは図形を内側に描くこと（nav.js のヘッダー参照）
 
 import { DRAW, drawKeys, bounceKeys, slideKeys, popInKeys } from "./_shared.js?v=20260815c";
 
@@ -174,7 +171,6 @@ export const NAV_ICONS_2 = [
             { at: 1, transform: "translateY(0)", opacity: 1 },
           ],
         },
-        // 下向きの山も動かすが、枠に触れないよう図形を内側に描いてから跳ねさせる
         { part: "chevron", origin: "12px 18.8px", keys: bounceKeys("Y", 1.4) },
       ],
     },

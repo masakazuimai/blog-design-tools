@@ -1,8 +1,5 @@
-// Liquid Glass の見た目を作る WebGL シェーダー本体。
-// ランタイムプレビューと「コードをコピー」出力の両方がこの文字列を共有する（ズレ防止）。
 
-// 頂点シェーダー: 画面全体を覆う三角形に uv を渡すだけ
-export const VERTEX_SHADER = /* glsl */ `
+export const VERTEX_SHADER = `
   attribute vec2 uv;
   attribute vec2 position;
   varying vec2 vUv;
@@ -12,9 +9,7 @@ export const VERTEX_SHADER = /* glsl */ `
   }
 `;
 
-// フラグメントシェーダー: 背景を cover 配置し、角丸矩形のガラス領域だけ
-// 屈折・色収差・フロスト（すりガラス）・スペキュラ・ティントを合成する。
-export const FRAGMENT_SHADER = /* glsl */ `
+export const FRAGMENT_SHADER = `
   precision highp float;
 
   uniform sampler2D uTexture;
@@ -127,7 +122,6 @@ export const FRAGMENT_SHADER = /* glsl */ `
   }
 `;
 
-// 形状プリセット。サイズ（半径ではなく実寸の半分=half）と角丸の既定値を持つ
 export const SHAPE_PRESETS = {
   button: { label: "button", halfW: 130, halfH: 46, radius: 46 },
   card: { label: "card", halfW: 200, halfH: 140, radius: 36 },
@@ -135,7 +129,6 @@ export const SHAPE_PRESETS = {
   circle: { label: "circle", halfW: 90, halfH: 90, radius: 90 },
 };
 
-// スライダー初期値（Liquid Glass らしい既定）
 export const DEFAULT_PARAMS = {
   shape: "button",
   refraction: 1.5,

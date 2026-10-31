@@ -1,4 +1,3 @@
-// パターン定義の集約。カテゴリの並びはページの上から下の順
 import header from "./header.js?v=20261006h";
 import hero from "./hero.js?v=20261006h";
 import pricing from "./pricing.js?v=20261006h";
@@ -32,7 +31,6 @@ const CATEGORIES_JA = [
 
 const PATTERNS_JA = [...header, ...hero, ...features, ...cases, ...cards, ...steps, ...pricing, ...faq, ...cta, ...form, ...company, ...footer];
 
-// 英語ページでは、カテゴリ名とパターン（説明文・HTML/CSS内の文言）を英語に差し替える
 export const CATEGORIES = LANG === "en"
   ? CATEGORIES_JA.map((c) => ({ ...c, name: CATEGORY_EN[c.id] }))
   : CATEGORIES_JA;

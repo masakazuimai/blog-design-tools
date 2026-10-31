@@ -1,5 +1,3 @@
-// 3D系ホバーエフェクト（12種）
-// キューブ回転などのnav定番。perspective は要素側に指定して self-contained にしている
 
 export const THREED_EFFECTS = [
   {

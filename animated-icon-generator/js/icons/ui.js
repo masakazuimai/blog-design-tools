@@ -1,4 +1,3 @@
-// UI・装飾カテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
 
 import { DRAW, drawKeys, pulseKeys, bounceKeys, popInKeys } from "./_shared.js?v=20260815c";
 
@@ -16,7 +15,6 @@ export const UI_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // まばたき
           part: ["outline", "pupil"],
           origin: "12px 12px",
           keys: [
@@ -77,7 +75,6 @@ export const UI_ICONS = [
       duration: 1.8,
       easing: "ease-out",
       tracks: [
-        // 点を円にして大きくし、本体も現れる動きにする
         { part: "body", origin: "12px 12px", keys: popInKeys(0) },
         { part: "dot1", origin: "7.6px 11.4px", keys: popInKeys(0.25) },
         { part: "dot2", origin: "9.8px 7.6px", keys: popInKeys(0.38) },
@@ -199,7 +196,6 @@ export const UI_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // 風になびく
           part: "cloth",
           origin: "5.4px 8.4px",
           keys: [
@@ -245,7 +241,6 @@ export const UI_ICONS = [
       duration: 2,
       easing: "ease-out",
       tracks: [
-        // 湯気を長くして移動量も増やす（短い線の微動では気づけなかった）
         { part: "steam1", origin: "8.2px 6.4px", keys: steamKeys(0) },
         { part: "steam2", origin: "12.4px 6.4px", keys: steamKeys(0.3) },
         { part: ["cup", "handle", "base"], origin: "12px 21.4px", keys: pulseKeys(1.05) },
@@ -270,7 +265,6 @@ export const UI_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // ひらめいて灯る
           part: "glass",
           keys: [
             { at: 0, opacity: 0.25 },
@@ -285,7 +279,6 @@ export const UI_ICONS = [
   },
 ];
 
-// 湯気が立ちのぼって消える
 function steamKeys(delay) {
   return [
     { at: 0, transform: "translateY(1.6px)", opacity: 0 },

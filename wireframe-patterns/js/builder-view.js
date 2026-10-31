@@ -1,4 +1,3 @@
-// ビルダー画面（構成リスト＋ページ全体のプレビュー＋書き出し）
 import { CATEGORIES, PATTERNS, categoryName, getPattern } from "./patterns/index.js?v=20261006h";
 import { createPreview } from "./preview.js?v=20261006h";
 import { buildCss, buildDocument, buildHtml } from "./code.js?v=20261006h";
@@ -90,7 +89,6 @@ export const initBuilderView = () => {
 
   store.subscribe(render);
   return {
-    // 非表示の間は枠幅が0なので、表示に切り替えたときに描き直す
     show: () => render(store.getItems()),
     refreshCount: () => { $("builder-count").textContent = String(store.getItems().length); },
   };

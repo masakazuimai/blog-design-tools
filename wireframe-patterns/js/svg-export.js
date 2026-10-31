@@ -1,11 +1,9 @@
-// 描画済みのワイヤーフレームを測って、Figma 等に貼れる SVG（rect / line / text）に変換する
 import { mountPatterns } from "./render.js?v=20261006h";
 
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const round = (n) => Math.round(n * 10) / 10;
 const isPaint = (c) => c && c !== "transparent" && !/rgba\(.*,\s*0\)$/.test(c);
 
-// 1要素の背景と枠線
 const boxShapes = (el, cs, r) => {
   const out = [];
   const { left: x, top: y, width: w, height: h } = r;
@@ -30,7 +28,6 @@ const boxShapes = (el, cs, r) => {
       out.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${d.c}" stroke-width="${d.w}"${d.dash ? ' stroke-dasharray="6 4"' : ""}/>`);
     });
   }
-  // 画像枠は斜線（×）を描く
   if (el.classList.contains("wf-img")) {
     const c = "#cfcfcf";
     out.push(`<line x1="${round(x)}" y1="${round(y)}" x2="${round(x + w)}" y2="${round(y + h)}" stroke="${c}" stroke-width="2"/>`);
@@ -39,7 +36,6 @@ const boxShapes = (el, cs, r) => {
   return out;
 };
 
-// テキストノードを行ごとに分けて <text> にする（1文字ずつ位置を測り、上端が同じものを1行とみなす）
 const textShapes = (node, origin) => {
   const cs = getComputedStyle(node.parentElement);
   const range = document.createRange();
@@ -78,14 +74,12 @@ const walk = (node, origin, out) => {
     const r = { left: b.left - origin.left, top: b.top - origin.top, width: b.width, height: b.height };
     out.push(...boxShapes(node, cs, r));
   }
-  // 閉じた details は summary だけ描く（中身は表示されていないが位置は取れてしまうため）
   const children = node.tagName === "DETAILS" && !node.open
     ? [...node.children].filter((c) => c.tagName === "SUMMARY")
     : node.childNodes;
   children.forEach((c) => walk(c, origin, out));
 };
 
-// patterns を幅 width で画面外に描画し、SVG文字列とサイズを返す
 export const buildSvg = (patterns, width) => {
   const host = document.createElement("div");
   host.style.cssText = `position:fixed; left:-100000px; top:0; width:${width}px;`;

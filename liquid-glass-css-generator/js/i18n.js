@@ -1,4 +1,3 @@
-// JS生成文字列のみ辞書化（静的HTMLテキストは各シェルに直書き）
 export const I18N = {
   ja: {
     copied: "コピーしました",

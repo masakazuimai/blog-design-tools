@@ -1,5 +1,3 @@
-// ScrollTrigger の登場演出と奥行き（フェード/マスク/クリップ/パララックス）。
-// 基本形は scrolltrigger.js を参照。デモの scroller 指定などの前提も同じ。
 import { CDN_ST, repeat } from "./_shared.js?v=20260811a";
 
 export const SCROLLTRIGGER_REVEAL = [
@@ -46,7 +44,6 @@ export const SCROLLTRIGGER_REVEAL = [
           scrollTrigger: {
             trigger: stage.querySelector(".px-hero"),
             scroller: stage,
-            // 画面に入った瞬間から出ていくまでを丸ごと使うと、動く距離が確保できる
             start: "top bottom",
             end: "bottom top",
             scrub: true,

@@ -1,4 +1,3 @@
-// デバイスカテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
 
 import { DRAW, drawKeys, pulseKeys, bounceKeys, popInKeys, blinkKeys, spinKeys } from "./_shared.js?v=20260815c";
 
@@ -17,7 +16,6 @@ export const DEVICE_ICONS = [
       duration: 1.8,
       easing: "ease-out",
       tracks: [
-        // 画面に内容が出る動き。全体のわずかな拡大では変化が読み取れなかった
         { part: "l1", keys: drawKeys(0.1, 0.45) },
         { part: "l2", keys: drawKeys(0.35, 0.75) },
       ],
@@ -36,7 +34,6 @@ export const DEVICE_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // 画面が開く
           part: "screen",
           origin: "12px 15.4px",
           keys: [
@@ -83,7 +80,6 @@ export const DEVICE_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // 着信のように小刻みに震える
           part: ["body", "home", "speaker"],
           origin: "12px 12px",
           keys: [
@@ -112,7 +108,6 @@ export const DEVICE_ICONS = [
       duration: 2,
       easing: "linear",
       tracks: [
-        // 短針も足して2本動かす。細い針1本では変化が小さかった
         { part: "minute", origin: "12px 12px", keys: spinKeys() },
         {
           part: "hour",
@@ -139,7 +134,6 @@ export const DEVICE_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // 走査線が画面を流れる。隅のランプの点滅では気づけなかった
           part: "scan",
           keys: [
             { at: 0, transform: "translateY(-3.6px)", opacity: 0.2 },
@@ -183,7 +177,6 @@ export const DEVICE_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // 本体ごと動かす。ホイールだけの微動では変化が見えなかった
           part: "body",
           origin: "12px 12px",
           keys: [
@@ -194,8 +187,6 @@ export const DEVICE_ICONS = [
           ],
         },
         {
-          // 同じパーツを2つのトラックで指定すると animation が後勝ちで打ち消し合うため、
-          // ホイールは本体と同じ移動量にスクロールの縮みを合成して1トラックにする
           part: "wheel",
           origin: "12px 12px",
           keys: [
@@ -232,7 +223,6 @@ export const DEVICE_ICONS = [
       duration: 1.6,
       easing: "ease-in-out",
       tracks: [
-        // 小さなランプの点滅だけでは動きが見えないので、読み書きのバーを走らせる
         {
           part: "bar",
           origin: "9.4px 12px",
@@ -292,7 +282,6 @@ export const DEVICE_ICONS = [
       easing: "ease-in-out",
       tracks: [
         { part: "led", keys: blinkKeys(0.1) },
-        // 電波が広がる動きにする（点滅だけでは変化が小さい）
         {
           part: "wave",
           origin: "12px 6.6px",
@@ -359,8 +348,6 @@ export const DEVICE_ICONS = [
       duration: 1.6,
       easing: "ease-in-out",
       tracks: [
-        // 同じパーツを2トラックで指定すると animation が後勝ちで打ち消し合うため、
-        // 目は「首振り＋まばたき」を1トラックに合成する
         {
           part: ["head", "antenna", "mouth"],
           origin: "12px 18.6px",

@@ -1,7 +1,3 @@
-// AIプロバイダの呼び出しを共通インターフェイスに包む。
-// callAI({ provider, model, messages, apiKey, onChunk }) -> Promise<string>
-// messages は [{ role: "user" | "assistant", content }] の会話履歴。
-// onChunk はストリーミング対応プロバイダで途中経過（累積テキスト）を受け取る。
 
 export async function callAI({ provider, model, messages, apiKey, onChunk }) {
   if (!messages?.length) throw new Error("メッセージがありません")
@@ -20,7 +16,6 @@ export async function callAI({ provider, model, messages, apiKey, onChunk }) {
   }
 }
 
-// Puter.js（キー不要・ストリーミング）。messages配列をそのまま渡せる。
 async function callPuter({ model, messages, onChunk }) {
   const puter = window.puter
   if (!puter?.ai?.chat) {
@@ -29,8 +24,6 @@ async function callPuter({ model, messages, onChunk }) {
   const options = { stream: true }
   if (model) options.model = model
 
-  // Puterは初回にサインインのポップアップが出る。スマホ等でブロックされると
-  // 応答が来ずに固まるため、一定時間 最初の応答が来なければ案内付きで打ち切る。
   const FIRST_RESPONSE_TIMEOUT = 30000
   let firstSeen = false
   let timer = null
@@ -71,7 +64,6 @@ async function callPuter({ model, messages, onChunk }) {
   }
 }
 
-// Google Gemini（BYOK）。roleは user / model に変換して contents で送る。
 async function callGemini({ model, messages, apiKey }) {
   if (!apiKey) throw new Error("Gemini の APIキーが未設定です")
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`
@@ -98,7 +90,6 @@ async function callGemini({ model, messages, apiKey }) {
   return text
 }
 
-// Groq（BYOK・OpenAI互換）。messages配列をそのまま送れる。
 async function callGroq({ model, messages, apiKey }) {
   if (!apiKey) throw new Error("Groq の APIキーが未設定です")
 
@@ -120,7 +111,6 @@ async function callGroq({ model, messages, apiKey }) {
   return text
 }
 
-// Claude（Anthropic・BYOK）。ブラウザ直叩き許可ヘッダ付きで /v1/messages を叩く。
 async function callClaude({ model, messages, apiKey }) {
   if (!apiKey) throw new Error("Claude（Anthropic）の APIキーが未設定です")
 

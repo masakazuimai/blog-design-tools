@@ -1,4 +1,3 @@
-// 問題集ファイルの読み書き（CSV / JSON）
 import { uid } from './util.js?v=20261003b';
 import { MAX_LEVEL } from './srs.js?v=20261003b';
 import { t, LANG } from './i18n.js?v=20261003b';
@@ -18,7 +17,6 @@ export function baseName(fileName) {
   return (fileName || '').replace(/\.(csv|json)$/i, '') || t('defaultDeckName');
 }
 
-// RFC 4180 準拠のCSVパーサー（引用符内の改行・カンマ・"" エスケープに対応）
 export function parseCSV(text) {
   const rows = [];
   let row = [];
@@ -52,7 +50,6 @@ function toInt(value, min, max) {
   return Math.min(Math.max(n, min), max);
 }
 
-// 1問ぶんの生データを検証して正規化する。不備があれば error を返す
 function normalizeQuestion(raw) {
   const q = String(raw.q ?? '').trim();
   const correct = String(raw.correct ?? '').trim();
@@ -89,7 +86,6 @@ function collect(rawList, lineOffset) {
 
 function parseCsvDeck(text) {
   const rows = parseCSV(text.replace(/^﻿/, ''));
-  // 日本語版・英語版どちらの見出し行でも読める
   const hasHeader = rows.length && HEADER_FIRST_CELLS.includes(rows[0][0]?.trim().toLowerCase());
   const body = (hasHeader ? rows.slice(1) : rows)
     .map((cells, i) => ({ cells, line: i + (hasHeader ? 2 : 1) }))
@@ -121,7 +117,6 @@ function parseJsonDeck(text) {
   return collect(raws, 1);
 }
 
-// 文字コードは UTF-8 を優先し、失敗したら Shift_JIS（Excelの「CSV」保存）として読む
 export function decodeText(buffer) {
   try {
     return new TextDecoder('utf-8', { fatal: true }).decode(buffer);
@@ -146,7 +141,6 @@ export function serializeDeck(questions, format) {
   }
   const lines = [CSV_HEADERS[LANG], ...questions.map(q =>
     [q.q, q.correct, ...q.wrong, q.explain, q.level, q.next, q.ok, q.ng])];
-  // BOM付きUTF-8：Excelで開いても文字化けしない
   return '﻿' + lines.map(cells => cells.map(csvCell).join(',')).join('\r\n') + '\r\n';
 }
 

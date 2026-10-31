@@ -1,9 +1,6 @@
-// 添付ファイルの処理。画像はdata URL（JPEG）に縮小、その他はそのまま読む。
-// localStorageは数MBが上限なので、画像は縮小、その他は3MBまでに制限する。
 
 const MAX_FILE_BYTES = 3 * 1024 * 1024
 
-// 添付1件を { name, type, dataUrl } に変換する。
 export async function processAttachment(file) {
   if (file.type && file.type.startsWith("image/")) {
     const dataUrl = await fileToScaledDataUrl(file)
@@ -16,7 +13,6 @@ export async function processAttachment(file) {
   return { name: file.name || "file", type: file.type || "application/octet-stream", dataUrl }
 }
 
-// ファイルをそのままdata URL（base64）として読む。
 function readFileAsDataUrl(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()

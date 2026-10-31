@@ -1,4 +1,3 @@
-// コミュニケーションカテゴリの追加分（共通ルールは status.js のヘッダーを参照）
 
 import { DRAW, drawKeys, spinKeys, pulseKeys, swingKeys, bounceKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815c";
 
@@ -67,7 +66,6 @@ export const COMM_ICONS_2 = [
       tracks: [
         { part: "face", origin: "9.1px 12px", keys: popInKeys(0.15) },
         {
-          // レンズ側も振って、通話中らしい動きにする
           part: "lens",
           origin: "15.6px 12px",
           keys: [

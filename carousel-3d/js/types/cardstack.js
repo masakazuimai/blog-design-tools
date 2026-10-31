@@ -1,10 +1,5 @@
-/*
- * テンプレート2：カードスタック（縦・3D後退トランジション）
- * 元はスクロール連動（ScrollTrigger）の動きを、自動送り＋スワイプ＋ループのカルーセルに置き換えたもの。
- * 次のカードが下からせり上がり、今のカードは縮小→奥へ後退してフェードアウトする。
- */
-const SCALE = 0.86; // 退出カードの縮小率
-const SWIPE = 40; // スワイプ判定のしきい値(px)
+const SCALE = 0.86;
+const SWIPE = 40;
 const GSAP_VER = "3.13.0";
 const CDN = `https://cdn.jsdelivr.net/npm/gsap@${GSAP_VER}/dist`;
 
@@ -154,7 +149,6 @@ function mount(host, state, autoOn) {
   };
 }
 
-// --- コード生成 ---------------------------------------------------------
 function cardsHTML(count) {
   let out = "";
   for (let i = 0; i < count; i++) {

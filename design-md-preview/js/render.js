@@ -1,4 +1,3 @@
-/* テーマのトークンをLPプレビュー・書体見本・トークン一覧へ流し込む */
 import { resolveRef } from './parser.js?v=20260910a';
 import { cssFamily } from './fonts.js?v=20260910a';
 
@@ -7,8 +6,6 @@ function pick(obj, names){
   return null;
 }
 
-/* 仕様上トークン名は自由に付けられる（`Any descriptive string key is valid`）ため、
-   名前で決め打ちせず、実際の値から見出し/本文/ラベルを選ぶ */
 function toPx(v){
   const m = String(v || '').match(/^([\d.]+)(px|rem|em)$/);
   if(!m) return null;
@@ -43,7 +40,7 @@ export function applyToLp(ds){
   const g = {colors:ds.colors, typography:ds.typography, spacing:ds.spacing, rounded:ds.rounded, components:ds.components};
   const C = k => resolveRef(g, ds.colors[k]);
   const lp = document.getElementById('lp');
-  lp.style.cssText = '';   /* 前のテーマの値を残さない（トークンが欠けている場合の混在を防ぐ） */
+  lp.style.cssText = '';
   const set = (k,v) => { if(v) lp.style.setProperty(k, v); };
 
   const bg      = pick(ds.colors, ['surface','background','neutral','surface-container-lowest']);

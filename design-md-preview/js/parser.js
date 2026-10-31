@@ -1,4 +1,3 @@
-/* DESIGN.md パーサ（仕様のスキーマに絞った最小実装） */
 const SCHEMA_KEYS = ['version','name','description','omitted','colors','typography','rounded','spacing','components'];
 
 function unquote(v){
@@ -18,7 +17,6 @@ export function parseDesignMd(text){
 
   const out = {raw:src, front, body, top:{}, colors:{}, typography:{}, spacing:{}, rounded:{}, components:{}, unknownTop:[]};
 
-  // --- フロントマター ---
   let group = null, sub = null;
   for(const line of front.split('\n')){
     if(!line.trim() || /^\s*#/.test(line)) continue;
@@ -53,7 +51,6 @@ export function parseDesignMd(text){
   return out;
 }
 
-/* --- トークン参照 {colors.primary} を解決 --- */
 export function resolveRef(ds, value, depth){
   if(typeof value !== 'string') return value;
   const m = value.match(/^\{([A-Za-z0-9_\-.]+)\}$/);

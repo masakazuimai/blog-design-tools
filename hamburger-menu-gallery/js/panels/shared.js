@@ -1,16 +1,9 @@
-// 開閉パターン定義の共通パーツ。
-// コピーコードは self-contained である必要があるため、ここは「定義ファイル側の重複を減らすヘルパー」であって
-// 出力されるCSSは各エフェクトごとに完全な形で書き出される（共通クラスへの依存は作らない）。
 
 export const NAV_LINKS = '<a href="#">Home</a><a href="#">About</a><a href="#">Works</a><a href="#">Contact</a>';
 
-// 閉じている間のメニューを隠す理由の注記。transform で画面外へ逃がしただけでは
-// リンクがタブ順に残り読み上げられてしまうため、visibility: hidden を併用する
 export const A11Y_HIDE_NOTE =
   "/* 閉じている間はタブ順とアクセシビリティツリーから外す（見えなくしただけではタブで到達できてしまう） */";
 
-// ラッパー > ボタン > （任意の追加要素） > nav の順に並べる。
-// 開閉状態は nav 側から見て「前にあるボタン」を ~ で参照するため、ボタンは必ず先頭に置く。
 export function panelHtml(ns, extra) {
   return (
     '<div class="' +
@@ -29,7 +22,6 @@ export function panelHtml(ns, extra) {
   );
 }
 
-// 右上に固定するハンバーガーボタン。openBarColor は開いた時の線の色。
 export function btnCss(ns, openBarColor) {
   return [
     "." + ns + "__btn {",
@@ -50,7 +42,6 @@ export function btnCss(ns, openBarColor) {
   ];
 }
 
-// nav 内リンクの見た目（色は呼び出し側で指定）
 export function linkCss(ns, color) {
   return [
     "." + ns + "__nav a {",

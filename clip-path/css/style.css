@@ -27,7 +27,6 @@ body {
   background: var(--bg);
 }
 
-/* ===== ヘッダー ===== */
 header {
   background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
   color: #fff;
@@ -70,7 +69,6 @@ header p {
   color: #fff;
 }
 
-/* ===== レイアウト ===== */
 .container {
   max-width: 1080px;
   margin: 0 auto;
@@ -83,7 +81,6 @@ header p {
   align-items: start;
 }
 
-/* ===== プレビュー ===== */
 .stage {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -96,7 +93,6 @@ header p {
   aspect-ratio: 1 / 1;
   max-width: 480px;
   margin: 0 auto;
-  /* チェッカー背景で切り抜き範囲を可視化 */
   background-image:
     linear-gradient(45deg, #e2e8f0 25%, transparent 25%),
     linear-gradient(-45deg, #e2e8f0 25%, transparent 25%),
@@ -120,7 +116,6 @@ header p {
   background-image: var(--clip-image);
 }
 
-/* ドラッグ用ハンドル層 */
 .handles {
   position: absolute;
   inset: 0;
@@ -154,7 +149,6 @@ header p {
   color: var(--muted);
 }
 
-/* プレビュー操作バー */
 .preview-bar {
   display: flex;
   gap: 8px;
@@ -183,7 +177,6 @@ header p {
   color: var(--accent);
 }
 
-/* ===== コントロールパネル ===== */
 .panel {
   display: flex;
   flex-direction: column;
@@ -295,7 +288,6 @@ input[type="range"] {
   display: none !important;
 }
 
-/* ===== 出力 ===== */
 .output-section {
   margin-top: 24px;
   background: var(--surface);
@@ -348,11 +340,9 @@ input[type="range"] {
   border-radius: 8px;
   padding: 16px;
 }
-/* 出力欄はアニメーション出力（11行）も全部見えるよう高めに */
 .output-section textarea {
   min-height: 300px;
 }
-/* プリセットページのコード表示（<pre>） */
 pre.code-block {
   margin: 0;
   min-height: 0;
@@ -360,7 +350,6 @@ pre.code-block {
   overflow-x: auto;
 }
 
-/* プリセットページのプレビュー枠 */
 .demo-stage {
   display: flex;
   align-items: center;
@@ -411,7 +400,6 @@ pre.code-block {
   border-radius: 4px;
 }
 
-/* ===== 記事・解説 ===== */
 .article {
   max-width: 820px;
   margin: 48px auto 0;
@@ -488,7 +476,6 @@ pre.code-block {
   color: #334155;
 }
 
-/* 関連ツール */
 .related {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -519,10 +506,9 @@ pre.code-block {
   color: var(--muted);
 }
 
-/* ===== フッター ===== */
 footer {
   display: flex;
-  justify-content: flex-start; /* 右下広告との被り回避で左寄せ */
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 12px 24px;
   align-items: center;
@@ -589,7 +575,6 @@ footer a:hover {
   }
 }
 
-/* 広告（PC/SPとも右下フローティングカード320×100・薄型透明枠＋×閉じ） */
 .footer-ad {
   position: fixed;
   right: 0;

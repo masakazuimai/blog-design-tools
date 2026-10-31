@@ -1,6 +1,4 @@
-// 色の変換・コントラスト計算ユーティリティ。
 
-// "#rrggbb" → {r,g,b}
 export function hexToRgb(hex) {
   const h = hex.replace("#", "");
   return {
@@ -10,13 +8,11 @@ export function hexToRgb(hex) {
   };
 }
 
-// {r,g,b} → "rgb(r, g, b)"
 export function rgbString(hex) {
   const { r, g, b } = hexToRgb(hex);
   return `rgb(${r}, ${g}, ${b})`;
 }
 
-// {r,g,b} → {h,s,l}
 export function hexToHsl(hex) {
   let { r, g, b } = hexToRgb(hex);
   r /= 255;
@@ -54,7 +50,6 @@ export function hslString(hex) {
   return `hsl(${h}, ${s}%, ${l}%)`;
 }
 
-// 相対輝度（WCAG）
 function relativeLuminance(hex) {
   const { r, g, b } = hexToRgb(hex);
   const toLinear = (c) => {
@@ -64,7 +59,6 @@ function relativeLuminance(hex) {
   return 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
 }
 
-// 2色のコントラスト比（1〜21）
 export function contrastRatio(hex1, hex2) {
   const l1 = relativeLuminance(hex1);
   const l2 = relativeLuminance(hex2);
@@ -73,14 +67,12 @@ export function contrastRatio(hex1, hex2) {
   return (lighter + 0.05) / (darker + 0.05);
 }
 
-// その色の上に置く文字色（白か黒か）を返す
 export function readableTextColor(hex) {
   return contrastRatio(hex, "#ffffff") >= contrastRatio(hex, "#000000")
     ? "#ffffff"
     : "#000000";
 }
 
-// コントラスト比 → WCAG等級（通常テキスト基準）
 export function wcagGrade(ratio) {
   if (ratio >= 7) return "AAA";
   if (ratio >= 4.5) return "AA";

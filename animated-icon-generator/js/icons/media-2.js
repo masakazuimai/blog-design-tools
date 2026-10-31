@@ -1,4 +1,3 @@
-// メディアカテゴリの追加分（共通ルールは status.js のヘッダーを参照）
 
 import { DRAW, drawKeys, spinKeys, pulseKeys, bounceKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815c";
 
@@ -42,7 +41,6 @@ export const MEDIA_ICONS_2 = [
     cat: "media",
     label: { ja: "リピート", en: "Repeat" },
     parts: [
-      // 折り返しの角は矢じりと反対側の端に置く（同じ端に重ねると入れ替えアイコンに見える）
       { tag: "path", part: "top", attrs: { d: "M6.4 11.6V8.4h11.2" } },
       { tag: "path", part: "topHead", attrs: { d: "M14.6 5.4 L17.6 8.4 L14.6 11.4" } },
       { tag: "path", part: "bottom", attrs: { d: "M17.6 12.4v3.2H6.4" } },
@@ -107,7 +105,6 @@ export const MEDIA_ICONS_2 = [
       duration: 1.6,
       easing: "linear",
       tracks: [
-        // 小さな穴の点滅ではなく、フィルムが送られる動きにする
         {
           part: "holes",
           keys: [
@@ -245,7 +242,6 @@ export const MEDIA_ICONS_2 = [
       tracks: [
         { part: "cone", origin: "12px 14.6px", keys: pulseKeys(1.22) },
         { part: "tweeter", keys: blinkKeys(0.2) },
-        // 箱ごと震わせて低音の迫力を出す
         {
           part: "body",
           origin: "12px 12px",
@@ -273,7 +269,6 @@ export const MEDIA_ICONS_2 = [
   },
 ];
 
-// 音量バーが上下する
 function eqKeys(peak) {
   return [
     { at: 0, transform: "scaleY(1)" },

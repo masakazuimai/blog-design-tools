@@ -1,16 +1,14 @@
-// アプリロジック（問題データは js/data.js の PROBLEMS / LEVELS を参照）
-// 読み解き型＝コードは実行せず、選んだ選択肢を answer と照合して自動採点する
 const STORE_KEY = 'cqPhpBasicsQuizV1';
 let state = { level: 'all', current: 1, status: {}, picks: {} };
 try {
   const saved = JSON.parse(localStorage.getItem(STORE_KEY));
   if (saved && saved.status) state = { ...state, ...saved };
-} catch (e) { /* 破損時は初期状態で続行 */ }
+} catch (e) { }
 
 const $ = id => document.getElementById(id);
 
 function save() {
-  try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* 保存不可でも続行 */ }
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { }
 }
 function levelRange() { return LEVELS.find(l => l.key === state.level).range; }
 function levelProblems() {
@@ -48,7 +46,6 @@ function renderProgress() {
   $('progressText').textContent = `${done} / ${ps.length} 正解`;
 }
 
-// 選択肢（出力は複数行があるため pre で表示。textContent で入れて文字参照をそのまま見せる）
 function renderChoices(p) {
   const picked = state.picks[p.id];
   const answered = picked !== undefined;
@@ -107,7 +104,6 @@ function renderClear() {
 
 function renderAll() { renderTabs(); renderChips(); renderProgress(); renderProblem(); }
 
-// 回答＝正解なら done、不正解なら review として記録（解説を読めるようその場に留まる）
 function pick(i) {
   const p = problem(state.current);
   const st = i === p.answer ? 'done' : 'review';
@@ -119,7 +115,6 @@ function pick(i) {
   save(); renderChips(); renderProgress(); renderChoices(p);
 }
 
-// もう一度解く＝回答だけ消す（判定は次に選んだ結果で上書き）
 $('retryBtn').onclick = () => {
   const picks = { ...state.picks };
   delete picks[state.current];
@@ -134,7 +129,6 @@ $('nextBtn').onclick = () => {
   else { state = { ...state, current: state.current + 1 }; save(); renderAll(); }
 };
 
-// 復習リストは回答を消してから解き直す
 function clearPicks(ps) {
   const picks = { ...state.picks };
   ps.forEach(p => delete picks[p.id]);
@@ -148,7 +142,6 @@ $('reviewBtn').onclick = () => {
   save(); renderAll();
 };
 
-// 表示中レベルの判定と回答を全解除。現在の問題位置は維持
 $('resetProgressBtn').onclick = () => {
   const ps = levelProblems();
   const status = { ...state.status };

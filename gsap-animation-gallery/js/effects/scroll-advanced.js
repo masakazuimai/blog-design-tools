@@ -1,6 +1,3 @@
-// スクロール演出（応用）のうち「画面を固定して見せる」大きめの見せ場。
-// ScrollTrigger の pin は使わず sticky で固定している（レイアウトを壊さず、入れ子のスクロール領域でも安定するため）。
-// ページ全体の見せ方に関わるものは scroll-scenes.js に分けてある。
 import { CDN_ST, repeat } from "./_shared.js?v=20260811a";
 
 export const SCROLL_ADVANCED = [

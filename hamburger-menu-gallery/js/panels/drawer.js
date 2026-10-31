@@ -1,6 +1,3 @@
-// ドロワー系の開閉パターン（8種）
-// 画面の端からメニューが滑り込むタイプ。ボタンは position: fixed で右上に固定する
-// アクセント色 #6366f1 / サブ色 #ec4899（rgbは 99,102,241 / 236,72,153）は main.js が置換する
 
 import { panelHtml, btnCss, linkCss, A11Y_HIDE_NOTE } from "./shared.js?v=20260725b";
 
@@ -12,7 +9,6 @@ export const DRAWER_PANELS = [
     label: { ja: "左からドロワー", en: "Drawer from the left" },
     html: panelHtml("hbp-left"),
     css: [
-      // メニューは左に出るのでボタンは白背景の上に残る＝開いた時も濃色のままにする
       ...btnCss("hbp-left", "#1e293b"),
       ".hbp-left__nav {",
       "  position: fixed; top: 0; bottom: 0; left: 0; z-index: 20;",
@@ -88,7 +84,6 @@ export const DRAWER_PANELS = [
     label: { ja: "下からせり上がる", en: "Rises from the bottom" },
     html: panelHtml("hbp-bottom"),
     css: [
-      // メニューは下に出るのでボタンは白背景の上に残る＝開いた時も濃色のままにする
       ...btnCss("hbp-bottom", "#1e293b"),
       ".hbp-bottom__nav {",
       "  position: fixed; bottom: 0; left: 0; right: 0; z-index: 20;",
@@ -183,7 +178,6 @@ export const DRAWER_PANELS = [
     label: { ja: "3D回転して開く", en: "Swings open in 3D" },
     html: panelHtml("hbp-rotate3d"),
     css: [
-      // メニューは左に出るのでボタンは白背景の上に残る＝開いた時も濃色のままにする
       ...btnCss("hbp-rotate3d", "#1e293b"),
       ".hbp-rotate3d__nav {",
       "  position: fixed; top: 0; bottom: 0; left: 0; z-index: 20;",

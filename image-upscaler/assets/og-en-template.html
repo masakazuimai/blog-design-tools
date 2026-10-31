@@ -1,7 +1,4 @@
 <!doctype html>
-<!-- OG画像(1200×630)の生成元。ヘッドレスChromeでスクリーンショットして assets/og-en.png を作る。
-     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
-       --screenshot=assets/og-en.png --window-size=1200,630 --default-background-color=0 assets/og-en-template.html -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -19,7 +16,6 @@
         padding: 0 78px;
       }
 
-      /* 背景: 解像度が上がる様子を表すピクセルグリッド */
       .grid { position: absolute; top: 50%; transform: translateY(-50%); display: grid; }
       .grid-coarse { left: 700px; grid-template-columns: repeat(3, 58px); gap: 6px; }
       .grid-fine { left: 960px; grid-template-columns: repeat(9, 20px); gap: 3px; }

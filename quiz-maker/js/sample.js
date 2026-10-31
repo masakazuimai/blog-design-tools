@@ -1,6 +1,5 @@
 import { LANG } from './i18n.js?v=20261003b';
 
-// 「サンプルで試す」用の問題（Web制作の基礎）
 const SAMPLE_JA = [
   { q: '光の三原色に含まれない色はどれ？', correct: '黄', wrong: ['赤', '緑', '青'], explain: '光の三原色は赤・緑・青（RGB）。画面の色はこの3色の光を混ぜて表現します。黄は色料の三原色（シアン・マゼンタ・イエロー）のひとつです。' },
   { q: 'HTMLで、ページ内で最も大きな見出しを表すタグは？', correct: '<h1>', wrong: ['<h6>', '<head>', '<title>'], explain: '見出しは h1〜h6 の6段階で、h1 が最上位です。<title> はブラウザのタブや検索結果に出るページ名で、本文の見出しではありません。' },
@@ -19,5 +18,4 @@ const SAMPLE_EN = [
   { q: 'What do you call two colors that sit opposite each other on the color wheel?', correct: 'Complementary colors', wrong: ['Analogous colors', 'Monochromatic colors', 'Neutral colors'], explain: 'Complementary colors sit across the color wheel and make each other stand out, e.g. red and cyan.' },
 ];
 
-// 「サンプルで試す」用の問題（ページの言語に合わせる）
 export const SAMPLE_QUESTIONS = LANG === 'en' ? SAMPLE_EN : SAMPLE_JA;

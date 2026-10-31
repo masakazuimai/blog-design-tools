@@ -1,4 +1,3 @@
-// 手書き系フォント定義（すべてOFLライセンス＝商用利用・再配布可）
 const GF = "https://cdn.jsdelivr.net/gh/google/fonts@main/";
 
 export const FONTS = [
@@ -20,7 +19,6 @@ export function findFont(id) {
   return FONTS.filter(function (f) { return f.id === id; })[0] || FONTS[0];
 }
 
-// TTFを取得してopentype.jsでパースする（同じ書体は2回目以降キャッシュ）
 export async function loadFont(id) {
   if (cache[id]) return cache[id];
   const meta = findFont(id);

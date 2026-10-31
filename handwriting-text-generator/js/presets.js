@@ -1,8 +1,4 @@
-// 紙とペンのプリセット定義
 
-// paperColor / lineColor は初期値。ユーザーがピッカーで上書きできる
-// rule: none = 罫線なし / line = 横罫 / grid = 方眼 / cells = マス目（原稿用紙）
-// mono: true のとき全文字を等幅（1マス1文字）で組む
 export const PAPERS = [
   { id: "none",   label: { ja: "なし（透過）", en: "None (transparent)" }, fill: null,      rule: "none" },
   { id: "plain",  label: { ja: "無地", en: "Plain" },         fill: "#fffdf7", rule: "none" },
@@ -13,8 +9,6 @@ export const PAPERS = [
   { id: "sticky", label: { ja: "付箋", en: "Sticky note" },         fill: "#fff3a8", rule: "none", corner: true }
 ];
 
-// w=線の太さ(px/文字サイズ64換算) wVar=字ごとの太さムラ aVar=字ごとの濃さムラ
-// blur=にじみ rough=かすれ（blur/roughはSVGではフィルタになる＝厳密な純パスではなくなる）
 export const PENS = [
   { id: "ballpoint", label: { ja: "ボールペン", en: "Ballpoint" }, w: 0,   wVar: 0,   aVar: 0,    blur: 0,   rough: 0 },
   { id: "fountain",  label: { ja: "万年筆", en: "Fountain pen" },     w: 0.7, wVar: 0.9, aVar: 0.18, blur: 0,   rough: 0 },

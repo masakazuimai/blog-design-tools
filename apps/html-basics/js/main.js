@@ -1,14 +1,11 @@
-// アプリロジック v4（問題データは js/data.js の PROBLEMS / LEVELS を参照）
-// v4: マークアップ描画型。エディタのHTMLをiframeへライブ描画し、「自分のコード」と
-// 「お手本」をタブで切り替えて見比べる。スクリプトは走らせない（sandbox属性で無効化）
 const STORE_KEY = 'cqHtmlBasicsQuizV1';
 let state = { level: 'all', current: 1, status: {}, drafts: {} };
 try {
   const saved = JSON.parse(localStorage.getItem(STORE_KEY));
   if (saved && saved.status) state = { ...state, ...saved };
-} catch (e) { /* 破損時は初期状態で続行 */ }
+} catch (e) { }
 
-let previewMode = 'mine'; // 'mine' | 'answer'
+let previewMode = 'mine';
 
 const $ = id => document.getElementById(id);
 
@@ -20,7 +17,6 @@ function levelProblems() {
 }
 function problem(id) { return PROBLEMS.find(p => p.id === id); }
 
-// ---- プレビュー（srcdocへ流し込むだけ。sandbox="" でスクリプトは実行されない） ----
 function renderPreview() {
   const p = problem(state.current);
   if (!p) return;
@@ -41,7 +37,6 @@ function setPreviewMode(mode) {
   renderPreview();
 }
 
-// エディタの高さを中身に合わせる（min-height 380px 〜 上限 640px。以降はスクロール）
 function autoGrow() {
   const ed = $('editor');
   ed.style.height = 'auto';
@@ -113,7 +108,6 @@ function renderClear() {
 
 function renderAll() { renderTabs(); renderChips(); renderProgress(); renderProblem(); }
 
-// ---- エディタ（入力のたびに下書き保存＋プレビュー更新。連打を抑えるため遅延させる） ----
 let timer = null;
 $('editor').addEventListener('input', () => {
   autoGrow();
@@ -125,7 +119,6 @@ $('editor').addEventListener('input', () => {
   }, 250);
 });
 
-// Tabキーでスペース2つ挿入
 $('editor').addEventListener('keydown', e => {
   if (e.key === 'Tab') {
     e.preventDefault();
@@ -138,7 +131,6 @@ $('editor').addEventListener('keydown', e => {
 $('pvMine').onclick = () => setPreviewMode('mine');
 $('pvAnswer').onclick = () => setPreviewMode('answer');
 
-// リセット＝下書きを破棄してひな形に戻す
 $('resetCodeBtn').onclick = () => {
   const p = problem(state.current);
   $('editor').value = p.starter;
@@ -151,7 +143,6 @@ $('resetCodeBtn').onclick = () => {
 };
 
 function setStatus(st) {
-  // 同じ判定をもう一度押したら解除（その場に留まる）
   if (state.status[state.current] === st) {
     const status = { ...state.status };
     delete status[state.current];
@@ -184,7 +175,6 @@ $('reviewBtn').onclick = () => {
   if (first) { state = { ...state, current: first.id }; save(); renderAll(); }
 };
 
-// 表示中レベルの判定（できた/復習）を全解除。現在の問題位置は維持
 $('resetProgressBtn').onclick = () => {
   const status = { ...state.status };
   levelProblems().forEach(p => delete status[p.id]);

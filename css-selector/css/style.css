@@ -1,5 +1,3 @@
-/* CSSセレクタ辞典 スタイル
-   デモ内部のスタイルは js/selectors.js の DEMO_HTML 側に持たせている（iframe隔離のため） */
 
 * {
   margin: 0;
@@ -15,7 +13,6 @@ body {
   line-height: 1.7;
 }
 
-/* ============ ヘッダー（薄型バー） ============ */
 .header {
   background: linear-gradient(135deg, #1e293b 0%, #3730a3 100%);
   color: #fff;
@@ -36,11 +33,6 @@ body {
   font-size: 1rem;
 }
 
-/* ============ レイアウト ============
-   ≥1400px: 一覧 / コード / デモ の3カラム。3つとも画面高に収めて内側スクロール
-   1000-1399px: 一覧 ＋ 右にコード→デモ の2カラム
-   <1000px: 1カラム（一覧 → コード → デモ）
-*/
 .container {
   max-width: 1280px;
   margin: 0 auto;
@@ -65,7 +57,6 @@ body {
   grid-area: detail;
 }
 
-/* ============ 一覧（サイドバー）・絞り込みコントロール ============ */
 .sidebar {
   position: sticky;
   top: 16px;
@@ -80,7 +71,6 @@ body {
 .sidebar h2 {
   font-size: 1.05rem;
 }
-/* 検索・カテゴリチップのアコーディオン。コード列のサンプルCSSの下に置き、既定は開いておく */
 .detail-controls {
   flex-shrink: 0;
   margin-top: 18px;
@@ -211,13 +201,11 @@ body {
   padding: 12px 4px;
 }
 
-/* ============ パネル ============ */
 .panel {
   background: #fff;
   border: 1px solid #e2e8f0;
   padding: 20px;
 }
-/* コード列は薄い水色。一覧・デモの白と塗り分けて列の切り替わりを分かりやすくする */
 .detail-panel {
   background: #e0f2fe;
 }
@@ -258,7 +246,6 @@ body {
   font-size: 1rem;
 }
 
-/* コード */
 .code-head {
   display: flex;
   align-items: center;
@@ -299,8 +286,6 @@ body {
   min-height: 76px;
 }
 
-/* デモ。パネルの高さを画面に合わせ、iframeが残りを埋めて内側でスクロールする
-   （JSで高さを測らないので「縮まない」問題が起きない） */
 .demo-panel {
   display: flex;
   flex-direction: column;
@@ -310,13 +295,11 @@ body {
   width: 100%;
   flex: 1;
   min-height: 320px;
-  /* パネルの余白を無くしたぶん、枠線はカラムの区切り線に任せる（2重線の防止） */
   border: none;
   background: #f8fafc;
   display: block;
 }
 
-/* 解説セクション */
 .about {
   margin-top: 20px;
 }
@@ -336,7 +319,6 @@ body {
   padding-left: 1.4em;
 }
 
-/* ============ トースト ============ */
 .toast {
   position: fixed;
   left: 50%;
@@ -356,7 +338,6 @@ body {
   transform: translateX(-50%) translateY(0);
 }
 
-/* ============ フッター ============ */
 footer {
   display: flex;
   justify-content: flex-start;
@@ -393,7 +374,6 @@ footer a:hover {
   color: #4f46e5;
 }
 
-/* ============ 広告（右下フローティングカード320×100・薄型透明枠＋×閉じ） ============ */
 .footer-ad {
   position: fixed;
   right: 0;
@@ -455,10 +435,7 @@ footer a:hover {
   height: 100px;
 }
 
-/* ============ レスポンシブ ============ */
 
-/* 画面高に収める（3カラム時と2カラム時）。各列が内側でスクロールする。
-   カラム同士は余白と角丸をやめ、1本のボーダーで区切る */
 @media (min-width: 1000px) {
   .container {
     max-width: none;
@@ -467,7 +444,7 @@ footer a:hover {
   .layout {
     height: calc(100vh - var(--header-h, 56px));
     min-height: 520px;
-    align-items: stretch; /* デモ列を列いっぱいに伸ばす */
+    align-items: stretch;
     gap: 0;
     background: #fff;
   }
@@ -476,7 +453,6 @@ footer a:hover {
   .detail-panel {
     border: none;
   }
-  /* コード列だけは薄い水色を残す */
   .sidebar,
   .demo-panel {
     background: #fff;
@@ -497,15 +473,12 @@ footer a:hover {
     max-height: 100%;
     min-height: 0;
   }
-  /* コードは中身の高さのまま。余白で間延びさせない */
   .detail-panel {
     align-self: start;
     overflow-y: auto;
   }
 }
 
-/* 2カラム時は右列をコード→デモの縦積みにする。
-   コードは中身の高さ（auto）、デモが残りを取る。%指定にするとコード側が潰れる */
 @media (min-width: 1000px) and (max-width: 1399px) {
   .layout {
     grid-template-rows: auto minmax(280px, 1fr);
@@ -520,8 +493,6 @@ footer a:hover {
   }
 }
 
-/* 3カラム（一覧 / コード / デモ）。一覧とコードを左に並べ、デモに残り全部を渡す。
-   共通ブロックの border / align-self を上書きするので、この位置（後ろ）に置く */
 @media (min-width: 1400px) {
   .container {
     max-width: 1980px;
@@ -532,7 +503,6 @@ footer a:hover {
   }
   .detail-panel {
     padding: 16px;
-    /* 中央列になるので区切り線は右側。デモ列との境目が途切れないよう縦いっぱいに伸ばす */
     border-left: none;
     border-right: 1px solid #e2e8f0;
     align-self: stretch;

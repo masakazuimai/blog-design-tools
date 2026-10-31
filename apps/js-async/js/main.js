@@ -1,12 +1,9 @@
-// アプリロジック v2（問題データは js/data.js の PROBLEMS / LEVELS を参照）
-// v2: ステージ（iframe実行環境）＋非同期対応コンソール。コードはiframe内で実行され、
-// console.logはライブ追記・alert()は[alert]としてconsole欄に表示される
 const STORE_KEY = 'cqJsAsyncQuizV1';
 let state = { level: 'all', current: 1, status: {}, drafts: {} };
 try {
   const saved = JSON.parse(localStorage.getItem(STORE_KEY));
   if (saved && saved.status) state = { ...state, ...saved };
-} catch (e) { /* 破損時は初期状態で続行 */ }
+} catch (e) { }
 
 const $ = id => document.getElementById(id);
 
@@ -18,7 +15,6 @@ function levelProblems() {
 }
 function problem(id) { return PROBLEMS.find(p => p.id === id); }
 
-// ---- ステージ（毎回作り直してリスナー多重登録を防ぐ） ----
 let stageWin = null;
 function buildStage(p) {
   const holder = $('stageHolder');
@@ -103,7 +99,6 @@ function renderClear() {
 
 function renderAll() { renderTabs(); renderChips(); renderProgress(); renderProblem(); }
 
-// ---- コンソール（非同期のログもライブ追記） ----
 let hasOutput = false;
 function fmt(v) {
   if (typeof v === 'object' && v !== null) { try { return JSON.stringify(v); } catch (e) { return String(v); } }
@@ -124,7 +119,6 @@ function showHint(p) {
     : '(出力なし — console.log で表示できます)';
 }
 
-// コード実行（ステージを作り直してからiframe内で実行）
 $('runBtn').onclick = () => {
   const code = $('editor').value;
   state = { ...state, drafts: { ...state.drafts, [state.current]: code } };
@@ -157,7 +151,6 @@ $('runBtn').onclick = () => {
   }
 };
 
-// リセット＝下書きを破棄してstarterに戻し、ステージも作り直す
 $('clearBtn').onclick = () => {
   const p = problem(state.current);
   $('editor').value = p.starter || '';
@@ -170,7 +163,6 @@ $('clearBtn').onclick = () => {
   $('consoleOut').textContent = '';
 };
 
-// Tabキーでスペース2つ挿入
 $('editor').addEventListener('keydown', e => {
   if (e.key === 'Tab') {
     e.preventDefault();
@@ -181,7 +173,6 @@ $('editor').addEventListener('keydown', e => {
 });
 
 function setStatus(st) {
-  // 同じ判定をもう一度押したら解除（その場に留まる）
   if (state.status[state.current] === st) {
     const status = { ...state.status };
     delete status[state.current];
@@ -214,7 +205,6 @@ $('reviewBtn').onclick = () => {
   if (first) { state = { ...state, current: first.id }; save(); renderAll(); }
 };
 
-// 表示中レベルの判定（できた/復習）を全解除。現在の問題位置は維持
 $('resetProgressBtn').onclick = () => {
   const status = { ...state.status };
   levelProblems().forEach(p => delete status[p.id]);

@@ -35,7 +35,6 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     }
 
-    /* ヘッダー */
     header {
       background: linear-gradient(135deg, #1a1a1a 0%, #6b6b6b 100%);
     }
@@ -94,7 +93,6 @@
       color: var(--color-text);
     }
 
-    /* ドロップゾーン */
     .drop-zone {
       border: 2px dashed var(--color-border);
       border-radius: 12px;
@@ -164,7 +162,6 @@
       cursor: pointer;
     }
 
-    /* プレビュー画像 */
     .preview-wrap {
       margin-top: 16px;
       display: none;
@@ -190,7 +187,6 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
-    /* 設定 */
     .setting-row {
       display: flex;
       justify-content: space-between;
@@ -251,7 +247,6 @@
       cursor: not-allowed;
     }
 
-    /* メインエリア */
     .main {
       display: flex;
       flex-direction: column;
@@ -285,7 +280,6 @@
       font-size: 1.125rem;
     }
 
-    /* 使い方ステップ */
     .steps {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
@@ -318,7 +312,6 @@
       margin-top: 2px;
     }
 
-    /* 抽出色一覧 */
     .palette-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -397,7 +390,6 @@
       opacity: 1;
     }
 
-    /* パレット提案 */
     .suggestion-section {
       margin-top: 8px;
     }
@@ -460,7 +452,6 @@
       color: #721c24;
     }
 
-    /* CSSエクスポート */
     .export-section {
       margin-top: 8px;
     }
@@ -527,7 +518,6 @@
       background: rgba(255, 255, 255, 0.15);
     }
 
-    /* プレビューカード */
     .preview-section {
       margin-top: 8px;
     }
@@ -596,7 +586,6 @@
       margin-bottom: 0;
     }
 
-    /* フッター */
     footer {
       background: linear-gradient(135deg, #6b6b6b 0%, #1a1a1a 100%);
       padding: 16px 0;
@@ -609,7 +598,7 @@
       padding: 0 24px;
       display: flex;
       align-items: center;
-      justify-content: flex-start; /* 右下広告との被り回避で左寄せ */
+      justify-content: flex-start;
       flex-wrap: wrap;
       gap: 12px 24px;
     }
@@ -645,7 +634,6 @@
       color: #fff;
     }
 
-    /* 保存パレット */
     .saved-empty {
       font-size: 1rem;
       color: var(--color-text-tertiary);
@@ -834,7 +822,6 @@
       }
     }
 
-    /* ============ i18n: 言語切替リンク ============ */
     header .header-inner {
       position: relative;
     }
@@ -855,7 +842,6 @@
       background: rgba(255, 255, 255, 0.15);
     }
 
-    /* ---- FAQ ---- */
     .faq-section {
       max-width: 820px;
       margin: 0 auto;
@@ -881,7 +867,6 @@
       line-height: 1.8;
     }
 
-/* 広告（PC/SPとも右下フローティングカード320×100・薄型透明枠＋×閉じ） */
 .footer-ad {
   position: fixed;
   right: 0;
@@ -951,7 +936,6 @@
   .footer-ad ins.adsbygoogle { width: 320px; height: 100px; }
 }
 
-/* ガイドへの導線（index フッター上） */
 .hint {
   font-size: 1rem;
   color: var(--color-text-secondary);
@@ -962,7 +946,6 @@
   text-decoration: underline;
 }
 
-/* ============ 使い方・ガイドページ（howto.html） ============ */
 .howto-wrap {
   max-width: 860px;
   margin: 0 auto;

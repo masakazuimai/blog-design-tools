@@ -1,19 +1,15 @@
-/* =========================================================
-   色の辞書 — Editorial Minimal（明朝体 × 和紙ベース）
-   "Research journal printed on warm stone"
-   ========================================================= */
 
 :root {
-  --paper: #f4efe3; /* ページ背景：学習用の紙色（温かみのある生成り） */
-  --paper-edge: #ece4d2; /* 一段沈んだ紙色（交互セクション） */
-  --card: #fbf8f0; /* カード面：一段明るい紙 */
-  --ink: #23201a; /* 本文：温黒（純黒を避ける） */
-  --ink-2: #6f6757; /* サブテキスト */
-  --ink-3: #a79d8a; /* 補助テキスト */
-  --line: #e3dbc8; /* 罫線 */
-  --line-2: #d3c9b1; /* 強い罫線 */
-  --seal: #b14730; /* アクセント：朱（落款の印色。CTA・リンク・選択に限定） */
-  --seal-weak: #f1e2d9; /* 朱の淡色背景 */
+  --paper: #f4efe3;
+  --paper-edge: #ece4d2;
+  --card: #fbf8f0;
+  --ink: #23201a;
+  --ink-2: #6f6757;
+  --ink-3: #a79d8a;
+  --line: #e3dbc8;
+  --line-2: #d3c9b1;
+  --seal: #b14730;
+  --seal-weak: #f1e2d9;
   --serif: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
   --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --radius: 4px;
@@ -40,7 +36,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* 和紙のごく薄い粒状感（紙らしさの演出） */
 body::before {
   content: "";
   position: fixed;
@@ -61,7 +56,6 @@ a {
   text-decoration-thickness: 1px;
 }
 
-/* ===== ヘッダー ===== */
 header {
   max-width: 1180px;
   margin: 0 auto;
@@ -127,7 +121,6 @@ header .lede {
   border-top: 1px solid var(--line);
 }
 
-/* ===== ツールバー（検索・絞り込み） ===== */
 .toolbar {
   position: sticky;
   top: 0;
@@ -182,7 +175,6 @@ header .lede {
   align-items: center;
   gap: 18px;
 }
-/* カテゴリ：セグメント */
 .segmented {
   display: inline-flex;
   border: 1px solid var(--line-2);
@@ -206,7 +198,6 @@ header .lede {
   background: var(--ink);
   color: var(--paper);
 }
-/* 色相チップ */
 .hue-chips {
   display: flex;
   flex-wrap: wrap;
@@ -242,7 +233,6 @@ header .lede {
   background: var(--card);
 }
 
-/* ===== メイン ===== */
 main {
   max-width: 1180px;
   margin: 0 auto;
@@ -267,7 +257,6 @@ main {
   color: var(--ink-3);
 }
 
-/* ===== カラーチップグリッド ===== */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
@@ -378,7 +367,6 @@ main {
   font-size: 1.05rem;
 }
 
-/* ===== 詳細モーダル（標本プレート） ===== */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -481,7 +469,6 @@ main {
   border-radius: 4px;
   color: #7a2a1c;
 }
-/* コード値（コピー可能な行） */
 .values {
   margin: 20px 0 4px;
   border-top: 1px solid var(--line);
@@ -549,7 +536,6 @@ main {
   line-height: 1.9;
   color: var(--ink);
 }
-/* 配色例 */
 .pair-row {
   display: flex;
   gap: 10px;
@@ -573,7 +559,6 @@ main {
   text-transform: uppercase;
   background: var(--card);
 }
-/* コントラスト */
 .contrast-row {
   display: flex;
   gap: 10px;
@@ -604,7 +589,6 @@ main {
   letter-spacing: 0.06em;
 }
 
-/* ===== トースト ===== */
 .toast {
   position: fixed;
   left: 50%;
@@ -627,7 +611,6 @@ main {
   transform: translateX(-50%) translateY(0);
 }
 
-/* ===== 読み物（SEOコンテンツ） ===== */
 .article {
   background: var(--paper-edge);
   border-top: 1px solid var(--line);
@@ -726,7 +709,6 @@ main {
   margin-top: 2px;
 }
 
-/* 広告（PC/SPとも右下フローティングカード320×100・薄型透明枠＋×閉じ） */
 .footer-ad {
   position: fixed;
   right: 0;
@@ -796,10 +778,9 @@ main {
   .footer-ad ins.adsbygoogle { width: 320px; height: 100px; }
 }
 
-/* ===== フッター ===== */
 footer {
   display: flex;
-  justify-content: flex-start; /* 右下広告との被り回避で左寄せ */
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 12px 24px;
   align-items: center;
@@ -834,7 +815,6 @@ footer a:hover {
   color: var(--seal);
 }
 
-/* ===== レスポンシブ ===== */
 @media (max-width: 768px) {
   header {
     padding: 44px 20px 28px;

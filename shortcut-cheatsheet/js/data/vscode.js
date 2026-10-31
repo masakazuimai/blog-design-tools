@@ -1,6 +1,3 @@
-// Visual Studio Code ショートカットキー データ（VS Code 既定キー準拠）
-// keys: トークン配列。'mod'=⌘/Ctrl, 'alt'=⌥/Alt, 'shift'=⇧/Shift、それ以外はそのまま表示。
-// ⌃（Control）が Mac/Win で構造的に異なるもの（ターミナル切替 ⌃` 等）は混乱を避けるため割愛。
 
 export const CATEGORIES = [
   {

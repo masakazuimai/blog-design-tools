@@ -5,7 +5,7 @@
   --line: #3c3f45;
   --text: #e8eaed;
   --muted: #9aa0a6;
-  --accent: #31a8ff; /* Photoshop blue */
+  --accent: #31a8ff;
   --accent-ink: #06121f;
   --radius: 12px;
 }
@@ -75,7 +75,6 @@ body {
   border-color: var(--accent);
 }
 
-/* ---- 2カラム本体 ---- */
 .ps-body {
   max-width: 1440px;
   margin: 20px auto 0;
@@ -170,7 +169,6 @@ body {
   border-color: var(--accent);
 }
 
-/* ---- マイ一覧ボタン ---- */
 .fav-view-btn {
   display: flex;
   align-items: center;
@@ -211,7 +209,6 @@ body {
   background: rgba(0, 0, 0, 0.18);
 }
 
-/* ---- セレクト（カテゴリ・テンプレ共通） ---- */
 .select-wrap {
   position: relative;
 }
@@ -242,7 +239,6 @@ body {
   border-color: var(--accent);
 }
 
-/* ---- デザイナーテンプレ ---- */
 .tpl-box {
   display: flex;
   flex-direction: column;
@@ -257,7 +253,6 @@ body {
   color: var(--text);
 }
 
-/* ---- カードグリッド ---- */
 .grid {
   margin: 0;
   padding: 0;
@@ -374,7 +369,6 @@ body {
   padding: 40px 0;
 }
 
-/* 広告（PC/SPとも右下フローティングカード320×100・薄型透明枠＋×閉じ） */
 .footer-ad {
   position: fixed;
   right: 0;
@@ -444,7 +438,6 @@ body {
   .footer-ad ins.adsbygoogle { width: 320px; height: 100px; }
 }
 
-/* ---- フッター ---- */
 .ps-foot {
   max-width: 1440px;
   margin: 36px auto 28px;
@@ -452,7 +445,7 @@ body {
   border-top: 1px solid var(--line);
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* 右下広告との被り回避で左寄せ */
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 12px 24px;
   color: var(--muted);
@@ -486,7 +479,6 @@ body {
   }
 }
 
-/* ---- アプリ選択ハブ ---- */
 .hub {
   max-width: 1440px;
   margin: 12px auto 0;
@@ -541,7 +533,6 @@ a.hub-card:hover {
   color: var(--muted);
 }
 
-/* ---- ショートカット登録ボタン ---- */
 .add-custom-btn {
   width: 100%;
   border: 1px dashed var(--line);
@@ -558,7 +549,6 @@ a.hub-card:hover {
   color: var(--accent);
 }
 
-/* ---- カスタムカードの操作 ---- */
 .card-actions {
   display: inline-flex;
   gap: 2px;
@@ -584,7 +574,6 @@ a.hub-card:hover {
   background: var(--panel-2);
 }
 
-/* ---- 登録モーダル ---- */
 .sc-modal {
   position: fixed;
   inset: 0;
@@ -719,7 +708,6 @@ a.hub-card:hover {
   color: var(--accent-ink);
 }
 
-/* ---- マイ一覧の書き出し ---- */
 .export-box {
   display: flex;
   flex-direction: column;
@@ -753,12 +741,10 @@ a.hub-card:hover {
   color: var(--accent);
 }
 
-/* 画面では印刷用コンテナを隠す */
 #scPrint {
   display: none;
 }
 
-/* ---- 印刷／PDF レイアウト ---- */
 @media print {
   body > *:not(#scPrint) {
     display: none !important;
@@ -827,7 +813,6 @@ a.hub-card:hover {
   }
 }
 
-/* ---- ハブのドラッグ並べ替え ---- */
 .hub-hint {
   margin: 0 0 14px;
   font-size: 16px;
@@ -860,7 +845,6 @@ a.hub-card:hover {
   pointer-events: none;
 }
 
-/* ---- ドロップ確定アニメーション（一覧カード・ハブ共通） ---- */
 @keyframes scDrop {
   0% { transform: scale(0.96); }
   55% { transform: scale(1.025); }
@@ -877,7 +861,6 @@ a.hub-card:hover {
   }
 }
 
-/* ---- ヘッダー右の操作群（TOP・言語切替） ---- */
 .head-actions {
   display: flex;
   align-items: center;

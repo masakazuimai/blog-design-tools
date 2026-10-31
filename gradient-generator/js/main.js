@@ -11,7 +11,6 @@ import {
 import { ALL_PRESETS } from "./presets.js?v=20260629o";
 import { buildSwatchPanel } from "./swatch.js?v=20260629b";
 
-// ===== 状態（編集中グラデーション） =====
 let uid = 0;
 const newId = () => `s${++uid}`;
 
@@ -26,12 +25,11 @@ const state = {
   radialShape: "circle",
   stops: [],
   selectedId: null,
-  target: "bg", // "bg" = 背景に適用 / "text" = 文字に適用（background-clip）
+  target: "bg",
 };
 
 let format = "css";
 
-// ===== DOM =====
 const $ = (id) => document.getElementById(id);
 const grid = $("grid");
 const countEl = $("count");
@@ -60,11 +58,7 @@ const pngBtn = $("png-btn");
 const fontRow = $("font-row");
 const fontSelect = $("text-font");
 
-// 文字モードで選べるフォント（Google Fonts）。
-// href は「コピーしたコードをそのまま動かす」ために出力へ含める。
-// 太字の見出し用途なので weight は 700 に固定する。
 const FONTS = [
-  // preloaded: ページ本体の<link>で既に読み込んでいるため追加読み込みしない
   { id: "noto-serif-jp", family: "Noto Serif JP", stack: '"Noto Serif JP", serif', preloaded: true },
   { id: "noto-sans-jp", family: "Noto Sans JP", stack: '"Noto Sans JP", sans-serif' },
   { id: "shippori-mincho", family: "Shippori Mincho", stack: '"Shippori Mincho", serif' },
@@ -85,7 +79,6 @@ const ANGLE_LABEL = {
 };
 const TYPE_LABEL = { linear: t.typeLinear, radial: t.typeRadial, conic: t.typeConic };
 
-// 色相チップ（color-dictionary と同じキー・ドット色）
 const HUE_GROUPS = [
   { key: "all", labelJa: "すべて", labelEn: "All", dot: "" },
   { key: "red", labelJa: "赤", labelEn: "Red", dot: "#c0392b" },
@@ -100,7 +93,6 @@ const HUE_GROUPS = [
 ];
 let curCat = "all";
 
-// ===== 色ユーティリティ（ストップ追加時の補間用） =====
 function hexToRgb(hex) {
   const h = hex.replace("#", "");
   const f = h.length === 3 ? h.split("").map((c) => c + c).join("") : h;
@@ -129,7 +121,6 @@ const isHex = (v) => /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(v);
 const expandHex = (hex) =>
   hex.length === 4 ? `#${hex.slice(1).split("").map((c) => c + c).join("")}` : hex;
 
-// ===== 一覧（ギャラリー） =====
 function presetGradient(p) {
   return gradientValue({
     type: p.type || "linear",
@@ -142,7 +133,6 @@ function presetGradient(p) {
 function buildGrid() {
   const frag = document.createDocumentFragment();
 
-  // 新規作成カード
   const nw = document.createElement("button");
   nw.type = "button";
   nw.className = "chip new";
@@ -185,7 +175,7 @@ function applyFilter() {
   const q = searchEl.value.trim().toLowerCase();
   let shown = 0;
   grid.querySelectorAll(".chip").forEach((chip) => {
-    if (chip.dataset.new) return; // 新規カードは常に表示
+    if (chip.dataset.new) return;
     const okCat = curCat === "all" || chip.dataset.cat === curCat;
     const okQ = !q || chip.dataset.search.includes(q);
     const visible = okCat && okQ;
@@ -195,7 +185,6 @@ function applyFilter() {
   countEl.innerHTML = `<b>${shown}</b>${t.countSuffix}`;
 }
 
-// 色相チップの描画と絞り込み
 function renderHueChips() {
   const box = $("hue-chips");
   box.innerHTML = HUE_GROUPS.map((g) => {
@@ -212,7 +201,6 @@ $("hue-chips").addEventListener("click", (e) => {
   applyFilter();
 });
 
-// ===== モーダルを開く／閉じる =====
 function openEditor(preset) {
   if (preset) {
     state.type = preset.type || "linear";
@@ -242,7 +230,6 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && modal.classList.contains("open")) closeEditor();
 });
 
-// ===== エディタのレンダリング =====
 function selected() {
   return state.stops.find((s) => s.id === state.selectedId) || state.stops[0];
 }
@@ -252,7 +239,6 @@ function previewText() {
 function currentFont() {
   return FONTS.find((f) => f.id === fontSelect.value) || FONTS[0];
 }
-// 選ばれたフォントだけを後から読み込む（初期表示を重くしないため）
 const loadedFonts = new Set();
 function ensureFontLoaded(font) {
   if (font.preloaded || loadedFonts.has(font.id)) return;
@@ -269,7 +255,6 @@ function renderPreview() {
     previewBox.style.background = gradientValue(state);
     return;
   }
-  // 文字モードはボックス自体を透明にして、字面だけをグラデーションで塗る
   const font = currentFont();
   ensureFontLoaded(font);
   previewBox.style.background = "none";
@@ -324,8 +309,6 @@ function renderControls() {
   delStop.disabled = state.stops.length <= 2;
 }
 function renderOutput() {
-  // 文字モードは当てる要素とフォント読み込みが分からないと動かないため、
-  // HTMLもまとめて出す（background-clip は単体のCSS宣言だけでは使えない）
   const ctx = state.target === "text" ? { text: previewText(), font: currentFont() } : {};
   output.value = format === "tailwind" ? buildTailwind(state, ctx) : buildCss(state, ctx);
   document.querySelectorAll("#format-seg button").forEach((b) =>
@@ -339,7 +322,6 @@ function renderEditor() {
   renderOutput();
 }
 
-// ===== トースト =====
 let toastTimer = null;
 function toast(msg) {
   toastEl.textContent = msg;
@@ -348,7 +330,6 @@ function toast(msg) {
   toastTimer = setTimeout(() => toastEl.classList.remove("show"), 1800);
 }
 
-// ===== エディタのイベント（初期化時に1度だけ束ねる） =====
 $("target-seg").addEventListener("click", (e) => {
   const b = e.target.closest("button");
   if (!b) return;
@@ -357,7 +338,7 @@ $("target-seg").addEventListener("click", (e) => {
 });
 previewTextInput.addEventListener("input", () => {
   renderPreview();
-  renderOutput(); // 出力HTMLに文言が入るため追従させる
+  renderOutput();
 });
 fontSelect.addEventListener("change", () => {
   renderPreview();
@@ -410,7 +391,6 @@ delStop.addEventListener("click", () => {
   renderEditor();
 });
 
-// グラデーションバー
 function posFromEvent(clientX) {
   const r = bar.getBoundingClientRect();
   return Math.min(100, Math.max(0, ((clientX - r.left) / r.width) * 100));
@@ -452,7 +432,6 @@ bar.addEventListener("dblclick", (e) => {
   renderEditor();
 });
 
-// 色の辞書スウォッチ
 let swatchBuilt = false;
 swatchToggle.addEventListener("click", async () => {
   const nowHidden = swatchPanel.classList.toggle("hidden");
@@ -462,7 +441,6 @@ swatchToggle.addEventListener("click", async () => {
   }
 });
 
-// 出力フォーマット
 $("format-seg").addEventListener("click", (e) => {
   const b = e.target.closest("button");
   if (!b) return;
@@ -470,7 +448,6 @@ $("format-seg").addEventListener("click", (e) => {
   renderOutput();
 });
 
-// コピー
 $("copy-btn").addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(output.value);
@@ -481,7 +458,6 @@ $("copy-btn").addEventListener("click", async () => {
   toast(t.copyDone);
 });
 
-// PNG書き出し。文字モードは字面だけを塗った透過PNGを出す
 const TEXT_PNG_FONT_SIZE = 220;
 const TEXT_PNG_PADDING = 40;
 
@@ -495,13 +471,10 @@ pngBtn.addEventListener("click", async () => {
 
   if (isText) {
     const font = `700 ${TEXT_PNG_FONT_SIZE}px ${currentFont().stack}`;
-    // Webフォントの読み込み前に描くと代替フォントで焼き込まれるため待つ
     try {
       await document.fonts.load(font, previewText());
     } catch {
-      /* 読めなくても代替フォントで書き出しは続行する */
     }
-    // 実測にも同じctxを使う（fontを跨いで測ると寸法がずれるため）
     const box = measureTextBox(ctx, previewText(), font, TEXT_PNG_PADDING);
     w = box.width;
     h = box.height;
@@ -522,10 +495,8 @@ pngBtn.addEventListener("click", async () => {
     a.href = url;
     a.download = filename;
     a.rel = "noopener";
-    // 一部ブラウザはDOMに無いアンカーのclickを無視するため追加してから発火
     document.body.appendChild(a);
     a.click();
-    // clickが処理される前にURLを破棄するとDLがキャンセルされるため遅延解放
     setTimeout(() => {
       a.remove();
       URL.revokeObjectURL(url);
@@ -534,9 +505,7 @@ pngBtn.addEventListener("click", async () => {
   }, "image/png");
 });
 
-// ===== 一覧の絞り込み（検索） =====
 searchEl.addEventListener("input", applyFilter);
 
-// ===== 初期化 =====
 renderHueChips();
 buildGrid();

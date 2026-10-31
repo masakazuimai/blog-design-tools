@@ -1,4 +1,3 @@
-// FAQ のパターン
 const QA = (n, open = false) => `<details class="fq01__item"${open ? " open" : ""}>
         <summary><span class="fq01__q">Q</span><span class="fq01__ttl">よくある質問${n}が入ります</span><span class="fq01__mark" aria-hidden="true"><span class="fq01__plus">＋</span><span class="fq01__minus">−</span></span></summary>
         <div class="fq01__a"><span class="fq01__q fq01__q--a">A</span><p class="wf-text">回答が入ります。結論を先に書き、必要なら補足を続けます。</p></div>

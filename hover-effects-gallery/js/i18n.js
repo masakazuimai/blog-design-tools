@@ -1,5 +1,3 @@
-// UI文字列の多言語辞書。<html lang> で言語を切り替える
-// エフェクト個別のラベルは js/effects/ 内の定義（label: {ja, en}）に持たせ、ここではUI文言のみ扱う
 
 const dict = {
   ja: {
@@ -42,8 +40,6 @@ const dict = {
   },
 };
 
-// コピーコード・プレビュー内のCSSコメント対訳。
-// エフェクト定義（js/effects/）は日本語コメントで共有し、enページでは main.js がこの表で差し替える
 export const CSS_COMMENT_EN = {
   "/* 左から入って、外すと右へ抜ける */": "/* Slides in from the left, exits to the right */",
   "/* グレー下線が右へ抜け、アクセント下線が左から入る */": "/* The gray underline exits right while the accent underline slides in from the left */",

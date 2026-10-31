@@ -1,4 +1,3 @@
-// 英語版：パターンの名前・使いどころ・設計の狙い・構成（id ごと）
 export const CATEGORY_EN = {
   header: "Header",
   hero: "Hero",

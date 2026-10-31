@@ -1,4 +1,3 @@
-// Figma templates (English). Labels must match figma.en.js exactly.
 
 export const TEMPLATES = [
   {

@@ -1,4 +1,3 @@
-// 開発・技術カテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
 
 import { DRAW, drawKeys, pulseKeys, bounceKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815c";
 
@@ -127,7 +126,6 @@ export const DEV_ICONS = [
       duration: 1.8,
       easing: "ease-in-out",
       tracks: [
-        // ランプ2つの点滅だけでは動きが小さいので、転送量のバーを伸縮させる
         { part: "bar1", origin: "10.4px 7.4px", keys: barKeys(0) },
         { part: "bar2", origin: "10.4px 16.6px", keys: barKeys(0.25) },
         { part: "led1", keys: blinkKeys(0.1) },
@@ -272,7 +270,6 @@ export const DEV_ICONS = [
       duration: 1.8,
       easing: "linear",
       tracks: [
-        // カーソルの点滅だけでは動きが小さいので、文字列が打ち込まれる動きを主役にする
         { part: "typed", keys: drawKeys(0.15, 0.7) },
         {
           part: "prompt",
@@ -320,7 +317,6 @@ export const DEV_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // 液面が上下する。小さな泡だけでは変化が見えなかった
           part: "level",
           keys: [
             { at: 0, transform: "translateY(2.6px) scaleX(0.78)" },
@@ -411,7 +407,6 @@ export const DEV_ICONS = [
   },
 ];
 
-// 転送量のように伸び縮みする
 function barKeys(delay) {
   return [
     { at: 0, transform: "scaleX(0.15)" },

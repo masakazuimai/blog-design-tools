@@ -1,7 +1,4 @@
 <!doctype html>
-<!-- OG画像(1200×630)の生成元。ヘッドレスChromeでスクリーンショットして assets/og.png を作る。
-     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
-       --screenshot=assets/og.png --window-size=1200,630 --default-background-color=0 assets/og-template.html -->
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
@@ -24,7 +21,6 @@
         padding: 0 78px 132px;
       }
 
-      /* 背景: 再生の周回を思わせる同心円 */
       .ring { position: absolute; border: 2px solid rgba(199, 210, 254, 0.14); border-radius: 50%; }
       .ring-1 { width: 700px; height: 700px; right: -210px; top: -170px; }
       .ring-2 { width: 960px; height: 960px; right: -330px; top: -300px; }
@@ -68,7 +64,6 @@
         font-weight: 500;
       }
 
-      /* 実際に収録しているアイコンを並べる */
       .strip {
         position: absolute;
         left: 0;

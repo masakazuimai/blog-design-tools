@@ -1,10 +1,6 @@
-// UI文字列の多言語辞書。<html lang> で言語を切り替える
-// 文字列をこの1ファイルに集約し、/ と /en/ で同じJSを共有する（重複コードを避けるため）
-// ※ @keyframes やコピー対象のCSSコードは言語非依存なので辞書に含めない
 
 const dict = {
   ja: {
-    // カテゴリ名（キーは日本語のまま内部識別子として使う）
     categories: {
       'すべて': 'すべて',
       '注目': '注目',
@@ -21,20 +17,16 @@ const dict = {
       'エフェクト': 'エフェクト',
     },
     countNote: (total, shown) => '全 ' + total + ' 種類 / 表示中 ' + shown + ' 種類',
-    // コピー
     copied: '✓ コピー',
     copiedToast: (label) => label + 'をコピーしました',
     copyFailed: 'コピーに失敗しました',
-    // デモ要素
     demoSample: 'サンプル',
     demoButton: 'ボタン',
     demoSampleText: 'サンプルテキスト',
-    // フリップカード
     flipFront: '表面 / FRONT',
     flipBack: '裏面 / BACK',
     flipH: '横フリップ（rotateY）',
     flipV: '縦フリップ（rotateX）',
-    // ショーケースのコピー対象ラベル（トースト用）
     labelFlipCard: 'フリップカード',
     labelCube: '3Dキューブ',
     labelCarousel: 'メリーゴーランド',
@@ -44,7 +36,6 @@ const dict = {
     labelMarquee: 'ロゴマーキー',
     labelCover: 'カバーフロー',
     labelCode: 'コード',
-    // ショーケースのライブラベル（デモ下の説明）
     cubeLabel: (s) => '自動回転キューブ（' + s + 's）',
     carouselLabel: (s) => '回転カルーセル（' + s + 's）',
     fadeLabel: (s) => '自動フェード切替（' + s + 's周期）',
@@ -52,12 +43,10 @@ const dict = {
     snapLabel: 'ドットで1枚ずつ切替',
     marqueeLabel: (s) => '無限ティッカー（' + s + 's）',
     coverLabel: 'ドットで切替えるカバーフロー',
-    // ホバーエフェクトのグループ
     groupButton: 'ボタン',
     groupCard: 'カード',
     groupImage: '画像',
     groupLink: 'リンク',
-    // ホバーエフェクトの個別ラベル（effect.key で引く）
     hvLabels: {
       grow: '拡大',
       btnlift: '浮き上がり＋影',
@@ -76,7 +65,6 @@ const dict = {
       linkcolor: '色変化',
       linkslide: '文字スライド＋矢印',
     },
-    // ホバーデモ内の可視テキスト（コピーコードにも入る）
     hvButton: 'ボタン',
     hvCard: 'カード',
     hvLink: 'リンクテキスト',

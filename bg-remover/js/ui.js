@@ -1,4 +1,3 @@
-// 結果リスト・サマリーのDOM描画
 
 import { t } from './i18n.js?v=20260614'
 
@@ -34,7 +33,6 @@ function buildResultItem(result, onDownload) {
   if (result.status === 'done') {
     const meta = document.createElement('div')
     meta.className = 'result-meta'
-    // 透過PNGは元のJPGよりサイズが増えることが多いため、削減率ではなくサイズと寸法のみ示す
     meta.textContent =
       `${formatBytes(result.origSize)} → ${formatBytes(result.newSize)}` +
       `（${result.outW}×${result.outH}）`

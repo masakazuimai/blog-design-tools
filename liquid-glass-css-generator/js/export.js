@@ -1,4 +1,3 @@
-// コピペ用スニペット生成: { html, css } を返す
 import { buildDisplacementMap, buildFilterSvg, buildGlassCss } from "./glass.js?v=20260619b";
 
 const FILTER_ID = "liquid-glass-filter";

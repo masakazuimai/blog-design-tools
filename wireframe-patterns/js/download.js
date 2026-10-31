@@ -1,4 +1,3 @@
-// ファイルのダウンロード（アンカーをDOMに追加・revokeを遅らせる・blob未生成のガード）
 export const downloadBlob = (blob, filename) => {
   if (!blob) throw new Error("ファイルを作れませんでした");
   const url = URL.createObjectURL(blob);
@@ -17,7 +16,6 @@ export const downloadBlob = (blob, filename) => {
 export const downloadText = (text, filename, type) =>
   downloadBlob(new Blob([text], { type: `${type};charset=utf-8` }), filename);
 
-// SVG文字列をPNGに変換して保存する（等倍の2倍で書き出し）
 export const downloadSvgAsPng = (svgText, width, height, filename) => new Promise((resolve, reject) => {
   const img = new Image();
   const url = URL.createObjectURL(new Blob([svgText], { type: "image/svg+xml;charset=utf-8" }));

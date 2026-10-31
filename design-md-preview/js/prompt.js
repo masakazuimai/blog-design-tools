@@ -1,4 +1,3 @@
-/* AIコーディングエージェントへ渡すプロンプトの生成 */
 const REPO = 'https://github.com/google-labs-code/design.md';
 const RAW  = 'https://raw.githubusercontent.com/google-labs-code/design.md/main';
 

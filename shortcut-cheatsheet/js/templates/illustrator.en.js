@@ -1,4 +1,3 @@
-// Illustrator templates (English). Labels must match illustrator.en.js exactly.
 
 export const TEMPLATES = [
   {

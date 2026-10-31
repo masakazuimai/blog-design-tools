@@ -1,6 +1,3 @@
-/* CSSセレクタ辞典 メイン処理
-   デモは iframe（srcdoc）に隔離してある。ライブCSS（* や a:hover など）は
-   iframe の中だけで完結するので、ツール本体のUIは絶対に壊れない。 */
 import { CATEGORIES, SELECTORS, DEMO_HTML } from "./selectors.js?v=20260731l";
 
 const $ = (id) => document.getElementById(id);
@@ -20,8 +17,6 @@ const els = {
   toast: $("toast"),
 };
 
-/* 疑似要素・状態系の疑似クラスは querySelectorAll で対象を数えられないため、
-   ハイライト用のクエリからは取り除いて「どの要素が対象か」だけを示す */
 const PSEUDO_ELEMENT = /::(before|after|first-letter|first-line|marker|placeholder|selection)/g;
 const STATE_PSEUDO = /:(link|visited|hover|active|focus-visible|focus-within|focus)\b/g;
 
@@ -30,17 +25,11 @@ const toHighlightQuery = (selector) => selector.replace(PSEUDO_ELEMENT, "").repl
 let currentCat = "all";
 let currentSel = null;
 let frameReady = false;
-// 初回表示の適用ではデモをスクロールさせない（開いた瞬間は先頭から見せる）
 let initialApplyDone = false;
 
-/* ========== iframe（デモ） ========== */
 
 const frameDoc = () => els.frame.contentDocument;
 
-/**
- * デモ内の最初のヒット要素が見えるところまで、iframe の中だけをスクロールする。
- * scrollIntoView は親ページまで巻き込んで動かすので使わない。
- */
 function scrollToFirstHit(doc, el) {
   if (!el || el === doc.documentElement || el === doc.body) return;
   const scroller = doc.scrollingElement || doc.documentElement;
@@ -49,7 +38,6 @@ function scrollToFirstHit(doc, el) {
   scroller.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
 }
 
-/** ヘッダーの実測高さをCSS変数に渡す（レイアウト高 = 画面高 - ヘッダー） */
 function syncHeaderHeight() {
   const header = document.querySelector(".header");
   if (!header) return;
@@ -65,7 +53,6 @@ function initFrame() {
       hl.textContent = ".__hit { outline: 2px solid #f59e0b; outline-offset: 1px; }";
     }
     frameReady = true;
-    // 読み込み完了前に選ばれていた場合はここで適用し直す
     if (currentSel) {
       const hits = applyToFrame(currentSel.sel, currentSel.css);
       els.hit.textContent = hits === null ? "—" : String(hits);
@@ -74,7 +61,6 @@ function initFrame() {
   els.frame.srcdoc = DEMO_HTML;
 }
 
-/** デモ側のハイライトとライブCSSを消す */
 function clearFrame() {
   const doc = frameDoc();
   if (!doc) return;
@@ -83,22 +69,17 @@ function clearFrame() {
   if (live) live.textContent = "";
 }
 
-/**
- * セレクタをデモに適用する
- * @returns {number|null} ヒット数。セレクタが無効なら null
- */
 function applyToFrame(selector, css) {
   const doc = frameDoc();
   if (!doc || !frameReady) return null;
 
   const query = toHighlightQuery(selector);
   try {
-    doc.querySelector(query); // 書き方が正しいかの検査だけ先に行う
+    doc.querySelector(query);
   } catch {
-    return null; // 無効なセレクタ。ハイライトは触らず呼び出し側で通知する
+    return null;
   }
 
-  // ハイライト用クラスが検索結果に影響しないよう、消してから数える
   clearFrame();
   const nodes = Array.from(doc.querySelectorAll(query));
   nodes.forEach((el) => el.classList.add("__hit"));
@@ -109,7 +90,6 @@ function applyToFrame(selector, css) {
   return nodes.length;
 }
 
-/* ========== 一覧（絞り込み・検索） ========== */
 
 function renderFilters() {
   els.filters.innerHTML = "";
@@ -159,7 +139,6 @@ function renderList() {
   }
 }
 
-/* ========== 詳細パネル ========== */
 
 function select(item) {
   currentSel = item;
@@ -187,7 +166,6 @@ function resetDetail() {
   renderList();
 }
 
-/* ========== コピー・トースト ========== */
 
 let toastTimer = null;
 function showToast(message) {
@@ -204,7 +182,6 @@ async function copyCss() {
     await navigator.clipboard.writeText(text);
     showToast("CSSをコピーしました");
   } catch {
-    // clipboard API が使えない環境（古いブラウザ・非セキュアコンテキスト）向けの退避策
     const ta = document.createElement("textarea");
     ta.value = text;
     ta.setAttribute("readonly", "");
@@ -218,7 +195,6 @@ async function copyCss() {
   }
 }
 
-/* ========== 起動 ========== */
 
 function init() {
   syncHeaderHeight();
@@ -230,8 +206,6 @@ function init() {
   els.search.addEventListener("input", renderList);
   els.copy.addEventListener("click", copyCss);
 
-  // 初期表示は #header を選んだ状態にする。
-  // ヒットが1件だけで「どこに当たったか」が一目で分かるため（p だと14件光って伝わりにくい）
   select(SELECTORS.find((s) => s.sel === "#header") || SELECTORS[0]);
 }
 

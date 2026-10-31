@@ -1,5 +1,3 @@
-/* ページ遷移アニメーション ギャラリー 共通スタイル */
-/* ページUIのスタイルのみを置く。エフェクト本体のCSSは js/effects/ の定義から動的に注入する */
 
 * {
   margin: 0;
@@ -15,7 +13,6 @@ body {
   line-height: 1.7;
 }
 
-/* ============ ヘッダー ============ */
 .header {
   position: relative;
   background: linear-gradient(135deg, #1e293b 0%, #3730a3 100%);
@@ -36,7 +33,6 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
-/* 言語切替リンク（ja ↔ en。ヘッダー右上） */
 .lang-switch {
   position: absolute;
   top: 16px;
@@ -53,7 +49,6 @@ body {
   background: rgba(147, 197, 253, 0.15);
 }
 
-/* ============ レイアウト ============ */
 .container {
   max-width: 1280px;
   margin: 0 auto;
@@ -76,7 +71,6 @@ body {
   padding-right: 2px;
 }
 
-/* ============ サイドバー カード ============ */
 .input-card {
   background: #fff;
   border: 1px solid #e2e8f0;
@@ -129,7 +123,6 @@ html[lang="en"] .code-box code:empty::before {
   cursor: default;
 }
 
-/* 色設定 */
 .field {
   margin-bottom: 12px;
 }
@@ -186,7 +179,6 @@ html[lang="en"] .code-box code:empty::before {
   text-align: center;
 }
 
-/* ============ フィルタ ============ */
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -214,7 +206,6 @@ html[lang="en"] .code-box code:empty::before {
   color: #fff;
 }
 
-/* ============ グリッド ============ */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -238,9 +229,6 @@ html[lang="en"] .code-box code:empty::before {
   overflow: hidden;
 }
 
-/* ============ デモ枠（ミニサイト） ============ */
-/* transform を持つ要素は子孫の position: fixed の基準になる。
-   これでコピーコードを実サイト用（fixed）のままにしてもカード内に収まる */
 .viewport {
   position: relative;
   width: 100%;
@@ -295,7 +283,6 @@ html[lang="en"] .code-box code:empty::before {
   width: 55%;
 }
 
-/* ============ カードの情報欄 ============ */
 .card-info {
   padding: 10px 14px 14px;
   border-top: 1px solid #f1f5f9;
@@ -361,7 +348,6 @@ html[lang="en"] .code-box code:empty::before {
   color: #fff;
 }
 
-/* ============ トースト ============ */
 .toast {
   position: fixed;
   left: 50%;
@@ -382,7 +368,6 @@ html[lang="en"] .code-box code:empty::before {
   transform: translateX(-50%) translateY(0);
 }
 
-/* ============ howto（使い方・FAQページ） ============ */
 .howto-body {
   max-width: 860px;
   margin: 0 auto;
@@ -432,7 +417,6 @@ html[lang="en"] .code-box code:empty::before {
   text-decoration: underline;
 }
 
-/* ============ フッター（左寄せ＝右下広告との被り回避） ============ */
 footer {
   display: flex;
   justify-content: flex-start;
@@ -469,7 +453,6 @@ footer a:hover {
   color: #1e3a8a;
 }
 
-/* ============ 広告（右下フローティングカード320×100・薄型透明枠＋×閉じ） ============ */
 .footer-ad {
   position: fixed;
   right: 0;
@@ -531,7 +514,6 @@ footer a:hover {
   height: 100px;
 }
 
-/* ============ レスポンシブ ============ */
 @media (max-width: 900px) {
   .layout {
     grid-template-columns: minmax(0, 1fr);

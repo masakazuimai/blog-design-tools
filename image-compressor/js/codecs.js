@@ -1,6 +1,3 @@
-// 画像のデコード・描画・エンコード処理
-// JPG/WebPはjSquash（WASM）優先、読み込み失敗時はCanvasにフォールバック
-// PNGはUPNG.jsの減色圧縮を使用
 
 import { t } from './i18n.js?v=20260614'
 
@@ -25,7 +22,6 @@ export function detectFormat(mimeType) {
   if (mimeType === 'image/jpeg') return 'jpeg'
   if (mimeType === 'image/webp') return 'webp'
   if (mimeType === 'image/avif') return 'avif'
-  // PNG以外の未対応形式（GIF等）はPNGとして出力する
   return 'png'
 }
 
@@ -39,7 +35,6 @@ export async function decodeToBitmap(file) {
   }
 }
 
-// SVGはcreateImageBitmap非対応のため、Image経由でCanvasにラスタライズする
 async function decodeSvg(file) {
   const text = await file.text()
   const { w, h, explicit } = svgIntrinsicSize(text)
@@ -47,7 +42,6 @@ async function decodeSvg(file) {
   try {
     const img = await loadImage(url)
     const canvas = document.createElement('canvas')
-    // サイズ属性のないSVGはブラウザ既定値（300×150等）になるため、viewBox基準の計算値を優先する
     canvas.width = explicit ? img.naturalWidth || w : w
     canvas.height = explicit ? img.naturalHeight || h : h
     const ctx = canvas.getContext('2d')
@@ -58,7 +52,6 @@ async function decodeSvg(file) {
   }
 }
 
-// width/height属性 → viewBox（長辺1024pxに拡大） → 既定1024px の順でサイズを決める
 function svgIntrinsicSize(text) {
   const width = text.match(/<svg[^>]*\swidth="(\d+(?:\.\d+)?)(?:px)?"/i)
   const height = text.match(/<svg[^>]*\sheight="(\d+(?:\.\d+)?)(?:px)?"/i)
@@ -88,14 +81,12 @@ function loadImage(url) {
   })
 }
 
-// リサイズ計画に沿ってCanvasへ描画し、ImageDataを返す
 export function renderImageData(bitmap, plan, format) {
   const canvas = document.createElement('canvas')
   canvas.width = plan.outW
   canvas.height = plan.outH
   const ctx = canvas.getContext('2d')
 
-  // JPGは透過を持てないため白で下塗りする（円形マスク時は最後に白合成する）
   const bg = plan.bg ?? (format === 'jpeg' && !plan.circle ? '#ffffff' : null)
   if (bg) {
     ctx.fillStyle = bg
@@ -108,14 +99,12 @@ export function renderImageData(bitmap, plan, format) {
   ctx.drawImage(bitmap, d.sx, d.sy, d.sw, d.sh, d.dx, d.dy, d.dw, d.dh)
 
   if (plan.circle) {
-    // 出力枠に内接する楕円（正方形なら正円）の外側を透過にする
     ctx.globalCompositeOperation = 'destination-in'
     ctx.beginPath()
     ctx.ellipse(plan.outW / 2, plan.outH / 2, plan.outW / 2, plan.outH / 2, 0, 0, Math.PI * 2)
     ctx.fill()
     ctx.globalCompositeOperation = 'source-over'
 
-    // JPGはアルファを持てないため白背景に合成し直す
     if (format === 'jpeg') {
       const flat = document.createElement('canvas')
       flat.width = plan.outW
@@ -134,7 +123,6 @@ export function renderImageData(bitmap, plan, format) {
 export async function encodeImage(format, imageData, quality) {
   if (format === 'jpeg') return encodeWithWasm('jpeg', 'image/jpeg', imageData, quality)
   if (format === 'webp') return encodeWithWasm('webp', 'image/webp', imageData, quality)
-  // AVIFはエンコードが重いため、品質への影響が小さい範囲で速度優先にする
   if (format === 'avif') return encodeWithWasm('avif', 'image/avif', imageData, quality, { speed: 7 })
   if (format === 'png') return encodePng(imageData, quality)
   if (format === 'svg') return encodeSvg(imageData, quality)
@@ -143,7 +131,6 @@ export async function encodeImage(format, imageData, quality) {
 
 function encodeSvg(imageData, quality) {
   try {
-    // 品質を色数に変換してベクタライズ（ロゴ・イラスト向き）
     const numberofcolors = quality >= 80 ? 16 : quality >= 60 ? 8 : quality >= 40 ? 6 : 4
     const svg = window.ImageTracer.imagedataToSVG(imageData, {
       numberofcolors,
@@ -163,7 +150,6 @@ async function encodeWithWasm(kind, mimeType, imageData, quality, extraOptions =
     const buffer = await encode(imageData, { quality, ...extraOptions })
     return new Blob([buffer], { type: mimeType })
   } catch (error) {
-    // AVIFはCanvasのtoBlobが非対応（PNGに化ける）ためフォールバックせずエラーにする
     if (kind === 'avif') {
       console.error('AVIFのWASMエンコードに失敗:', error)
       throw new Error(t.avifFailed)
@@ -175,7 +161,6 @@ async function encodeWithWasm(kind, mimeType, imageData, quality, extraOptions =
 
 function encodePng(imageData, quality) {
   try {
-    // 品質を色数に変換して減色圧縮（90以上はロスレス）
     const cnum = quality >= 90 ? 0 : quality >= 70 ? 256 : quality >= 40 ? 128 : 64
     const buffer = window.UPNG.encode(
       [imageData.data.buffer],

@@ -2,11 +2,11 @@
   --light-color: #444;
   --dark-color: #000;
   --icon-color: #65615f;
-  --w: 36rem;        /* プレビューボタン幅 */
-  --h: 11rem;        /* プレビューボタン高さ */
-  --radius: 3.2rem;  /* 角丸 */
-  --rim: 0.8rem;     /* リム（ベゼル）太さ＝金属面の幅 */
-  --circle: 16rem;   /* 丸形の直径 */
+  --w: 36rem;
+  --h: 11rem;
+  --radius: 3.2rem;
+  --rim: 0.8rem;
+  --circle: 16rem;
 }
 
 *, *::before, *::after {
@@ -26,7 +26,6 @@ body {
   font-family: sans-serif;
 }
 
-/* 見出し（コンテンツ幅・中央寄せ） */
 .lm-head {
   width: 100%;
   max-width: 112rem;
@@ -34,7 +33,6 @@ body {
   text-align: center;
 }
 
-/* h1と言語ボタンを同じ行に：空き｜h1中央｜ボタン右（サイドバー右端と一致） */
 .lm-head-top {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -51,7 +49,6 @@ body {
   justify-self: end;
 }
 
-/* 言語切り替え（h1と同じ行・コンテンツ右端） */
 .lang-switch {
   margin: 0;
 }
@@ -91,7 +88,6 @@ body {
   margin: 1.2rem auto 0;
 }
 
-/* アプリ本体：左＝プレビュー＋コード / 右＝サイドバー */
 .lm-app {
   width: 100%;
   max-width: 112rem;
@@ -109,7 +105,6 @@ body {
   min-width: 0;
 }
 
-/* 大きなプレビュー1つ */
 .preview {
   position: relative;
   display: flex;
@@ -122,13 +117,11 @@ body {
   border-radius: 1.6rem;
 }
 
-/* プレビュー背景：ライト切替（#F5F5F5） */
 .preview[data-bg="light"] {
   background: #f5f5f5;
   border-color: #e2e2e2;
 }
 
-/* プレビュー背景トグル（右上） */
 .bg-toggle {
   position: absolute;
   top: 1.2rem;
@@ -197,7 +190,6 @@ body {
   line-height: 1.6;
 }
 
-/* テンプレート（プリセット）ボタン群 */
 .tpl-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -244,7 +236,6 @@ body {
   line-height: 1.1;
 }
 
-/* rep / angle / speed スライダー */
 .ctrl {
   display: flex;
   flex-direction: column;
@@ -302,7 +293,6 @@ body {
   cursor: pointer;
 }
 
-/* 色相スライダーはトラックを虹色に（色変更のUIヒント） */
 .sld-hue {
   background: linear-gradient(
     to right,
@@ -311,7 +301,6 @@ body {
   );
 }
 
-/* メタルボタン本体（全面描画のシェーダーcanvasを角丸でクリップ） */
 .lm {
   position: relative;
   width: var(--w);
@@ -322,7 +311,6 @@ body {
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
-/* シェーダー描画canvas（中央の暗い面より下＝縁のリムだけ見せる） */
 .lm canvas {
   position: absolute;
   inset: 0;
@@ -331,7 +319,6 @@ body {
   display: block;
 }
 
-/* 丸形（円） */
 .lm[data-shape="circle"] {
   width: var(--circle);
   height: var(--circle);
@@ -354,7 +341,6 @@ body {
   text-indent: 0.08em;
 }
 
-/* 形セレクタ（長方形 / 丸） */
 .shape-row {
   display: flex;
   gap: 0.6rem;
@@ -384,13 +370,11 @@ body {
   font-weight: 700;
 }
 
-/* クリック時：少し沈み込む */
 .lm:active {
   transform: translateY(0.2rem) scale(0.98);
   box-shadow: 0 0.3rem 0.8rem rgba(0, 0, 0, 0.5);
 }
 
-/* 中央を覆う暗い面。メタルを“縁のリム”だけ見せる */
 .lm::before {
   content: "";
   position: absolute;
@@ -415,7 +399,6 @@ body {
   z-index: 2;
 }
 
-/* 極細のカラーアウトライン */
 .outline::before {
   content: "";
   position: absolute;
@@ -438,7 +421,6 @@ body {
   color: var(--icon-color);
 }
 
-/* ライトテーマ：ボタン面を明るく・テキストを濃く反転 */
 .lm[data-theme="light"] {
   --light-color: #fcfcfc;
   --dark-color: #d2d2d2;
@@ -452,7 +434,6 @@ body {
   color: #333333;
 }
 
-/* 生成コードパネル（プレビューの下・メイン列いっぱい） */
 .code-panel {
   width: 100%;
   background: #141414;
@@ -551,7 +532,6 @@ body {
   tab-size: 2;
 }
 
-/* 広告（PCは右下フローティングカード320×100・薄型透明枠＋×閉じ／SPはfooter内320×100） */
 .footer-ad {
   position: fixed;
   right: 0;
@@ -562,7 +542,7 @@ body {
   align-items: center;
   gap: 2px;
   padding: 0;
-  width: 320px; /* 明示幅でAdSenseレスポンシブの横伸びを防ぎ、×を右端に固定 */
+  width: 320px;
   overflow: hidden;
   background: transparent;
   border: none;
@@ -646,7 +626,6 @@ body {
   margin-left: 1.6rem;
 }
 
-/* 狭い画面：h1と言語ボタンを同じ行に保てないので縦積み（ボタンを上・右寄せ） */
 @media (max-width: 860px) {
   .lm-head-top {
     grid-template-columns: 1fr;
@@ -662,7 +641,6 @@ body {
   }
 }
 
-/* タブレット以下：1カラムに積む（プレビュー → テンプレート＋設定 → 生成コードの順） */
 @media (max-width: 880px) {
   .lm-app {
     display: flex;
@@ -670,11 +648,9 @@ body {
     align-items: stretch;
     gap: 2rem;
   }
-  /* .lm-mainを透過させ、子（プレビュー/コード）を.lm-app直下のflex子にしてorderで並べ替え */
   .lm-main {
     display: contents;
   }
-  /* プレビューは画面上部に達したら固定（スクロール中も表示を保つ） */
   .preview {
     order: 1;
     position: sticky;
@@ -690,7 +666,6 @@ body {
   }
 }
 
-/* スマホ：ボタン・余白を引き締め */
 @media (max-width: 480px) {
   :root {
     --w: min(34rem, 82vw);

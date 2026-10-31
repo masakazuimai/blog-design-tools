@@ -1,4 +1,3 @@
-// CTA（行動を促す帯）のパターン
 export default [
   {
     id: "ct01",

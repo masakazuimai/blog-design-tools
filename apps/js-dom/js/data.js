@@ -1,5 +1,3 @@
-// 問題データ（Q1-10は記事版 id1334 と同期・Q11-20はアプリ限定ドリル）
-// stageHtml: プレビューiframeに描画するHTML。answerはiframe内で実行される
 const PROBLEMS = [
   {"id":1,"title":"テキストの変更","questionHtml":"ボタンをクリックすると、<code>#text1</code> のテキストを「こんにちはJavaScript！」に変更してください。","stageHtml":"<p id=\"text1\">こんにちは！</p>\n<button id=\"btn1\">テキスト変更</button>","answer":"document.getElementById('btn1').addEventListener('click', () => {\n  document.getElementById('text1').textContent = 'こんにちはJavaScript！';\n});"},
   {"id":2,"title":"要素の非表示","questionHtml":"ボタンをクリックすると、ボックス <code>#box2</code> を非表示にしてください（<code>style.display</code> を操作します）。","stageHtml":"<div id=\"box2\" style=\"background: #eee; padding: 1rem;\">このボックスを非表示</div>\n<button id=\"btn2\">非表示にする</button>","answer":"document.getElementById('btn2').addEventListener('click', () => {\n  document.getElementById('box2').style.display = 'none';\n});"},

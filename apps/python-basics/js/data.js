@@ -1,4 +1,3 @@
-// 問題データ（Q1-6は記事版 id6349 と同期・Q7-20はアプリ限定ドリル）
 const PROBLEMS = [
   {"id":1,"title":"変数と出力","questionHtml":"変数 <code>message</code> に “Hello, Python!” を代入し、<code>print()</code> で表示してください。","answer":"message = \"Hello, Python!\"\nprint(message)"},
   {"id":2,"title":"四則演算","questionHtml":"変数 <code>a</code> に 10、<code>b</code> に 3 を代入し、足し算・引き算・掛け算・割り算の結果をすべて表示してください。","answer":"a = 10\nb = 3\nprint(a + b, a - b, a * b, a / b)"},

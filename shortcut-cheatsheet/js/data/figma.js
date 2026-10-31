@@ -1,6 +1,3 @@
-// Figma ショートカットキー データ（Figma 標準ショートカット準拠）
-// keys: トークン配列。'mod'=⌘/Ctrl, 'alt'=⌥/Alt, 'shift'=⇧/Shift、それ以外はそのまま表示。
-// 単キー（ツール等）は Mac/Win 共通。
 
 export const CATEGORIES = [
   {

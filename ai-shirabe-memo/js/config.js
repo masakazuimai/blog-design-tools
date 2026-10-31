@@ -1,4 +1,3 @@
-// アプリ全体の設定値（プロバイダ定義・付箋の色・既定値・ストレージキー）を集約する。
 
 export const STORAGE_KEYS = {
   board: "ai-sticky-board:notes",
@@ -6,7 +5,6 @@ export const STORAGE_KEYS = {
   keys: "ai-sticky-board:apikeys",
 }
 
-// 無料で使えるAIプロバイダ。Puterはキー不要、Gemini/Groqはユーザー自身の無料キー（BYOK）。
 export const PROVIDERS = {
   puter: {
     label: "Puter（キー不要）",

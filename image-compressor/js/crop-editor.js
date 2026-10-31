@@ -1,7 +1,3 @@
-// トリミング位置調整モーダル
-// - template用: 固定枠の中で画像をドラッグ（カバー切り抜き）
-// - 切り抜き用: 元画像全体を表示し、切り抜き枠をドラッグで移動・右下ハンドルで伸縮
-//   Shift押下中は1:1固定。「円形で切り抜く」トグルで枠に内接する楕円マスク（Shift併用で正円）
 
 import { t } from './i18n.js?v=20260614'
 
@@ -19,21 +15,17 @@ const dom = {
   close: document.getElementById('crop-close'),
 }
 
-// region-drag時は追加で { circle, scale, dispW, dispH, regionW, regionH, defaultW, defaultH } を持つ
 let session = null
 let dragStart = null
 let resizeStart = null
-let marquee = null // 画像上ドラッグでの範囲描画 { x0, y0, prev }
+let marquee = null
 
 const MIN_REGION_PX = 24
 
-// テンプレート用: 枠の中で画像をドラッグして切り抜き位置を決める
 export function openCropEditor({ url, template, focus, onApply }) {
   loadImage(url, (img) => setupImageDrag(img, url, template, focus, onApply))
 }
 
-// 切り抜き用: 元画像のプレビュー上で切り抜き枠をドラッグする
-// cropW/cropHは幅・高さ入力の現在値（枠の初期サイズ）、circleは正円トグルの現在値
 export function openRegionEditor({ url, cropW, cropH, circle, focus, onApply }) {
   loadImage(url, (img) => setupRegionDrag(img, url, { cropW, cropH, circle, focus, onApply }))
 }
@@ -49,7 +41,6 @@ function setupImageDrag(img, url, template, focus, onApply) {
   const imgW = img.naturalWidth || 1
   const imgH = img.naturalHeight || 1
 
-  // フレームはテンプレートの縦横比を保ったまま最大440×360px（小画面では画面幅）に収める
   const maxFrameW = Math.min(440, window.innerWidth - 72)
   const frameScale = Math.min(maxFrameW / template.w, 360 / template.h)
   const frameW = Math.round(template.w * frameScale)
@@ -57,7 +48,6 @@ function setupImageDrag(img, url, template, focus, onApply) {
   dom.frame.style.width = `${frameW}px`
   dom.frame.style.height = `${frameH}px`
 
-  // カバー配置（フレームを埋める倍率）ではみ出した分がドラッグ可能量になる
   const cover = Math.max(frameW / imgW, frameH / imgH)
   const dispW = imgW * cover
   const dispH = imgH * cover
@@ -84,11 +74,9 @@ function setupImageDrag(img, url, template, focus, onApply) {
 function setupRegionDrag(img, url, { cropW, cropH, circle, focus, onApply }) {
   const imgW = img.naturalWidth || 1
   const imgH = img.naturalHeight || 1
-  // 未入力・画像超えの指定は画像サイズまでに丸める（円形も枠は自由比率＝楕円可）
   const effW = Math.min(cropW > 0 ? cropW : imgW, imgW)
   const effH = Math.min(cropH > 0 ? cropH : imgH, imgH)
 
-  // 元画像全体を最大440×360px（小画面では画面幅）に収めて表示する
   const maxFrameW = Math.min(440, window.innerWidth - 72)
   const scale = Math.min(maxFrameW / imgW, 360 / imgH)
   const dispW = Math.round(imgW * scale)
@@ -168,7 +156,6 @@ function closeModal() {
   marquee = null
 }
 
-// ドラッグの向き: 画像ドラッグは画像の移動＝focusの逆方向、枠ドラッグはfocusと同方向
 function handleDragMove(event, direction) {
   const o = overflows()
   const dx = ((event.clientX - dragStart.x) / (o.x || 1)) * direction
@@ -197,7 +184,6 @@ function bindDragHandlers(el, direction, activeMode) {
 
 bindDragHandlers(dom.image, -1, 'image-drag')
 
-// デザインツール風マーキー選択: クリック位置を起点にドラッグで範囲を描く（region-drag時）
 function framePoint(event) {
   const rect = dom.frame.getBoundingClientRect()
   return {
@@ -222,7 +208,6 @@ function moveMarquee(event) {
   let w = Math.abs(p.x - marquee.x0)
   let h = Math.abs(p.y - marquee.y0)
   if (event.shiftKey) {
-    // 起点からドラッグした方向に収まる範囲で正方形にする
     const maxX = p.x >= marquee.x0 ? session.dispW - marquee.x0 : marquee.x0
     const maxY = p.y >= marquee.y0 ? session.dispH - marquee.y0 : marquee.y0
     const side = Math.min(Math.max(w, h), maxX, maxY)
@@ -235,7 +220,6 @@ function moveMarquee(event) {
 }
 
 function endMarquee() {
-  // ドラッグせずクリックしただけのときは元の枠を維持する
   if (session && (session.regionW < 8 || session.regionH < 8)) {
     const { w, h, focus } = marquee.prev
     session = { ...session, regionW: w, regionH: h, focus }
@@ -260,7 +244,6 @@ dom.image.addEventListener('pointerup', () => {
   if (marquee && marquee.captureEl === dom.image) endMarquee()
 })
 
-// 切り抜き枠: 動かせる余地があればドラッグで移動、画像全体を覆っているときはマーキー開始
 dom.region.addEventListener('pointerdown', (event) => {
   if (!session || session.mode !== 'region-drag') return
   event.preventDefault()
@@ -291,7 +274,6 @@ dom.region.addEventListener('pointerup', () => {
   dragStart = null
 })
 
-// 枠のサイズ・位置を左上固定で更新し、focusを再計算する共通処理
 function resizeRegionTo(w, h, left, top) {
   const ox = Math.max(0, session.dispW - w)
   const oy = Math.max(0, session.dispH - h)
@@ -308,7 +290,6 @@ function resizeRegionTo(w, h, left, top) {
   applyPosition()
 }
 
-// サイズ変更ハンドル（左上を固定したまま枠を伸縮。Shift押下中は1:1固定）
 dom.regionHandle.addEventListener('pointerdown', (event) => {
   if (!session || session.mode !== 'region-drag') return
   event.preventDefault()
@@ -349,7 +330,6 @@ dom.regionHandle.addEventListener('pointerup', () => {
   resizeStart = null
 })
 
-// 円形トグル: 枠に内接する楕円表示に切り替える（枠サイズはそのまま）
 dom.circleToggle.addEventListener('change', () => {
   if (!session || session.mode !== 'region-drag') return
   const circle = dom.circleToggle.checked
@@ -370,7 +350,6 @@ dom.reset.addEventListener('click', () => {
 dom.apply.addEventListener('click', () => {
   if (!session) return
   if (session.mode === 'region-drag') {
-    // 選択範囲（元画像px換算）と正円状態を返し、幅・高さ入力へ反映してもらう
     const area = {
       w: Math.max(1, Math.round(session.regionW / session.scale)),
       h: Math.max(1, Math.round(session.regionH / session.scale)),

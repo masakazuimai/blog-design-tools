@@ -1,7 +1,3 @@
-// 定番のアイコン変形（10種）
-// 各エフェクトは self-contained（HTML + CSS + 開閉用の3行JS）でそのままコピペできる
-// アクセント色 #6366f1 / サブ色 #ec4899（rgbは 99,102,241 / 236,72,153）は main.js が置換する
-// 開閉状態は button の aria-expanded="true" で表現する（CSSのクラス切替は使わない）
 
 const BARS = "<span></span><span></span><span></span>";
 

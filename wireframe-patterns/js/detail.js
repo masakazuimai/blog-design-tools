@@ -1,4 +1,3 @@
-// パターン詳細（モーダル）
 import { getPattern, categoryName } from "./patterns/index.js?v=20261006h";
 import { createPreview } from "./preview.js?v=20261006h";
 import { buildCss } from "./code.js?v=20261006h";
@@ -35,7 +34,6 @@ export const initDetail = () => {
 
   bindSeg($("detail-device"), (w) => preview.setWidth(w));
   $("detail-close").addEventListener("click", () => dialog.close());
-  // 背景（::backdrop）のクリックで閉じる
   dialog.addEventListener("click", (e) => {
     if (e.target === dialog) dialog.close();
   });
@@ -69,7 +67,6 @@ export const initDetail = () => {
     showCode();
     dialog.showModal();
     track("open", { pattern_id: current.id });
-    // 表示後に枠幅が決まるので、開いてから描画する
     preview.setPatterns([current]);
   };
 };

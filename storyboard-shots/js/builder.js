@@ -1,4 +1,3 @@
-// 絵コンテ（ショットの並び）の状態。配列は毎回作り直し、変更のたびに保存して購読者へ通知する
 import { getShot } from "./shots/index.js?v=20261030e";
 
 const KEY = "sbs:board:v1";
@@ -34,7 +33,6 @@ const commit = (next) => {
   try {
     localStorage.setItem(KEY, JSON.stringify(items));
   } catch {
-    // 保存できない環境（プライベートモード等）でも、このタブ内では使えるようにする
   }
   listeners.forEach((fn) => fn(items));
 };
@@ -60,7 +58,6 @@ export const moveItem = (key, delta) => {
   commit(next);
 };
 
-// 別のショットに差し替える。秒数と場面の説明は、利用者が書き換えていなければ新しいショットの既定値にする
 export const swapItem = (key, id) => commit(items.map((it) => {
   if (it.uid !== key) return it;
   const before = getShot(it.id);

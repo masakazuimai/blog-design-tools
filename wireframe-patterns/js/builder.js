@@ -1,4 +1,3 @@
-// ビルダー（ページ構成）の状態。配列は毎回作り直し、変更のたびに保存して購読者へ通知する
 import { getPattern } from "./patterns/index.js?v=20261006h";
 
 const KEY = "wfp:builder:v1";
@@ -20,7 +19,6 @@ const commit = (next) => {
   try {
     localStorage.setItem(KEY, JSON.stringify(items));
   } catch {
-    // 保存できない環境（プライベートモード等）でも、このタブ内では使えるようにする
   }
   listeners.forEach((fn) => fn(items));
 };
@@ -49,5 +47,4 @@ export const moveItem = (key, delta) => {
   commit(next);
 };
 
-// 同じカテゴリの別パターンに差し替える（構成を保ったまま見比べられるように）
 export const swapItem = (key, id) => commit(items.map((item) => (item.uid === key ? { ...item, id } : item)));

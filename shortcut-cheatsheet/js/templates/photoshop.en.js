@@ -1,4 +1,3 @@
-// Photoshop templates (English). Labels must match photoshop.en.js exactly.
 
 export const TEMPLATES = [
   {

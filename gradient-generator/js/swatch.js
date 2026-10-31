@@ -1,10 +1,7 @@
-// 「色の辞書」連携：同リポジトリの color-dictionary の色データを動的importし、
-// ストップの色をパレットから選べるようにする。読み込み失敗時は安全に劣化する。
 import { t, LANG } from "./i18n.js?v=20260629a";
 
 let cache = null;
 
-// color-dictionary の色データを取得（ja / css）。失敗時は null。
 async function loadColors() {
   if (cache) return cache;
   try {
@@ -43,7 +40,6 @@ function renderGrid(colors, q) {
   return frag;
 }
 
-// パレットパネルを container に構築。onPick(hex) で選択を通知。
 export async function buildSwatchPanel(container, onPick) {
   container.innerHTML = `<p class="swatch-group-title">${t.swatchLoading}</p>`;
   const data = await loadColors();

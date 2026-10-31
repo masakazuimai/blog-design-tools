@@ -1,21 +1,14 @@
-/*
- * テンプレート5：キューブ
- * カードを正立方体の6面（前後左右＋天面・底面）として配置し、回す。
- * 各面の法線をrotateY(回転)→rotateX(見下ろし)で回し、正面ほど明るく＋前面化（z-index）する。
- * 構造・CSSは共通（scene>tilt>stage>.c3-card）。tilt=rotateX(見下ろし)／stage=rotateY(回転)。
- */
 const SENS = 0.22;
 const GSAP_VER = "3.13.0";
 const CDN = `https://cdn.jsdelivr.net/npm/gsap@${GSAP_VER}/dist`;
 
-// 6面：自分の向き(transform)と、その面の外向き法線ベクトル(回転前)
 const FACES = [
-  { rot: "rotateY(0deg)", n: [0, 0, 1] }, // 前
-  { rot: "rotateY(90deg)", n: [1, 0, 0] }, // 右
-  { rot: "rotateY(180deg)", n: [0, 0, -1] }, // 後
-  { rot: "rotateY(270deg)", n: [-1, 0, 0] }, // 左
-  { rot: "rotateX(-90deg)", n: [0, 1, 0] }, // 天面
-  { rot: "rotateX(90deg)", n: [0, -1, 0] }, // 底面
+  { rot: "rotateY(0deg)", n: [0, 0, 1] },
+  { rot: "rotateY(90deg)", n: [1, 0, 0] },
+  { rot: "rotateY(180deg)", n: [0, 0, -1] },
+  { rot: "rotateY(270deg)", n: [-1, 0, 0] },
+  { rot: "rotateX(-90deg)", n: [0, 1, 0] },
+  { rot: "rotateX(90deg)", n: [0, -1, 0] },
 ];
 
 const fields = [
@@ -67,10 +60,8 @@ function mount(host, state, autoOn) {
     const tr = (s.tilt * Math.PI) / 180;
     for (let i = 0; i < cards.length; i++) {
       const n = FACES[i].n;
-      // rotateY(rotation)
       const x = n[0] * Math.cos(rr) + n[2] * Math.sin(rr);
       const z1 = -n[0] * Math.sin(rr) + n[2] * Math.cos(rr);
-      // rotateX(tilt)
       const z = n[1] * Math.sin(tr) + z1 * Math.cos(tr);
       cards[i].style.filter = `brightness(${(0.38 + 0.62 * (z * 0.5 + 0.5)).toFixed(3)})`;
       cards[i].style.zIndex = String(Math.round(z * 100));
@@ -126,7 +117,6 @@ function mount(host, state, autoOn) {
   };
 }
 
-// --- コード生成 ---------------------------------------------------------
 function cardsHTML() {
   let out = "";
   for (let i = 0; i < FACES.length; i++) {

@@ -1,4 +1,3 @@
-// ヘッダーのパターン
 const BURGER = `<button class="wf-burger" type="button" aria-label="メニュー"><span></span><span></span><span></span></button>`;
 
 export default [

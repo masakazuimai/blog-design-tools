@@ -1,13 +1,12 @@
 import { SHAPES } from "./shapes.js?v=20260618h";
 import { t, LANG } from "./i18n.js?v=20260618h";
 
-// ===== 状態 =====
 const state = {
-  type: "polygon", // polygon | circle | ellipse | inset
-  points: regularPolygon(6), // 初期表示は正多角形スライダー既定の6角
+  type: "polygon",
+  points: regularPolygon(6),
   activeShape: null,
-  fillRule: null, // 市松などは "evenodd"
-  stripeVertical: false, // ストライプの向き（本数スライダーが参照）
+  fillRule: null,
+  stripeVertical: false,
   circle: { r: 50, cx: 50, cy: 50 },
   ellipse: { rx: 50, ry: 35, cx: 50, cy: 50 },
   inset: { top: 10, right: 10, bottom: 10, left: 10, round: 0 },
@@ -24,7 +23,6 @@ function clamp(n) {
   return Math.max(0, Math.min(100, n));
 }
 
-// ===== DOM =====
 const wrap = document.getElementById("preview-wrap");
 const clipBox = document.getElementById("clip-box");
 const handles = document.getElementById("handles");
@@ -32,7 +30,6 @@ const output = document.getElementById("output");
 const typeRow = document.getElementById("type-row");
 const shapeGrid = document.getElementById("shape-grid");
 
-// ===== clip-path 値の生成 =====
 function buildValue() {
   if (state.type === "polygon") {
     const pts = state.points.map(([x, y]) => `${round(x)}% ${round(y)}%`).join(", ");
@@ -51,7 +48,6 @@ function buildValue() {
   return i.round > 0 ? `${base} round ${round(i.round)}%)` : `${base})`;
 }
 
-// ===== 反映 =====
 function applyClip() {
   const value = buildValue();
   clipBox.style.clipPath = value;
@@ -71,7 +67,6 @@ function renderOutput(value) {
   output.value = css;
 }
 
-// ===== ハンドル（polygon のみ） =====
 function renderHandles() {
   handles.innerHTML = "";
   if (state.type !== "polygon") return;
@@ -86,7 +81,6 @@ function renderHandles() {
   });
 }
 
-// ドラッグ
 let dragIndex = -1;
 function pointerPercent(e) {
   const rect = wrap.getBoundingClientRect();
@@ -122,7 +116,6 @@ handles.addEventListener("pointerup", (e) => {
   }
   dragIndex = -1;
 });
-// 頂点の削除（ダブルクリック）
 handles.addEventListener("dblclick", (e) => {
   const target = e.target.closest(".handle");
   if (!target) return;
@@ -134,7 +127,6 @@ handles.addEventListener("dblclick", (e) => {
   renderHandles();
   applyClip();
 });
-// 頂点の追加（プレビュー上のダブルクリック）
 wrap.addEventListener("dblclick", (e) => {
   if (state.type !== "polygon") return;
   if (e.target.closest(".handle")) return;
@@ -146,7 +138,6 @@ wrap.addEventListener("dblclick", (e) => {
   renderHandles();
   applyClip();
 });
-// クリック地点に最も近い辺の「後ろ」に挿入する位置を返す
 function nearestEdgeIndex(px, py) {
   const pts = state.points;
   let best = pts.length;
@@ -173,7 +164,6 @@ function segDist(px, py, x1, y1, x2, y2) {
   return Math.hypot(px - cx, py - cy);
 }
 
-// ===== 形状タイプ切替 =====
 typeRow.addEventListener("click", (e) => {
   const btn = e.target.closest(".type-btn");
   if (!btn) return;
@@ -186,7 +176,6 @@ typeRow.addEventListener("click", (e) => {
   applyClip();
 });
 
-// ===== 定番形状（polygon） =====
 SHAPES.forEach((shape) => {
   const btn = document.createElement("button");
   btn.type = "button";
@@ -226,7 +215,6 @@ function syncShapeButtons() {
   updateSliders();
 }
 
-// ===== スライダー（circle / ellipse / inset） =====
 function bindSlider(id, apply) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -252,7 +240,6 @@ bindSlider("inset-bottom", (v) => (state.inset.bottom = v));
 bindSlider("inset-left", (v) => (state.inset.left = v));
 bindSlider("inset-round", (v) => (state.inset.round = v));
 
-// ===== プレビューの縦横比切替 =====
 const aspectBar = document.getElementById("aspect-bar");
 aspectBar.addEventListener("click", (e) => {
   const btn = e.target.closest(".mini-btn");
@@ -261,7 +248,6 @@ aspectBar.addEventListener("click", (e) => {
   [...aspectBar.children].forEach((b) => b.classList.toggle("active", b === btn));
 });
 
-// ===== 正多角形スライダー（3〜12角） =====
 const ngon = document.getElementById("ngon");
 const ngonLabel = document.querySelector('[data-val="ngon"]');
 function regularPolygon(n) {
@@ -284,7 +270,6 @@ ngon.addEventListener("input", () => {
 });
 ngonLabel.textContent = `${ngon.value}${t.ngonSuffix}`;
 
-// ===== バーストのトゲ数スライダー（5〜20） =====
 const spikes = document.getElementById("spikes");
 const spikesLabel = document.querySelector('[data-val="spikes"]');
 function burstPolygon(n, outer = 50, inner = 38) {
@@ -308,9 +293,7 @@ spikes.addEventListener("input", () => {
 });
 spikesLabel.textContent = `${spikes.value}`;
 
-// ===== ストライプ／市松（蛇行パスの裏ワザで点数を可変生成） =====
 function stripePolygon(n, vertical) {
-  // n本のストライプ（等間隔・nonzero）。横は左辺、縦は上辺のブリッジで1本のパスに繋ぐ
   const s = 100 / (2 * n);
   const p = [];
   for (let i = 0; i < n; i++) {
@@ -322,7 +305,6 @@ function stripePolygon(n, vertical) {
   return p;
 }
 function comb(n, vertical) {
-  // 偶数番のバンドだけ塗る櫛状パス（横 or 縦）
   const c = 100 / n;
   const p = [];
   for (let i = 0; i < n; i += 2) {
@@ -334,7 +316,6 @@ function comb(n, vertical) {
   return p;
 }
 function checkerPolygon(n) {
-  // 横櫛＋縦櫛を連結し even-odd で重なりを抜く＝市松
   return comb(n, false).concat(comb(n, true));
 }
 const stripes = document.getElementById("stripes");
@@ -365,7 +346,6 @@ cells.addEventListener("input", () => {
 });
 cellsLabel.textContent = `${cells.value}`;
 
-// ===== スライダーは該当する形のものだけ表示 =====
 const sliderRows = {
   ngon: document.getElementById("ngon-row"),
   spikes: document.getElementById("spikes-row"),
@@ -381,8 +361,6 @@ function updateSliders() {
   });
 }
 
-// ===== 反転 =====
-// circle/ellipse/inset の state 値をスライダーUIへ反映
 function syncSliders() {
   const map = {
     "circle-r": state.circle.r,
@@ -432,13 +410,11 @@ function flip(horizontal) {
 document.getElementById("flip-h").addEventListener("click", () => flip(true));
 document.getElementById("flip-v").addEventListener("click", () => flip(false));
 
-// ===== 出力オプション =====
 document.getElementById("animate").addEventListener("change", (e) => {
   state.animate = e.target.checked;
   applyClip();
 });
 
-// ===== プレビュー操作（背景） =====
 document.getElementById("bg-upload").addEventListener("change", (e) => {
   const file = e.target.files[0];
   if (!file) return;
@@ -450,7 +426,6 @@ document.getElementById("bg-reset").addEventListener("click", () => {
   clipBox.classList.remove("show-image");
 });
 
-// ===== コピー =====
 const copyBtn = document.getElementById("copy-btn");
 copyBtn.addEventListener("click", async () => {
   try {
@@ -469,7 +444,6 @@ copyBtn.addEventListener("click", async () => {
   }, 1600);
 });
 
-// ===== 初期化 =====
 syncShapeButtons();
 renderHandles();
 applyClip();

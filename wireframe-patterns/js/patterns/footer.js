@@ -1,4 +1,3 @@
-// フッターのパターン
 export default [
   {
     id: "ft01",

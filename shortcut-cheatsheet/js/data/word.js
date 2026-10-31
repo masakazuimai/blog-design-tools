@@ -1,6 +1,3 @@
-// Word ショートカットキー データ（Microsoft 標準ショートカット準拠 / Windows 基準）
-// keys: トークン配列。'mod'=⌘/Ctrl, 'alt'=⌥/Alt, 'shift'=⇧/Shift、それ以外はそのまま表示。
-// Mac では mod=⌘。一部 Mac 固有の差異あり。
 
 export const CATEGORIES = [
   {

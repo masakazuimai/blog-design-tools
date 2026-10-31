@@ -1,4 +1,3 @@
-// 問題データ（Q1-10は記事版 id3691 と同期・Q11-20はアプリ限定ドリル）
 const PROBLEMS = [
   {"id":1,"title":"map：税込み価格に変換","questionHtml":"商品リスト <code>products</code> の価格を、すべて税込み（10%）に変換した新しい配列を作成してください。","starter":"const products = [\n  { name: 'Tシャツ', price: 2000 },\n  { name: 'パーカー', price: 5000 },\n  { name: 'キャップ', price: 1500 },\n  { name: 'スニーカー', price: 8000 }\n];\n","answer":"const taxIncluded = products.map(item => ({\n  ...item,\n  price: item.price * 1.1\n}));\nconsole.log(taxIncluded);"},
   {"id":2,"title":"filter：条件で絞り込み","questionHtml":"ユーザーリスト <code>users</code> から、20歳以上かつアクティブなユーザーだけを抽出してください。","starter":"const users = [\n  { name: '田中', age: 25, active: true },\n  { name: '佐藤', age: 17, active: true },\n  { name: '鈴木', age: 30, active: false },\n  { name: '高橋', age: 22, active: true },\n  { name: '伊藤', age: 19, active: true }\n];\n","answer":"const activeAdults = users.filter(user => user.age >= 20 && user.active);\nconsole.log(activeAdults);"},

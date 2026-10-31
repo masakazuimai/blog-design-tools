@@ -1,4 +1,3 @@
-// 人・体・健康カテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
 
 import { DRAW, drawKeys, pulseKeys, swingKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815c";
 
@@ -47,8 +46,6 @@ export const BODY_ICONS = [
     },
   },
   {
-    // 手のひら2枚で拍手を表す案は小サイズで形が読めなかったため、
-    // 同じ「祝う」文脈で判別しやすいクラッカーにする
     id: "celebrate",
     cat: "body",
     label: { ja: "お祝い", en: "Celebrate" },
@@ -83,8 +80,6 @@ export const BODY_ICONS = [
     },
   },
   {
-    // 手で指し示す絵は小さいサイズで別のジェスチャーに見えるリスクがあるため、
-    // 矢印ポインタ（カーソル）で「指し示す」を表す
     id: "cursor",
     cat: "body",
     label: { ja: "カーソル", en: "Cursor" },
@@ -96,7 +91,6 @@ export const BODY_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // 押し込むような小さいクリック動作
           part: "arrow",
           origin: "6.6px 3.8px",
           keys: [
@@ -114,7 +108,6 @@ export const BODY_ICONS = [
     cat: "body",
     label: { ja: "OKサイン", en: "OK sign" },
     parts: [
-      // 手の形ではなく「OK」の文字（K を斜体にしたスラント体）
       { tag: "ellipse", part: "o", attrs: { cx: 8.6, cy: 11.8, rx: 4, ry: 6 } },
       { tag: "path", part: "stem", attrs: { d: "M15.4 5.8 L13.4 18.2" } },
       { tag: "path", part: "arm", attrs: { d: "M20.6 7.8 L14.6 13 L17.8 18.2" } },
@@ -162,7 +155,6 @@ export const BODY_ICONS = [
     cat: "body",
     label: { ja: "足あと", en: "Footsteps" },
     parts: [
-      // 跳ねて出る動きぶんの余白を上下に残す
       { tag: "path", part: "left", attrs: { d: "M7.8 5.4a2.2 2.2 0 0 1 2.2 2.2v3.2a2.2 2.2 0 0 1-4.4 0V7.6a2.2 2.2 0 0 1 2.2-2.2z M5.6 12.8h4.4v2a2.2 2.2 0 0 1-4.4 0z" } },
       { tag: "path", part: "right", attrs: { d: "M16.2 9.6a2.2 2.2 0 0 1 2.2 2.2v3.2a2.2 2.2 0 0 1-4.4 0v-3.2a2.2 2.2 0 0 1 2.2-2.2z M14 17h4.4v2a2.2 2.2 0 0 1-4.4 0z" } },
     ],
@@ -180,10 +172,8 @@ export const BODY_ICONS = [
     cat: "body",
     label: { ja: "ランニング", en: "Running" },
     parts: [
-      // 首を胴体につなげて頭が浮かないようにする。胴体を斜めに倒し、腕・脚を肘と膝で折って疾走の姿勢を出す
       { tag: "circle", part: "head", attrs: { cx: 17.4, cy: 5.8, r: 2.6 } },
       { tag: "path", part: "body", attrs: { d: "M14.8 8.8 L13.2 14 M14.8 8.8 L11.8 6.4 L10.8 9.4 M14.6 9.6 L16.6 13.4 L19.2 11.4 M13.2 14 L17.8 15.4 L12.4 16.8 M13.2 14 L7.6 18.6" } },
-      // スピード線だけは体の線と差をつけたいので、共通の stroke-width 2 から細くする
       { tag: "path", part: "speed", attrs: { d: "M2.8 12.4h3.4 M2.4 14.6h3.2 M3.4 16.8h2.8", "stroke-width": 1.2 } },
     ],
     anim: {
@@ -282,12 +272,8 @@ export const BODY_ICONS = [
     cat: "body",
     label: { ja: "マスク", en: "Face mask" },
     parts: [
-      // 輪郭が4本（本体・ひも左右・ひだ）近接するアイコンなので、共通の stroke-width 2 では潰れる。
-      // このアイコンだけ全パーツ 1.4 に落とす
       { tag: "path", part: "body", attrs: { d: "M7 7.6C10 6.2 14 6.2 17 7.6v8.8c-3 1.4-7 1.4-10 0z", "stroke-width": 1.4 } },
-      // 耳ひもは角丸2.2の四角。本体の左右へ4.0ずつ張り出させる
       { tag: "path", part: "strap", attrs: { d: "M7 8.4H5.2a2.2 2.2 0 0 0-2.2 2.2v2.8a2.2 2.2 0 0 0 2.2 2.2H7 M17 8.4H18.8a2.2 2.2 0 0 1 2.2 2.2v2.8a2.2 2.2 0 0 1-2.2 2.2H17", "stroke-width": 1.4 } },
-      // ひだは2本まで（3本だと線の間隔が線幅を下回り、小サイズで塊に見える）
       { tag: "path", part: "folds", attrs: { d: "M9 10.6h6 M9 13.4h6", "stroke-width": 1.4 } },
     ],
     anim: { duration: 1.4, easing: "ease-out", tracks: [{ part: ["body", "strap", "folds"], origin: "12px 12px", keys: pulseKeys(1.06) }] },

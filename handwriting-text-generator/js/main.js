@@ -48,7 +48,6 @@ function render() {
   try {
     const preview = window.devicePixelRatio > 1 ? 2 : 1;
     lastLayout = buildLayout(currentFont, o, paper, pen);
-    // 固定キャンバスからはみ出したら、文字サイズと余白を縮めて入るまで組み直す
     if ($("fit").checked) {
       for (let i = 0; i < 3 && lastLayout.overflow; i++) {
         const k = Math.min(o.fixedW / lastLayout.cw, o.fixedH / lastLayout.ch) * 0.98;
@@ -85,7 +84,6 @@ async function selectFont(id) {
   }
 }
 
-// Blobダウンロード（アンカーをDOMに入れてclick→遅延revoke）
 function save(blob, filename) {
   if (!blob) { setStatus(T.saveFailed); return; }
   const url = URL.createObjectURL(blob);
@@ -100,7 +98,7 @@ function save(blob, filename) {
 
 function exportRaster(type, ext, quality) {
   const o = opts();
-  if (type === "image/jpeg") o.forceFill = true;   // JPGは透過を持てないので紙色で塗る
+  if (type === "image/jpeg") o.forceFill = true;
   const paper = findPaper(pressed("paperSel"));
   const pen = findPen(pressed("penSel"));
   const cv = document.createElement("canvas");
@@ -108,13 +106,11 @@ function exportRaster(type, ext, quality) {
   cv.toBlob(function (b) { save(b, "handwriting." + ext); }, type, quality);
 }
 
-// にじみ・かすれを使うペンは、SVGがフィルタ表現になることを知らせる
 function updatePenNote() {
   const pen = findPen(pressed("penSel"));
   $("penNote").hidden = !(pen.rough > 0 || pen.blur > 0);
 }
 
-// ── テンプレート適用 ───────────────────────────────────────────────
 function setChip(wrapId, id) {
   Array.prototype.forEach.call($(wrapId).querySelectorAll(".chip"), function (c) {
     c.setAttribute("aria-pressed", String(c.dataset.v === id));
@@ -141,7 +137,6 @@ function applyTemplate(id) {
   render();
 }
 
-// ── チップUIの生成 ─────────────────────────────────────────────────
 function buildChips(wrapId, list, activeId) {
   const wrap = $(wrapId);
   list.forEach(function (item) {
@@ -160,7 +155,6 @@ function buildChips(wrapId, list, activeId) {
       c.setAttribute("aria-pressed", String(c === btn));
     });
     if (wrapId === "tplSel") { applyTemplate(btn.dataset.v); return; }
-    // 紙を選んだら紙色の既定値も追従させる
     if (wrapId === "paperSel") {
       const p = findPaper(btn.dataset.v);
       if (p.fill) $("paper").value = p.fill;
@@ -170,7 +164,6 @@ function buildChips(wrapId, list, activeId) {
   });
 }
 
-// ── 初期化 ─────────────────────────────────────────────────────────
 const sel = $("font");
 FONTS.forEach(function (f) {
   const op = document.createElement("option");

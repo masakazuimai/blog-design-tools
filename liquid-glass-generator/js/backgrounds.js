@@ -1,6 +1,4 @@
-// 背景画像の定義とロード。/ と /en/ で同じJSを共有するため asset の相対パスを動的に解決する。
 
-// /en/ 配下なら 1つ上、それ以外はカレント直下の assets を参照する
 const assetBase = location.pathname.includes('/en/') ? '../assets/' : 'assets/'
 
 export const BACKGROUNDS = [
@@ -15,7 +13,6 @@ export function backgroundUrl(file) {
   return assetBase + file
 }
 
-// 画像を読み込んで HTMLImageElement を返す（CORS安全のため crossOrigin 指定）
 export function loadImage(src) {
   return new Promise((resolve, reject) => {
     const img = new Image()

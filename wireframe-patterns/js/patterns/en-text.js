@@ -1,6 +1,4 @@
-// 英語版：パターンの HTML／CSS コメント内の文言（タグに挟まれた文字列単位で完全一致させて置き換える）
 export const TEXT_EN = {
-  // 共通
   "商品名が入ります": "Product name",
   "必須": "Required",
   "任意": "Optional",
@@ -87,7 +85,6 @@ export const TEXT_EN = {
   "〒000-0000 〇〇県〇〇市〇〇 0-0-0": "000 Main Street, City, State 00000",
   "利用規約": "Terms of service",
 
-  // ヘッダー
   "特長": "Features",
   "無料で試す": "Try for free",
   "ブランド名": "Brand",
@@ -132,7 +129,6 @@ export const TEXT_EN = {
   "製品名8": "Product 8",
   "注目のお知らせ →": "Featured news →",
 
-  // ファーストビュー
   "ラベルテキスト": "Eyebrow label",
   "サービスの価値をひとことで": "A headline that states",
   "伝える見出し": "your value in one line",
@@ -174,7 +170,6 @@ export const TEXT_EN = {
   "キーワード2": "Keyword 2",
   "キーワード3": "Keyword 3",
 
-  // 特長・メリット
   "こんなお悩みはありませんか？": "Sound familiar?",
   "よくあるお悩み": "Common problems",
   "悩み1が入ります": "Problem 1 goes here",
@@ -203,7 +198,6 @@ export const TEXT_EN = {
   "メリット5": "Benefit 5",
   "メリット6": "Benefit 6",
 
-  // 導入事例・お客様の声
   "お客様の声": "What our customers say",
   "氏名1": "Name 1",
   "氏名2": "Name 2",
@@ -225,7 +219,6 @@ export const TEXT_EN = {
   "40代・男性": "Man, 40s",
   "20代・女性": "Woman, 20s",
 
-  // カード一覧
   "新着記事": "Latest articles",
   "すべて見る →": "View all →",
   "おすすめ商品": "Recommended",
@@ -242,7 +235,6 @@ export const TEXT_EN = {
   "お知らせのタイトルが入ります。長い場合は折り返します": "News title goes here. Long titles wrap to the next line",
   "メディア掲載": "In the media",
 
-  // 流れ・ステップ
   "ご利用の流れ": "How it works",
   "お申し込み": "Apply",
   "ヒアリング": "Consultation",
@@ -265,7 +257,6 @@ export const TEXT_EN = {
   "内容の確認": "Review",
   "完了": "Done",
 
-  // 料金表
   "ライト": "Lite",
   "スタンダード": "Standard",
   "月額": "Monthly",
@@ -315,7 +306,6 @@ export const TEXT_EN = {
   "要見積もり": "Quote",
   "※ 表示価格はすべて税込です。注記が入ります。": "All prices include tax. Other notes go here.",
 
-  // FAQ
   "よくある質問1が入ります": "Frequently asked question 1",
   "よくある質問2が入ります": "Frequently asked question 2",
   "よくある質問3が入ります": "Frequently asked question 3",
@@ -348,7 +338,6 @@ export const TEXT_EN = {
   "よく見られている質問4が入ります": "Popular question 4",
   "解決しない場合は": "Still need help?",
 
-  // CTA
   "行動を促す見出しが入ります": "A headline that prompts action",
   "申し込むと何が得られるのかを一文で伝えます。": "One line on what they get by signing up.",
   "無料で試してみる": "Try it free",
@@ -375,7 +364,6 @@ export const TEXT_EN = {
   "無料で登録": "Sign up free",
   "登録は無料・いつでも解約できます": "Free to join. Cancel anytime",
 
-  // お問い合わせフォーム
   "2営業日以内にご返信します。": "We reply within two business days.",
   "送信内容を確認する": "Review your message",
   "お電話でのお問い合わせ": "Call us",
@@ -409,7 +397,6 @@ export const TEXT_EN = {
   "グレーの時間は満席です。": "Gray times are fully booked.",
   "この内容で予約する": "Book this time",
 
-  // 会社概要・アクセス
   "株式会社〇〇": "Company Name Inc.",
   "所在地": "Address",
   "〒000-0000 〇〇県〇〇市〇〇 0-0-0 〇〇ビル0F": "000 Main Street, Suite 000, City, State 00000",
@@ -449,7 +436,6 @@ export const TEXT_EN = {
   "創業〇〇周年を迎える": "Celebrated our 00th anniversary",
   "縦線は行ごとに引き、最初の行は点から下・最後の行は点から上だけにする": "Draw the vertical line per row: from the dot down on the first row, from the dot up on the last",
 
-  // フッター
   "会社やサービスを一文で紹介するテキストが入ります。": "One line introducing the company or service.",
   "サービス": "Services",
   "会社情報": "Company",
@@ -472,14 +458,11 @@ export const TEXT_EN = {
   "&copy; 2026 メディア名": "&copy; 2026 Media Name",
 };
 
-// 語順が入れ替わる・同じ文言でも訳し分けが要る箇所は、HTML の断片ごと先に差し替える
 export const HTML_EN = [
   ['<a class="wf-link" href="#"><u>プライバシーポリシー</u></a>に同意する', 'I agree to the <a class="wf-link" href="#"><u>privacy policy</u></a>'],
   ['実績で選ばれていることを<br>伝える見出し', 'A headline showing<br>proven results'],
   ['短く印象的な<br>見出し', 'Short and<br>striking headline'],
-  // 英語のフォームは「名 → 姓」の順・郵便番号は5桁
   ['<div class="fm04__pair"><span class="fm-input">姓</span><span class="fm-input">名</span></div>', '<div class="fm04__pair"><span class="fm-input">First name</span><span class="fm-input">Last name</span></div>'],
   ['<span class="fm-input">000-0000</span>', '<span class="fm-input">00000</span>'],
-  // フリガナ（名前の読み）は英語のフォームにない項目なので、英語版では同じ位置を「電話・メール」の行に置き換える
   ['      <div class="fm04__row"><span class="fm-label">フリガナ<span class="fm-req">必須</span></span><div class="fm04__pair"><span class="fm-input">セイ</span><span class="fm-input">メイ</span></div></div>\n', '      <div class="fm04__row"><span class="fm-label">Phone &amp; email<span class="fm-req">Required</span></span><div class="fm04__pair"><span class="fm-input">Phone</span><span class="fm-input">Email</span></div></div>\n'],
 ];

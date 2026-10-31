@@ -2,10 +2,7 @@
 
       import { t } from "./i18n.js?v=20260615";
 
-      // 各アニメーションのメタ情報。
-      // origin: transform-origin が必要なもの / flip: backface-visibility: visible が必要なもの
       const ANIMATIONS = [
-        // Attention seekers（注目）
         { key: "bounce", cat: "注目", origin: "center bottom" },
         { key: "flash", cat: "注目" },
         { key: "pulse", cat: "注目" },
@@ -18,7 +15,6 @@
         { key: "wobble", cat: "注目" },
         { key: "jello", cat: "注目", origin: "center" },
         { key: "heartBeat", cat: "注目" },
-        // Fade
         { key: "fadeIn", cat: "フェード" },
         { key: "fadeInDown", cat: "フェード" },
         { key: "fadeInUp", cat: "フェード" },
@@ -31,14 +27,12 @@
         { key: "fadeOutUp", cat: "フェード" },
         { key: "fadeOutLeft", cat: "フェード" },
         { key: "fadeOutRight", cat: "フェード" },
-        // Bounce
         { key: "bounceIn", cat: "バウンド" },
         { key: "bounceInDown", cat: "バウンド" },
         { key: "bounceInUp", cat: "バウンド" },
         { key: "bounceInLeft", cat: "バウンド" },
         { key: "bounceInRight", cat: "バウンド" },
         { key: "bounceOut", cat: "バウンド" },
-        // Zoom
         { key: "zoomIn", cat: "ズーム" },
         { key: "zoomOut", cat: "ズーム" },
         { key: "zoomInDown", cat: "ズーム" },
@@ -46,7 +40,6 @@
         { key: "zoomInLeft", cat: "ズーム" },
         { key: "zoomInRight", cat: "ズーム" },
         { key: "zoomOutDown", cat: "ズーム", origin: "center bottom" },
-        // Slide
         { key: "slideInDown", cat: "スライド" },
         { key: "slideInUp", cat: "スライド" },
         { key: "slideInLeft", cat: "スライド" },
@@ -54,36 +47,30 @@
         { key: "slideOutDown", cat: "スライド" },
         { key: "slideOutUp", cat: "スライド" },
         { key: "slideOutLeft", cat: "スライド" },
-        // Flip
         { key: "flip", cat: "フリップ", flip: true },
         { key: "flipInX", cat: "フリップ", flip: true },
         { key: "flipInY", cat: "フリップ", flip: true },
         { key: "flipOutX", cat: "フリップ", flip: true },
         { key: "flipOutY", cat: "フリップ", flip: true },
-        // Rotate
         { key: "rotateIn", cat: "回転", origin: "center" },
         { key: "rotateInDownLeft", cat: "回転", origin: "left bottom" },
         { key: "rotateInUpRight", cat: "回転", origin: "right bottom" },
         { key: "rotateInUpLeft", cat: "回転", origin: "left bottom" },
         { key: "rotateInDownRight", cat: "回転", origin: "right bottom" },
         { key: "rotateOut", cat: "回転", origin: "center" },
-        // Back
         { key: "backInDown", cat: "バック" },
         { key: "backInUp", cat: "バック" },
         { key: "backInLeft", cat: "バック" },
         { key: "backInRight", cat: "バック" },
         { key: "backOutDown", cat: "バック" },
         { key: "backOutUp", cat: "バック" },
-        // Light speed
         { key: "lightSpeedInRight", cat: "スピード" },
         { key: "lightSpeedInLeft", cat: "スピード" },
         { key: "lightSpeedOutRight", cat: "スピード" },
-        // Special
         { key: "rollIn", cat: "特殊" },
         { key: "rollOut", cat: "特殊" },
         { key: "hinge", cat: "特殊", origin: "top left" },
         { key: "jackInTheBox", cat: "特殊" },
-        // 3D（単一要素）
         { key: "spin3DX", cat: "3D" },
         { key: "spin3DY", cat: "3D" },
         { key: "spin3DZ", cat: "3D" },
@@ -108,7 +95,6 @@
         { key: "wobble3D", cat: "3D" },
         { key: "helixIn", cat: "3D" },
         { key: "popOut3D", cat: "3D" },
-        // エフェクト
         { key: "glitch", cat: "エフェクト" },
         { key: "neonFlicker", cat: "エフェクト" },
         { key: "float", cat: "エフェクト" },
@@ -119,7 +105,6 @@
         { key: "swirlOut", cat: "エフェクト" },
       ];
 
-      // @keyframes の本文を <style> から読み出してコピー用に整形する
       const keyframeCache = {};
       function getKeyframes(key) {
         if (keyframeCache[key] !== undefined) return keyframeCache[key];
@@ -165,9 +150,7 @@
         copyPreview: document.getElementById("copyPreview"),
       };
 
-      // 設定の永続化（localStorage）
       const SETTINGS_KEY = "animation-gallery-settings";
-      // デフォルト値（HTMLの初期値と一致させる）
       const DEFAULT_SETTINGS = {
         demoType: "text",
         duration: "1",
@@ -177,7 +160,6 @@
         autoPlayMode: "off",
       };
 
-      // 現在の設定値を localStorage へ保存する
       function saveSettings() {
         try {
           const data = {
@@ -194,7 +176,6 @@
         }
       }
 
-      // localStorage から設定を読み込んで各 input/select へ反映する
       function applySettings(data) {
         if (typeof data.demoType === "string") els.demoType.value = data.demoType;
         if (typeof data.duration === "string") els.duration.value = data.duration;
@@ -205,7 +186,6 @@
         els.durVal.textContent = parseFloat(els.duration.value).toFixed(1) + "s";
       }
 
-      // 起動時に保存済み設定を復元する（無効な値は無視してデフォルトのまま）
       function restoreSettings() {
         try {
           const raw = localStorage.getItem(SETTINGS_KEY);
@@ -216,7 +196,6 @@
         }
       }
 
-      // 設定をデフォルトへ戻し、保存内容も消す
       function resetSettings() {
         try {
           localStorage.removeItem(SETTINGS_KEY);
@@ -228,9 +207,8 @@
         updatePreview();
       }
 
-      // 選択状態とコードプレビュー
-      let selected = null; // { kind: 'anim'|'flip'|'cube'|'mg', data? }
-      let previewFormat = "css"; // anim のとき CSS / HTML+CSS を切替
+      let selected = null;
+      let previewFormat = "css";
 
       function getSelectedCode() {
         if (!selected) return "";
@@ -266,7 +244,6 @@
       }
 
       function updatePreview() {
-        // フォーマット切替は anim のときだけ表示
         els.fmtToggle.classList.toggle("hidden", !selected || selected.kind !== "anim");
         els.copyPreview.disabled = !selected;
         els.codePreview.textContent = getSelectedCode();
@@ -328,18 +305,15 @@
         return demoMarkup[els.demoType.value] || demoMarkup.text;
       }
 
-      // 対象要素にアニメーションを適用して再生
       function playAnim(target, anim) {
         const s = getSettings();
         target.style.animation = "none";
-        // reflow を強制してアニメーションをリスタート
         void target.offsetWidth;
         target.style.transformOrigin = anim.origin || "";
         target.style.backfaceVisibility = anim.flip ? "visible" : "";
         target.style.animation = anim.key + " " + s.dur + "s " + s.easing + " " + s.iter + " both";
       }
 
-      // コピー用 CSS を生成
       function buildCSS(anim) {
         const s = getSettings();
         const cls = "animate-" + anim.key;
@@ -350,7 +324,6 @@
         return "." + cls + " {\n" + "  animation: " + anim.key + " " + s.dur + "s " + s.easing + " " + s.iter + " both;" + extraStr + "\n}\n\n" + "@keyframes " + anim.key + " {\n" + getKeyframes(anim.key) + "\n}";
       }
 
-      // コピー用 HTML+CSS 一式を生成
       function buildFullCode(anim) {
         const cls = "animate-" + anim.key;
         return "<style>\n" + buildCSS(anim) + "\n</style>\n\n" + '<div class="' + cls + '">' + t.demoSampleText + "</div>";
@@ -443,7 +416,6 @@
         }
       }
 
-      // すべて再生（表示中のカードを順番に少しずつずらして再生）
       function playAllVisible() {
         const stages = els.grid.querySelectorAll(".stage");
         const visible = activeCat === "すべて" ? ANIMATIONS : ANIMATIONS.filter((a) => a.cat === activeCat);
@@ -453,7 +425,6 @@
         });
       }
 
-      // ---- 3Dフリップカード ----
       const FLIP_CARDS = [
         { id: "flip-h", label: t.flipH, axis: "Y" },
         { id: "flip-v", label: t.flipV, axis: "X" },
@@ -475,7 +446,6 @@
           inner.innerHTML = '<div class="flip-card-front">' + t.flipFront + "</div>" + '<div class="flip-card-back">' + t.flipBack + "</div>" + '<div class="flip-edge flip-edge-right"></div>' + '<div class="flip-edge flip-edge-left"></div>' + '<div class="flip-edge flip-edge-top"></div>' + '<div class="flip-edge flip-edge-bottom"></div>';
           card.appendChild(inner);
 
-          // ライブデモは JS でフリップ（タップにも対応）。コピーコードは :hover 版。
           const flipT = v.axis === "Y" ? "rotateY(180deg)" : "rotateX(180deg)";
           card.addEventListener("mouseenter", () => {
             inner.style.transform = flipT;
@@ -551,7 +521,6 @@
         ].join("\n");
       }
 
-      // ---- 3Dキューブ ----
       function cubeDuration() {
         return (getSettings().dur * 4).toFixed(1);
       }
@@ -575,7 +544,6 @@
           ["cube-bottom", "6"],
         ];
         cube.innerHTML = faces.map((f) => '<div class="cube-face ' + f[0] + '">' + f[1] + "</div>").join("");
-        // animation-play-state はインラインで指定せず、CSSの :hover で一時停止できるようにする
         cube.style.animationName = "cubeSpin";
         cube.style.animationDuration = cubeDuration() + "s";
         cube.style.animationTimingFunction = "linear";
@@ -648,7 +616,6 @@
         ].join("\n");
       }
 
-      // ---- 3Dメリーゴーランド ----
       const MG_PANELS = ["#3b82f6", "#6366f1", "#8b5cf6", "#ec4899", "#f59e0b", "#10b981"];
       const MG_RADIUS = 120;
       function mgDuration() {
@@ -665,7 +632,6 @@
         scene.className = "mg-scene";
         const ring = document.createElement("div");
         ring.className = "mg-ring";
-        // animation-play-state はインラインで指定せず、CSSの :hover で一時停止できるようにする
         ring.style.animationName = "mgSpin";
         ring.style.animationDuration = mgDuration() + "s";
         ring.style.animationTimingFunction = "linear";
@@ -700,11 +666,9 @@
         return ["<style>", ".mg-scene { width: 360px; height: 170px; perspective: 1000px; }", ".mg-ring {", "  position: relative; width: 100%; height: 100%;", "  transform-style: preserve-3d;", "  animation: mgSpin " + dur + "s infinite linear;", "}", "/* マウスを乗せたら回転を一時停止 */", ".mg-scene:hover .mg-ring { animation-play-state: paused; }", ".mg-panel {", "  position: absolute; width: 120px; height: 90px; left: 120px; top: 40px;", "  display: flex; align-items: center; justify-content: center;", "  border-radius: 12px; color: #fff; font-size: 2rem; font-weight: 700;", "  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35);", "}"].concat(panelRules).concat(["@keyframes mgSpin {", "  from { transform: rotateX(-12deg) rotateY(0); }", "  to   { transform: rotateX(-12deg) rotateY(360deg); }", "}", "</style>", "", '<div class="mg-scene">', '  <div class="mg-ring">']).concat(panelHTML).concat(["  </div>", "</div>"]).join("\n");
       }
 
-      // ---- スライダー・カルーセル共通 ----
       const SLIDE_COLORS = ["#3b82f6", "#6366f1", "#8b5cf6", "#ec4899", "#f59e0b"];
       const MARQUEE_LOGOS = ["★ BRAND", "◆ STUDIO", "● LABS", "▲ WORKS", "■ DESIGN"];
 
-      // ---- フェードスライダー ----
       function fadeTotal() {
         return (getSettings().dur * 8).toFixed(1);
       }
@@ -746,7 +710,6 @@
         return ["<style>", ".fade-slider {", "  position: relative; width: 320px; height: 180px;", "  border-radius: 12px; overflow: hidden;", "}", ".fade-slide {", "  position: absolute; inset: 0;", "  display: flex; align-items: center; justify-content: center;", "  color: #fff; font-size: 2rem; font-weight: 700;", "  opacity: 0; animation: fadeSlider " + total + "s infinite;", "}"].concat(slideRules).concat(["@keyframes fadeSlider {", "  0%   { opacity: 0; }", "  9%   { opacity: 1; }", "  11%  { opacity: 1; }", "  20%  { opacity: 0; }", "  100% { opacity: 0; }", "}", "</style>", "", '<div class="fade-slider">']).concat(slideHTML).concat(["</div>"]).join("\n");
       }
 
-      // ---- 自動スクロールカルーセル ----
       function scrollDuration() {
         return (getSettings().dur * 8).toFixed(1);
       }
@@ -761,7 +724,6 @@
         const track = document.createElement("div");
         track.className = "scroll-track";
         const dur = scrollDuration();
-        // animation-play-state はインラインで指定せず、CSSの :hover で一時停止できるようにする
         track.style.animationName = "scrollCarousel";
         track.style.animationDuration = dur + "s";
         track.style.animationTimingFunction = "linear";
@@ -795,9 +757,6 @@
         return ["<style>", ".scroll-carousel { width: 360px; overflow: hidden; border-radius: 12px; }", ".scroll-track {", "  display: flex; gap: 16px; width: max-content;", "  animation: scrollCarousel " + dur + "s linear infinite;", "}", "/* マウスを乗せたら一時停止 */", ".scroll-track:hover { animation-play-state: paused; }", ".scroll-item {", "  flex: none; width: 150px; height: 120px; border-radius: 12px;", "  display: flex; align-items: center; justify-content: center;", "  color: #fff; font-size: 1.8rem; font-weight: 700;", "}", "/* gap 16px の半分(8px)を引いて継ぎ目をなくす */", "@keyframes scrollCarousel {", "  from { transform: translateX(0); }", "  to   { transform: translateX(calc(-50% - 8px)); }", "}", "</style>", "", '<div class="scroll-carousel">', '  <!-- 同じ並びを2回置いてシームレスにループ -->', '  <div class="scroll-track">'].concat(itemHTML).concat(["  </div>", "</div>"]).join("\n");
       }
 
-      // ---- ドットナビ カルーセル / カバーフロー 共通（純CSS・ラジオボタン制御） ----
-      // ラジオの :checked 状態に応じた transform 等のルールを生成する。
-      // ライブデモへの注入とコピーコード生成で同じ生成器を使う。
       function ccStateRules() {
         const n = SLIDE_COLORS.length;
         const rules = [];
@@ -837,7 +796,6 @@
         }
         return rules;
       }
-      // 状態ルールはdurに依存しないので一度だけ<style>に注入する
       let sliderStylesInjected = false;
       function injectSliderStateStyles() {
         if (sliderStylesInjected) return;
@@ -847,7 +805,6 @@
         sliderStylesInjected = true;
       }
 
-      // ---- ドットナビ カルーセル ----
       function renderSnapCarousel() {
         injectSliderStateStyles();
         const row = document.getElementById("snapRow");
@@ -898,7 +855,6 @@
           .join("\n");
       }
 
-      // ---- ロゴマーキー ----
       function marqueeDuration() {
         return (getSettings().dur * 12).toFixed(1);
       }
@@ -913,7 +869,6 @@
         const track = document.createElement("div");
         track.className = "marquee-track";
         const dur = marqueeDuration();
-        // animation-play-state はインラインで指定せず、CSSの :hover で一時停止できるようにする
         track.style.animationName = "marquee";
         track.style.animationDuration = dur + "s";
         track.style.animationTimingFunction = "linear";
@@ -948,7 +903,6 @@
         return ["<style>", ".marquee {", "  width: 360px; overflow: hidden;", "  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);", "  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);", "}", ".marquee-track {", "  display: flex; align-items: center; gap: 36px; width: max-content;", "  animation: marquee " + dur + "s linear infinite;", "}", ".marquee-track:hover { animation-play-state: paused; }", ".marquee-item {", "  flex: none; font-size: 1.4rem; font-weight: 800;", "  color: #475569; white-space: nowrap;", "}", "/* gap 36px の半分(18px)を引いて継ぎ目をなくす */", "@keyframes marquee {", "  from { transform: translateX(0); }", "  to   { transform: translateX(calc(-50% - 18px)); }", "}", "</style>", "", '<div class="marquee">', '  <!-- 同じ並びを2回置いてシームレスにループ -->', '  <div class="marquee-track">'].concat(itemHTML).concat(["  </div>", "</div>"]).join("\n");
       }
 
-      // ---- カバーフロー ----
       function coverflowDefaultIndex() {
         return Math.floor(SLIDE_COLORS.length / 2);
       }
@@ -1004,10 +958,7 @@
           .join("\n");
       }
 
-      // ---- ホバーエフェクト（すべて :hover + transition のみ・JS不要） ----
-      // 各エフェクトは self-contained（baseの見た目 + transition + :hover）でコピー可能。
       const HOVER_EFFECTS = [
-        // ボタン系
         {
           key: "grow",
           group: t.groupButton,
@@ -1036,7 +987,6 @@
           html: '<button class="hv-shine">' + t.hvButton + "</button>",
           css: [".hv-shine {", "  position: relative; overflow: hidden;", "  display: inline-flex; align-items: center; justify-content: center;", "  padding: 12px 28px; border: none; border-radius: 8px;", "  background: #6366f1; color: #fff; font-size: 1rem; font-weight: 700; cursor: pointer;", "}", ".hv-shine::after {", '  content: ""; position: absolute; top: 0; left: -75%; width: 50%; height: 100%;', "  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent);", "  transform: skewX(-20deg); transition: left 0.5s ease;", "}", ".hv-shine:hover::after { left: 125%; }"],
         },
-        // カード系
         {
           key: "cardlift",
           group: t.groupCard,
@@ -1065,7 +1015,6 @@
           html: '<div class="hv-cardtilt">' + t.hvCard + "</div>",
           css: [".hv-cardtilt {", "  width: 180px; padding: 28px 24px; border-radius: 14px;", "  background: #fff; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.1);", "  color: #1e293b; font-weight: 700; text-align: center;", "  transition: transform 0.3s ease;", "  transform: perspective(700px) rotateX(0) rotateY(0);", "}", ".hv-cardtilt:hover { transform: perspective(700px) rotateX(6deg) rotateY(-6deg); }"],
         },
-        // 画像系（.ph は画像プレースホルダ。<img> に差し替え可）
         {
           key: "imgzoom",
           group: t.groupImage,
@@ -1094,7 +1043,6 @@
           html: '<div class="hv-imgoverlay"><div class="ph">🏞️</div><div class="cap">' + t.hvDetail + "</div></div>",
           css: [".hv-imgoverlay { position: relative; width: 200px; height: 140px; border-radius: 12px; overflow: hidden; }", ".hv-imgoverlay .ph {", "  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;", "  font-size: 3rem; background: linear-gradient(135deg, #60a5fa, #a78bfa);", "}", ".hv-imgoverlay .cap {", "  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;", "  background: rgba(15,23,42,0.6); color: #fff; font-weight: 700;", "  opacity: 0; transition: opacity 0.3s ease;", "}", ".hv-imgoverlay:hover .cap { opacity: 1; }"],
         },
-        // リンク/テキスト系
         {
           key: "underline",
           group: t.groupLink,
@@ -1125,7 +1073,6 @@
         },
       ];
 
-      // 全エフェクトのCSSを一度だけ<style>に注入する
       let hoverStylesInjected = false;
       function injectHoverStyles() {
         if (hoverStylesInjected) return;
@@ -1152,7 +1099,6 @@
           stage.style.justifyContent = "center";
           stage.style.cursor = "pointer";
           stage.innerHTML = effect.html;
-          // デモのリンクは遷移させない
           stage.querySelectorAll("a").forEach((a) => a.addEventListener("click", (e) => e.preventDefault()));
           stage.addEventListener("click", () => selectHover(effect, item));
 
@@ -1175,7 +1121,6 @@
         }
       }
 
-      // すべてのギャラリーを再描画する（初期化・リセットで共有）
       function renderAll() {
         renderFilters();
         renderGrid();
@@ -1190,7 +1135,6 @@
         renderHoverEffects();
       }
 
-      // イベント
       els.demoType.addEventListener("change", () => {
         renderGrid();
         updatePreview();
@@ -1224,7 +1168,6 @@
       els.playAll.addEventListener("click", playAllVisible);
       els.resetSettings.addEventListener("click", resetSettings);
 
-      // 設定アコーディオン（初期は閉じた状態）
       const settingsCard = document.getElementById("settingsCard");
       const settingsToggle = document.getElementById("settingsToggle");
       settingsToggle.addEventListener("click", () => {
@@ -1232,19 +1175,14 @@
         settingsToggle.setAttribute("aria-expanded", String(!collapsed));
       });
 
-      // コードプレビュー操作
       els.fmtToggle.querySelectorAll(".fmt-btn").forEach((b) => b.addEventListener("click", () => setFormat(b.dataset.fmt)));
       els.copyPreview.addEventListener("click", (e) => {
         if (selected) copyText(getSelectedCode(), e.currentTarget, t.labelCode);
       });
 
-      // 初期化（保存済み設定を反映してから描画する）
       restoreSettings();
       renderAll();
-      // 初期選択（先頭のアニメーション）
       selectAnim(ANIMATIONS[0], document.querySelector(".grid .card"));
-      // 自動再生が「1回再生」なら、初回ペイント直後にすべて再生する
-      // （重い初期描画の前に再生するとアニメ冒頭が見えないため rAF 2回で待つ）
       if (els.autoPlayMode.value === "once") {
         requestAnimationFrame(() => requestAnimationFrame(playAllVisible));
       }

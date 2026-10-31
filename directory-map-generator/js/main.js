@@ -1,6 +1,3 @@
-// ============================================================
-// エントリ：初期化・ツールバー配線・ショートカット
-// ============================================================
 
 import { state, load, hasSaved, clearAll, replaceAll, nextId, addItem, addConnector } from "./store.js?v=20260702s";
 import {
@@ -15,7 +12,6 @@ import {
 import { exportPng, exportJson, readJsonFile } from "./export.js?v=20260702f";
 import { toMarkdown, downloadMarkdown, copyMarkdown, parseMarkdown, readTextFile } from "./markdown.js?v=20260824b";
 
-// 色相ありの色を先頭に、無彩色（白/灰/黒）は末尾。初期色は色相のある #fde68a
 const SWATCHES = [
   "#fde68a", "#fcd34d", "#fed7aa", "#fdba74", "#fecaca", "#fca5a5", "#fbcfe8", "#f9a8d4",
   "#ddd6fe", "#c4b5fd", "#bfdbfe", "#93c5fd", "#a5f3fc", "#99f6e4", "#bbf7d0", "#86efac",
@@ -33,7 +29,6 @@ const KEY_TO_TOOL = {
   c: "connector",
 };
 
-// ---- i18n（同一JSで /en/ と出し分け。document.documentElement.lang で判定）----
 const LANG = document.documentElement.lang === "en" ? "en" : "ja";
 const STR = {
   ja: {
@@ -105,7 +100,6 @@ function init() {
     },
   });
 
-  // ---- ツールボタン ----
   const toolBtns = [...document.querySelectorAll(".tool[data-tool]")];
   toolBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -118,12 +112,10 @@ function init() {
     toolBtns.forEach((b) => b.classList.toggle("is-active", b.dataset.tool === tool));
   }
 
-  // ---- 色ピッカー（色相環トリガー＋ドロワー）----
   const colorTrigger = $("color-trigger");
   const colorDrawer = $("color-drawer");
-  let currentColor = "auto"; // 既定はテーマ既定色（ライト/ダークに追従）。色は色相環ドロワーで選ぶ
+  let currentColor = "auto";
 
-  // value は "auto"（テーマ既定色）またはhex。auto は board.js 側でインライン色を空にして扱う
   const addSwatch = (value, { className = "swatch", label }) => {
     const btn = document.createElement("button");
     btn.className = className + (value === currentColor ? " is-active" : "");
@@ -157,7 +149,6 @@ function init() {
     if (colorDrawer.hidden) openColorDrawer();
     else closeColorDrawer();
   });
-  // ドロワー外クリック / Escで閉じる
   document.addEventListener("click", (e) => {
     if (!colorDrawer.hidden && !e.target.closest("#color-picker")) closeColorDrawer();
   });
@@ -165,7 +156,6 @@ function init() {
     if (e.key === "Escape" && !colorDrawer.hidden) closeColorDrawer();
   });
 
-  // ---- テーマ切替（ライト/ダーク・既定ダーク・localStorage保存）----
   const THEME_KEY = "dirmap:theme";
   const themeToggle = $("theme-toggle");
   const curTheme = () => (document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light");
@@ -182,14 +172,12 @@ function init() {
       try {
         localStorage.setItem(THEME_KEY, next);
       } catch (_) {
-        /* noop */
       }
       syncThemeLabel();
     });
     syncThemeLabel();
   }
 
-  // ---- 矢印の設定（形＝直線/直角、端＝片方向/双方向/なし）をアイコンで ----
   const wtStraight = $("wt-straight");
   const wtElbow = $("wt-elbow");
   const wtEnd = $("wt-end");
@@ -224,15 +212,12 @@ function init() {
   });
   syncWireTools();
 
-  // ---- ズーム ----
   $("zoom-in").addEventListener("click", () => zoomBy(1.2));
   $("zoom-out").addEventListener("click", () => zoomBy(1 / 1.2));
   $("zoom-reset").addEventListener("click", () => resetZoom());
 
-  // ---- アクション ----
   $("btn-delete").addEventListener("click", () => deleteSelected());
 
-  // 書き出しメニュー（ホバーで開く。タッチ・キーボード用にクリックでも開閉できる）
   const exportMenu = $("export-menu");
   const exportTrigger = $("export-trigger");
   const exportDrawer = $("export-drawer");
@@ -298,7 +283,6 @@ function init() {
     if (!file) return;
     const isJson = /\.json$/i.test(file.name);
     try {
-      // JSONは色や座標ごと復元できる。Markdownは木構造だけなので自動レイアウトで置き直す
       const data = isJson ? await readJsonFile(file) : parseMarkdown(await readTextFile(file));
       if (!data) {
         toast(STR.mdParseError);
@@ -315,7 +299,6 @@ function init() {
     fileInput.value = "";
   });
 
-  // ---- テンプレ（ディレクトリツリーの例）----
   $("btn-template").addEventListener("click", () => {
     if (state.items.length || state.connectors.length) {
       if (!confirm(STR.confirmSample)) return;
@@ -334,16 +317,13 @@ function init() {
     toast(STR.cleared);
   });
 
-  // ---- キーボードショートカット ----
   window.addEventListener("keydown", (e) => {
-    // テキスト編集中・入力欄では無効化
     const editing =
       document.activeElement &&
       (document.activeElement.isContentEditable ||
         ["INPUT", "TEXTAREA"].includes(document.activeElement.tagName));
     if (editing) return;
 
-    // コピー / 切り取り / 貼り付け / 複製 / 全選択（⌘ or Ctrl）
     if (e.metaKey || e.ctrlKey) {
       const mk = e.key.toLowerCase();
       if (mk === "c") {
@@ -381,7 +361,7 @@ function init() {
         board.selectAll();
         return;
       }
-      return; // その他の⌘/Ctrl系はツール切替させない
+      return;
     }
 
     const key = e.key.toLowerCase();
@@ -404,11 +384,9 @@ function init() {
     }
   });
 
-  // 初期ツール表示
   board.setTool("select");
   syncToolButtons("select");
 
-  // 初回訪問（保存データなし）は、サンプルを画面中央に表示
   if (!hasSaved()) {
     loadDirectoryTemplate();
     board.renderAll();
@@ -416,13 +394,11 @@ function init() {
   }
 }
 
-// ---- ディレクトリツリーのスターターテンプレ ----
 function loadDirectoryTemplate() {
   clearAll();
-  // ツリーは親→子の片方向が自然。現在の既定に関わらず片方向で生成する
   const prevEnds = state.wireEnds;
   state.wireEnds = "end";
-  const FOLDER = "auto"; // テーマ既定色（ライト/ダーク追従）
+  const FOLDER = "auto";
   const FILE = "auto";
   const mk = (type, x, y, text, color) => {
     const size = type === "folder" ? { w: 196, h: 60 } : { w: 184, h: 52 };
@@ -430,16 +406,12 @@ function loadDirectoryTemplate() {
     addItem({ id, type, x, y, w: size.w, h: size.h, text, color });
     return id;
   };
-  // root
   const root = mk("folder", 360, 40, "my-app", FOLDER);
-  // 第1階層
   const src = mk("folder", 150, 200, "src", FOLDER);
   const pub = mk("folder", 420, 200, "public", FOLDER);
   const pkg = mk("file", 680, 204, "package.json", FILE);
-  // 第2階層
   const indexTsx = mk("file", 30, 360, "index.tsx", FILE);
   const components = mk("folder", 250, 356, "components", FOLDER);
-  // 第3階層
   const button = mk("file", 250, 500, "Button.tsx", FILE);
 
   addConnector(root, src);
@@ -448,10 +420,9 @@ function loadDirectoryTemplate() {
   addConnector(src, indexTsx);
   addConnector(src, components);
   addConnector(components, button);
-  state.wireEnds = prevEnds; // 既定を元に戻す
+  state.wireEnds = prevEnds;
 }
 
-// ---- トースト ----
 let mdText = "";
 
 let toastTimer = null;

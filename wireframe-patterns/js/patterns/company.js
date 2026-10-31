@@ -1,4 +1,3 @@
-// 会社概要・アクセスのパターン
 export default [
   {
     id: "co01",

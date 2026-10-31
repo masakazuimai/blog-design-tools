@@ -9,7 +9,6 @@
     <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/directory-map-generator/" />
     <link rel="alternate" hreflang="en" href="https://codequest.work/generator/directory-map-generator/en/" />
     <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/directory-map-generator/" />
-    <!-- OGP -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://codequest.work/generator/directory-map-generator/" />
     <meta property="og:title" content="ディレクトリマップ作成ツール【無料】サイト構成図・フォルダ構成を生成" />
@@ -20,12 +19,10 @@
     <meta property="og:image:alt" content="ディレクトリマップ作成ツール" />
     <meta property="og:site_name" content="CodeQuest.work" />
     <meta property="og:locale" content="ja_JP" />
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="ディレクトリマップ作成ツール【無料】サイト構成図・フォルダ構成を生成" />
     <meta name="twitter:description" content="フォルダ・ファイルのノードを矢印でつないでディレクトリマップ／サイト構成図を作れる無料ツール。無限キャンバス・自動保存・登録不要。" />
     <meta name="twitter:image" content="https://codequest.work/generator/directory-map-generator/assets/og.png" />
-    <!-- Google Tag Manager -->
     <script>
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
@@ -38,12 +35,9 @@
         f.parentNode.insertBefore(j, f);
       })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
     </script>
-    <!-- End Google Tag Manager -->
-    <!-- テーマを先に適用（既定ダーク・チラつき防止） -->
     <script>
       document.documentElement.setAttribute("data-theme", localStorage.getItem("dirmap:theme") || "dark");
     </script>
-    <!-- ?v= はキャッシュバスティング用。js/css更新時は index.html と js の両方で日付を上げる -->
     <link rel="stylesheet" href="css/style.css?v=20260824c" />
     <script type="application/ld+json">
       {
@@ -66,7 +60,6 @@
     </script>
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe
         src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2"
@@ -75,7 +68,6 @@
         style="display: none; visibility: hidden"
       ></iframe
     ></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <header class="app-head">
       <div class="app-kicker">~/directory-map</div>
       <h1>ディレクトリマップ作成ツール</h1>
@@ -88,7 +80,6 @@
       </div>
     </header>
 
-    <!-- ツールバー -->
     <div class="toolbar" id="toolbar">
       <div class="tool-group" role="toolbar" aria-label="ツール">
         <button class="tool" data-tool="select" title="選択・移動 (V)" aria-label="選択">
@@ -218,7 +209,6 @@
       </button>
     </div>
 
-    <!-- キャンバス -->
     <div class="stage" id="stage">
       <div class="canvas" id="canvas">
         <div class="world" id="world">
@@ -229,13 +219,11 @@
               </marker>
             </defs>
           </svg>
-          <!-- 付箋・図形はここに動的追加 -->
         </div>
       </div>
       <p class="empty-hint" id="empty-hint">右上の<strong>「サンプル」</strong>で例を読み込むか、<strong>フォルダ</strong>／<strong>ファイル</strong>を選んでキャンバスをクリックして配置。<br />コネクタでノードをつなぎ、ドラッグで移動・ホイールでスクロール・⌘＋ホイールでズーム。</p>
     </div>
 
-    <!-- 広告テスト（2026-10-24〜6週間）: 右下広告を停止中。全画面広告用にローダーのみ残す -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
 
     <footer>

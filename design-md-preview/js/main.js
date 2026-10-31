@@ -1,4 +1,3 @@
-/* 起動とイベント配線 */
 import { PRESETS } from './presets.js?v=20260910a';
 import { parseDesignMd, resolveRef } from './parser.js?v=20260910a';
 import { loadFonts, reportFonts } from './fonts.js?v=20260910a';

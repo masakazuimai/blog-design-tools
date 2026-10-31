@@ -1,4 +1,3 @@
-// 色の辞書 — メインロジック（検索・絞り込み・カード描画・詳細モーダル・コピー）
 import { COLORS, HUE_GROUPS } from "./colors.js?v=20260625d";
 import { t, LANG } from "./i18n.js?v=20260625d";
 import {
@@ -21,7 +20,6 @@ const els = {
   toast: document.getElementById("toast"),
 };
 
-// カタカナ→ひらがな（読み検索の表記ゆれ吸収）
 const toHira = (s) =>
   s.replace(/[ァ-ヶ]/g, (c) =>
     String.fromCharCode(c.charCodeAt(0) - 0x60)
@@ -38,7 +36,6 @@ function matches(c) {
     .some((f) => norm(f).includes(q));
 }
 
-// ---- アイコン ----
 const ICON_COPY =
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
 const ICON_CLOSE =
@@ -50,7 +47,6 @@ const esc = (s) =>
     (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[m])
   );
 
-// ---- フィルタUIの描画 ----
 function renderFilters() {
   els.hues.innerHTML = HUE_GROUPS.map((g) => {
     const label = g.key === "all" ? t.catAll : LANG === "en" ? g.labelEn : g.labelJa;
@@ -60,7 +56,6 @@ function renderFilters() {
   }).join("");
 }
 
-// ---- グリッド描画 ----
 function render() {
   const list = COLORS.filter(matches);
   els.count.innerHTML = `<b>${list.length}</b> ${t.resultCount(list.length).replace(/^\d+\s*/, "")}`;
@@ -89,7 +84,6 @@ function render() {
     .join("");
 }
 
-// ---- クリップボード ----
 async function copy(text) {
   try {
     await navigator.clipboard.writeText(text);
@@ -116,7 +110,6 @@ function showToast(msg) {
   toastTimer = setTimeout(() => els.toast.classList.remove("show"), 1600);
 }
 
-// ---- 詳細モーダル ----
 function openModal(id) {
   const c = COLORS.find((x) => x.id === id);
   if (!c) return;
@@ -207,7 +200,6 @@ function closeModal() {
   document.body.style.overflow = "";
 }
 
-// ---- イベント ----
 els.search.addEventListener("input", (e) => {
   state.q = e.target.value;
   render();
@@ -244,7 +236,6 @@ els.grid.addEventListener("click", (e) => {
   if (chip) openModal(chip.dataset.id);
 });
 
-// チップのキーボード操作（Enter / Space で詳細を開く）
 els.grid.addEventListener("keydown", (e) => {
   const chip = e.target.closest(".chip");
   if (chip && (e.key === "Enter" || e.key === " ")) {
@@ -266,7 +257,6 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && els.overlay.classList.contains("open")) closeModal();
 });
 
-// ---- 初期描画 ----
 els.search.placeholder = t.searchPlaceholder;
 renderFilters();
 render();

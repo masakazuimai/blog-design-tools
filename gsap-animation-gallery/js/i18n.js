@@ -1,5 +1,3 @@
-// UI文言とコピー用コード内テキストの対訳。/ と /en/ は同一のcss/jsを共有し、
-// document.documentElement.lang で言語を切り替える。
 export const LANG = document.documentElement.lang === "en" ? "en" : "ja";
 
 export const t = (key) => UI[key][LANG];
@@ -24,17 +22,9 @@ const UI = {
   countNote: { ja: (a, b) => `表示中: ${a}種 / 全${b}種`, en: (a, b) => `Showing ${a} of ${b}` },
 };
 
-/** countNote など引数を取る文言用 */
 export const tf = (key, ...args) => UI[key][LANG](...args);
 
-/**
- * デモ台（stage）とコピー用コード（code）に含まれる日本語の対訳。
- * キーはコメント記号（// や / * * /）を含めず「中身の文字列」だけを書く。
- * こうしておくと同じ文言がJSコメントでもCSSコメントでもHTML本文でも一律に置換でき、
- * 記号の書き分けによる訳し漏れが起きない。
- */
 export const CODE_TEXT_EN = {
-  // ---- 全角記号（英語ページでは半角・中黒相当へ置き換える） ----
   "GSAP ・ ScrollTrigger ・ Timeline ・ Stagger ・": "GSAP · ScrollTrigger · Timeline · Stagger ·",
   "COPY &amp; PASTE ・ GSAP ・": "COPY &amp; PASTE · GSAP ·",
   "SCROLL ・ GSAP ・ MARQUEE ・": "SCROLL · GSAP · MARQUEE ·",
@@ -42,7 +32,6 @@ export const CODE_TEXT_EN = {
   "SCROLL ・ GSAP ・": "SCROLL · GSAP ·",
   "＋": "+",
 
-  // ---- デモ台（カード内に表示される文言） ----
   "高さを直接アニメーションさせず、autoの実寸を測ってから動かします。":
     "Instead of animating the height directly, it measures the real auto height first.",
   "点線の枠は拡大しないので、差が分かります": "The dashed frame never scales, so the difference is clear",
@@ -91,7 +80,6 @@ export const CODE_TEXT_EN = {
   "正確": "Precise",
   "メニュー項目 ": "Menu item ",
 
-  // ---- 基本トゥイーン ----
   "from() は「今の見た目」をゴールにして、指定した状態から動かす":
     "from() treats the current look as the goal and animates from the values you pass",
   "64px下から": "from 64px below",
@@ -117,7 +105,6 @@ export const CODE_TEXT_EN = {
   "1つのトゥイーンで多段の動きを書ける。timelineを組むまでもない時に便利":
     "multiple steps in a single tween — useful when a full timeline is overkill",
 
-  // ---- タイムライン ----
   "timeline は「順番に並べる箱」。第3引数の位置指定で重ね方を調整する":
     "a timeline is a container that plays things in order; the 3rd argument controls the overlap",
   "要素を少し重ねて再生": "Overlap each element slightly",
@@ -145,7 +132,6 @@ export const CODE_TEXT_EN = {
   "ホバーのたびに新しいトゥイーンを作らず、1本を play/reverse で使い回すのがコツ":
     "reuse one timeline with play/reverse instead of creating a tween on every hover",
 
-  // ---- ScrollTrigger ----
   "トリガーは「まとまり」に1つだけ置き、中身は stagger でずらす":
     "put one trigger on the group and let stagger handle the items",
   "scrub でスクロール位置に直結させると、スクロールを止めた分だけ途中で止まる":
@@ -191,7 +177,6 @@ export const CODE_TEXT_EN = {
   "開発中だけ true にして start/end の位置を目視で確認する":
     "turn it on during development to see exactly where start/end sit",
 
-  // ---- スクロール演出 ----
   "高さ = パネル数ぶんの縦スクロール量を確保する":
     "height = the vertical scroll distance the panels need",
   "position:sticky で固定しておけば pin なしでも横スクロールが作れる":
@@ -218,7 +203,6 @@ export const CODE_TEXT_EN = {
   "scrub では duration が「配分の比率」になる":
     "under scrub, duration becomes the share of the scroll each step gets",
 
-  // ---- テキスト・数値 ----
   "transform を効かせるために必須": "required so transforms apply",
   "1文字ずつ span に分解する（有料プラグイン SplitText なしでOK）":
     "split into one span per character (no paid SplitText plugin needed)",
@@ -244,7 +228,6 @@ export const CODE_TEXT_EN = {
   "文字に切り抜いた背景の位置をずらすことで、色が流れて見える":
     "sliding the background behind the clipped text makes the color appear to flow",
 
-  // ---- SVG ----
   "有料の DrawSVGPlugin を使わず、dasharray / dashoffset で同じ表現ができる":
     "dasharray / dashoffset gives the same result without the paid DrawSVGPlugin",
   "破線1本分を線の外に逃がして「消えた」状態にする":
@@ -260,7 +243,6 @@ export const CODE_TEXT_EN = {
     "in production, place two copies side by side at double width so it never gaps",
   "速度差で奥行きが出る": "different speeds create a sense of depth",
 
-  // ---- インタラクション ----
   "quickTo は毎フレーム呼んでも軽い、追従アニメ専用のショートカット":
     "quickTo is a cheap shortcut built for per-frame follow animations",
   "0.4 = 引っ張られる強さ": "0.4 = how strongly it is pulled",
@@ -301,7 +283,6 @@ export const CODE_TEXT_EN = {
     "an empty tween is the standard way to insert a pause that does nothing",
   "コピーしたい文字列": "the text you want to copy",
 
-  // ---- 追加分: 基本トゥイーン ----
   "filter も文字列のまま渡せる。ぼかしは重いので対象は小さく絞る":
     "filter can be passed as a plain string; blur is expensive, so keep the target small",
   "skewX を初期値だけに入れると「勢いで歪んで、止まると直る」ように見える":
@@ -316,7 +297,6 @@ export const CODE_TEXT_EN = {
   'from には "start" "center" "end" "edges" "random" が指定できる':
     'from accepts "start", "center", "end", "edges" and "random"',
 
-  // ---- 追加分: タイムライン ----
   "コールバック内の this はそのタイムライン自身を指す（アロー関数だと this が変わるので注意）":
     "inside a callback, this is the timeline itself (an arrow function would change that)",
   "開始": "started",
@@ -328,7 +308,6 @@ export const CODE_TEXT_EN = {
   "repeatDelay を入れると「繰り返しの間に一拍置く」＝しつこさが消える":
     "repeatDelay puts a beat between repeats, which stops it feeling nagging",
 
-  // ---- 追加分: ScrollTrigger ----
   "軸を左下に置くと「めくれ上がる」ような入り方になる":
     "anchoring at the bottom-left makes it look like it peels up into place",
   "inset の4辺は「上 右 下 左」。上を100%削ると下から開く":
@@ -342,7 +321,6 @@ export const CODE_TEXT_EN = {
   "手前ほど大きく動かすと奥行きが出る。同じ設定オブジェクトを使い回せる":
     "move nearer layers further for depth; the same config object can be reused",
 
-  // ---- 追加分: スクロール演出 ----
   "重ねてから左右へ開く": "stack them first, then fan out left and right",
   "スクロールに合わせて": "As you scroll",
   "読んでいる行だけが": "only the line you are reading",
@@ -360,7 +338,6 @@ export const CODE_TEXT_EN = {
   "画面の中央付近を判定線にすると、現在地の切り替わりが自然に見える":
     "putting the boundary near the middle of the viewport makes the switch feel natural",
 
-  // ---- 追加分: テキスト ----
   "最後は先頭に戻す": "wrap back to the first one at the end",
   "同じ文字を2枚重ね、上の塗り版を clip-path で削っておく":
     "stack two copies and clip the filled one on top",
@@ -371,7 +348,6 @@ export const CODE_TEXT_EN = {
   "繰り返しのたびに関数を再評価する＝毎回違う乱数になる":
     "re-evaluates the functions on every repeat, so the randomness changes each time",
 
-  // ---- 追加分: SVG ----
   "線と矢じりを別パスにしておくと、描かれる順番を制御できる":
     "keeping the shaft and the head as separate paths lets you control the drawing order",
   "path の d も、コマンドの並びが同じなら attr で補間できる（C の数と順序を揃えるのがコツ）":
@@ -386,10 +362,8 @@ export const CODE_TEXT_EN = {
     "getPointAtLength gives you the coordinates, so you can follow a path without MotionPathPlugin",
 };
 
-// 短い語が長い語の一部を壊さないよう、必ず長いキーから置換する（例:「記事本文」→「本文」の順）
 const SORTED_ENTRIES = Object.entries(CODE_TEXT_EN).sort((a, b) => b[0].length - a[0].length);
 
-/** 英語ページのとき、コピー用コード内の日本語を英訳に差し替える */
 export const localizeCode = (code) => {
   if (LANG === "ja") return code;
   return SORTED_ENTRIES.reduce((acc, [ja, en]) => acc.replaceAll(ja, en), code);

@@ -1,5 +1,3 @@
-// JSが生成する文字列だけをここに集約する
-// （HTMLに直接書かれた静的テキストは各シェル側 = index.html / en/index.html に持たせる）
 
 export const LANG = document.documentElement.lang === "en" ? "en" : "ja";
 

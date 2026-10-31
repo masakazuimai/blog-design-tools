@@ -1,4 +1,3 @@
-// VS Code templates (English). label must match data/vscode.en.js exactly.
 
 export const TEMPLATES = [
   {

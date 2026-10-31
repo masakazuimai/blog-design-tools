@@ -1,4 +1,3 @@
-// ファーストビューのパターン
 export default [
   {
     id: "fv01",

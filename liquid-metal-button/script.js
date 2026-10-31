@@ -1,9 +1,4 @@
-/*
- * リキッドメタルボタン – 自作WebGLシェーダー（MIT License / CodeQuest.work）
- * 外部ライブラリ非依存。rep（うねりの細かさ）と angle（光の角度）で質感を変える。
- */
 
-// --- シェーダーソース（ランタイムと生成コードで共有する単一の真実）---------
 const VERT_SRC = `attribute vec2 a_pos;
 void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }`;
 
@@ -52,7 +47,6 @@ void main() {
   gl_FragColor = vec4(col, 1.0);
 }`;
 
-// --- WebGLレンダラー -------------------------------------------------
 function compileShader(gl, type, src) {
   const shader = gl.createShader(type);
   gl.shaderSource(shader, src);
@@ -86,7 +80,6 @@ function createLiquidMetal(container, options) {
   }
   gl.useProgram(program);
 
-  // 画面いっぱいの三角形1枚
   const buffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
@@ -143,11 +136,8 @@ function createLiquidMetal(container, options) {
   };
 }
 
-// --- コード生成 -------------------------------------------------
-// ページ言語（生成コードのコメントを日本語/英語で切替）
 const IS_EN = document.documentElement.lang === "en";
 
-// 形・リム・テーマを反映した .lm 用のCSS（fullCode と cssJsBlock で共有）
 function styleBlock(rim, shape, theme) {
   const circle = shape === "circle";
   const w = circle ? 160 : 300;
@@ -174,7 +164,6 @@ function styleBlock(rim, shape, theme) {
 </style>`;
 }
 
-// CSS + 呼び出しのみ（createLiquidMetal ヘルパーを別途読み込み済みの人向け）
 function cssJsBlock(rep, ang, spd, hue, sat, rim, shape, theme) {
   return `<!-- ${IS_EN ? "This button's CSS + call (load the createLiquidMetal helper separately; the all-in-one snippet is in the other tab)" : "このボタンのCSS + 呼び出し（createLiquidMetal ヘルパーは別途読み込んでおく / 全部入りは「一式」タブ）"} -->
 <div class="lm">
@@ -194,7 +183,6 @@ createLiquidMetal(document.querySelector(".lm"), {
 <\/script>`;
 }
 
-// 他サイトへ貼ってそのまま動く自己完結スニペット（MIT・外部依存なし）
 function fullCode(rep, ang, spd, hue, sat, rim, shape, theme) {
   return `<!-- ${IS_EN ? "Liquid metal button" : "リキッドメタルボタン"} (${shape} / ${theme} / rep ${rep} / angle ${ang} / speed ${spd} / hue ${hue} / tint ${sat} / rim ${rim}px) | MIT License -->
 <div class="lm">
@@ -257,7 +245,6 @@ ${styleBlock(rim, shape, theme)}
 <\/script>`;
 }
 
-// --- テンプレート定義（プリセット） ---------------------------
 const TEMPLATES = [
   { id: "FLAT", rep: 0, ang: 0, spd: 0.6 },
   { id: "A", rep: 0.4, ang: 0, spd: 1 },
@@ -270,7 +257,6 @@ const TEMPLATES = [
   { id: "H", rep: 0.6, ang: 90, spd: 1 },
 ];
 
-// --- 要素参照 ---------------------------------------------
 const lm = document.querySelector(".lm");
 const repSld = document.getElementById("repSld");
 const angSld = document.getElementById("angSld");
@@ -289,9 +275,8 @@ const codeOut = document.getElementById("codeOut");
 const codeMeta = document.getElementById("codeMeta");
 const copyBtn = document.getElementById("copyBtn");
 
-let activeTab = "full"; // "full" | "params"
+let activeTab = "full";
 
-// --- プレビュー（単一インスタンス） -----------------------------
 let instance = null;
 try {
   instance = createLiquidMetal(lm, {
@@ -305,10 +290,8 @@ try {
   console.error("リキッドメタルの初期化に失敗しました:", error);
 }
 
-// リム太さ（CSS変数）を初期値で反映
 lm.style.setProperty("--rim", `${lm.dataset.rim}px`);
 
-// スライダー表示をプレビューの初期値に同期（ブラウザのフォーム値復元対策）
 repSld.value = lm.dataset.rep;
 repVal.textContent = lm.dataset.rep;
 angSld.value = lm.dataset.ang;
@@ -322,7 +305,6 @@ hueVal.textContent = lm.dataset.hue;
 satSld.value = lm.dataset.sat;
 satVal.textContent = lm.dataset.sat;
 
-// --- コード生成 ---------------------------------------------
 function renderCode() {
   const d = lm.dataset;
   codeMeta.textContent = `${d.shape} / rep ${d.rep} / angle ${d.ang} / speed ${d.spd} / hue ${d.hue} / tint ${d.sat} / rim ${d.rim}px`;
@@ -332,7 +314,6 @@ function renderCode() {
       : cssJsBlock(d.rep, d.ang, d.spd, d.hue, d.sat, parseFloat(d.rim), d.shape, d.theme);
 }
 
-// --- 値の反映（プレビュー + スライダー表示） ---------------------
 function setRep(v) {
   lm.dataset.rep = v;
   repSld.value = v;
@@ -374,7 +355,6 @@ function clearActiveTemplate() {
   tplGrid.querySelectorAll(".tpl-btn").forEach((b) => b.classList.remove("is-active"));
 }
 
-// スライダー手動操作 → 値更新（テンプレ選択は解除）
 repSld.addEventListener("input", () => {
   setRep(repSld.value);
   clearActiveTemplate();
@@ -390,7 +370,6 @@ spdSld.addEventListener("input", () => {
   clearActiveTemplate();
   renderCode();
 });
-// リム太さ・色はテンプレ非依存のスタイル調整（テンプレ選択は維持）
 rimSld.addEventListener("input", () => {
   setRim(rimSld.value);
   renderCode();
@@ -404,7 +383,6 @@ satSld.addEventListener("input", () => {
   renderCode();
 });
 
-// --- テンプレートボタン生成 -----------------------------------
 function applyTemplate(tpl, btn) {
   setRep(String(tpl.rep));
   setAng(String(tpl.ang));
@@ -423,10 +401,9 @@ TEMPLATES.forEach((tpl) => {
     `<span class="tpl-meta">${tpl.rep}·${tpl.ang}·${tpl.spd}</span>`;
   btn.addEventListener("click", () => applyTemplate(tpl, btn));
   tplGrid.appendChild(btn);
-  if (tpl.id === "FLAT") btn.classList.add("is-active"); // 初期はテンプレFLAT（プレビュー初期値と一致）
+  if (tpl.id === "FLAT") btn.classList.add("is-active");
 });
 
-// --- 形セレクタ（長方形 / 丸）→ 生成コードにも反映 ----------------
 document.querySelectorAll(".shape-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".shape-btn").forEach((b) => b.classList.remove("is-active"));
@@ -436,8 +413,6 @@ document.querySelectorAll(".shape-btn").forEach((btn) => {
   });
 });
 
-// --- 背景＝テーマ切替（プレビュー背景＋ボタン面/文字色を反転）-------
-// 背景色自体はページ側なのでコードには含めないが、ボタンのテーマ（面/文字色）は反映する
 const preview = document.querySelector(".preview");
 document.querySelectorAll(".bg-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -449,10 +424,8 @@ document.querySelectorAll(".bg-btn").forEach((btn) => {
   });
 });
 
-// 初期表示のコード生成
 renderCode();
 
-// --- タブ切替（一式 / パラメータのみ）---------------------------
 document.querySelectorAll(".tab").forEach((tab) => {
   tab.addEventListener("click", () => {
     document.querySelectorAll(".tab").forEach((t) => t.classList.remove("is-active"));
@@ -462,7 +435,6 @@ document.querySelectorAll(".tab").forEach((tab) => {
   });
 });
 
-// --- コピー --------------------------------------------------
 copyBtn.addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(codeOut.textContent);

@@ -1,5 +1,3 @@
-// Word テンプレート
-// 各項目は { cat: カテゴリID, label: data.js のラベル完全一致 }。
 
 export const TEMPLATES = [
   {

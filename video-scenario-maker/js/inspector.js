@@ -1,4 +1,3 @@
-// インスペクター：選択中のシーン1件を編集する。入力中は作り直さず値だけ差し替える
 import { SHOTS, ANGLES, MOVES, LIGHTS, TRANSITIONS } from "./vocab.js?v=20261025b";
 import { withTimes } from "./store.js?v=20261025b";
 import { fmtTime } from "./prompt.js?v=20261025b";
@@ -16,7 +15,6 @@ Object.entries(SELECTS).forEach(([id, list]) => {
   $(id).replaceChildren(...list.map((o) => new Option(label(o), o.v)));
 });
 
-// フォーカス中の欄は上書きしない（入力中のカーソル位置を守る）
 const setValue = (node, v) => {
   if (document.activeElement !== node && node.value !== v) node.value = v;
 };

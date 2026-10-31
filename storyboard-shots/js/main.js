@@ -1,4 +1,3 @@
-// 画面の配線（ショット一覧／絵コンテの切り替え）
 import { initGallery } from "./gallery.js?v=20261030e";
 import { initDetail } from "./detail.js?v=20261030e";
 import { initBoardView } from "./board-view.js?v=20261030e";

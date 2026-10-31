@@ -1,6 +1,3 @@
-// 矢印・記号に変わるアイコン変形（10種）
-// 戻る矢印やアコーディオンの開閉マークなど、×以外の意味を持たせたい時に使う
-// アクセント色 #6366f1 / サブ色 #ec4899 は main.js が置換する
 
 const BARS = "<span></span><span></span><span></span>";
 const MORPH_TRANSITION =

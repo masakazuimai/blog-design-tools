@@ -1,6 +1,3 @@
-// 下線系ホバーエフェクト（12種）
-// 各エフェクトは self-contained（基本の見た目 + :hover）でそのままコピペできる
-// アクセント色 #6366f1 / サブ色 #ec4899（rgbは 99,102,241 / 236,72,153）は main.js が置換する
 
 export const UNDERLINE_EFFECTS = [
   {

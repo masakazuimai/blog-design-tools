@@ -1,5 +1,3 @@
-// 動くアイコン ジェネレーター
-// 一覧の再生制御・設定の反映・3形式のダウンロードを担当する
 
 import { ICONS, CATEGORIES, CATEGORY_LABELS } from "./icons/index.js?v=20260815c";
 import { buildKeyframes, buildRules } from "./anim.js?v=20260815c";
@@ -11,7 +9,6 @@ import { LANG, t } from "./i18n.js?v=20260815c";
 const STORAGE_KEY = "aig:v1";
 const DEFAULTS = { color: "#6366f1", size: 128, speed: 1, loop: "infinite" };
 
-// 一覧カードは設定に関わらず3回で止める（CEO指定の固定仕様）
 const GALLERY_LOOP = 3;
 
 const label = (labels) => labels[LANG] || labels.ja;
@@ -41,14 +38,11 @@ let activeCat = "all";
 let query = "";
 let selected = ICONS[0];
 
-// 設定に依存しない @keyframes は起動時に1度だけ、animation ルールは設定変更のたびに差し替える
 const keyframeStyle = document.createElement("style");
 const ruleStyle = document.createElement("style");
-// タイトル左の装飾は設定に追従させないため、ルールを別枠で持つ
 const titleStyle = document.createElement("style");
 document.head.append(keyframeStyle, ruleStyle, titleStyle);
 
-/* ---------------- 設定 ---------------- */
 
 function loadSettings() {
   try {
@@ -76,7 +70,6 @@ function applySettings() {
   dom.speed.value = String(settings.speed);
   dom.loop.value = settings.loop;
 
-  // 一覧＝3回固定 / 設定パネルのプレビュー＝ユーザー指定のループ回数
   ruleStyle.textContent = ICONS.map((icon) =>
     [
       buildRules(icon, { speed: settings.speed, loop: GALLERY_LOOP, scope: `.card.icon-${icon.id}.is-playing ` }),
@@ -85,16 +78,13 @@ function applySettings() {
   ).join("\n");
 }
 
-/* ---------------- 再生制御 ---------------- */
 
-// クラスを外して強制リフローを挟まないと、連続再生時にアニメーションが再スタートしない
 function play(target) {
   target.classList.remove("is-playing");
   void target.offsetWidth;
   target.classList.add("is-playing");
 }
 
-/* ---------------- 一覧 ---------------- */
 
 function visibleIcons() {
   const keyword = query.trim().toLowerCase();
@@ -166,7 +156,6 @@ function renderGrid() {
   dom.countNote.textContent = t("count", icons.length, ICONS.length);
 }
 
-/* ---------------- 設定パネル ---------------- */
 
 function selectIcon(icon) {
   selected = icon;
@@ -180,7 +169,6 @@ function selectIcon(icon) {
   play(dom.preview);
 }
 
-/* ---------------- ダウンロード ---------------- */
 
 function svgOptions(animated) {
   return {
@@ -217,7 +205,6 @@ async function handleDownload(kind) {
   }
 }
 
-/* ---------------- 初期化 ---------------- */
 
 function bindEvents() {
   dom.search.addEventListener("input", (event) => {
@@ -231,7 +218,6 @@ function bindEvents() {
 
   dom.replay.addEventListener("click", () => play(dom.preview));
 
-  // ループ回数が有限の場合、最後の周が終わったら止める（infinite では発火しない）
   dom.grid.addEventListener("animationend", (event) => {
     const card = event.target.closest(".card");
     if (card) card.classList.remove("is-playing");
@@ -275,7 +261,6 @@ function bindEvents() {
   });
 }
 
-// タイトル左のチェックを1回だけ再生する（一覧や設定の再生条件とは独立）
 function setupTitleIcon() {
   const icon = ICONS.find((item) => item.id === "check");
   if (!icon || !dom.titleIcon) return;

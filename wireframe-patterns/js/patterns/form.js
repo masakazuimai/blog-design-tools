@@ -1,11 +1,8 @@
-// お問い合わせフォームのパターン
-// 入力欄は見た目だけの枠（span）で描く。実装時は input / select / textarea に置き換える
 const FIELD = (label, { req = false, tall = false, hint = "" } = {}) => `<div class="fm-field">
         <span class="fm-label">${label}${req ? `<span class="fm-req">必須</span>` : `<span class="fm-opt">任意</span>`}</span>
         <span class="fm-input${tall ? " fm-input--tall" : ""}">${hint}</span>
       </div>`;
 
-// フォーム系パターンで共通に使う見た目
 const FIELD_CSS = `.fm-field { display: grid; gap: 6px; }
 .fm-label { display: flex; align-items: center; gap: 8px; font-weight: 700; }
 .fm-req, .fm-opt { padding: 0 8px; border-radius: 4px; font-size: 16px; font-weight: 600; }

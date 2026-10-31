@@ -106,7 +106,6 @@
       <div class="brand">CodeQuest.work</div>
     </div>
     <script>
-      // 一度きりの静的レイアウト（アニメーション無し＝スクショ安定）
       var ring = document.getElementById("ring");
       var n = 7,
         radius = 210,
@@ -117,7 +116,6 @@
         c.textContent = i + 1;
         var ang = (i * 360) / n;
         c.style.transform = "rotateY(" + ang + "deg) translateZ(" + radius + "px)";
-        // 正面ほど明るく
         var face = Math.cos(((ang - 20) * Math.PI) / 180);
         c.style.filter = "brightness(" + (0.45 + 0.55 * (face * 0.5 + 0.5)).toFixed(3) + ")";
         c.style.zIndex = Math.round(face * 100);

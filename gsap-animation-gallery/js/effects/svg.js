@@ -1,4 +1,3 @@
-// SVG・図形。DrawSVG / MorphSVG（有料）を使わず、標準の属性トゥイーンで同じ表現を作る。
 import { CDN } from "./_shared.js?v=20260811a";
 
 export const SVG = [

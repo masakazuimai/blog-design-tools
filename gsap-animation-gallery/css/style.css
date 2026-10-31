@@ -1,5 +1,3 @@
-/* GSAPアニメーション ギャラリー 共通スタイル */
-/* ページUIのスタイルのみを置く。デモ本体のCSSは js/effects/ の各定義から動的に注入する */
 
 * {
   margin: 0;
@@ -20,7 +18,6 @@ body {
   line-height: 1.7;
 }
 
-/* ============ ヘッダー ============ */
 .header {
   position: relative;
   background: linear-gradient(135deg, #0f172a 0%, #3730a3 60%, #6d28d9 100%);
@@ -28,7 +25,6 @@ body {
   padding: 40px 20px 36px;
   text-align: center;
 }
-/* 言語切替リンク（ja ↔ en。ヘッダー右上） */
 .lang-switch {
   position: absolute;
   top: 16px;
@@ -57,7 +53,6 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
-/* ============ レイアウト ============ */
 .container {
   max-width: 1280px;
   margin: 0 auto;
@@ -80,7 +75,6 @@ body {
   padding-right: 2px;
 }
 
-/* ============ サイドバー ============ */
 .input-card {
   background: #fff;
   border: 1px solid #e2e8f0;
@@ -148,7 +142,6 @@ html[lang="en"] .code-box code:empty::before {
 .reset-settings:hover {
   background: #f1f5f9;
 }
-/* 視覚的には隠すが、スクリーンリーダーには読ませるラベル */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -206,7 +199,6 @@ html[lang="en"] .code-box code:empty::before {
   outline-offset: 1px;
 }
 
-/* ============ フィルタ ============ */
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -229,7 +221,6 @@ html[lang="en"] .code-box code:empty::before {
   font-weight: 700;
 }
 
-/* ============ カードグリッド ============ */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -267,7 +258,6 @@ html[lang="en"] .code-box code:empty::before {
   font-weight: 700;
 }
 
-/* デモ台。各エフェクトのCSSはここより内側にスコープされる */
 .stage {
   position: relative;
   height: 190px;
@@ -280,8 +270,6 @@ html[lang="en"] .code-box code:empty::before {
   align-items: center;
   justify-content: center;
 }
-/* スクロール連動デモ用。カード内に独立したスクロール領域を作り、
-   ScrollTrigger の scroller にこの要素を指定する */
 .stage--scroll {
   display: block;
   overflow-y: auto;
@@ -343,7 +331,6 @@ html[lang="en"] .stage--scroll::before {
   background: var(--accent);
 }
 
-/* ============ トースト ============ */
 .toast {
   position: fixed;
   left: 50%;
@@ -363,7 +350,6 @@ html[lang="en"] .stage--scroll::before {
   transform: translate(-50%, 0);
 }
 
-/* ============ 使い方セクション ============ */
 .usage {
   max-width: 960px;
   margin: 0 auto;
@@ -398,7 +384,6 @@ html[lang="en"] .stage--scroll::before {
   font-size: 1rem;
 }
 
-/* ============ フッター ============ */
 footer {
   display: flex;
   justify-content: flex-start;
@@ -434,7 +419,6 @@ footer a:hover {
   color: #3b82f6;
 }
 
-/* ============ 広告（右下フローティングカード / ~/.claude/rules/ad-units.md 準拠） ============ */
 .footer-ad {
   position: fixed;
   right: 0;
@@ -529,7 +513,6 @@ footer a:hover {
     box-shadow: none;
     z-index: auto;
   }
-  /* PCで閉じてもSPでは表示する */
   .footer-ad.is-closed {
     display: flex;
   }

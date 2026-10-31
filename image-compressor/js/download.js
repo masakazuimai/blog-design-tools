@@ -1,4 +1,3 @@
-// ダウンロード処理（個別・ZIP一括）
 
 export function downloadBlob(blob, fileName) {
   if (!blob) return
@@ -7,10 +6,8 @@ export function downloadBlob(blob, fileName) {
   link.href = url
   link.download = fileName
   link.rel = 'noopener'
-  // 一部ブラウザはDOMに無いアンカーのclickを無視するため追加してから発火
   document.body.appendChild(link)
   link.click()
-  // clickが処理される前にURLを破棄するとDLがキャンセルされるため遅延解放
   setTimeout(() => {
     link.remove()
     URL.revokeObjectURL(url)
@@ -22,7 +19,6 @@ export async function downloadZip(results) {
   const usedNames = new Set()
 
   results.forEach((result) => {
-    // 同名ファイルの衝突を連番で回避する
     let name = result.outputName
     let counter = 2
     while (usedNames.has(name)) {

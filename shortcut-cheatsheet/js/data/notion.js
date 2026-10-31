@@ -1,5 +1,3 @@
-// Notion ショートカットキー データ（Notion 既定キー準拠）
-// keys: トークン配列。'mod'=⌘/Ctrl, 'alt'=⌥/Alt, 'shift'=⇧/Shift、それ以外はそのまま表示。
 
 export const CATEGORIES = [
   {

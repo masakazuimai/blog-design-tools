@@ -1,8 +1,3 @@
-/* CSSセレクタ辞典 データ定義
-   - CATEGORIES: 絞り込みチップ
-   - SELECTORS : 44種のセレクタ（sel=セレクタ文字列 / css=サンプル / desc=解説 / note=状態依存の補足）
-   - DEMO_HTML : iframe（srcdoc）に流し込むデモ文書。ライブCSSはこの中だけに閉じ込める
-*/
 
 export const CATEGORIES = [
   { id: "all", label: "すべて" },
@@ -14,11 +9,9 @@ export const CATEGORIES = [
   { id: "form", label: "フォーム状態" },
 ];
 
-/** 状態依存（マウス・フォーカス）で見た目が変わるセレクタに付ける共通の補足文 */
 const STATE_NOTE = "この状態はユーザー操作中だけ発生します。ハイライトは対象要素の位置を示すもので、実際の見た目はデモ内でマウスを乗せる・クリックすると確認できます。";
 
 export const SELECTORS = [
-  /* ---------- 基本 ---------- */
   {
     sel: "p",
     cat: "basic",
@@ -55,7 +48,6 @@ export const SELECTORS = [
     desc: "カンマで区切ると、複数のセレクタに同じスタイルをまとめて当てられます。ひとつでも解釈できない書き方が混ざると、ルール全体が無視される点に注意します。",
   },
 
-  /* ---------- 階層・兄弟 ---------- */
   {
     sel: "div p",
     cat: "hierarchy",
@@ -85,7 +77,6 @@ export const SELECTORS = [
     desc: "同じ親の中で、その要素より後ろにある兄弟すべてを対象にします。直後の1つに限定される + との違いを押さえておきます。",
   },
 
-  /* ---------- 属性 ---------- */
   {
     sel: "a[href]",
     cat: "attr",
@@ -136,7 +127,6 @@ export const SELECTORS = [
     desc: "値のどこかにその文字列が含まれていればマッチします。単語単位の ~= より緩いぶん、意図しない要素も拾いやすい点に注意します。",
   },
 
-  /* ---------- 疑似クラス ---------- */
   {
     sel: "a:link",
     cat: "pseudo",
@@ -240,7 +230,6 @@ export const SELECTORS = [
     desc: "子要素もテキストも持たない要素にマッチします。半角スペースや改行が入っていると空とはみなされません（HTMLコメントは無視されます）。",
   },
 
-  /* ---------- 疑似要素 ---------- */
   {
     sel: "p::before",
     cat: "element",
@@ -270,7 +259,6 @@ export const SELECTORS = [
     desc: "表示上の1行目だけを装飾します。幅が変われば対象になる文字数も変わる、レイアウト依存の指定です。",
   },
 
-  /* ---------- フォーム状態 ---------- */
   {
     sel: "input:checked",
     cat: "form",
@@ -344,7 +332,6 @@ export const SELECTORS = [
   },
 ];
 
-/* デモ文書。ライブCSSとハイライトはこの iframe の中だけで完結する */
 export const DEMO_HTML = `<!doctype html>
 <html lang="ja">
 <head>

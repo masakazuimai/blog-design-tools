@@ -1,4 +1,3 @@
-// ボーダー系ホバーエフェクト（12種）
 
 export const BORDER_EFFECTS = [
   {

@@ -1,4 +1,3 @@
-// ショット詳細（モーダル）
 import { getShot, categoryName } from "./shots/index.js?v=20261030e";
 import { frameHtml } from "./frame.js?v=20261030e";
 import { VOCAB, vocabLabel } from "./vocab.js?v=20261030e";
@@ -10,7 +9,6 @@ import { hasDemo, demoPoster, demoSources, reducedMotion } from "./move-demo.js?
 
 const $ = (id) => document.getElementById(id);
 
-// 開いたショットの動きに合わせて見本を差し替える（動画は開いたときだけ読み込む）
 const showMoveDemo = (shot) => {
   const box = $("detail-move");
   const video = $("detail-move-video");
@@ -22,7 +20,6 @@ const showMoveDemo = (shot) => {
   video.poster = demoPoster(shot);
   video.innerHTML = demoSources(shot);
   video.load();
-  // 応用のカメラワークは動きを語彙で持たないので、ショット名を出す
   $("detail-move-cap").textContent = t("moveDemo")(shot.vocab?.move ? vocabLabel("move", shot.vocab.move) : shot.name);
   box.hidden = false;
   if (!reducedMotion()) video.play().catch(() => {});
@@ -41,7 +38,6 @@ export const initDetail = () => {
   let current = null;
 
   $("detail-close").addEventListener("click", () => dialog.close());
-  // close は後から届くので、その間に次のショットを開いていたら止めない
   dialog.addEventListener("close", () => {
     if (!dialog.open) stopMoveDemo();
   });
@@ -67,7 +63,6 @@ export const initDetail = () => {
     $("detail-use").textContent = current.use;
     $("detail-intent").textContent = current.intent;
     $("detail-tips").textContent = current.tips;
-    // 応用のカメラワーク（語彙に無い動き）は、動きを語彙でなくプロンプトの説明文で指定している
     const inDesc = (key) => key === "move" && current.cat === "move" && !current.vocab.move;
     $("detail-vocab").innerHTML = VOCAB
       .map((v) => `<tr><th>${v.label}</th><td>${inDesc(v.key) ? t("moveInDesc") : vocabLabel(v.key, current.vocab[v.key]) || t("none")}</td></tr>`)

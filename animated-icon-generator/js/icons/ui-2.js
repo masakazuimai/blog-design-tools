@@ -1,4 +1,3 @@
-// UI・装飾カテゴリの追加分（共通ルールは status.js のヘッダーを参照）
 
 import { DRAW, drawKeys, pulseKeys, bounceKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815c";
 
@@ -86,7 +85,6 @@ export const UI_ICONS_2 = [
       duration: 1.5,
       easing: "ease-in-out",
       tracks: [
-        // 目盛りの点滅だけでは動きが小さいので、定規を斜めに滑らせる
         {
           part: ["body", "ticks"],
           origin: "12px 12px",
@@ -130,7 +128,6 @@ export const UI_ICONS_2 = [
       duration: 1.5,
       easing: "ease-out",
       tracks: [
-        // 小さなチェックの描画だけでは変化が足りないので、バッジごと回して出す
         {
           part: "body",
           origin: "12px 12px",

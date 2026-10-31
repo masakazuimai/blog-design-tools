@@ -1,4 +1,3 @@
-// カード一覧（記事・商品）のパターン
 const POST = `<li class="wf-box cd01__card">
         <div class="wf-img cd01__img"></div>
         <div class="cd01__body">

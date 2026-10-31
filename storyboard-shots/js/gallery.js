@@ -1,4 +1,3 @@
-// ショット一覧（カテゴリ絞り込み＋カード）
 import { CATEGORIES, SHOTS, categoryName, getShot } from "./shots/index.js?v=20261030e";
 import { frameHtml } from "./frame.js?v=20261030e";
 import { vocabLabel } from "./vocab.js?v=20261030e";
@@ -21,7 +20,6 @@ const renderChips = (wrap, onSelect) => {
   });
 };
 
-// カードに出す設定のタグ（指定なしは出さない）
 const tags = (s) => ["shot", "angle", "move"]
   .map((k) => vocabLabel(k, s.vocab[k]))
   .filter((label) => label && label !== t("none"))
@@ -42,7 +40,6 @@ const cardHtml = (s) => `<article class="card" data-cat="${s.cat}">
   </div>
 </article>`;
 
-// マウスを乗せている間だけ、写真を粘土風の見本動画に入れ替える（タッチ端末はホバーが無いので詳細画面で見る）
 const canHover = window.matchMedia("(hover: hover) and (pointer: fine)");
 
 const startDemo = (card) => {
@@ -50,7 +47,6 @@ const startDemo = (card) => {
   const shot = getShot(thumb.dataset.open);
   const img = thumb.querySelector(".photo-frame__img");
   if (!hasDemo(shot) || !img || !canHover.matches || reducedMotion() || thumb.querySelector(".photo-frame__demo")) return;
-  // 写真の直後に置き、アイコンの重ね描き（SVG）は動画の上に残す
   img.insertAdjacentHTML("afterend",
     `<video class="photo-frame__demo" muted loop playsinline autoplay poster="${demoPoster(shot)}" aria-hidden="true">${demoSources(shot)}</video>`);
   thumb.querySelector(".photo-frame__demo").play().catch(() => {});

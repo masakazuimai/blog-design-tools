@@ -9,7 +9,6 @@
     <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/neon-button-generator/" />
     <link rel="alternate" hreflang="en" href="https://codequest.work/generator/neon-button-generator/en/" />
     <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/neon-button-generator/" />
-    <!-- OGP -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://codequest.work/generator/neon-button-generator/en/" />
     <meta property="og:title" content="Neon Button Generator — 15 Glowing CSS Button Styles (Free)" />
@@ -19,12 +18,10 @@
     <meta property="og:image:height" content="630" />
     <meta property="og:site_name" content="CodeQuest.work" />
     <meta property="og:locale" content="en_US" />
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Neon Button Generator — 15 Glowing CSS Button Styles" />
     <meta name="twitter:description" content="Create CSS buttons with a glowing rim using SVG filters. 15 light patterns with auto animation. Copy-paste HTML/CSS. Free." />
     <meta name="twitter:image" content="https://codequest.work/generator/neon-button-generator/assets/og-en.jpg" />
-    <!-- Google Tag Manager -->
     <script>
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
@@ -37,7 +34,6 @@
         f.parentNode.insertBefore(j, f);
       })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
     </script>
-    <!-- End Google Tag Manager -->
     <link rel="stylesheet" href="../css/style.css?v=20260724a" />
     <script type="application/ld+json">
       {
@@ -72,7 +68,6 @@
     </script>
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe
         src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2"
@@ -81,14 +76,12 @@
         style="display: none; visibility: hidden"
       ></iframe
     ></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <header>
       <div class="brand"><span>Neon Button</span> Generator</div>
       <a class="lang-switch" href="../" hreflang="ja">日本語</a>
     </header>
 
     <main class="stage">
-      <!-- Glowing-rim button. The contents are rebuilt by script.js per light pattern. -->
       <div class="preview">
         <button class="rim-btn" type="button">
           <svg class="rim-btn__svg" viewBox="0 0 320 120" width="320" height="120" aria-hidden="true"></svg>
@@ -96,7 +89,6 @@
         </button>
       </div>
 
-      <!-- Light pattern selection (buttons), placed above the settings panel -->
       <section class="patterns">
         <h2 class="patterns__title">Light pattern</h2>
         <div class="patterns__grid">
@@ -118,7 +110,6 @@
         </div>
       </section>
 
-      <!-- Control panel (each input is bound to state) -->
       <div class="panel">
         <div class="field field--wide">
           <div class="field__head">
@@ -135,7 +126,6 @@
           <input class="field__slider" id="width" type="range" min="160" max="560" step="4" value="320" data-key="width" data-unit="px" />
         </div>
 
-        <!-- Directional / Dual / Tri: light direction -->
         <div class="field" data-pattern="distant dual tri">
           <div class="field__head">
             <label for="azimuth">Light angle</label>
@@ -152,7 +142,6 @@
           <input class="field__slider" id="elevation" type="range" min="0" max="90" step="1" value="46" data-key="elevation" data-unit="°" />
         </div>
 
-        <!-- Point: light position -->
         <div class="field" data-pattern="point">
           <div class="field__head">
             <label for="pointX">Light X</label>
@@ -169,7 +158,6 @@
           <input class="field__slider" id="pointY" type="range" min="0" max="100" step="1" value="0" data-key="pointYPct" data-unit="%" />
         </div>
 
-        <!-- Point / Beam Glow: light spread -->
         <div class="field" data-pattern="point beamglow">
           <div class="field__head">
             <label for="pointZ">Light spread</label>
@@ -178,7 +166,6 @@
           <input class="field__slider" id="pointZ" type="range" min="1" max="100" step="1" value="14" data-key="pointZ" />
         </div>
 
-        <!-- Arc Shine / Beam Glow: orbit position -->
         <div class="field" data-pattern="arcshine beamglow">
           <div class="field__head">
             <label for="orbit">Orbit angle</label>
@@ -187,7 +174,6 @@
           <input class="field__slider" id="orbit" type="range" min="0" max="360" step="1" value="90" data-key="orbitAngle" data-unit="°" data-round="1" />
         </div>
 
-        <!-- Arc Shine: arc length -->
         <div class="field" data-pattern="arcshine">
           <div class="field__head">
             <label for="arcLen">Arc length</label>
@@ -196,7 +182,6 @@
           <input class="field__slider" id="arcLen" type="range" min="5" max="60" step="1" value="22" data-key="arcLen" data-unit="%" />
         </div>
 
-        <!-- Gloss Shine: sheen angle / width -->
         <div class="field" data-pattern="glossshine">
           <div class="field__head">
             <label for="glossAngle">Sheen angle</label>
@@ -237,7 +222,6 @@
           <input class="field__slider" id="blur" type="range" min="0" max="15" step="0.5" value="3" data-key="blur" />
         </div>
 
-        <!-- specular (directional / dual / tri). Point uses a gradient, neon-type has no light source -->
         <div class="field" data-pattern="distant dual tri">
           <div class="field__head">
             <label for="surface">Depth</label>
@@ -262,7 +246,6 @@
           <input class="field__slider" id="constant" type="range" min="0" max="3" step="0.1" value="1.2" data-key="constant" />
         </div>
 
-        <!-- Rim color (directional / point / corner / chase / arc / beam / gloss + outer ring of double) -->
         <div class="field" data-pattern="distant point corner chase double arcshine beamglow glossshine">
           <div class="field__head">
             <label for="color">Rim color</label>
@@ -270,7 +253,6 @@
           <input class="field__color" id="color" type="color" value="#ffffff" data-key="lightColor" />
         </div>
 
-        <!-- Glow color (neon / pulse / flicker / underglow + inner ring of double) -->
         <div class="field" data-pattern="neon pulse flicker under double">
           <div class="field__head">
             <label for="glowColor">Glow color</label>
@@ -278,7 +260,6 @@
           <input class="field__color" id="glowColor" type="color" value="#00ffaa" data-key="glowColor" />
         </div>
 
-        <!-- Glow strength (neon / pulse / flicker / underglow) -->
         <div class="field" data-pattern="neon pulse flicker under corner">
           <div class="field__head">
             <label for="glowIntensity">Glow strength</label>
@@ -287,7 +268,6 @@
           <input class="field__slider" id="glowIntensity" type="range" min="0" max="1" step="0.05" value="0.3" data-key="glowIntensity" />
         </div>
 
-        <!-- Dual / Gradient / Tri: colors -->
         <div class="field" data-pattern="dual gradient tri">
           <div class="field__head">
             <label for="leftColor">Left color</label>
@@ -302,7 +282,6 @@
           <input class="field__color" id="rightColor" type="color" value="#f472b6" data-key="rightColor" />
         </div>
 
-        <!-- Tri: third color -->
         <div class="field" data-pattern="tri">
           <div class="field__head">
             <label for="thirdColor">Third color</label>
@@ -339,7 +318,6 @@
         </div>
       </div>
 
-      <!-- Generated code output (updates live with every setting) -->
       <div class="output">
         <div class="output__col">
           <div class="output__head">
@@ -360,7 +338,6 @@
 
     <p class="hint" style="text-align:center;margin:16px auto 0;max-width:760px;">For how to use it, a table of all 15 light patterns, and FAQ, see the <a href="howto.html">how-to guide</a>.</p>
 
-    <!-- 広告テスト（2026-10-24〜6週間）: 右下広告を停止中。全画面広告用にローダーのみ残す -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
 
     <footer>

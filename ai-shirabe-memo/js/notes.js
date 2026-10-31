@@ -1,5 +1,3 @@
-// 付箋DOMの生成と更新ヘルパー。付箋＝会話スレッドとして描画する。
-// 状態管理はmain.jsが持ち、ここは描画とイベント委譲に専念する。
 
 import { NOTE_COLORS } from "./config.js?v=20260624ad"
 
@@ -17,7 +15,6 @@ function applyGeometry(el, note) {
   el.style.height = `${note.height || 380}px`
 }
 
-// 付箋1枚のDOMを生成。handlers に各操作のコールバックを渡す。
 export function createNoteElement(note, handlers) {
   const el = document.createElement("div")
   el.className = "note"
@@ -59,7 +56,6 @@ export function createNoteElement(note, handlers) {
   renderAttachments(el, note.attachments || [])
   renderThread(el, note.messages || [], handlers.editingIndex(note.id))
 
-  // バー＝ドラッグハンドル（色・モード・削除・見出し編集の上では発火させない）
   el.querySelector(".note__bar").addEventListener("pointerdown", (e) => {
     if (e.target.closest(".note__delete, .note__color, .note__mode, .note__title-edit")) return
     handlers.onDragStart(e, note.id)
@@ -76,8 +72,6 @@ export function createNoteElement(note, handlers) {
   memo.addEventListener("input", () => handlers.onMemoInput(note.id, memo.value))
   memo.addEventListener("blur", () => handlers.onMemoCommit(note.id))
 
-  // ファイルの貼り付け（📎=透明入力をボタン全面に重ねている / ペースト / ドラッグ＆ドロップ）
-  // 入力そのものをクリックさせるので .click() に依存せずダイアログが確実に開く
   const fileInput = el.querySelector(".note__file")
   fileInput.addEventListener("change", () => {
     const files = [...(fileInput.files || [])]
@@ -92,7 +86,6 @@ export function createNoteElement(note, handlers) {
     }
   })
 
-  // 見出し（要約）をダブルクリックで手動編集
   const titleText = el.querySelector(".note__titletext")
   const titleEdit = el.querySelector(".note__title-edit")
   el.querySelector(".note__title").addEventListener("dblclick", (e) => {
@@ -140,7 +133,6 @@ export function createNoteElement(note, handlers) {
   })
   el.querySelector(".note__resize").addEventListener("pointerdown", (e) => handlers.onResizeStart(e, note.id))
 
-  // スレッド内メッセージの編集／削除／完了／キャンセルをイベント委譲で処理
   el.querySelector(".note__thread").addEventListener("click", (e) => {
     const msgEl = e.target.closest(".msg")
     if (!msgEl) return
@@ -154,7 +146,6 @@ export function createNoteElement(note, handlers) {
   return el
 }
 
-// スレッド全体を messages から再構築する。editingIndex のメッセージは編集UIで描画。
 export function renderThread(noteEl, messages, editingIndex = -1) {
   const thread = noteEl.querySelector(".note__thread")
   thread.innerHTML = ""
@@ -209,7 +200,6 @@ function buildEditMessage(message, index) {
   return msg
 }
 
-// ストリーミング中、最後のAIメッセージ本文だけを更新する。
 export function streamLastAssistant(noteEl, text) {
   const bodies = noteEl.querySelectorAll(".msg--assistant .msg__body")
   const last = bodies[bodies.length - 1]
@@ -219,7 +209,6 @@ export function streamLastAssistant(noteEl, text) {
   thread.scrollTop = thread.scrollHeight
 }
 
-// AIの発言はmarkdownをサニタイズして描画、ユーザー発言はプレーンテキスト。
 function setMsgBody(bodyEl, role, content) {
   if (role === "assistant") {
     const html = window.marked ? window.marked.parse(content || "") : escapeHtml(content || "")
@@ -233,7 +222,6 @@ export function setNoteColor(noteEl, colorId) {
   noteEl.style.background = colorValue(colorId)
 }
 
-// 付箋の添付ファイルを再構築する。画像はサムネ、その他はファイルチップ。空なら非表示。
 export function renderAttachments(noteEl, attachments) {
   const strip = noteEl.querySelector(".note__attachments")
   strip.innerHTML = ""
@@ -273,7 +261,6 @@ export function renderAttachments(noteEl, attachments) {
   })
 }
 
-// クリップボード/ドロップからファイルを取り出す（種類問わず）。
 export function filesFromDataTransfer(dt) {
   if (!dt) return []
   const out = []
@@ -290,7 +277,6 @@ export function filesFromDataTransfer(dt) {
   return out
 }
 
-// dragover時にファイルドロップを受け付けるか判定（この時点では実体は取れない）。
 function dataTransferHasFile(dt) {
   if (!dt) return false
   if (dt.items && dt.items.length) {
@@ -302,7 +288,6 @@ function dataTransferHasFile(dt) {
   return Array.from(dt.types || []).includes("Files")
 }
 
-// 付箋のモード（ai / memo）を切り替える。CSSの mode-memo クラスで表示を出し分ける。
 export function setNoteMode(noteEl, mode) {
   const isMemo = mode === "memo"
   noteEl.classList.toggle("mode-memo", isMemo)
@@ -311,7 +296,6 @@ export function setNoteMode(noteEl, mode) {
   })
 }
 
-// 付箋の見出し（バー）に1行要約を表示する。空なら操作ヒントに戻す。
 export function setNoteSummary(noteEl, summary) {
   const hasSummary = !!(summary && summary.trim())
   noteEl.querySelector(".note__titletext").textContent = hasSummary ? summary : "ドラッグで移動"
@@ -321,7 +305,6 @@ export function setNoteSummary(noteEl, summary) {
     : "ダブルクリックで見出しを編集"
 }
 
-// ステータス表示。成功(ok)は ✔️ を出して3秒後に自動で消す。loading/error は残す。
 const statusTimers = new WeakMap()
 
 export function setNoteStatus(noteEl, text, type) {
@@ -348,7 +331,6 @@ export function setNoteStatus(noteEl, text, type) {
   status.className = "note__status" + (type ? ` is-${type}` : "")
 }
 
-// 「✔️ 保存済」を一定時間だけ表示する（自動保存の確認・両モードで見える操作行に出す）。
 const savedTimers = new WeakMap()
 
 export function flashSaved(noteEl) {

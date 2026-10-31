@@ -1,10 +1,5 @@
-// プリセット定義（和グラデーション・一覧ギャラリー用）。
-// 構成 = ①情景グラデ(SCENE_PRESETS, 手書きの多色/放射/扇形) ＋
-//        ②色の辞書の日本の伝統色250色から自動生成した階調グラデ(DICT_PRESETS)。
-// 伝統色のHEX・色カテゴリ(hue)は color-dictionary の正規データをそのまま流用する。
 import { JA_COLORS } from "../../color-dictionary/js/data-ja.js";
 
-// ===== 情景グラデーション（多色・放射・扇形。単色階調では出せないもの） =====
 export const SCENE_PRESETS = [
   { id: "akane-sora", name: "茜の空", reading: "あかねのそら", name_en: "Akane Sky", cat: "orange", angle: 160, stops: [{ color: "#b7282e", pos: 0 }, { color: "#e8743b", pos: 50 }, { color: "#f6d8a8", pos: 100 }] },
   { id: "kure-akane", name: "暮茜", reading: "くれあかね", name_en: "Dusk Akane", cat: "orange", angle: 160, stops: [{ color: "#2c1330", pos: 0 }, { color: "#7e2218", pos: 42 }, { color: "#b9521e", pos: 78 }, { color: "#d97b35", pos: 100 }] },
@@ -31,7 +26,6 @@ export const SCENE_PRESETS = [
   { id: "asagiri", name: "朝霧", reading: "あさぎり", name_en: "Morning Mist", cat: "neutral", type: "radial", radialShape: "circle", stops: [{ color: "#fffdf7", pos: 0 }, { color: "#c9c9c0", pos: 60 }, { color: "#95989f", pos: 100 }] },
 ];
 
-// ===== 色ユーティリティ（HSL・混色） =====
 function hexToHsl(hex) {
   let h = hex.replace("#", "");
   if (h.length === 3) h = h.split("").map((c) => c + c).join("");
@@ -47,7 +41,6 @@ function hexToHsl(hex) {
     hue *= 60;
   }
   const l = (max + min) / 2;
-  // 2番目は彩度(chroma=max−min)。淡色を過大評価しないよう HSL彩度ではなく chroma を使う
   return [hue, d, l];
 }
 function rgbOf(hex) {
@@ -63,14 +56,12 @@ function mix(hex, target, amt) {
   const a = rgbOf(hex), b = rgbOf(target);
   return toHex(a[0] + (b[0] - a[0]) * amt, a[1] + (b[1] - a[1]) * amt, a[2] + (b[2] - a[2]) * amt);
 }
-// 単色 → 階調グラデ（明るい色は濃→淡、それ以外は色→淡）
 function tonalStops(hex) {
   const [, , l] = hexToHsl(hex);
   if (l > 0.82) return [{ color: mix(hex, "#3a3027", 0.16), pos: 0 }, { color: hex, pos: 100 }];
   return [{ color: hex, pos: 0 }, { color: mix(hex, "#ffffff", 0.4), pos: 100 }];
 }
 
-// ===== 伝統色250色 → 自動生成（情景グラデと名前が重複するものは除外） =====
 const SCENE_NAMES = new Set(SCENE_PRESETS.map((p) => p.name));
 const ANGLES = [135, 150, 160, 120];
 const DICT_PRESETS = JA_COLORS.filter((c) => !SCENE_NAMES.has(c.name)).map((c, i) => ({
@@ -83,8 +74,6 @@ const DICT_PRESETS = JA_COLORS.filter((c) => !SCENE_NAMES.has(c.name)).map((c, i
   stops: tonalStops(c.hex),
 }));
 
-// ===== 並び替え（color-dictionary と同じ：カテゴリ順 → 同カテゴリは明→暗） =====
-// 連続色相ソートは紫⇔桃の折り返しで破綻するため、チップと同じ離散カテゴリ順で並べる。
 const CAT_RANK = { red: 0, orange: 1, yellow: 2, green: 3, blue: 4, purple: 5, pink: 6, brown: 7, neutral: 8 };
 function repLight(p) {
   const cs = p.stops.map((s) => hexToHsl(s.color)).sort((a, b) => b[1] - a[1]);
@@ -93,8 +82,7 @@ function repLight(p) {
 function compareKey(a, b) {
   const ra = CAT_RANK[a.cat] ?? 9, rb = CAT_RANK[b.cat] ?? 9;
   if (ra !== rb) return ra - rb;
-  return repLight(b) - repLight(a); // 同カテゴリは明るい順
+  return repLight(b) - repLight(a);
 }
 
-// 一覧描画用（情景＋伝統色250、カテゴリ順）
 export const ALL_PRESETS = [...SCENE_PRESETS, ...DICT_PRESETS].sort(compareKey);

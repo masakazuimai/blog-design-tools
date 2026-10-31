@@ -1,4 +1,3 @@
-// 流れ・ステップのパターン
 const STEP = (n, title) => `<li class="st01__step">
         ${n > 1 ? `<span class="st01__arrow" aria-hidden="true"><span class="st01__pc">→</span><span class="st01__sp">↓</span></span>` : ""}
         <span class="st01__no">STEP ${n}</span>

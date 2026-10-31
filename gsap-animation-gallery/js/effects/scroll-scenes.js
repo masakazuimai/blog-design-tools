@@ -1,5 +1,3 @@
-// スクロール演出のうち、ページ全体の見せ方に関わるもの（背景色・積み重ね・目次追従など）。
-// 固定して見せる大きな演出は scroll-advanced.js を参照。
 import { CDN_ST, repeat } from "./_shared.js?v=20260811a";
 
 export const SCROLL_SCENES = [
@@ -257,7 +255,6 @@ export const SCROLL_SCENES = [
         start: "top top",
         end: "max",
         onUpdate: (self) => {
-          // 下スクロールで正方向、上スクロールで逆方向に流す
           gsap.to(loop, { timeScale: self.direction === 1 ? 1 : -1, duration: 0.3, overwrite: true });
         },
       });

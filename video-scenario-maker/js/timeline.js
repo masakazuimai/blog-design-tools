@@ -1,13 +1,12 @@
-// タイムライン：ルーラー／映像・字幕・BGMの3トラック／再生ヘッド。クリップ右端のドラッグで長さを変える
 import { withTimes, totalDuration } from "./store.js?v=20261025b";
 import { fmtTime } from "./prompt.js?v=20261025b";
 import { blobUrl } from "./preview.js?v=20261025b";
 import { BGM_GENRES, pick } from "./vocab.js?v=20261025b";
 import { T, label } from "./i18n.js?v=20261025b";
 
-const LABEL_MIN_PX = 64; // 目盛りラベル同士の最小間隔
+const LABEL_MIN_PX = 64;
 const STEPS = [0.5, 1, 2, 5, 10, 15, 30, 60];
-const TAIL_SEC = 4; // 末尾に空ける余白（追加・延長の余地）
+const TAIL_SEC = 4;
 const snap = (sec) => Math.min(60, Math.max(0.5, Math.round(sec * 2) / 2));
 
 const div = (cls, text) => {
@@ -18,7 +17,7 @@ const div = (cls, text) => {
 };
 
 export const createTimeline = (el, { onSelect, onSeek, onResize }) => {
-  let pps = 40; // 1秒あたりのpx
+  let pps = 40;
   let state = { project: null, selectedId: null };
   let drag = null;
   let head = 0;
@@ -89,7 +88,6 @@ export const createTimeline = (el, { onSelect, onSeek, onResize }) => {
     return Math.max(0, (clientX - rect.left) / pps);
   };
 
-  // クリック：クリップなら選択、空き地・ルーラーならその位置へシーク
   el.inner.addEventListener("pointerdown", (e) => {
     const handle = e.target.closest(".handle");
     const clip = e.target.closest(".clip-video, .clip-sub");
@@ -98,7 +96,7 @@ export const createTimeline = (el, { onSelect, onSeek, onResize }) => {
       const s = state.project.scenes.find((x) => x.id === id);
       drag = { id, x: e.clientX, dur: s.dur };
       if (id !== state.selectedId) onSelect(id);
-      el.inner.setPointerCapture(e.pointerId); // 再描画でハンドルが作り直されてもドラッグを続ける
+      el.inner.setPointerCapture(e.pointerId);
       e.preventDefault();
       return;
     }

@@ -1,10 +1,8 @@
 "use strict";
 
-// ?v= はキャッシュバスティング用。js更新時は index.html・en/index.html の参照とここを揃えて上げる
 import { t, lang, TEXT_EN } from "./i18n.js?v=20260725b";
 import { EFFECTS, CATEGORIES } from "./effects/index.js?v=20260725b";
 
-// デフォルトのアクセント色（エフェクト定義内のリテラルと一致させる）
 const DEFAULT_ACCENT = "#6366f1";
 const DEFAULT_SUB = "#ec4899";
 const DEFAULT_ACCENT_RGB = "99,102,241";
@@ -12,7 +10,6 @@ const DEFAULT_SUB_RGB = "236,72,153";
 
 const SETTINGS_KEY = "page-transition-gallery-settings";
 
-// ローディングのデモを何ミリ秒見せてから閉じるか
 const LOADING_HOLD = 1700;
 
 const els = {
@@ -35,17 +32,13 @@ let sub = DEFAULT_SUB;
 let activeCat = "all";
 let selected = null;
 
-// 再生中のカードを覚えて二重再生を防ぐ
 const playing = new Set();
 
-// ---- 色の置換 ----
-// #rrggbb → "r,g,b"（rgba() 内の置換用）
 function hexToRgb(hex) {
   const n = parseInt(hex.slice(1), 16);
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255].join(",");
 }
 
-// エフェクト定義内のデフォルト色を現在の設定色に置き換える
 function applyColors(cssText) {
   return cssText
     .replaceAll(DEFAULT_ACCENT, accent)
@@ -54,7 +47,6 @@ function applyColors(cssText) {
     .replaceAll(DEFAULT_SUB_RGB, hexToRgb(sub));
 }
 
-// ---- 設定の永続化 ----
 function saveSettings() {
   try {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify({ accent, sub }));
@@ -95,8 +87,6 @@ function syncColorInputs() {
   els.subVal.textContent = sub;
 }
 
-// ---- エフェクトCSSの注入 ----
-// 全エフェクトのCSSを1つの<style>にまとめて注入する（色変更時は差し替え）
 let styleEl = null;
 function injectStyles() {
   if (!styleEl) {
@@ -106,8 +96,6 @@ function injectStyles() {
   styleEl.textContent = applyColors(EFFECTS.map((e) => e.css.join("\n")).join("\n"));
 }
 
-// ---- コード生成・コピー ----
-// enページでは定義内の日本語（CSSコメント・aria-label）を英語へ差し替える
 function localize(text) {
   if (lang !== "en") return text;
   for (const [ja, en] of Object.entries(TEXT_EN)) {
@@ -116,7 +104,6 @@ function localize(text) {
   return text;
 }
 
-// カテゴリごとに発火のしかたが違うので、JSも出し分ける
 function buildScript(effect) {
   if (effect.cat === "loading") {
     return (
@@ -156,7 +143,6 @@ function buildScript(effect) {
 
 function buildCode(effect) {
   const style = "<style>\n" + localize(applyColors(effect.css.join("\n"))) + "\n</style>";
-  // JSが無効な環境で幕が出っぱなしにならないようにする保険
   const noscript = "<noscript><style>." + effect.key + " { display: none; }</style></noscript>";
   return style + "\n\n" + localize(effect.html) + "\n" + noscript + "\n\n" + buildScript(effect);
 }
@@ -186,7 +172,6 @@ async function copyText(text, btn, label) {
   }
 }
 
-// ---- 選択とプレビュー ----
 function markSelected(el) {
   document.querySelectorAll(".card.selected").forEach((n) => n.classList.remove("selected"));
   if (el) el.classList.add("selected");
@@ -203,8 +188,6 @@ function selectEffect(effect, card) {
   updatePreview();
 }
 
-// ---- デモの再生 ----
-// 待機中の見た目を作る。すでに終了状態のクラスを付けてから挿入するので、アニメーションは走らない
 function mountIdle(card, effect) {
   const holder = card.querySelector(".vp-fx");
   const box = document.createElement("div");
@@ -215,7 +198,6 @@ function mountIdle(card, effect) {
   holder.appendChild(el);
 }
 
-// ページが切り替わったように見せる
 function swapPage(card) {
   const label = card.querySelector(".vp-page");
   label.textContent = label.textContent === "Page 1" ? "Page 2" : "Page 1";
@@ -237,7 +219,6 @@ function playCard(card, effect) {
     }, wait);
 
   if (effect.cat === "loading") {
-    // forwards のアニメーションを頭から流したいので作り直す
     const holder = card.querySelector(".vp-fx");
     holder.innerHTML = effect.html;
     const el = holder.firstElementChild;
@@ -246,7 +227,6 @@ function playCard(card, effect) {
     return;
   }
 
-  // 幕が閉じる → ページを差し替える → 幕が開く
   const el = card.querySelector(".vp-fx").firstElementChild;
   el.classList.remove("is-open");
   setTimeout(() => {
@@ -256,7 +236,6 @@ function playCard(card, effect) {
   finish(effect.ms * 2 + 300);
 }
 
-// ---- フィルタとグリッド ----
 function renderFilters() {
   const cats = ["all", ...CATEGORIES];
   els.filters.innerHTML = "";
@@ -340,14 +319,12 @@ function renderGrid() {
   }
 }
 
-// 表示中のカードを少しずつずらして順に再生する
 function playAllShown() {
   const shown = activeCat === "all" ? EFFECTS : EFFECTS.filter((e) => e.cat === activeCat);
   const cards = [...els.grid.querySelectorAll(".card")];
   cards.forEach((card, i) => setTimeout(() => playCard(card, shown[i]), i * 220));
 }
 
-// ---- イベント ----
 els.accentColor.addEventListener("input", () => {
   accent = els.accentColor.value;
   els.accentVal.textContent = accent;
@@ -368,7 +345,6 @@ els.copyPreview.addEventListener("click", (event) => {
   if (selected) copyText(buildCode(selected), event.currentTarget, t.labelCode);
 });
 
-// ---- 初期化 ----
 restoreSettings();
 syncColorInputs();
 injectStyles();

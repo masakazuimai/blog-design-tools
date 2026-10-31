@@ -1,4 +1,3 @@
-// 画面共通の小物（トースト・コピー・計測）
 import { t } from "./i18n.js?v=20261030e";
 
 let toastTimer = 0;
@@ -20,7 +19,6 @@ export const copyText = async (text, label = t("copied")) => {
   }
 };
 
-// GA4計測：GTM の dataLayer へイベントを送る。データレイヤー変数は前回値を引き継ぐため、未使用のキーは毎回 undefined で上書きする
 const TRACK_KEYS = ["scope", "format", "shot_id", "shot_count", "from"];
 export const track = (event, params = {}) => {
   window.dataLayer = window.dataLayer || [];

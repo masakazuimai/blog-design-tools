@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="ja">
   <head>
-    <!-- Google Tag Manager -->
     <script>
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
@@ -14,14 +13,12 @@
         f.parentNode.insertBefore(j, f);
       })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
     </script>
-    <!-- End Google Tag Manager -->
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>HTMLアウトラインチェッカー【無料】見出し階層・タグ構造の誤りを検証</title>
     <meta name="description" content="HTMLを貼り付けるだけで、見出し階層（アウトライン）の乱れ・不正なタグの入れ子・class重複・alt欠落・charset/title欠落などのHTML構造の誤りをブラウザ内で検証できる無料ツール。データは外部に送信されません。" />
     <link rel="canonical" href="https://codequest.work/generator/html-outline-checker/" />
-    <!-- OGP -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://codequest.work/generator/html-outline-checker/" />
     <meta property="og:title" content="HTMLアウトラインチェッカー【無料】見出し階層・タグ構造の誤りを検証" />
@@ -32,7 +29,6 @@
     <meta property="og:image:alt" content="HTMLアウトラインチェッカー" />
     <meta property="og:site_name" content="CodeQuest.work" />
     <meta property="og:locale" content="ja_JP" />
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="HTMLアウトラインチェッカー【無料】HTML構造の誤りを検証" />
     <meta name="twitter:description" content="HTMLを貼り付けるだけで見出し階層・タグの入れ子・class重複・alt欠落などをブラウザ内で検証できる無料ツール。" />
@@ -166,7 +162,6 @@
         background: #f3f4f6;
       }
 
-      /* エディタ（contenteditable） */
       #editor {
         min-height: 60vh;
         border: 1px solid var(--line);
@@ -181,13 +176,11 @@
           Menlo,
           monospace;
       }
-      /* 万一混入しても表示させない保険 */
       #editor style,
       #editor script {
         display: none !important;
       }
 
-      /* 文字色のみ（幅に影響しない） */
       .err,
       .warn,
       .info {
@@ -208,7 +201,6 @@
         color: var(--info);
       }
 
-      /* レンダリング差の抑制 */
       #editor,
       #editor * {
         font-variant-ligatures: none;
@@ -216,7 +208,6 @@
         -moz-osx-font-smoothing: grayscale;
       }
 
-      /* 結果パネル */
       .issue {
         border-bottom: 1px solid var(--line);
         padding: 8px 6px;
@@ -231,7 +222,7 @@
 
       footer {
         display: flex;
-        justify-content: flex-start; /* 右下広告との被り回避で左寄せ */
+        justify-content: flex-start;
         flex-wrap: wrap;
         gap: 12px 24px;
         align-items: center;
@@ -263,7 +254,6 @@
       }
     </style>
     <style>
-      /* 広告（PC/SPとも右下フローティングカード320×100・薄型透明枠＋×閉じ） */
       .footer-ad {
         position: fixed;
         right: 0;
@@ -335,7 +325,6 @@
     </style>
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe
         src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2"
@@ -344,7 +333,6 @@
         style="display: none; visibility: hidden"
       ></iframe
     ></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <header>
       <div class="header-inner">
         <h1>HTMLアウトラインチェッカー</h1>
@@ -402,7 +390,6 @@
         <p>エラーの直し方やよくある質問は<a href="/html-outline-checker/">HTMLアウトラインチェッカーの使い方</a>で解説しています。セレクタの書き方を確かめたいときは<a href="../css-selector/">CSSセレクタ一覧</a>もどうぞ。</p>
       </section>
     </main>
-    <!-- 広告テスト（2026-10-24〜6週間）: 右下広告を停止中。全画面広告用にローダーのみ残す -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
     <footer>
       <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> HTML Outline Checker | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
@@ -412,7 +399,6 @@
       </div>
     </footer>
 
-    <!-- サンプル（そのまま生テキスト） -->
     <script id="sample-html" type="text/plain">
       <!DOCTYPE html>
       <html lang="ja">
@@ -445,7 +431,6 @@
     </script>
 
     <script>
-      /* ================= ユーティリティ ================= */
       const $ = (s) => document.querySelector(s);
       const escapeHtml = (s) => (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
       const bySeverity = { err: 3, warn: 2, info: 1 };
@@ -487,7 +472,6 @@
         return out;
       }
 
-      /* ================ ルール用プリコンパイル ================ */
       const RE = {
         doctype: /^\s*<!doctype html>/i,
         htmlOpen: /<html[^>]*>/i,
@@ -498,7 +482,6 @@
       };
       const VOID = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]);
 
-      /* ====== DOM 解析用サニタイズ ====== */
       function sanitizeForDOM(raw) {
         let text = raw.replace(/\r\n?/g, "\n").replace(/[\u200B-\u200D\uFEFF]/g, "");
         const live = /<!--\s*Code injected by live-server\s*-->[\s\S]*?<\s*\/script\s*>/gi;
@@ -508,7 +491,6 @@
         return text;
       }
 
-      /* ================ 解析（DOM + テキスト） ================ */
       function analyze(raw) {
         const issues = [];
         const ranges = [];
@@ -517,7 +499,6 @@
 
         raw = raw.replace(/[\u200B-\u200D\uFEFF]/g, "");
 
-        // 1) DOCTYPE
         if (!RE.doctype.test(raw)) {
           addIssue("err", "DOCTYPE がありません", "互換モードになる恐れ。", "先頭に <!DOCTYPE html> を追加してください。");
           const m = raw.match(RE.htmlOpen);
@@ -526,7 +507,6 @@
 
         const doc = new DOMParser().parseFromString(sanitizeForDOM(raw), "text/html");
 
-        // 2) <html lang>
         const htmlEl = doc.documentElement;
         if (!htmlEl) {
           addIssue("err", "<html> 要素が見つかりません", "文書ルートが欠落。", "全体を <html>…</html> で囲んでください。");
@@ -536,7 +516,6 @@
           if (m) addRanges("warn", m[0]);
         }
 
-        // 3) <head> 基本
         const head = doc.querySelector("head");
         const hasCharsetRaw = /<meta[^>]*\bcharset\b/i.test(raw);
         const hasViewportRaw = /<meta[^>]*\bname\s*=\s*["']viewport["']/i.test(raw);
@@ -566,7 +545,6 @@
           }
         }
 
-        // 4) id 重複
         const ids = [];
         let mm;
         RE.idAttr.lastIndex = 0;
@@ -582,7 +560,6 @@
           ids.filter((x) => dups.includes(x.id)).forEach((x) => ranges.push({ start: x.start, end: x.end, cls: "err" }));
         }
 
-        // 5) <img> alt なし
         doc.querySelectorAll("img").forEach((img) => {
           const alt = img.getAttribute("alt");
           const ariaHidden = img.getAttribute("aria-hidden") === "true";
@@ -603,7 +580,6 @@
           }
         });
 
-        // 6) li の親
         doc.querySelectorAll("li").forEach((li) => {
           const p = li.parentElement?.tagName?.toLowerCase();
           if (p !== "ul" && p !== "ol") {
@@ -613,7 +589,6 @@
           }
         });
 
-        // 7) ul/ol 直下に li 以外
         doc.querySelectorAll("ul,ol").forEach((list) => {
           list.querySelectorAll(":scope > *:not(li)").forEach((bad) => {
             addIssue("err", `${list.tagName.toLowerCase()} 直下に li 以外があります`, `子要素は <li> のみです。`, "余計な要素を <li> 内へ移動。");
@@ -622,7 +597,6 @@
           });
         });
 
-        // 8) 見出し階層
         const hs = [...doc.querySelectorAll("h1,h2,h3,h4,h5,h6")];
         if (hs.length) {
           const h1c = hs.filter((h) => h.tagName === "H1").length;
@@ -644,7 +618,6 @@
           }
         }
 
-        // 9) タグ不整合（修正版：クロス閉じを安全に処理）
         (function () {
           const stripped = raw
             .replace(/<!--[\s\S]*?-->/g, "")
@@ -652,7 +625,7 @@
             .replace(/<style\b[\s\S]*?<\/style\s*>/gi, "");
 
           const tagRe = /<\/?([a-zA-Z][\w:-]*)([^>]*)>/g;
-          const stack = []; // { name, openSnippet }
+          const stack = [];
           let m;
           while ((m = tagRe.exec(stripped)) !== null) {
             const full = m[0];
@@ -667,20 +640,16 @@
                 continue;
               }
               if (stack[stack.length - 1].name === name) {
-                // 正常ペア
                 stack.pop();
               } else {
-                // クロス閉じ：上から順に「閉じ忘れ」を報告して落としていく
                 while (stack.length && stack[stack.length - 1].name !== name) {
                   const top = stack.pop();
                   addIssue("err", `閉じタグ不足：<${top.name}>`, "開始タグに対応する閉じタグがありません（入れ子順序の逆転）。", `適切な位置に </${top.name}> を追加してください。`);
                   if (top.openSnippet) findAllIndices(raw, top.openSnippet).forEach((r) => ranges.push({ ...r, cls: "err" }));
                 }
                 if (stack.length && stack[stack.length - 1].name === name) {
-                  // 目的の要素を1つだけ消して今回の閉じタグと対応づけ
                   stack.pop();
                 } else {
-                  // 見つからない → この閉じタグ自体が不要
                   addIssue("err", `不要な閉じタグ </${name}>`, "対応する開始タグがありません。", `不要な </${name}> を削除してください。`);
                   findAllIndices(raw, full).forEach((r) => ranges.push({ ...r, cls: "err" }));
                 }
@@ -690,14 +659,12 @@
               stack.push({ name, openSnippet });
             }
           }
-          // 残りは閉じ忘れ
           stack.forEach((s) => {
             addIssue("err", `閉じタグ不足：<${s.name}>`, "開始タグに対応する閉じタグがありません。", `適切な位置に </${s.name}> を追加してください。`);
             if (s.openSnippet) findAllIndices(raw, s.openSnippet).forEach((r) => ranges.push({ ...r, cls: "err" }));
           });
         })();
 
-        // 10) class 重複
         (function () {
           RE.classAttr.lastIndex = 0;
           let m;
@@ -727,7 +694,6 @@
         return { issues, ranges };
       }
 
-      /* ================== UI描画 ================== */
       function renderIssues(issues) {
         const res = $("#results");
         if (!issues.length) {
@@ -746,7 +712,6 @@
           .join("");
       }
 
-      /* ================== 実行（ボタンでのみ） ================== */
       function run() {
         const editor = $("#editor");
         const raw = editor.innerText.replace(/\r\n?/g, "\n").replace(/[\u200B-\u200D\uFEFF]/g, "");
@@ -755,16 +720,12 @@
         renderIssues(issues);
       }
 
-      /* ================== イベント ================== */
-      // 「検証する」ボタンのみで実行
       $("#btn-validate").addEventListener("click", run);
 
-      // サンプル投入（検証は自動で走らせない）
       $("#btn-sample-bad").addEventListener("click", () => {
         $("#editor").textContent = $("#sample-html").textContent.trim();
       });
 
-      /* ===== 貼り付け/入力の安全化（常にプレーンテキスト、ただし検証はしない） ===== */
       const editorEl = $("#editor");
       let _norm = false;
       editorEl.addEventListener("paste", (e) => {
@@ -785,11 +746,10 @@
         if (_norm) return;
         _norm = true;
         const txt = editorEl.innerText.replace(/\r\n?/g, "\n");
-        editorEl.textContent = txt; // span 等を除去
+        editorEl.textContent = txt;
         _norm = false;
       });
 
-      /* 初期は空（自動検証なし） */
       editorEl.textContent = "";
     </script>
   </body>

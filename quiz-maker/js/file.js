@@ -1,5 +1,3 @@
-// PC上のファイルを開く・上書き保存する
-// Chrome / Edge は File System Access API で元ファイルへ直接書き戻す。非対応ブラウザはダウンロードで代替
 import { formatOf } from './format.js?v=20261003b';
 import { t } from './i18n.js?v=20261003b';
 
@@ -14,7 +12,6 @@ function isAbort(e) {
   return e && e.name === 'AbortError';
 }
 
-// 非対応ブラウザ用：<input type=file> で選ばせる
 function pickWithInput() {
   return new Promise(resolve => {
     const input = document.createElement('input');
@@ -26,7 +23,6 @@ function pickWithInput() {
   });
 }
 
-// 戻り値 { name, buffer, handle } 。キャンセル時は null
 export async function openFile() {
   if (canOverwrite) {
     try {
@@ -64,7 +60,6 @@ function mimeOf(format) {
   return format === 'json' ? 'application/json' : 'text/csv';
 }
 
-// アンカーをDOMに追加してクリックし、revoke は遅らせる（同期revokeだと一部環境でDLが始まらない）
 function download(name, text, format) {
   const blob = new Blob([text], { type: `${mimeOf(format)};charset=utf-8` });
   const url = URL.createObjectURL(blob);
@@ -77,7 +72,6 @@ function download(name, text, format) {
   setTimeout(() => { a.remove(); URL.revokeObjectURL(url); }, 1500);
 }
 
-// 上書き保存。ハンドルが無ければ同名でダウンロード。戻り値 { name, handle, downloaded }
 export async function saveFile({ handle, name, buildText }) {
   if (handle) {
     await writeHandle(handle, buildText(formatOf(name)));
@@ -88,7 +82,6 @@ export async function saveFile({ handle, name, buildText }) {
   return { name: fileName, handle: null, downloaded: true };
 }
 
-// 別名で保存。キャンセル時は null
 export async function saveFileAs({ suggestedName, buildText }) {
   if (window.showSaveFilePicker) {
     try {

@@ -1,7 +1,5 @@
-// レイアウト結果を canvas と SVG に描く。両者は同じパス・同じ数値から描く
 import { mulberry32 } from "./layout.js";
 
-// start を基準に step 間隔で 0〜max に収まる位置を並べる
 function series(start, step, max) {
   const out = [];
   let v = start;
@@ -10,8 +8,6 @@ function series(start, step, max) {
   return out;
 }
 
-// 紙の罫線・マス目・マージン線を算出する（canvas/SVG共通）
-// 罫線は文字の位置を基準に並べるので、キャンバスを固定しても行とズレない
 function paperMarks(o, paper, lay) {
   const marks = { lines: [], rects: [], color: paper.lineColor || "#9db6cf" };
   if (paper.rule === "line") {
@@ -34,14 +30,11 @@ function paperMarks(o, paper, lay) {
   return marks;
 }
 
-// 紙を斜めに置くため、回転後の外接サイズを求める
 export function outerSize(lay, angle) {
   const c = Math.abs(Math.cos(angle)), s = Math.abs(Math.sin(angle));
   return { W: Math.ceil(lay.w * c + lay.h * s), H: Math.ceil(lay.w * s + lay.h * c) };
 }
 
-// 鉛筆の「かすれ」用ノイズ。テキスト層をこれで削る
-// 粗い濃淡フィールドで確率を変調し、抜けを塊にする（一様ノイズだと網点に見えるため）
 function roughCanvas(w, h, amount, seed) {
   const cv = document.createElement("canvas");
   cv.width = w; cv.height = h;
@@ -129,7 +122,6 @@ export function drawCanvas(cv, lay, o, paper, pen, scale) {
     ctx.closePath(); ctx.fill();
   }
 
-  // にじみ・かすれがあるときは別レイヤーに描いてから合成する
   if (pen.blur > 0 || pen.rough > 0) {
     const layer = document.createElement("canvas");
     layer.width = cv.width; layer.height = cv.height;
@@ -162,7 +154,6 @@ export function buildSVG(lay, o, paper, pen) {
   s.push('<svg xmlns="http://www.w3.org/2000/svg" width="' + outer.W + '" height="' + outer.H +
          '" viewBox="0 0 ' + outer.W + ' ' + outer.H + '">');
 
-  // にじみ・かすれはSVGではフィルタで表現する（canvasとは完全一致しない）
   let filterAttr = "";
   if (pen.blur > 0 || pen.rough > 0) {
     const inBlur = pen.blur > 0

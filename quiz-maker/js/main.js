@@ -1,4 +1,3 @@
-// 自分だけの問題集：起動・画面の切り替え・ファイルバー
 import { h, toast } from './util.js?v=20261003b';
 import { getState, subscribe, resetState } from './store.js?v=20261003b';
 import { loadBackup } from './backup.js?v=20261003b';
@@ -49,7 +48,6 @@ function render(state, prev) {
   const view = state.questions ? state.view : 'start';
   appEl.replaceChildren(VIEWS[view](state));
   if (view === 'quiz') ensureChoices();
-  // 画面が切り替わったら上端へ（出題中の問題送りではスクロール位置を保つ）
   if (prev && prev.view !== state.view) appEl.scrollIntoView({ block: 'start', behavior: 'smooth' });
 }
 

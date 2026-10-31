@@ -1,9 +1,3 @@
-/*
- * テンプレート4：フラワー
- * カードを中心から放射状（花びら状）に並べ、円盤ごと回す。tiltで見下ろし角を変え、
- * 真上に近づけるほど「上から見た花が回る」見え方になる。構造・CSSは共通（scene>tilt>stage>.c3-card）。
- * tilt=rotateX（見下ろし角）／stage=rotateZ（スピン）／card=rotateZ(i*step) translateY(-radius)（花びら配置）。
- */
 const SENS = 0.22;
 const GSAP_VER = "3.13.0";
 const CDN = `https://cdn.jsdelivr.net/npm/gsap@${GSAP_VER}/dist`;
@@ -62,7 +56,6 @@ function mount(host, state, autoOn) {
     stage.style.transform = `rotateZ(${s.rotation}deg)`;
     const step = 360 / s.count;
     for (let i = 0; i < cards.length; i++) {
-      // 手前（下）に来た花びらを明るく、奥（上）を暗く
       const a = ((s.rotation + i * step - 90) * Math.PI) / 180;
       const face = Math.cos(a);
       cards[i].style.filter = `brightness(${(0.5 + 0.5 * (face * 0.5 + 0.5)).toFixed(3)})`;
@@ -121,7 +114,6 @@ function mount(host, state, autoOn) {
   };
 }
 
-// --- コード生成 ---------------------------------------------------------
 function cardsHTML(count) {
   let out = "";
   for (let i = 0; i < count; i++) {

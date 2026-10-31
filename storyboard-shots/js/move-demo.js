@@ -1,16 +1,10 @@
-// カメラの動きの見本動画（Blenderで作った粘土風のループ）。一覧のホバーと詳細画面で使う
-// 動画はショットごとに、写真と同じ場面・向き・画の大きさで作っている
 
-// 見本があるショット（カメラが動くショットと、応用のカメラワーク・つなぎ・編集の全部。sz04 は目元の写真をそのまま拡大する方が伝わるので除く）
 const DEMO_SHOTS = new Set([
   "es01", "ag04", "mv01", "mv02", "mv03", "rl04", "mv04", "mv05", "mv06", "mv07", "mv08",
   "pr01", "pr02", "pr03", "pr04", "pr05", "pr06", "pr07", "pr08", "pr09", "pr10", "pr11", "pr12",
   "pr13", "pr14", "pr15", "pr16", "pr17",
-  // 会話の切り返し（rl07）は After Effects でつないだもの、対談の2ショット（rl08）は Blender だけ
   "rl07", "rl08",
-  // 第5弾（2026-10-30）。フィックス（pr22）は動かないので動画にしない
   "pr18", "pr19", "pr20", "pr21", "pr23", "pr24", "pr25", "pr26", "pr27", "pr28", "pr29", "pr30",
-  // つなぎ・編集は、Blenderの素材カットを After Effects でつないだもの
   "ed01", "ed02", "ed03", "ed04", "ed05", "ed06",
 ]);
 const DEMO_VER = "20261030e";
@@ -20,7 +14,6 @@ export const hasDemo = (shot) => DEMO_SHOTS.has(shot?.id);
 
 export const demoPoster = (shot) => demoUrl(`shot-${shot.id}-poster.webp`);
 
-// Safari 等で webm が再生できない場合に備えて mp4 も並べる
 export const demoSources = (shot) =>
   `<source src="${demoUrl(`shot-${shot.id}.webm`)}" type="video/webm"><source src="${demoUrl(`shot-${shot.id}.mp4`)}" type="video/mp4">`;
 

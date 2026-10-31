@@ -1,10 +1,8 @@
-// プロジェクトの状態と保存（IndexedDB）。状態は常に新しいオブジェクトで置き換える
 
 import { LANG } from "./i18n.js?v=20261025b";
 
 const DB_NAME = "video-scenario-maker";
 const STORE = "project";
-// 日本語版と英語版で作業データを分ける（サンプルもセリフの言語も違うため）
 const KEY = LANG === "en" ? "current-en" : "current";
 const SAVE_DELAY = 400;
 
@@ -28,7 +26,6 @@ export const createScene = (patch = {}) => ({
   ...patch,
 });
 
-// 初回表示のサンプル（汎用的な例）。画面の言語に合わせてセリフと話者名を変える
 const SAMPLE = {
   ja: { speaker: "話し手A", hello: "こんにちは。今日はこれを紹介します。", more: "詳しくは概要欄へ", speechLang: "ja" },
   en: { speaker: "Speaker A", hello: "Hi! Today I want to show you this.", more: "Find out more in the description.", speechLang: "en" },
@@ -44,7 +41,6 @@ export const createProject = () => ({
   dialogue: "speak",
   noText: true,
   target: 30,
-  // 声は話者名ごと（キー "" はナレーション＝話す人が空欄のセリフ）
   voices: {
     "": { gender: "male", age: "adult", tone: "calm", speed: "", note: "" },
     [SAMPLE.speaker]: { gender: "female", age: "young", tone: "bright", speed: "", note: "" },
@@ -67,7 +63,6 @@ export const createProject = () => ({
   ],
 });
 
-// サンプルのシーン2・3に作例画像を入れる（シーン1は動きの見本を見せるため画像なし）。読み込めなければ画像なしのまま
 const SAMPLE_IMAGES = { 1: "scene2.webp", 2: "scene3.webp" };
 
 const fetchSampleImage = async (name) => {
@@ -90,7 +85,6 @@ export const createSampleProject = async () => {
   return { ...project, scenes };
 };
 
-// 開始秒を積み上げで計算（小数誤差を避けるため0.1秒単位で丸める）
 export const withTimes = (scenes) =>
   scenes.reduce((acc, s) => {
     const start = acc.length ? acc[acc.length - 1].end : 0;
@@ -101,7 +95,6 @@ export const withTimes = (scenes) =>
 export const totalDuration = (scenes) =>
   Math.round(scenes.reduce((sum, s) => sum + s.dur, 0) * 10) / 10;
 
-// ── 並べ替え・追加・削除（すべて新しい配列を返す） ──
 export const updateScene = (scenes, id, patch) =>
   scenes.map((s) => (s.id === id ? { ...s, ...patch } : s));
 
@@ -122,8 +115,6 @@ export const duplicateScene = (scenes, id) => {
   return [...scenes.slice(0, i + 1), { ...scenes[i], id: newId() }, ...scenes.slice(i + 1)];
 };
 
-// ── IndexedDB（画像・音声のBlobも構造化複製でそのまま保存できる） ──
-// 接続は1本だけ開いて使い回す（保存のたびに開くと接続が溜まる）
 let dbPromise = null;
 const openDb = () =>
   (dbPromise ||= new Promise((resolve, reject) => {
@@ -169,7 +160,6 @@ export const saveProject = (project, onError) => {
 
 export const createVoice = (patch = {}) => ({ gender: "", age: "", tone: "", speed: "", note: "", ...patch });
 
-// 型が違う値（JSONの手編集・旧データ）は既定値に置き換える
 const text = (v, fallback = "") => (typeof v === "string" ? v : fallback);
 const bool = (v, fallback) => (typeof v === "boolean" ? v : fallback);
 const texts = (v) => (Array.isArray(v) ? v.filter((x) => typeof x === "string") : []);
@@ -185,7 +175,6 @@ const normalizeVoices = (raw) => {
   );
 };
 
-// シーンに登場する話者（空欄＝ナレーション）を登場順に重複なしで返す
 export const speakersOf = (scenes) => [
   ...new Set(scenes.filter((s) => String(s.line).trim()).map((s) => String(s.speaker).trim())),
 ];
@@ -195,8 +184,6 @@ const num = (v, min, max, fallback) => {
   return Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : fallback;
 };
 
-// 読み込んだデータの欠けと型違いを既定値で埋める（JSON読み込み・旧データ互換）
-// 項目は列挙したものだけ取り込む（未知のキーや壊れた値を保存しない）
 export const normalize = (raw) => {
   const base = createProject();
   const src = raw && typeof raw === "object" ? raw : {};
@@ -227,7 +214,6 @@ export const normalize = (raw) => {
     },
     scenes: scenes.map((sc, i) => {
       const image = sc.image instanceof Blob ? sc.image : null;
-      // IDが無い・重複している場合は振り直す（選択や並べ替えがIDで動くため）
       const dupe = scenes.findIndex((x) => x.id === sc.id) !== i;
       return createScene({
         id: typeof sc.id === "string" && sc.id && !dupe ? sc.id : newId(),

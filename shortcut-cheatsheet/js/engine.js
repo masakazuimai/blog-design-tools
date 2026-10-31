@@ -1,16 +1,12 @@
-// ショートカット チートシート 共通エンジン
-// アプリページから initApp({ appId, categories, templates }) で起動する。
-// データ（categories）とテンプレ（templates）はアプリごとに差し替える。
 
-const FAV = "__fav"; // お気に入り（マイ一覧）の擬似カテゴリID
-const CLEAR = "__clear"; // テンプレ選択肢「空にする」のID
-const CUSTOM = "custom"; // 自分で登録したショートカットの擬似カテゴリID
+const FAV = "__fav";
+const CLEAR = "__clear";
+const CUSTOM = "custom";
 const CUSTOM_CAT = { id: CUSTOM, name: "カスタム" };
 
 const MAC = { mod: "⌘", alt: "⌥", shift: "⇧", Delete: "⌫", Enter: "↩", Tab: "Tab", Space: "Space", Esc: "Esc", click: "Click" };
 const WIN = { mod: "Ctrl", alt: "Alt", shift: "Shift", Delete: "Del", Enter: "Enter", Tab: "Tab", Space: "Space", Esc: "Esc", click: "Click" };
 
-// UI文言（デフォルト日本語）。EN等はページから strings で上書きする。
 const DEFAULT_STRINGS = {
   favRemove: "マイ一覧から外す",
   favAdd: "マイ一覧に追加",
@@ -47,7 +43,6 @@ const escapeHtml = (s) =>
 const detectOS = () =>
   /Mac|iPhone|iPad/i.test(navigator.platform || navigator.userAgent) ? "mac" : "win";
 
-// 入力キーをトークンへ正規化
 const normalizeKey = (k) => {
   if (k === " ") return "Space";
   const map = {
@@ -55,7 +50,7 @@ const normalizeKey = (k) => {
     Backspace: "Delete", Delete: "Delete", Enter: "Enter", Tab: "Tab",
   };
   if (map[k]) return map[k];
-  return k.length === 1 ? k.toUpperCase() : k; // F5 などはそのまま
+  return k.length === 1 ? k.toUpperCase() : k;
 };
 
 export function initApp({ appId, appName, categories, templates, strings }) {
@@ -69,23 +64,19 @@ export function initApp({ appId, appName, categories, templates, strings }) {
   const STORAGE_KEY = `sc:${appId}:v1`;
   let customSeq = 0;
 
-  // ---- 安定ID（キー組合せ）。'|'区切り（'|'はキートークンに存在しない）----
-  // お気に入り/並び順はこの slug で保存するため、データの並べ替え・挿入・削除に強い。
   const slugOf = (item) => item.keys.join("|");
 
-  // カテゴリ内で参照(slug or 旧index)から item を引く（slug優先・旧index形式も移行解決）
   const itemByRef = (cat, ref) => {
     const r = String(ref);
     const bySlug = cat.items.find((it) => slugOf(it) === r);
     if (bySlug) return bySlug;
     if (/^\d+$/.test(r)) {
       const idx = Number(r);
-      if (idx >= 0 && idx < cat.items.length) return cat.items[idx]; // 旧 'catId:idx' 形式の移行
+      if (idx >= 0 && idx < cat.items.length) return cat.items[idx];
     }
     return null;
   };
 
-  // ---- 複合キー解決：'catId:slug' / 'custom:id'（旧 'catId:idx' も移行）→ 該当アイテム ----
   const resolveKey = (key) => {
     if (typeof key !== "string") return null;
     if (key.startsWith("custom:")) {
@@ -99,17 +90,15 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     if (!cat) return null;
     const item = itemByRef(cat, key.slice(i + 1));
     if (!item) return null;
-    return { key: `${cat.id}:${slugOf(item)}`, cat, item, custom: false }; // 正規化キーを返す
+    return { key: `${cat.id}:${slugOf(item)}`, cat, item, custom: false };
   };
 
-  // ---- 状態管理（OS・並び順・お気に入り・カスタム）----
   const defaultOrder = () => {
     const order = {};
     for (const cat of categories) order[cat.id] = cat.items.map(slugOf);
     return order;
   };
 
-  // 保存済みの並び順を slug へ正規化（旧index移行）＋新規項目を末尾追加
   const mergeOrder = (saved) => {
     const base = defaultOrder();
     if (!saved || typeof saved !== "object") return base;
@@ -133,7 +122,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     return merged;
   };
 
-  // 保存済みカスタムを健全化（id/label/keys が揃ったものだけ）
   const validCustom = (arr) => {
     if (!Array.isArray(arr)) return [];
     const out = [];
@@ -148,7 +136,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     return out;
   };
 
-  // 保存済みお気に入りを slug へ正規化（旧index移行）し、現存するものだけ順序保持で残す
   const validFavorites = (favs, custom) => {
     if (!Array.isArray(favs)) return [];
     const customIds = new Set(custom.map((c) => c.id));
@@ -203,10 +190,9 @@ export function initApp({ appId, appName, categories, templates, strings }) {
   };
 
   let state = loadState();
-  let activeCat = FAV; // 起動時はマイ一覧を表示（空ならガイドが出る）
+  let activeCat = FAV;
   let query = "";
 
-  // ---- キー表示の整形 ----
   const renderKeys = (keys) => {
     const map = state.os === "mac" ? MAC : WIN;
     return keys
@@ -214,7 +200,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
       .join('<span class="plus">+</span>');
   };
 
-  // ---- DOM参照 ----
   const grid = document.getElementById("grid");
   const searchInput = document.getElementById("searchInput");
   const favBtn = document.getElementById("favBtn");
@@ -227,7 +212,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
   const printBtn = document.getElementById("printBtn");
   const pngBtn = document.getElementById("pngBtn");
 
-  // ---- アクティブな並び替え対象リスト ----
   const getActiveList = () => {
     if (activeCat === FAV) return state.favorites;
     if (activeCat === CUSTOM) return state.custom.map((c) => `custom:${c.id}`);
@@ -244,7 +228,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     }
   };
 
-  // ---- サイドナビの状態反映 ----
   const renderNav = () => {
     const favCount = state.favorites.length;
     favBtn.classList.toggle("is-active", activeCat === FAV);
@@ -253,7 +236,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     catSelect.value = activeCat && activeCat !== FAV ? activeCat : "";
   };
 
-  // 初期化：カテゴリ・テンプレのoptionを一度だけ生成
   const buildSidebar = () => {
     catSelect.insertAdjacentHTML(
       "beforeend",
@@ -268,7 +250,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     );
   };
 
-  // ---- カード描画 ----
   const cardHtml = ({ key, item, dragId, custom }) => {
     const isFav = state.favorites.includes(key);
     const id = custom ? key.slice(7) : "";
@@ -337,7 +318,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     osToggle.querySelectorAll(".os-btn").forEach((b) => b.classList.toggle("is-active", b.dataset.os === state.os));
   };
 
-  // ---- お気に入りトグル ----
   const toggleFav = (key) => {
     if (!resolveKey(key)) return;
     const has = state.favorites.includes(key);
@@ -348,7 +328,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     renderGrid();
   };
 
-  // ---- テンプレ適用（マイ一覧に追加・重複スキップ）----
   const keyByLabel = (catId, label) => {
     const cat = categories.find((c) => c.id === catId);
     if (!cat) return null;
@@ -375,16 +354,13 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     render();
   };
 
-  // ---- カスタムショートカット 登録/編集/削除 ----
   const genCustomId = () => `c${Date.now().toString(36)}${(customSeq++).toString(36)}`;
 
   const saveCustom = ({ id, label, keys }) => {
     if (id) {
-      // 編集（マイ一覧への登録状態はそのまま維持）
       state = { ...state, custom: state.custom.map((c) => (c.id === id ? { ...c, label, keys } : c)) };
       activeCat = CUSTOM;
     } else {
-      // 新規：自動でマイ一覧（お気に入り）にも登録する
       const newId = genCustomId();
       const favKey = `custom:${newId}`;
       state = {
@@ -392,7 +368,7 @@ export function initApp({ appId, appName, categories, templates, strings }) {
         custom: [...state.custom, { id: newId, label, keys }],
         favorites: state.favorites.includes(favKey) ? state.favorites : [...state.favorites, favKey],
       };
-      activeCat = FAV; // 登録結果をマイ一覧で確認
+      activeCat = FAV;
     }
     saveState();
     render();
@@ -409,8 +385,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     render();
   };
 
-  // ---- 書き出し（マイ一覧のチートシート）----
-  // マイ一覧を解決して {keys, label} の配列にする
   const favItems = () =>
     state.favorites
       .map(resolveKey)
@@ -421,7 +395,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
   printEl.id = "scPrint";
   document.body.appendChild(printEl);
 
-  // 印刷／PDF（印刷ダイアログから「PDFで保存」も可）
   const printFavorites = () => {
     const items = favItems();
     if (!items.length) {
@@ -445,7 +418,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     window.print();
   };
 
-  // 画像（PNG）— 自前 canvas 描画（外部ライブラリ不要）
   const exportPng = () => {
     const items = favItems();
     if (!items.length) {
@@ -474,11 +446,9 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     const keyText = (k) => map[k] ?? k;
     const plusW = 14;
 
-    // 背景
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, W, H);
 
-    // タイトル
     ctx.textAlign = "left";
     ctx.textBaseline = "alphabetic";
     ctx.fillStyle = "#111827";
@@ -488,7 +458,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     ctx.font = fontSans(400, 14);
     ctx.fillText(t.exportSubtitle(items.length, state.os), padX, padTop + 44);
 
-    // キー列の幅を測ってラベル位置を揃える
     ctx.font = fontKey;
     const keyW = (k) => Math.max(keyH, ctx.measureText(keyText(k)).width + 16);
     const comboW = (keys) => keys.reduce((w, k, i) => w + keyW(k) + (i ? plusW : 0), 0);
@@ -554,8 +523,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     ctx.font = fontSans(400, 12);
     ctx.fillText(t.exportFooter, padX, H - 14);
 
-    // 同期の toDataURL を使う（toBlob は非同期でユーザー操作の文脈が切れ、
-    // 一部ブラウザでダウンロードがブロックされるため）。拡張子 .png は維持。
     const url = canvas.toDataURL("image/png");
     const a = document.createElement("a");
     a.href = url;
@@ -565,7 +532,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     a.remove();
   };
 
-  // ---- ドラッグ＆ドロップ並べ替え ----
   let dragId = null;
 
   grid.addEventListener("dragstart", (e) => {
@@ -605,7 +571,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     saveState();
     renderGrid();
 
-    // ドロップ確定の軽いアニメーション
     const sel = window.CSS && CSS.escape ? CSS.escape(dragId) : dragId;
     const movedCard = grid.querySelector(`.card[data-id="${sel}"]`);
     if (movedCard) {
@@ -614,7 +579,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     }
   });
 
-  // ---- イベント ----
   favBtn.addEventListener("click", () => {
     activeCat = FAV;
     render();
@@ -664,14 +628,12 @@ export function initApp({ appId, appName, categories, templates, strings }) {
   });
 
   resetBtn.addEventListener("click", () => {
-    // 全初期値に戻す：並び順・お気に入りをクリア（カスタム登録とOS設定は維持）
     state = { ...state, order: defaultOrder(), favorites: [] };
     activeCat = null;
     saveState();
     render();
   });
 
-  // ---- 登録モーダル ----
   const modal = buildModal();
   const elModalTitle = modal.querySelector("#scModalTitle");
   const elLabel = modal.querySelector("#scLabel");
@@ -764,7 +726,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
   elKeyChar.addEventListener("input", () => {
     const v = elKeyChar.value.trim();
     pending.key = v.length === 1 ? v.toUpperCase() : v;
-    // プレビューだけ更新（入力欄の値は触らない）
     const tokens = pendingTokens();
     elPreview.innerHTML = tokens.length ? renderKeys(tokens) : `<span class="sc-key-empty">${escapeHtml(t.modalKeyEmpty)}</span>`;
   });
@@ -774,7 +735,6 @@ export function initApp({ appId, appName, categories, templates, strings }) {
     syncModalUI();
   });
 
-  // キャプチャ：モーダル表示中にキー押下を捕捉
   document.addEventListener("keydown", (e) => {
     if (modal.hidden) return;
     if (!capturing) {
@@ -787,7 +747,7 @@ export function initApp({ appId, appName, categories, templates, strings }) {
       syncModalUI();
       return;
     }
-    if (["Meta", "Control", "Alt", "Shift"].includes(e.key)) return; // 修飾キー単体は待つ
+    if (["Meta", "Control", "Alt", "Shift"].includes(e.key)) return;
     pending.mod = e.metaKey || e.ctrlKey;
     pending.alt = e.altKey;
     pending.shift = e.shiftKey;
@@ -798,9 +758,8 @@ export function initApp({ appId, appName, categories, templates, strings }) {
 
   buildSidebar();
   render();
-  saveState(); // 起動時に slug 正規化済みの状態を保存（旧index形式からの移行を確定）
+  saveState();
 
-  // モーダルDOMを生成して body に挿入
   function buildModal() {
     const el = document.createElement("div");
     el.className = "sc-modal";

@@ -1,4 +1,3 @@
-// 操作カテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
 
 import { DRAW, drawKeys, spinKeys, pulseKeys, bounceKeys, slideKeys } from "./_shared.js?v=20260815c";
 
@@ -16,7 +15,6 @@ export const ACTION_ICONS = [
       easing: "ease-out",
       tracks: [
         {
-          // 手前の紙が奥から抜き出される
           part: "front",
           origin: "12px 12px",
           keys: [
@@ -59,8 +57,6 @@ export const ACTION_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // 矢印の先端が y=3.4 にあり、跳ねさせると viewBox の上に見切れる。
-          // 上へ抜けながら消し、トレイの側から戻す動きにして枠内に収める
           part: ["shaft", "head"],
           origin: "12px 12px",
           keys: slideKeys("Y", -2.2),
@@ -108,7 +104,6 @@ export const ACTION_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // 探すように少しだけ動く
           part: ["lens", "handle"],
           origin: "12px 12px",
           keys: [
@@ -130,7 +125,6 @@ export const ACTION_ICONS = [
     parts: [
       { tag: "circle", part: "hub", attrs: { cx: 12, cy: 12, r: 5.4 } },
       {
-        // 歯は本体の円に接する位置から生やす。円と離すと太陽アイコンに見えてしまう
         tag: "path",
         part: "teeth",
         attrs: {
@@ -158,7 +152,6 @@ export const ACTION_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // 蓋が開いて閉じる
           part: "lid",
           origin: "3.4px 6.6px",
           keys: [
@@ -342,7 +335,6 @@ export const ACTION_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // かんぬきが持ち上がって落ちる＝施錠の所作
           part: "shackle",
           origin: "12px 10px",
           keys: [
@@ -393,7 +385,6 @@ export const ACTION_ICONS = [
     anim: {
       duration: 1.1,
       easing: "ease-out",
-      // 図形を内側に描き直したうえで移動量も抑える（5.4 - 線幅1 - 3 = 1.4 で枠内）
       tracks: [{ part: ["head", "needle"], origin: "12px 12px", keys: bounceKeys("Y", -3) }],
     },
   },
@@ -412,7 +403,6 @@ export const ACTION_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // 印刷された紙が出てくる
           part: "paper",
           origin: "12px 14.2px",
           keys: [

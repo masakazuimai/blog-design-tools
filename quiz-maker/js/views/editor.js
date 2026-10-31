@@ -1,4 +1,3 @@
-// ③-A 新規追加 ／ ③-B 編集（左に問題一覧、右に入力フォーム）
 import { h, uid, shortDate, track, toast } from '../util.js?v=20261003b';
 import { getState, setState, updateQuestions } from '../store.js?v=20261003b';
 import { MAX_LEVEL } from '../srs.js?v=20261003b';
@@ -32,7 +31,6 @@ function field(label, mod, control) {
   return h('div', { class: `field ${mod}` }, h('label', {}, h('span', { text: label }), control));
 }
 
-// フォームの値を検証して { values } か { error } を返す
 function readForm(inputs) {
   const values = {
     q: inputs.q.value.trim(),
@@ -93,7 +91,7 @@ function renderForm(state) {
   const onKeydown = (e) => {
     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
-      submit(true); // 編集時は stay を見ないので保存だけ行う
+      submit(true);
     }
   };
 

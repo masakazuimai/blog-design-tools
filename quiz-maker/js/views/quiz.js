@@ -1,4 +1,3 @@
-// ④ 出題 ／ ⑤ 結果
 import { h, shuffle, today, track } from '../util.js?v=20261003b';
 import { getState, setState } from '../store.js?v=20261003b';
 import { applyAnswer, describeDays, MAX_LEVEL } from '../srs.js?v=20261003b';
@@ -12,7 +11,6 @@ function currentQuestion(state) {
   return questions.find(q => q.id === quiz.ids[quiz.index]);
 }
 
-// 選択肢は問題を表示するたびにシャッフルして quiz.choices に固定する
 export function ensureChoices() {
   const state = getState();
   const { quiz } = state;
@@ -53,7 +51,6 @@ export function next() {
   setState({ view: 'result', result: { mode: quiz.mode, results: quiz.results }, quiz: null });
 }
 
-// 出題中のキーボード操作：1〜4で回答、Enterで次へ
 export function handleQuizKey(e) {
   const state = getState();
   if (state.view !== 'quiz' || e.ctrlKey || e.metaKey || e.altKey) return;

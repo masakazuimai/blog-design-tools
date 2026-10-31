@@ -1,12 +1,6 @@
 'use strict';
 
-/* 畳み込みは sRGB 値のまま行う。
-   「リサンプリングはリニア光で」が定石だが、実写真で原本と突き合わせて測ったところ
-   リニア変換を挟むと PSNR 24.25 -> 23.99 と一貫して悪化した。
-   元画像の縮小自体が sRGB 空間で行われているのが通例のため、そちらに合わせる。
-   sRGB のまま処理した結果は Pillow の LANCZOS と PSNR/SSIM が一致する（実装検証済み）。 */
 
-/* Lanczos カーネル: L(x) = a·sin(πx)·sin(πx/a) / (π²x²) */
 function lanczos(x, a) {
   if (x === 0) return 1;
   if (x <= -a || x >= a) return 0;
@@ -14,10 +8,8 @@ function lanczos(x, a) {
   return (a * Math.sin(px) * Math.sin(px / a)) / (px * px);
 }
 
-/* 出力1ピクセルごとの参照範囲と重みを事前計算する */
 function buildContributions(srcLen, dstLen, a) {
   const scale = dstLen / srcLen;
-  // 縮小時はカーネルを広げないとエイリアシングが出る
   const filterScale = scale < 1 ? scale : 1;
   const support = a / filterScale;
   const maxTaps = Math.ceil(support * 2) + 2;
@@ -43,7 +35,6 @@ function buildContributions(srcLen, dstLen, a) {
       weights[base + j] = w;
       sum += w;
     }
-    // 端で切り詰めた分を正規化して明度ズレを防ぐ
     if (sum !== 0) {
       for (let j = 0; j < n; j++) weights[base + j] /= sum;
     } else {
@@ -59,7 +50,6 @@ function report(phase, value) {
   self.postMessage({ type: 'progress', phase: phase, value: value });
 }
 
-/* 水平パス: 8bit → プリマルチプライ済み Float32 (dstW × srcH) */
 function resampleHorizontal(src, srcW, srcH, dstW, a) {
   const c = buildContributions(srcW, dstW, a);
   const out = new Float32Array(dstW * srcH * 4);
@@ -76,7 +66,6 @@ function resampleHorizontal(src, srcW, srcH, dstW, a) {
       for (let j = 0; j < n; j++) {
         const w = weights[wBase + j];
         const p = srcRow + (start + j) * 4;
-        // アルファをプリマルチプライしないと透明部の色が滲み出す
         const av = src[p + 3] / 255;
         r += src[p] * av * w;
         g += src[p + 1] * av * w;
@@ -91,7 +80,6 @@ function resampleHorizontal(src, srcW, srcH, dstW, a) {
   return out;
 }
 
-/* 垂直パス: Float32 → 8bit RGBA */
 function resampleVertical(tmp, dstW, srcH, dstH, a) {
   const c = buildContributions(srcH, dstH, a);
   const { starts, counts, weights, maxTaps } = c;
@@ -114,7 +102,6 @@ function resampleVertical(tmp, dstW, srcH, dstH, a) {
       const i = x * 4;
       const al = acc[i + 3];
       if (al > 1e-6) {
-        // Uint8ClampedArray への代入で 0-255 のクランプと丸めが行われる
         out[dstRow + i] = acc[i] / al;
         out[dstRow + i + 1] = acc[i + 1] / al;
         out[dstRow + i + 2] = acc[i + 2] / al;
@@ -129,12 +116,7 @@ function resampleVertical(tmp, dstW, srcH, dstH, a) {
   return out;
 }
 
-/* ===== 反復逆投影（Iterative Back-Projection） =====
-   「拡大結果を元サイズへ縮小し直したら元画像に一致するはず」という制約を反復で満たしにいく。
-   アンシャープマスクが既存エッジを強調するだけなのに対し、
-   こちらは元画像の画素値そのものを手がかりに使うため、より本質的にボケが戻る。 */
 
-/* Float32 の RGB プレーンをリサンプルする（拡大・縮小どちらにも使う） */
 function resampleFloatRGB(src, srcW, srcH, dstW, dstH, a) {
   const cx = buildContributions(srcW, dstW, a);
   const tmp = new Float32Array(dstW * srcH * 3);
@@ -175,10 +157,8 @@ function rgbFromRGBA(px, count) {
 function backProject(x, dstW, dstH, srcRGB, srcW, srcH, iters, lambda, a) {
   const srcLen = srcW * srcH * 3;
   for (let it = 0; it < iters; it++) {
-    // 現在の推定を元サイズへ落として、元画像との誤差を取る
     const down = resampleFloatRGB(x, dstW, dstH, srcW, srcH, a);
     for (let i = 0; i < srcLen; i++) down[i] = srcRGB[i] - down[i];
-    // 誤差を拡大側へ戻して足し込む
     const up = resampleFloatRGB(down, srcW, srcH, dstW, dstH, a);
     for (let i = 0; i < x.length; i++) x[i] += lambda * up[i];
     report('backproject', (it + 1) / iters);
@@ -200,14 +180,11 @@ function gaussianKernel(sigma) {
   return { k: k, radius: radius };
 }
 
-/* アンシャープマスク: out = orig + amount × (orig − blur)。
-   ぼかしは 8bit 中間で持つ（Float32 だと大きい画像でメモリが破綻する） */
 function unsharpMask(px, w, h, amount, sigma, threshold) {
   if (amount <= 0) return;
   const { k, radius } = gaussianKernel(sigma);
   const tmp = new Uint8ClampedArray(w * h * 3);
 
-  // 水平ぼかし
   for (let y = 0; y < h; y++) {
     const row = y * w;
     for (let x = 0; x < w; x++) {
@@ -225,7 +202,6 @@ function unsharpMask(px, w, h, amount, sigma, threshold) {
     if ((y & 63) === 0) report('sharpen', (y / h) * 0.5);
   }
 
-  // 垂直ぼかし＋合成を同時に行い、バッファをもう1枚持たずに済ませる
   for (let y = 0; y < h; y++) {
     for (let x = 0; x < w; x++) {
       let r = 0, g = 0, b = 0;
@@ -238,7 +214,6 @@ function unsharpMask(px, w, h, amount, sigma, threshold) {
       }
       const p4 = (y * w + x) * 4;
       const dr = px[p4] - r, dg = px[p4 + 1] - g, db = px[p4 + 2] - b;
-      // しきい値未満の差はノイズとみなして触らない
       if (dr > threshold || dr < -threshold) px[p4] = px[p4] + amount * dr;
       if (dg > threshold || dg < -threshold) px[p4 + 1] = px[p4 + 1] + amount * dg;
       if (db > threshold || db < -threshold) px[p4 + 2] = px[p4 + 2] + amount * db;
@@ -247,15 +222,7 @@ function unsharpMask(px, w, h, amount, sigma, threshold) {
   }
 }
 
-/* ===== Richardson-Lucy デコンボリューション =====
-   「元画像がガウシアンでボケている」と仮定して、そのボケを逆算で解く。
-   逆投影が拡大時に失われる情報を埋めるのに対し、こちらは元画像が既に持っている
-   ボケ（ソフトフォーカス・軽い手ブレ）そのものを戻すのが目的。
-   輝度チャンネルだけに掛ける＝色ズレが出ず、メモリと計算も1/3で済む。 */
 
-/* ガウシアンをボックスブラー3回で近似する。
-   移動和で計算するため1画素あたりの計算量がσに依存しない（O(1)）。
-   RLは反復ごとに2回ぼかすので、ここが全体の処理時間を決める。 */
 function boxSizesForGauss(sigma, n) {
   const wIdeal = Math.sqrt((12 * sigma * sigma / n) + 1);
   let wl = Math.floor(wIdeal);
@@ -321,7 +288,6 @@ function richardsonLucy(px, w, h, sigma, iters) {
 
   for (let it = 0; it < iters; it++) {
     blurPlane(est, w, h, sizes, buf, tmp);
-    // 観測値との比を取る。ゼロ割と過大な増幅を抑える
     for (let i = 0; i < n; i++) {
       const c = buf[i] > 1e-3 ? buf[i] : 1e-3;
       let r = observed[i] / c;
@@ -336,7 +302,6 @@ function richardsonLucy(px, w, h, sigma, iters) {
     report('deconv', (it + 1) / iters);
   }
 
-  // 輝度の変化分だけをRGBへ反映する（色相・彩度は保つ）
   for (let i = 0, p = 0; i < n; i++, p += 4) {
     const y0 = observed[i];
     if (y0 < 1e-3) continue;
@@ -352,17 +317,16 @@ self.onmessage = function (e) {
   try {
     const t0 = Date.now();
     const src = new Uint8ClampedArray(d.buffer);
-    const A = 3; // Lanczos3
+    const A = 3;
 
     let tmp = resampleHorizontal(src, d.srcW, d.srcH, d.dstW, A);
     let out = resampleVertical(tmp, d.dstW, d.srcH, d.dstH, A);
-    tmp = null; // 垂直パス後は不要。ここで解放しないとピークメモリが倍になる
+    tmp = null;
 
     if (d.ibpIters > 0) {
       const srcRGB = rgbFromRGBA(src, d.srcW * d.srcH);
       const x = rgbFromRGBA(out, d.dstW * d.dstH);
       backProject(x, d.dstW, d.dstH, srcRGB, d.srcW, d.srcH, d.ibpIters, d.ibpLambda, A);
-      // アルファはベース結果のものをそのまま残す
       for (let i = 0, o = 0, p = 0; i < d.dstW * d.dstH; i++, o += 3, p += 4) {
         out[p] = x[o]; out[p + 1] = x[o + 1]; out[p + 2] = x[o + 2];
       }

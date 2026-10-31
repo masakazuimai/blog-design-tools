@@ -1,4 +1,3 @@
-// 画面から呼ぶ操作（ファイル入出力・出題の開始）
 import { getState, setState, resetState } from './store.js?v=20261003b';
 import { openFile, saveFile, saveFileAs, downloadText, readFile } from './file.js?v=20261003b';
 import { parseDeck, serializeDeck, decodeText, templateCsv, baseName } from './format.js?v=20261003b';
@@ -7,7 +6,6 @@ import { SAMPLE_QUESTIONS } from './sample.js?v=20261003b';
 import { shuffle, today, toast, uid, track } from './util.js?v=20261003b';
 import { t } from './i18n.js?v=20261003b';
 
-// 未保存の変更を捨ててよいか確認する
 function confirmDiscard() {
   const { questions, dirty } = getState();
   if (!questions || !dirty) return true;
@@ -108,7 +106,6 @@ export function deckTitle() {
   return baseName(getState().fileName);
 }
 
-// 出題を始める。mode: due（今日の復習）| all（全問）| retry（間違えた問題だけ）
 export function startQuiz(mode, { count = 0, ids = [] } = {}) {
   const { questions } = getState();
   const now = today();

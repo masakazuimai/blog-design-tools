@@ -1,8 +1,3 @@
-/*
- * テンプレート3：縦回転リング（観覧車／ロロデックス型）
- * メリーゴーランドの回転軸を縦(X軸)にしたもの。カードが上下に回り、前面のカードが正面を向く。
- * 構造・CSSはメリーゴーランドと共通（scene > tilt > stage > .c3-card）。tiltは横傾き(rotateY)。
- */
 const SENS = 0.22;
 const GSAP_VER = "3.13.0";
 const CDN = `https://cdn.jsdelivr.net/npm/gsap@${GSAP_VER}/dist`;
@@ -120,7 +115,6 @@ function mount(host, state, autoOn) {
   };
 }
 
-// --- コード生成 ---------------------------------------------------------
 function cardsHTML(count) {
   let out = "";
   for (let i = 0; i < count; i++) {

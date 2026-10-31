@@ -14,15 +14,10 @@ body{
 a{color:var(--ui-accent-2)}
 .wrap{max-width:1838px; margin:0 auto; padding:24px 16px 64px}
 
-/* ---- header ---- */
 .head{display:flex; flex-direction:column; gap:8px; margin-bottom:24px}
 .head h1{margin:0; font-size:clamp(22px,2.4vw,30px); letter-spacing:-.02em; line-height:1.35}
 .head p{margin:0; color:var(--ui-muted); font-size:16px}
 
-/* ---- 3 columns ---- */
-/* 左右のサイドバーは同幅で固定。中央は画面幅に応じて伸縮させる。
-   上限1266pxはステージの枠(12px×2＋境界線1px×2)を含む値で、
-   プレビュー本体が実サイトの本文幅と同じ1240pxで止まる */
 .cols{display:grid; grid-template-columns:250px minmax(0,1266px) 250px; gap:20px;
       justify-content:center; align-items:start}
 @media (max-width:1040px){ .cols{grid-template-columns:1fr} }
@@ -32,7 +27,6 @@ a{color:var(--ui-accent-2)}
 .panel h3{margin:18px 0 8px; font-size:16px; color:var(--ui-muted); font-weight:600}
 .hint{color:var(--ui-muted); font-size:16px; margin:8px 0 0}
 
-/* ---- theme buttons ---- */
 .themes{display:flex; flex-direction:column; gap:8px}
 .grp{font-size:16px; color:var(--ui-muted); margin:14px 0 6px}
 .grp small{display:block; overflow-wrap:anywhere}
@@ -64,13 +58,9 @@ textarea{
 }
 .btn+.btn{margin-top:8px}
 
-/* ---- prompt ---- */
 #prompt{min-height:280px}
 .copied{color:var(--ui-ok); font-size:16px; margin:8px 0 0; min-height:1.7em}
 
-/* =========================================================
-   LP PREVIEW — テーマのトークンだけで描画する領域
-   ========================================================= */
 .stage{background:#1d2740; border:1px solid var(--ui-line); border-radius:var(--ui-radius); padding:12px}
 .stage .lp{box-shadow:0 0 0 1px rgba(255,255,255,.14), 0 12px 28px rgba(0,0,0,.35)}
 .stage-bar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px}
@@ -126,17 +116,15 @@ textarea{
 .spec-meta{font-size:16px; color:var(--lp-muted); font-family:'SFMono-Regular',Menlo,Consolas,monospace}
 .spec-sample{margin:0; overflow-wrap:anywhere}
 
-/* ---- token dump ---- */
 .tokens{margin-top:14px}
 .tok-grid{display:flex; flex-wrap:wrap; gap:6px}
 .tok{display:flex; align-items:center; gap:6px; font-size:16px; background:var(--ui-panel-2); border:1px solid var(--ui-line); border-radius:6px; padding:3px 8px}
 .tok i{width:14px; height:14px; border-radius:3px; border:1px solid rgba(255,255,255,.2)}
 details summary{cursor:pointer; color:var(--ui-muted); font-size:16px}
 
-/* 広告（ツール規格: PC/SPとも320×100・PCは右下フローティング） */
 .footer-ad{position:fixed; right:0; bottom:0; z-index:90;
            display:flex; flex-direction:column; align-items:center; gap:2px; padding:0;
-           width:320px; overflow:hidden; /* AdSenseレスポンシブの横伸び防止＋×を右端に固定 */
+           width:320px; overflow:hidden;
            background:transparent; border:none; box-shadow:none}
 .footer-ad.is-closed{display:none}
 .ad-widget__head{display:flex; align-items:center; justify-content:space-between; width:100%; position:relative; z-index:1}
@@ -155,8 +143,8 @@ details summary{cursor:pointer; color:var(--ui-muted); font-size:16px}
     position:static; align-self:center; margin:24px auto 0;
     gap:0; padding:0; background:none; border:none; border-radius:0; box-shadow:none; z-index:auto;
   }
-  .footer-ad.is-closed{display:flex}  /* PCで閉じてもSPでは表示 */
-  .ad-widget__head{display:none}      /* SPはラベル・×を隠す */
+  .footer-ad.is-closed{display:flex}
+  .ad-widget__head{display:none}
   .footer-ad ins.adsbygoogle{width:320px; height:100px}
 }
 

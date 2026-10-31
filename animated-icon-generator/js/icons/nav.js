@@ -1,14 +1,6 @@
-// ナビゲーションカテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
-//
-// ハンバーガーメニューは hamburger-menu-gallery と役割が重なるため、ここには置かない。
-//
-// ⚠️ 移動するアイコンは図形を内側に描く: 他のアイコンと同じ 3.4〜20.6 いっぱいに描くと、
-//    translate した瞬間に線幅ぶんも含めて viewBox からはみ出して見切れる。
-//    矢印系は 4.4〜19.6 に収め、移動量は 3 までとする（4.4 - 線幅1 - 3 = 0.4 で枠内）。
 
 import { DRAW, drawKeys, bounceKeys, slideKeys, popInKeys } from "./_shared.js?v=20260815c";
 
-// 矢印の移動量。図形の内寸から決めた上限
 const ARROW_SHIFT = 3;
 
 export const NAV_ICONS = [

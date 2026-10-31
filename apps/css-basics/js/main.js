@@ -1,20 +1,15 @@
-// アプリロジック v5（問題データは js/data.js の PROBLEMS / LEVELS を参照）
-// v5: スタイル適用型。固定のステージHTMLへエディタのCSSを当ててiframeにライブ描画し、
-// 「自分のコード」と「お手本」をタブで見比べる。プレビュー幅はPC/SP(375px)で切り替えられ、
-// iframeは独立したビューポートなのでメディアクエリやclamp()の効き目もその場で確認できる
 const STORE_KEY = 'cqCssBasicsQuizV1';
 let state = { level: 'all', current: 1, status: {}, drafts: {} };
 try {
   const saved = JSON.parse(localStorage.getItem(STORE_KEY));
   if (saved && saved.status) state = { ...state, ...saved };
-} catch (e) { /* 破損時は初期状態で続行 */ }
+} catch (e) { }
 
-let previewMode = 'mine';  // 'mine' | 'answer'
-let previewWidth = 'pc';   // 'pc' | 'sp'
+let previewMode = 'mine';
+let previewWidth = 'pc';
 
 const $ = id => document.getElementById(id);
 
-// ステージ側の下敷き。問題のCSSを邪魔しない最小限にとどめる
 const BASE_CSS = 'body{margin:16px;font-family:"Noto Sans JP",system-ui,sans-serif;font-size:16px;line-height:1.5;color:#222;background:#fff}';
 
 function save() { localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
@@ -25,7 +20,6 @@ function levelProblems() {
 }
 function problem(id) { return PROBLEMS.find(p => p.id === id); }
 
-// ---- プレビュー（sandbox="" でスクリプトは実行されない） ----
 function renderPreview() {
   const p = problem(state.current);
   if (!p) return;
@@ -54,7 +48,6 @@ function setPreviewMode(mode) {
 function setPreviewWidth(w) {
   previewWidth = w;
   renderPreviewTabs();
-  // 幅を変えるだけならsrcdocの再設定は不要（iframeのビューポートが変わる）
 }
 
 function renderTabs() {
@@ -86,7 +79,6 @@ function renderProgress() {
   $('progressText').textContent = `${done} / ${ps.length} クリア`;
 }
 
-// エディタの高さを中身に合わせる（min-height 300px 〜 上限 740px。以降はスクロール）
 function autoGrow() {
   const ed = $('editor');
   ed.style.height = 'auto';
@@ -131,7 +123,6 @@ function renderClear() {
 
 function renderAll() { renderTabs(); renderChips(); renderProgress(); renderProblem(); }
 
-// ---- エディタ（入力のたびに下書き保存＋プレビュー更新。連打を抑えるため遅延させる） ----
 let timer = null;
 $('editor').addEventListener('input', () => {
   autoGrow();
@@ -143,7 +134,6 @@ $('editor').addEventListener('input', () => {
   }, 250);
 });
 
-// Tabキーでスペース2つ挿入
 $('editor').addEventListener('keydown', e => {
   if (e.key === 'Tab') {
     e.preventDefault();
@@ -158,7 +148,6 @@ $('pvAnswer').onclick = () => setPreviewMode('answer');
 $('pvPc').onclick = () => setPreviewWidth('pc');
 $('pvSp').onclick = () => setPreviewWidth('sp');
 
-// リセット＝下書きを破棄してひな形に戻す
 $('resetCodeBtn').onclick = () => {
   const p = problem(state.current);
   $('editor').value = p.starter;
@@ -171,7 +160,6 @@ $('resetCodeBtn').onclick = () => {
 };
 
 function setStatus(st) {
-  // 同じ判定をもう一度押したら解除（その場に留まる）
   if (state.status[state.current] === st) {
     const status = { ...state.status };
     delete status[state.current];
@@ -204,7 +192,6 @@ $('reviewBtn').onclick = () => {
   if (first) { state = { ...state, current: first.id }; save(); renderAll(); }
 };
 
-// 表示中レベルの判定（できた/復習）を全解除。現在の問題位置は維持
 $('resetProgressBtn').onclick = () => {
   const status = { ...state.status };
   levelProblems().forEach(p => delete status[p.id]);

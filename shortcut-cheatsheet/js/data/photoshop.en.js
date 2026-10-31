@@ -1,4 +1,3 @@
-// Photoshop shortcut data (English). Same keys as the JP file; labels translated.
 
 export const CATEGORIES = [
   {

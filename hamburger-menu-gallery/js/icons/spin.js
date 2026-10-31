@@ -1,5 +1,3 @@
-// 回転・スピン系のアイコン変形（10種）
-// アクセント色 #6366f1 / サブ色 #ec4899 は main.js が置換する
 
 const BARS = "<span></span><span></span><span></span>";
 

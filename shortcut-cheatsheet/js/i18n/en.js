@@ -1,5 +1,3 @@
-// English UI strings for the shortcut cheat sheet engine.
-// Passed to initApp({ strings: STRINGS_EN }).
 
 export const STRINGS_EN = {
   favRemove: "Remove from My List",

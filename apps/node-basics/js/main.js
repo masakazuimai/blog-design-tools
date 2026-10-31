@@ -1,13 +1,9 @@
-// アプリロジック v2拡張「仮想Node環境」（問題データは js/data.js の PROBLEMS / LEVELS を参照）
-// コードはiframe内で実行され、fs / path / process / require / Buffer / setImmediate をモックで提供する。
-// fsは問題ごとの仮想ファイルシステム（実行のたびに初期状態へリセット）に対して読み書きし、
-// 変更はファイルパネルにライブ反映される。console.logはライブ追記・エラーはconsole欄に表示。
 const STORE_KEY = 'cqNodeBasicsQuizV1';
 let state = { level: 'all', current: 1, status: {}, drafts: {} };
 try {
   const saved = JSON.parse(localStorage.getItem(STORE_KEY));
   if (saved && saved.status) state = { ...state, ...saved };
-} catch (e) { /* 破損時は初期状態で続行 */ }
+} catch (e) { }
 
 const $ = id => document.getElementById(id);
 
@@ -19,9 +15,6 @@ function levelProblems() {
 }
 function problem(id) { return PROBLEMS.find(p => p.id === id); }
 
-// ============================================================
-// 仮想Node環境
-// ============================================================
 const VCWD = '/app';
 const te = new TextEncoder();
 const td = new TextDecoder();
@@ -36,7 +29,6 @@ function normPath(p) {
   return '/' + parts.join('/');
 }
 
-// ---- Buffer（最小限のモック） ----
 function makeBuffer(v) {
   const bytes = typeof v === 'string' ? te.encode(v) : (v && v.__isBuffer ? v.bytes : new Uint8Array(v));
   return {
@@ -60,7 +52,6 @@ const BufferMock = {
   },
 };
 
-// ---- path（POSIX形式のモック） ----
 function makePathModule() {
   const join = (...parts) => {
     const joined = parts.filter(s => s !== '' && s != null).join('/');
@@ -99,7 +90,6 @@ function makePathModule() {
   return { join, basename, dirname, extname, resolve, sep: '/', isAbsolute: p => String(p).startsWith('/') };
 }
 
-// ---- fs（仮想FSに対するモック。onChangeでパネルへライブ反映） ----
 function makeFsModule(files, onChange) {
   const delay = fn => new Promise((res, rej) => setTimeout(() => {
     try { res(fn()); } catch (e) { rej(e); }
@@ -187,7 +177,6 @@ function makeFsModule(files, onChange) {
   return { promises, fsFull };
 }
 
-// ---- process（nextTickはCJS/ESMで順序が変わる。CJSは実行前にdrainを先行予約） ----
 function makeProcessModule(p, win) {
   const tickQueue = [];
   let drainScheduled = false;
@@ -196,7 +185,6 @@ function makeProcessModule(p, win) {
     while (tickQueue.length) tickQueue.shift()();
   };
   const preSchedule = () => {
-    // CJS: 同期コード完了直後（ユーザーのPromiseコールバックより先）にnextTickキューを処理する
     if (p.moduleFormat !== 'esm') {
       drainScheduled = true;
       win.queueMicrotask(drain);
@@ -221,21 +209,18 @@ function makeProcessModule(p, win) {
   return { proc, preSchedule };
 }
 
-// ---- タイマー（Node準拠: 同時にキューされたsetImmediateはsetTimeoutより先に実行する） ----
 function makeTimers(win) {
   const immQ = [];
   const mc = new win.MessageChannel();
   mc.port1.onmessage = () => { const cb = immQ.shift(); if (cb) cb(); };
   const setImmediateMock = cb => { immQ.push(cb); mc.port2.postMessage(0); };
   const setTimeoutMock = (cb, ms, ...args) => win.setTimeout(() => {
-    // タイマー発火時、先にキュー済みのimmediateをすべて処理してから本体を実行
     while (immQ.length) immQ.shift()();
     cb(...args);
   }, ms);
   return { setImmediateMock, setTimeoutMock };
 }
 
-// ---- require（node:コアのモック＋仮想FS内のローカルモジュール/JSON） ----
 function makeRequire(ctx) {
   const cache = {};
   const req = spec => {
@@ -271,7 +256,6 @@ function makeRequire(ctx) {
   return req;
 }
 
-// ---- ESM importの簡易トランスフォーム（トップレベルの静的import3形式のみ対応） ----
 function transformImports(code) {
   return code
     .replace(/^\s*import\s+\*\s+as\s+(\w+)\s+from\s+(['"][^'"]+['"]);?\s*$/gm, 'const $1 = require($2);')
@@ -280,12 +264,9 @@ function transformImports(code) {
     .replace(/^\s*import\s+(\w+)\s+from\s+(['"][^'"]+['"]);?\s*$/gm, 'const $1 = require($2);');
 }
 
-// ============================================================
-// ステージ（仮想Node環境パネル＋隠しiframe実行環境）
-// ============================================================
 let stageWin = null;
-let runFiles = null;     // 実行中の仮想FS（実行のたびにvfsから複製）
-let changedKeys = null;  // 実行中に書き込まれたファイル
+let runFiles = null;
+let changedKeys = null;
 
 function initialFiles(p) {
   const files = {};
@@ -401,7 +382,6 @@ function renderClear() {
 
 function renderAll() { renderTabs(); renderChips(); renderProgress(); renderProblem(); }
 
-// ---- コンソール（非同期のログもライブ追記） ----
 let hasOutput = false;
 function fmt(v) {
   if (v && v.__isBuffer) return '<Buffer ' + v.length + ' bytes>';
@@ -422,7 +402,6 @@ function showHint() {
   out.textContent = '(出力なし — console.log で表示できます)';
 }
 
-// コード実行（仮想Node環境を作り直してからiframe内で実行）
 $('runBtn').onclick = () => {
   const code = $('editor').value;
   state = { ...state, drafts: { ...state.drafts, [state.current]: code } };
@@ -464,8 +443,6 @@ $('runBtn').onclick = () => {
 
   const execCode = transformImports(code);
 
-  // "type": "module" のプロジェクトで require を使った場合の実機エラーを再現
-  // （import変換後でなく、ユーザーが書いた元コードで判定する）
   if (p.esmGuard && /(^|[^.\w])require\s*\(/.test(code)) {
     out.className = 'err';
     out.textContent = 'ReferenceError: require is not defined in ES module scope, you can use import instead';
@@ -489,7 +466,6 @@ $('runBtn').onclick = () => {
   }
 };
 
-// リセット＝下書きを破棄してstarterに戻し、仮想FSも初期状態に戻す
 $('clearBtn').onclick = () => {
   const p = problem(state.current);
   $('editor').value = p.starter || '';
@@ -503,7 +479,6 @@ $('clearBtn').onclick = () => {
   $('consoleOut').textContent = '';
 };
 
-// Tabキーでスペース2つ挿入
 $('editor').addEventListener('keydown', e => {
   if (e.key === 'Tab') {
     e.preventDefault();
@@ -514,7 +489,6 @@ $('editor').addEventListener('keydown', e => {
 });
 
 function setStatus(st) {
-  // 同じ判定をもう一度押したら解除（その場に留まる）
   if (state.status[state.current] === st) {
     const status = { ...state.status };
     delete status[state.current];
@@ -547,7 +521,6 @@ $('reviewBtn').onclick = () => {
   if (first) { state = { ...state, current: first.id }; save(); renderAll(); }
 };
 
-// 表示中レベルの判定（できた/復習）を全解除。現在の問題位置は維持
 $('resetProgressBtn').onclick = () => {
   const status = { ...state.status };
   levelProblems().forEach(p => delete status[p.id]);

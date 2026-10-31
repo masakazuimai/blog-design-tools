@@ -1,9 +1,7 @@
-// UI文言の辞書（ja / en）。言語は <html lang> で判定し、/ と /en/ が同じJSを共有する
 export const LANG = document.documentElement.lang === 'en' ? 'en' : 'ja';
 
 const DICT = {
   ja: {
-    // ファイルバー
     noFile: 'ファイル未選択',
     dirty: '● 未保存の変更あり',
     notSavedYet: 'まだファイルに保存していません',
@@ -17,7 +15,6 @@ const DICT = {
     hintOverwrite: '💡 PCの故障に備えて Googleドライブのフォルダ に保存しておくのがおすすめです。新しいPCでも同じファイルを開けば、問題も学習記録もそのまま続きから使えます。',
     hintDownload: '💡 このブラウザでは保存するとファイルがダウンロードされます。Googleドライブのフォルダへ移しておけば、新しいPCでも続きから使えます（Chrome / Edge なら元のファイルへ直接上書き保存できます）。',
     restored: '前回の作業を復元しました（未保存の変更があります）',
-    // 操作
     confirmDiscard: '保存していない変更があります。破棄して続けますか？',
     createdDeck: '新しい問題集を作りました。問題を追加してください',
     sampleLoaded: 'サンプルの問題集を読み込みました',
@@ -36,12 +33,10 @@ const DICT = {
     defaultDeckName: '新しい問題集',
     pickerCsv: '問題集（CSV）',
     pickerJson: '問題集（JSON）',
-    // 読み込みエラー
     errLine: '{line}行目：{error}',
     errBlank: '問題・正解・誤答3つのどれかが空欄です',
     errJson: 'JSONの形式が正しくありません',
     errJsonQuestions: 'JSONに questions の配列がありません',
-    // 初回
     startTitle: '問題集を作って、覚えるまで解こう',
     startLead: 'まずは新しく作るか、手元のCSV／JSONファイルを開いてください（ファイルをここへドラッグしてもOK）。',
     startNew: '＋ 新しい問題集を作る',
@@ -49,7 +44,6 @@ const DICT = {
     csvHowTitle: 'Excelで作る場合のCSVの書き方',
     csvHowNote: '1行目は見出しです。「習熟度」より右の列は空欄でOK（読み込むと全問すぐ出題されます）。Excelでは「CSV UTF-8」で保存してください。 ',
     csvTemplate: 'ひな形CSVをダウンロード',
-    // ホーム
     noQuestionsYet: 'まだ問題がありません。最初の問題を追加しましょう。',
     addFirst: '＋ 問題を追加する',
     statTotal: '全問題',
@@ -64,7 +58,6 @@ const DICT = {
     quizAll: '全問から出題',
     addQuestion: '＋ 問題を追加',
     editQuestions: '✏ 問題を編集',
-    // 編集
     searchPlaceholder: '🔍 問題を検索',
     searchLabel: '問題を検索',
     backHome: '← ホームへ戻る',
@@ -102,7 +95,6 @@ const DICT = {
     fieldCorrect: '✅ 正解',
     fieldWrong: '❌ 誤答{n}',
     fieldExplain: '解説（任意）',
-    // 出題
     modeDue: '今日の復習',
     modeAll: '全問から出題',
     modeRetry: '間違えた問題をもう一度',
@@ -116,7 +108,6 @@ const DICT = {
     nextQuestion: '次の問題へ →（Enter）',
     keyHint: 'キーボードの 1〜4 でも回答できます。選択肢の並びは毎回シャッフルされます。',
     quit: '中断してホームへ（ここまでの記録は残ります）',
-    // 結果
     score: '{correct} / {total} 問正解',
     rate: '正答率 {rate}%',
     newlyMastered: '🎉 新しく「覚えた」に到達：{n}問',
@@ -125,7 +116,6 @@ const DICT = {
     retryWrong: '間違えた{n}問だけもう一度',
     home: 'ホームへ',
     saveReminder: '⚠ 学習記録を残すには「上書き保存」を押してください',
-    // 間隔
     days1: '明日', days7: '1週間後', days14: '2週間後', days30: '1か月後', days90: '3か月後', daysN: '{n}日後',
   },
   en: {
@@ -247,7 +237,6 @@ const DICT = {
   },
 };
 
-// 文言を取り出し {name} を差し込む
 export function t(key, params = {}) {
   const value = DICT[LANG][key] ?? DICT.ja[key] ?? key;
   if (typeof value !== 'string') return value;

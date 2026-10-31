@@ -1,6 +1,3 @@
-// 単色背景の透過化
-// 外周の不透明ピクセルから背景色を推定し、外周と色がつながっている範囲だけを
-// フラッドフィルで透過にする（ロゴ内部の同色部分は残る）
 
 const OPAQUE_ALPHA = 200
 const NEAR_TRANSPARENT = 16
@@ -11,7 +8,6 @@ export function removeBackground(imageData, tolerance) {
   const bg = estimateBackgroundColor(src, w, h)
   if (!bg) return imageData
 
-  // 許容値0〜100を色距離（RGB空間ユークリッド距離、最大441）のしきい値に変換
   const threshold = (tolerance / 100) * 250
 
   const out = new Uint8ClampedArray(src)
@@ -27,7 +23,6 @@ export function removeBackground(imageData, tolerance) {
     return Math.sqrt(dr * dr + dg * dg + db * db) <= threshold
   }
 
-  // 外周の全ピクセルを起点にする
   for (let x = 0; x < w; x += 1) {
     stack.push(x, (h - 1) * w + x)
   }
@@ -52,7 +47,6 @@ export function removeBackground(imageData, tolerance) {
   return new ImageData(out, w, h)
 }
 
-// 外周の不透明ピクセルの平均色を背景色とみなす（全て透過なら推定不可）
 function estimateBackgroundColor(data, w, h) {
   let r = 0
   let g = 0

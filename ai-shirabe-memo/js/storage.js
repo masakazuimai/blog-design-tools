@@ -1,4 +1,3 @@
-// localStorage の薄いラッパー。JSONのシリアライズとエラー処理を1か所に集約する。
 
 export function loadJson(key, fallback) {
   try {

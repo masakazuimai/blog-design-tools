@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <!-- Google Tag Manager -->
     <script>
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
@@ -14,7 +13,6 @@
         f.parentNode.insertBefore(j, f);
       })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
     </script>
-    <!-- End Google Tag Manager -->
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,7 +24,6 @@
     <link rel="canonical" href="https://codequest.work/generator/grayscale/" />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="CodeQuest" />
-    <!-- OGP設定 -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="CodeQuest.work" />
     <meta property="og:locale" content="ja_JP" />
@@ -38,7 +35,6 @@
     <meta property="og:url" content="https://codequest.work/generator/grayscale/" />
     <meta property="og:image" content="https://codequest.work/wp-content/uploads/2024/11/120120logo.png" />
 
-    <!-- Twitterカード設定 -->
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="グレースケール変換ツール【無料】画像を送らずブラウザで白黒化" />
     <meta
@@ -47,7 +43,6 @@
     />
     <meta name="twitter:image" content="https://codequest.work/wp-content/uploads/2024/11/120120logo.png" />
     <meta name="twitter:site" content="@CodeQuest_work" />
-    <!-- 構造化データ -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -107,7 +102,6 @@
             ctx.drawImage(img, 0, 0);
             originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             applyGrayscale(document.getElementById("grayscale-slider").value);
-            // 画像が入るまで空のcanvasと保存ボタンは出さない
             document.getElementById("result-area").hidden = false;
           };
           img.src = e.target.result;
@@ -149,7 +143,6 @@
         const link = document.createElement("a");
 
         if (format === "jpeg") {
-          // JPEGは透明を扱えないため、白で塗りつぶしてから書き出す
           const out = document.createElement("canvas");
           out.width = canvas.width;
           out.height = canvas.height;
@@ -264,7 +257,6 @@
         background: #555;
       }
 
-      /* 保存形式の選択 */
       .format-row {
         width: 90%;
         max-width: 800px;
@@ -291,7 +283,6 @@
         cursor: pointer;
       }
 
-      /* 使い方・注意書き */
       .note {
         width: 90%;
         max-width: 800px;
@@ -346,7 +337,6 @@
         color: #000;
       }
 
-      /* 広告（PC/SPとも右下フローティングカード320×100・薄型透明枠＋×閉じ） */
       .footer-ad {
         position: fixed;
         right: 0;
@@ -383,7 +373,6 @@
       .ad-widget__close {
         appearance: none;
         border: none;
-        /* このページは素の button に幅・余白を当てているため打ち消す */
         width: 18px;
         height: 18px;
         min-width: 0;
@@ -423,7 +412,6 @@
     </style>
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe
         src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2"
@@ -432,7 +420,6 @@
         style="display: none; visibility: hidden"
       ></iframe
     ></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <header>
       <h1>Gray Scale Generator</h1>
       <p>画像をドラッグ＆ドロップするだけで白黒化。変換はブラウザ内で完結し、画像は外部に送信されません。</p>
@@ -482,7 +469,6 @@
       </ul>
     </section>
 
-    <!-- 広告テスト（2026-10-24〜6週間）: 右下広告を停止中。全画面広告用にローダーのみ残す -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
 
     <footer>

@@ -1,12 +1,3 @@
-// 状態・通知カテゴリのアイコン定義
-//
-// 共通ルール（全カテゴリ共通・アイコン追加時も厳守）
-//  - viewBox は 0 0 24 24 / stroke-width 2 / linecap・linejoin ともに round / fill なし
-//  - 描画はおおむね 3〜21 の範囲に収める（線幅ぶんの余白を残す）
-//  - parts は「アニメを適用していない完成形」。静止SVGとPNGはこれをそのまま書き出す
-//  - 線を描くアニメは animAttrs に pathLength="1" を持たせ、stroke-dashoffset を 1→0 で動かす
-//    （実際のパス長を測らずに済み、どのアイコンでも同じ書き方で通る）
-//  - 動きの語彙は draw / spin / pulse / swing / bounce / blink / slide に統一する
 
 import { DRAW, drawKeys, spinKeys, swingKeys } from "./_shared.js?v=20260815c";
 
@@ -119,7 +110,6 @@ export const STATUS_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // ベル本体と振り子を同じ軸で揺らす。軸は傘の頂点あたり（viewBox座標）
           part: ["body", "clapper"],
           origin: "12px 5.5px",
           keys: swingKeys(13),
@@ -196,7 +186,6 @@ export const STATUS_ICONS = [
     label: { ja: "読み込み中", en: "Loading" },
     parts: [
       { tag: "circle", part: "track", attrs: { cx: 12, cy: 12, r: 9, opacity: 0.2 } },
-      // 1/4 円だと小サイズで弧が見えないため半円にする
       { tag: "path", part: "arc", attrs: { d: "M12 3 A9 9 0 0 1 12 21" } },
     ],
     anim: {
@@ -267,7 +256,6 @@ export const STATUS_ICONS = [
     label: { ja: "時計", en: "Clock" },
     parts: [
       { tag: "circle", part: "ring", attrs: { cx: 12, cy: 12, r: 9 } },
-      // 短針は3時方向へ。両方を12時に置くと静止状態で時計に見えない
       { tag: "path", part: "hour", attrs: { d: "M12 12 H15.4" } },
       { tag: "path", part: "minute", attrs: { d: "M12 12 V6.6" } },
     ],
@@ -337,10 +325,6 @@ export const STATUS_ICONS = [
           d: "M6.6 3.4h10.8 M6.6 20.6h10.8 M7.8 3.4v3.1c0 1 .4 1.9 1.1 2.6L12 12l-3.1 2.9c-.7.7-1.1 1.6-1.1 2.6v3.1 M16.2 3.4v3.1c0 1-.4 1.9-1.1 2.6L12 12l3.1 2.9c.7.7 1.1 1.6 1.1 2.6v3.1",
         },
       },
-      // 砂は「枠の形で切り抜いた面を上下させる」方式にする。
-      // 三角形を拡大縮小する方式だと、すぼまった壁沿いに必ず隙間が残るため。
-      // clipPath を掛けた <g> は動かさず、中の <rect> だけを動かすのが要点
-      // （clip-path は要素自身の transform と一緒に動いてしまい、掛け直しにならない）
       {
         tag: "defs",
         children: [
@@ -362,7 +346,6 @@ export const STATUS_ICONS = [
         children: [{ tag: "rect", part: "sandTop", attrs: { x: 7, y: 3, width: 10, height: 9.6, fill: "currentColor", stroke: "none" } }],
       },
       {
-        // 初期位置は枠の下＝空。上がってくると底から順に埋まる
         tag: "g",
         attrs: { "clip-path": "url(#aig-hourglass-bottom)" },
         children: [{ tag: "rect", part: "sandBottom", attrs: { x: 7, y: 21, width: 10, height: 9.6, fill: "currentColor", stroke: "none" } }],
@@ -374,7 +357,6 @@ export const STATUS_ICONS = [
       easing: "linear",
       tracks: [
         {
-          // 砂の表面が下がる＝上の砂が減る
           part: "sandTop",
           keys: [
             { at: 0, transform: "translateY(0)" },
@@ -383,7 +365,6 @@ export const STATUS_ICONS = [
           ],
         },
         {
-          // 下は逆に、面が上がってきて底から埋まる
           part: "sandBottom",
           keys: [
             { at: 0, transform: "translateY(0)" },
@@ -392,7 +373,6 @@ export const STATUS_ICONS = [
           ],
         },
         {
-          // 落ちている間だけ砂粒の筋を見せる
           part: "grain",
           keys: [
             { at: 0, opacity: 0 },
@@ -436,7 +416,6 @@ export const STATUS_ICONS = [
       duration: 1.6,
       easing: "ease-out",
       tracks: [
-        // 内側から外側へ順に灯る
         { part: "dot", keys: [{ at: 0, opacity: 0.15 }, { at: 0.15, opacity: 1 }, { at: 1, opacity: 1 }] },
         { part: "wave1", keys: [{ at: 0, opacity: 0.15 }, { at: 0.2, opacity: 0.15 }, { at: 0.35, opacity: 1 }, { at: 1, opacity: 1 }] },
         { part: "wave2", keys: [{ at: 0, opacity: 0.15 }, { at: 0.4, opacity: 0.15 }, { at: 0.55, opacity: 1 }, { at: 1, opacity: 1 }] },

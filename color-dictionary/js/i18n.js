@@ -1,4 +1,3 @@
-// JSで生成する文字列の多言語辞書。HTMLの静的テキストは各シェルに直書きする。
 const DICT = {
   ja: {
     searchPlaceholder: "色名・読み・HEX で検索（例：茜、あかね、#dc143c、crimson）",

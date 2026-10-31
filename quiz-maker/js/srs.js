@@ -1,5 +1,3 @@
-// 間隔反復（段階式＝ライトナー方式）
-// 現在の習熟度で正解したら INTERVALS[習熟度] 日後に出題し、習熟度を1上げる。間違えたら Lv0・翌日
 import { addDays } from './util.js?v=20261003b';
 import { t } from './i18n.js?v=20261003b';
 
@@ -14,8 +12,6 @@ export function isMastered(question) {
   return question.level >= MAX_LEVEL;
 }
 
-// 回答を反映した新しい問題オブジェクトと、表示用の変化情報を返す
-// 出題日が来ていない問題（全問モード）を正解しても、習熟度は先取りで上げない
 export function applyAnswer(question, isCorrect, todayYmd) {
   const from = question.level;
   if (!isCorrect) {
@@ -52,7 +48,6 @@ export function deckStats(questions, todayYmd) {
   };
 }
 
-// 「◯日後」を読みやすい言葉にする
 export function describeDays(days) {
   return [1, 7, 14, 30, 90].includes(days) ? t(`days${days}`) : t('daysN', { n: days });
 }

@@ -1,5 +1,3 @@
-// 選択肢の語彙。ja=日本語の画面表示（日本語の確認用プロンプトにも使う）／el=英語の画面表示／en=プロンプトへ出力する英語表現
-// en が空文字のものは「指定なし」＝プロンプトに出力しない
 
 export const ASPECTS = [
   { v: "16:9", ja: "16:9 横長", el: "16:9 Landscape", en: "16:9 widescreen" },
@@ -88,7 +86,6 @@ export const DIALOGUE_MODES = [
   { v: "none", ja: "プロンプトに含めない", el: "Leave out", en: "" },
 ];
 
-// 声（話者ごと）。年代は英語で voice の前に置ける形容詞にしている
 export const VOICE_GENDERS = [
   { v: "", ja: "指定なし", el: "None", en: "" },
   { v: "male", ja: "男性", el: "Male", en: "male" },
@@ -147,5 +144,4 @@ export const BGM_MOODS = [
   { v: "epic", ja: "壮大", el: "Epic", en: "epic" },
 ];
 
-// v から語彙を引く（見つからなければ先頭）
 export const pick = (list, v) => list.find((o) => o.v === v) || list[0];

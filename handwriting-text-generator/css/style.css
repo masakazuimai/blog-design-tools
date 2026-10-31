@@ -92,12 +92,11 @@ button.dl:disabled{opacity:.5; cursor:not-allowed}
 .note{font-size:16px; color:var(--sub); border-top:1px dashed var(--line); padding-top:12px; margin:4px 0 0}
 .note.warn{color:var(--accent); border-top:none; padding-top:0}
 
-/* ── 広告（ツール規格: PC/SPとも320×100・PCは右下フローティング） ───────── */
 .footer-ad {
   position: fixed; right: 0; bottom: 0; z-index: 90;
   display: flex; flex-direction: column; align-items: center; gap: 2px;
   padding: 0;
-  width: 320px; overflow: hidden; /* AdSenseレスポンシブの横伸び防止＋×を右端に固定 */
+  width: 320px; overflow: hidden;
   background: transparent; border: none; box-shadow: none;
 }
 .footer-ad.is-closed { display: none; }
@@ -117,12 +116,11 @@ button.dl:disabled{opacity:.5; cursor:not-allowed}
     position: static; align-self: center; margin: 24px auto 0;
     gap: 0; padding: 0; background: none; border: none; border-radius: 0; box-shadow: none; z-index: auto;
   }
-  .footer-ad.is-closed { display: flex; } /* PCで閉じてもSPでは表示 */
-  .ad-widget__head { display: none; }     /* SPはラベル・×を隠す */
+  .footer-ad.is-closed { display: flex; }
+  .ad-widget__head { display: none; }
   .footer-ad ins.adsbygoogle { width: 320px; height: 100px; }
 }
 
-/* ── フッター（規格: 左寄せ＋wrap） ─────────────────────────────────── */
 footer{
   display:flex; justify-content:flex-start; flex-wrap:wrap; gap:12px 24px; align-items:center;
   padding:24px clamp(16px,4vw,32px); color:var(--sub); font-size:16px;

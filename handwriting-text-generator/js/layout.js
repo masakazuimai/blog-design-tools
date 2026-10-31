@@ -1,6 +1,4 @@
-// テキストを1文字ずつパス化して配置する。PNG/JPG/SVGはすべてこの結果から描く
 
-// seed固定で同じ揺らぎを再現するための疑似乱数
 export function mulberry32(a) {
   return function () {
     a |= 0; a = (a + 0x6D2B79F5) | 0;
@@ -10,7 +8,6 @@ export function mulberry32(a) {
   };
 }
 
-// パスの座標を「中心(cx,cy)まわりに回転・拡縮してから平行移動」する
 function transformPath(path, cx, cy, angle, scale, dx, dy) {
   const cos = Math.cos(angle), sin = Math.sin(angle);
   const map = function (x, y) {
@@ -36,19 +33,18 @@ export function buildLayout(font, o, paper, pen) {
   const desc = -font.descender * o.size / upm;
   const lines = o.text.replace(/\r/g, "").split("\n");
   const rnd = mulberry32(o.seed * 7919);
-  const mono = !!paper.mono;          // 原稿用紙は1マス1文字＝等幅で組む
-  const step = o.size * (1 + o.ls);   // 文字送り（等幅時）
+  const mono = !!paper.mono;
+  const step = o.size * (1 + o.ls);
   const lineStep = o.size * o.lh;
   const paths = [];
-  const meta = [];                    // ペンによる字ごとの太さ・濃さ
+  const meta = [];
   let cells = [];
-  let minOff = 0, maxOff = 0;         // 行のうねりで基準線からはみ出す量
+  let minOff = 0, maxOff = 0;
   let w, h;
 
   let maxLen = 1;
   lines.forEach(function (l) { maxLen = Math.max(maxLen, l.length); });
 
-  // 行ごとに「全体の傾き」と「うねりの波」を決める
   function lineFlow() {
     return {
       slope: (rnd() - 0.5) * 2 * o.tilt,
@@ -57,7 +53,6 @@ export function buildLayout(font, o, paper, pen) {
       phase: rnd() * Math.PI * 2
     };
   }
-  // 行頭から距離tでの「基準線のずれ」と「接線の角度」
   function flowAt(f, t) {
     const k = 2 * Math.PI / f.len;
     const slopeTan = Math.tan(f.slope);
@@ -66,7 +61,6 @@ export function buildLayout(font, o, paper, pen) {
     if (off > maxOff) maxOff = off;
     return { off: off, ang: Math.atan(slopeTan + f.amp * k * Math.cos(k * t + f.phase)) };
   }
-  // ペンの「字ごとのムラ」。canvasとSVGで同じ値を使うためここで確定させる
   function penStroke() {
     const base = pen.w * o.size / 64;
     const jitter = base * pen.wVar * (rnd() - 0.5) * 2;
@@ -116,7 +110,6 @@ export function buildLayout(font, o, paper, pen) {
       }
     }
   } else {
-    // 縦書き：行＝列として右から左へ積む。うねりは左右方向に出る
     const colW = o.size * o.lh;
     const w0 = o.pad * 2 + lines.length * colW;
     h = o.pad * 2 + maxLen * step - o.size * o.ls;
@@ -153,10 +146,9 @@ export function buildLayout(font, o, paper, pen) {
     }
   }
 
-  // 固定キャンバス指定があれば、中身を中央へ寄せてキャンバスサイズを差し替える
   let ox = 0, oy = 0;
   let overflow = false;
-  const cw = Math.ceil(w), ch = Math.ceil(h);   // 中身の実サイズ
+  const cw = Math.ceil(w), ch = Math.ceil(h);
   if (o.fixedW > 0 && o.fixedH > 0) {
     ox = Math.round((o.fixedW - w) / 2);
     oy = Math.round((o.fixedH - h) / 2);

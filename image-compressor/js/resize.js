@@ -1,4 +1,3 @@
-// リサイズ計画の計算（描画はせず、出力サイズと描画パラメータだけを返す）
 
 import { t } from './i18n.js?v=20260614'
 
@@ -35,7 +34,6 @@ export function findTemplate(id) {
   return TEMPLATES.flatMap((g) => g.items).find((t) => t.id === id) ?? null
 }
 
-// 戻り値: { outW, outH, draw: {sx,sy,sw,sh,dx,dy,dw,dh}, bg, circle }
 export function computeRenderPlan(srcW, srcH, resize) {
   if (resize.mode === 'free') return planFree(srcW, srcH, resize)
   if (resize.mode === 'template') return planTemplate(srcW, srcH, resize)
@@ -62,7 +60,6 @@ function planScale(srcW, srcH, w, h, keepRatio, noUpscale) {
   if (!w && !h) return fullPlan(srcW, srcH, srcW, srcH)
 
   if (!keepRatio) {
-    // 縦横比を維持しない場合は指定値そのまま（未入力の辺は元サイズ）
     return fullPlan(srcW, srcH, w ?? srcW, h ?? srcH)
   }
 
@@ -79,8 +76,6 @@ function planScale(srcW, srcH, w, h, keepRatio, noUpscale) {
   return fullPlan(srcW, srcH, outW, outH)
 }
 
-// 指定サイズを等倍のまま切り抜く（focusは0〜1の位置、画像を超える指定は画像サイズまで）
-// circle時は枠に内接する楕円マスクを描画側でかける（枠が正方形なら正円になる）
 function planCrop(srcW, srcH, w, h, focus, circle) {
   const cropW = Math.min(w ?? srcW, srcW)
   const cropH = Math.min(h ?? srcH, srcH)
@@ -114,7 +109,6 @@ function planTemplate(srcW, srcH, { template, fit, bg, focus }) {
     }
   }
 
-  // cover: 出力枠を埋めるように元画像を切り抜く（focusは0〜1の切り抜き位置、0.5が中央）
   const f = focus ?? { x: 0.5, y: 0.5 }
   const srcRatio = srcW / srcH
   const targetRatio = w / h

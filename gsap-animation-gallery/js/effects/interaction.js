@@ -1,4 +1,3 @@
-// インタラクション（マウス追従・クリック・開閉）。イベントのたびにトゥイーンを作り直さないのが共通のコツ。
 import { CDN, CDN_DRAG, repeat } from "./_shared.js?v=20260811a";
 
 export const INTERACTION = [
@@ -503,7 +502,6 @@ body { cursor: none; }
         gsap.set(before, { clipPath: `inset(0 ${(1 - ratio) * 100}% 0 0)` });
       };
 
-      // ドラッグしないと何も起きず静止画に見えるので、最初に一度だけ自動で往復させて操作を示す
       const intro = gsap
         .timeline({ defaults: { duration: 0.9, ease: "power2.inOut", onUpdate: applyClip } })
         .to(handle, { x: -area.offsetWidth * 0.3 })

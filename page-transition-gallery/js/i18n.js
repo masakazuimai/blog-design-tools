@@ -1,5 +1,3 @@
-// UI文字列の多言語辞書。<html lang> で言語を切り替える
-// エフェクト個別のラベルは js/effects/ 内の定義（label: {ja, en}）に持たせ、ここではUI文言のみ扱う
 
 const dict = {
   ja: {
@@ -36,8 +34,6 @@ const dict = {
   },
 };
 
-// コピーコード・プレビュー内の日本語テキストの対訳。
-// エフェクト定義（js/effects/）は日本語で共有し、enページでは main.js がこの表で差し替える
 export const TEXT_EN = {
   'aria-label="読み込み中"': 'aria-label="Loading"',
   "// 読み込み直後に幕を開き、内部リンクのクリックで幕を閉じてから遷移する":

@@ -1,5 +1,3 @@
-// 全パターン共通のワイヤーフレーム用CSS（コピー出力にもそのまま含める）
-// 各セクションは自身をコンテナにして、@container でSP幅のレイアウトに切り替える
 export const BASE_CSS = `/* ワイヤーフレーム共通 */
 .wf-section {
   container-type: inline-size;

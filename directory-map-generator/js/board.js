@@ -1,7 +1,3 @@
-// ============================================================
-// ホワイトボード エンジン
-// カメラ（パン・ズーム）/ 描画 / 付箋・図形・コネクタの操作
-// ============================================================
 
 import {
   state,
@@ -16,15 +12,14 @@ import {
   save,
 } from "./store.js?v=20260702s";
 
-// ---- モジュール内参照 ----
 let els = {};
-let itemEls = new Map(); // id -> element
+let itemEls = new Map();
 let tool = "select";
 let color = "#fde68a";
-let selectedIds = new Set(); // 複数選択中のアイテムid
+let selectedIds = new Set();
 let selectedConnId = null;
-let clipboard = null; // コピー内容 { items, conns }
-let pasteShift = 0; // 連続ペーストのずらし量
+let clipboard = null;
+let pasteShift = 0;
 let onChange = () => {};
 
 const MIN_SCALE = 0.2;
@@ -40,16 +35,12 @@ const DEFAULT_SIZE = {
   file: { w: 184, h: 52 },
 };
 
-// フォルダ/ファイル（ディレクトリマップ用ノード）
 const NODE_TYPES = new Set(["folder", "file"]);
 const NODE_ICON = { folder: "📁", file: "📄" };
 
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 const cam = () => state.camera;
 
-// ============================================================
-// 初期化
-// ============================================================
 export function initBoard(refs, opts = {}) {
   els = refs;
   onChange = opts.onChange || (() => {});
@@ -81,7 +72,6 @@ export function initBoard(refs, opts = {}) {
   };
 }
 
-// 矢印の形（直角エルボー / 直線）を切り替え（全コネクタに適用）
 export function setWireStyle(style) {
   state.wireStyle = style === "straight" ? "straight" : "elbow";
   save();
@@ -89,7 +79,6 @@ export function setWireStyle(style) {
   onChange({ wireStyle: state.wireStyle });
 }
 
-// 矢印の端（片方向 / 双方向 / なし）。新規の既定を更新し、選択中コネクタにも即適用
 export function setWireEnds(ends) {
   const val = ["end", "both", "none"].includes(ends) ? ends : "end";
   state.wireEnds = val;
@@ -99,9 +88,6 @@ export function setWireEnds(ends) {
   onChange({ wireEnds: val });
 }
 
-// ============================================================
-// ツール・色
-// ============================================================
 export function setTool(next) {
   tool = next;
   els.canvas.classList.remove(
@@ -119,7 +105,6 @@ export function setTool(next) {
 
 export function setColor(hex) {
   color = hex;
-  // 選択中アイテムすべてに即反映
   selectedIds.forEach((id) => {
     updateItem(id, { color: hex });
     renderItem(getItem(id));
@@ -127,9 +112,6 @@ export function setColor(hex) {
   onChange({ color });
 }
 
-// ============================================================
-// カメラ（パン・ズーム）
-// ============================================================
 function applyCamera() {
   const { x, y, scale } = cam();
   els.world.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
@@ -161,7 +143,6 @@ export function resetZoom() {
   applyCamera();
 }
 
-// 全アイテムがビューポート中央に収まるようカメラを合わせる
 export function fitView(padding = 60) {
   if (!state.items.length) return;
   const rect = els.canvas.getBoundingClientRect();
@@ -193,7 +174,6 @@ export function fitView(padding = 60) {
 
 function onWheel(e) {
   e.preventDefault();
-  // ⌘（Mac）/ Ctrl を押しながらのときだけズーム。単体ホイールはスクロール（パン）
   if (e.metaKey || e.ctrlKey) {
     const factor = e.deltaY < 0 ? 1.1 : 1 / 1.1;
     zoomAt(e.clientX, e.clientY, factor);
@@ -204,7 +184,6 @@ function onWheel(e) {
   }
 }
 
-// 画面座標 → ワールド座標
 function screenToWorld(clientX, clientY) {
   const rect = els.canvas.getBoundingClientRect();
   return {
@@ -213,9 +192,6 @@ function screenToWorld(clientX, clientY) {
   };
 }
 
-// ============================================================
-// ポインタ操作の入口
-// ============================================================
 function onPointerDown(e) {
   if (e.button !== 0) return;
   const rz = e.target.closest(".rz");
@@ -232,22 +208,20 @@ function onPointerDown(e) {
       startConnector(id, e);
       return;
     }
-    if (itemEl.classList.contains("editing")) return; // テキスト編集中はキャレット優先
+    if (itemEl.classList.contains("editing")) return;
     if (e.shiftKey) {
-      selectItem(id, true); // Shiftクリックで選択に追加/解除（移動はしない）
+      selectItem(id, true);
       return;
     }
-    if (!selectedIds.has(id)) selectItem(id, false); // 未選択ならこれだけ選択
-    startMoveSelection(e); // 選択中すべてをまとめて移動
+    if (!selectedIds.has(id)) selectItem(id, false);
+    startMoveSelection(e);
     return;
   }
 
-  // 空きスペース
   if (isCreationTool(tool)) {
     createItemAt(e.clientX, e.clientY);
     return;
   }
-  // パンは廃止 → 空きドラッグは範囲選択（マーキー）
   startMarquee(e);
 }
 
@@ -262,11 +236,7 @@ function isCreationTool(t) {
   );
 }
 
-// ---- 汎用ジェスチャ ----
-// pointer captureは「実際に動き始めてから」engageする。pointerdown即時にcaptureすると
-// クリック/ダブルクリックのイベント合成を妨げ、ダブルクリック編集が効かなくなるため。
-// 一度動き出せばcaptureされ、広告iframe等を跨いでもpointermove/upを取りこぼさない。
-const DRAG_THRESHOLD = 3; // px
+const DRAG_THRESHOLD = 3;
 function beginGesture(e, onMove, onUp) {
   const target = els.canvas;
   const pid = e.pointerId;
@@ -280,7 +250,6 @@ function beginGesture(e, onMove, onUp) {
       try {
         if (pid != null) target.setPointerCapture(pid);
       } catch (_) {
-        /* 非対応でも通常のバブリングで概ね動く */
       }
     }
     onMove(ev);
@@ -293,7 +262,6 @@ function beginGesture(e, onMove, onUp) {
       try {
         if (pid != null) target.releasePointerCapture(pid);
       } catch (_) {
-        /* noop */
       }
     }
     if (onUp) onUp(ev);
@@ -303,16 +271,13 @@ function beginGesture(e, onMove, onUp) {
   target.addEventListener("pointercancel", end);
 }
 
-// ============================================================
-// 範囲選択（マーキー）
-// ============================================================
 function startMarquee(e) {
   const box = document.createElement("div");
   box.className = "marquee";
   els.canvas.appendChild(box);
   const additive = e.shiftKey;
   const base = additive ? new Set(selectedIds) : new Set();
-  if (!additive) applySelectionSet(new Set()); // 既存選択をいったん解除
+  if (!additive) applySelectionSet(new Set());
   const rect = els.canvas.getBoundingClientRect();
   const sx0 = e.clientX - rect.left;
   const sy0 = e.clientY - rect.top;
@@ -336,22 +301,18 @@ function startMarquee(e) {
     },
     () => {
       box.remove();
-      if (!moved && !additive) clearSelection(); // 単なるクリック＝選択解除
+      if (!moved && !additive) clearSelection();
       onChange({ selected: selectedIds.size > 0 });
     }
   );
 }
 
-// 矩形（ワールド座標）と交差するアイテムid
 function itemsInRect(x1, y1, x2, y2) {
   return state.items
     .filter((it) => it.x < x2 && it.x + it.w > x1 && it.y < y2 && it.y + it.h > y1)
     .map((it) => it.id);
 }
 
-// ============================================================
-// アイテム生成
-// ============================================================
 function createItemAt(clientX, clientY) {
   const type = tool;
   const size = DEFAULT_SIZE[type];
@@ -374,9 +335,6 @@ function createItemAt(clientX, clientY) {
   startEdit(item.id);
 }
 
-// ============================================================
-// アイテム移動（選択中すべてをまとめて）
-// ============================================================
 function startMoveSelection(e) {
   const ids = [...selectedIds];
   if (!ids.length) return;
@@ -412,9 +370,6 @@ function startMoveSelection(e) {
   );
 }
 
-// ============================================================
-// アイテムのリサイズ
-// ============================================================
 function startResize(id, e) {
   const item = getItem(id);
   if (!item) return;
@@ -439,16 +394,13 @@ function startResize(id, e) {
   );
 }
 
-// ============================================================
-// コネクタ生成（アイテム→アイテム）
-// ============================================================
 function startConnector(fromId, e) {
   const from = getItem(fromId);
   if (!from) return;
   const preview = document.createElementNS("http://www.w3.org/2000/svg", "path");
   preview.setAttribute("class", "wire-preview");
   preview.setAttribute("marker-end", "url(#arrow)");
-  preview.style.pointerEvents = "none"; // elementFromPointで対象アイテムを妨げない
+  preview.style.pointerEvents = "none";
   els.wires.appendChild(preview);
   let targetEl = null;
 
@@ -458,7 +410,6 @@ function startConnector(fromId, e) {
       const w = screenToWorld(ev.clientX, ev.clientY);
       const p1 = rectEdge(from, w.x, w.y);
       preview.setAttribute("d", `M ${p1.x} ${p1.y} L ${w.x} ${w.y}`);
-      // ホバー中のアイテムを強調
       const over = document.elementFromPoint(ev.clientX, ev.clientY);
       const overItem = over && over.closest(".item");
       if (targetEl && targetEl !== overItem) targetEl.classList.remove("is-connect-target");
@@ -471,7 +422,6 @@ function startConnector(fromId, e) {
     },
     (ev) => {
       preview.remove();
-      // ドラッグ中に追跡した targetEl を優先し、無ければ離した位置で判定（取りこぼし防止）
       let overItem = targetEl;
       if (!overItem) {
         const over = document.elementFromPoint(ev.clientX, ev.clientY);
@@ -486,9 +436,6 @@ function startConnector(fromId, e) {
   );
 }
 
-// ============================================================
-// テキスト編集
-// ============================================================
 function onDblClick(e) {
   const itemEl = e.target.closest(".item");
   if (!itemEl) return;
@@ -502,7 +449,6 @@ function startEdit(id) {
   el.classList.add("editing");
   txt.setAttribute("contenteditable", "true");
   txt.focus();
-  // キャレットを末尾へ
   const range = document.createRange();
   range.selectNodeContents(txt);
   range.collapse(false);
@@ -519,10 +465,6 @@ function startEdit(id) {
   txt.addEventListener("blur", finish);
 }
 
-// ============================================================
-// 選択（複数対応）
-// ============================================================
-// 選択集合をnextに揃え、DOMのis-selectedクラスとリサイズハンドルを反映
 function applySelectionSet(next) {
   selectedIds.forEach((id) => {
     if (!next.has(id)) {
@@ -538,7 +480,6 @@ function applySelectionSet(next) {
   updateResizeHandle();
 }
 
-// リサイズハンドルは「単一選択のとき」だけ表示
 function updateResizeHandle() {
   itemEls.forEach((el) => {
     const h = el.querySelector(".rz");
@@ -581,16 +522,13 @@ export function clearSelection() {
   onChange({ selected: false });
 }
 
-// ============================================================
-// 削除
-// ============================================================
 export function deleteSelected() {
   if (selectedIds.size) {
     selectedIds.forEach((id) => {
       const el = itemEls.get(id);
       if (el) el.remove();
       itemEls.delete(id);
-      removeItem(id); // 付随コネクタも除去
+      removeItem(id);
     });
     selectedIds = new Set();
     renderWires();
@@ -603,9 +541,6 @@ export function deleteSelected() {
   }
 }
 
-// ============================================================
-// コピー / ペースト / 複製 / 切り取り
-// ============================================================
 function collectSelection() {
   const items = state.items.filter((it) => selectedIds.has(it.id)).map((it) => ({ ...it }));
   const idset = new Set(items.map((it) => it.id));
@@ -615,7 +550,6 @@ function collectSelection() {
   return { items, conns };
 }
 
-// items/connsをdx,dyずらして複製・追加し、複製分を選択状態にする
 function addClones(items, conns, dx, dy) {
   if (!items.length) return 0;
   const idMap = new Map();
@@ -662,11 +596,7 @@ export function cutSelection() {
   return n;
 }
 
-// ============================================================
-// 描画
-// ============================================================
 function renderAll() {
-  // 既存DOMを掃除（wires以外）
   itemEls.forEach((el) => el.remove());
   itemEls.clear();
   state.items.forEach((item) => renderItem(item));
@@ -727,7 +657,6 @@ function applyItemSize(el, item) {
 }
 
 function applyItemColor(el, item) {
-  // 色未指定（auto/falsy）はインラインを空にしてCSSのテーマ既定色に委ねる
   const themed = !item.color || item.color === "auto";
   const val = themed ? "" : item.color;
   if (item.type === "diamond") {
@@ -738,9 +667,7 @@ function applyItemColor(el, item) {
   }
 }
 
-// ---- コネクタ描画 ----
 function renderWires() {
-  // defs以外を除去
   [...els.wires.querySelectorAll(".wire, .wire-hit")].forEach((n) => n.remove());
   const NS = "http://www.w3.org/2000/svg";
 
@@ -750,7 +677,6 @@ function renderWires() {
     if (!a || !b) return;
     const d = wireD(a, b);
 
-    // 当たり判定用の太い透明線（クリックで選択）
     const hit = document.createElementNS(NS, "path");
     hit.setAttribute("class", "wire-hit");
     hit.setAttribute("d", d);
@@ -763,7 +689,6 @@ function renderWires() {
     const line = document.createElementNS(NS, "path");
     line.setAttribute("class", "wire" + (conn.id === selectedConnId ? " is-selected" : ""));
     line.setAttribute("d", d);
-    // 矢印の端（片方向=end / 双方向=both / なし=none）。#arrowはorient="auto-start-reverse"なので両端共用
     const ends = conn.ends || "end";
     if (ends === "end" || ends === "both") line.setAttribute("marker-end", "url(#arrow)");
     if (ends === "both") line.setAttribute("marker-start", "url(#arrow)");
@@ -780,9 +705,6 @@ function selectConnector(id) {
   onChange({ selected: true });
 }
 
-// ---- コネクタのパス（スタイル別）----
-// elbow: 直角ルーティング。子が下/上のときは「親中心から出る縦トランク＋共有バス」を
-//        固定ギャップで描くため、同じ親から出た兄弟線が自然に枝分かれして見える。
 function wireD(a, b) {
   if (state.wireStyle === "straight") {
     const p1 = rectEdge(a, b.x + b.w / 2, b.y + b.h / 2);
@@ -792,8 +714,8 @@ function wireD(a, b) {
   return elbowD(a, b);
 }
 
-const BUS_GAP = 22; // 親の縁から共有バスまでの固定距離（兄弟で一致＝枝分かれ）
-const ALIGN_SNAP = 16; // 中心のズレがこれ以下なら、カクつかせず真っ直ぐに整列させる
+const BUS_GAP = 22;
+const ALIGN_SNAP = 16;
 
 function elbowD(a, b) {
   const acx = a.x + a.w / 2;
@@ -801,19 +723,16 @@ function elbowD(a, b) {
   const acy = a.y + a.h / 2;
   const bcy = b.y + b.h / 2;
   const bottom = a.y + a.h;
-  // 子が下：縦トランク→横バス→子へ降下（ただしほぼ真下なら真っ直ぐ）
   if (b.y > bottom + BUS_GAP + 2) {
     if (Math.abs(acx - bcx) <= ALIGN_SNAP) return `M ${bcx} ${bottom} V ${b.y}`;
     const busY = bottom + BUS_GAP;
     return `M ${acx} ${bottom} V ${busY} H ${bcx} V ${b.y}`;
   }
-  // 子が上
   if (b.y + b.h < a.y - BUS_GAP - 2) {
     if (Math.abs(acx - bcx) <= ALIGN_SNAP) return `M ${bcx} ${a.y} V ${b.y + b.h}`;
     const busY = a.y - BUS_GAP;
     return `M ${acx} ${a.y} V ${busY} H ${bcx} V ${b.y + b.h}`;
   }
-  // 子が右
   if (b.x > a.x + a.w) {
     const x1 = a.x + a.w;
     const x2 = b.x;
@@ -821,7 +740,6 @@ function elbowD(a, b) {
     const mx = (x1 + x2) / 2;
     return `M ${x1} ${acy} H ${mx} V ${bcy} H ${x2}`;
   }
-  // 子が左
   if (b.x + b.w < a.x) {
     const x1 = a.x;
     const x2 = b.x + b.w;
@@ -829,13 +747,11 @@ function elbowD(a, b) {
     const mx = (x1 + x2) / 2;
     return `M ${x1} ${acy} H ${mx} V ${bcy} H ${x2}`;
   }
-  // 近接・重なり：中心同士を直線
   const p1 = rectEdge(a, bcx, bcy);
   const p2 = rectEdge(b, acx, acy);
   return `M ${p1.x} ${p1.y} L ${p2.x} ${p2.y}`;
 }
 
-// ---- 矩形の縁と、中心→対象方向の交点 ----
 function rectEdge(item, tx, ty) {
   const cx = item.x + item.w / 2;
   const cy = item.y + item.h / 2;

@@ -1,4 +1,3 @@
-// 変形系ホバーエフェクト（10種）
 
 export const TRANSFORM_EFFECTS = [
   {

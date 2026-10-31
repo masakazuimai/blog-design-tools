@@ -2,7 +2,6 @@ $(document).ready(function () {
   var $list = $("#counter-list");
   var $emptyState = $("#empty-state");
 
-  // 合計 = すべてのカウンターの「単価 × 数量」の総和
   function updateTotalSum() {
     var totalSum = 0;
     $list.find(".button").each(function () {
@@ -50,7 +49,6 @@ $(document).ready(function () {
       });
     });
 
-    // 単価入力中は誤操作を防ぐためボタンを無効化する
     $counterName.on("focus", function () {
       $counter.find(".increment, .decrement, .reset, .remove").prop("disabled", true);
     });
@@ -60,7 +58,6 @@ $(document).ready(function () {
       updateTotalSum();
     });
 
-    // 全角数字を半角へ変換してから合計に反映する
     $counterName.on("input", function () {
       var converted = $counterName.val().replace(/[０-９]/g, function (s) {
         return String.fromCharCode(s.charCodeAt(0) - 0xfee0);
@@ -94,7 +91,6 @@ $(document).ready(function () {
     updateEmptyState();
   });
 
-  // カードをドラッグで並べ替える（ハンドルからのみ開始）
   $list.sortable({
     items: ".button",
     handle: ".drag-handle",

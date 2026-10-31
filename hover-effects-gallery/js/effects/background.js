@@ -1,4 +1,3 @@
-// 背景塗り系ホバーエフェクト（12種）
 
 export const BACKGROUND_EFFECTS = [
   {

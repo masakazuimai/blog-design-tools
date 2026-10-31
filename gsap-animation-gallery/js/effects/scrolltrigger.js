@@ -1,7 +1,3 @@
-// ScrollTrigger の基本形（トリガー・scrub・toggleActions・batch・snap など）
-// デモはカード内の独立したスクロール領域で動かすため、すべて scroller に stage を渡している。
-// コピー用コードではページ全体をスクローラーにする（= scroller 指定なし）。
-// 登場演出・奥行き系は scrolltrigger-reveal.js に分けてある。
 import { CDN_ST, repeat } from "./_shared.js?v=20260811a";
 
 export const SCROLLTRIGGER = [
@@ -529,10 +525,8 @@ export const SCROLLTRIGGER = [
         const current = Math.round(progress * 2);
         dots.forEach((d, i) => d.classList.toggle("is-on", i === current));
       };
-      render(0); // onUpdate は初回に呼ばれないので、初期状態を先に描いておく
+      render(0);
 
-      // 数値と現在地の表示をスクロール位置に直結させる。
-      // 指を離した瞬間に 0.00 / 0.50 / 1.00 のどれかへ跳ぶので、吸着が目で分かる
       ScrollTrigger.create({
         trigger: stage.querySelector(".sn-inner"),
         scroller: stage,
@@ -542,7 +536,6 @@ export const SCROLLTRIGGER = [
         onUpdate: (self) => render(self.progress),
       });
 
-      // 各セクションの数字もスクロール連動で動かし、止まっていないことを分かるようにする
       stage.querySelectorAll(".sn-sec").forEach((sec) => {
         gsap.fromTo(
           sec.querySelector(".sn-num"),

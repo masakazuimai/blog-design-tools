@@ -1,5 +1,3 @@
-// アプリ本体。状態（付箋配列・設定・APIキー）を保持し、ボード操作と会話を配線する。
-// 付箋は会話スレッド（messages配列）を持ち、送信のたびに履歴ごとAIへ渡す。
 
 import { PROVIDERS, NOTE_COLORS, NOTE_DEFAULTS, DEFAULT_SETTINGS, STORAGE_KEYS } from "./config.js?v=20260624ad"
 import { loadJson, saveJson } from "./storage.js?v=20260624ad"
@@ -19,17 +17,15 @@ import {
   colorValue,
 } from "./notes.js?v=20260624ad"
 
-// --- 状態（更新は常に新しい配列/オブジェクトを作る） ---
 let notes = (loadJson(STORAGE_KEYS.board, []) || []).map(migrateNote)
 let settings = { ...DEFAULT_SETTINGS, ...loadJson(STORAGE_KEYS.settings, {}) }
 let apiKeys = loadJson(STORAGE_KEYS.keys, {})
 
-const elements = new Map() // id -> 付箋DOM
-const editing = new Map() // id -> 編集中メッセージindex
+const elements = new Map()
+const editing = new Map()
 let topZ = 1
-let activeNoteId = null // 直近に触れた付箋（ペースト先）
+let activeNoteId = null
 
-// --- DOM参照 ---
 const board = document.getElementById("board")
 const providerSel = document.getElementById("provider")
 const modelSel = document.getElementById("model")
@@ -39,9 +35,7 @@ const keyLink = document.getElementById("apikey-link")
 const addBtn = document.getElementById("add-note")
 const clearBtn = document.getElementById("clear-board")
 
-// 旧データ（prompt/answer）を messages 配列へ変換する。
 function migrateNote(n) {
-  // 旧 images（data URL文字列の配列）を attachments（オブジェクト配列）へ変換
   const attachments = Array.isArray(n.attachments)
     ? n.attachments
     : (n.images || []).map((dataUrl) => ({ name: "画像", type: "image/jpeg", dataUrl }))
@@ -72,7 +66,6 @@ function editingIndex(id) {
   return editing.has(id) ? editing.get(id) : -1
 }
 
-// --- 永続化 ---
 const persist = debounce(() => saveJson(STORAGE_KEYS.board, notes), 400)
 function persistNow() {
   saveJson(STORAGE_KEYS.board, notes)
@@ -82,14 +75,12 @@ function updateNote(id, patch) {
   persist()
 }
 
-// 確定操作（タイトル/本文/送信/添付）で即時保存し、✔️を表示する。
 function commitSave(id) {
   persistNow()
   const el = elements.get(id)
   if (el) flashSaved(el)
 }
 
-// --- 付箋の操作ハンドラ ---
 const handlers = {
   onDragStart: startDrag,
   onResizeStart: startResize,
@@ -162,14 +153,11 @@ function cycleColor(id) {
   updateNote(id, { color: next.id })
 }
 
-// 付箋ごとに AI（チャット）/ メモ（素のテキスト）を切り替える。内容は両方保持する。
 function setMode(id, mode) {
   setNoteMode(elements.get(id), mode)
   updateNote(id, { mode })
 }
 
-// ファイルを付箋に添付する（両モード共通・表示のみ、AIには送らない）。
-// 画像は縮小、その他はそのまま（3MBまで）。保存はlocalStorage。
 async function addFiles(id, files) {
   const el = elements.get(id)
   const note = notes.find((n) => n.id === id)
@@ -197,14 +185,12 @@ function removeAttachment(id, index) {
   renderAttachments(elements.get(id), attachments)
 }
 
-// 見出し（要約）を手動で設定する（タイトルのダブルクリック編集）。
 function setSummaryManual(id, text) {
   updateNote(id, { summary: text })
   setNoteSummary(elements.get(id), text)
   commitSave(id)
 }
 
-// --- 会話：送信して履歴ごとAIへ渡す ---
 async function sendMessage(id) {
   const el = elements.get(id)
   if (!el) return
@@ -223,12 +209,10 @@ async function sendMessage(id) {
     return
   }
 
-  // ユーザー発言を履歴に追加して入力欄をクリア
   const history = [...note.messages, { role: "user", content: text }]
   updateNote(id, { messages: history, draft: "" })
   input.value = ""
 
-  // AIの返信プレースホルダを表示（保存はまだしない）
   const withPlaceholder = [...history, { role: "assistant", content: "" }]
   notes = notes.map((n) => (n.id === id ? { ...n, messages: withPlaceholder } : n))
   renderThread(el, withPlaceholder, -1)
@@ -252,7 +236,7 @@ async function sendMessage(id) {
     commitSave(id)
   } catch (error) {
     console.error("AI呼び出しに失敗:", error)
-    updateNote(id, { messages: history }) // プレースホルダを除去
+    updateNote(id, { messages: history })
     renderThread(el, history, -1)
     setNoteStatus(el, error.message || "エラーが発生しました", "error")
   } finally {
@@ -260,7 +244,6 @@ async function sendMessage(id) {
   }
 }
 
-// --- メッセージ単位の編集・削除 ---
 function startMsgEdit(id, index) {
   editing.set(id, index)
   const note = notes.find((n) => n.id === id)
@@ -295,7 +278,6 @@ function deleteMessage(id, index) {
   renderThread(elements.get(id), messages, -1)
 }
 
-// --- ドラッグ移動 ---
 let drag = null
 function startDrag(e, id) {
   const el = elements.get(id)
@@ -325,7 +307,6 @@ function onDragEnd() {
   drag = null
 }
 
-// --- リサイズ ---
 let resize = null
 function startResize(e, id) {
   e.stopPropagation()
@@ -357,13 +338,11 @@ function bringToFront(el) {
   if (el) el.style.zIndex = String(++topZ)
 }
 
-// 付箋にフォーカス（最前面化＋ペースト先として記憶）。
 function focusNote(id) {
   activeNoteId = id
   bringToFront(elements.get(id))
 }
 
-// --- 設定UI（プロバイダ・モデル・APIキー） ---
 function initSettings() {
   Object.entries(PROVIDERS).forEach(([key, conf]) => {
     providerSel.appendChild(makeOption(key, conf.label))
@@ -423,7 +402,6 @@ function updateEmptyState() {
   document.body.classList.toggle("is-empty", notes.length === 0)
 }
 
-// --- ユーティリティ ---
 function genId() {
   if (window.crypto?.randomUUID) return crypto.randomUUID()
   return `n${Date.now()}${Math.random().toString(16).slice(2)}`
@@ -436,8 +414,6 @@ function debounce(fn, wait) {
   }
 }
 
-// --- 初期化 ---
-// ヘッダーのハンバーガーメニュー（AI設定・付箋追加・全消去を格納）
 function initMenu() {
   const toggle = document.getElementById("menu-toggle")
   const panel = document.getElementById("menu-panel")
@@ -460,10 +436,9 @@ function initMenu() {
     if (e.key === "Escape" && isOpen()) setOpen(false)
   })
 
-  setOpen(false) // 初期は必ず閉じた状態に
+  setOpen(false)
 }
 
-// 付箋のタイトル文字列（見出し優先、無ければ本文/メモの先頭、無題なら既定文言）
 function noteTitle(note) {
   if (note.summary && note.summary.trim()) return note.summary.trim()
   const firstMsg = (note.messages || []).find((m) => m.content && m.content.trim())
@@ -472,7 +447,6 @@ function noteTitle(note) {
   return ""
 }
 
-// 左ドロワー（付箋タイトル一覧＋検索＋クリックでジャンプ）
 function initListDrawer() {
   const toggle = document.getElementById("list-toggle")
   const panel = document.getElementById("list-panel")
@@ -543,7 +517,6 @@ function initListDrawer() {
   setOpen(false)
 }
 
-// 指定した付箋までボードをスクロールし、最前面化＋一瞬ハイライト
 function gotoNote(id) {
   const el = elements.get(id)
   const note = notes.find((n) => n.id === id)
@@ -577,7 +550,6 @@ function init() {
     updateEmptyState()
   })
 
-  // 空きスペースをダブルクリックでその位置に付箋を追加
   board.addEventListener("dblclick", (e) => {
     if (e.target.closest(".note")) return
     const rect = board.getBoundingClientRect()
@@ -587,7 +559,6 @@ function init() {
     })
   })
 
-  // ペーストは付箋がフォーカスされていなくても効くよう、ドキュメント全体で受けて直近の付箋へ貼る
   document.addEventListener("paste", (e) => {
     if (!activeNoteId || !elements.has(activeNoteId)) return
     const files = filesFromDataTransfer(e.clipboardData)

@@ -1,8 +1,5 @@
-// 画面の文言（/ と /en/ で同じJSを共有し、<html lang> で切り替える）
-// HTMLに直接書く静的な文言は各ページに直書きし、JSが作る文言だけをここに集める
 export const LANG = document.documentElement.lang === "en" ? "en" : "ja";
 
-// 選択肢の表示ラベル（vocab.js の ja / el）
 export const label = (o) => (LANG === "en" ? o.el : o.ja);
 
 const DICT = {

@@ -1,6 +1,3 @@
-// デザイナーテンプレート定義
-// 各項目は { cat: カテゴリID, label: data.js のラベル完全一致 } で指定し、
-// ランタイムで複合キー（catId:idx）へ解決する（インデックス直書きを避ける）。
 
 export const TEMPLATES = [
   {

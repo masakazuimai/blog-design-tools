@@ -1,15 +1,10 @@
-// ============================================================
-// 書き出し：PNG（canvasへ手描画）/ JSON 保存・読み込み
-// ============================================================
 
 const PAD = 48;
 
-// ---- PNG ----
 export function exportPng(state, filename = "whiteboard.png") {
   const items = state.items;
   if (!items.length) return false;
 
-  // 全アイテムのバウンディングボックス
   let minX = Infinity;
   let minY = Infinity;
   let maxX = -Infinity;
@@ -30,17 +25,14 @@ export function exportPng(state, filename = "whiteboard.png") {
   const ctx = canvas.getContext("2d");
   ctx.scale(dpr, dpr);
 
-  // 座標をオフセット（bbox左上をPADへ）
   const ox = -minX + PAD;
   const oy = -minY + PAD;
 
-  // 背景
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, w, h);
 
   const byId = new Map(items.map((it) => [it.id, it]));
 
-  // コネクタ（背面）
   ctx.strokeStyle = "#64748b";
   ctx.fillStyle = "#64748b";
   ctx.lineWidth = 2;
@@ -53,7 +45,6 @@ export function exportPng(state, filename = "whiteboard.png") {
     drawWire(ctx, pts, ox, oy, c.ends || "end");
   });
 
-  // アイテム
   items.forEach((it) => drawItem(ctx, it, ox, oy));
 
   triggerDownload(canvas, filename);
@@ -71,14 +62,12 @@ function drawItem(ctx, it, ox, oy) {
     roundRect(ctx, x, y, it.w, it.h, 8);
     ctx.fill();
     ctx.stroke();
-    // アイコン
     ctx.font = '18px "Apple Color Emoji", system-ui, sans-serif';
     ctx.textBaseline = "middle";
     ctx.textAlign = "left";
     ctx.fillStyle = "#1f2937";
     const icon = it.type === "folder" ? "📁" : "📄";
     ctx.fillText(icon, x + 12, y + it.h / 2);
-    // ラベル
     ctx.font = '16px system-ui, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif';
     const label = it.text || "";
     ctx.fillText(label, x + 40, y + it.h / 2 + 1);
@@ -152,7 +141,6 @@ function drawText(ctx, it, x, y, align) {
   ctx.restore();
 }
 
-// 日本語混在を考慮した文字単位の折り返し
 function wrapText(ctx, text, maxW) {
   const out = [];
   text.split("\n").forEach((para) => {
@@ -171,7 +159,6 @@ function wrapText(ctx, text, maxW) {
   return out;
 }
 
-// コネクタの折れ点（board.js の elbowD と同じルーティング）
 const BUS_GAP = 22;
 const ALIGN_SNAP = 16;
 function wirePoints(a, b, style) {
@@ -214,7 +201,6 @@ function wirePoints(a, b, style) {
   return [p1, p2];
 }
 
-// fromPt→toPt の向きに、toPt を頂点とする矢じりを描く
 function drawHead(ctx, from, to, ox, oy) {
   const ang = Math.atan2(to.y - from.y, to.x - from.x);
   const len = 10;
@@ -279,7 +265,6 @@ function triggerDownload(canvas, filename) {
   }, "image/png");
 }
 
-// ---- JSON 保存 ----
 export function exportJson(state, filename = "whiteboard.json") {
   const payload = { items: state.items, connectors: state.connectors };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
@@ -295,7 +280,6 @@ export function exportJson(state, filename = "whiteboard.json") {
   }, 1000);
 }
 
-// ---- JSON 読み込み ----
 export function readJsonFile(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();

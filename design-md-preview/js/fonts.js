@@ -1,5 +1,4 @@
-/* 書体の読み込み（Google Fonts） */
-const fontLinks = new Map();   /* family -> <link> */
+const fontLinks = new Map();
 
 function familyList(v){
   return String(v || '').split(',').map(x=>x.trim()).filter(Boolean);
@@ -17,7 +16,6 @@ function gfUrl(family, weights){
   return 'https://fonts.googleapis.com/css2?family=' + fam + (w.length ? ':wght@' + w.join(';') : '') + '&display=swap';
 }
 export function loadFonts(ds){
-  /* トークンから family と weight を集める */
   const want = new Map();
   for(const t of Object.values(ds.typography)){
     if(!t || typeof t !== 'object' || !t.fontFamily) continue;
@@ -27,7 +25,6 @@ export function loadFonts(ds){
       if(t.fontWeight) want.get(fam).add(String(t.fontWeight).trim());
     }
   }
-  /* 使わなくなったlinkは残しても害がないので消さない（キャッシュが効く） */
   for(const [fam, weights] of want){
     if(fontLinks.has(fam)) continue;
     const link = document.createElement('link');
@@ -35,7 +32,6 @@ export function loadFonts(ds){
     link.href = gfUrl(fam, weights);
     link.dataset.family = fam;
     link.addEventListener('error', ()=>{
-      /* weight指定が無い書体だと400になるので、素のURLで一度だけ再試行 */
       if(link.dataset.retried) return;
       link.dataset.retried = '1';
       link.href = gfUrl(fam, []);

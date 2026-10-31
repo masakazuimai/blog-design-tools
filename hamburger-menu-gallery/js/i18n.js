@@ -1,5 +1,3 @@
-// UI文字列の多言語辞書。<html lang> で言語を切り替える
-// エフェクト個別のラベルは js/icons/ ・ js/panels/ の定義（label: {ja, en}）に持たせ、ここではUI文言のみ扱う
 
 const dict = {
   ja: {
@@ -52,8 +50,6 @@ const dict = {
   },
 };
 
-// コピーコード・プレビュー内の日本語テキストの対訳。
-// エフェクト定義（js/icons/・js/panels/）は日本語で共有し、enページでは main.js がこの表で差し替える
 export const TEXT_EN = {
   'aria-label="メニュー"': 'aria-label="Menu"',
   "ここがページ本文です。": "This is your page content.",

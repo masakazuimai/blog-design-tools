@@ -1,13 +1,3 @@
-/* AI超解像（Swin2SR / Apache-2.0）。
-   transformers.js と重みは CDN から取得するため、当サイト側の配信コストは発生しない。
-
-   実測にもとづく構成上の判断（2026-08-18）:
-   - dtype は fp32。WebGPU では q8 量子化がむしろ遅く、x4 で 9.6秒 -> 75秒 まで落ちた。
-     fp16 は onnxruntime-web がバッファ再利用でシェイプ不一致を起こして失敗する。
-   - x4 は realworld（BSRGAN劣化で学習）。PNG無圧縮なら classical が最良（25.05dB）だが、
-     実写真は JPEG なので JPEG 品質88 で測り直したところ classical はブラウザ標準を下回り
-     （23.20 対 23.24）横縞のアーティファクトが出た。realworld は 24.02dB で唯一標準を上回る。
-   - x2 は lightweight。JPEG 入力で classical-x2 と同等（26.59 対 26.47）で 4.6倍速く 6.7倍軽い。 */
 
 const LIB_URL = 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.2.0';
 
@@ -16,12 +6,9 @@ export const AI_MODELS = {
   4: { id: 'Xenova/swin2SR-realworld-sr-x4-64-bsrgan-psnr', scale: 4, sizeMB: 50.3, msPerInputMP: 90000 }
 };
 
-/* AIモードで選べる倍率。モデルが固定倍率のため 2倍と4倍だけ */
 export const AI_SCALES = [2, 4];
 
-/* 入力タイルの一辺。大きいほど速いがメモリを食う */
 const TILE = 256;
-/* タイルの周囲に付ける余白。境界でのブロックノイズを防ぐために必要 */
 const OVERLAP = 16;
 
 export function webgpuAvailable() {
@@ -30,7 +17,7 @@ export function webgpuAvailable() {
 
 let libPromise = null;
 function loadLib() {
-  if (!libPromise) libPromise = import(/* @vite-ignore */ LIB_URL);
+  if (!libPromise) libPromise = import( LIB_URL);
   return libPromise;
 }
 
@@ -53,7 +40,6 @@ async function getPipeline(scale, onDownload) {
   return p;
 }
 
-/* すでに読み込み済みなら再ダウンロードは発生しない（ブラウザのキャッシュに載る） */
 export function isModelLoaded(scale) {
   return pipelines.has(scale);
 }
@@ -72,10 +58,6 @@ function cropImageData(src, srcW, x0, y0, w, h) {
   return out;
 }
 
-/**
- * 画像をAIで拡大する。タイルに割って順に推論し、1枚に貼り合わせる。
- * @returns {Promise<{data: Uint8ClampedArray, width: number, height: number}>}
- */
 export async function aiUpscale({ data, width, height, scale, onProgress }) {
   if (!webgpuAvailable()) throw new Error('WEBGPU_UNAVAILABLE');
   const model = AI_MODELS[scale];
@@ -98,7 +80,6 @@ export async function aiUpscale({ data, width, height, scale, onProgress }) {
     for (let tx = 0; tx < cols; tx++) {
       const x = tx * TILE;
       const y = ty * TILE;
-      // 余白付きで切り出す。モデルに周囲を見せてタイル境界の段差を防ぐ
       const sx0 = Math.max(0, x - OVERLAP);
       const sy0 = Math.max(0, y - OVERLAP);
       const sx1 = Math.min(width, x + TILE + OVERLAP);
@@ -111,10 +92,8 @@ export async function aiUpscale({ data, width, height, scale, onProgress }) {
       const res = await pipe(rawTile);
       const resRGBA = res.rgba();
 
-      // モデルは幅・高さを8の倍数へ切り上げるので、余った分を無視する
       const rW = res.width;
 
-      // 余白を除いた、このタイルが担当する範囲だけを書き戻す
       const ox = (x - sx0) * scale;
       const oy = (y - sy0) * scale;
       const ow = Math.min(TILE, width - x) * scale;
@@ -128,7 +107,6 @@ export async function aiUpscale({ data, width, height, scale, onProgress }) {
 
       done++;
       if (onProgress) onProgress('infer', done / total);
-      // UIの更新を挟む
       await new Promise((r) => setTimeout(r, 0));
     }
   }

@@ -1,4 +1,3 @@
-// 配線：状態の更新 → 保存 → プレビュー・タイムライン・インスペクター・出力の再描画
 import {
   ASPECTS, STYLES, MOODS, SPEECH_LANGS, DIALOGUE_MODES, BGM_GENRES, BGM_MOODS, pick,
 } from "./vocab.js?v=20261025b";
@@ -19,7 +18,6 @@ const MAX_AUDIO_BYTES = 50 * 1024 * 1024;
 let project = createProject();
 let selectedId = project.scenes[0].id;
 
-// ── トースト ──
 let toastTimer = 0;
 const toast = (msg) => {
   const t = $("toast");
@@ -49,7 +47,6 @@ const player = createPlayer(
   { onScene: (id) => timeline.markPlaying(id), onTime: (t) => timeline.setPlayhead(t) }
 );
 
-// ── 更新の入口 ──
 const commit = (next) => {
   project = next;
   if (!project.scenes.some((s) => s.id === selectedId)) selectedId = project.scenes[0].id;
@@ -89,7 +86,6 @@ const renderStatus = () => {
   $("warn").textContent = warn;
 };
 
-// ── チップ（data-single があれば単一選択、なければ複数選択） ──
 const mountChips = (el, list, get, set) => {
   const multi = !("single" in el.dataset);
   el.replaceChildren(
@@ -133,7 +129,6 @@ const painters = [
   mountChips($("bgmMoods"), BGM_MOODS, () => project.bgm.moods, (v) => setBgm({ moods: v })),
 ];
 
-// ── 左ペインのタブ ──
 document.querySelector('[data-group="left"]').addEventListener("click", (e) => {
   const b = e.target.closest("[data-pane]");
   if (!b) return;
@@ -145,7 +140,6 @@ document.querySelector('[data-group="left"]').addEventListener("click", (e) => {
   });
 });
 
-// ── 全体設定・BGMのフォーム ──
 const fillForm = () => {
   $("title").value = project.title;
   $("styleNote").value = project.styleNote;
@@ -196,8 +190,6 @@ $("bgmClear").addEventListener("click", () => {
   fillForm();
 });
 
-// ── シーン（インスペクター） ──
-// 選択中のシーンを消し、次（末尾なら前）のシーンを選ぶ。最後の1件は消さない
 const deleteSelected = () => {
   const s = project.scenes;
   const i = s.findIndex((x) => x.id === selectedId);
@@ -238,7 +230,6 @@ $("addScene").addEventListener("click", () => {
   $("fDesc").focus();
 });
 $("delScene").addEventListener("click", deleteSelected);
-// Delete / Backspace でも削除（入力欄の文字消しとは区別する）
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Delete" && e.key !== "Backspace") return;
   if (e.target.closest("input, textarea, select, [contenteditable]")) return;
@@ -246,7 +237,6 @@ document.addEventListener("keydown", (e) => {
   deleteSelected();
 });
 
-// ── 保存・読み込み ──
 const download = (blob, name) => {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -289,7 +279,6 @@ $("loadJson").addEventListener("change", async (e) => {
   }
 });
 
-// 誤操作防止：1回目で確認表示、3秒以内の2回目で実行
 let resetArmed = 0;
 $("reset").addEventListener("click", async (e) => {
   const btn = e.currentTarget;
@@ -314,7 +303,6 @@ $("reset").addEventListener("click", async (e) => {
 
 bindOutput({ toast, download, fileBase });
 
-// ── 起動 ──
 const saved = await loadProject();
 project = saved?.scenes.length ? saved : await createSampleProject();
 selectedId = project.scenes[0].id;

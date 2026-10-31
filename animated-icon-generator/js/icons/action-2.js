@@ -1,4 +1,3 @@
-// 操作カテゴリの追加分（共通ルールは status.js のヘッダーを参照）
 
 import { DRAW, drawKeys, spinKeys, pulseKeys, bounceKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815c";
 
@@ -81,7 +80,6 @@ export const ACTION_ICONS_2 = [
       { tag: "path", part: "minus", attrs: { d: "M8 10.8h5.6" }, animAttrs: DRAW },
     ],
     anim: { duration: 1.2, easing: "ease-out", tracks: [
-        // 虫眼鏡が縮む動きを足す
         { part: ["lens", "handle"], origin: "12px 12px", keys: [
           { at: 0, transform: "scale(1)" },
           { at: 0.5, transform: "scale(0.78)" },
@@ -165,7 +163,6 @@ export const ACTION_ICONS_2 = [
       { tag: "path", part: "plus", attrs: { d: "M9.4 12v5.2 M6.8 14.6h5.2" }, animAttrs: DRAW },
     ],
     anim: { duration: 1.4, easing: "ease-out", tracks: [
-        // 手前の紙が奥から抜き出される（＋の描画だけでは動きが小さい）
         {
           part: "front",
           origin: "12px 12px",

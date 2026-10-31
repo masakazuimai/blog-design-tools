@@ -1,4 +1,3 @@
-// PowerPoint shortcut data (English / Windows-based). Same keys as the JP file.
 
 export const CATEGORIES = [
   {

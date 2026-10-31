@@ -1,11 +1,8 @@
-// 天気・自然カテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
 
 import { DRAW, drawKeys, spinKeys, swingKeys } from "./_shared.js?v=20260815c";
 
-// 雲の共通シルエット（雨・雷と使い回す）
 const CLOUD_D = "M7 17.6a3.9 3.9 0 0 1 .4-7.8 6 6 0 0 1 11.3 1.2 3.4 3.4 0 0 1-.5 6.6z";
 
-// 落ちて消える（雨粒・雪片用）
 const fallKeys = (delay) => [
   { at: 0, transform: "translateY(-2px)", opacity: 0 },
   { at: delay, transform: "translateY(-2px)", opacity: 0 },
@@ -22,7 +19,6 @@ export const WEATHER_ICONS = [
     parts: [
       { tag: "circle", part: "core", attrs: { cx: 12, cy: 12, r: 4 } },
       {
-        // 光線は本体からはっきり離す（設定アイコンの歯車と描き分けるため）
         tag: "path",
         part: "rays",
         attrs: {
@@ -86,7 +82,6 @@ export const WEATHER_ICONS = [
       duration: 1.4,
       easing: "ease-in",
       tracks: [
-        // 落下距離を伸ばし、雲も揺らして全体で動かす
         {
           part: "cloud",
           origin: "12px 14px",

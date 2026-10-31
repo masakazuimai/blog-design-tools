@@ -1,4 +1,3 @@
-/* カウンターアプリ 共通スタイル（generator 標準トンマナ） */
 
 * {
   margin: 0;
@@ -17,7 +16,6 @@ body {
   flex-direction: column;
 }
 
-/* ============ ヘッダー ============ */
 .header {
   background: linear-gradient(135deg, #1e293b 0%, #3730a3 100%);
   color: #fff;
@@ -35,7 +33,6 @@ body {
   color: #c7d2fe;
 }
 
-/* ============ レイアウト ============ */
 .container {
   flex: 1;
   width: 100%;
@@ -44,7 +41,6 @@ body {
   padding: 28px 20px 56px;
 }
 
-/* ============ ツールバー ============ */
 .toolbar {
   position: sticky;
   top: 0;
@@ -105,7 +101,6 @@ body {
   color: #1e293b;
 }
 
-/* ============ カウンターカード ============ */
 #counter-list {
   display: flex;
   flex-direction: column;
@@ -128,7 +123,6 @@ body {
   border-color: #c7d2fe;
 }
 
-/* 並べ替えハンドル */
 .drag-handle {
   color: #cbd5e1;
   font-size: 1.25rem;
@@ -144,7 +138,6 @@ body {
   color: #94a3b8;
 }
 
-/* 名称入力 */
 .counter-label {
   min-width: 0;
   padding: 8px 10px;
@@ -164,7 +157,6 @@ body {
   border-color: #3730a3;
 }
 
-/* 単価入力 */
 .counter-field {
   display: flex;
   align-items: center;
@@ -193,7 +185,6 @@ body {
   border-color: #3730a3;
 }
 
-/* 数量表示 */
 .counter-title {
   display: flex;
   align-items: baseline;
@@ -212,7 +203,6 @@ body {
   text-align: right;
 }
 
-/* 操作ボタン */
 .counter-actions {
   grid-column: 1 / -1;
   display: flex;
@@ -268,7 +258,6 @@ body {
   color: #b91c1c;
 }
 
-/* 並べ替え中のプレースホルダー */
 .counter-placeholder {
   height: 88px;
   border: 2px dashed #c7d2fe;
@@ -276,7 +265,6 @@ body {
   background: #f8fafc;
 }
 
-/* ============ 空の状態 ============ */
 .empty-state {
   padding: 48px 24px;
   text-align: center;
@@ -317,7 +305,6 @@ body {
   color: #3730a3;
 }
 
-/* ============ 補足 ============ */
 .note {
   margin-top: 40px;
   padding: 24px;
@@ -341,7 +328,6 @@ body {
   color: #94a3b8;
 }
 
-/* ============ フッター ============ */
 footer {
   display: flex;
   justify-content: flex-start;
@@ -377,7 +363,6 @@ footer a:hover {
   color: #3730a3;
 }
 
-/* ============ レスポンシブ ============ */
 @media (max-width: 600px) {
   .toolbar {
     flex-direction: column;
@@ -404,7 +389,6 @@ footer a:hover {
   }
 }
 
-/* ============ 広告（PC/SPとも右下フローティングカード320×100・薄型透明枠＋×閉じ） ============ */
 .footer-ad {
   position: fixed;
   right: 0;

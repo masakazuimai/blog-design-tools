@@ -1,4 +1,3 @@
-// メディアカテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
 
 import { DRAW, drawKeys, pulseKeys, bounceKeys, popInKeys } from "./_shared.js?v=20260815c";
 
@@ -34,7 +33,6 @@ export const MEDIA_ICONS = [
       duration: 1.2,
       easing: "ease-in-out",
       tracks: [
-        // 縮み幅が小さいと止まって見えるため、はっきり縮ませる
         {
           part: "bar1",
           origin: "12px 12px",
@@ -130,7 +128,6 @@ export const MEDIA_ICONS = [
       easing: "ease-out",
       tracks: [
         {
-          // シャッターが切れる
           part: "lens",
           origin: "12px 13.4px",
           keys: [
@@ -186,7 +183,6 @@ export const MEDIA_ICONS = [
             { at: 1, transform: "rotate(0deg)" },
           ],
         },
-        // 本体も揺らして、撮影中らしい動きにする
         {
           part: "body",
           origin: "9.1px 12px",

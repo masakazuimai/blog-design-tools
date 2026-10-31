@@ -3,16 +3,12 @@ import { t, isEN } from './i18n.js?v=20260818c';
 import { AI_MODELS, AI_SCALES, webgpuAvailable, isModelLoaded, aiUpscale, estimateSeconds as aiEstimate } from './ai-upscale.js?v=20260818c';
 import { FORMATS, encodeCanvas, formatFromMime } from './export.js?v=20260818c';
 
-/* js/ 配下のローカル参照に付けるキャッシュバスティング用の版番号 */
 const ASSET_VERSION = '20260818c';
 
-/* サンプル画像は日本語版の直下にだけ置き、/en/ からは1階層上を参照する */
 const SAMPLE_BASE = isEN ? '../samples/' : 'samples/';
 
-// 出力上限。逆投影とデコンボリューションが画素あたり約31バイトのFloat32バッファを使うため、
-// 24MPだと700MB超になる。（本番ではタイル分割で解除する想定）
 const MAX_OUT_PIXELS = 16000000;
-const IBP_ITERATIONS = 5;   // 実測で5回以降は頭打ち
+const IBP_ITERATIONS = 5;
 const IBP_LAMBDA = 1.0;
 
 const $ = function (id) { return document.getElementById(id); };
@@ -29,18 +25,17 @@ const viewportEl = $('viewport');
 const viewCanvas = $('view');
 const zoomLabel = $('zoomLabel');
 
-let sourceCanvas = null;   // 元画像
-let baselineCanvas = null; // ブラウザ標準拡大
-let outputCanvas = null;   // 高画質化結果
+let sourceCanvas = null;
+let baselineCanvas = null;
+let outputCanvas = null;
 let sourceName = 'image';
 let worker = null;
 
 let scale = 2;
 let deconvIters = 20;
-let mode = 'standard';   // 'standard' = 数値計算 / 'ai' = Swin2SR
+let mode = 'standard';
 const view = { zoom: 1, panX: 0, panY: 0, split: 0.5, fit: true };
 
-/* ---------- 入力 ---------- */
 
 dropzone.addEventListener('click', function () { fileInput.click(); });
 fileInput.addEventListener('change', function (e) {
@@ -67,7 +62,6 @@ async function loadFile(file) {
     return;
   }
   sourceName = file.name.replace(/\.[^.]+$/, '') || 'image';
-  // 元と同じ形式で返すのが自然なので、保存形式の既定を入力に合わせる
   $('dlFormat').value = formatFromMime(file.type);
   try {
     const bitmap = await createImageBitmap(file);
@@ -101,7 +95,6 @@ Array.prototype.forEach.call(document.querySelectorAll('.sample-btn'), function 
   });
 });
 
-/* ---------- 設定UI ---------- */
 
 $('scaleSeg').addEventListener('click', function (e) {
   const btn = e.target.closest('button[data-scale]');
@@ -128,8 +121,6 @@ $('modeSeg').addEventListener('click', function (e) {
   updateMeta();
 });
 
-/* AIモードはモデルが固定倍率のため2倍と4倍しか選べない。
-   非対応の倍率ボタンを無効化し、選択中なら2倍へ寄せる */
 function applyMode() {
   const ai = mode === 'ai';
   document.body.classList.toggle('is-ai-mode', ai);
@@ -150,7 +141,6 @@ function applyMode() {
 }
 
 if (!webgpuAvailable()) {
-  // WebGPUが無いとWASM実行になり実測で79秒かかった＝実用にならないため選ばせない
   const aiBtn = $('modeSeg').querySelector('button[data-mode="ai"]');
   aiBtn.disabled = true;
   aiBtn.title = t.aiNoWebGPU;
@@ -168,9 +158,6 @@ $('qualitySeg').addEventListener('click', function (e) {
   updateMeta();
 });
 
-/* ボケ補正の目盛りを実際のガウシアンσへ変換する。
-   低い側を細かく刻む＝シャープな写真では弱くしか掛からないようにするため。
-   実測では、ボケていない写真に強く掛けると PSNR が 24.47 -> 20.59 まで崩れた。 */
 function deblurSigma(v) {
   return v <= 0 ? 0 : 0.6 + 2.4 * Math.pow(v / 100, 1.5);
 }
@@ -194,8 +181,6 @@ $('deblur').addEventListener('input', function () {
   updateMeta();
 });
 
-/* 原本と突き合わせた実測では最適なシャープ半径が倍率にほぼ比例した
-   （2倍で σ≒0.6 / 4倍で σ≒1.2）。ユーザーが手で動かすまでは自動追従させる */
 let radiusTouched = false;
 function applyAutoRadius() {
   if (radiusTouched) return;
@@ -223,7 +208,6 @@ applyMode();
 function targetSize() {
   const sw = sourceCanvas.width, sh = sourceCanvas.height;
   let s = scale;
-  // 上限を超える倍率は自動的に切り下げる
   if (sw * sh * s * s > MAX_OUT_PIXELS) {
     s = Math.sqrt(MAX_OUT_PIXELS / (sw * sh));
   }
@@ -237,11 +221,9 @@ function targetSize() {
 
 function estimateSeconds(megapixels) {
   if (mode === 'ai') {
-    // AIは入力画素数で決まる。初回はモデルのダウンロード時間も乗る
     const base = aiEstimate(sourceCanvas.width, sourceCanvas.height, scale);
     return base + (isModelLoaded(scale) ? 0 : AI_MODELS[scale].sizeMB / 2);
   }
-  // 実測値から: 拡大＋逆投影が約0.19s/MP、デコンボリューションが約0.034s/MP/反復
   const rl = parseInt($('deblur').value, 10) > 0 ? deconvIters : 0;
   return megapixels * (0.19 + 0.034 * rl);
 }
@@ -263,14 +245,11 @@ function updateMeta() {
   metaLine.innerHTML = html;
 }
 
-/* ---------- 実行 ---------- */
 
 runBtn.addEventListener('click', function () {
   if (!sourceCanvas) return;
   const tgt = targetSize();
 
-  // AIモデルは倍率固定（2倍/4倍）で標準モードのように倍率を切り下げられない。
-  // 上限を超える場合は走らせず、別の倍率か標準モードを案内する
   if (mode === 'ai' && tgt.clamped) {
     alert(t.aiTooLarge(MAX_OUT_PIXELS / 1000000));
     return;
@@ -281,7 +260,6 @@ runBtn.addEventListener('click', function () {
   progressWrap.hidden = false;
   setProgress('resample', 0);
 
-  // 比較用のベースライン（ブラウザ標準の拡大）
   baselineCanvas = document.createElement('canvas');
   baselineCanvas.width = tgt.w;
   baselineCanvas.height = tgt.h;
@@ -299,7 +277,6 @@ runBtn.addEventListener('click', function () {
   }
 
   if (worker) worker.terminate();
-  // ページが / でも /en/ でも同じ js/ を参照できるよう import.meta.url を基準にする
   worker = new Worker(new URL('./upscale-worker.js?v=' + ASSET_VERSION, import.meta.url));
 
   worker.onmessage = function (e) {
@@ -380,7 +357,6 @@ function finish(d) {
 
 }
 
-/* ---------- 比較ビュー ---------- */
 
 function viewportSize() {
   const dpr = window.devicePixelRatio || 1;
@@ -427,7 +403,6 @@ function render() {
   }
   const ctx = viewCanvas.getContext('2d');
   ctx.clearRect(0, 0, vs.w, vs.h);
-  // 等倍以上では実ピクセルを見たいので補間を切る
   ctx.imageSmoothingEnabled = view.zoom < 1;
 
   const dw = outputCanvas.width * view.zoom;
@@ -447,7 +422,6 @@ function render() {
   zoomLabel.textContent = t.zoomLabel + Math.round(view.zoom * 100) + '%';
 }
 
-/* 仕切りハンドル: GSAP Draggable。読み込めなかった場合は素のポインタ操作へ退避 */
 const cpHandle = $('cpHandle');
 
 function syncHandle() {
@@ -487,7 +461,6 @@ if (window.gsap && window.Draggable) {
   });
 }
 
-/* ビューポートのドラッグはパン専用（ハンドル上では無視する） */
 let drag = null;
 viewportEl.addEventListener('pointerdown', function (e) {
   if (!outputCanvas) return;
@@ -517,7 +490,6 @@ viewportEl.addEventListener('wheel', function (e) {
   const rect = viewportEl.getBoundingClientRect();
   const cx = (e.clientX - rect.left) * vs.dpr;
   const cy = (e.clientY - rect.top) * vs.dpr;
-  // カーソル位置を固定してズームする
   const imgX = (cx - view.panX) / view.zoom;
   const imgY = (cy - view.panY) / view.zoom;
   const next = Math.min(8, Math.max(0.05, view.zoom * (e.deltaY < 0 ? 1.15 : 1 / 1.15)));
@@ -543,7 +515,6 @@ window.addEventListener('resize', function () {
   syncHandle();
 });
 
-/* ---------- ダウンロード ---------- */
 
 const dlBtn = $('dlBtn');
 const dlFormat = $('dlFormat');
@@ -553,8 +524,6 @@ function triggerDownload(blob, ext) {
   const a = document.createElement('a');
   a.href = url;
   a.download = sourceName + '_upscaled_' + outputCanvas.width + 'x' + outputCanvas.height + '.' + ext;
-  // 一部環境では DOM に挿入しないと click が効かないため必ず append する。
-  // 削除と revoke は同期で行うと一部環境で DL が始まらないため遅らせる
   document.body.appendChild(a);
   a.click();
   setTimeout(function () {
@@ -568,7 +537,6 @@ dlBtn.addEventListener('click', async function () {
   const format = dlFormat.value;
   const label = dlBtn.textContent;
   dlBtn.disabled = true;
-  // AVIF は WASM の取得とエンコードで数秒かかるので待ち表示にする
   if (format === 'avif') dlBtn.textContent = t.encoding;
   try {
     const blob = await encodeCanvas(outputCanvas, format);

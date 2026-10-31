@@ -1,10 +1,9 @@
-// アプリロジック（問題データは js/data.js の PROBLEMS / LEVELS を参照）
 const STORE_KEY = 'cqPythonBasicsQuizV1';
 let state = { level: 'all', current: 1, status: {}, drafts: {} };
 try {
   const saved = JSON.parse(localStorage.getItem(STORE_KEY));
   if (saved && saved.status) state = { ...state, ...saved };
-} catch (e) { /* 破損時は初期状態で続行 */ }
+} catch (e) { }
 
 const $ = id => document.getElementById(id);
 
@@ -53,7 +52,6 @@ function renderProblem() {
   $('qNum').textContent = `Q${p.id}.`;
   $('qTitle').textContent = p.title;
   $('qText').innerHTML = p.questionHtml;
-  // 下書きがなければ問題のデータ（starter）をプリセット
   $('editor').value = state.drafts[p.id] || p.starter || '';
   $('answerCode').textContent = p.answer;
   $('answerBox').open = false;
@@ -82,7 +80,6 @@ function renderClear() {
 
 function renderAll() { renderTabs(); renderChips(); renderProgress(); renderProblem(); }
 
-// コード実行（SkulptでPythonを実行し、print出力を捕捉して表示）
 $('runBtn').onclick = () => {
   const code = $('editor').value;
   state = { ...state, drafts: { ...state.drafts, [state.current]: code } };
@@ -109,7 +106,6 @@ $('runBtn').onclick = () => {
     })
     .catch(err => {
       const msg = String(err);
-      // 途中までの出力は通常色で残し、エラー行だけを赤くする
       if (lines.length) {
         out.className = '';
         out.textContent = lines.join('') + '\n';
@@ -124,7 +120,6 @@ $('runBtn').onclick = () => {
     });
 };
 
-// リセット＝下書きを破棄して問題のデータ（starter）に戻す
 $('clearBtn').onclick = () => {
   const p = problem(state.current);
   $('editor').value = p.starter || '';
@@ -134,7 +129,6 @@ $('clearBtn').onclick = () => {
   save();
 };
 
-// Tabキーでスペース4つ挿入（Pythonの標準インデント）
 $('editor').addEventListener('keydown', e => {
   if (e.key === 'Tab') {
     e.preventDefault();
@@ -145,7 +139,6 @@ $('editor').addEventListener('keydown', e => {
 });
 
 function setStatus(st) {
-  // 同じ判定をもう一度押したら解除（その場に留まる）
   if (state.status[state.current] === st) {
     const status = { ...state.status };
     delete status[state.current];
@@ -178,7 +171,6 @@ $('reviewBtn').onclick = () => {
   if (first) { state = { ...state, current: first.id }; save(); renderAll(); }
 };
 
-// 表示中レベルの判定（できた/復習）を全解除。現在の問題位置は維持
 $('resetProgressBtn').onclick = () => {
   const status = { ...state.status };
   levelProblems().forEach(p => delete status[p.id]);

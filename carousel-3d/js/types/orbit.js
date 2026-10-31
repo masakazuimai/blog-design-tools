@@ -1,9 +1,3 @@
-/*
- * テンプレート6：観覧車
- * カードを円周に並べて回すが、観覧車のゴンドラのように各カードは常に正面（水平・正立）を向く（ビルボード）。
- * 各カードを毎フレーム「円周上に配置 → 自分の角度ぶん逆回転 → 見下ろしtiltも打ち消す」ことで正面固定する。
- * 見下ろし=0で真正面の縦回転ホイール、上げるほど見下ろした楕円軌道になる。構造・CSSは共通（scene>tilt>stage>.c3-card）。
- */
 const SENS = 0.22;
 const GSAP_VER = "3.13.0";
 const CDN = `https://cdn.jsdelivr.net/npm/gsap@${GSAP_VER}/dist`;
@@ -41,15 +35,13 @@ function mount(host, state, autoOn) {
     }
   }
 
-  // 現在の回転で各カードを配置（初期表示と毎フレームで共用）
   function place() {
     const step = 360 / s.count;
     for (let i = 0; i < cards.length; i++) {
       const th = s.rotation + i * step;
-      // 円周配置 → 自分の角度を逆回転 → 見下ろしtiltも打ち消して正面固定
       cards[i].style.transform =
         `rotateZ(${th}deg) translateY(${-s.radius}px) rotateZ(${-th}deg) rotateX(${-s.tilt}deg)`;
-      const face = -Math.cos((th * Math.PI) / 180); // 手前(下)で1
+      const face = -Math.cos((th * Math.PI) / 180);
       cards[i].style.filter = `brightness(${(0.5 + 0.5 * (face * 0.5 + 0.5)).toFixed(3)})`;
       cards[i].style.zIndex = String(Math.round(face * 100));
     }
@@ -127,7 +119,6 @@ function mount(host, state, autoOn) {
   };
 }
 
-// --- コード生成 ---------------------------------------------------------
 function cardsHTML(count) {
   let out = "";
   for (let i = 0; i < count; i++) {

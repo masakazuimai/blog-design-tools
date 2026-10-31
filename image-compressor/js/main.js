@@ -1,6 +1,4 @@
-// エントリーポイント: 設定の読み取り・イベント配線・変換パイプラインの実行
 
-// import先の ?v= はキャッシュバスティング用（サーバーがjsを7日キャッシュするため）。各ファイル更新時に日付を上げる
 import { TEMPLATES, findTemplate, computeRenderPlan } from './resize.js?v=20260614'
 import { detectFormat, decodeToBitmap, renderImageData, encodeImage, EXT_MAP } from './codecs.js?v=20260614'
 import { renderResults, renderSummary } from './ui.js?v=20260614'
@@ -44,9 +42,8 @@ const dom = {
   zipButton: document.getElementById('zip-button'),
 }
 
-let selectedFiles = [] // {file, url, focus} の配列（urlはプレビュー用Object URL、focusは切り抜き位置0〜1）
+let selectedFiles = []
 let results = []
-// 正円切り抜きの状態（モーダル内トグルで変更され、全画像に適用される）
 let cropCircle = false
 
 function init() {
@@ -114,7 +111,6 @@ function bindSettings() {
     radio.addEventListener('change', updateResizePanels)
   })
   dom.bgTransparent.addEventListener('change', updateResizePanels)
-  // サイズ設定の変更を縦横比連動とサムネイル下の「変換後サイズ」表示へ即時反映する
   dom.freeWidth.addEventListener('input', () => {
     syncLinkedInput('width')
     renderDropPreviews()
@@ -150,13 +146,10 @@ function updateResizePanels() {
   dom.freeScaleOptions.hidden = freeMode !== 'scale'
   dom.freeCropHint.hidden = freeMode !== 'crop'
   prefillScaleInputs()
-  // 背景透過は切り抜き時とテンプレート時のみ選択できる
   dom.bgRemoveSection.hidden = !(mode === 'template' || (mode === 'free' && freeMode === 'crop'))
-  // 切り抜き系の設定時のみ位置調整ボタンを出すため再描画する
   renderDropPreviews()
 }
 
-// 位置調整が意味を持つ設定か（template: カバー切り抜き / free-crop: 指定サイズ切り抜き）
 function cropEditorKind() {
   const mode = document.querySelector('input[name="resize-mode"]:checked').value
   if (mode === 'template') {
@@ -183,7 +176,6 @@ function addFiles(files) {
   added.forEach(loadDimensions)
 }
 
-// サムネイル下のサイズ表示用に画像の実寸を取得する（取得後に再描画）
 async function loadDimensions(entry) {
   try {
     const bitmap = await decodeToBitmap(entry.file)
@@ -199,7 +191,6 @@ async function loadDimensions(entry) {
   }
 }
 
-// サイズ計算の基準になる画像（実寸が取得できた最初の1枚）
 function referenceDims() {
   const entry = selectedFiles.find((e) => e.srcW)
   return entry ? { w: entry.srcW, h: entry.srcH } : null
@@ -212,7 +203,6 @@ function isScaleMode() {
   )
 }
 
-// 縮小モードで入力が空なら、1枚目の画像サイズを初期値として入れる
 function prefillScaleInputs() {
   if (!isScaleMode()) return
   const ref = referenceDims()
@@ -223,7 +213,6 @@ function prefillScaleInputs() {
   }
 }
 
-// 縦横比を維持中は、片方の入力からもう片方を自動計算する（基準は1枚目の画像）
 function syncLinkedInput(changed) {
   if (!isScaleMode() || !dom.keepRatio.checked) return
   const ref = referenceDims()
@@ -244,7 +233,6 @@ function removeFile(index) {
   renderDropPreviews()
 }
 
-// ドロップゾーン内に選択済みファイルのサムネイルを表示する
 function renderDropPreviews() {
   const hasFiles = selectedFiles.length > 0
   dom.dropZone.classList.toggle('has-files', hasFiles)
@@ -257,7 +245,6 @@ function renderDropPreviews() {
     const tile = document.createElement('div')
     tile.className = 'preview-tile'
 
-    // ボタン類の配置基準になるサムネイル枠（下のサイズ表示とは分離）
     const thumb = document.createElement('div')
     thumb.className = 'preview-thumb'
     tile.appendChild(thumb)
@@ -279,7 +266,6 @@ function renderDropPreviews() {
     })
     thumb.appendChild(remove)
 
-    // 元サイズと変換後サイズの表示（実寸取得後のみ）
     if (entry.srcW) {
       const caption = document.createElement('div')
       caption.className = 'preview-size'
@@ -306,7 +292,6 @@ function renderDropPreviews() {
         event.stopPropagation()
         const onApply = (focus, area, circle) => {
           selectedFiles = selectedFiles.map((e, i) => (i === index ? { ...e, focus } : e))
-          // ドラッグで選んだ範囲を幅・高さ入力と正円状態に反映する
           if (area) {
             dom.freeWidth.value = area.w
             dom.freeHeight.value = area.h
@@ -349,7 +334,6 @@ function readSettings() {
   const format = document.querySelector('input[name="format"]:checked').value
   const quality = Number(dom.quality.value)
   const mode = document.querySelector('input[name="resize-mode"]:checked').value
-  // 背景透過はチェックボックスが表示されている文脈（切り抜き・テンプレート）でのみ有効
   const freeMode = document.querySelector('input[name="free-mode"]:checked').value
   const bgRemove = {
     enabled:
@@ -382,7 +366,6 @@ function readSettings() {
         mode,
         template: findTemplate(dom.templateSelect.value),
         fit: document.querySelector('input[name="fit-mode"]:checked').value,
-        // 透過指定時はnull（JPG出力時のみ描画側で白が入る）
         bg: dom.bgTransparent.checked ? null : dom.bgColor.value,
       },
     }
@@ -414,14 +397,12 @@ async function processFile(entry, settings) {
   const { file } = entry
   try {
     const bitmap = await decodeToBitmap(file)
-    // 画像ごとのトリミング位置を反映する（切り抜きを伴わないモードでは無視される）
     const resize = { ...settings.resize, focus: entry.focus }
     const plan = computeRenderPlan(bitmap.width, bitmap.height, resize)
     const format = settings.format === 'same' ? detectFormat(file.type) : settings.format
     let imageData = renderImageData(bitmap, plan, format)
     bitmap.close()
 
-    // 単色背景の透過化（JPGは透過を保持できないためスキップ）
     if (settings.bgRemove.enabled && format !== 'jpeg') {
       imageData = removeBackground(imageData, settings.bgRemove.tolerance)
     }

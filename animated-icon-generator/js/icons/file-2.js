@@ -1,8 +1,6 @@
-// ファイル・データカテゴリの追加分（共通ルールは status.js のヘッダーを参照）
 
 import { DRAW, drawKeys, pulseKeys, bounceKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815c";
 
-// ファイル本体の共通シルエット（折り返し付き）
 const FILE_D = "M13.6 3.4H6.4a2 2 0 0 0-2 2v13.2a2 2 0 0 0 2 2h11.2a2 2 0 0 0 2-2V9.4z M13.6 3.4v6h6";
 
 export const FILE_ICONS_2 = [
@@ -15,7 +13,6 @@ export const FILE_ICONS_2 = [
       { tag: "path", part: "plus", attrs: { d: "M12 12.4v5.2 M9.4 15h5.2" }, animAttrs: DRAW },
     ],
     anim: { duration: 1.3, easing: "ease-out", tracks: [
-        // 小さな＋の描画だけでは変化が見えないため、本体も跳ねさせる
         { part: "body", origin: "12px 12px", keys: bounceKeys("Y", -1.6) },
         { part: "plus", keys: drawKeys(0.25, 0.75) },
       ],
@@ -129,7 +126,6 @@ export const FILE_ICONS_2 = [
       { tag: "path", part: "line", attrs: { d: "M8.4 8h7.2 M8.4 11.4h5.2" }, animAttrs: DRAW },
     ],
     anim: { duration: 1.6, easing: "ease-out", tracks: [
-        // ページがめくれるように表紙を傾ける
         {
           part: ["cover", "pages"],
           origin: "5.4px 12px",

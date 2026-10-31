@@ -1,4 +1,3 @@
-// GSAPアニメーション ギャラリー UI配線
 import { EFFECTS, CATEGORIES } from "./effects/index.js?v=20260811a";
 import { LANG, t, tf, localizeCode } from "./i18n.js?v=20260811a";
 
@@ -25,7 +24,6 @@ let selectedKey = null;
 let currentCat = "all";
 let keyword = "";
 
-/* ============ 色設定 ============ */
 
 const loadColors = () => {
   try {
@@ -45,17 +43,13 @@ const saveColors = () => {
   }
 };
 
-/** 定義に書いた既定色を、ユーザーが選んだ色へ差し替える */
 const applyColors = (text) =>
   text.replaceAll(DEFAULT_ACCENT, accentInput.value).replaceAll(DEFAULT_SUB, subInput.value);
 
-/** 表示用に整形したコピー用コード（色差し替え＋英語ページなら日本語を英訳） */
 const buildCode = (def) => localizeCode(applyColors(def.code));
 
-/** デモ台のHTML（英語ページではカード内に出る文言も英訳する） */
 const buildStage = (def) => localizeCode(def.stage);
 
-/* ============ デモCSSの注入 ============ */
 
 const styleTag = document.createElement("style");
 document.head.appendChild(styleTag);
@@ -64,7 +58,6 @@ const renderStyles = () => {
   styleTag.textContent = applyColors(EFFECTS.map((e) => e.css).join("\n"));
 };
 
-/* ============ 共通UI ============ */
 
 const showToast = (msg) => {
   toast.textContent = msg;
@@ -83,13 +76,7 @@ const copyText = async (text) => {
   }
 };
 
-/* ============ カード ============ */
 
-/**
- * デモを最初から組み直す。
- * ScrollTriggerは要素を作り直すと参照が切れるため、
- * このステージに紐づくインスタンスを先に破棄してから再生成する。
- */
 const playDemo = (stage, def) => {
   ScrollTrigger.getAll()
     .filter((st) => st.scroller === stage || stage.contains(st.trigger))
@@ -147,7 +134,6 @@ const buildCard = (def) => {
 
 const catLabel = (key) => CATEGORIES.find((c) => c.key === key)?.label[LANG] ?? key;
 
-/* ============ 一覧の描画 ============ */
 
 const visibleEffects = () =>
   EFFECTS.filter((e) => currentCat === "all" || e.cat === currentCat).filter((e) => {
@@ -157,7 +143,6 @@ const visibleEffects = () =>
   });
 
 const renderGrid = () => {
-  // 一覧を作り直す前に、前回のデモが残したScrollTriggerを全て破棄する
   ScrollTrigger.getAll().forEach((st) => st.kill());
   grid.innerHTML = "";
 
@@ -189,7 +174,6 @@ const renderFilters = () => {
   });
 };
 
-/* ============ イベント ============ */
 
 const onColorChange = () => {
   accentVal.textContent = accentInput.value;
@@ -219,7 +203,6 @@ copyPreview.addEventListener("click", () => {
   if (def) copyText(buildCode(def));
 });
 
-/* ============ 初期化 ============ */
 
 searchInput.placeholder = t("searchPlaceholder");
 copyPreview.textContent = t("copyThis");

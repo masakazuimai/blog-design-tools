@@ -1,4 +1,3 @@
-// 料金表のパターン
 const PLAN = (name, price, rec = false) => `<li class="wf-box pr-plan${rec ? " is-rec" : ""}">
         ${rec ? `<span class="pr-plan__badge">おすすめ</span>` : ""}
         <p class="wf-h3">${name}</p>
@@ -8,7 +7,6 @@ const PLAN = (name, price, rec = false) => `<li class="wf-box pr-plan${rec ? " i
         <a class="wf-btn${rec ? " wf-btn--primary" : ""}" href="#">このプランにする</a>
       </li>`;
 
-// 3プランのカードで共通に使う見た目（料金表の各パターンで使い回す）
 const PLAN_CSS = `.pr-plan { position: relative; display: flex; flex-direction: column; gap: 16px; padding: 28px 24px; }
 .pr-plan.is-rec { border-color: #444; border-width: 3px; }
 .pr-plan__badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); padding: 2px 14px; border-radius: 999px; background: #444; color: #fff; font-weight: 700; }

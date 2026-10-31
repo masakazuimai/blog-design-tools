@@ -17,7 +17,6 @@ html,
 body {
   margin: 0;
   height: 100%;
-  /* 画面外に控える右メニュー/左ドロワーが横スクロールを生まないよう塞ぐ */
   overflow-x: hidden;
 }
 
@@ -32,7 +31,6 @@ body {
   overflow: hidden;
 }
 
-/* ===== ツールバー ===== */
 .toolbar {
   position: relative;
   flex: 0 0 auto;
@@ -47,7 +45,6 @@ body {
   z-index: 100;
 }
 
-/* 左端中央の「›」タブ（クリックで付箋一覧ドロワーを開く） */
 .list-tab {
   position: fixed;
   top: 50%;
@@ -90,7 +87,6 @@ body {
   transform: scaleX(-1);
 }
 
-/* 左から出る付箋一覧ドロワー */
 .list-panel {
   position: fixed;
   top: 0;
@@ -208,7 +204,6 @@ body {
   padding: 8px 4px;
 }
 
-/* 一覧からジャンプした付箋を一瞬ハイライト */
 .note.is-highlight {
   box-shadow: 0 0 0 3px var(--accent), var(--note-shadow);
 }
@@ -240,7 +235,6 @@ body {
   letter-spacing: 0;
 }
 
-/* 3本線ハンバーガー（メニューより前面に固定＝開いても押せる） */
 .hamburger {
   position: fixed;
   top: 17px;
@@ -278,7 +272,6 @@ body {
   transform: translateY(-9.5px) rotate(-45deg);
 }
 
-/* メモ用紙風スライドインメニュー */
 .menu-panel {
   position: fixed;
   top: 0;
@@ -327,7 +320,6 @@ body {
   width: 100%;
 }
 
-/* メニュー内はノート紙に馴染ませる＝背景透明・枠線のみ */
 .menu-panel .field select,
 .menu-panel .field input {
   background: transparent;
@@ -354,7 +346,6 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.35);
 }
 
-/* ホバーは「文字が濃くなる」だけ（全消去と統一）。背景のベタ塗りはしない */
 .menu-panel .btn--primary:hover,
 .menu-panel .btn--ghost:hover {
   background: transparent;
@@ -362,7 +353,6 @@ body {
   border-color: rgba(0, 0, 0, 0.5);
 }
 
-/* メニュー内のガイド（使い方・FAQ）リンク。黄色ノートテーマに合わせ透明＋枠線 */
 .menu-link {
   display: block;
   text-align: center;
@@ -379,14 +369,12 @@ body {
   border-color: rgba(0, 0, 0, 0.5);
 }
 
-/* AI選択の下に出す注記（Puterのサインイン案内など） */
 .menu-hint {
   margin: 0;
   font-size: 16px;
   line-height: 1.5;
   color: var(--muted);
 }
-/* Puter公式サイト・GitHubへのリンク。下線だけでなくチップ（枠線＋↗）で「押せる」と分かるように */
 .puter-links {
   display: flex;
   flex-wrap: wrap;
@@ -479,7 +467,6 @@ body {
   text-decoration: underline;
 }
 
-/* ===== ボタン ===== */
 .btn {
   font-family: inherit;
   font-size: 16px;
@@ -511,7 +498,6 @@ body {
   color: var(--ink);
 }
 
-/* ===== ボード（ホワイトボード） ===== */
 .board {
   position: relative;
   flex: 1 1 auto;
@@ -552,7 +538,6 @@ body:not(.is-empty) .empty-hint {
   margin: 0;
 }
 
-/* ===== 付箋 ===== */
 .note {
   position: absolute;
   display: flex;
@@ -681,7 +666,6 @@ body:not(.is-empty) .empty-hint {
   border-color: rgba(0, 0, 0, 0.3);
 }
 
-/* ファイル入力をボタン全面に透明で重ねる＝クリックで確実にダイアログが開く */
 .note__attach .note__file {
   position: absolute;
   inset: 0;
@@ -720,7 +704,6 @@ body:not(.is-empty) .empty-hint {
   color: #b91c1c;
 }
 
-/* ===== 会話スレッド ===== */
 .note__thread {
   flex: 1 1 auto;
   min-height: 0;
@@ -911,7 +894,6 @@ body:not(.is-empty) .empty-hint {
   cursor: pointer;
 }
 
-/* ===== 入力エリア ===== */
 .note__input {
   flex: 0 0 auto;
   height: 3.4rem;
@@ -979,7 +961,6 @@ body:not(.is-empty) .empty-hint {
   color: #b91c1c;
 }
 
-/* ===== 添付ファイル（画像サムネ / ファイルチップ） ===== */
 .note__attachments {
   flex: 0 0 auto;
   display: flex;
@@ -1049,7 +1030,6 @@ body:not(.is-empty) .empty-hint {
   outline-offset: -3px;
 }
 
-/* ===== メモモード ===== */
 .note__memo {
   flex: 1 1 auto;
   min-height: 0;
@@ -1071,7 +1051,6 @@ body:not(.is-empty) .empty-hint {
   background: #fff;
 }
 
-/* モードによる表示の出し分け */
 .note:not(.mode-memo) .note__memo {
   display: none;
 }
@@ -1109,8 +1088,6 @@ body:not(.is-empty) .empty-hint {
     width: 130px;
   }
 
-  /* SPでは付箋をもう一回り小さく表示（インラインstyleを上書き）。
-     固定サイズにするため、タッチで扱いづらいリサイズハンドルは隠す */
   .note {
     width: 272px !important;
     height: 320px !important;
@@ -1120,12 +1097,11 @@ body:not(.is-empty) .empty-hint {
   }
 }
 
-/* ===== 共通フッター（他ツールと統一） ===== */
 footer {
   flex: 0 0 auto;
-  height: 64px; /* 広告(60px)＋上下4pxに詰める。広告が潰れない最小高さ */
+  height: 64px;
   display: flex;
-  justify-content: flex-start; /* 右下広告との被り回避で左寄せ */
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 12px 24px;
   align-items: center;
@@ -1143,7 +1119,6 @@ footer a {
 footer a:hover {
   color: #3b82f6;
 }
-/* 右端のボタン2つ（他ツールと統一） */
 .footer-links {
   display: flex;
   gap: 16px;
@@ -1159,19 +1134,17 @@ footer a:hover {
   border-color: #3b82f6;
   color: #3b82f6;
 }
-/* PCでは右下にフローティングカードとして固定表示（ChatWork風）。footerからは抜く。
-   サイズは320x100（ラージモバイルバナー）・薄型透明枠で統一 */
 .footer-ad {
   position: fixed;
   right: 0;
-  bottom: 0; /* 画面右下ぴったり（footerに被ってOK） */
-  z-index: 90; /* ボード/フッターより上・メニュー/一覧パネル(1000)より下＝パネル展開時は広告を隠す */
+  bottom: 0;
+  z-index: 90;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
   padding: 0;
-  width: 320px; /* AdSenseレスポンシブの横伸び防止＋×を右端に固定 */
+  width: 320px;
   overflow: hidden;
   background: transparent;
   border: none;
@@ -1186,7 +1159,7 @@ footer a:hover {
   justify-content: space-between;
   width: 100%;
   position: relative;
-  z-index: 1; /* 広告iframeの上に×を出してクリックできるようにする */
+  z-index: 1;
 }
 .ad-widget__label {
   color: #64748b;
@@ -1217,11 +1190,10 @@ footer a:hover {
   color: #1e293b;
 }
 .footer-ad ins.adsbygoogle {
-  display: block; /* inline-blockだと行ボックスのディセンダ分の隙間が広告下にできる */
+  display: block;
   width: 320px;
   height: 100px;
 }
-/* コピーライト＋468px広告が横並びで収まらない幅では縦積み＋広告をモバイルバナー(320x100)に */
 @media (max-width: 1040px) {
   footer {
     height: auto;
@@ -1230,7 +1202,6 @@ footer a:hover {
     padding: 8px 16px;
     text-align: center;
   }
-  /* スマホはフローティング解除してfooter内に戻す（×・ラベルも非表示） */
   .footer-ad {
     position: static;
     align-self: center;
@@ -1243,13 +1214,13 @@ footer a:hover {
     z-index: auto;
   }
   .footer-ad.is-closed {
-    display: flex; /* PCで閉じた状態でもスマホのfooter広告は表示する */
+    display: flex;
   }
   .ad-widget__head {
     display: none;
   }
   .footer-links {
-    display: none; /* スマホ（footer縦積み時）は右端ボタンを非表示 */
+    display: none;
   }
   .footer-ad ins.adsbygoogle {
     width: 320px;
@@ -1259,6 +1230,3 @@ footer a:hover {
     display: none;
   }
 }
-/* スマホはページスクロールさせない（body overflow:hidden のまま）。
-   フッターは最下部に固定・ボードは内部スクロール。
-   → 入力欄フォーカスでキーボードが出てもページが動かず、フッターがせり上がらない */

@@ -1,4 +1,3 @@
-// 特長・メリットのパターン
 const HEAD = `<div class="wf-head">
       <span class="wf-label">FEATURES</span>
       <h2 class="wf-h2">選ばれる理由</h2>

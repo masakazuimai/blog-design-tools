@@ -1,4 +1,3 @@
-// PowerPoint templates (English). Labels must match powerpoint.en.js exactly.
 
 export const TEMPLATES = [
   {

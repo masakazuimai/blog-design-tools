@@ -1,10 +1,6 @@
-// 共通設定（state）から Swiper / Splide / Slick それぞれの
-// オプションオブジェクト・マークアップ・コピペ用コード文字列を生成する純粋関数群。
-// プレビューはオプションオブジェクトを直接使い、出力欄は文字列化したコードを使う。
 
 import { LANG } from "./i18n.js?v=20260623k";
 
-// プレビュー・出力で使うサンプル画像（Unsplash・安定した固定ID）
 export const IMAGES = [
   "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80&auto=format&fit=crop",
@@ -16,7 +12,6 @@ export const IMAGES = [
 
 const img = (i) => `<img src="${IMAGES[i % IMAGES.length]}" alt="${LANG === "en" ? `Slide ${i + 1}` : `スライド${i + 1}`}" />`;
 
-// 出力コード内のコメント（言語別）。enページでは英語コメントを出す。
 const CMT =
   LANG === "en"
     ? {
@@ -58,16 +53,12 @@ export const CDN = {
   },
 };
 
-// fade/cube/flip/cards は1枚表示が前提のエフェクト（表示枚数を1に固定）
 const SINGLE_VIEW_EFFECTS = ["fade", "cube", "flip", "cards"];
 const isSingleView = (state) => SINGLE_VIEW_EFFECTS.includes(state.effect);
 const perViewOf = (state) => (isSingleView(state) ? 1 : state.perView);
 const perViewMobileOf = (state) =>
   isSingleView(state) ? 1 : Math.min(state.perViewMobile, perViewOf(state));
 
-/* ============================================================
- * Swiper v12
- * ============================================================ */
 export function swiperOptions(state) {
   const opt = {};
   opt.slidesPerView = perViewMobileOf(state);
@@ -91,7 +82,6 @@ export function swiperOptions(state) {
     opt.coverflowEffect = { rotate: 30, stretch: 0, depth: 120, modifier: 1, slideShadows: true };
   }
   if (state.centered && perViewOf(state) > 1) opt.centeredSlides = true;
-  // Swiper固有オプション
   if (state.grabCursor && state.effect !== "coverflow") opt.grabCursor = true;
   if (state.mousewheel) opt.mousewheel = true;
   if (state.keyboard) opt.keyboard = true;
@@ -101,7 +91,6 @@ export function swiperOptions(state) {
   }
   if (state.pagination) opt.pagination = { el: ".swiper-pagination", clickable: true };
   if (state.arrows) opt.navigation = { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" };
-  // レスポンシブ：モバイル基準→768px以上で表示枚数を増やす（1枚固定エフェクト時は不要）
   if (!isSingleView(state) && perViewOf(state) !== perViewMobileOf(state)) {
     opt.breakpoints = { 768: { slidesPerView: perViewOf(state) } };
   }
@@ -110,7 +99,6 @@ export function swiperOptions(state) {
 
 export function swiperMarkup(count, state = {}) {
   const slides = Array.from({ length: count }, (_, i) => `      <div class="swiper-slide">${img(i)}</div>`).join("\n");
-  // ドット/矢印はSwiperが「箱」の中に描画する。ONのときだけ要素を出力する（無ければプレビューと食い違う）
   const pager = state.pagination ? `\n  <div class="swiper-pagination"></div>` : "";
   const nav = state.arrows
     ? `\n  <div class="swiper-button-prev"></div>\n  <div class="swiper-button-next"></div>`
@@ -122,7 +110,6 @@ ${slides}
 </div>`;
 }
 
-// プレビュー用：ナビ/ページネーション要素を含むフルマークアップ
 export function swiperPreviewMarkup(count, state) {
   const slides = Array.from({ length: count }, (_, i) => `<div class="swiper-slide">${img(i)}</div>`).join("");
   const pager = state.pagination ? `<div class="swiper-pagination"></div>` : "";
@@ -130,12 +117,8 @@ export function swiperPreviewMarkup(count, state) {
   return `<div class="swiper my-slider"><div class="swiper-wrapper">${slides}</div>${pager}${nav}</div>`;
 }
 
-/* ============================================================
- * Splide v4
- * ============================================================ */
 export function splideOptions(state) {
   const opt = {};
-  // rewind は type:'slide' と併用（loopとは排他）
   opt.type = state.effect === "fade" ? "fade" : state.rewind ? "slide" : state.loop ? "loop" : "slide";
   if (state.rewind) opt.rewind = true;
   if (perViewOf(state) !== 1) opt.perPage = perViewOf(state);
@@ -146,13 +129,13 @@ export function splideOptions(state) {
     opt.height = "16rem";
   }
   if (state.centered && perViewOf(state) > 1) opt.focus = "center";
-  if (state.dragFree) opt.drag = "free"; // Splide固有：自由ドラッグ
+  if (state.dragFree) opt.drag = "free";
   if (!state.arrows) opt.arrows = false;
   if (!state.pagination) opt.pagination = false;
   if (state.autoplay) {
     opt.autoplay = true;
     opt.interval = state.autoplayDelay;
-    if (!state.pauseOnHover) opt.pauseOnHover = false; // Splideの既定はtrue
+    if (!state.pauseOnHover) opt.pauseOnHover = false;
   }
   if (!isSingleView(state) && perViewMobileOf(state) !== perViewOf(state)) {
     opt.breakpoints = { 768: { perPage: perViewMobileOf(state) } };
@@ -176,9 +159,6 @@ export function splidePreviewMarkup(count) {
   return `<div class="splide my-slider"><div class="splide__track"><ul class="splide__list">${slides}</ul></div></div>`;
 }
 
-/* ============================================================
- * Slick v1.8.1（jQuery依存・保守停止）
- * ============================================================ */
 export function slickOptions(state) {
   const opt = {};
   opt.slidesToShow = perViewOf(state);
@@ -194,11 +174,11 @@ export function slickOptions(state) {
     opt.centerMode = true;
     opt.centerPadding = `${state.centerPadding}px`;
   }
-  if (state.adaptiveHeight) opt.adaptiveHeight = true; // Slick固有
+  if (state.adaptiveHeight) opt.adaptiveHeight = true;
   opt.autoplay = !!state.autoplay;
   if (state.autoplay) {
     opt.autoplaySpeed = state.autoplayDelay;
-    if (!state.pauseOnHover) opt.pauseOnHover = false; // Slickの既定はtrue
+    if (!state.pauseOnHover) opt.pauseOnHover = false;
   }
   opt.arrows = !!state.arrows;
   opt.dots = !!state.pagination;
@@ -220,7 +200,6 @@ export function slickPreviewMarkup(count) {
   return `<div class="my-slider">${slides}</div>`;
 }
 
-// Slick は gap オプションを持たないため、余白指定時はCSSで補う
 export function slickGapCss(gap) {
   if (gap <= 0) return "";
   return `<style>
@@ -230,9 +209,6 @@ export function slickGapCss(gap) {
 `;
 }
 
-/* ============================================================
- * オプションオブジェクト → JS風文字列
- * ============================================================ */
 export function stringifyOptions(obj, indent = 2) {
   const pad = " ".repeat(indent);
   const entries = Object.entries(obj);
@@ -252,19 +228,11 @@ function formatValue(value, indent) {
   return String(value);
 }
 
-/* ============================================================
- * コピペ用フルコード（CDN + HTML + 初期化）
- * ============================================================ */
-/* ============================================================
- * サムネイル連動ギャラリー（メイン＋サムネの2スライダー）
- * メインは1枚表示固定。サムネをクリックすると連動。loop/perView等は無効。
- * ============================================================ */
 const thumbVisible = (state) => Math.min(state.slideCount, 5);
 const swiperSlideList = (count) => Array.from({ length: count }, (_, i) => `      <div class="swiper-slide">${img(i)}</div>`).join("\n");
 const splideSlideList = (count) => Array.from({ length: count }, (_, i) => `        <li class="splide__slide">${img(i)}</li>`).join("\n");
 const slickSlideList = (count) => Array.from({ length: count }, (_, i) => `  <div>${img(i)}</div>`).join("\n");
 
-// プレビュー用の2スライダー（メイン＋サムネ）マークアップ
 export function galleryPreviewMarkup(name, state) {
   const c = state.slideCount;
   if (name === "swiper") {
@@ -288,8 +256,7 @@ export function thumbCode(name, state) {
   const per = thumbVisible(state);
   const fade = state.effect === "fade";
   const auto = state.autoplay;
-  const loop = state.loop; // ループON=最後のスライド後も一定方向に連続。OFF=端で停止
-  // Splide: 通常はtype:'loop'で連続。fadeはloop type不可なのでrewindで巡回させる
+  const loop = state.loop;
   const splideType = fade ? "fade" : loop ? "loop" : "slide";
   const splideRewind = fade && loop;
 
@@ -427,11 +394,6 @@ ${CMT.initJq}
   return "";
 }
 
-/* ============================================================
- * 無限スクロール（連続・マーキー）
- * 止まらず等速で流し続ける。エフェクト/通常autoplay/矢印/ドットは無効。
- * 速さは「遷移速度」スライダーに連動（値が大きいほど速い）。
- * ============================================================ */
 export const marqueeDuration = (state) => Math.min(20000, Math.max(1500, Math.round(2000000 / state.speed)));
 export const marqueeSplideSpeed = (state) => Math.min(5, Math.max(0.5, Math.round((state.speed / 300) * 10) / 10));
 
@@ -440,11 +402,9 @@ export function marqueeCode(name, state) {
   const per = state.perView;
   const gap = state.gap;
   const ms = marqueeDuration(state);
-  // 縦の無限スクロールはSwiper/Splideのみ対応（Slickは縦等速の品質が悪いため横で出力）
   const vertical = state.direction === "vertical";
 
   if (name === "swiper") {
-    // 縦はコンテナに高さが必要。画像は枠に合わせて切り抜く
     const verticalCss = vertical
       ? `\n  .my-slider { height: 16rem; }\n  .my-slider .swiper-slide img { display: block; width: 100%; height: 100%; object-fit: cover; }`
       : "";
@@ -475,7 +435,6 @@ ${CMT.init}
 
   if (name === "splide") {
     const sp = marqueeSplideSpeed(state);
-    // 縦はトラックに高さを与える（AutoScrollは縦方向にも対応）
     const directionOpt = vertical ? `\n    direction: 'ttb',\n    height: '16rem',` : "";
     return `${CMT.head}
 <link rel="stylesheet" href="${CDN.splide.css}" />

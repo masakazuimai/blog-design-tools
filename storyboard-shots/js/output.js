@@ -1,4 +1,3 @@
-// 書き出し：動画生成AI向けプロンプト・絵コンテPNG・video-scenario-maker 用JSON
 import { getShot, categoryName } from "./shots/index.js?v=20261030e";
 import { frameSvg, frameSvgWithPhoto } from "./frame.js?v=20261030e";
 import { vocabEn } from "./vocab.js?v=20261030e";
@@ -7,7 +6,6 @@ import { t } from "./i18n.js?v=20261030e";
 const sentence = (s) => (s ? `${s.replace(/[.\s]+$/, "")}.` : "");
 const camera = (v) => ["shot", "angle", "move"].map((k) => vocabEn(k, v[k])).filter(Boolean).join(", ");
 
-// 1ショット分のプロンプト
 export const shotPrompt = (shot, desc = shot.desc) => [
   sentence(desc),
   camera(shot.vocab) ? sentence(`Camera: ${camera(shot.vocab)}`) : "",
@@ -16,7 +14,6 @@ export const shotPrompt = (shot, desc = shot.desc) => [
 
 const fmt = (sec) => `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, "0")}`;
 
-// 絵コンテ全体を、時間つきの1本のプロンプトにする
 export const boardPrompt = (items) => {
   let t = 0;
   const lines = items.map((it, i) => {
@@ -33,7 +30,6 @@ export const boardPrompt = (items) => {
   ].join("\n");
 };
 
-// video-scenario-maker の「JSONを開く」で読み込める形
 export const scenarioJson = (items, title) => JSON.stringify({
   title,
   aspect: "16:9",
@@ -54,7 +50,6 @@ export const scenarioJson = (items, title) => JSON.stringify({
 
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-// 文字を指定幅で折り返す（SVG の text は自動で折り返さないため）。英文は単語の区切りで折る
 const wrap = (text, max) => {
   const tokens = /\s/.test(text) ? text.split(/(\s+)/) : [...text];
   const out = [];
@@ -71,7 +66,6 @@ const wrap = (text, max) => {
   return out.slice(0, 3);
 };
 
-// 写真を data URL にする（SVG を画像として描くと外部ファイルは読み込まれないため、埋め込む）
 const toDataUrl = async (url) => {
   const blob = await (await fetch(url)).blob();
   return new Promise((resolve, reject) => {
@@ -82,7 +76,6 @@ const toDataUrl = async (url) => {
   });
 };
 
-// 絵コンテのシート（3列）を1枚のSVGにする。PNG書き出しに使う
 export const sheetSvg = async (items) => {
   const photos = Object.fromEntries(await Promise.all(
     [...new Set(items.map((it) => getShot(it.id)).filter((s) => s.image).map((s) => s.image))]
@@ -106,7 +99,6 @@ export const sheetSvg = async (items) => {
     sec += it.dur;
     const attrs = `x="${x}" y="${y}" width="${CW}" height="${FH}"`;
     const frame = shot.image ? frameSvgWithPhoto(shot, photos[shot.image], attrs) : frameSvg(shot, { animate: false, attrs });
-    // 英文は1行約52字、日本語は全角なので約27字で折る
     const desc = wrap(it.desc, /\s/.test(it.desc) ? 52 : 27).map((l, k) => `<text x="${x}" y="${y + FH + 62 + k * 18}" font-size="14" fill="#555">${esc(l)}</text>`).join("");
     return `${frame}
 <text x="${x}" y="${y + FH + 26}" font-size="18" font-weight="700" fill="#111">${String(i + 1).padStart(2, "0")}${t("sheetSep")}${esc(shot.name)}</text>

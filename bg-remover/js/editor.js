@@ -1,13 +1,9 @@
-// 切り抜き結果を手動レタッチするモーダルエディタ
-// 消去ブラシ（被写体を減らす＝alpha→0）と復元ブラシ（元画像から塗り戻して被写体を増やす）を提供する
-// 画像はホイール／ピンチで拡大縮小でき、細かい箇所も精密にレタッチできる
-// runEditor(originalFile, cutoutBlob) → 編集済み透過PNGのBlob / キャンセル時は null
 
 import { t } from './i18n.js?v=20260614'
 
-const UNDO_LIMIT = 10 // やり直し履歴の上限（大きい画像のメモリ消費を抑えるため控えめにする）
-const MIN_ZOOM = 1 // 等倍（ステージにフィットした初期表示）が下限
-const MAX_ZOOM = 8 // これ以上は拡大しても精度が上がらないため上限とする
+const UNDO_LIMIT = 10
+const MIN_ZOOM = 1
+const MAX_ZOOM = 8
 
 export async function runEditor(originalFile, cutoutBlob) {
   const [originalBitmap, cutoutBitmap] = await Promise.all([
@@ -17,17 +13,14 @@ export async function runEditor(originalFile, cutoutBlob) {
   const width = cutoutBitmap.width
   const height = cutoutBitmap.height
 
-  // 復元ブラシ・自動選択用に、元画像を切り抜きと同じ解像度で保持する
   const originalCanvas = document.createElement('canvas')
   originalCanvas.width = width
   originalCanvas.height = height
   const originalCtx = originalCanvas.getContext('2d')
   originalCtx.drawImage(originalBitmap, 0, 0, width, height)
   originalBitmap.close()
-  // マジックワンド（色ベース自動選択）で毎回読み直さずに済むよう、元画像の画素を一度だけ取得しておく
   const originalData = originalCtx.getImageData(0, 0, width, height)
 
-  // 編集対象キャンバス（初期状態は切り抜き結果。出力もこれを使う）
   const canvas = document.createElement('canvas')
   canvas.width = width
   canvas.height = height
@@ -35,11 +28,8 @@ export async function runEditor(originalFile, cutoutBlob) {
   const ctx = canvas.getContext('2d')
   ctx.drawImage(cutoutBitmap, 0, 0)
   cutoutBitmap.close()
-  // 「AI結果に戻す」用に初期状態を保持する
   const initialImage = ctx.getImageData(0, 0, width, height)
 
-  // 復元モードのガイド表示用レイヤー（表示専用・出力には影響しない）
-  // ghost: 元画像を薄く全面表示（originalCanvasを流用） / tint: 現在の被写体を赤くなぞる
   originalCanvas.className = 'editor-layer editor-ghost'
   const tintCanvas = document.createElement('canvas')
   tintCanvas.width = width
@@ -53,21 +43,18 @@ export async function runEditor(originalFile, cutoutBlob) {
     document.body.style.overflow = 'hidden'
 
     const undoStack = []
-    let mode = 'erase' // 'erase' | 'restore'（消去＝alpha→0 / 復元＝元画像を塗り戻す）
-    let brushDisplay = 40 // 表示px基準のブラシ直径（実際の塗り半径は表示倍率に応じて換算）
+    let mode = 'erase'
+    let brushDisplay = 40
     let drawing = false
     let last = null
 
-    // 自動選択（マジックワンド）。ONのときクリック起点の同色連続領域を一括で消去/復元する
     let autoSelect = false
-    let tolerance = 30 // 0–100。色の近さの許容値（大きいほど広く選択する）
+    let tolerance = 30
 
-    // ズーム／パン状態。transformはui.surface（キャンバスラップ）に適用する
     let zoom = 1
     let panX = 0
     let panY = 0
-    // パン操作の状態。spaceHeld/panTool中、または中ボタンドラッグで画像を移動する
-    const pointers = new Map() // ピンチズーム用に現在押下中のポインタを保持
+    const pointers = new Map()
     let panning = false
     let panStart = null
     let pinch = null
@@ -82,12 +69,10 @@ export async function runEditor(originalFile, cutoutBlob) {
       resolve(result)
     }
 
-    // 表示倍率（キャンバスの実ピクセル / 画面表示ピクセル）。transformのスケールも自動で反映される
     function displayScale() {
       const rect = canvas.getBoundingClientRect()
       return canvas.width / rect.width
     }
-    // 画面座標 → キャンバス座標。getBoundingClientRectはtransform適用後の矩形を返すため拡大時も正しい
     function pointToCanvas(clientX, clientY) {
       const rect = canvas.getBoundingClientRect()
       return {
@@ -102,7 +87,6 @@ export async function runEditor(originalFile, cutoutBlob) {
       return (brushDisplay / 2) * displayScale()
     }
 
-    // --- ズーム／パン ---
     function clamp(v, lo, hi) {
       return Math.min(hi, Math.max(lo, v))
     }
@@ -114,7 +98,6 @@ export async function runEditor(originalFile, cutoutBlob) {
       ui.zoomOut.disabled = zoom <= MIN_ZOOM + 0.001
       ui.zoomIn.disabled = zoom >= MAX_ZOOM - 0.001
     }
-    // 画像が完全に画面外へ消えないよう、ステージ内に最低限重なるようパンを補正する
     function clampPan() {
       const s = ui.stage.getBoundingClientRect()
       const r = canvas.getBoundingClientRect()
@@ -131,7 +114,6 @@ export async function runEditor(originalFile, cutoutBlob) {
         applyTransform()
       }
     }
-    // 指定した画面座標の点を固定したまま倍率を変える（カーソル位置を中心にズーム）
     function zoomAt(clientX, clientY, target) {
       const next = clamp(target, MIN_ZOOM, MAX_ZOOM)
       if (Math.abs(next - zoom) < 0.0001) return
@@ -145,7 +127,6 @@ export async function runEditor(originalFile, cutoutBlob) {
         return
       }
       applyTransform()
-      // 倍率変更後、同じキャンバス点が画面上どこに来たかを測り、その分パンで引き戻す
       const rect = canvas.getBoundingClientRect()
       const screenX = rect.left + (p.x / canvas.width) * rect.width
       const screenY = rect.top + (p.y / canvas.height) * rect.height
@@ -162,7 +143,6 @@ export async function runEditor(originalFile, cutoutBlob) {
       applyTransform()
       clampPan()
     }
-    // ボタン操作時はステージ中央を基準に拡大縮小する
     function zoomByButton(factor) {
       const s = ui.stage.getBoundingClientRect()
       zoomAt(s.left + s.width / 2, s.top + s.height / 2, zoom * factor)
@@ -174,7 +154,6 @@ export async function runEditor(originalFile, cutoutBlob) {
       applyTransform()
       updateZoomLabel()
     }
-    // パン中／パン待機中はブラシリングを隠し、grab系カーソルに切り替える
     function updatePanCursor() {
       const ready = (panTool || spaceHeld) && !panning
       ui.surface.classList.toggle('pan-ready', ready)
@@ -195,7 +174,6 @@ export async function runEditor(originalFile, cutoutBlob) {
       if (mode === 'restore') renderTint()
     }
 
-    // 復元モードのガイド: 現在の被写体（alpha>0の領域）を赤くなぞる
     function renderTint() {
       tintCtx.clearRect(0, 0, width, height)
       tintCtx.globalCompositeOperation = 'source-over'
@@ -205,7 +183,6 @@ export async function runEditor(originalFile, cutoutBlob) {
       tintCtx.fillRect(0, 0, width, height)
       tintCtx.globalCompositeOperation = 'source-over'
     }
-    // 描画中はフレーム単位に間引いてガイドを更新する（大画像での負荷を抑える）
     let overlayRaf = 0
     function scheduleOverlay() {
       if (mode !== 'restore' || overlayRaf) return
@@ -215,7 +192,6 @@ export async function runEditor(originalFile, cutoutBlob) {
       })
     }
 
-    // ブラシの1スタンプ。消去はalphaを削り、復元は元画像を円内にだけ描き戻す
     function stamp(x, y, r) {
       if (mode === 'erase') {
         ctx.globalCompositeOperation = 'destination-out'
@@ -232,7 +208,6 @@ export async function runEditor(originalFile, cutoutBlob) {
         ctx.restore()
       }
     }
-    // 直線補間で連続スタンプし、速い動きでも隙間ができないようにする
     function strokeTo(p) {
       const r = brushRadius()
       if (!last) {
@@ -250,13 +225,10 @@ export async function runEditor(originalFile, cutoutBlob) {
       last = p
     }
 
-    // --- 自動選択（マジックワンド） ---
-    // 許容値(0–100)を色距離の二乗しきい値に変換する。sqrtを避けるため二乗で比較する
     function toleranceThreshold() {
-      const dist = tolerance * 1.6 // 0–160（RGBユークリッド距離）
+      const dist = tolerance * 1.6
       return dist * dist
     }
-    // クリック点と色が近い連続領域を元画像から塗り広げ、選択マスク(Uint8Array)を返す
     function buildWandMask(seedX, seedY) {
       const sx = Math.floor(seedX)
       const sy = Math.floor(seedY)
@@ -291,7 +263,6 @@ export async function runEditor(originalFile, cutoutBlob) {
       }
       return mask
     }
-    // 選択マスクに現在の方向（消去/復元）を適用する
     function applyMask(mask) {
       const work = ctx.getImageData(0, 0, width, height)
       const wd = work.data
@@ -313,7 +284,6 @@ export async function runEditor(originalFile, cutoutBlob) {
       }
       ctx.putImageData(work, 0, 0)
     }
-    // クリック位置で自動選択を実行し、結果を反映する
     function autoSelectAt(ev) {
       const p = toCanvasPoint(ev)
       const mask = buildWandMask(p.x, p.y)
@@ -342,14 +312,12 @@ export async function runEditor(originalFile, cutoutBlob) {
       try {
         ui.surface.setPointerCapture(ev.pointerId)
       } catch {
-        // ポインタ捕捉に失敗してもパンは続行する
       }
     }
 
     ui.surface.addEventListener('pointerdown', (ev) => {
       pointers.set(ev.pointerId, { x: ev.clientX, y: ev.clientY })
 
-      // 2本指タッチ → ピンチズーム開始（描画はキャンセル）
       if (ev.pointerType === 'touch' && pointers.size === 2) {
         drawing = false
         last = null
@@ -360,7 +328,6 @@ export async function runEditor(originalFile, cutoutBlob) {
       }
       if (pinch) return
 
-      // 中ボタン / Space / 手のひらツール → 画像移動
       if (ev.button === 1 || spaceHeld || panTool) {
         ev.preventDefault()
         startPan(ev)
@@ -368,18 +335,15 @@ export async function runEditor(originalFile, cutoutBlob) {
       }
       if (ev.pointerType !== 'touch' && ev.button !== 0) return
 
-      // 自動選択モード: クリック1点で領域を選び、消去/復元を一括適用（ドラッグ描画はしない）
       if (autoSelect) {
         autoSelectAt(ev)
         return
       }
 
-      // ブラシ描画
       drawing = true
       try {
         ui.surface.setPointerCapture(ev.pointerId)
       } catch {
-        // 一部環境（合成イベント等）でポインタ捕捉に失敗しても描画は続行する
       }
       pushUndo()
       last = null
@@ -389,7 +353,6 @@ export async function runEditor(originalFile, cutoutBlob) {
     ui.surface.addEventListener('pointermove', (ev) => {
       if (pointers.has(ev.pointerId)) pointers.set(ev.pointerId, { x: ev.clientX, y: ev.clientY })
 
-      // ピンチズーム中: 2点の距離変化で倍率、中点を基準にズーム＋パン
       if (pinch && pointers.size >= 2) {
         const pts = [...pointers.values()]
         const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y)
@@ -428,7 +391,6 @@ export async function runEditor(originalFile, cutoutBlob) {
       ui.cursor.hidden = true
     })
 
-    // ホイールでカーソル位置を中心にズーム
     ui.stage.addEventListener(
       'wheel',
       (ev) => {
@@ -459,7 +421,6 @@ export async function runEditor(originalFile, cutoutBlob) {
       autoSelect = !autoSelect
       ui.autoBtn.classList.toggle('active', autoSelect)
       ui.surface.classList.toggle('auto-mode', autoSelect)
-      // ブラシ太さは自動選択時は不要、代わりに許容値スライダーを出す
       ui.sizeWrap.hidden = autoSelect
       ui.tolWrap.hidden = !autoSelect
       ui.cursor.hidden = true
@@ -559,8 +520,6 @@ const HAND_ICON =
   '<path d="M10 10.5V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v8"/>' +
   '<path d="M18 8a2 2 0 0 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>'
 
-// モーダルのDOMを構築し、制御に必要な要素参照を返す
-// layers: { work, ghost, tint } の3キャンバスを重ねて表示する
 function buildEditorDom(layers) {
   const root = document.createElement('div')
   root.className = 'editor-modal'
@@ -584,7 +543,6 @@ function buildEditorDom(layers) {
   modes.append(modeErase, modeRestore)
   toolbar.appendChild(modes)
 
-  // 自動選択（マジックワンド）。消去/復元の「方向」とは別軸の入力方法なので区切って配置する
   const tools = document.createElement('div')
   tools.className = 'editor-tools'
   const autoBtn = makeToolButton(WAND_ICON, t.editorAutoSelect)
@@ -604,7 +562,6 @@ function buildEditorDom(layers) {
   sizeWrap.append(sizeLabel, size, sizeValue)
   toolbar.appendChild(sizeWrap)
 
-  // 許容値スライダー（自動選択モードのときだけ表示）
   const tolWrap = document.createElement('label')
   tolWrap.className = 'editor-size'
   tolWrap.hidden = true
@@ -619,7 +576,6 @@ function buildEditorDom(layers) {
   tolWrap.append(tolLabel, tol, tolValue)
   toolbar.appendChild(tolWrap)
 
-  // ズーム操作（− / 倍率%（クリックで等倍に戻す） / ＋ / 手のひら）
   const zoomWrap = document.createElement('div')
   zoomWrap.className = 'editor-zoom'
   const zoomOut = makeZoomButton('−', t.editorZoomOut)
@@ -646,7 +602,6 @@ function buildEditorDom(layers) {
   stage.className = 'editor-stage'
   const wrap = document.createElement('div')
   wrap.className = 'editor-canvas-wrap'
-  // ghost(背面) → work → tint(前面) の順で重ねる。workが在席してラップの寸法を決める
   wrap.append(layers.ghost, layers.work, layers.tint)
   stage.appendChild(wrap)
   panel.appendChild(stage)
@@ -656,7 +611,6 @@ function buildEditorDom(layers) {
   hint.textContent = t.editorHint
   panel.appendChild(hint)
 
-  // ブラシ位置を示すリング（画面全体に対する固定配置のためroot直下に置く）
   const cursor = document.createElement('div')
   cursor.className = 'editor-cursor'
   cursor.hidden = true

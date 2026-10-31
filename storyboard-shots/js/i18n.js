@@ -1,4 +1,3 @@
-// UI文言の辞書。<html lang> で日本語／英語を切り替える（/ と /en/ で同じJSを共有）
 export const LANG = typeof document !== "undefined" && document.documentElement.lang === "en" ? "en" : "ja";
 
 const STR = {

@@ -1,4 +1,3 @@
-// 状態管理・ライブプレビュー・出力束ね
 import { DEFAULT_PARAMS, SHAPE_PRESETS, buildDisplacementMap, buildFilterSvg, buildGlassCss } from "./glass.js?v=20260619b";
 import { generateSnippet } from "./export.js?v=20260619b";
 import { I18N, getLang } from "./i18n.js?v=20260619b";
@@ -15,13 +14,11 @@ const previewEl = $("#lg-preview");
 const outHtml = $("#output-html");
 const outCss = $("#output-css");
 
-// ライブ屈折はChromium(Chrome/Edge)のみ。UAで判定し注記を出す。
 function isRefractionSupported() {
   const ua = navigator.userAgent;
   return /chrome|chromium|crios|edg/i.test(ua) && !/firefox|fxios/i.test(ua);
 }
 
-// 中核: マップ再生成 → フィルタ注入 → プレビュー適用 → 出力更新
 function updateAll() {
   const mapDataUri = buildDisplacementMap(state);
   filterHost.innerHTML = buildFilterSvg(PREVIEW_FILTER_ID, state, mapDataUri);
@@ -51,7 +48,6 @@ function syncOutput() {
   outCss.value = css;
 }
 
-// ===== コントロール束ね =====
 function bindParams() {
   document.querySelectorAll("[data-param]").forEach((el) => {
     const key = el.dataset.param;
@@ -93,7 +89,6 @@ function bindBackgrounds() {
   });
 }
 
-// shapeプリセット適用後、スライダーUIを状態に同期
 function syncSliders() {
   document.querySelectorAll("input[type=range][data-param]").forEach((el) => {
     const key = el.dataset.param;
@@ -130,7 +125,6 @@ function initSupportNotice() {
 }
 
 function init() {
-  // 初期スライダー値を状態へ反映
   document.querySelectorAll("input[type=range][data-param], input[type=color][data-param], input[type=text][data-param]").forEach((el) => {
     const key = el.dataset.param;
     if (state[key] === undefined) return;

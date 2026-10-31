@@ -1,11 +1,9 @@
 "use strict";
 
-// ?v= はキャッシュバスティング用。js更新時は index.html・en/index.html の参照とここを揃えて上げる
 import { t, lang, TEXT_EN } from "./i18n.js?v=20260725b";
 import { ICON_EFFECTS, ICON_CATEGORIES } from "./icons/index.js?v=20260725b";
 import { PANEL_EFFECTS, PANEL_CATEGORIES } from "./panels/index.js?v=20260725b";
 
-// デフォルトのアクセント色（エフェクト定義内のリテラルと一致させる）
 const DEFAULT_ACCENT = "#6366f1";
 const DEFAULT_SUB = "#ec4899";
 const DEFAULT_ACCENT_RGB = "99,102,241";
@@ -41,14 +39,11 @@ let mode = "icon";
 let activeCat = "all";
 let selected = null;
 
-// ---- 色の置換 ----
-// #rrggbb → "r,g,b"（rgba() 内の置換用）
 function hexToRgb(hex) {
   const n = parseInt(hex.slice(1), 16);
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255].join(",");
 }
 
-// エフェクト定義内のデフォルト色を現在の設定色に置き換える
 function applyColors(cssText) {
   return cssText
     .replaceAll(DEFAULT_ACCENT, accent)
@@ -57,7 +52,6 @@ function applyColors(cssText) {
     .replaceAll(DEFAULT_SUB_RGB, hexToRgb(sub));
 }
 
-// ---- 設定の永続化 ----
 function saveSettings() {
   try {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify({ accent, sub }));
@@ -98,8 +92,6 @@ function syncColorInputs() {
   els.subVal.textContent = sub;
 }
 
-// ---- エフェクトCSSの注入 ----
-// 全エフェクトのCSSを1つの<style>にまとめて注入する（色変更時は差し替え）
 let styleEl = null;
 function injectStyles() {
   if (!styleEl) {
@@ -109,8 +101,6 @@ function injectStyles() {
   styleEl.textContent = applyColors(ALL_EFFECTS.map((e) => e.css.join("\n")).join("\n"));
 }
 
-// ---- コード生成・コピー ----
-// enページでは定義内の日本語（CSSコメント・aria-label・本文サンプル）を英語へ差し替える
 function localize(text) {
   if (lang !== "en") return text;
   for (const [ja, en] of Object.entries(TEXT_EN)) {
@@ -119,12 +109,10 @@ function localize(text) {
   return text;
 }
 
-// 開閉を切り替えるボタンのセレクタ（アイコンはボタン自身、開閉パターンは __btn）
 function buttonSelector(effect) {
   return effect.mode === "icon" ? "." + effect.key : "." + effect.key + "__btn";
 }
 
-// 開閉パターンは入れ子が深いので、コピー時だけ改行を入れて読みやすくする
 function formatHtml(html) {
   if (!html.startsWith("<div")) return html;
   return html
@@ -177,7 +165,6 @@ async function copyText(text, btn, label) {
   }
 }
 
-// ---- 選択とプレビュー ----
 function markSelected(el) {
   document.querySelectorAll(".card.selected").forEach((n) => n.classList.remove("selected"));
   if (el) el.classList.add("selected");
@@ -194,7 +181,6 @@ function selectEffect(effect, card) {
   updatePreview();
 }
 
-// ---- 開閉トグル ----
 function toggleButton(btn) {
   btn.setAttribute("aria-expanded", btn.getAttribute("aria-expanded") !== "true" ? "true" : "false");
 }
@@ -205,7 +191,6 @@ function closeAll() {
   showToast(t.closedAll);
 }
 
-// ---- タブ・フィルタ・グリッド ----
 function renderModeTabs() {
   els.modeTabs.innerHTML = "";
   for (const key of ["icon", "panel"]) {
@@ -243,8 +228,6 @@ function renderFilters() {
   }
 }
 
-// 開閉パターンのデモ枠。transform を持つ祖先は position: fixed の基準になるため、
-// コピーコードを fixed のまま（＝実サイト用そのまま）にしてもカード内に収まる
 function panelViewport(effect) {
   return (
     '<div class="viewport">' +
@@ -279,7 +262,6 @@ function renderGrid() {
 
     const info = document.createElement("div");
     info.className = "card-info";
-    // 1段目＝タグ＋タイトル、2段目＝コピーボタン
     const meta = document.createElement("div");
     meta.className = "card-meta";
     const cat = document.createElement("span");
@@ -307,7 +289,6 @@ function renderGrid() {
   }
 }
 
-// ---- イベント ----
 els.accentColor.addEventListener("input", () => {
   accent = els.accentColor.value;
   els.accentVal.textContent = accent;
@@ -328,7 +309,6 @@ els.copyPreview.addEventListener("click", (event) => {
   if (selected) copyText(buildCode(selected), event.currentTarget, t.labelCode);
 });
 
-// ---- 初期化 ----
 restoreSettings();
 syncColorInputs();
 injectStyles();

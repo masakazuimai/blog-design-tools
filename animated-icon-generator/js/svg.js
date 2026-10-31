@@ -1,11 +1,8 @@
-// アイコン定義から SVG を組み立てる
-// 画面表示用は DOM要素、ダウンロード用は整形済みの文字列を返す（属性の作り方は共有する）
 
 import { buildInlineCss } from "./anim.js?v=20260815c";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 
-// 全アイコン共通のルート属性
 const ROOT_ATTRS = {
   viewBox: "0 0 24 24",
   fill: "none",
@@ -14,10 +11,6 @@ const ROOT_ATTRS = {
   "stroke-linejoin": "round",
 };
 
-// パーツの最終的な属性（アニメ対象は p-<part> クラスで参照できるようにする）
-//
-// animAttrs はアニメーションの下地としてのみ必要な属性（pathLength や stroke-dasharray）。
-// 静止版に混ぜると意味のない指定がファイルに残るため、アニメ版のときだけ合成する。
 function partAttrs(part, animated) {
   return {
     ...part.attrs,
@@ -36,7 +29,6 @@ function attrsToString(attrs) {
     .join("");
 }
 
-// 画面表示用。色は currentColor のままにしておき、CSS側の変数で切り替える
 export function createIconSvg(icon, { size, color = "currentColor" } = {}) {
   const svg = document.createElementNS(SVG_NS, "svg");
   const attrs = { ...ROOT_ATTRS, stroke: color };
@@ -46,13 +38,11 @@ export function createIconSvg(icon, { size, color = "currentColor" } = {}) {
   }
   Object.keys(attrs).forEach((name) => svg.setAttribute(name, attrs[name]));
 
-  // 画面上のアイコンは常にアニメーションを適用しうるため animAttrs を含める
   icon.parts.forEach((part) => svg.appendChild(createPartNode(part, true)));
 
   return svg;
 }
 
-// パーツを1つ作る。children を持つ場合（defs / clipPath / g）は入れ子で作る
 function createPartNode(part, animated) {
   const el = document.createElementNS(SVG_NS, part.tag);
   const attrs = partAttrs(part, animated);
@@ -61,7 +51,6 @@ function createPartNode(part, animated) {
   return el;
 }
 
-// 文字列側も同じ構造で組み立てる（indent はファイルの読みやすさ用）
 function partToLines(part, animated, indent) {
   const pad = "  ".repeat(indent);
   const attrs = attrsToString(partAttrs(part, animated));
@@ -74,14 +63,7 @@ function partToLines(part, animated, indent) {
   ];
 }
 
-// ダウンロード用のSVGファイル本文
-//
-// animated: true にすると @keyframes を <style> としてファイル内に埋め込む。
-// 外部参照もスクリプトも含まない自己完結ファイルになるため、<img src="icon.svg"> でもそのまま動く。
-// animated: false は parts だけの「アニメ適用前の完成形」＝静止版。
 export function buildSvgFile(icon, { size, color, animated = false, speed = 1, loop = "infinite" } = {}) {
-  // 塗りつぶしを持つパーツが fill="currentColor" を解決できるよう、ルートに color も置く
-  // （画面表示側は CSS の color で色を与えるため createIconSvg では不要）
   const attrs = { xmlns: SVG_NS, ...ROOT_ATTRS, stroke: color, color, width: size, height: size };
   const lines = [`<svg${attrsToString(attrs)}>`];
 

@@ -1,5 +1,3 @@
-// UI文字列の多言語辞書。<html lang> で言語を切り替える
-// 文字列をこの1ファイルに集約し、/ と /en/ で同じJSを共有する（重複コードを避けるため）
 
 const dict = {
   ja: {
@@ -21,7 +19,6 @@ const dict = {
     statusCutting: 'AIが切り抜き中…',
     download: 'ダウンロード',
     summary: (count) => `<strong>${count}枚</strong>の背景を透過にしました`,
-    // エディタ
     editorErase: '消去',
     editorRestore: '復元',
     editorAutoSelect: '自動選択',
@@ -58,7 +55,6 @@ const dict = {
     download: 'Download',
     summary: (count) =>
       `Removed the background from <strong>${count}</strong> ${count === 1 ? 'image' : 'images'}`,
-    // editor
     editorErase: 'Erase',
     editorRestore: 'Restore',
     editorAutoSelect: 'Auto-select',

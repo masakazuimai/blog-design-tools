@@ -1,17 +1,16 @@
-// アプリの状態。更新は必ず新しいオブジェクトで置き換え、購読者（描画）へ通知する
 import { saveBackup } from './backup.js?v=20261003b';
 
 const initial = {
-  questions: null,   // null＝未読み込み。配列＝問題集を開いている
-  fileName: '',      // 例：色彩の勉強.csv（未保存の新規は空）
-  handle: null,      // File System Access API のハンドル
-  dirty: false,      // 未保存の変更あり
-  view: 'start',     // start | home | edit | quiz | result
-  editId: null,      // 編集中の問題ID。'new' は新規追加
-  addedCount: 0,     // 新規追加画面で今回追加した数
+  questions: null,
+  fileName: '',
+  handle: null,
+  dirty: false,
+  view: 'start',
+  editId: null,
+  addedCount: 0,
   search: '',
-  quiz: null,        // 出題セッション
-  result: null,      // 直近の結果
+  quiz: null,
+  result: null,
 };
 
 let state = initial;
@@ -50,7 +49,6 @@ export function setState(patch) {
   listeners.forEach(fn => fn(state, prev));
 }
 
-// 問題の配列を差し替え、未保存フラグを立てる
 export function updateQuestions(updater) {
   setState({ questions: updater(state.questions || []), dirty: true });
 }

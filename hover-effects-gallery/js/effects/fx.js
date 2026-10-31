@@ -1,4 +1,3 @@
-// エフェクト系ホバーエフェクト（8種）
 
 export const FX_EFFECTS = [
   {

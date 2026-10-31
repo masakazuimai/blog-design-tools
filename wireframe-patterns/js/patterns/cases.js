@@ -1,4 +1,3 @@
-// 導入事例・お客様の声のパターン
 const VOICE = (n) => `<li class="wf-box cs01__card">
         <p class="cs01__quote">「お客様の声が入ります。導入して何が変わったのかを、具体的な言葉で書きます。」</p>
         <div class="cs01__who"><span class="wf-avatar"></span><p class="wf-text">会社名・役職<br>氏名${n}</p></div>

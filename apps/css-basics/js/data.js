@@ -1,6 +1,3 @@
-// 問題データ（Q1-5は記事版 id751 と同期・Q6-24はアプリ限定ドリル）
-// stageHtml: プレビューに描画する固定HTML／starter・answer: エディタに書くCSS
-// preferSp: 既定でSP幅（375px）プレビューにする問題（メディアクエリ等）
 const PROBLEMS = [
   {"id": 1, "title": "テキストの色を変える", "questionHtml": "<code>.text</code> の文字色を<strong>青</strong>にしてください。色は色名・16進数（<code>#0000ff</code>）・<code>rgb()</code> のどれでも指定できます。", "stageHtml": "<div class=\"text\">CSSで色を変えてみよう！</div>", "starter": ".text {\n  \n}\n", "answer": ".text {\n  color: blue;\n}\n"},
   {"id": 2, "title": "背景色と大きさ", "questionHtml": "<code>.box</code> の背景色を<strong>薄いグレー（#f0f0f0）</strong>にし、幅と高さをそれぞれ <strong>100px</strong> にしてください。", "stageHtml": "<div class=\"box\">ボックスのスタイルを変更しよう！</div>", "starter": ".box {\n  \n}\n", "answer": ".box {\n  background-color: #f0f0f0;\n  width: 100px;\n  height: 100px;\n}\n"},

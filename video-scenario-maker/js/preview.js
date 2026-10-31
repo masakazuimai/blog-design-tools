@@ -1,4 +1,3 @@
-// プレビュー再生：画像＋字幕＋BGMを秒数どおりに流す
 import { withTimes, totalDuration } from "./store.js?v=20261025b";
 import { fmtTime } from "./prompt.js?v=20261025b";
 import { MOVES } from "./vocab.js?v=20261025b";
@@ -6,13 +5,11 @@ import { T, label } from "./i18n.js?v=20261025b";
 
 const FADE_SEC = 0.5;
 
-// カメラの動きの見本（Blenderの粘土風ループ）。画像がまだ無いシーンだけ枠に仮表示する
 const DEMO_MOVES = new Set(["pan", "tilt", "in", "out", "track", "orbit", "hand", "drone"]);
 const DEMO_VER = "20261024a";
 const demoUrl = (file) => new URL(`../video/${file}?v=${DEMO_VER}`, import.meta.url).href;
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-// Blob → objectURL を使い回す（同じBlobに何度もURLを発行しない）
 const urls = new WeakMap();
 export const blobUrl = (blob) => {
   if (!blob) return "";
@@ -37,7 +34,6 @@ export const createPlayer = (el, { onScene, onTime } = {}) => {
     return i < 0 ? scenes.length - 1 : i;
   };
 
-  // move が空なら見本を隠す。同じ動きのまま次のシーンへ移った時は読み込み直さない
   const showDemo = (move) => {
     const v = el.demo;
     el.demoTag.hidden = !move;
@@ -49,7 +45,6 @@ export const createPlayer = (el, { onScene, onTime } = {}) => {
     if (v.dataset.move !== move) {
       v.dataset.move = move;
       v.poster = demoUrl(`move-${move}-poster.webp`);
-      // Safari 等で webm が再生できない場合に備えて mp4 も並べる
       v.innerHTML = `<source src="${demoUrl(`move-${move}.webm`)}" type="video/webm"><source src="${demoUrl(`move-${move}.mp4`)}" type="video/mp4">`;
       v.load();
       el.demoTag.textContent = T.moveDemo(label(MOVES.find((m) => m.v === move)));
@@ -85,7 +80,6 @@ export const createPlayer = (el, { onScene, onTime } = {}) => {
       el.speaker.hidden = !s.speaker;
       onScene?.(s.id);
     }
-    // フェード／ディゾルブ指定のシーンは終わり際に暗転させる（最後のシーンは除く）
     const remain = s.end - time;
     const fades = s.trans !== "cut" && i < scenes.length - 1 && remain < FADE_SEC;
     el.frame.style.opacity = fades ? String(Math.max(0, remain / FADE_SEC)) : "1";
@@ -146,7 +140,6 @@ export const createPlayer = (el, { onScene, onTime } = {}) => {
 
   el.play.addEventListener("click", () => (playing ? pause() : play()));
   el.toStart.addEventListener("click", () => seek(0));
-  // スペースキーで再生／停止（入力欄での操作は除く）
   document.addEventListener("keydown", (e) => {
     if (e.code !== "Space" || e.target.closest("input, textarea, select, button, [contenteditable]")) return;
     e.preventDefault();

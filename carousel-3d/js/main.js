@@ -1,8 +1,3 @@
-/*
- * 3Dカルーセル ジェネレーター – タイプ切替・UI配線・GSAPコード生成（CodeQuest.work）
- * テンプレート1=メリーゴーランド / 2=縦回転 / 3=カードスタック / 4=フラワー / 5=キューブ / 6=観覧車。各タイプが自分の
- * プレビュー・設定項目・生成コードを内包し、main.js は切替と配線だけを担う。
- */
 import { merryType } from "./types/merry.js?v=20260710a";
 import { cardStackType } from "./types/cardstack.js?v=20260710a";
 import { vRingType } from "./types/vring.js?v=20260710a";
@@ -13,7 +8,6 @@ import { orbitType } from "./types/orbit.js?v=20260710a";
 const TYPES = [merryType, vRingType, cardStackType, flowerType, cubeType, orbitType];
 const IS_EN = document.documentElement.lang === "en";
 
-// --- 要素参照 ----------------------------------------------------------
 const host = document.getElementById("host");
 const ctrlWrap = document.getElementById("ctrlWrap");
 const tplGrid = document.getElementById("tplGrid");
@@ -23,7 +17,6 @@ const codeMeta = document.getElementById("codeMeta");
 const copyBtn = document.getElementById("copyBtn");
 const preview = document.querySelector(".preview");
 
-// --- 状態 --------------------------------------------------------------
 let type = TYPES[0];
 let state = defaultsOf(type);
 let autoOn = true;
@@ -43,7 +36,6 @@ function autoText() {
   return IS_EN ? `${label}: ${autoOn ? "ON" : "OFF"}` : `${label}：${autoOn ? "ON" : "OFF"}`;
 }
 
-// --- 設定スライダーを現タイプに合わせて構築 --------------------------------
 function buildSliders() {
   ctrlWrap.innerHTML = "";
   sliders = {};
@@ -70,7 +62,6 @@ function buildSliders() {
   });
 }
 
-// --- タイプ切替 ---------------------------------------------------------
 function mountType() {
   if (instance) instance.destroy();
   instance = type.mount(host, state, autoOn);
@@ -88,13 +79,11 @@ function switchType(t) {
   renderCode();
 }
 
-// --- コード生成 --------------------------------------------------------
 function renderCode() {
   codeMeta.textContent = type.meta(state, autoOn);
   codeOut.textContent = type.fullCode(state, autoOn, IS_EN);
 }
 
-// --- stateをスライダーDOM・プレビュー・コードへ反映 ------------------------
 function syncFromState() {
   type.fields.forEach((f) => {
     sliders[f.key].value = state[f.key];
@@ -104,7 +93,6 @@ function syncFromState() {
   renderCode();
 }
 
-// 初期値へ確定リセット（フォーム値復元対策。下の guardedReset から呼ぶ）
 function resetToDefaults() {
   state = defaultsOf(type);
   syncFromState();
@@ -114,7 +102,6 @@ function guardedReset() {
   if (!userTouched) resetToDefaults();
 }
 
-// --- タイプボタン（テンプレート） ----------------------------------------
 TYPES.forEach((t, idx) => {
   const btn = document.createElement("button");
   btn.type = "button";
@@ -129,7 +116,6 @@ TYPES.forEach((t, idx) => {
   if (idx === 0) btn.classList.add("is-active");
 });
 
-// --- 自動再生トグル -----------------------------------------------------
 autoBtn.addEventListener("click", () => {
   userTouched = true;
   autoOn = !autoOn;
@@ -139,7 +125,6 @@ autoBtn.addEventListener("click", () => {
   renderCode();
 });
 
-// --- 背景トグル（プレビューのみ・コードには含めない） ------------------------
 document.querySelectorAll(".bg-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".bg-btn").forEach((b) => b.classList.remove("is-active"));
@@ -148,7 +133,6 @@ document.querySelectorAll(".bg-btn").forEach((btn) => {
   });
 });
 
-// --- コピー -------------------------------------------------------------
 copyBtn.addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(codeOut.textContent);
@@ -167,19 +151,14 @@ copyBtn.addEventListener("click", async () => {
   }
 });
 
-// ユーザーが実際に触ったか（ポインタ/キー操作のみ。フォーム値復元のinputは
-// ポインタ非経由なので誤検出しない）。
 document.querySelector(".c3-sidebar").addEventListener("pointerdown", () => (userTouched = true));
 document.querySelector(".c3-sidebar").addEventListener("keydown", () => (userTouched = true));
 
-// --- 初期化 ------------------------------------------------------------
 buildSliders();
 mountType();
 autoBtn.textContent = autoText();
 renderCode();
 
-// 復元（bfcache/ソフトリロード）は不定タイミングでinputを発火させスライダーを化けさせるため、
-// 未操作の間は load 後に複数回 初期値で確定し直す。
 window.addEventListener("load", () => {
   requestAnimationFrame(guardedReset);
   setTimeout(guardedReset, 350);

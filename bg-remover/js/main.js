@@ -1,6 +1,4 @@
-// エントリーポイント: ファイル選択・AIモデル準備・切り抜きパイプラインの実行
 
-// import先の ?v= はキャッシュバスティング用（サーバーがjsを7日キャッシュするため）。各ファイル更新時に日付を上げる
 import { preloadModel, cutoutSubject } from './cutout.js?v=20260614'
 import { renderResults, renderSummary } from './ui.js?v=20260614'
 import { downloadBlob, downloadZip } from './download.js?v=20260629'
@@ -26,10 +24,9 @@ const dom = {
   zipButton: document.getElementById('zip-button'),
 }
 
-let selectedFiles = [] // {file, url} の配列（urlはプレビュー用Object URL）
+let selectedFiles = []
 let results = []
 let preloadStarted = false
-// entry → { status, blob, url, showing } の切り抜きプレビューキャッシュ。本処理でも再利用する
 const cutoutCache = new Map()
 
 function init() {
@@ -68,7 +65,6 @@ function bindSettings() {
   })
   document.querySelectorAll('input[name="format"]').forEach((radio) => {
     radio.addEventListener('change', () => {
-      // 品質スライダーはWebP/JPG出力時のみ意味を持つ（PNGは可逆圧縮）
       dom.qualityRow.hidden = radio.value === 'png'
     })
   })
@@ -83,7 +79,6 @@ function addFiles(files) {
   startPreload()
 }
 
-// 最初のファイル選択をきっかけにAIモデルを先読みし、実行時の待ち時間を隠す
 async function startPreload() {
   if (preloadStarted) return
   preloadStarted = true
@@ -122,8 +117,6 @@ function removeFile(index) {
   renderDropPreviews()
 }
 
-// その1枚だけAI切り抜きを実行してキャッシュする。生成済みなら即返す
-// 戻り値: done状態オブジェクト / 生成失敗・並行実行中・生成中に削除された場合は null
 async function ensureCutout(entry) {
   const current = cutoutCache.get(entry)
   if (current?.status === 'done') return current
@@ -132,9 +125,7 @@ async function ensureCutout(entry) {
   cutoutCache.set(entry, { status: 'loading', blob: null, url: null, showing: false })
   renderDropPreviews()
   try {
-    // 進捗ハンドラは渡さない（モデル準備表示を切り抜きプレビューで上書きしないため）
     const blob = await cutoutSubject(entry.file)
-    // 生成中に削除された場合はObject URLを作らず破棄する
     if (!selectedFiles.includes(entry)) return null
     const state = { status: 'done', blob, url: URL.createObjectURL(blob), showing: true }
     cutoutCache.set(entry, state)
@@ -150,8 +141,6 @@ async function ensureCutout(entry) {
   }
 }
 
-// サムネ単位でAI切り抜きプレビューを生成・切り替えする
-// 未生成: 切り抜いて被写体プレビューを表示 / 生成済み: 元画像との表示トグル
 async function togglePreview(entry) {
   const current = cutoutCache.get(entry)
   if (current?.status === 'done') {
@@ -162,15 +151,13 @@ async function togglePreview(entry) {
   await ensureCutout(entry)
 }
 
-// 切り抜き結果を手動レタッチ（被写体の増減）するモーダルエディタを開く
 async function openEditor(entry) {
   const state = (await ensureCutout(entry)) ?? cutoutCache.get(entry)
   if (state?.status !== 'done') return
 
   const editedBlob = await runEditor(entry.file, state.blob)
-  if (!editedBlob) return // キャンセル
+  if (!editedBlob) return
 
-  // 生成中の待機などで削除されていないか確認してから差し替える
   if (!selectedFiles.includes(entry)) return
   const old = cutoutCache.get(entry)
   if (old?.url) URL.revokeObjectURL(old.url)
@@ -183,7 +170,6 @@ async function openEditor(entry) {
   renderDropPreviews()
 }
 
-// ドロップゾーン内に選択済みファイルのサムネイルを表示する
 function renderDropPreviews() {
   const hasFiles = selectedFiles.length > 0
   dom.dropZone.classList.toggle('has-files', hasFiles)
@@ -226,7 +212,6 @@ function buildPreviewTile(entry, index) {
   img.title = entry.file.name
   tile.appendChild(img)
 
-  // 生成済みなら、ホバー中だけ切り抜きを即表示する（クリックでの固定表示とは別）
   if (state?.status === 'done') {
     tile.addEventListener('mouseenter', () => {
       img.src = state.url
@@ -320,7 +305,6 @@ async function runPipeline() {
   }))
   refreshView()
 
-  // AI推論はメモリ消費が大きいため、並列にせず1枚ずつ処理する
   for (let i = 0; i < selectedFiles.length; i += 1) {
     const result = await processFile(selectedFiles[i], settings)
     results = results.map((r, j) => (j === i ? result : r))
@@ -334,7 +318,6 @@ async function runPipeline() {
 async function processFile(entry, settings) {
   const { file } = entry
   try {
-    // プレビューで生成済みの切り抜きがあれば再利用し、再推論を省く
     const cached = cutoutCache.get(entry)
     const pngBlob =
       cached?.status === 'done' && cached.blob
@@ -358,7 +341,6 @@ async function processFile(entry, settings) {
   }
 }
 
-// 切り抜き結果（透過PNG）を選択された出力形式に変換する
 async function finalizeOutput(pngBlob, settings) {
   const bitmap = await createImageBitmap(pngBlob)
   const { width, height } = bitmap
@@ -372,7 +354,6 @@ async function finalizeOutput(pngBlob, settings) {
   canvas.width = width
   canvas.height = height
   const ctx = canvas.getContext('2d')
-  // JPGは透過を持てないため白で下塗りする
   if (settings.format === 'jpeg') {
     ctx.fillStyle = '#ffffff'
     ctx.fillRect(0, 0, width, height)
@@ -382,7 +363,6 @@ async function finalizeOutput(pngBlob, settings) {
 
   const mimeType = settings.format === 'jpeg' ? 'image/jpeg' : 'image/webp'
   const blob = await canvasToBlob(canvas, mimeType, settings.quality / 100)
-  // WebPエンコード非対応ブラウザ（古いSafari等）ではPNGのまま返す
   if (settings.format === 'webp' && blob.type !== 'image/webp') {
     return { blob: pngBlob, width, height }
   }

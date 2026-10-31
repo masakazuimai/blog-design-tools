@@ -1,4 +1,3 @@
-// 声タブ：シーンに登場する話者ごとに性別・年代・雰囲気・速さを設定する
 import { VOICE_GENDERS, VOICE_AGES, VOICE_TONES, VOICE_SPEEDS } from "./vocab.js?v=20261025b";
 import { speakersOf, createVoice } from "./store.js?v=20261025b";
 import { T, label as optLabel } from "./i18n.js?v=20261025b";
@@ -10,7 +9,7 @@ const FIELDS = [
   { key: "speed", label: T.voiceFields.speed, list: VOICE_SPEEDS },
 ];
 
-let shownKey = null; // 表示中の話者一覧（変わった時だけ描き直す＝入力中のフォーカスを守る）
+let shownKey = null;
 
 const card = (name, voice) => {
   const wrap = document.createElement("div");
@@ -49,7 +48,6 @@ const card = (name, voice) => {
 export const renderVoices = (el, project, { force = false } = {}) => {
   const names = speakersOf(project.scenes);
   const key = JSON.stringify(names);
-  // 入力欄の候補（インスペクターの「話す人」）も話者一覧に合わせる
   const list = document.getElementById("speakerList");
   list.replaceChildren(...names.filter(Boolean).map((n) => new Option(n)));
   if (!force && key === shownKey) return;

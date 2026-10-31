@@ -1,6 +1,3 @@
-// 定番の clip-path 形状プリセット。座標はパーセント（0〜100）の [x, y] 配列。
-// polygon 形状はここから読み込み、本体ツールでドラッグ編集できる。
-// label=日本語 / labelEn=英語（/en/ で使用）。
 
 export const SHAPES = [
   { key: "triangle", label: "三角形", labelEn: "Triangle", points: [[50, 0], [0, 100], [100, 100]] },
@@ -20,7 +17,6 @@ export const SHAPES = [
   { key: "cross", label: "十字", labelEn: "Cross", points: [[35, 0], [65, 0], [65, 35], [100, 35], [100, 65], [65, 65], [65, 100], [35, 100], [35, 65], [0, 65], [0, 35], [35, 35]] },
   { key: "message", label: "吹き出し", labelEn: "Bubble", points: [[0, 0], [100, 0], [100, 75], [75, 75], [75, 100], [50, 75], [0, 75]] },
   { key: "frame", label: "フレーム", labelEn: "Frame", points: [[0, 0], [100, 0], [100, 100], [0, 100], [0, 80], [80, 80], [80, 20], [20, 20], [20, 80], [0, 80]] },
-  // 蛇行パスの裏ワザで生成する形（点数はスライダーで可変）。points は持たず main.js で生成する
   { key: "stripe", label: "横ストライプ", labelEn: "Stripes H", parametric: "stripe", n: 5 },
   { key: "stripe-v", label: "縦ストライプ", labelEn: "Stripes V", parametric: "stripe", n: 5, vertical: true },
   { key: "checkerboard", label: "チェック", labelEn: "Checker", parametric: "checker", n: 4, fillRule: "evenodd" },

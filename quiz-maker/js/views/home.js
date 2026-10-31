@@ -1,4 +1,3 @@
-// ① 初回（未読み込み）と ② ホーム
 import { h, today, shortDate } from '../util.js?v=20261003b';
 import { setState } from '../store.js?v=20261003b';
 import { deckStats, MAX_LEVEL } from '../srs.js?v=20261003b';

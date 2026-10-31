@@ -1,7 +1,3 @@
-/*
- * テンプレート1：メリーゴーランド（横回転リング）
- * カードを円環状に並べ、GSAPのticker＋Draggable＋InertiaPluginで自動回転＋ドラッグ慣性回転する。
- */
 const SENS = 0.22;
 const GSAP_VER = "3.13.0";
 const CDN = `https://cdn.jsdelivr.net/npm/gsap@${GSAP_VER}/dist`;
@@ -120,7 +116,6 @@ function mount(host, state, autoOn) {
   };
 }
 
-// --- コード生成 ---------------------------------------------------------
 function cardsHTML(count) {
   let out = "";
   for (let i = 0; i < count; i++) {

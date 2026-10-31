@@ -1,5 +1,3 @@
-// 問題データ（読み解き型＝PHPコードを読んで出力を4択で当てる）
-// Q1-6は記事版と同期・Q7-20はアプリ限定ドリル。出力はすべて PHP 8.x の実行結果で検証済み
 const PROBLEMS = [
   {"id":1,"title":"echo と文字列の連結","questionHtml":"<code>.</code>（ドット）で文字列をつなぎます。このコードの出力はどれでしょう？",
    "code":"<?php\n$name = \"Taro\";\necho \"Hello, \" . $name . \"!\";",

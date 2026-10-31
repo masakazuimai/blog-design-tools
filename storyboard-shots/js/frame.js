@@ -1,14 +1,9 @@
-// ショットの絵コンテ1コマを SVG で描く（16:9・viewBox 160×90）
-// 被写体の大きさ（size）・アングル（angle）・カメラの動き（move）の組み合わせで絵を作り、絵柄は THEMES で切り替える
 
 const W = 160;
 const H = 90;
 
-// 人物は顔を描かない塗りつぶしのシルエット。足元が原点、身長は約97
-// 脚は身長の約45%（股＝-44）。腕は太ももの中ほどまで
 const BODY = "M-3.5 -81 L-3.5 -78 C-8 -77.5 -13 -76.5 -15 -74 C-17 -68 -17.5 -58 -17.5 -50 L-16.5 -42 L-13 -42 L-13.2 -56 L-11.5 -61 L-10.5 -52 L-11.5 -46 L-8.5 0 L-3 0 L-1 -44 L1 -44 L3 0 L8.5 0 L11.5 -46 L10.5 -52 L11.5 -61 L13.2 -56 L13 -42 L16.5 -42 L17.5 -50 C17.5 -58 17 -68 15 -74 C13 -76.5 8 -77.5 3.5 -78 L3.5 -81 Z";
 
-// 絵柄ごとの色と効果。uid は1コマごとに振る（defs の id を衝突させないため）
 export const THEMES = {
   clean: {
     label: "クリーン",
@@ -42,7 +37,6 @@ export const THEMES = {
   },
 };
 
-// 描画中の絵柄とコマの id（frameSvg の中だけで差し替える）
 let T = THEMES.clean;
 let U = "";
 const col = (v) => (typeof v === "function" ? v(U) : v);
@@ -53,7 +47,6 @@ const personShape = (fill) => {
   return `<g class="pf" fill="${f}" ${edge}><ellipse cx="0" cy="-89" rx="6.5" ry="8"/><path d="${BODY}" stroke-linejoin="round"/></g>`;
 };
 
-// 被写体の大きさ → 人物の拡大率と足元の位置（はみ出した部分は枠で切れる）
 const SIZE = {
   ews: { s: 0.11, x: 92, y: 66 },
   ws: { s: 0.28, x: 96, y: 72 },
@@ -62,7 +55,6 @@ const SIZE = {
   cu: { s: 2.6, x: 80, y: 268 },
 };
 
-// 見下ろしは人物を小さく、見上げは大きく描いて角度の印象を出す
 const ANGLE_SIZE = { high: { s: 0.55, x: 80, y: 76 }, low: { s: 1, x: 80, y: 99 } };
 
 const person = (size, x, angle, fill) => {
@@ -70,7 +62,6 @@ const person = (size, x, angle, fill) => {
   return `<g transform="translate(${x ?? p.x} ${p.y}) scale(${p.s})">${personShape(fill)}</g>`;
 };
 
-// 背景：地平線と山（引きの画で使う）
 const landscape = (horizon = 58) => {
   const ridge = `-40,${horizon} 10,${horizon - 16} 34,${horizon - 6} 62,${horizon - 22} 96,${horizon - 4} 128,${horizon - 14} 200,${horizon}`;
   const fill = T.landFill === "none" ? "" : `<polygon points="${ridge} 200,${H + 20} -40,${H + 20}" fill="${T.landFill}"/>`;
@@ -80,7 +71,6 @@ const landscape = (horizon = 58) => {
 </g>`;
 };
 
-// 超アップ（目元）：画面いっぱいの顔の上に、濃い目と眉だけを置く
 const eyes = () => `<g>
   <rect width="${W}" height="${H}" fill="${T.face}"/>
   <path d="M28 48 Q52 32 76 48 Q52 60 28 48 Z" fill="${T.faceDark}" stroke="${T.edge === "none" ? "none" : T.edge}" stroke-width="0.8"/>
@@ -89,32 +79,26 @@ const eyes = () => `<g>
   <path d="M26 30 Q52 20 78 28 L78 32 Q52 25 26 34 Z M82 28 Q108 20 134 30 L134 34 Q108 25 82 32 Z" fill="${T.faceDark}"/>
 </g>`;
 
-// 肩越し：手前に相手の後ろ姿（濃い色・大きく・左端で切れる）、奥に人物
 const overShoulder = () => `<g>${person("fs", 106)}${person("ms", 8, undefined, T.fg)}</g>`;
 
-// 2ショット：向き合う2人
 const twoShot = () => `<g>${person("fs", 56)}${person("fs", 106)}</g>`;
 
-// 主観：画面下に自分の両手（人物と同じ塗り）
 const pov = () => `<g>${landscape(46)}${person("ws", 104)}
   <path d="M24 90 Q28 72 42 66 Q54 62 58 70 Q60 78 52 90 Z" fill="${col(T.figure)}" stroke="${T.edge === "none" ? "none" : T.edge}" stroke-width="0.8"/>
   <path d="M136 90 Q132 72 118 66 Q106 62 102 70 Q100 78 108 90 Z" fill="${col(T.figure)}" stroke="${T.edge === "none" ? "none" : T.edge}" stroke-width="0.8"/>
 </g>`;
 
-// 真上から：テーブル（枠）に向かう人物を上から見た形（肩と頭）
 const topView = () => `<g>
   <rect x="34" y="14" width="92" height="40" rx="2" fill="none" stroke="${T.line}" stroke-width="1"/>
   <ellipse cx="80" cy="64" rx="22" ry="10" fill="${col(T.figure)}" stroke="${T.edge === "none" ? "none" : T.edge}" stroke-width="0.8"/>
   <ellipse cx="80" cy="62" rx="9" ry="9" fill="${T === THEMES.clean ? "#6f6f6f" : T.fg}"/>
 </g>`;
 
-// 物のアップ（テーブルの上の小物）
 const object = () => `<g>
   <line x1="0" y1="66" x2="${W}" y2="66" stroke="${T.line}" stroke-width="1"/>
   <rect x="62" y="34" width="36" height="32" rx="4" fill="${col(T.figure)}" stroke="${T.ink}" stroke-width="1.2"/>
 </g>`;
 
-// 見下ろし・見上げは、地面の見え方（パース線）で表す
 const ground = (angle) => {
   if (angle === "high") {
     return `<g class="bg"><path d="M-20 90 L52 20 M180 90 L108 20 M20 90 L68 20 M140 90 L92 20" stroke="${T.line}" stroke-width="0.8" opacity="0.6"/></g>`;
@@ -125,7 +109,6 @@ const ground = (angle) => {
   return "";
 };
 
-// 被写体の組み立て
 const subject = (f) => {
   switch (f.subject) {
     case "eyes": return eyes();
@@ -139,7 +122,6 @@ const subject = (f) => {
   }
 };
 
-// 右下の小さな側面図：人物（棒）とカメラの位置
 const CAM_POS = { high: [26, 4], low: [26, 22], bird: [12, 2], ots: [22, 14], pov: [16, 12] };
 const angleInset = (angle) => {
   const pos = CAM_POS[angle];
@@ -154,7 +136,6 @@ const angleInset = (angle) => {
 </g>`;
 };
 
-// カメラの動き：枠の中（.cam）を CSS アニメで動かし、左上に矢印のアイコンを出す
 const MOVE_ANIM = {
   in: "@keyframes mv{from{transform:scale(1)}to{transform:scale(1.4)}}",
   out: "@keyframes mv{from{transform:scale(1.4)}to{transform:scale(1)}}",
@@ -180,10 +161,8 @@ const moveLayer = (move, uid) => {
   if (!MOVE_ANIM[move]) return { style: "", icon: "" };
   const dur = move === "hand" ? "0.9s" : "3.2s";
   const dir = move === "hand" || move === "orbit" ? "infinite" : "infinite alternate";
-  // 追いかける（track）は人物を止めたまま背景だけを流す
   const target = move === "track" ? ".bg" : ".cam";
   return {
-    // ページ内に複数のコマが並ぶので、keyframes 名はコマごとに分ける
     style: `<style>#${uid} ${target}{transform-box:view-box;transform-origin:50% 50%;animation:${uid}mv ${dur} ease-in-out ${dir}}${MOVE_ANIM[move].replace("@keyframes mv", `@keyframes ${uid}mv`)}@media (prefers-reduced-motion: reduce){#${uid} ${target}{animation:none}}</style>`,
     icon: `<g transform="translate(4 ${T.bars ? 10 : 4})"><rect width="24" height="24" rx="4" fill="${T.panel}" stroke="${T.guide}"/><path d="${MOVE_ICON[move]}" fill="none" stroke="${T.accent}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g>`,
   };
@@ -191,11 +170,8 @@ const moveLayer = (move, uid) => {
 
 let seq = 0;
 
-// 応用のカメラワークは語彙に無い動きなので、frame.move で絵のアニメだけ指定する
 const frameMove = (shot) => shot.frame?.move ?? shot.vocab?.move;
 
-// shot.frame と shot.vocab から SVG 文字列を作る。animate=false で静止画（書き出し用）
-// attrs は外側の svg に付ける位置・サイズ（シートに埋め込むときに x/y/width/height を渡す）
 export const frameSvg = (shot, { animate = true, attrs = 'width="100%"', theme = "clean" } = {}) => {
   T = THEMES[theme] ?? THEMES.clean;
   U = `fr${(seq += 1)}`;
@@ -203,7 +179,6 @@ export const frameSvg = (shot, { animate = true, attrs = 'width="100%"', theme =
   const move = frameMove(shot);
   const layer = moveLayer(move, U);
   const style = animate ? layer.style : "";
-  // シネマは上下に黒帯（シネスコ風）を入れる
   const bars = T.bars ? `<rect width="${W}" height="7" fill="#000"/><rect y="${H - 7}" width="${W}" height="7" fill="#000"/>` : "";
   return `<svg id="${U}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" ${attrs} role="img" aria-label="${shot.name}">
 ${style}
@@ -220,8 +195,6 @@ ${layer.icon}
 </svg>`;
 };
 
-// ===== 写真のあるショット =====
-// 写真の上に重ねるもの（カメラ位置の側面図・動きの矢印・枠線）だけを SVG で描く
 const overlaySvg = (shot) => {
   T = THEMES.clean;
   U = `fr${(seq += 1)}`;
@@ -231,7 +204,6 @@ ${moveLayer(frameMove(shot), U).icon}
 </svg>`;
 };
 
-// 画面表示用：写真があれば <img>（遅延読み込み）＋重ね描き、無ければ SVG の絵
 export const frameHtml = (shot, { eager = false } = {}) => {
   if (!shot.image) return frameSvg(shot);
   const move = frameMove(shot) || "static";
@@ -241,7 +213,6 @@ export const frameHtml = (shot, { eager = false } = {}) => {
 </div>`;
 };
 
-// 書き出し用：写真を data URL で埋め込んだ SVG（PNG に変換すると写真も写る）
 export const frameSvgWithPhoto = (shot, dataUrl, attrs) => {
   T = THEMES.clean;
   U = `fr${(seq += 1)}`;

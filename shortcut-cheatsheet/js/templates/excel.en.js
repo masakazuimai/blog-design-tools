@@ -1,4 +1,3 @@
-// Excel templates (English). Labels must match excel.en.js exactly.
 
 export const TEMPLATES = [
   {

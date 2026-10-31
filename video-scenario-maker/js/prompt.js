@@ -1,4 +1,3 @@
-// 設定からプロンプト（英語＝貼る用／日本語＝確認用）とSRTを組み立てる（汎用書式＝特定サービスの記法に依存しない）
 import {
   ASPECTS, STYLES, MOODS, SHOTS, ANGLES, MOVES, LIGHTS, TRANSITIONS,
   SPEECH_LANGS, BGM_GENRES, BGM_MOODS, VOICE_GENDERS, VOICE_AGES, VOICE_TONES, VOICE_SPEEDS, pick,
@@ -6,20 +5,17 @@ import {
 import { withTimes, totalDuration } from "./store.js?v=20261025b";
 
 const str = (v) => (typeof v === "string" ? v.trim() : "");
-// 選択肢の語。「指定なし」（en が空）は出力しない。ja は確認用の表示ラベル
 const word = (list, v, lang) => {
   const o = pick(list, v);
   return o.en ? o[lang] : "";
 };
 const joiner = (lang) => (arr) => arr.filter(Boolean).join(lang === "ja" ? "、" : ", ");
-// 文末を補う（既に終止符があれば足さない。和文で終わる場合は句点）
 const sentence = (t) => {
   if (!t || /[.!?。！？」』"]$/.test(t)) return t;
   return /[\u3000-\u9fff\uff00-\uffef]$/.test(t) ? `${t}。` : `${t}.`;
 };
 const oneLine = (t) => t.replace(/\s*\n\s*/g, " ");
 
-// 0:03 / 0:03.5 形式
 export const fmtTime = (sec) => {
   const m = Math.floor(sec / 60);
   const s = sec - m * 60;
@@ -30,13 +26,11 @@ export const fmtTime = (sec) => {
 
 const fmtNum = (sec) => (Number.isInteger(sec) ? String(sec) : sec.toFixed(1));
 
-// 出力言語ごとの文型。語彙は vocab.js の en / ja を使う（ja は内容確認用）
 const PHRASES = {
   en: {
     sec: (n) => `${fmtNum(n)} second${n === 1 ? "" : "s"}`,
     style: (w, note) => sentence([`Style: ${w}`, note].filter(Boolean).join(". ")),
     says: (who, voice, lang, line) => `${who || "A narrator"}${voice ? ` (${voice})` : ""} says in ${lang}: "${line}"`,
-    // 例: a calm, middle-aged male voice, speaking slowly
     voice: ({ gender, age, tone, speed, note }) => {
       const core = [age, gender].filter(Boolean).join(" ");
       const main = [tone, core].filter(Boolean).join(", ");
@@ -129,7 +123,6 @@ const ctx = (p, lang = "en") => {
   return { T, w, join, styleLine, camera, dialogue, noText, genres, moods };
 };
 
-// ── シーン別（1カット＝1回の生成に貼る。単体で意味が通るよう共通設定も毎回含める） ──
 export const scenePrompts = (p, lang) => {
   const c = ctx(p, lang);
   const scenes = withTimes(p.scenes);
@@ -151,7 +144,6 @@ export const scenePrompts = (p, lang) => {
   });
 };
 
-// ── タイムライン一括（尺の長い生成や、タイムコード指定に対応するサービス向け） ──
 export const timelinePrompt = (p, lang) => {
   const c = ctx(p, lang);
   const scenes = withTimes(p.scenes);
@@ -183,7 +175,6 @@ export const timelinePrompt = (p, lang) => {
   return [...head, "", ...shots, "", ...tail].join("\n").trim();
 };
 
-// ── BGM ──
 export const bgmPrompt = (p, lang) => {
   const c = ctx(p, lang);
   const b = p.bgm;
@@ -201,7 +192,6 @@ export const bgmPrompt = (p, lang) => {
   ].filter(Boolean).join("\n");
 };
 
-// ── SRT（セリフのあるシーンだけ字幕にする） ──
 const srtTime = (sec) => {
   const ms = Math.round(sec * 1000);
   const pad = (n, w = 2) => String(n).padStart(w, "0");

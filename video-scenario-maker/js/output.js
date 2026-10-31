@@ -1,9 +1,8 @@
-// 出力タブ：シーン別／一括／BGM／SRT。設定が変わるたびに作り直す
 import { scenePrompts, timelinePrompt, bgmPrompt, toSrt } from "./prompt.js?v=20261025b";
 import { LANG, T } from "./i18n.js?v=20261025b";
 
 let tab = "scene";
-let lang = "en"; // 既定は英語（貼る用）。日本語は確認用
+let lang = "en";
 let current = null;
 let deps = null;
 
@@ -77,7 +76,6 @@ const views = {
 const paint = () => {
   if (!current || !deps) return;
   const { blocks, actions } = views[tab](current);
-  // SRTはセリフそのもの、英語版の画面は英語が前提なので、どちらも言語切替を出さない
   const langable = tab !== "srt" && LANG === "ja";
   document.getElementById("outLang").hidden = !langable;
   document.getElementById("tabNote").textContent = langable && lang === "ja" ? `${T.notes[tab]} ${T.jaNote}` : T.notes[tab];

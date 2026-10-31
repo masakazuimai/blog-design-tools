@@ -1,4 +1,3 @@
-// パターン一覧（カテゴリ絞り込み＋カード）
 import { CATEGORIES, PATTERNS, categoryName } from "./patterns/index.js?v=20261006h";
 import { createPreview } from "./preview.js?v=20261006h";
 import { addItem } from "./builder.js?v=20261006h";

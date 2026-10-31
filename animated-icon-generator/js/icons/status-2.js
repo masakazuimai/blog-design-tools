@@ -1,4 +1,3 @@
-// 状態・通知カテゴリの追加分（共通ルールは status.js のヘッダーを参照）
 
 import { DRAW, drawKeys, spinKeys, pulseKeys, popInKeys, blinkKeys, bounceKeys } from "./_shared.js?v=20260815c";
 
@@ -152,7 +151,6 @@ export const STATUS_ICONS_2 = [
       duration: 2,
       easing: "linear",
       tracks: [
-        // 針を長くして可視性を上げ、本体も鼓動させる
         { part: "hand", origin: "12px 13.6px", keys: spinKeys() },
         { part: "body", origin: "12px 13.6px", keys: pulseKeys(1.06) },
       ],
@@ -214,7 +212,6 @@ export const STATUS_ICONS_2 = [
   },
 ];
 
-// 底辺を軸に伸び上がる（電波バー用）
 function growKeys(delay) {
   return [
     { at: 0, transform: "scaleY(0)" },

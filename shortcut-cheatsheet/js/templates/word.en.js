@@ -1,4 +1,3 @@
-// Word templates (English). Labels must match word.en.js exactly.
 
 export const TEMPLATES = [
   {

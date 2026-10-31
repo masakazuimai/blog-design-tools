@@ -1,4 +1,3 @@
-// 絵コンテを組む画面（ショットの並び＋シートのプレビュー＋書き出し）
 import { CATEGORIES, SHOTS, getShot } from "./shots/index.js?v=20261030e";
 import { frameHtml } from "./frame.js?v=20261030e";
 import { boardPrompt, scenarioJson, sheetSvg } from "./output.js?v=20261030e";
@@ -16,7 +15,6 @@ const fmt = (sec) => `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, "0"
 const optionsFor = (selected) => CATEGORIES.map((c) => `<optgroup label="${c.name}">${SHOTS.filter((s) => s.cat === c.id)
   .map((s) => `<option value="${s.id}"${s.id === selected ? " selected" : ""}>${s.name}</option>`).join("")}</optgroup>`).join("");
 
-// 1コマ分：絵・番号・時間・ショットの差し替え・秒数・場面の説明
 const cellHtml = (it, i, start, total) => {
   const shot = getShot(it.id);
   return `<li class="cell" data-uid="${it.uid}">
@@ -67,7 +65,6 @@ export const initBoardView = () => {
       store.updateItem(cell.dataset.uid, { dur });
     }
   });
-  // 説明文は入力のたびに描き直すと入力中のカーソルが飛ぶので、フォーカスが外れたときに保存する
   list.addEventListener("focusout", (e) => {
     const cell = e.target.closest(".cell");
     if (cell && e.target.matches("[data-desc]")) store.updateItem(cell.dataset.uid, { desc: e.target.value.trim() });

@@ -1,5 +1,3 @@
-// UI文字列の多言語辞書。<html lang> で言語を切り替える
-// 文字列をこの1ファイルに集約し、/ と /en/ で同じJSを共有する（重複コードを避けるため）
 
 const dict = {
   ja: {
@@ -11,19 +9,16 @@ const dict = {
     defaultName: (n) => `パレット ${n}`,
     saved: '保存しました',
     copied: 'コピーしました',
-    // パレット提案の役割
     rolePrimary: 'プライマリ（CTA・リンク）',
     roleSecondary: 'セカンダリ（補助・ボーダー）',
     roleAccent: 'アクセント（装飾・バッジ）',
     roleText: 'テキスト',
     roleBackground: '背景',
-    // 結果カードの見出し
     extractedColors: '抽出カラー（クリックでHEXコピー）',
     suggestedPalette: 'WEBデザイン用パレット提案',
     exportTitle: 'コードをエクスポート',
     cssVarsTab: 'CSS変数',
     previewTitle: 'プレビュー',
-    // プレビューデモ
     samplePage: 'サンプルページ',
     sampleSubtitle: '抽出したカラーパレットでデザインするとこんな感じ',
     previewBody:

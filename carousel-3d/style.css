@@ -19,7 +19,6 @@ body {
   font-family: sans-serif;
 }
 
-/* 見出し */
 .c3-head {
   width: 100%;
   max-width: 112rem;
@@ -82,7 +81,6 @@ body {
   margin: 1.2rem auto 0;
 }
 
-/* アプリ本体：左＝プレビュー＋コード / 右＝サイドバー */
 .c3-app {
   width: 100%;
   max-width: 112rem;
@@ -100,7 +98,6 @@ body {
   min-width: 0;
 }
 
-/* 大きなプレビュー */
 .preview {
   position: relative;
   display: flex;
@@ -158,7 +155,6 @@ body {
   border-color: #2b3540;
 }
 
-/* タイプ別のプレビューをマウントするホスト */
 .c3-host {
   width: 100%;
   height: 100%;
@@ -168,7 +164,6 @@ body {
   justify-content: center;
 }
 
-/* === 3Dカルーセル本体（メリーゴーランド） === */
 .c3-scene {
   --c3-hue: 210;
   position: relative;
@@ -218,7 +213,6 @@ body {
   overflow: hidden;
 }
 
-/* === カードスタック型（テンプレート2） === */
 .cs-wrap {
   --cs-hue: 8;
   position: relative;
@@ -276,7 +270,6 @@ body {
   color: #666;
 }
 
-/* サイドバー */
 .c3-sidebar {
   display: flex;
   flex-direction: column;
@@ -307,7 +300,6 @@ body {
   line-height: 1.6;
 }
 
-/* トグル行（自動回転など） */
 .toggle-row {
   display: flex;
   gap: 0.6rem;
@@ -337,7 +329,6 @@ body {
   font-weight: 700;
 }
 
-/* テンプレート（プリセット） */
 .tpl-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -378,7 +369,6 @@ body {
   color: #cfe0ef;
 }
 
-/* スライダー */
 .ctrl {
   display: flex;
   flex-direction: column;
@@ -449,7 +439,6 @@ body {
   );
 }
 
-/* 生成コードパネル */
 .code-panel {
   width: 100%;
   background: #141414;
@@ -548,7 +537,6 @@ body {
   tab-size: 2;
 }
 
-/* 広告（PC/SPとも右下フローティングカード320×100・薄型透明枠＋×閉じ） */
 .footer-ad {
   position: fixed;
   right: 0;
@@ -643,7 +631,6 @@ body {
   margin-left: 1.6rem;
 }
 
-/* 狭い画面：h1と言語ボタンを縦積み */
 @media (max-width: 860px) {
   .c3-head-top {
     grid-template-columns: 1fr;
@@ -659,7 +646,6 @@ body {
   }
 }
 
-/* タブレット以下：1カラム（プレビュー → 設定 → コード） */
 @media (max-width: 880px) {
   .c3-app {
     display: flex;

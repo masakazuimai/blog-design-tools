@@ -1,4 +1,3 @@
-// 基本トゥイーン（to / from / fromTo / stagger / ease / repeat）
 import { CDN, repeat } from "./_shared.js?v=20260811a";
 
 export const BASIC = [

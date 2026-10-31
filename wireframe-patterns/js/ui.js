@@ -1,10 +1,7 @@
-// 画面共通の小物（トースト・コピー・セグメント切り替え・書き出し）
 import { buildSvg } from "./svg-export.js?v=20261006h";
 import { downloadSvgAsPng, downloadText } from "./download.js?v=20261006h";
 import { t } from "./i18n.js?v=20261006h";
 
-// GA4計測：GTM の dataLayer へイベントを送る（GTM側でカスタムイベントとしてGA4へ転送）
-// データレイヤー変数は前回の値を引き継ぐため、使わないパラメータも毎回 undefined で上書きする
 const TRACK_KEYS = ["scope", "format", "pattern_id", "section_count", "from"];
 export const track = (event, params = {}) => {
   window.dataLayer = window.dataLayer || [];
@@ -31,7 +28,6 @@ export const copyText = async (text, label = t("copied")) => {
   }
 };
 
-// aria-pressed のボタン群。選ばれた値を onChange へ渡す
 export const bindSeg = (group, onChange) => {
   group.addEventListener("click", (e) => {
     const btn = e.target.closest("button[data-width]");

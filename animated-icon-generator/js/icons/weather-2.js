@@ -1,4 +1,3 @@
-// 天気・自然カテゴリの追加分（共通ルールは status.js のヘッダーを参照）
 
 import { DRAW, drawKeys, spinKeys, pulseKeys, bounceKeys, popInKeys, blinkKeys } from "./_shared.js?v=20260815c";
 
@@ -51,7 +50,6 @@ export const WEATHER_ICONS_2 = [
       easing: "ease-in-out",
       tracks: [
         { part: "level", keys: drawKeys(0.15, 0.8) },
-        // 温度計本体も脈打たせて、細い液柱だけに頼らない
         { part: "tube", origin: "12px 17.4px", keys: pulseKeys(1.07) },
       ],
     },
@@ -240,7 +238,6 @@ export const WEATHER_ICONS_2 = [
   },
 ];
 
-// 左右にゆっくり流れる（波用）
 function waveKeys(delay) {
   return [
     { at: 0, transform: "translateX(0)" },

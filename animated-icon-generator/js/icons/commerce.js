@@ -1,4 +1,3 @@
-// EC・お金カテゴリのアイコン定義（共通ルールは status.js のヘッダーを参照）
 
 import { DRAW, drawKeys, pulseKeys, bounceKeys, popInKeys, swingKeys } from "./_shared.js?v=20260815c";
 
@@ -54,7 +53,6 @@ export const COMMERCE_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // カードが抜き差しされる（小さな点の点滅では動きが読み取れなかった）
           part: "card",
           keys: [
             { at: 0, transform: "translateY(0)" },
@@ -80,7 +78,6 @@ export const COMMERCE_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // カード全体を通す動き。細い線を描くだけでは変化が見えなかった
           part: ["body", "stripe", "number"],
           origin: "12px 12px",
           keys: [
@@ -107,7 +104,6 @@ export const COMMERCE_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // 表裏がひっくり返るように横方向だけ潰す
           part: ["outer", "inner"],
           origin: "12px 12px",
           keys: [
@@ -199,7 +195,6 @@ export const COMMERCE_ICONS = [
     cat: "commerce",
     label: { ja: "配送", en: "Delivery truck" },
     parts: [
-      // 横移動と車輪の回転ぶんの余白を残すため、荷台を内側に収める
       { tag: "path", part: "body", attrs: { d: "M3.6 6.6h9.6v9.6H3.6z M13.2 9.8h3.4l2.8 2.8v3.6h-6.2z" } },
       { tag: "circle", part: "wheel1", attrs: { cx: 7.2, cy: 18, r: 1.7 } },
       { tag: "circle", part: "wheel2", attrs: { cx: 16.4, cy: 18, r: 1.7 } },
@@ -226,7 +221,6 @@ export const COMMERCE_ICONS = [
       easing: "ease-in-out",
       tracks: [
         {
-          // シャッターが上がって開店する（ドアの線を描くだけでは伝わらなかった）
           part: "shutter",
           origin: "12px 10.4px",
           keys: [
@@ -327,7 +321,6 @@ export const COMMERCE_ICONS = [
       easing: "ease-in",
       tracks: [
         {
-          // コインが上から落ちて投入口に消える
           part: "coin",
           keys: [
             { at: 0, transform: "translateY(-1.4px)", opacity: 0 },
@@ -382,7 +375,6 @@ export const COMMERCE_ICONS = [
       tracks: [
         { part: "body", origin: "12px 12px", keys: pulseKeys(1.08) },
         {
-          // ミシン目が切り離れるように点滅させる（伸ばすと枠外へ出るため長さは変えない）
           part: "line",
           keys: [
             { at: 0, opacity: 1 },

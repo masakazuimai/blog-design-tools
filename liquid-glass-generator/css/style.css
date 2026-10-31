@@ -28,7 +28,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ---- ヘッダー ---- */
 header {
   padding: 40px 24px 24px;
   border-bottom: 1px solid var(--line);
@@ -79,7 +78,6 @@ header p {
   border-color: var(--accent);
 }
 
-/* ---- レイアウト ---- */
 .container {
   max-width: 1180px;
   margin: 0 auto;
@@ -93,7 +91,6 @@ header p {
   align-items: start;
 }
 
-/* ---- ステージ（プレビュー） ---- */
 .stage {
   position: sticky;
   top: 28px;
@@ -121,7 +118,6 @@ header p {
   cursor: grabbing;
 }
 
-/* ガラス内テキスト（出力スニペットと同じ見た目になるよう揃える） */
 .glass-label {
   position: absolute;
   transform: translate(-50%, -50%);
@@ -149,7 +145,6 @@ header p {
   white-space: nowrap;
 }
 
-/* ---- 背景バー ---- */
 .bg-bar {
   display: flex;
   align-items: center;
@@ -203,7 +198,6 @@ header p {
   color: var(--accent);
 }
 
-/* ---- コントロールパネル ---- */
 .panel {
   display: flex;
   flex-direction: column;
@@ -345,7 +339,6 @@ input[type="color"] {
   margin-bottom: 0;
 }
 
-/* ---- 出力 ---- */
 .output-section {
   margin-top: 28px;
   background: var(--panel);
@@ -430,7 +423,6 @@ input[type="color"] {
   color: var(--accent);
 }
 
-/* ---- 解説 ---- */
 .article {
   margin: 36px 0;
   max-width: 820px;
@@ -548,10 +540,9 @@ input[type="color"] {
   margin: 0;
 }
 
-/* ---- フッター ---- */
 footer {
   display: flex;
-  justify-content: flex-start; /* 右下広告との被り回避で左寄せ */
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 12px 24px;
   align-items: center;
@@ -591,7 +582,6 @@ footer a:hover {
   color: var(--accent);
 }
 
-/* ---- レスポンシブ ---- */
 @media (max-width: 920px) {
   .layout {
     grid-template-columns: 1fr;
@@ -620,7 +610,6 @@ footer a:hover {
   }
 }
 
-/* 広告（PC/SPとも右下フローティングカード320×100・薄型透明枠＋×閉じ） */
 .footer-ad {
   position: fixed;
   right: 0;
@@ -690,7 +679,6 @@ footer a:hover {
   .footer-ad ins.adsbygoogle { width: 320px; height: 100px; }
 }
 
-/* 使い方ガイドへの導線（ヒント）。リンクはデフォルト色だと読みにくいのでアクセント色＋下線、SPは左寄せ＋行間広め */
 .hint {
   max-width: 760px;
   margin: 16px auto 0;

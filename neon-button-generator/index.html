@@ -9,7 +9,6 @@
     <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/neon-button-generator/" />
     <link rel="alternate" hreflang="en" href="https://codequest.work/generator/neon-button-generator/en/" />
     <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/neon-button-generator/" />
-    <!-- OGP -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://codequest.work/generator/neon-button-generator/" />
     <meta property="og:title" content="ネオンボタン ジェネレーター【無料】光る縁のCSSボタンを15種生成" />
@@ -19,12 +18,10 @@
     <meta property="og:image:height" content="630" />
     <meta property="og:site_name" content="CodeQuest.work" />
     <meta property="og:locale" content="ja_JP" />
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="ネオンボタン ジェネレーター【無料】光る縁のCSSボタンを生成" />
     <meta name="twitter:description" content="SVGフィルタで縁が光るCSSボタンを15種の光パターンで生成。コピペできるHTML/CSSを出力する無料ツール。" />
     <meta name="twitter:image" content="https://codequest.work/generator/neon-button-generator/assets/og.jpg" />
-    <!-- Google Tag Manager -->
     <script>
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
@@ -37,7 +34,6 @@
         f.parentNode.insertBefore(j, f);
       })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
     </script>
-    <!-- End Google Tag Manager -->
     <link rel="stylesheet" href="css/style.css?v=20260724a" />
     <script type="application/ld+json">
       {
@@ -70,11 +66,9 @@
         ]
       }
     </script>
-    <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe
         src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2"
@@ -83,14 +77,12 @@
         style="display: none; visibility: hidden"
       ></iframe
     ></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <header>
       <div class="brand"><span>Neon Button</span> Generator</div>
       <a class="lang-switch" href="en/" hreflang="en">English</a>
     </header>
 
     <main class="stage">
-      <!-- 縁(リム)が光るボタン。スクロールしても見えるよう上部に固定。中身はscript.jsが光パターンに応じて再構築する -->
       <div class="preview">
         <button class="rim-btn" type="button">
           <svg class="rim-btn__svg" viewBox="0 0 320 120" width="320" height="120" aria-hidden="true"></svg>
@@ -98,7 +90,6 @@
         </button>
       </div>
 
-      <!-- 光パターン選択（ボタン）。設定パネルの上の独立セクション -->
       <section class="patterns">
         <h2 class="patterns__title">光パターン</h2>
         <div class="patterns__grid">
@@ -120,7 +111,6 @@
         </div>
       </section>
 
-      <!-- コントロールパネル（各入力がstateに連動） -->
       <div class="panel">
         <div class="field field--wide">
           <div class="field__head">
@@ -137,7 +127,6 @@
           <input class="field__slider" id="width" type="range" min="160" max="560" step="4" value="320" data-key="width" data-unit="px" />
         </div>
 
-        <!-- 方向/デュアル/トライ：光源の向き -->
         <div class="field" data-pattern="distant dual tri">
           <div class="field__head">
             <label for="azimuth">光源角度</label>
@@ -154,7 +143,6 @@
           <input class="field__slider" id="elevation" type="range" min="0" max="90" step="1" value="46" data-key="elevation" data-unit="°" />
         </div>
 
-        <!-- ポイント：光源位置 -->
         <div class="field" data-pattern="point">
           <div class="field__head">
             <label for="pointX">光源位置X</label>
@@ -171,7 +159,6 @@
           <input class="field__slider" id="pointY" type="range" min="0" max="100" step="1" value="0" data-key="pointYPct" data-unit="%" />
         </div>
 
-        <!-- ポイント/ビームグロー：光の広がり -->
         <div class="field" data-pattern="point beamglow">
           <div class="field__head">
             <label for="pointZ">光の広がり</label>
@@ -180,7 +167,6 @@
           <input class="field__slider" id="pointZ" type="range" min="1" max="100" step="1" value="14" data-key="pointZ" />
         </div>
 
-        <!-- アークシャイン/ビームグロー：周回位置 -->
         <div class="field" data-pattern="arcshine beamglow">
           <div class="field__head">
             <label for="orbit">周回角度</label>
@@ -189,7 +175,6 @@
           <input class="field__slider" id="orbit" type="range" min="0" max="360" step="1" value="90" data-key="orbitAngle" data-unit="°" data-round="1" />
         </div>
 
-        <!-- アークシャイン：弧の長さ -->
         <div class="field" data-pattern="arcshine">
           <div class="field__head">
             <label for="arcLen">弧の長さ</label>
@@ -198,7 +183,6 @@
           <input class="field__slider" id="arcLen" type="range" min="5" max="60" step="1" value="22" data-key="arcLen" data-unit="%" />
         </div>
 
-        <!-- グロスシャイン：艶の角度・幅 -->
         <div class="field" data-pattern="glossshine">
           <div class="field__head">
             <label for="glossAngle">艶の角度</label>
@@ -239,7 +223,6 @@
           <input class="field__slider" id="blur" type="range" min="0" max="15" step="0.5" value="3" data-key="blur" />
         </div>
 
-        <!-- specular系（方向/デュアル/トライ。ポイント=グラデ方式・ネオン系=光源なしは対象外）-->
         <div class="field" data-pattern="distant dual tri">
           <div class="field__head">
             <label for="surface">立体感</label>
@@ -264,7 +247,6 @@
           <input class="field__slider" id="constant" type="range" min="0" max="3" step="0.1" value="1.2" data-key="constant" />
         </div>
 
-        <!-- リムの色（方向/ポイント/コーナー/チェイス/アーク/ビーム/グロス＋二重リムの外側） -->
         <div class="field" data-pattern="distant point corner chase double arcshine beamglow glossshine">
           <div class="field__head">
             <label for="color">リムの色</label>
@@ -272,7 +254,6 @@
           <input class="field__color" id="color" type="color" value="#ffffff" data-key="lightColor" />
         </div>
 
-        <!-- グロー色（ネオン/パルス/フリッカー/アンダーグロー＋二重リムの内側） -->
         <div class="field" data-pattern="neon pulse flicker under double">
           <div class="field__head">
             <label for="glowColor">グロー色</label>
@@ -280,7 +261,6 @@
           <input class="field__color" id="glowColor" type="color" value="#00ffaa" data-key="glowColor" />
         </div>
 
-        <!-- グロー強度（ネオン/パルス/フリッカー/アンダーグロー） -->
         <div class="field" data-pattern="neon pulse flicker under corner">
           <div class="field__head">
             <label for="glowIntensity">グロー強度</label>
@@ -289,7 +269,6 @@
           <input class="field__slider" id="glowIntensity" type="range" min="0" max="1" step="0.05" value="0.3" data-key="glowIntensity" />
         </div>
 
-        <!-- デュアル/グラデ/トライ：色 -->
         <div class="field" data-pattern="dual gradient tri">
           <div class="field__head">
             <label for="leftColor">左の色</label>
@@ -304,7 +283,6 @@
           <input class="field__color" id="rightColor" type="color" value="#f472b6" data-key="rightColor" />
         </div>
 
-        <!-- トライ：3色目 -->
         <div class="field" data-pattern="tri">
           <div class="field__head">
             <label for="thirdColor">3つ目の色</label>
@@ -341,7 +319,6 @@
         </div>
       </div>
 
-      <!-- 生成コード出力（各設定値に連動して更新される貼り付け用コード） -->
       <div class="output">
         <div class="output__col">
           <div class="output__head">
@@ -362,7 +339,6 @@
 
     <p class="hint" style="text-align:center;margin:16px auto 0;max-width:760px;">使い方・15種の光パターン早見表・FAQは<a href="howto.html">使い方ガイド</a>をご覧ください。</p>
 
-    <!-- 広告テスト（2026-10-24〜6週間）: 右下広告を停止中。全画面広告用にローダーのみ残す -->
 
     <footer>
       <span>&copy; <span class="cq-year">2026</span><script>document.currentScript.previousElementSibling.textContent=new Date().getFullYear();</script> Neon Button Generator | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>

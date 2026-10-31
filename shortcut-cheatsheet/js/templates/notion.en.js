@@ -1,4 +1,3 @@
-// Notion templates (English). label must match data/notion.en.js exactly.
 
 export const TEMPLATES = [
   {
