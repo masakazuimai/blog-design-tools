@@ -38,7 +38,7 @@ button, select { font: inherit; }
 }
 .howto-link:hover { border-color: var(--text); }
 .site-head__inner { padding-inline: clamp(16px, 3vw, 32px); }
-.site-head h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.15; letter-spacing: -0.04em; font-weight: 700; }
+.site-head h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.15; letter-spacing: -0.04em; font-weight: 700; word-break: keep-all; overflow-wrap: anywhere; }
 .site-head p { margin: 8px 0 0; color: var(--text-2); }
 .view-tabs { display: flex; gap: 4px; }
 .view-tab {

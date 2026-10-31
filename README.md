@@ -38,7 +38,7 @@
 | [DESIGN.mdプレビュー](./design-md-preview/) | DESIGN.mdのテーマを切り替えて見た目を確認し、AIに渡すプロンプトをコピー | [デモ](https://codequest.work/generator/design-md-preview/) |
 | [ディレクトリマップ作成ツール](./directory-map-generator/) | サイト構成図・フォルダ構成を作成してMarkdownのツリー図で書き出し | [デモ](https://codequest.work/generator/directory-map-generator/) |
 | [動画シナリオ作成ツール](./video-scenario-maker/) | シーンごとに動画のシナリオを作り、AI動画用プロンプト・SRT字幕をコピー | [デモ](https://codequest.work/generator/video-scenario-maker/) |
-| [絵コンテ ショット集](./storyboard-shots/) | 動画の定番ショット38種を絵コンテで一覧し、AI動画用プロンプトをコピー | [デモ](https://codequest.work/generator/storyboard-shots/) |
+| [カメラワーク・ショット図鑑](./storyboard-shots/) | 動画の定番ショット38種を絵コンテで一覧し、AI動画用プロンプトをコピー | [デモ](https://codequest.work/generator/storyboard-shots/) |
 | [ショートカットキー チートシート](./shortcut-cheatsheet/) | アプリ別のショートカット一覧と自分専用のマイ一覧 | [デモ](https://codequest.work/generator/shortcut-cheatsheet/) |
 | [AIでちょっと調べながらメモ](./ai-shirabe-memo/) | AIに聞きながら付箋にメモできるボード | [デモ](https://codequest.work/generator/ai-shirabe-memo/) |
 | [自分だけの問題集](./quiz-maker/) | 4択問題を自分で作り、覚えるまで出題する暗記ツール | [デモ](https://codequest.work/generator/quiz-maker/) |
