@@ -1,7 +1,7 @@
-import { initGallery } from "./gallery.js?v=20261030e";
-import { initDetail } from "./detail.js?v=20261030e";
-import { initBoardView } from "./board-view.js?v=20261030e";
-import { track } from "./ui.js?v=20261030e";
+import { initGallery } from "./gallery.js?v=20261101a";
+import { initDetail } from "./detail.js?v=20261101a";
+import { initBoardView } from "./board-view.js?v=20261101a";
+import { track } from "./ui.js?v=20261101a";
 
 const openDetail = initDetail();
 initBoardView();

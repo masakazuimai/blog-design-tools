@@ -1,5 +1,5 @@
 import { SHOTS as SIZES, ANGLES, MOVES, LIGHTS } from "../../video-scenario-maker/js/vocab.js?v=20260928b";
-import { LANG, t } from "./i18n.js?v=20261030e";
+import { LANG, t } from "./i18n.js?v=20261101a";
 
 const find = (list, v) => list.find((o) => o.v === v);
 

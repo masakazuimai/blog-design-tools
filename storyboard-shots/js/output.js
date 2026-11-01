@@ -1,7 +1,7 @@
-import { getShot, categoryName } from "./shots/index.js?v=20261030e";
-import { frameSvg, frameSvgWithPhoto } from "./frame.js?v=20261030e";
-import { vocabEn } from "./vocab.js?v=20261030e";
-import { t } from "./i18n.js?v=20261030e";
+import { getShot, categoryName } from "./shots/index.js?v=20261101a";
+import { frameSvg, frameSvgWithPhoto } from "./frame.js?v=20261101a";
+import { vocabEn } from "./vocab.js?v=20261101a";
+import { t } from "./i18n.js?v=20261101a";
 
 const sentence = (s) => (s ? `${s.replace(/[.\s]+$/, "")}.` : "");
 const camera = (v) => ["shot", "angle", "move"].map((k) => vocabEn(k, v[k])).filter(Boolean).join(", ");
