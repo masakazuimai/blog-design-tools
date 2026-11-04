@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CSS 吹き出しの作り方｜clip-pathでしっぽ付き吹き出し（コピペ）</title>
-    <meta name="description" content="CSSのclip-pathでしっぽ付きの吹き出しを作る方法。中央下・右下のしっぽのコードを実物プレビュー付きでコピーできます。疑似要素を使わず1要素で作れます。無料・登録不要。" />
+    <title>CSS 吹き出しの作り方とジェネレーター｜clip-pathでしっぽ付き（コピペ）</title>
+    <meta name="description" content="吹き出しをCSSで作れる無料のジェネレーターとコピペ用コード。CSSのclip-pathでしっぽ付きの吹き出しを作る方法。中央下・右下のしっぽのコードを実物プレビュー付きでコピーできます。疑似要素を使わず1要素で作れます。無料・登録不要。" />
     <link rel="canonical" href="https://codequest.work/generator/clip-path/preset/speech-bubble/" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://codequest.work/generator/clip-path/preset/speech-bubble/" />
-    <meta property="og:title" content="CSS 吹き出しの作り方｜clip-pathでしっぽ付き吹き出し" />
+    <meta property="og:title" content="CSS 吹き出しの作り方とジェネレーター｜clip-pathでしっぽ付き" />
     <meta property="og:description" content="clip-pathでしっぽ付きの吹き出しを1要素で作る方法。実物プレビュー付きでコードをコピーできます。" />
     <meta property="og:site_name" content="CodeQuest.work" />
     <meta property="og:locale" content="ja_JP" />
@@ -45,6 +45,7 @@
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
+          { "@type": "Question", "name": "吹き出しをCSSで作れるジェネレーターはありますか？", "acceptedAnswer": { "@type": "Answer", "text": "吹き出しをCSSで作れるジェネレーターなら、clip-path ジェネレーターの定番形状から「吹き出し」を選ぶと、しっぽの位置をドラッグで変えて -webkit- 付きのコードをコピーできます（無料・登録不要）。" } },
           { "@type": "Question", "name": "疑似要素なしで吹き出しが作れますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。clip-pathのpolygonにしっぽの頂点を含めることで、1つの要素だけで吹き出しを作れます。" } },
           { "@type": "Question", "name": "しっぽの位置を変えるには？", "acceptedAnswer": { "@type": "Answer", "text": "しっぽを構成する頂点のX座標（中央なら50%）を左右にずらします。本文の下に余白として25%程度を空け、その領域にしっぽを描きます。" } }
         ]
@@ -72,6 +73,7 @@
       <section class="article" style="margin-top: 8px">
         <div class="answer-box">
           <p>しっぽ付きの吹き出しは、<code>clip-path: polygon(...)</code> にしっぽの頂点を含めることで、疑似要素を使わず<strong>1つの要素だけ</strong>で作れます。本文の下に余白を空け、そこにしっぽの三角形を描くのがコツです。下にコピペ用コードを用意しました。</p>
+          <p>吹き出しをCSSで作れるジェネレーターなら、<a href="../../">clip-path ジェネレーター</a>の定番形状から「吹き出し」を選ぶと、しっぽの位置をドラッグで変えて <code>-webkit-</code> 付きのコードをコピーできます（無料・登録不要）。</p>
         </div>
 
         <h2>しっぽが中央下</h2>

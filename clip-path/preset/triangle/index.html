@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CSS 三角形の作り方｜clip-pathで上下左右の三角形（コピペ）</title>
-    <meta name="description" content="CSSのclip-pathで三角形を作る方法。上向き・下向き・左向き・右向きの三角形のコードを実物プレビュー付きでコピーできます。borderを使う方法との違いも解説。無料・登録不要。" />
+    <title>CSS 三角形の作り方とジェネレーター｜clip-pathで上下左右（コピペ）</title>
+    <meta name="description" content="三角形をCSSで作れる無料のジェネレーターとコピペ用コード。CSSのclip-pathで三角形を作る方法。上向き・下向き・左向き・右向きの三角形のコードを実物プレビュー付きでコピーできます。borderを使う方法との違いも解説。無料・登録不要。" />
     <link rel="canonical" href="https://codequest.work/generator/clip-path/preset/triangle/" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://codequest.work/generator/clip-path/preset/triangle/" />
-    <meta property="og:title" content="CSS 三角形の作り方｜clip-pathで上下左右の三角形" />
+    <meta property="og:title" content="CSS 三角形の作り方とジェネレーター｜clip-pathで上下左右" />
     <meta property="og:description" content="clip-pathで三角形を作る方法。上下左右のコードを実物プレビュー付きでコピーできます。" />
     <meta property="og:site_name" content="CodeQuest.work" />
     <meta property="og:locale" content="ja_JP" />
@@ -45,6 +45,7 @@
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
+          { "@type": "Question", "name": "三角形をCSSで作れるジェネレーターはありますか？", "acceptedAnswer": { "@type": "Answer", "text": "三角形をCSSで作れるジェネレーターなら、clip-path ジェネレーターの定番形状から「三角形」を選ぶと、頂点をドラッグして向きや角度を変え、-webkit- 付きのコードをコピーできます（無料・登録不要）。" } },
           { "@type": "Question", "name": "clip-pathとborderの三角形はどちらが良い？", "acceptedAnswer": { "@type": "Answer", "text": "clip-pathは要素の中身（背景画像やテキスト）を三角形に切り抜けるのが利点です。borderの三角形は中身を持てず色だけの三角形になります。用途で使い分けます。" } },
           { "@type": "Question", "name": "三角形の角度を変えるには？", "acceptedAnswer": { "@type": "Answer", "text": "頂点のX座標（上向きなら50%）を左右にずらすと傾きが変わります。要素の幅・高さでも見た目の角度が変わります。" } }
         ]
@@ -72,6 +73,7 @@
       <section class="article" style="margin-top: 8px">
         <div class="answer-box">
           <p>三角形は <code>clip-path: polygon(50% 0, 0 100%, 100% 100%)</code> で作れます。3つの頂点を指定するだけで上向きの三角形になります。<code>border</code> を使う方法と違い、要素の<strong>中身（背景画像やテキスト）を三角形に切り抜ける</strong>のが利点です。下に向き別のコピペ用コードを用意しました。</p>
+          <p>三角形をCSSで作れるジェネレーターなら、<a href="../../">clip-path ジェネレーター</a>の定番形状から「三角形」を選ぶと、頂点をドラッグして向きや角度を変え、<code>-webkit-</code> 付きのコードをコピーできます（無料・登録不要）。</p>
         </div>
 
         <h2>上向き</h2>
