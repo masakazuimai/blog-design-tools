@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{title}}</title>
+<meta name="description" content="{{desc}}">
+<link rel="canonical" href="{{url}}">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CodeQuest.work">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="{{deck_title}} 一問一答（全{{count}}問）">
+<meta property="og:description" content="{{desc}}">
+<meta property="og:url" content="{{url}}">
+<meta property="og:image" content="{{og_image}}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{genre_h1}}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{deck_title}} 一問一答（全{{count}}問）">
+<meta name="twitter:description" content="{{desc}}">
+<meta name="twitter:image" content="{{og_image}}">
+<script type="application/ld+json">
+{{jsonld}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/quiz/assets/quiz.css?v={{ver}}">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+</head>
+<body class="is-deck">
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<header class="bar">
+  <nav class="crumbs" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="https://codequest.work/">CodeQuest.work</a></li>
+      <li><a href="/quiz/">無料の問題集</a></li>
+      <li><a href="../">{{genre_title}}</a></li>
+      <li aria-current="page">{{subject}}</li>
+    </ol>
+  </nav>
+</header>
+
+<main class="deck-page">
+  <section class="intro" data-view="intro">
+    <p class="intro__genre">{{genre_title}}</p>
+    <h1 class="intro__title">{{subject}} 一問一答<span class="intro__count">全{{count}}問</span></h1>
+    <p class="intro__lead">{{lead}}本番の試験では{{exam}}問出ます。</p>
+    <dl class="tally" data-tally>
+      <div><dt>解いた</dt><dd><span data-t-done>0</span><small>/ {{count}}</small></dd></div>
+      <div><dt>正解</dt><dd data-t-ok>0</dd></div>
+      <div><dt>間違い</dt><dd data-t-ng>0</dd></div>
+    </dl>
+    <div class="intro__actions">
+      <button class="btn btn--primary" type="button" data-start="resume" hidden>続きから解く<span class="btn__sub" data-resume-at></span></button>
+      <button class="btn btn--primary" type="button" data-start="all">最初から解く</button>
+      <button class="btn btn--ghost" type="button" data-start="wrong" hidden>間違えた問題だけ解く<span class="btn__sub" data-wrong-count></span></button>
+    </div>
+    <button class="linkish" type="button" data-reset hidden>解いた記録を消す</button>
+    <noscript><p class="intro__noscript">問題を解くには JavaScript を有効にしてください。</p></noscript>
+  </section>
+
+  <section class="play" data-view="play" hidden aria-label="問題">
+    <div class="play__top">
+      <span class="play__pos"><span data-pos>1</span> / <span data-len>{{count}}</span></span>
+      <span class="play__mode" data-mode-label></span>
+      <button class="linkish" type="button" data-quit>やめる</button>
+    </div>
+    <div class="meter meter--play" aria-hidden="true"><span class="meter__fill" data-play-meter></span></div>
+    <p class="play__q" data-q tabindex="-1"></p>
+    <ol class="choices" data-choices></ol>
+    <div class="verdict" data-verdict hidden aria-live="polite">
+      <p class="verdict__head" data-verdict-head></p>
+      <p class="verdict__answer"><span>正しい答え</span><strong data-verdict-answer></strong></p>
+      <p class="verdict__note" data-verdict-note></p>
+      <div class="verdict__src" data-verdict-src>
+        <p class="verdict__src-label">出典</p>
+        <ul data-verdict-src-list></ul>
+      </div>
+    </div>
+    <div class="play__next" data-next-wrap hidden>
+      <button class="btn btn--primary btn--wide" type="button" data-next>次の問題へ</button>
+    </div>
+  </section>
+
+  <section class="result" data-view="result" hidden aria-labelledby="result-title">
+    <h2 class="result__title" id="result-title" tabindex="-1">おつかれさまでした</h2>
+    <p class="result__score"><span data-r-ok>0</span><small>/ <span data-r-len>0</span>問 正解</small></p>
+    <div class="passline" data-passline>
+      <div class="passline__bar"><span class="passline__fill" data-r-meter></span><span class="passline__mark" aria-hidden="true"></span></div>
+      <p class="passline__text" data-r-text></p>
+    </div>
+    <div class="result__actions">
+      <button class="btn btn--primary" type="button" data-again-wrong hidden><span>間違えた<span data-r-ng></span>問だけもう一度</span></button>
+      <button class="btn btn--ghost" type="button" data-start="all">最初から解く</button>
+      <a class="btn btn--ghost" href="../">科目の一覧へ</a>
+    </div>
+    {{app_cta}}
+  </section>
+
+  <details class="qlist">
+    <summary>この科目の問題（全{{count}}問）</summary>
+    <ol>{{qlist}}</ol>
+  </details>
+
+  <nav class="others" aria-label="ほかの科目">
+    <h2 class="section-title">ほかの科目</h2>
+    <ul>{{others}}</ul>
+  </nav>
+</main>
+
+<footer class="foot">
+  <span>&copy; 2026 {{genre_title}} 一問一答 | Created by <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span>
+  <div class="foot__links">
+    <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
+    <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+  </div>
+</footer>
+<script type="application/json" id="quiz-data">{{data}}</script>
+<script type="module" src="/quiz/assets/quiz.js?v={{ver}}"></script>
+</body>
+</html>

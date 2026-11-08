@@ -31,12 +31,14 @@ jobs:
           # apps/ は直下に index.html を持たず配下に複数ユニットを抱えるため、
           # 「apps」1ユニットで一括デプロイする
           # （転送先は /generator/ でなく docroot 直下の /apps/）
+          # quiz/（問題集の棚）も同じ扱いで docroot 直下の /quiz/ へ送る
           all_dirs() {
             for d in */; do
-              case "${d}" in apps/) continue ;; esac
+              case "${d}" in apps/|quiz/) continue ;; esac
               [ -f "${d}index.html" ] && echo "${d%/}"
             done
             [ -d apps ] && echo "apps"
+            [ -d quiz ] && echo "quiz"
           }
 
           if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
@@ -56,7 +58,7 @@ jobs:
               TARGETS=$(echo "$CHANGED" | { grep '/' || true; } | cut -d/ -f1 | sort -u \
                 | while read -r d; do
                     case "$d" in
-                      apps) [ -d "$d" ] && echo "$d" ;;
+                      apps|quiz) [ -d "$d" ] && echo "$d" ;;
                       *) [ -f "${d}/index.html" ] && echo "$d" ;;
                     esac
                     # 配信対象が1つも無いと case の判定が偽のまま while が終わり、
@@ -93,9 +95,9 @@ jobs:
           REMOTE="${REMOTE_USER}@${REMOTE_HOST}"
           PORT=$(echo "${REMOTE_PORT}" | tr -d '[:space:]')
           for name in $TARGETS; do
-            # apps は /generator/ でなく docroot 直下（DEPLOY_PATH の親）へ配置する
+            # apps・quiz は /generator/ でなく docroot 直下（DEPLOY_PATH の親）へ配置する
             case "$name" in
-              apps|apps/*) BASE=$(dirname "${DEST}") ;;
+              apps|apps/*|quiz|quiz/*) BASE=$(dirname "${DEST}") ;;
               *) BASE="${DEST}" ;;
             esac
             echo "Deploying (SSH): ${name} -> ${BASE}/${name}"
@@ -120,9 +122,9 @@ jobs:
           echo "SSHデプロイ失敗を検知 → FTPSでフォールバック配信します"
           DEST=$(echo "${FTP_DEPLOY_PATH}" | tr -d '[:space:]')
           for name in $TARGETS; do
-            # apps は /generator/ でなく docroot 直下（FTP_DEPLOY_PATH の親）へ配置する
+            # apps・quiz は /generator/ でなく docroot 直下（FTP_DEPLOY_PATH の親）へ配置する
             case "$name" in
-              apps|apps/*) BASE=$(dirname "${DEST}") ;;
+              apps|apps/*|quiz|quiz/*) BASE=$(dirname "${DEST}") ;;
               *) BASE="${DEST}" ;;
             esac
             echo "Deploying (FTPS): ${name} -> ${BASE}/${name}"
