@@ -150,6 +150,7 @@ function init() {
 
     $("[data-verdict]").hidden = true;
     $("[data-next-wrap]").hidden = true;
+    views.play.classList.remove("is-answered");
     window.scrollTo({ top: 0 });
     qEl.focus({ preventScroll: true });
   }
@@ -204,6 +205,7 @@ function init() {
     const isLast = run.index + 1 >= run.ids.length;
     $("[data-next]").textContent = isLast ? "結果を見る" : "次の問題へ";
     $("[data-next-wrap]").hidden = false;
+    views.play.classList.add("is-answered");
     $("[data-next]").focus({ preventScroll: true });
     $("[data-play-meter]").style.width = Math.round(((run.index + 1) / run.ids.length) * 100) + "%";
   }

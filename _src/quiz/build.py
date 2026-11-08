@@ -52,6 +52,11 @@ GENRES = {
 }
 
 
+SHELF = [
+    {"genre": "otsu4", "name": "危険物乙4", "note": "危険物取扱者 乙種第4類。法令・物理化学・性質消火の3科目を4択で。"},
+]
+
+
 def fail(message):
     sys.stderr.write(f"build.py: {message}\n")
     sys.exit(1)
@@ -272,6 +277,40 @@ def build_genre(gid, genre, src_dir, manifest):
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "index.html").write_text(page, encoding="utf-8")
     print(f"{gid}: {len(decks)}冊・{total}問 → {out_dir.relative_to(ROOT)}/")
+    return total
+
+
+def build_shelf(totals):
+    url = f"{SITE}/quiz/"
+    items = "".join(
+        render("shelf-row.html", {
+            "href": f"{item['genre']}/",
+            "name": html.escape(item["name"]),
+            "note": html.escape(item["note"]),
+            "count": str(totals[item["genre"]]),
+        })
+        for item in SHELF
+    )
+    schema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "ホーム", "item": f"{SITE}/"},
+            {"@type": "ListItem", "position": 2, "name": "無料の問題集", "item": url},
+        ],
+    }
+    desc = "資格試験の一問一答を、ブラウザでそのまま解ける無料の問題集です。4択で答えるとすぐに正誤と出典つきの解説が出て、間違えた問題だけを解き直せます。登録不要。"
+    page = render("shelf.html", {
+        "title": "無料の問題集｜資格試験の一問一答を4択で | CodeQuest.work",
+        "desc": html.escape(desc),
+        "url": url,
+        "og_image": f"{SITE}/quiz/otsu4/og.png?v={ASSET_VER}",
+        "jsonld": ld(schema),
+        "items": items,
+        "ver": ASSET_VER,
+    })
+    (ROOT / "quiz" / "index.html").write_text(page, encoding="utf-8")
+    print(f"棚: {len(SHELF)}件 → quiz/index.html")
 
 
 def main():
@@ -280,8 +319,11 @@ def main():
     if not manifest_path.exists():
         fail(f"{manifest_path} が見つかりません")
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    for gid, genre in GENRES.items():
-        build_genre(gid, genre, src_dir, manifest)
+    totals = {gid: build_genre(gid, genre, src_dir, manifest) for gid, genre in GENRES.items()}
+    missing = [item["genre"] for item in SHELF if item["genre"] not in totals]
+    if missing:
+        fail(f"SHELF にあるのに GENRES に無いジャンル: {', '.join(missing)}")
+    build_shelf(totals)
 
 
 if __name__ == "__main__":
