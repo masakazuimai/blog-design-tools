@@ -57,6 +57,10 @@ SHELF = [
 ]
 
 
+SHELF_NAME = "無料の問題集"
+SHELF_URL = f"{SITE}/quiz/"
+
+
 def fail(message):
     sys.stderr.write(f"build.py: {message}\n")
     sys.exit(1)
@@ -158,7 +162,6 @@ def build_genre(gid, genre, src_dir, manifest):
                     "about": {"@type": "Thing", "name": "危険物取扱者 乙種第4類"},
                     "isAccessibleForFree": True,
                     "interactivityType": "active",
-                    "numberOfItems": count,
                     "isPartOf": {"@type": "LearningResource", "name": genre["h1"], "url": top_url},
                     "provider": provider(),
                 },
@@ -166,8 +169,9 @@ def build_genre(gid, genre, src_dir, manifest):
                     "@type": "BreadcrumbList",
                     "itemListElement": [
                         {"@type": "ListItem", "position": 1, "name": "ホーム", "item": f"{SITE}/"},
-                        {"@type": "ListItem", "position": 2, "name": genre["h1"], "item": top_url},
-                        {"@type": "ListItem", "position": 3, "name": d["subject"], "item": d["url"]},
+                        {"@type": "ListItem", "position": 2, "name": SHELF_NAME, "item": SHELF_URL},
+                        {"@type": "ListItem", "position": 3, "name": genre["h1"], "item": top_url},
+                        {"@type": "ListItem", "position": 4, "name": d["subject"], "item": d["url"]},
                     ],
                 },
             ],
@@ -209,19 +213,28 @@ def build_genre(gid, genre, src_dir, manifest):
     )
     faq = [
         ("危険物乙4の試験は、どの科目が何問出ますか？",
-         "危険物取扱者試験の乙種第4類は、危険物に関する法令が15問、基礎的な物理学及び基礎的な化学が10問、危険物の性質並びにその火災予防及び消火の方法が10問の、計35問の5肢択一式です。試験時間は2時間です。"),
+         "危険物取扱者試験の乙種第4類は、危険物に関する法令が15問、基礎的な物理学及び基礎的な化学が10問、危険物の性質並びにその火災予防及び消火の方法が10問の、計35問で、どの問題も5つの選択肢から1つを選ぶ形式です。試験時間は2時間です。",
+         ("消防試験研究センター「危険物取扱者試験 乙種第4類 過去に出題された問題」（PDF）", "https://www.shoubo-shiken.or.jp/content/kikenbutsu_otsu4.pdf")),
         ("合格の基準は？",
-         "試験科目ごとの成績が、それぞれ60%以上で合格です。3科目のうち1つでも60%に届かないと不合格になるため、この問題集も冊ごとに正解率を出しています。"),
+         "試験科目ごとの成績が、それぞれ60%以上で合格です。3科目のうち1つでも60%に届かないと不合格になるため、この問題集も冊ごとに正解率を出しています。", None),
         ("問題は何をもとに作っていますか？",
-         "消防法、危険物の規制に関する政令・規則などの条文（e-Gov 法令検索）と、公的機関の資料をもとに作り、解説の下に出典を書いています。本番の試験問題そのものではありません。"),
+         "消防法、危険物の規制に関する政令・規則などの条文（e-Gov 法令検索）と、公的機関の資料をもとに作り、解説の下に出典を書いています。本番の試験問題そのものではありません。", None),
         ("解いた結果はどこに保存されますか？",
-         "お使いのブラウザの中（localStorage）にだけ保存されます。サーバーには送りません。同じ端末・同じブラウザなら、閉じても続きから解けます。"),
+         "お使いのブラウザの中（localStorage）にだけ保存されます。サーバーには送りません。同じ端末・同じブラウザなら、閉じても続きから解けます。", None),
         ("お金はかかりますか？",
-         "無料です。登録もいりません。"),
+         "無料です。登録もいりません。", None),
     ]
+    def faq_answer_html(a, src):
+        if not src:
+            return html.escape(a)
+        return f'{html.escape(a)}出典：<a href="{html.escape(src[1])}" target="_blank" rel="noopener">{html.escape(src[0])}</a>'
+
+    def faq_answer_text(a, src):
+        return f"{a}出典：{src[0]} {src[1]}" if src else a
+
     faq_html = "".join(
-        f'<details class="faq__item"><summary>{html.escape(q)}</summary><p>{html.escape(a)}</p></details>'
-        for q, a in faq
+        f'<details class="faq__item"><summary>{html.escape(q)}</summary><p>{faq_answer_html(a, src)}</p></details>'
+        for q, a, src in faq
     )
     top_desc = "危険物乙4（危険物取扱者 乙種第4類）の一問一答。法令・物理化学・性質消火の3科目を4択で解き、その場で正誤と出典つきの解説を確かめられます。間違えた問題だけの解き直しもでき、登録不要・無料です。"
     schema = {
@@ -237,7 +250,6 @@ def build_genre(gid, genre, src_dir, manifest):
                 "educationalLevel": "危険物取扱者試験 乙種第4類",
                 "about": {"@type": "Thing", "name": "危険物取扱者 乙種第4類"},
                 "isAccessibleForFree": True,
-                "numberOfItems": total,
                 "hasPart": [
                     {"@type": "LearningResource", "name": f"{d['title']} 一問一答", "url": d["url"]}
                     for d in decks
@@ -248,14 +260,15 @@ def build_genre(gid, genre, src_dir, manifest):
                 "@type": "BreadcrumbList",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "ホーム", "item": f"{SITE}/"},
-                    {"@type": "ListItem", "position": 2, "name": genre["h1"], "item": top_url},
+                    {"@type": "ListItem", "position": 2, "name": SHELF_NAME, "item": SHELF_URL},
+                    {"@type": "ListItem", "position": 3, "name": genre["h1"], "item": top_url},
                 ],
             },
             {
                 "@type": "FAQPage",
                 "mainEntity": [
-                    {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}}
-                    for q, a in faq
+                    {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": faq_answer_text(a, src)}}
+                    for q, a, src in faq
                 ],
             },
         ],
@@ -296,7 +309,7 @@ def build_shelf(totals):
         "@type": "BreadcrumbList",
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "ホーム", "item": f"{SITE}/"},
-            {"@type": "ListItem", "position": 2, "name": "無料の問題集", "item": url},
+            {"@type": "ListItem", "position": 2, "name": SHELF_NAME, "item": url},
         ],
     }
     desc = "資格試験の一問一答を、ブラウザでそのまま解ける無料の問題集です。4択で答えるとすぐに正誤と出典つきの解説が出て、間違えた問題だけを解き直せます。登録不要。"

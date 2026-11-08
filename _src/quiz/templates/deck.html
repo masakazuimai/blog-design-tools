@@ -45,7 +45,14 @@
 <body class="is-deck">
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <header class="bar">
-  <a class="bar__back" href="../">{{genre_h1}}</a>
+  <nav class="crumbs" aria-label="パンくずリスト">
+    <ol>
+      <li><a href="https://codequest.work/">CodeQuest.work</a></li>
+      <li><a href="/quiz/">無料の問題集</a></li>
+      <li><a href="../">{{genre_title}}</a></li>
+      <li aria-current="page">{{subject}}</li>
+    </ol>
+  </nav>
 </header>
 
 <main class="deck-page">

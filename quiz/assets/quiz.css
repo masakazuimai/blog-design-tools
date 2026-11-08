@@ -437,3 +437,8 @@ main { width: 100%; max-width: 760px; margin: 0 auto; padding: 0 16px 80px; }
   * { transition: none !important; }
 }
 .hero--shelf { grid-template-columns: 1fr; }
+.crumbs ol { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 0; margin: 0; padding: 10px 0; list-style: none; }
+.crumbs li { color: var(--ink-2); }
+.crumbs li + li::before { content: "›"; margin: 0 10px; color: var(--ink-3); }
+.crumbs a { font-weight: 700; }
+.crumbs li[aria-current="page"] { color: var(--ink); font-weight: 700; }
