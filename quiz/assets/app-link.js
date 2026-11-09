@@ -1,5 +1,5 @@
-import { APP_LIVE, APP_FALLBACK_URL, APP_SCHEME } from "./config.js?v=20261108a";
-import { track } from "./store.js?v=20261108a";
+import { APP_LIVE, APP_FALLBACK_URL, APP_SCHEME } from "./config.js?v=20261109a";
+import { track } from "./store.js?v=20261109a";
 
 function openApp(deckId) {
   let left = false;
