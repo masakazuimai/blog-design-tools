@@ -1,5 +1,5 @@
-import { load, save, clear, tally, track } from "./store.js?v=20261109a";
-import { setupAppLinks } from "./app-link.js?v=20261109a";
+import { load, save, clear, tally, track } from "./store.js?v=20261109b";
+import { setupAppLinks } from "./app-link.js?v=20261109b";
 
 const PASS_RATE = 0.6;
 const MODE_LABEL = { all: "全問", wrong: "間違えた問題", retry: "解き直し" };
@@ -243,6 +243,7 @@ function init() {
     $("[data-r-len]").textContent = String(len);
     const rate = run.ok / len;
     $("[data-r-meter]").style.width = Math.round(rate * 100) + "%";
+    $(".passline__mark").style.left = Math.round(passRatio * 100) + "%";
     const need = Math.ceil(len * passRatio) - run.ok;
     $("[data-r-text]").textContent =
       "正解率 " + Math.round(rate * 100) + "%。" +

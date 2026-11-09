@@ -1,5 +1,5 @@
-import { load, tally } from "./store.js?v=20261109a";
-import { setupAppLinks } from "./app-link.js?v=20261109a";
+import { load, tally } from "./store.js?v=20261109b";
+import { setupAppLinks } from "./app-link.js?v=20261109b";
 
 function paint(row) {
   const count = Number(row.dataset.count) || 0;

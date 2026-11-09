@@ -5,9 +5,11 @@
     python3 _src/quiz/build.py                   各ジャンルの既定のフォルダ（GENRES の src）から作る
     python3 _src/quiz/build.py <フォルダ>         decks.json のあるフォルダ。そこに載っているジャンルだけ差し替える
     python3 _src/quiz/build.py <ジャンル>=<フォルダ>  ジャンルを指定して差し替える（いくつでも並べてよい）
-    アプリの案内の QR を作り直すときは _src/quiz で npm install のあと npm run qr
 
 decks.json の無いフォルダは、GENRES の decks の順と title で作る（アプリより先にページを作るとき）。
+アプリの案内は GENRES の app で決める。live が False のジャンルは案内を出力しない。
+True にするときは url（短縮URL）と scheme を書き、_src/quiz で npm install のあと
+npm run qr -- <ジャンル> <url> で quiz/assets/qr-<ジャンル>.svg を作る。
 出力はリポジトリ直下の quiz/<ジャンル>/ 以下（手で編集しない）。
 """
 import csv
@@ -20,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[2]
 TEMPLATES = Path(__file__).resolve().parent / "templates"
 RESEARCH = Path.home() / ".claude/projects/-Users-orectic-Projects/docs/research"
 SITE = "https://codequest.work"
-ASSET_VER = "20261109a"
+ASSET_VER = "20261109b"
 COLUMNS = ["問題ID", "問題", "正解", "誤答1", "誤答2", "誤答3", "解説"]
 
 EGOV = '<a href="https://laws.e-gov.go.jp/" target="_blank" rel="noopener">e-Gov 法令検索</a>'
@@ -44,6 +46,7 @@ GENRES = {
         "pass_ratio": 0.6,
         "pass_label": "本番の合格ライン（各科目60%）",
         "app_pack": "本番形式の模試3回と追加の150問が入った「危険物乙4 実力テストパック」は、アプリで解けます。",
+        "app": {"live": False},
         "faq": [
             ("危険物乙4の試験は、どの科目が何問出ますか？",
              "危険物取扱者試験の乙種第4類は、危険物に関する法令が15問、基礎的な物理学及び基礎的な化学が10問、危険物の性質並びにその火災予防及び消火の方法が10問の、計35問で、どの問題も5つの選択肢から1つを選ぶ形式です。試験時間は2時間です。",
@@ -91,13 +94,14 @@ GENRES = {
         "top_desc": "第二種衛生管理者の一問一答。関係法令・労働衛生・労働生理の3科目を4択で解き、その場で正誤と出典つきの解説を確かめられます。間違えた問題だけの解き直しもでき、登録不要・無料です。",
         "hero_lead": "第二種衛生管理者の試験に出る3科目を、全{total}問の4択で解けます。答えるとすぐに正誤と解説が出て、間違えた問題だけを解き直せます。登録はいりません。",
         "decks_note": "本番は関係法令・労働衛生・労働生理の3科目で30問。科目ごとに40%以上、かつ合計で60%以上の正解で合格です。",
-        "howto_first": "関係法令・労働衛生・労働生理から1つ選びます。どの科目も40%に届かないと不合格なので、苦手な科目を残さないように3冊とも解いておきましょう。",
+        "howto_first": "関係法令・労働衛生・労働生理から1つ選びます。1科目でも40%に届かないと、合計が60%を超えていても不合格になるので、苦手な科目を残さないように3冊とも解いておきましょう。",
         "howto_source": "出典の条文や資料",
         "about_html": f'問題と解説は、労働安全衛生法、労働安全衛生規則、事務所衛生基準規則、労働基準法などの条文（{EGOV}）と、厚生労働省のガイドラインや指針などの公的機関の資料をもとに作り、解説ごとに出典を書いています。本番の試験問題そのものではありません。試験の科目と問題数は<a href="{EXAM_OR_JP[1]}" target="_blank" rel="noopener">安全衛生技術試験協会</a>の案内に合わせています。',
         "plate": "衛生管理者",
         "pass_ratio": 0.6,
-        "pass_label": "合格の目安（合計60%）",
+        "pass_label": "合格の目安（3科目の合計で60%・各科目40%以上）",
         "app_pack": "第二種衛生管理者の模試と追加の問題は、アプリで解けます。",
+        "app": {"live": False},
         "faq": [
             ("第二種衛生管理者の試験は、どの科目が何問出ますか？",
              "関係法令（有害業務に係るものを除く）、労働衛生（有害業務に係るものを除く）、労働生理の3科目が10問ずつ、計30問です。試験時間は3時間です。",
@@ -106,7 +110,7 @@ GENRES = {
              "科目ごとの得点が40%以上で、かつ合計が60%以上で合格です。合計が60%を超えていても、1科目でも40%に届かないと不合格になります。",
              EXAM_OR_JP),
             ("第二種衛生管理者の免許で、どの業種の衛生管理者になれますか？",
-             "農林畜水産業、鉱業、建設業、製造業、電気業、ガス業、水道業、熱供給業、運送業、自動車整備業、機械修理業、医療業、清掃業を除く業種の事業場で、衛生管理者に選ばれることができます。除かれた業種の事業場では、第一種衛生管理者免許などが必要です。",
+             "農林畜水産業、鉱業、建設業、製造業（物の加工業を含む。）、電気業、ガス業、水道業、熱供給業、運送業、自動車整備業、機械修理業、医療業、清掃業を除く業種の事業場で、衛生管理者に選ばれることができます。除かれた業種の事業場では、第一種衛生管理者免許などが必要です。",
              ("労働安全衛生規則 第7条第1項第3号（e-Gov 法令検索）", "https://laws.e-gov.go.jp/law/347M50002000032")),
             ("問題は何をもとに作っていますか？",
              "労働安全衛生法、労働安全衛生規則、事務所衛生基準規則、労働基準法などの条文（e-Gov 法令検索）と、厚生労働省のガイドラインや指針などの公的機関の資料をもとに作り、解説の下に出典を書いています。本番の試験問題そのものではありません。", None),
@@ -202,11 +206,21 @@ def render(name, values):
     return text
 
 
-def app_cta(genre, deck_id, placement):
+def app_cta(gid, genre, deck_id, placement):
+    app = genre["app"]
+    if not app["live"]:
+        return ""
+    if not app.get("url") or not app.get("scheme"):
+        fail(f"{gid} の app に url と scheme がありません（live を True にするときは両方を書く）")
+    if not (ROOT / "quiz" / "assets" / f"qr-{gid}.svg").exists():
+        fail(f"quiz/assets/qr-{gid}.svg がありません（_src/quiz で npm run qr -- {gid} {app['url']}）")
     return render("app-cta.html", {
+        "genre_id": gid,
         "deck_id": deck_id,
         "placement": placement,
         "pack": html.escape(genre["app_pack"]),
+        "app_url": html.escape(app["url"]),
+        "app_scheme": html.escape(app["scheme"]),
         "ver": ASSET_VER,
     })
 
@@ -307,7 +321,7 @@ def build_genre(gid, genre, src_dir):
             "exam": str(d["exam"]),
             "lead": html.escape(d["lead"]),
             "others": others,
-            "app_cta": app_cta(genre, d["id"], "complete"),
+            "app_cta": app_cta(gid, genre, d["id"], "complete"),
             "qlist": qlist,
             "data": json.dumps(payload, ensure_ascii=False).replace("</", "<\\/"),
             "ver": ASSET_VER,
@@ -395,7 +409,7 @@ def build_genre(gid, genre, src_dir):
         "about_html": genre["about_html"],
         "rows": rows,
         "faq": faq_html,
-        "app_cta": app_cta(genre, decks[0]["id"], "top"),
+        "app_cta": app_cta(gid, genre, decks[0]["id"], "top"),
         "ver": ASSET_VER,
     })
     out_dir.mkdir(parents=True, exist_ok=True)
