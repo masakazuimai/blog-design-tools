@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
-"""quiz/ の問題集ページを、iOS アプリの公式の問題集（CSV と decks.json）から作る。
+"""quiz/ の問題集ページを、ジャンルごとの CSV（と、あれば decks.json）から作る。
 
 使い方:
-    python3 _src/quiz/build.py [公式の問題集のフォルダ]
-    アプリの案内の QR を作り直すときは _src/quiz で npm install のあと npm run qr
+    python3 _src/quiz/build.py                   各ジャンルの既定のフォルダ（GENRES の src）から作る
+    python3 _src/quiz/build.py <フォルダ>         decks.json のあるフォルダ。そこに載っているジャンルだけ差し替える
+    python3 _src/quiz/build.py <ジャンル>=<フォルダ>  ジャンルを指定して差し替える（いくつでも並べてよい）
 
-既定のフォルダは ~/Projects/ios-apps/quiz-maker/content/official/。
+decks.json の無いフォルダは、GENRES の decks の順と title で作る（アプリより先にページを作るとき）。
+アプリの案内は GENRES の app で決める。live が False のジャンルは案内を出力しない。
+True にするときは url（短縮URL）と scheme を書き、_src/quiz で npm install のあと
+npm run qr -- <ジャンル> <url> で quiz/assets/qr-<ジャンル>.svg を作る。
 出力はリポジトリ直下の quiz/<ジャンル>/ 以下（手で編集しない）。
 """
 import csv
@@ -16,15 +20,46 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 TEMPLATES = Path(__file__).resolve().parent / "templates"
-DEFAULT_SRC = Path.home() / "Projects/ios-apps/quiz-maker/content/official"
+RESEARCH = Path.home() / ".claude/projects/-Users-orectic-Projects/docs/research"
 SITE = "https://codequest.work"
-ASSET_VER = "20261108a"
+ASSET_VER = "20261109b"
 COLUMNS = ["問題ID", "問題", "正解", "誤答1", "誤答2", "誤答3", "解説"]
+
+EGOV = '<a href="https://laws.e-gov.go.jp/" target="_blank" rel="noopener">e-Gov 法令検索</a>'
+EXAM_OR_JP = ("安全衛生技術試験協会「第一種・第二種衛生管理者の紹介」", "https://www.exam.or.jp/introduction/h_shokai502")
 
 GENRES = {
     "otsu4": {
+        "src": Path.home() / "Projects/ios-apps/quiz-maker/content/official",
         "title": "危険物乙4",
         "h1": "危険物乙4 一問一答（無料の4択問題集）",
+        "exam_name": "危険物取扱者試験 乙種第4類",
+        "about": "危険物取扱者 乙種第4類",
+        "top_title_tail": "法令・物理化学・性質消火",
+        "top_desc": "危険物乙4（危険物取扱者 乙種第4類）の一問一答。法令・物理化学・性質消火の3科目を4択で解き、その場で正誤と出典つきの解説を確かめられます。間違えた問題だけの解き直しもでき、登録不要・無料です。",
+        "hero_lead": "危険物取扱者 乙種第4類の試験に出る3科目を、全{total}問の4択で解けます。答えるとすぐに正誤と解説が出て、間違えた問題だけを解き直せます。登録はいりません。",
+        "decks_note": "本番は3科目で35問。科目ごとに60%以上の正解で合格です。",
+        "howto_first": "法令・物理化学・性質消火から1つ選びます。最初は問題数の多い法令がおすすめです。",
+        "howto_source": "出典の条文",
+        "about_html": f'問題と解説は、消防法、危険物の規制に関する政令・規則（{EGOV}）と公的機関の資料をもとに作り、解説ごとに出典を書いています。本番の試験問題そのものではありません。試験の科目と問題数は<a href="https://www.shoubo-shiken.or.jp/kikenbutsu/annai/subject.html" target="_blank" rel="noopener">消防試験研究センター</a>の案内に合わせています。',
+        "plate": "火気厳禁",
+        "pass_ratio": 0.6,
+        "pass_label": "本番の合格ライン（各科目60%）",
+        "app_pack": "本番形式の模試3回と追加の150問が入った「危険物乙4 実力テストパック」は、アプリで解けます。",
+        "app": {"live": False},
+        "faq": [
+            ("危険物乙4の試験は、どの科目が何問出ますか？",
+             "危険物取扱者試験の乙種第4類は、危険物に関する法令が15問、基礎的な物理学及び基礎的な化学が10問、危険物の性質並びにその火災予防及び消火の方法が10問の、計35問で、どの問題も5つの選択肢から1つを選ぶ形式です。試験時間は2時間です。",
+             ("消防試験研究センター「危険物取扱者試験 乙種第4類 過去に出題された問題」（PDF）", "https://www.shoubo-shiken.or.jp/content/kikenbutsu_otsu4.pdf")),
+            ("合格の基準は？",
+             "試験科目ごとの成績が、それぞれ60%以上で合格です。3科目のうち1つでも60%に届かないと不合格になるため、この問題集も冊ごとに正解率を出しています。", None),
+            ("問題は何をもとに作っていますか？",
+             "消防法、危険物の規制に関する政令・規則などの条文（e-Gov 法令検索）と、公的機関の資料をもとに作り、解説の下に出典を書いています。本番の試験問題そのものではありません。", None),
+            ("解いた結果はどこに保存されますか？",
+             "お使いのブラウザの中（localStorage）にだけ保存されます。サーバーには送りません。同じ端末・同じブラウザなら、閉じても続きから解けます。", None),
+            ("お金はかかりますか？",
+             "無料です。登録もいりません。", None),
+        ],
         "decks": {
             "otsu4-hoki": {
                 "slug": "hoki",
@@ -48,12 +83,75 @@ GENRES = {
                 "teaches": "第4類の危険物の性質並びにその火災予防及び消火の方法",
             },
         },
-    }
+    },
+    "eisei2": {
+        "src": RESEARCH / "eisei2/free",
+        "title": "第二種衛生管理者",
+        "h1": "第二種衛生管理者 一問一答（無料の4択問題集）",
+        "exam_name": "第二種衛生管理者免許試験",
+        "about": "第二種衛生管理者",
+        "top_title_tail": "関係法令・労働衛生・労働生理",
+        "top_desc": "第二種衛生管理者の一問一答。関係法令・労働衛生・労働生理の3科目を4択で解き、その場で正誤と出典つきの解説を確かめられます。間違えた問題だけの解き直しもでき、登録不要・無料です。",
+        "hero_lead": "第二種衛生管理者の試験に出る3科目を、全{total}問の4択で解けます。答えるとすぐに正誤と解説が出て、間違えた問題だけを解き直せます。登録はいりません。",
+        "decks_note": "本番は関係法令・労働衛生・労働生理の3科目で30問。科目ごとに40%以上、かつ合計で60%以上の正解で合格です。",
+        "howto_first": "関係法令・労働衛生・労働生理から1つ選びます。1科目でも40%に届かないと、合計が60%を超えていても不合格になるので、苦手な科目を残さないように3冊とも解いておきましょう。",
+        "howto_source": "出典の条文や資料",
+        "about_html": f'問題と解説は、労働安全衛生法、労働安全衛生規則、事務所衛生基準規則、労働基準法などの条文（{EGOV}）と、厚生労働省のガイドラインや指針などの公的機関の資料をもとに作り、解説ごとに出典を書いています。本番の試験問題そのものではありません。試験の科目と問題数は<a href="{EXAM_OR_JP[1]}" target="_blank" rel="noopener">安全衛生技術試験協会</a>の案内に合わせています。',
+        "plate": "衛生管理者",
+        "pass_ratio": 0.6,
+        "pass_label": "合格の目安（3科目の合計で60%・各科目40%以上）",
+        "app_pack": "第二種衛生管理者の模試と追加の問題は、アプリで解けます。",
+        "app": {"live": False},
+        "faq": [
+            ("第二種衛生管理者の試験は、どの科目が何問出ますか？",
+             "関係法令（有害業務に係るものを除く）、労働衛生（有害業務に係るものを除く）、労働生理の3科目が10問ずつ、計30問です。試験時間は3時間です。",
+             EXAM_OR_JP),
+            ("合格の基準は？",
+             "科目ごとの得点が40%以上で、かつ合計が60%以上で合格です。合計が60%を超えていても、1科目でも40%に届かないと不合格になります。",
+             EXAM_OR_JP),
+            ("第二種衛生管理者の免許で、どの業種の衛生管理者になれますか？",
+             "農林畜水産業、鉱業、建設業、製造業（物の加工業を含む。）、電気業、ガス業、水道業、熱供給業、運送業、自動車整備業、機械修理業、医療業、清掃業を除く業種の事業場で、衛生管理者に選ばれることができます。除かれた業種の事業場では、第一種衛生管理者免許などが必要です。",
+             ("労働安全衛生規則 第7条第1項第3号（e-Gov 法令検索）", "https://laws.e-gov.go.jp/law/347M50002000032")),
+            ("問題は何をもとに作っていますか？",
+             "労働安全衛生法、労働安全衛生規則、事務所衛生基準規則、労働基準法などの条文（e-Gov 法令検索）と、厚生労働省のガイドラインや指針などの公的機関の資料をもとに作り、解説の下に出典を書いています。本番の試験問題そのものではありません。", None),
+            ("解いた結果はどこに保存されますか？",
+             "お使いのブラウザの中（localStorage）にだけ保存されます。サーバーには送りません。同じ端末・同じブラウザなら、閉じても続きから解けます。", None),
+            ("お金はかかりますか？",
+             "無料です。登録もいりません。", None),
+        ],
+        "decks": {
+            "eisei2-hourei": {
+                "title": "第二種衛生管理者 関係法令",
+                "slug": "hourei",
+                "subject": "関係法令",
+                "exam": 10,
+                "lead": "労働安全衛生法と労働安全衛生規則、事務所衛生基準規則、労働基準法から、衛生管理者・産業医の選任、衛生委員会、健康診断、事務所の衛生基準、労働時間と休暇までを4択で確かめます。",
+                "teaches": "関係法令（有害業務に係るものを除く）",
+            },
+            "eisei2-eisei": {
+                "title": "第二種衛生管理者 労働衛生",
+                "slug": "eisei",
+                "subject": "労働衛生",
+                "exam": 10,
+                "lead": "事務室の空気環境と換気、温熱と照明、情報機器作業、腰痛予防、メンタルヘルス、健康づくり、食中毒と感染症、救急処置までを4択で確かめます。",
+                "teaches": "労働衛生（有害業務に係るものを除く）",
+            },
+            "eisei2-seiri": {
+                "title": "第二種衛生管理者 労働生理",
+                "slug": "seiri",
+                "subject": "労働生理",
+                "exam": 10,
+                "lead": "心臓と血液の循環、呼吸、神経、感覚器、消化と吸収、腎臓、血液、体温調節、睡眠と体内時計など、人の体のしくみを4択で確かめます。",
+                "teaches": "労働生理",
+            },
+        },
+    },
 }
 
 
 SHELF = [
     {"genre": "otsu4", "name": "危険物乙4", "note": "危険物取扱者 乙種第4類。法令・物理化学・性質消火の3科目を4択で。"},
+    {"genre": "eisei2", "name": "第二種衛生管理者", "note": "第二種衛生管理者免許試験。関係法令・労働衛生・労働生理の3科目を4択で。"},
 ]
 
 
@@ -67,6 +165,8 @@ def fail(message):
 
 
 def read_deck(path):
+    if not path.exists():
+        fail(f"{path} が見つかりません")
     with path.open(encoding="utf-8-sig", newline="") as f:
         rows = list(csv.reader(f))
     if not rows or rows[0] != COLUMNS:
@@ -106,8 +206,23 @@ def render(name, values):
     return text
 
 
-def app_cta(deck_id, placement):
-    return render("app-cta.html", {"deck_id": deck_id, "placement": placement, "ver": ASSET_VER})
+def app_cta(gid, genre, deck_id, placement):
+    app = genre["app"]
+    if not app["live"]:
+        return ""
+    if not app.get("url") or not app.get("scheme"):
+        fail(f"{gid} の app に url と scheme がありません（live を True にするときは両方を書く）")
+    if not (ROOT / "quiz" / "assets" / f"qr-{gid}.svg").exists():
+        fail(f"quiz/assets/qr-{gid}.svg がありません（_src/quiz で npm run qr -- {gid} {app['url']}）")
+    return render("app-cta.html", {
+        "genre_id": gid,
+        "deck_id": deck_id,
+        "placement": placement,
+        "pack": html.escape(genre["app_pack"]),
+        "app_url": html.escape(app["url"]),
+        "app_scheme": html.escape(app["scheme"]),
+        "ver": ASSET_VER,
+    })
 
 
 def ld(obj):
@@ -118,18 +233,26 @@ def provider():
     return {"@type": "Organization", "name": "CodeQuest.work", "url": f"{SITE}/"}
 
 
-def build_genre(gid, genre, src_dir, manifest):
-    out_dir = ROOT / "quiz" / gid
-    top_url = f"{SITE}/quiz/{gid}/"
+def deck_entries(gid, genre, src_dir):
+    manifest_path = src_dir / "decks.json"
+    if not manifest_path.exists():
+        return [{"id": deck_id, "title": meta["title"]} for deck_id, meta in genre["decks"].items()]
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     entries = sorted((d for d in manifest if d["genre"] == gid), key=lambda d: d["order"])
     if [d["id"] for d in entries] != list(genre["decks"].keys()):
-        fail(f"decks.json の {gid} の冊と build.py の設定が合いません")
+        fail(f"{manifest_path} の {gid} の冊と build.py の設定が合いません")
+    return entries
+
+
+def build_genre(gid, genre, src_dir):
+    out_dir = ROOT / "quiz" / gid
+    top_url = f"{SITE}/quiz/{gid}/"
 
     decks = []
-    for entry in entries:
+    for entry in deck_entries(gid, genre, src_dir):
         meta = genre["decks"][entry["id"]]
         questions = read_deck(src_dir / f"{entry['id']}.csv")
-        decks.append({**entry, **meta, "questions": questions, "url": f"{top_url}{meta['slug']}/"})
+        decks.append({**meta, **entry, "questions": questions, "url": f"{top_url}{meta['slug']}/"})
 
     total = sum(len(d["questions"]) for d in decks)
     deck_links = [
@@ -146,7 +269,14 @@ def build_genre(gid, genre, src_dir, manifest):
             for o in deck_links if o["id"] != d["id"]
         )
         qlist = "".join(f"<li>{html.escape(q['q'])}</li>" for q in d["questions"])
-        payload = {"deckId": d["id"], "title": d["title"], "subject": d["subject"], "questions": d["questions"]}
+        payload = {
+            "deckId": d["id"],
+            "title": d["title"],
+            "subject": d["subject"],
+            "passRatio": genre["pass_ratio"],
+            "passLabel": genre["pass_label"],
+            "questions": d["questions"],
+        }
         schema = {
             "@context": "https://schema.org",
             "@graph": [
@@ -157,9 +287,9 @@ def build_genre(gid, genre, src_dir, manifest):
                     "url": d["url"],
                     "inLanguage": "ja",
                     "learningResourceType": "練習問題",
-                    "educationalLevel": "危険物取扱者試験 乙種第4類",
+                    "educationalLevel": genre["exam_name"],
                     "teaches": d["teaches"],
-                    "about": {"@type": "Thing", "name": "危険物取扱者 乙種第4類"},
+                    "about": {"@type": "Thing", "name": genre["about"]},
                     "isAccessibleForFree": True,
                     "interactivityType": "active",
                     "isPartOf": {"@type": "LearningResource", "name": genre["h1"], "url": top_url},
@@ -191,7 +321,7 @@ def build_genre(gid, genre, src_dir, manifest):
             "exam": str(d["exam"]),
             "lead": html.escape(d["lead"]),
             "others": others,
-            "app_cta": app_cta(d["id"], "complete"),
+            "app_cta": app_cta(gid, genre, d["id"], "complete"),
             "qlist": qlist,
             "data": json.dumps(payload, ensure_ascii=False).replace("</", "<\\/"),
             "ver": ASSET_VER,
@@ -211,19 +341,8 @@ def build_genre(gid, genre, src_dir, manifest):
         })
         for d in decks
     )
-    faq = [
-        ("危険物乙4の試験は、どの科目が何問出ますか？",
-         "危険物取扱者試験の乙種第4類は、危険物に関する法令が15問、基礎的な物理学及び基礎的な化学が10問、危険物の性質並びにその火災予防及び消火の方法が10問の、計35問で、どの問題も5つの選択肢から1つを選ぶ形式です。試験時間は2時間です。",
-         ("消防試験研究センター「危険物取扱者試験 乙種第4類 過去に出題された問題」（PDF）", "https://www.shoubo-shiken.or.jp/content/kikenbutsu_otsu4.pdf")),
-        ("合格の基準は？",
-         "試験科目ごとの成績が、それぞれ60%以上で合格です。3科目のうち1つでも60%に届かないと不合格になるため、この問題集も冊ごとに正解率を出しています。", None),
-        ("問題は何をもとに作っていますか？",
-         "消防法、危険物の規制に関する政令・規則などの条文（e-Gov 法令検索）と、公的機関の資料をもとに作り、解説の下に出典を書いています。本番の試験問題そのものではありません。", None),
-        ("解いた結果はどこに保存されますか？",
-         "お使いのブラウザの中（localStorage）にだけ保存されます。サーバーには送りません。同じ端末・同じブラウザなら、閉じても続きから解けます。", None),
-        ("お金はかかりますか？",
-         "無料です。登録もいりません。", None),
-    ]
+    faq = genre["faq"]
+
     def faq_answer_html(a, src):
         if not src:
             return html.escape(a)
@@ -236,7 +355,7 @@ def build_genre(gid, genre, src_dir, manifest):
         f'<details class="faq__item"><summary>{html.escape(q)}</summary><p>{faq_answer_html(a, src)}</p></details>'
         for q, a, src in faq
     )
-    top_desc = "危険物乙4（危険物取扱者 乙種第4類）の一問一答。法令・物理化学・性質消火の3科目を4択で解き、その場で正誤と出典つきの解説を確かめられます。間違えた問題だけの解き直しもでき、登録不要・無料です。"
+    top_desc = genre["top_desc"]
     schema = {
         "@context": "https://schema.org",
         "@graph": [
@@ -247,8 +366,8 @@ def build_genre(gid, genre, src_dir, manifest):
                 "url": top_url,
                 "inLanguage": "ja",
                 "learningResourceType": "練習問題",
-                "educationalLevel": "危険物取扱者試験 乙種第4類",
-                "about": {"@type": "Thing", "name": "危険物取扱者 乙種第4類"},
+                "educationalLevel": genre["exam_name"],
+                "about": {"@type": "Thing", "name": genre["about"]},
                 "isAccessibleForFree": True,
                 "hasPart": [
                     {"@type": "LearningResource", "name": f"{d['title']} 一問一答", "url": d["url"]}
@@ -274,22 +393,28 @@ def build_genre(gid, genre, src_dir, manifest):
         ],
     }
     page = render("top.html", {
-        "title": html.escape(f"{genre['h1']}｜法令・物理化学・性質消火 全{total}問 | CodeQuest.work"),
+        "title": html.escape(f"{genre['h1']}｜{genre['top_title_tail']} 全{total}問 | CodeQuest.work"),
         "desc": html.escape(top_desc),
         "url": top_url,
         "og_image": f"{top_url}og.png?v={ASSET_VER}",
         "jsonld": ld(schema),
         "h1": html.escape(genre["h1"]),
+        "genre_id": gid,
         "genre_title": html.escape(genre["title"]),
-        "total": str(total),
+        "plate": html.escape(genre["plate"]),
+        "hero_lead": html.escape(genre["hero_lead"].format(total=total)),
+        "decks_note": html.escape(genre["decks_note"]),
+        "howto_first": html.escape(genre["howto_first"]),
+        "howto_source": html.escape(genre["howto_source"]),
+        "about_html": genre["about_html"],
         "rows": rows,
         "faq": faq_html,
-        "app_cta": app_cta(decks[0]["id"], "top"),
+        "app_cta": app_cta(gid, genre, decks[0]["id"], "top"),
         "ver": ASSET_VER,
     })
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "index.html").write_text(page, encoding="utf-8")
-    print(f"{gid}: {len(decks)}冊・{total}問 → {out_dir.relative_to(ROOT)}/")
+    print(f"{gid}: {len(decks)}冊・{total}問 ← {src_dir} → {out_dir.relative_to(ROOT)}/")
     return total
 
 
@@ -326,13 +451,28 @@ def build_shelf(totals):
     print(f"棚: {len(SHELF)}件 → quiz/index.html")
 
 
+def source_dirs(args):
+    dirs = {gid: genre["src"] for gid, genre in GENRES.items()}
+    for arg in args:
+        if "=" in arg:
+            gid, path = arg.split("=", 1)
+            if gid not in GENRES:
+                fail(f"GENRES に無いジャンル: {gid}")
+            dirs[gid] = Path(path).expanduser()
+            continue
+        folder = Path(arg).expanduser()
+        manifest_path = folder / "decks.json"
+        if not manifest_path.exists():
+            fail(f"{manifest_path} が見つかりません（decks.json の無いフォルダは <ジャンル>=<フォルダ> で渡す）")
+        listed = {d["genre"] for d in json.loads(manifest_path.read_text(encoding="utf-8"))}
+        for gid in listed & set(GENRES):
+            dirs[gid] = folder
+    return dirs
+
+
 def main():
-    src_dir = Path(sys.argv[1]).expanduser() if len(sys.argv) > 1 else DEFAULT_SRC
-    manifest_path = src_dir / "decks.json"
-    if not manifest_path.exists():
-        fail(f"{manifest_path} が見つかりません")
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    totals = {gid: build_genre(gid, genre, src_dir, manifest) for gid, genre in GENRES.items()}
+    dirs = source_dirs(sys.argv[1:])
+    totals = {gid: build_genre(gid, genre, dirs[gid]) for gid, genre in GENRES.items()}
     missing = [item["genre"] for item in SHELF if item["genre"] not in totals]
     if missing:
         fail(f"SHELF にあるのに GENRES に無いジャンル: {', '.join(missing)}")

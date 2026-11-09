@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "qr": "node make-qr.mjs",
-    "build": "node make-qr.mjs && python3 build.py"
+    "build": "python3 build.py"
   },
   "devDependencies": {
     "qrcode": "1.5.4"

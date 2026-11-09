@@ -56,16 +56,16 @@
 
 <main class="top">
   <section class="hero">
-    <div class="plate" aria-hidden="true"><span>火気厳禁</span></div>
+    <div class="plate plate--{{genre_id}}" aria-hidden="true"><span>{{plate}}</span></div>
     <div class="hero__text">
       <h1 class="hero__title">{{h1}}</h1>
-      <p class="hero__lead">危険物取扱者 乙種第4類の試験に出る3科目を、全{{total}}問の4択で解けます。答えるとすぐに正誤と解説が出て、間違えた問題だけを解き直せます。登録はいりません。</p>
+      <p class="hero__lead">{{hero_lead}}</p>
     </div>
   </section>
 
   <section class="decks" aria-labelledby="decks-title">
     <h2 id="decks-title" class="section-title">科目を選んで解く</h2>
-    <p class="decks__note">本番は3科目で35問。科目ごとに60%以上の正解で合格です。</p>
+    <p class="decks__note">{{decks_note}}</p>
     <ul class="decks__list">
 {{rows}}
     </ul>
@@ -76,15 +76,15 @@
   <section class="howto" aria-labelledby="howto-title">
     <h2 id="howto-title" class="section-title">使い方</h2>
     <ol class="howto__steps">
-      <li><strong>科目を選ぶ</strong><span>法令・物理化学・性質消火から1つ選びます。最初は問題数の多い法令がおすすめです。</span></li>
-      <li><strong>4つから選んで答える</strong><span>選んだ瞬間に正誤が出て、正しい答えと解説、出典の条文が表示されます。選択肢の順番は毎回入れ替わります。</span></li>
+      <li><strong>科目を選ぶ</strong><span>{{howto_first}}</span></li>
+      <li><strong>4つから選んで答える</strong><span>選んだ瞬間に正誤が出て、正しい答えと解説、{{howto_source}}が表示されます。選択肢の順番は毎回入れ替わります。</span></li>
       <li><strong>間違えた問題だけ解き直す</strong><span>最後まで解くと正解率が出ます。間違えた問題だけをもう一度解けます。途中でやめても、次に開いたとき続きから再開できます。</span></li>
     </ol>
   </section>
 
   <section class="about" aria-labelledby="about-title">
     <h2 id="about-title" class="section-title">この問題集について</h2>
-    <p>問題と解説は、消防法、危険物の規制に関する政令・規則（<a href="https://laws.e-gov.go.jp/" target="_blank" rel="noopener">e-Gov 法令検索</a>）と公的機関の資料をもとに作り、解説ごとに出典を書いています。本番の試験問題そのものではありません。試験の科目と問題数は<a href="https://www.shoubo-shiken.or.jp/kikenbutsu/annai/subject.html" target="_blank" rel="noopener">消防試験研究センター</a>の案内に合わせています。</p>
+    <p>{{about_html}}</p>
     <p>解いた結果は、このブラウザの中にだけ保存されます。</p>
   </section>
 

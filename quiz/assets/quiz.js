@@ -1,5 +1,5 @@
-import { load, save, clear, tally, track } from "./store.js?v=20261108a";
-import { setupAppLinks } from "./app-link.js?v=20261108a";
+import { load, save, clear, tally, track } from "./store.js?v=20261109b";
+import { setupAppLinks } from "./app-link.js?v=20261109b";
 
 const PASS_RATE = 0.6;
 const MODE_LABEL = { all: "全問", wrong: "間違えた問題", retry: "解き直し" };
@@ -58,6 +58,8 @@ function init() {
   const data = readData();
   const deckId = data.deckId;
   const questions = data.questions;
+  const passRatio = typeof data.passRatio === "number" ? data.passRatio : PASS_RATE;
+  const passLabel = data.passLabel || "本番の合格ライン（各科目60%）";
   const byId = new Map(questions.map((q) => [q.id, q]));
   const allIds = questions.map((q) => q.id);
 
@@ -241,10 +243,11 @@ function init() {
     $("[data-r-len]").textContent = String(len);
     const rate = run.ok / len;
     $("[data-r-meter]").style.width = Math.round(rate * 100) + "%";
-    const need = Math.ceil(len * PASS_RATE) - run.ok;
+    $(".passline__mark").style.left = Math.round(passRatio * 100) + "%";
+    const need = Math.ceil(len * passRatio) - run.ok;
     $("[data-r-text]").textContent =
       "正解率 " + Math.round(rate * 100) + "%。" +
-      (need <= 0 ? "本番の合格ライン（各科目60%）を超えています。" : "本番の合格ライン（各科目60%）まで、あと" + need + "問です。");
+      (need <= 0 ? passLabel + "を超えています。" : passLabel + "まで、あと" + need + "問です。");
     $("[data-passline]").classList.toggle("is-pass", need <= 0);
     const again = $("[data-again-wrong]");
     again.hidden = lastWrong.length === 0;

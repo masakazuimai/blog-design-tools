@@ -1,7 +1,6 @@
-import { APP_LIVE, APP_FALLBACK_URL, APP_SCHEME } from "./config.js?v=20261108a";
-import { track } from "./store.js?v=20261108a";
+import { track } from "./store.js?v=20261109b";
 
-function openApp(deckId) {
+function openApp(deckId, url, scheme) {
   let left = false;
   const onHide = () => {
     left = true;
@@ -12,27 +11,24 @@ function openApp(deckId) {
     document.removeEventListener("visibilitychange", onHide);
     window.removeEventListener("pagehide", onHide);
     if (!left && document.visibilityState === "visible") {
-      window.location.href = APP_FALLBACK_URL;
+      window.location.href = url;
     }
   }, 1500);
-  window.location.href = APP_SCHEME + encodeURIComponent(deckId);
+  window.location.href = scheme + encodeURIComponent(deckId);
 }
 
 export function setupAppLinks() {
   document.querySelectorAll("[data-app-cta]").forEach((box) => {
-    if (!APP_LIVE) {
-      box.hidden = true;
-      return;
-    }
-    box.hidden = false;
+    const url = box.dataset.appUrl || "";
+    const scheme = box.dataset.appScheme || "";
     const link = box.querySelector("[data-app-link]");
-    if (!link) return;
+    if (!url || !scheme || !link) return;
+    box.hidden = false;
     const deckId = box.dataset.deckId || "";
-    link.href = APP_FALLBACK_URL;
     link.addEventListener("click", (event) => {
       event.preventDefault();
       track("quiz_app_click", { deck_id: deckId, placement: box.dataset.placement || "" });
-      openApp(deckId);
+      openApp(deckId, url, scheme);
     });
   });
 }
