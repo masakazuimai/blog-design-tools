@@ -231,3 +231,17 @@ footer a:hover { text-decoration: underline; }
 .howto-cta { margin-top: 32px; }
 .howto-cta .btn { display: inline-block; text-decoration: none; }
 .csv-pre { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; font-family: var(--mono); font-size: 16px; overflow-x: auto; color: var(--accent); margin-bottom: 12px; }
+
+.app-cta { display: grid; grid-template-columns: 1fr auto; gap: 20px 32px; align-items: center; margin: 32px 0 0; padding: clamp(20px, 3vw, 28px); background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 12px; }
+.app-cta__eyebrow { font-family: var(--mono); color: var(--accent); margin-bottom: 4px; }
+.app-cta__title { font-size: clamp(20px, 2.6vw, 24px); font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 10px; }
+.app-cta__points { margin: 0 0 20px; padding-left: 1.2em; color: var(--text-sub); display: grid; gap: 4px; }
+.app-cta__btn { display: inline-block; text-decoration: none; }
+.app-cta__qr { margin: 0; width: 164px; text-align: center; }
+.app-cta__qr img { display: block; width: 148px; height: 148px; margin: 0 auto 8px; border-radius: 8px; }
+.app-cta__qr figcaption { color: var(--text-sub); line-height: 1.5; }
+@media (max-width: 768px), not all and (hover: hover) and (pointer: fine) {
+  .app-cta { grid-template-columns: 1fr; }
+  .app-cta__qr { display: none; }
+  .app-cta__btn { width: 100%; text-align: center; }
+}

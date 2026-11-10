@@ -71,7 +71,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=20261003d">
+<link rel="stylesheet" href="css/style.css?v=20261110a">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -89,6 +89,34 @@
 
   <div class="filebar" id="filebar"></div>
   <main id="app"><noscript><p class="card">このツールを使うにはJavaScriptを有効にしてください。</p></noscript></main>
+
+  <aside class="app-cta" id="app-cta" aria-labelledby="app-cta-title">
+    <div class="app-cta__body">
+      <p class="app-cta__eyebrow">iPhone アプリ版</p>
+      <h2 class="app-cta__title" id="app-cta-title">同じ問題集を、iPhone でも</h2>
+      <ul class="app-cta__points">
+        <li>このページで作った CSV を、そのまま取り込めます。</li>
+        <li>ホーム画面のウィジェットで、今日の復習の数が分かります。</li>
+        <li>iCloud Drive に保存でき、機種を替えても問題集が残ります。</li>
+      </ul>
+      <a class="btn btn--white btn--big app-cta__btn" href="https://codequest.work/app/quiz-maker/site" target="_blank" rel="noopener">App Store で見る（無料）</a>
+    </div>
+    <figure class="app-cta__qr">
+      <img src="assets/qr-app.svg?v=20261110a" width="148" height="148" alt="App Store のアプリのページを開くQRコード" loading="lazy">
+      <figcaption>iPhone のカメラで読み取ると App Store が開きます。</figcaption>
+    </figure>
+  </aside>
+  <script>
+    (function () {
+      var box = document.getElementById("app-cta");
+      if (!box) return;
+      if (/Android/i.test(navigator.userAgent)) { box.remove(); return; }
+      box.querySelector(".app-cta__btn").addEventListener("click", function () {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: "quiz_maker_app_click", placement: "bottom" });
+      });
+    })();
+  </script>
 
 
   <footer>
