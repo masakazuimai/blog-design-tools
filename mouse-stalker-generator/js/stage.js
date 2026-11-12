@@ -36,9 +36,9 @@ button { font: inherit; font-weight: 700; padding: 12px 24px; border-radius: 999
 .card { display: block; text-decoration: none; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
 .card i { display: block; aspect-ratio: 4 / 3; }
 .card span { display: block; padding: 10px 14px; font-weight: 700; }
-.c1 { background: linear-gradient(135deg, #e8b36a, #b8652d); }
-.c2 { background: linear-gradient(135deg, #d9c19a, #8a6a3d); }
-.c3 { background: linear-gradient(135deg, #f2a6a0, #c0485a); }
+.c1 { background: #e8b36a url(images/stage-card1.webp) center / cover; }
+.c2 { background: #d9c19a url(images/stage-card2.webp) center / cover; }
+.c3 { background: #f2a6a0 url(images/stage-card3.webp) center / cover; }
 @media (max-width: 560px) { .cards { grid-template-columns: 1fr 1fr; } .cards a:last-child { display: none; } }
 `;
 
@@ -58,9 +58,9 @@ const SAMPLE = `
   </div>
 </section>
 <div class="cards">
-  <a class="card" href="#"><i class="c1"></i><span>クロワッサン</span></a>
-  <a class="card" href="#"><i class="c2"></i><span>バゲット</span></a>
-  <a class="card" href="#"><i class="c3"></i><span>季節のタルト</span></a>
+  <a class="card" href="#"><i class="c1" data-stalker-gl data-stalker-reveal="images/stage-card1b.webp"></i><span>クロワッサン</span></a>
+  <a class="card" href="#"><i class="c2" data-stalker-gl data-stalker-reveal="images/stage-card2b.webp"></i><span>バゲット</span></a>
+  <a class="card" href="#"><i class="c3" data-stalker-gl data-stalker-reveal="images/stage-card3b.webp"></i><span>季節のタルト</span></a>
 </div>
 `;
 

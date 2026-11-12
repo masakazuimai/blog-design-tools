@@ -52,7 +52,8 @@ ${loopJs(o)}`),
 
 const dotRing = {
   id: "dot-ring",
-  label: "点＋リング",
+  label: "ドット＆リング",
+  aka: "点＋リング",
   desc: "点はマウスにぴったり、リングは遅れて付いてくる二重のカーソルです。",
   uses: ["color", "size", "lag", "hide"],
   defaults: { size: 40, lag: 75, hide: true },
@@ -103,7 +104,8 @@ ${TRACK_JS}
 
 const invert = {
   id: "invert",
-  label: "下の色を反転",
+  label: "ディファレンス（反転）",
+  aka: "下の色を反転",
   desc: "重なった所の色が反転します（mix-blend-mode: difference）。色は白で固定です。",
   uses: ["size", "lag", "hide"],
   defaults: { size: 56, lag: 60 },
@@ -158,10 +160,9 @@ ${FADE_CSS}
   opacity: 0.35;
 }
 ${hideCss(o)}`,
-      js: wrap(o, `  const circle = el.querySelector(".stalker-circle");
-${TRACK_JS}
+      js: wrap(o, `${TRACK_JS}
 ${hoverJs()}
-${loopJs(o, "circle")}`),
+${loopJs(o)}`),
     };
   },
 };
@@ -207,10 +208,9 @@ ${FADE_CSS}
   transform: scale(1);
 }
 ${hideCss(o)}`,
-      js: wrap(o, `  const label = el.querySelector(".stalker-label");
-${TRACK_JS}
+      js: wrap(o, `${TRACK_JS}
 ${hoverJs()}
-${loopJs(o, "label")}`),
+${loopJs(o)}`),
     };
   },
 };

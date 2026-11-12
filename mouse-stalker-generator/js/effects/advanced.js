@@ -31,7 +31,8 @@ const SHOW_CSS = `  opacity: 0;
 
 const magnetic = {
   id: "magnetic",
-  label: "ボタンに吸い付く",
+  label: "マグネットカーソル",
+  aka: "ボタンに吸い付く",
   desc: "リングがボタンの形に変わって包み込み、ボタンもマウスへ少し引き寄せられます。",
   uses: ["color", "size", "lag", "hide"],
   defaults: { size: 36, lag: 25, hide: true },
@@ -97,7 +98,8 @@ ${showJs("el")}
 
 const goo = {
   id: "goo",
-  label: "液体のようにくっつく",
+  label: "メタボール",
+  aka: "液体のようにくっつく",
   desc: "いくつかの丸が少しずつ遅れて付いてきて、液体のようにくっついたり分かれたりします。",
   uses: ["color", "size", "lag", "hide"],
   defaults: { size: 36, lag: 30 },
@@ -192,7 +194,8 @@ ${showJs("el")}
 
 const line = {
   id: "line",
-  label: "軌跡を線で描く",
+  label: "ライントレイル",
+  aka: "軌跡を線で描く",
   desc: "動かした跡に線が伸びて、止めると先端へ縮んでいきます。大きさは線の太さです。",
   uses: ["color", "size", "lag", "hide"],
   defaults: { size: 8, lag: 40 },

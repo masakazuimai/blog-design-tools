@@ -28,7 +28,8 @@ ${make}
 
 const tail = {
   id: "tail",
-  label: "しっぽ",
+  label: "トレイル",
+  aka: "しっぽ",
   desc: "点が列になって、しっぽのように後を追いかけます。",
   uses: ["color", "size", "lag", "hide"],
   defaults: { size: 18, lag: 45 },
@@ -178,7 +179,8 @@ ${hideCss(o)}`,
 
 const ripple = {
   id: "ripple",
-  label: "クリックで波紋",
+  label: "リップル",
+  aka: "クリックで波紋",
   desc: "ふだんは丸が付いてきて、クリックした所に輪が広がります。",
   uses: ["color", "size", "lag", "hide"],
   defaults: { size: 20, lag: 65 },
@@ -243,7 +245,8 @@ ${TRACK_JS}
 
 const stretch = {
   id: "stretch",
-  label: "速さで伸びる",
+  label: "ストレッチ",
+  aka: "速さで伸びる",
   desc: "速く動かすほど進む向きに伸びて、止まると丸に戻ります。",
   uses: ["color", "size", "lag", "hide"],
   defaults: { size: 28, lag: 70 },

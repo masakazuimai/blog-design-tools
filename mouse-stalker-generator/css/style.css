@@ -58,6 +58,29 @@ body {
   margin-bottom: 20px;
 }
 
+.picker-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.fx-search {
+  flex: 1 1 240px;
+  max-width: 360px;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  font: inherit;
+}
+
+.fx-item small {
+  margin-left: 6px;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
 .tier-tabs {
   display: inline-flex;
   gap: 4px;
@@ -249,6 +272,7 @@ body {
   accent-color: var(--accent);
 }
 
+.field select,
 .field input[type="text"] {
   padding: 8px 12px;
   border: 1px solid var(--border);

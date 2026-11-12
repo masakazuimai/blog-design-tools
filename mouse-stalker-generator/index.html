@@ -81,7 +81,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css?v=20261112a" />
+    <link rel="stylesheet" href="css/style.css?v=20261112f" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
   </head>
   <body>
@@ -96,12 +96,15 @@
 
     <header class="header">
       <h1>マウスストーカー ジェネレーター</h1>
-      <p>カーソルに付いてくる動きを選んで、色・大きさ・遅れを変え、コードをそのままコピーできます。初級は貼るだけ、上級は GSAP、プロは Blender で描いた立体を使います。</p>
+      <p>カーソルに付いてくる100種以上の動きから選んで、色・大きさ・遅れを変え、コードをそのままコピーできます。初級は貼るだけ、上級は GSAP、上級＋は Three.js（WebGL）、キャラは Blender で描いたキャラが付いてきます。</p>
     </header>
 
     <main class="container">
       <section class="picker" aria-label="動きを選ぶ">
-        <div class="tier-tabs" id="tierTabs" role="tablist" aria-label="むずかしさ"></div>
+        <div class="picker-bar">
+          <div class="tier-tabs" id="tierTabs" role="tablist" aria-label="むずかしさ"></div>
+          <input type="search" id="fxSearch" class="fx-search" placeholder="動きの名前で探す（例: 雪、文字）" aria-label="動きの名前で探す" />
+        </div>
         <p class="tier-note" id="tierNote"></p>
         <div class="fx-list" id="fxList"></div>
       </section>
@@ -145,6 +148,15 @@
           <div class="field" data-use="emoji">
             <label for="optEmoji">絵文字</label>
             <input type="text" id="optEmoji" maxlength="8" />
+          </div>
+          <div class="field" data-use="brush">
+            <label for="optBrush">なぞる形</label>
+            <select id="optBrush">
+              <option value="ink">にじみ</option>
+              <option value="pen">ペン</option>
+              <option value="art">筆</option>
+              <option value="spray">スプレー</option>
+            </select>
           </div>
           <div class="field field-check" data-use="hide">
             <input type="checkbox" id="optHide" />
@@ -200,6 +212,6 @@
       </div>
     </footer>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script type="module" src="js/main.js?v=20261112a"></script>
+    <script type="module" src="js/main.js?v=20261112u"></script>
   </body>
 </html>

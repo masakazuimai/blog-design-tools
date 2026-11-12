@@ -1,24 +1,47 @@
-import { BASIC } from "./effects/basic.js?v=20261112a";
-import { MIDDLE } from "./effects/middle.js?v=20261112a";
-import { ADVANCED } from "./effects/advanced.js?v=20261112a";
-import { PRO } from "./effects/pro.js?v=20261112a";
+import { BASIC } from "./effects/basic.js?v=20261112f";
+import { MIDDLE } from "./effects/middle.js?v=20261112f";
+import { ADVANCED } from "./effects/advanced.js?v=20261112f";
+import { BASIC_2 } from "./effects/basic-2.js?v=20261112f";
+import { MIDDLE_2 } from "./effects/middle-2.js?v=20261112f";
+import { MIDDLE_3 } from "./effects/middle-3.js?v=20261112f";
+import { ADVANCED_2 } from "./effects/advanced-2.js?v=20261112f";
+import { ADVANCED_3 } from "./effects/advanced-3.js?v=20261112f";
+import { PRO } from "./effects/pro.js?v=20261112c";
+import { PRO_2 } from "./effects/pro-2.js?v=20261112c";
+import { PRO_WEBGL } from "./effects/webgl.js?v=20261112u";
 import { GSAP_CDN } from "./effects/_shared.js?v=20261112a";
-import { stageDoc } from "./stage.js?v=20261112a";
+import { stageDoc } from "./stage.js?v=20261112d";
 
 const TIERS = [
-  { id: "basic", label: "初級", note: "CSS と数行の JavaScript。貼るだけで動きます。", items: BASIC },
-  { id: "middle", label: "中級", note: "素の JavaScript で粒や形を動かします。ライブラリは要りません。", items: MIDDLE },
-  { id: "advanced", label: "上級", note: "GSAP を使います。読み込みの1行もコードに入っています。", items: ADVANCED },
+  { id: "basic", label: "初級", note: "CSS と数行の JavaScript。貼るだけで動きます。", items: [...BASIC, ...BASIC_2] },
+  {
+    id: "middle",
+    label: "中級",
+    note: "素の JavaScript で粒や形を動かします。ライブラリは要りません。",
+    items: [...MIDDLE, ...MIDDLE_2, ...MIDDLE_3],
+  },
+  {
+    id: "advanced",
+    label: "上級",
+    note: "GSAP を使います。読み込みの1行もコードに入っています。",
+    items: [...ADVANCED, ...ADVANCED_2, ...ADVANCED_3],
+  },
   {
     id: "pro",
-    label: "プロ",
-    note: "Blender で描いた立体の画像を、動きに合わせて切り替えます。画像をダウンロードして images フォルダに置いてください。",
-    items: PRO,
+    label: "上級＋",
+    note: "Three.js（WebGL）でその場で描く立体です。形・質感・映り込みの景色は Blender で作りました。素材をダウンロードして images フォルダに置いてください。",
+    items: PRO_WEBGL,
+  },
+  {
+    id: "chara",
+    label: "キャラ",
+    note: "Blender で描いた立体のキャラや小物が、歩いたり跳ねたりして付いてきます。画像をダウンロードして images フォルダに置いてください。",
+    items: [...PRO, ...PRO_2],
   },
 ];
 
 const ALL = TIERS.flatMap((t) => t.items.map((fx) => ({ ...fx, tier: t.id })));
-const BASE = { color: "#6366f1", size: 24, lag: 60, hide: false, text: "VIEW", emoji: "🐾" };
+const BASE = { color: "#6366f1", size: 24, lag: 60, hide: false, text: "VIEW", emoji: "🐾", brush: "ink" };
 const SIZE_RANGE = [8, 120];
 
 const $ = (id) => document.getElementById(id);
@@ -26,6 +49,7 @@ const els = {
   tabs: $("tierTabs"),
   note: $("tierNote"),
   list: $("fxList"),
+  search: $("fxSearch"),
   frame: $("stageFrame"),
   themes: $("themes"),
   fxName: $("fxName"),
@@ -39,6 +63,7 @@ const els = {
   hide: $("optHide"),
   text: $("optText"),
   emoji: $("optEmoji"),
+  brush: $("optBrush"),
   reset: $("resetOpts"),
   codeTabs: $("codeTabs"),
   code: $("codeOut"),
@@ -67,15 +92,22 @@ function renderTabs() {
   ).join("");
 }
 
+function itemButton(fx, tierLabel) {
+  const badge = tierLabel ? `<small>${tierLabel}</small>` : "";
+  return `<button type="button" class="fx-item" data-fx="${fx.id}" aria-pressed="${fx.id === state.fx.id}">${fx.label}${badge}</button>`;
+}
+
 function renderList() {
+  const q = els.search.value.trim().toLowerCase();
+  if (q) {
+    const hits = ALL.filter((fx) => `${fx.label} ${fx.aka || ""} ${fx.desc} ${fx.id}`.toLowerCase().includes(q));
+    els.note.textContent = hits.length ? `「${els.search.value.trim()}」に合う動き: ${hits.length}種` : "合う動きがありません。別のことばで探してください。";
+    els.list.innerHTML = hits.map((fx) => itemButton(fx, TIERS.find((t) => t.id === fx.tier).label)).join("");
+    return;
+  }
   const tier = TIERS.find((t) => t.id === state.fx.tier);
   els.note.textContent = tier.note;
-  els.list.innerHTML = tier.items
-    .map(
-      (fx) =>
-        `<button type="button" class="fx-item" data-fx="${fx.id}" aria-pressed="${fx.id === state.fx.id}">${fx.label}</button>`
-    )
-    .join("");
+  els.list.innerHTML = tier.items.map((fx) => itemButton(fx)).join("");
 }
 
 function renderControls() {
@@ -92,16 +124,33 @@ function renderControls() {
   els.hide.checked = !!opts.hide;
   els.text.value = opts.text;
   els.emoji.value = opts.emoji;
+  els.brush.value = opts.brush;
   document.querySelectorAll("[data-use]").forEach((f) => {
     f.hidden = !fx.uses.includes(f.dataset.use);
   });
   els.fxName.textContent = fx.label;
   els.fxDesc.textContent = fx.desc;
-  els.download.hidden = !fx.sprite;
-  if (fx.sprite) {
-    els.download.href = `images/${fx.sprite}`;
-    els.download.setAttribute("download", fx.sprite);
-  }
+  const files = assetFiles(fx);
+  els.download.hidden = !files.length;
+  els.download.textContent = files.length > 1 ? `素材をダウンロード（${files.length}つ）` : "素材をダウンロード";
+}
+
+function assetFiles(fx) {
+  if (typeof fx.files === "function") return fx.files(state.opts);
+  return fx.files || (fx.sprite ? [fx.sprite] : []);
+}
+
+function downloadAssets() {
+  assetFiles(state.fx).forEach((file, i) => {
+    setTimeout(() => {
+      const a = document.createElement("a");
+      a.href = `images/${file}`;
+      a.download = file;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => a.remove(), 1000);
+    }, i * 400);
+  });
 }
 
 function lagLabel(v) {
@@ -139,7 +188,8 @@ const PASTE_NOTES = {
 function renderCode(code) {
   els.code.textContent = codeText(code);
   els.pasteNote.textContent =
-    PASTE_NOTES[state.codeTab] + (state.fx.sprite ? " 画像は、貼ったページから見て images フォルダの中に置きます。" : "");
+    PASTE_NOTES[state.codeTab] +
+    (assetFiles(state.fx).length ? ` 素材（${assetFiles(state.fx).join("・")}）は、貼ったページから見て images フォルダの中に置きます。` : "");
   els.codeTabs.querySelectorAll("button").forEach((b) => {
     b.setAttribute("aria-selected", String(b.dataset.tab === state.codeTab));
   });
@@ -202,8 +252,10 @@ function bind() {
     const b = e.target.closest("[data-tier]");
     if (!b) return;
     const tier = TIERS.find((t) => t.id === b.dataset.tier);
+    els.search.value = "";
     selectFx({ ...tier.items[0], tier: tier.id });
   });
+  els.search.addEventListener("input", renderList);
   els.list.addEventListener("click", (e) => {
     const b = e.target.closest("[data-fx]");
     if (b) selectFx(ALL.find((f) => f.id === b.dataset.fx));
@@ -221,6 +273,7 @@ function bind() {
   els.hide.addEventListener("change", () => setOpt("hide", els.hide.checked));
   els.text.addEventListener("input", () => setOpt("text", els.text.value.slice(0, 12)));
   els.emoji.addEventListener("input", () => setOpt("emoji", els.emoji.value.slice(0, 8)));
+  els.brush.addEventListener("change", () => setOpt("brush", els.brush.value));
   els.reset.addEventListener("click", () => {
     state.opts = { ...BASE, ...state.fx.defaults };
     renderControls();
@@ -231,6 +284,10 @@ function bind() {
     if (!b) return;
     state.codeTab = b.dataset.tab;
     renderCode(currentCode());
+  });
+  els.download.addEventListener("click", (e) => {
+    e.preventDefault();
+    downloadAssets();
   });
   els.copy.addEventListener("click", async () => {
     await copyText(els.code.textContent);
