@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mouse Stalker Generator｜Copy-paste custom cursor effects (CSS, JS, GSAP, Three.js)</title>
+    <meta
+      name="description"
+      content="Pick a mouse stalker (custom cursor follower), tweak its color, size and delay, and copy the HTML, CSS and JavaScript. From a simple circle to sparkles, GSAP magnetic cursors, Three.js image effects and 3D characters rendered in Blender. Free, no sign-up, no jQuery."
+    />
+    <link rel="canonical" href="https://codequest.work/generator/mouse-stalker-generator/en/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/mouse-stalker-generator/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/mouse-stalker-generator/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/mouse-stalker-generator/" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Mouse Stalker Generator｜Copy-paste custom cursor effects" />
+    <meta
+      property="og:description"
+      content="Pick a cursor follower, tweak it, and copy the HTML, CSS and JavaScript. From a simple circle to GSAP magnetic cursors, Three.js image effects and Blender characters."
+    />
+    <meta property="og:url" content="https://codequest.work/generator/mouse-stalker-generator/en/" />
+    <meta property="og:image" content="https://codequest.work/generator/mouse-stalker-generator/assets/og-en.png?v=20261113a" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Mouse Stalker Generator" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://codequest.work/generator/mouse-stalker-generator/assets/og-en.png?v=20261113a" />
+    <meta name="twitter:title" content="Mouse Stalker Generator｜Copy-paste custom cursor effects" />
+    <meta
+      name="twitter:description"
+      content="Pick a cursor follower, tweak it, and copy the HTML, CSS and JavaScript. From a simple circle to GSAP magnetic cursors, Three.js image effects and Blender characters."
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "Mouse Stalker Generator",
+            "url": "https://codequest.work/generator/mouse-stalker-generator/en/",
+            "description": "A free tool to pick a mouse stalker (custom cursor follower), tweak its color, size and delay, and copy the HTML, CSS and JavaScript.",
+            "applicationCategory": "DesignApplication",
+            "operatingSystem": "Web",
+            "browserRequirements": "Requires JavaScript.",
+            "inLanguage": "en",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+            "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://codequest.work/" },
+              { "@type": "ListItem", "position": 2, "name": "Generators", "item": "https://codequest.work/category/generator/" },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Mouse Stalker Generator",
+                "item": "https://codequest.work/generator/mouse-stalker-generator/en/"
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css?v=20261113a" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+
+    <header class="header">
+      <a class="lang-switch" href="../" hreflang="ja">日本語</a>
+      <h1>Mouse Stalker Generator</h1>
+      <p>Pick from 100+ effects that follow the cursor, change the color, size and delay, and copy the code. Basic ones are copy-paste, Advanced uses GSAP, Advanced+ uses Three.js (WebGL), and Characters are 3D figures rendered in Blender.</p>
+    </header>
+
+    <main class="container">
+      <section class="picker" aria-label="Choose an effect">
+        <div class="picker-bar">
+          <div class="tier-tabs" id="tierTabs" role="tablist" aria-label="Level"></div>
+          <input type="search" id="fxSearch" class="fx-search" placeholder="Search effects (e.g. snow, text)" aria-label="Search effects" />
+        </div>
+        <p class="tier-note" id="tierNote"></p>
+        <div class="fx-list" id="fxList"></div>
+      </section>
+
+      <section class="work">
+        <div class="stage">
+          <div class="stage-bar">
+            <span class="stage-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="stage-name" id="fxName"></span>
+            <div class="themes" id="themes" role="group" aria-label="Background">
+              <button type="button" data-theme="light" aria-pressed="true">Light</button>
+              <button type="button" data-theme="dark" aria-pressed="false">Dark</button>
+              <button type="button" data-theme="photo" aria-pressed="false">Photo</button>
+            </div>
+          </div>
+          <iframe id="stageFrame" class="stage-frame" title="Sample page to try the mouse stalker"></iframe>
+          <p class="stage-desc" id="fxDesc"></p>
+        </div>
+
+        <aside class="panel" aria-label="Settings">
+          <h2>Settings</h2>
+          <div class="field" data-use="color">
+            <label for="optColor">Color</label>
+            <div class="color-row">
+              <input type="color" id="optColor" value="#6366f1" />
+              <span id="optColorVal">#6366f1</span>
+            </div>
+          </div>
+          <div class="field" data-use="size">
+            <label for="optSize">Size <output id="optSizeVal"></output></label>
+            <input type="range" id="optSize" min="8" max="120" step="1" />
+          </div>
+          <div class="field" data-use="lag">
+            <label for="optLag">Delay <output id="optLagVal"></output></label>
+            <input type="range" id="optLag" min="0" max="100" step="1" />
+          </div>
+          <div class="field" data-use="text">
+            <label for="optText">Text in the circle</label>
+            <input type="text" id="optText" maxlength="12" />
+          </div>
+          <div class="field" data-use="emoji">
+            <label for="optEmoji">Emoji</label>
+            <input type="text" id="optEmoji" maxlength="8" />
+          </div>
+          <div class="field" data-use="brush">
+            <label for="optBrush">Brush</label>
+            <select id="optBrush">
+              <option value="ink">Ink</option>
+              <option value="pen">Pen</option>
+              <option value="art">Brush</option>
+              <option value="spray">Spray</option>
+            </select>
+          </div>
+          <div class="field field-check" data-use="hide">
+            <input type="checkbox" id="optHide" />
+            <label for="optHide">Hide the default arrow</label>
+          </div>
+          <button class="btn" id="resetOpts" type="button">Reset settings</button>
+          <p class="panel-note">The exported code does nothing on touch devices without a mouse, or when the visitor prefers reduced motion.</p>
+        </aside>
+      </section>
+
+      <section class="code" aria-label="Code">
+        <div class="code-bar">
+          <div class="code-tabs" id="codeTabs" role="tablist" aria-label="Code type">
+            <button type="button" role="tab" data-tab="all" aria-selected="true">All in one</button>
+            <button type="button" role="tab" data-tab="html" aria-selected="false">HTML</button>
+            <button type="button" role="tab" data-tab="css" aria-selected="false">CSS</button>
+            <button type="button" role="tab" data-tab="js" aria-selected="false">JS</button>
+          </div>
+          <div class="code-actions">
+            <a class="btn" id="downloadSprite" href="#" hidden>Download asset</a>
+            <button class="btn btn-primary" id="copyCode" type="button">Copy code</button>
+          </div>
+        </div>
+        <p class="paste-note" id="pasteNote"></p>
+        <pre class="code-out"><code id="codeOut"></code></pre>
+      </section>
+
+      <section class="about">
+        <h2>What is a mouse stalker?</h2>
+        <p>
+          A mouse stalker is an element that follows the cursor around the page: a circle, an image, particles or a trail. Effects that change shape over links also tell visitors what is clickable.
+          Every effect here is plain code you can paste into any site: no build step, no jQuery, and it turns itself off on touch devices and for visitors who prefer reduced motion.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <span
+        >&copy; <span class="cq-year">2026</span
+        ><script>
+          document.currentScript.previousElementSibling.textContent = new Date().getFullYear();
+        </script>
+        Mouse Stalker Generator | Created by
+        <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span
+      >
+      <div class="footer-links">
+        <a href="howto.html">How to use &amp; FAQ</a>
+        <a href="../../gsap-animation-gallery/en/">GSAP Animation Gallery &rarr;</a>
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="../js/main.js?v=20261113a"></script>
+  </body>
+</html>

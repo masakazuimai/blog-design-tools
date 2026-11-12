@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to use &amp; FAQ｜Mouse Stalker Generator</title>
+    <meta
+      name="description"
+      content="How to use the Mouse Stalker Generator: the difference between Basic, Intermediate, Advanced (GSAP), Advanced+ (Three.js) and Characters, how to add it to WordPress or any site, mobile behavior and image assets."
+    />
+    <link rel="canonical" href="https://codequest.work/generator/mouse-stalker-generator/en/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/mouse-stalker-generator/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/mouse-stalker-generator/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/mouse-stalker-generator/howto.html" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="How to use &amp; FAQ｜Mouse Stalker Generator" />
+    <meta property="og:description" content="The levels, how to paste the code into WordPress or any site, mobile behavior and image assets." />
+    <meta property="og:url" content="https://codequest.work/generator/mouse-stalker-generator/en/howto.html" />
+    <meta property="og:image" content="https://codequest.work/generator/mouse-stalker-generator/assets/og-en.png?v=20261113a" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="How to use &amp; FAQ｜Mouse Stalker Generator" />
+    <meta name="twitter:description" content="The levels, how to paste the code into WordPress or any site, mobile behavior and image assets." />
+    <meta name="twitter:image" content="https://codequest.work/generator/mouse-stalker-generator/assets/og-en.png?v=20261113a" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I add a mouse stalker to WordPress?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Paste the \"All in one\" code right before </body> in your theme's footer.php, or into the footer field of a plugin that lets you add code to the header and footer. If you edit the theme directly, use a child theme so updates don't overwrite it."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens on phones?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nothing. The exported code only runs on devices with a mouse (hover: hover and pointer: fine), so phones and tablets show the page as usual."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Will it slow down my site?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Positions are updated inside requestAnimationFrame and only change transform, so the page layout is not recalculated. Particle effects only spawn particles after the cursor moves a set distance and remove them when they fade."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I hide the default arrow?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Either is fine. Hiding it looks cleaner but can make clickable areas less obvious. If you hide it, pair it with an effect that changes shape over links, such as Grow on Links, Text Circle or Magnetic Cursor."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is GSAP free to use?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Since 2025 GSAP is free to use, including on commercial sites. The Advanced code includes the line that loads it from a CDN, so you can paste it as is."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use the Character images on commercial sites?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. They are free for personal and commercial use and no credit is required. Redistributing or selling the images themselves as assets is not allowed."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I make my own logo or image follow the cursor?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Choose Emoji or Image in Basic and replace the content of the span in the HTML with an img element; the image follows with the same motion. To switch frames by direction or rotation, prepare a sprite sheet like the Characters level and swap the background URL in the CSS."
+            }
+          }
+        ]
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css?v=20261113a" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+
+    <header class="header">
+      <a class="lang-switch" href="../howto.html" hreflang="ja">日本語</a>
+      <h1>How to use &amp; FAQ</h1>
+      <p>How to use the Mouse Stalker Generator, and common questions</p>
+    </header>
+
+    <main class="container">
+      <article class="doc">
+        <h2>Basic steps</h2>
+        <ol>
+          <li>Pick a level (Basic, Intermediate, Advanced, Advanced+ or Characters) and choose an effect</li>
+          <li>Move the mouse over the sample page, including over links and buttons</li>
+          <li>Change the color, size and delay in the settings</li>
+          <li>Press "Copy code" and paste it into your site (for Characters, also download the image)</li>
+        </ol>
+
+        <h2>Levels</h2>
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>Level</th>
+              <th>Uses</th>
+              <th>Good for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Basic</td>
+              <td>CSS and a few lines of JavaScript</td>
+              <td>Trying your first one. Paste it and it works</td>
+            </tr>
+            <tr>
+              <td>Intermediate</td>
+              <td>Plain JavaScript</td>
+              <td>Adding particles, trails and other flourishes</td>
+            </tr>
+            <tr>
+              <td>Advanced</td>
+              <td>GSAP (loading line included)</td>
+              <td>Smooth motion such as magnetic buttons and metaballs</td>
+            </tr>
+            <tr>
+              <td>Advanced+</td>
+              <td>Three.js (WebGL), loading included</td>
+              <td>Moving the screen and images themselves: Fluid, Glitch, Mask Reveal, Dissolve</td>
+            </tr>
+            <tr>
+              <td>Characters</td>
+              <td>Sprite sheets rendered in Blender (directions and action frames)</td>
+              <td>Friendly sites with characters that walk, hop and sleep</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>How to paste</h2>
+        <p>
+          The easiest way is to paste the "All in one" code right before <code>&lt;/body&gt;</code>.
+          Styles and scripts are bundled together, so you don't need to touch anything else.
+        </p>
+        <p>
+          If your site keeps CSS and JavaScript in separate files, switch tabs and copy HTML, CSS and JS separately into each file.
+          The Advanced code includes the line that loads GSAP from a CDN in the HTML; skip it if your site already loads GSAP.
+        </p>
+        <p>
+          For Characters, put the image you get from "Download asset" in an <code>images</code> folder next to the page.
+          If you put it elsewhere, change <code>images/…</code> in the code to match.
+          Advanced+ loads Three.js from a CDN, so it is heavier than the other levels (it does not run on phones).
+          Glitch, Mask Reveal and Dissolve work on <code>img</code> elements and on elements with a background image that have the <code>data-stalker-gl</code> attribute.
+          Set the second image for Mask Reveal with <code>data-stalker-reveal="images/second.webp"</code> on the element (without it, a grayscale version of the same image is revealed).
+        </p>
+
+        <h2>Reacting to more elements</h2>
+        <p>
+          Grow on Links, Text Circle and Magnetic Cursor change shape over <code>a</code> and <code>button</code>.
+          To make other elements such as cards react, add the <code>data-stalker</code> attribute to them.
+        </p>
+        <pre class="doc-code"><code>&lt;div class="card" data-stalker&gt;…&lt;/div&gt;</code></pre>
+
+        <h2>FAQ</h2>
+
+        <h3>How do I add a mouse stalker to WordPress?</h3>
+        <p>
+          Paste the "All in one" code right before <code>&lt;/body&gt;</code> in your theme's <code>footer.php</code>, or into the footer field of a plugin that lets you add code to the header and footer.
+          If you edit the theme directly, use a child theme so updates don't overwrite it.
+        </p>
+
+        <h3>What happens on phones?</h3>
+        <p>
+          Nothing. The exported code only runs on devices with a mouse (<code>hover: hover</code> and <code>pointer: fine</code>), so phones and tablets show the page as usual.
+          It also does nothing for visitors who have turned on reduced motion.
+        </p>
+
+        <h3>Will it slow down my site?</h3>
+        <p>
+          Positions are updated inside <code>requestAnimationFrame</code> and only change <code>transform</code>, so the page layout is not recalculated.
+          Particle effects only spawn particles after the cursor moves a set distance and remove them when they fade.
+        </p>
+
+        <h3>Should I hide the default arrow?</h3>
+        <p>
+          Either is fine. Hiding it looks cleaner but can make clickable areas less obvious.
+          If you hide it, pair it with an effect that changes shape over links, such as Grow on Links, Text Circle or Magnetic Cursor.
+        </p>
+
+        <h3>Is GSAP free to use?</h3>
+        <p>
+          Yes. Since 2025 GSAP is free to use, including on commercial sites.
+          The Advanced code includes the line that loads it from a CDN, so you can paste it as is.
+        </p>
+
+        <h3>Can I use the Character images on commercial sites?</h3>
+        <p>Yes. They are free for personal and commercial use and no credit is required. Redistributing or selling the images themselves as assets is not allowed.</p>
+
+        <h3>How do I make my own logo or image follow the cursor?</h3>
+        <p>
+          Choose Emoji or Image in Basic and replace the content of the <code>span</code> in the HTML with an <code>img</code> element; the image follows with the same motion.
+          To switch frames by direction or rotation, prepare a sprite sheet like the Characters level and swap the <code>background</code> URL in the CSS.
+        </p>
+
+        <p class="doc-back"><a href="./">&larr; Back to the tool</a></p>
+      </article>
+    </main>
+
+    <footer>
+      <span
+        >&copy; <span class="cq-year">2026</span
+        ><script>
+          document.currentScript.previousElementSibling.textContent = new Date().getFullYear();
+        </script>
+        Mouse Stalker Generator | Created by
+        <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span
+      >
+      <div class="footer-links">
+        <a href="./">Back to the tool</a>
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -298,7 +298,7 @@ const BRUSHES = {
     mc.stroke();`,
   },
   art: {
-    post: "m = smoothstep(0.05, 0.6, m);",
+    post: "m = smoothstep(0.02, 0.25, m);",
     setup: `  const tip = new Image();
   tip.src = "images/stalker-brush.webp";
   let lastAng = 0;`,

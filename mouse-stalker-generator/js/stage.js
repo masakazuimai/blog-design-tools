@@ -42,25 +42,30 @@ button { font: inherit; font-weight: 700; padding: 12px 24px; border-radius: 999
 @media (max-width: 560px) { .cards { grid-template-columns: 1fr 1fr; } .cards a:last-child { display: none; } }
 `;
 
-const SAMPLE = `
+const WORDS = {
+  ja: ["こむぎ堂", "メニュー", "お店について", "アクセス", "朝いちばんの、焼きたてを。", "マウスを動かしたり、リンクやボタンに乗せたりして、動きを試してください。", "メニューを見る", "地図を開く", "クロワッサン", "バゲット", "季節のタルト"],
+  en: ["Komugi Bakery", "Menu", "About", "Visit", "Fresh from the oven, first thing.", "Move the mouse and hover the links and buttons to try the effect.", "See the menu", "Open the map", "Croissant", "Baguette", "Seasonal tart"],
+};
+
+const sample = (w) => `
 <nav>
-  <strong>こむぎ堂</strong>
-  <a href="#">メニュー</a>
-  <a href="#">お店について</a>
-  <a href="#">アクセス</a>
+  <strong>${w[0]}</strong>
+  <a href="#">${w[1]}</a>
+  <a href="#">${w[2]}</a>
+  <a href="#">${w[3]}</a>
 </nav>
 <section class="hero">
-  <h1>朝いちばんの、焼きたてを。</h1>
-  <p>マウスを動かしたり、リンクやボタンに乗せたりして、動きを試してください。</p>
+  <h1>${w[4]}</h1>
+  <p>${w[5]}</p>
   <div class="actions">
-    <button class="primary" type="button">メニューを見る</button>
-    <button class="ghost" type="button">地図を開く</button>
+    <button class="primary" type="button">${w[6]}</button>
+    <button class="ghost" type="button">${w[7]}</button>
   </div>
 </section>
 <div class="cards">
-  <a class="card" href="#"><i class="c1" data-stalker-gl data-stalker-reveal="images/stage-card1b.webp"></i><span>クロワッサン</span></a>
-  <a class="card" href="#"><i class="c2" data-stalker-gl data-stalker-reveal="images/stage-card2b.webp"></i><span>バゲット</span></a>
-  <a class="card" href="#"><i class="c3" data-stalker-gl data-stalker-reveal="images/stage-card3b.webp"></i><span>季節のタルト</span></a>
+  <a class="card" href="#"><i class="c1" data-stalker-gl data-stalker-reveal="images/stage-card1b.webp"></i><span>${w[8]}</span></a>
+  <a class="card" href="#"><i class="c2" data-stalker-gl data-stalker-reveal="images/stage-card2b.webp"></i><span>${w[9]}</span></a>
+  <a class="card" href="#"><i class="c3" data-stalker-gl data-stalker-reveal="images/stage-card3b.webp"></i><span>${w[10]}</span></a>
 </div>
 `;
 
@@ -73,6 +78,7 @@ export function previewJs(js) {
     .join("\n");
 }
 
-export function stageDoc(code, theme, needsGsap) {
-  return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><style>${STAGE_CSS}\n${code.css}</style></head><body class="theme-${theme}">${SAMPLE}${code.html}${needsGsap ? GSAP_CDN : ""}<script>${BLOCK_LINKS}\n${previewJs(code.js)}<\/script></body></html>`;
+export function stageDoc(code, theme, needsGsap, lang = "ja", root = "") {
+  const base = root ? `<base href="${root}">` : "";
+  return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8">${base}<style>${STAGE_CSS}\n${code.css}</style></head><body class="theme-${theme}">${sample(WORDS[lang] || WORDS.ja)}${code.html}${needsGsap ? GSAP_CDN : ""}<script>${BLOCK_LINKS}\n${previewJs(code.js)}<\/script></body></html>`;
 }

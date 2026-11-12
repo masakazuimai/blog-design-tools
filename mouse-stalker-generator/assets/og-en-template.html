@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        position: relative;
+        font-family: "Noto Sans JP", sans-serif;
+        background: #fffdf8;
+        color: #1e293b;
+        padding: 96px 80px;
+      }
+      .site {
+        position: absolute;
+        inset: 0 0 0 auto;
+        width: 520px;
+        background: #f1ece2;
+        border-left: 1px solid #e6dccb;
+      }
+      .trail {
+        position: absolute;
+        border-radius: 50%;
+        background: #6366f1;
+      }
+      .sprite {
+        position: absolute;
+        background-repeat: no-repeat;
+      }
+      .cursor {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+      }
+      h1 {
+        position: relative;
+        font-size: 66px;
+        font-weight: 900;
+        line-height: 1.15;
+        letter-spacing: -0.04em;
+        width: 640px;
+      }
+      p {
+        position: relative;
+        margin-top: 28px;
+        font-size: 30px;
+        font-weight: 700;
+        color: #475569;
+        width: 600px;
+        line-height: 1.5;
+      }
+      .tiers {
+        position: absolute;
+        left: 80px;
+        bottom: 72px;
+        display: flex;
+        gap: 12px;
+      }
+      .tiers span {
+        padding: 8px 22px;
+        border-radius: 999px;
+        border: 2px solid #1e293b;
+        font-size: 24px;
+        font-weight: 700;
+      }
+      .brand {
+        position: absolute;
+        right: 40px;
+        bottom: 32px;
+        font-size: 24px;
+        font-weight: 700;
+        color: #475569;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="site"></div>
+    <h1>Mouse Stalker<br />Generator</h1>
+    <p>Pick it, tweak it, copy the code.</p>
+    <div class="tiers"><span>CSS</span><span>JS</span><span>GSAP</span><span>Three.js</span><span>Blender</span></div>
+
+    <i class="trail" style="left: 760px; top: 470px; width: 14px; height: 14px; opacity: 0.25"></i>
+    <i class="trail" style="left: 800px; top: 430px; width: 18px; height: 18px; opacity: 0.4"></i>
+    <i class="trail" style="left: 846px; top: 392px; width: 22px; height: 22px; opacity: 0.6"></i>
+    <div class="sprite" style="left: 880px; top: 250px; width: 180px; height: 180px; background-image: url(../images/stalker-critter.webp); background-size: 2880px 180px; background-position: -2160px 0"></div>
+    <div class="sprite" style="left: 735px; top: 70px; width: 130px; height: 130px; background-image: url(../images/stalker-orb.webp); background-size: 2080px 130px; background-position: 0 0"></div>
+    <div class="sprite" style="left: 1000px; top: 70px; width: 140px; height: 140px; background-image: url(../images/stalker-ring.webp); background-size: 2240px 140px; background-position: -280px 0"></div>
+    <svg class="cursor" style="left: 1080px; top: 236px" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 2l15 11-7 1-3 7z" fill="#1e293b" stroke="#fff" stroke-width="1.5" stroke-linejoin="round" />
+    </svg>
+    <div class="brand">CodeQuest.work</div>
+  </body>
+</html>

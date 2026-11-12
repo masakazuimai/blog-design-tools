@@ -8,37 +8,35 @@ import { ADVANCED_2 } from "./effects/advanced-2.js?v=20261112f";
 import { ADVANCED_3 } from "./effects/advanced-3.js?v=20261112f";
 import { PRO } from "./effects/pro.js?v=20261112c";
 import { PRO_2 } from "./effects/pro-2.js?v=20261112c";
-import { PRO_WEBGL } from "./effects/webgl.js?v=20261112u";
+import { PRO_WEBGL } from "./effects/webgl.js?v=20261113a";
 import { GSAP_CDN } from "./effects/_shared.js?v=20261112a";
-import { stageDoc } from "./stage.js?v=20261112d";
+import { stageDoc } from "./stage.js?v=20261113a";
+import { UI } from "./i18n.js?v=20261113a";
+import { EN } from "./i18n-en.js?v=20261113a";
 
-const TIERS = [
-  { id: "basic", label: "初級", note: "CSS と数行の JavaScript。貼るだけで動きます。", items: [...BASIC, ...BASIC_2] },
-  {
-    id: "middle",
-    label: "中級",
-    note: "素の JavaScript で粒や形を動かします。ライブラリは要りません。",
-    items: [...MIDDLE, ...MIDDLE_2, ...MIDDLE_3],
-  },
-  {
-    id: "advanced",
-    label: "上級",
-    note: "GSAP を使います。読み込みの1行もコードに入っています。",
-    items: [...ADVANCED, ...ADVANCED_2, ...ADVANCED_3],
-  },
-  {
-    id: "pro",
-    label: "上級＋",
-    note: "Three.js（WebGL）でその場で描く立体です。形・質感・映り込みの景色は Blender で作りました。素材をダウンロードして images フォルダに置いてください。",
-    items: PRO_WEBGL,
-  },
-  {
-    id: "chara",
-    label: "キャラ",
-    note: "Blender で描いた立体のキャラや小物が、歩いたり跳ねたりして付いてきます。画像をダウンロードして images フォルダに置いてください。",
-    items: [...PRO, ...PRO_2],
-  },
-];
+const LANG = document.documentElement.lang === "en" ? "en" : "ja";
+const T = UI[LANG];
+const ROOT = new URL("../", import.meta.url).href;
+
+const localize = (list) =>
+  LANG === "en"
+    ? list.map((fx) => (EN[fx.id] ? { ...fx, aka: `${fx.label} ${fx.aka || ""}`, label: EN[fx.id][0], desc: EN[fx.id][1] } : fx))
+    : list;
+
+const GROUPS = {
+  basic: [...BASIC, ...BASIC_2],
+  middle: [...MIDDLE, ...MIDDLE_2, ...MIDDLE_3],
+  advanced: [...ADVANCED, ...ADVANCED_2, ...ADVANCED_3],
+  pro: PRO_WEBGL,
+  chara: [...PRO, ...PRO_2],
+};
+
+const TIERS = Object.entries(GROUPS).map(([id, items]) => ({
+  id,
+  label: T.tiers[id][0],
+  note: T.tiers[id][1],
+  items: localize(items),
+}));
 
 const ALL = TIERS.flatMap((t) => t.items.map((fx) => ({ ...fx, tier: t.id })));
 const BASE = { color: "#6366f1", size: 24, lag: 60, hide: false, text: "VIEW", emoji: "🐾", brush: "ink" };
@@ -101,7 +99,7 @@ function renderList() {
   const q = els.search.value.trim().toLowerCase();
   if (q) {
     const hits = ALL.filter((fx) => `${fx.label} ${fx.aka || ""} ${fx.desc} ${fx.id}`.toLowerCase().includes(q));
-    els.note.textContent = hits.length ? `「${els.search.value.trim()}」に合う動き: ${hits.length}種` : "合う動きがありません。別のことばで探してください。";
+    els.note.textContent = hits.length ? T.hits(els.search.value.trim(), hits.length) : T.noHits;
     els.list.innerHTML = hits.map((fx) => itemButton(fx, TIERS.find((t) => t.id === fx.tier).label)).join("");
     return;
   }
@@ -132,7 +130,7 @@ function renderControls() {
   els.fxDesc.textContent = fx.desc;
   const files = assetFiles(fx);
   els.download.hidden = !files.length;
-  els.download.textContent = files.length > 1 ? `素材をダウンロード（${files.length}つ）` : "素材をダウンロード";
+  els.download.textContent = T.download(files.length);
 }
 
 function assetFiles(fx) {
@@ -144,7 +142,7 @@ function downloadAssets() {
   assetFiles(state.fx).forEach((file, i) => {
     setTimeout(() => {
       const a = document.createElement("a");
-      a.href = `images/${file}`;
+      a.href = `${ROOT}images/${file}`;
       a.download = file;
       document.body.appendChild(a);
       a.click();
@@ -154,10 +152,7 @@ function downloadAssets() {
 }
 
 function lagLabel(v) {
-  if (v < 20) return "ほぼなし";
-  if (v < 50) return "少し";
-  if (v < 80) return "ふつう";
-  return "ゆったり";
+  return T.lag[v < 20 ? 0 : v < 50 ? 1 : v < 80 ? 2 : 3];
 }
 
 function currentCode() {
@@ -178,18 +173,10 @@ function codeText(code) {
   return bundle(code);
 }
 
-const PASTE_NOTES = {
-  all: "まとめて </body> の直前に貼れば動きます。",
-  html: "</body> の直前に貼ります。",
-  css: "サイトの CSS ファイルの最後に足します。",
-  js: "HTML の後ろの <script> の中か、JS ファイルに足します。",
-};
-
 function renderCode(code) {
   els.code.textContent = codeText(code);
-  els.pasteNote.textContent =
-    PASTE_NOTES[state.codeTab] +
-    (assetFiles(state.fx).length ? ` 素材（${assetFiles(state.fx).join("・")}）は、貼ったページから見て images フォルダの中に置きます。` : "");
+  const files = assetFiles(state.fx);
+  els.pasteNote.textContent = T.paste[state.codeTab] + (files.length ? T.assets(files) : "");
   els.codeTabs.querySelectorAll("button").forEach((b) => {
     b.setAttribute("aria-selected", String(b.dataset.tab === state.codeTab));
   });
@@ -199,7 +186,7 @@ let frameTimer = 0;
 function renderStage(code) {
   clearTimeout(frameTimer);
   frameTimer = setTimeout(() => {
-    els.frame.srcdoc = stageDoc(code, state.theme, !!state.fx.gsap);
+    els.frame.srcdoc = stageDoc(code, state.theme, !!state.fx.gsap, LANG, ROOT);
   }, 120);
 }
 
@@ -291,7 +278,7 @@ function bind() {
   });
   els.copy.addEventListener("click", async () => {
     await copyText(els.code.textContent);
-    showToast("コードをコピーしました");
+    showToast(T.copied);
   });
   addEventListener("hashchange", () => {
     const fx = fromHash();
