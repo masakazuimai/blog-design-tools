@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>立体のマウスストーカー 3案の比較</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 24px 20px 48px; background: #f8fafc; color: #1e293b; font: 16px/1.7 "Noto Sans JP", -apple-system, sans-serif; }
+      h1 { margin: 0 0 4px; font-size: 1.75rem; letter-spacing: -0.02em; }
+      .lead { margin: 0 0 20px; color: #64748b; }
+      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; }
+      .card h2 { margin: 0; padding: 12px 16px 0; font-size: 1.125rem; }
+      .card p { margin: 0; padding: 4px 16px 12px; color: #64748b; }
+      .stage { position: relative; height: 420px; overflow: hidden; cursor: none; border-top: 1px solid #e2e8f0; touch-action: none; }
+      .stage.light { background: #fffdf8; }
+      .stage.dark { background: #14161c; }
+      .sprite { position: absolute; top: 0; left: 0; width: 96px; height: 96px; margin: -48px 0 0 -48px; background-repeat: no-repeat; background-size: 1536px 96px; pointer-events: none; opacity: 0; transition: opacity 0.3s; }
+      .stage.is-on .sprite { opacity: 1; }
+      .meta { padding: 8px 16px 12px; color: #64748b; border-top: 1px solid #e2e8f0; }
+      .bg { display: inline-flex; gap: 4px; margin: 0 0 16px; }
+      .bg button { font: inherit; padding: 6px 14px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; cursor: pointer; }
+      .bg button[aria-pressed="true"] { background: #1e293b; color: #fff; border-color: #1e293b; }
+      @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } .stage { height: 300px; } }
+    </style>
+  </head>
+  <body>
+    <h1>立体のマウスストーカー 3案</h1>
+    <p class="lead">Blender で描いた16コマの画像を、マウスの動きに合わせて切り替えています。各枠の中でマウスを動かしてください（スマホは指でなぞる）。</p>
+    <div class="bg" role="group" aria-label="背景">
+      <button type="button" data-bg="light" aria-pressed="true">明るい背景</button>
+      <button type="button" data-bg="dark" aria-pressed="false">暗い背景</button>
+    </div>
+    <div class="grid">
+      <section class="card">
+        <h2>A 光る球</h2>
+        <p>動いた距離だけ球が転がり、表面の模様が流れます。</p>
+        <div class="stage light" data-variant="orb"><span class="sprite" style="background-image: url(orb.webp)"></span></div>
+        <div class="meta">画像 55KB・ゆっくり付いてくる</div>
+      </section>
+      <section class="card">
+        <h2>B 金色のリング</h2>
+        <p>速く動かすほど速く回り、止めるとゆっくり回り続けます。</p>
+        <div class="stage light" data-variant="ring"><span class="sprite" style="background-image: url(ring.webp)"></span></div>
+        <div class="meta">画像 77KB・少し遅れて付いてくる</div>
+      </section>
+      <section class="card">
+        <h2>C 小さなキャラ</h2>
+        <p>進む向きに顔を向けて、止まるとこちらを向きます。</p>
+        <div class="stage light" data-variant="critter"><span class="sprite" style="background-image: url(critter.webp)"></span></div>
+        <div class="meta">画像 49KB・とことこ付いてくる</div>
+      </section>
+    </div>
+    <script>
+      const N = 16;
+      const FRAME = 96;
+      const FRONT = 12;
+
+      function setup(stage) {
+        const variant = stage.dataset.variant;
+        const el = stage.querySelector(".sprite");
+        const ease = { orb: 0.12, ring: 0.18, critter: 0.1 }[variant];
+        let mx = 0, my = 0, x = 0, y = 0, on = false;
+        let frame = 0, roll = 0, spin = 0, still = 0, t = 0;
+
+        stage.addEventListener("pointermove", (e) => {
+          const r = stage.getBoundingClientRect();
+          mx = e.clientX - r.left;
+          my = e.clientY - r.top;
+          if (!on) { x = mx; y = my; on = true; stage.classList.add("is-on"); }
+        });
+        stage.addEventListener("pointerleave", () => { on = false; stage.classList.remove("is-on"); });
+
+        (function loop() {
+          const dx = (mx - x) * ease;
+          const dy = (my - y) * ease;
+          x += dx;
+          y += dy;
+          const speed = Math.hypot(dx, dy);
+          let lift = 0;
+          t += 1;
+          if (variant === "orb") {
+            roll += speed;
+            frame = Math.floor(roll / 10) % N;
+          } else if (variant === "ring") {
+            spin += 0.12 + speed * 0.12;
+            frame = Math.floor(spin) % N;
+          } else {
+            if (speed > 0.6) {
+              const a = Math.atan2(-dy, dx);
+              frame = ((Math.round(a / (Math.PI * 2 / N)) % N) + N) % N;
+              still = 0;
+              lift = Math.abs(Math.sin(t * 0.35)) * -8;
+            } else if (++still > 30) {
+              frame = FRONT;
+              lift = Math.sin(t * 0.08) * 2;
+            }
+          }
+          el.style.transform = `translate3d(${x}px, ${y + lift}px, 0)`;
+          el.style.backgroundPosition = `${-frame * FRAME}px 0`;
+          requestAnimationFrame(loop);
+        })();
+      }
+
+      document.querySelectorAll(".stage").forEach(setup);
+      document.querySelector(".bg").addEventListener("click", (e) => {
+        const b = e.target.closest("[data-bg]");
+        if (!b) return;
+        document.querySelectorAll(".bg button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+        document.querySelectorAll(".stage").forEach((s) => { s.classList.remove("light", "dark"); s.classList.add(b.dataset.bg); });
+      });
+    </script>
+  </body>
+</html>

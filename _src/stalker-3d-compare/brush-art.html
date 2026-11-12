@@ -1,0 +1,70 @@
+<!doctype html><body style="margin:0;background:#fff"><canvas id=c width=1100 height=460></canvas><script>
+const mc=document.getElementById("c").getContext("2d");mc.fillStyle="#000";mc.strokeStyle="#000";const R=90;let mx=0,my=0;
+  let lx = -999, ly = -999, lastW = 0, tick = 0, travel = 0, idle = 0, lnx = 0, lny = 1;
+  const hairs = [
+    ...Array.from({ length: 40 }, (_, i) => ({
+      o: (i / 39 - 0.5) * 1.1 + (Math.random() - 0.5) * 0.03,
+      w: 1.4 + Math.random() * 1.8,
+      a: 0.8 + Math.random() * 0.2,
+      dry: Math.random(),
+      ph: 0,
+      wob: 0,
+    })),
+    ...Array.from({ length: 34 }, () => ({
+      o: (Math.random() - 0.5) * 1.2,
+      w: 0.8 + Math.random() * 2.6,
+      a: 0.6 + Math.random() * 0.4,
+      dry: Math.random(),
+      ph: Math.random() * Math.PI * 2,
+      wob: 0.03 + Math.random() * 0.07,
+    })),
+  ];
+  const tip = new Image();
+  tip.src = "images/stalker-brush.webp";
+  let lastAng = 0;
+
+function circle(cx,cy,r,n){lx=-999;lastW=0;travel=0;for(let i=0;i<=n;i++){const t=i/n*Math.PI*1.85-Math.PI/2;mx=cx+Math.cos(t)*r;my=cy+Math.sin(t)*r;const dist=Math.hypot(mx-lx,my-ly);if(lx<-900){lx=mx;ly=my;continue;}if(dist>2){    if (tip.naturalWidth) {
+      const TW = tip.naturalWidth;
+      const TH = tip.naturalHeight;
+      const w = R * 1.4;
+      const k = TH / w;
+      const ang = Math.atan2(my - ly, mx - lx);
+      if (!travel) lastAng = ang;
+      let da = ang - lastAng;
+      da = Math.atan2(Math.sin(da), Math.cos(da));
+      const head = TW * 0.14;
+      const steps = Math.max(1, Math.ceil(dist / 2));
+      for (let j = 0; j < steps; j++) {
+        const t = j / steps;
+        const seg = dist / steps;
+        const pos = travel * k;
+        const sx = pos < head ? pos : head + ((pos - head) % (TW * 0.7));
+        const sw = Math.max(1, Math.min(seg * k, TW - sx));
+        mc.save();
+        mc.translate(lx + (mx - lx) * t, ly + (my - ly) * t);
+        mc.rotate(lastAng + da * t);
+        mc.drawImage(tip, sx, 0, sw, TH, -1, -w / 2, sw / k + 2, w);
+        mc.restore();
+        travel += seg;
+      }
+      lastAng = ang;
+    }
+
+lx=mx;ly=my;}}
+      if (travel > 0 && tip.naturalWidth) {
+        const TW = tip.naturalWidth;
+        const TH = tip.naturalHeight;
+        const w = R * 1.4;
+        const k = TH / w;
+        const tl = TW * 0.16;
+        mc.save();
+        mc.translate(lx, ly);
+        mc.rotate(lastAng);
+        mc.drawImage(tip, TW - tl, 0, tl, TH, -2, -w / 2, tl / k, w);
+        mc.restore();
+      }
+
+}
+function go(){circle(290,230,170,70);circle(810,230,170,22);}
+if (typeof tip !== "undefined") tip.onload = go; else go();
+</script>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>立体のマウスストーカー 追加12案</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 24px 20px 48px; background: #f8fafc; color: #1e293b; font: 16px/1.7 "Noto Sans JP", -apple-system, sans-serif; }
+      h1 { margin: 0 0 4px; font-size: 1.75rem; letter-spacing: -0.02em; }
+      h2 { margin: 28px 0 8px; font-size: 1.25rem; }
+      .lead { margin: 0 0 16px; color: #64748b; }
+      .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+      .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; }
+      .card h3 { margin: 0; padding: 10px 14px; font-size: 1rem; border-bottom: 1px solid #e2e8f0; }
+      .stage { position: relative; height: 260px; overflow: hidden; cursor: none; touch-action: none; }
+      .stage.light { background: #fffdf8; }
+      .stage.dark { background: #14161c; }
+      .sprite { position: absolute; top: 0; left: 0; width: 80px; height: 80px; margin: -40px 0 0 -40px; background-repeat: no-repeat; background-size: 1280px 80px; pointer-events: none; opacity: 0; transition: opacity 0.3s; }
+      .stage.is-on .sprite { opacity: 1; }
+      .stage .still { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; transition: opacity 0.3s; }
+      .stage.is-on .still { opacity: 0; }
+      .still i { width: 80px; height: 80px; background-repeat: no-repeat; background-size: 1280px 80px; }
+      .bg { display: inline-flex; gap: 4px; }
+      .bg button { font: inherit; padding: 6px 14px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; cursor: pointer; }
+      .bg button[aria-pressed="true"] { background: #1e293b; color: #fff; border-color: #1e293b; }
+      @media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <h1>立体のマウスストーカー 追加12案</h1>
+    <p class="lead">各枠の中でマウスを動かしてください（スマホは指でなぞる）。動物は進む向きを向いて止まるとこちらを向き、飛ぶものは進む向きを向き、下の4つは回ります。</p>
+    <div class="bg" role="group" aria-label="背景">
+      <button type="button" data-bg="light" aria-pressed="true">明るい背景</button>
+      <button type="button" data-bg="dark" aria-pressed="false">暗い背景</button>
+    </div>
+    <div id="groups"></div>
+    <script>
+      const GROUPS = [
+        { title: "動物（向きが変わる）", kind: "walk", items: [["cat", "ねこ"], ["dog", "いぬ"], ["rabbit", "うさぎ"], ["penguin", "ペンギン"]] },
+        { title: "飛ぶもの（進む向きを向く）", kind: "fly", items: [["plane", "紙飛行機"], ["rocket", "ロケット"], ["fish", "金魚"], ["bee", "蜂"]] },
+        { title: "回るもの", kind: "spin", items: [["gem", "宝石"], ["snowman", "雪だるま"], ["pumpkin", "かぼちゃ"], ["wand", "星の杖"]] },
+      ];
+      const N = 16;
+      const F = 80;
+      const root = document.getElementById("groups");
+      root.innerHTML = GROUPS.map((g) => `<h2>${g.title}</h2><div class="grid">${g.items
+        .map(([id, label]) => `<section class="card"><h3>${label}</h3><div class="stage light" data-kind="${g.kind}"><div class="still"><i style="background-image:url(${id}.webp);background-position:${g.kind === "walk" ? -12 * F : 0}px 0"></i></div><span class="sprite" style="background-image:url(${id}.webp)"></span></div></section>`)
+        .join("")}</div>`).join("");
+
+      function setup(stage) {
+        const kind = stage.dataset.kind;
+        const el = stage.querySelector(".sprite");
+        let mx = 0, my = 0, x = 0, y = 0, on = false, frame = kind === "walk" ? 12 : 0, spin = 0, still = 0, t = 0;
+        stage.addEventListener("pointermove", (e) => {
+          const r = stage.getBoundingClientRect();
+          mx = e.clientX - r.left;
+          my = e.clientY - r.top;
+          if (!on) { x = mx; y = my; on = true; stage.classList.add("is-on"); }
+        });
+        stage.addEventListener("pointerleave", () => { on = false; stage.classList.remove("is-on"); });
+        (function loop() {
+          const dx = (mx - x) * 0.1;
+          const dy = (my - y) * 0.1;
+          x += dx;
+          y += dy;
+          t += 1;
+          const speed = Math.hypot(dx, dy);
+          let lift = 0;
+          if (kind === "spin") {
+            spin += 0.12 + speed * 0.12;
+            frame = Math.floor(spin) % N;
+          } else if (speed > 0.5) {
+            frame = ((Math.round(Math.atan2(-dy, dx) / (Math.PI * 2 / N)) % N) + N) % N;
+            still = 0;
+            if (kind === "walk") lift = -Math.abs(Math.sin(t * 0.35)) * 6;
+          } else if (kind === "walk" && ++still > 30) {
+            frame = 12;
+          }
+          if (kind === "fly") lift = Math.sin(t * 0.08) * 3;
+          el.style.transform = `translate3d(${x}px, ${y + lift}px, 0)`;
+          el.style.backgroundPosition = `${-frame * F}px 0`;
+          requestAnimationFrame(loop);
+        })();
+      }
+      document.querySelectorAll(".stage").forEach(setup);
+      document.querySelector(".bg").addEventListener("click", (e) => {
+        const b = e.target.closest("[data-bg]");
+        if (!b) return;
+        document.querySelectorAll(".bg button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+        document.querySelectorAll(".stage").forEach((s) => { s.classList.remove("light", "dark"); s.classList.add(b.dataset.bg); });
+      });
+    </script>
+  </body>
+</html>
