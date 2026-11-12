@@ -1,4 +1,4 @@
-import { GUARD, HIDE_JS, hideCss, ease, TRACK_JS } from "./_shared.js?v=20261112a";
+import { GUARD, HIDE_JS, hideCss, ease, TRACK_JS } from "./_shared.js?v=20261113b";
 
 const THREE_URL = "https://cdn.jsdelivr.net/npm/three@0.170.0/+esm";
 
@@ -29,12 +29,17 @@ function wrap(o, body) {
 ${GUARD}
   const el = document.querySelector(".stalker");
 ${o.hide ? HIDE_JS + "\n" : ""}  const THREE = await import("${THREE_URL}");
+  if (signal.aborted) return;
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({ canvas: el, alpha: true, antialias: true });
   } catch (e) {
     return;
   }
+  onStop(() => {
+    renderer.setAnimationLoop(null);
+    renderer.dispose();
+  });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   const scene = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(0, 1, 0, -1, -10, 10);
@@ -86,6 +91,7 @@ const IMAGES_JS = `  const loader = new THREE.TextureLoader();
     };
     items.push({ t, clip, u, aspect: tex.image.width / tex.image.height });
   }
+  if (signal.aborted) return;
   const place = (it) => {
     const r = it.t.getBoundingClientRect();
     const c = it.clip.getBoundingClientRect();
@@ -415,6 +421,7 @@ const reveal = {
   for (const it of items) {
     const src2 = it.t.dataset.stalkerReveal;
     const tex2 = src2 ? await load(src2) : null;
+    if (signal.aborted) return;
     const extra = { ...shared, uTex2: { value: tex2 }, uHas2: { value: tex2 ? 1 : 0 }, uCover2: { value: new THREE.Vector2(1, 1) } };
     it.aspect2 = tex2 ? tex2.image.width / tex2.image.height : 1;
     it.extra = extra;
@@ -563,6 +570,7 @@ const crumble = {
     scene.add(pts);
     it.t.style.visibility = "hidden";
   }
+  onStop(() => items.forEach((it) => (it.t.style.visibility = "")));
   renderer.setAnimationLoop(() => {
     const over = items.some((it) => {
       const r = it.t.getBoundingClientRect();

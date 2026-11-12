@@ -1,4 +1,4 @@
-import { GUARD, HIDE_JS, hideCss, dur, BASE_CSS } from "./_shared.js?v=20261112a";
+import { GUARD, HIDE_JS, hideCss, dur, BASE_CSS } from "./_shared.js?v=20261113b";
 
 const HOVER_SEL = 'a, button, [data-stalker]';
 
@@ -56,6 +56,11 @@ ${hideCss(o)}`,
   const yTo = gsap.quickTo(el, "y", { duration: ${dur(o)}, ease: "power3" });
   let target = null;
   let rect = null;
+  onStop(() => {
+    if (!target) return;
+    gsap.killTweensOf(target);
+    gsap.set(target, { clearProps: "transform" });
+  });
 ${showJs("el")}
   addEventListener("pointermove", (e) => {
     if (target) {

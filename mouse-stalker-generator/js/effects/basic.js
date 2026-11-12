@@ -1,4 +1,4 @@
-import { GUARD, HIDE_JS, hideCss, ease, half, BASE_CSS, TRACK_JS, FADE_CSS, escText } from "./_shared.js?v=20261112a";
+import { GUARD, HIDE_JS, hideCss, ease, half, BASE_CSS, TRACK_JS, FADE_CSS, escText } from "./_shared.js?v=20261113b";
 
 const HOVER_SEL = 'a, button, [data-stalker]';
 

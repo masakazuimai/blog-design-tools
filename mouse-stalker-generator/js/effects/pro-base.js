@@ -1,4 +1,4 @@
-import { GUARD, HIDE_JS, hideCss, ease, half, TRACK_JS } from "./_shared.js?v=20261112a";
+import { GUARD, HIDE_JS, hideCss, ease, half, TRACK_JS } from "./_shared.js?v=20261113b";
 
 export const USES = ["size", "lag", "hide"];
 export const RANGE = { size: [32, 160] };

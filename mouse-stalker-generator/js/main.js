@@ -1,16 +1,16 @@
-import { BASIC } from "./effects/basic.js?v=20261112f";
-import { MIDDLE } from "./effects/middle.js?v=20261112f";
-import { ADVANCED } from "./effects/advanced.js?v=20261112f";
-import { BASIC_2 } from "./effects/basic-2.js?v=20261112f";
-import { MIDDLE_2 } from "./effects/middle-2.js?v=20261112f";
-import { MIDDLE_3 } from "./effects/middle-3.js?v=20261112f";
-import { ADVANCED_2 } from "./effects/advanced-2.js?v=20261112f";
-import { ADVANCED_3 } from "./effects/advanced-3.js?v=20261112f";
-import { PRO } from "./effects/pro.js?v=20261112c";
-import { PRO_2 } from "./effects/pro-2.js?v=20261112c";
-import { PRO_WEBGL } from "./effects/webgl.js?v=20261113a";
-import { GSAP_CDN } from "./effects/_shared.js?v=20261112a";
-import { stageDoc } from "./stage.js?v=20261113a";
+import { BASIC } from "./effects/basic.js?v=20261113b";
+import { MIDDLE } from "./effects/middle.js?v=20261113b";
+import { ADVANCED } from "./effects/advanced.js?v=20261113b";
+import { BASIC_2 } from "./effects/basic-2.js?v=20261113b";
+import { MIDDLE_2 } from "./effects/middle-2.js?v=20261113b";
+import { MIDDLE_3 } from "./effects/middle-3.js?v=20261113b";
+import { ADVANCED_2 } from "./effects/advanced-2.js?v=20261113b";
+import { ADVANCED_3 } from "./effects/advanced-3.js?v=20261113b";
+import { PRO } from "./effects/pro.js?v=20261113b";
+import { PRO_2 } from "./effects/pro-2.js?v=20261113b";
+import { PRO_WEBGL } from "./effects/webgl.js?v=20261113b";
+import { GSAP_CDN, finish } from "./effects/_shared.js?v=20261113b";
+import { stageDoc } from "./stage.js?v=20261113b";
 import { UI } from "./i18n.js?v=20261113a";
 import { EN } from "./i18n-en.js?v=20261113a";
 
@@ -156,7 +156,8 @@ function lagLabel(v) {
 }
 
 function currentCode() {
-  return state.fx.build(state.opts);
+  const code = state.fx.build(state.opts);
+  return { ...code, js: finish(code.js) };
 }
 
 function bundle(code) {

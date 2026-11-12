@@ -1,4 +1,4 @@
-import { GUARD, HIDE_JS, hideCss, ease, dur, half, BASE_CSS } from "./_shared.js?v=20261112a";
+import { GUARD, HIDE_JS, hideCss, ease, dur, half, BASE_CSS } from "./_shared.js?v=20261113b";
 
 const HOVER_SEL = "a, button, [data-stalker]";
 
@@ -81,6 +81,7 @@ ${hideCss(o)}`,
   const R = ${Math.round(70 + o.size * 2)};
   const split = new Map();
   let current = null;
+  onStop(() => split.forEach((st, h) => { clearTimeout(st.timer); h.textContent = st.text; }));
   function prepare(h) {
     const text = h.textContent;
     const parts = [...text].reduce((a, c) => (a.length && /[、。，．！？」』）,.!?)]/.test(c) ? a.slice(0, -1).concat(a[a.length - 1] + c) : a.concat(c)), []);
@@ -392,6 +393,9 @@ ${hideCss(o)}`,
       js: wrap(o, `${followJs(o)}
   const held = new Map();
   let current = null;
+  onStop(() => held.forEach((st) => {
+    gsap.set(st.inner, { clearProps: "transform", overwrite: true });
+    if (st.wrapper) st.wrapper.replaceWith(...st.wrapper.childNodes); }));
   function grab(t) {
     if (held.has(t)) return held.get(t);
     const texts = [...t.children].filter((c) => c.textContent.trim());

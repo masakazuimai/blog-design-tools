@@ -1,5 +1,5 @@
-import { hideCss, ease, half, BASE_CSS, TRACK_JS, FADE_CSS, hexToRgb } from "./_shared.js?v=20261112a";
-import { wrap, DIV, rootCss, particle, canvasFx } from "./middle-2.js?v=20261112f";
+import { hideCss, ease, half, BASE_CSS, TRACK_JS, FADE_CSS, hexToRgb } from "./_shared.js?v=20261113b";
+import { wrap, DIV, rootCss, particle, canvasFx } from "./middle-2.js?v=20261113b";
 
 function shade(hex, f) {
   const n = parseInt(hex.slice(1), 16);
@@ -450,6 +450,7 @@ ${hideCss(o)}`,
       js: wrap(o, `  const ring = el.querySelector(".stalker-ring");
   const R = 110, PUSH = 46;
   const letters = [];
+  onStop(() => letters.forEach((l) => (l.el.style.transform = "")));
   document.querySelectorAll("h1, h2").forEach((h) => {
     if (h.closest(".stalker")) return;
     h.setAttribute("aria-label", h.textContent.trim());

@@ -1,4 +1,4 @@
-import { GUARD, HIDE_JS, hideCss, ease, dur, half, BASE_CSS, hexToRgb } from "./_shared.js?v=20261112a";
+import { GUARD, HIDE_JS, hideCss, ease, dur, half, BASE_CSS, hexToRgb } from "./_shared.js?v=20261113b";
 
 const HOVER_SEL = "a, button, [data-stalker]";
 
@@ -83,6 +83,12 @@ ${hideCss(o)}`,
       js: wrap(o, `${followJs(o)}
   const orig = new Map();
   let cur = null;
+  onStop(() => orig.forEach((pos, t) => {
+    gsap.killTweensOf(t);
+    gsap.set(t, { clearProps: "transform" });
+    t.style.position = pos;
+    t.querySelectorAll(".stalker-glare").forEach((g) => g.remove());
+  }));
   function grab(t) {
     gsap.killTweensOf(t);
     if (!orig.has(t)) {

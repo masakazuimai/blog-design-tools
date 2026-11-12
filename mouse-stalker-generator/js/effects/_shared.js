@@ -1,7 +1,36 @@
 export const GSAP_CDN = '<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>';
 
 export const GUARD = `  if (!matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;`;
+  const motion = matchMedia("(prefers-reduced-motion: reduce)");
+  if (motion.matches) return;
+  const stop = new AbortController();
+  const { signal } = stop;
+  motion.addEventListener("change", () => {
+    if (!motion.matches) return;
+    stop.abort();
+    document.documentElement.classList.remove("has-stalker");
+    document.querySelectorAll(".stalker, .stalker-bg").forEach((n) => n.remove());
+  }, { signal });`;
+
+const HELPERS = [
+  [/\bon\(/, `  const on = (target, type, fn, opt) => target.addEventListener(type, fn, { ...opt, signal });`],
+  [/(?<![\w.])requestAnimationFrame\(/, `  const requestAnimationFrame = (fn) => (signal.aborted ? 0 : window.requestAnimationFrame(fn));`],
+  [/\bonTick\(/, `  const onTick = (fn) => {
+    gsap.ticker.add(fn);
+    signal.addEventListener("abort", () => gsap.ticker.remove(fn));
+  };`],
+  [/\bonStop\(/, `  const onStop = (fn) => (signal.aborted ? fn() : signal.addEventListener("abort", fn));`],
+];
+
+export function finish(js) {
+  const body = js
+    .replace(/(?<![\w.$])document\.documentElement\.addEventListener\(/g, "on(document.documentElement, ")
+    .replace(/(?<![\w.$])document\.addEventListener\(/g, "on(document, ")
+    .replace(/(?<![\w.$])addEventListener\(/g, "on(window, ")
+    .replace(/(?<![\w.$])gsap\.ticker\.add\(/g, "onTick(");
+  const used = HELPERS.filter(([re]) => re.test(body.replace(GUARD, ""))).map(([, code]) => code);
+  return used.length ? body.replace(GUARD, `${GUARD}\n${used.join("\n")}`) : body;
+}
 
 export const HIDE_JS = `  document.documentElement.classList.add("has-stalker");`;
 

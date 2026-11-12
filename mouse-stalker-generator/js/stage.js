@@ -1,4 +1,4 @@
-import { GSAP_CDN } from "./effects/_shared.js?v=20261112a";
+import { GSAP_CDN } from "./effects/_shared.js?v=20261113b";
 
 const STAGE_CSS = `
 * { box-sizing: border-box; }
@@ -74,7 +74,7 @@ const BLOCK_LINKS = `document.addEventListener("click", function (e) { if (e.tar
 export function previewJs(js) {
   return js
     .split("\n")
-    .filter((l) => !l.includes("matchMedia("))
+    .filter((l) => !l.startsWith("  if (!matchMedia(") && l !== "  if (motion.matches) return;")
     .join("\n");
 }
 
