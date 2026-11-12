@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使い方・FAQ｜マウスストーカー ジェネレーター</title>
+    <meta
+      name="description"
+      content="マウスストーカー ジェネレーターの使い方。初級・中級・上級（GSAP）・プロ（Blender の立体）の違い、WordPress やブログへの貼り方、スマホでの動き、画像の使い方を解説します。"
+    />
+    <link rel="canonical" href="https://codequest.work/generator/mouse-stalker-generator/howto.html" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:title" content="使い方・FAQ｜マウスストーカー ジェネレーター" />
+    <meta property="og:description" content="4つの段の違い、WordPress やブログへの貼り方、スマホでの動き、画像の使い方を解説します。" />
+    <meta property="og:url" content="https://codequest.work/generator/mouse-stalker-generator/howto.html" />
+    <meta property="og:image" content="https://codequest.work/generator/mouse-stalker-generator/assets/og.png?v=20261112a" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="使い方・FAQ｜マウスストーカー ジェネレーター" />
+    <meta name="twitter:description" content="4つの段の違い、WordPress やブログへの貼り方、スマホでの動き、画像の使い方を解説します。" />
+    <meta name="twitter:image" content="https://codequest.work/generator/mouse-stalker-generator/assets/og.png?v=20261112a" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "WordPress にマウスストーカーを入れるには？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "「まとめて」のコードを、テーマの footer.php の </body> の直前か、ヘッダーやフッターにコードを足せるプラグインのフッター欄に貼ります。テーマを直接書き換える場合は、子テーマで行うと更新で消えません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "スマホではどうなりますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "何もしません。書き出すコードは、マウスで操作する端末（hover: hover かつ pointer: fine）のときだけ動き、スマホやタブレットではいつもの表示のままです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "サイトが重くなりませんか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "位置の更新は requestAnimationFrame の中で transform だけを書き換えるので、ページのレイアウトをやり直さず軽く動きます。キラキラやハートは一定の距離を動いたときだけ粒を出し、消えた粒は取り除きます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "元の矢印は消したほうがいいですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "どちらでも構いません。消すと見た目はすっきりしますが、押せる場所が分かりにくくなることがあります。消すなら「リンクで膨らむ」「文字入りの円」「ボタンに吸い付く」のように、リンクの上で形が変わるものと組み合わせるのがおすすめです。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "GSAP は無料で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "使えます。GSAP は2025年から、商用のサイトも含めて無料で使えるようになりました。上級のコードは CDN から読み込む1行が入っているので、そのまま貼れば動きます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "プロの段の画像は商用のサイトで使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "使えます。個人・商用を問わず無料で、クレジットの表記も要りません。ただし画像そのものを素材として再配布・販売することは禁止しています。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "自分のロゴや画像を付いてこさせるには？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "初級の「絵文字・画像」を選び、HTML の span の中身を img 要素に替えれば、同じ動きで画像が付いてきます。向きや回転で絵を切り替えたいときは、プロの段と同じく16コマを横に並べた画像を用意し、CSS の background の URL を差し替えます。"
+            }
+          }
+        ]
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css?v=20261112a" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+
+    <header class="header">
+      <h1>使い方・FAQ</h1>
+      <p>マウスストーカー ジェネレーターの使い方と、よくある質問</p>
+    </header>
+
+    <main class="container">
+      <article class="doc">
+        <h2>基本の流れ</h2>
+        <ol>
+          <li>「初級」「中級」「上級」「プロ」から段を選び、動きを1つ選ぶ</li>
+          <li>見本のページの上でマウスを動かし、リンクやボタンにも乗せて確かめる</li>
+          <li>右の設定で色・大きさ・遅れを変える</li>
+          <li>「コードをコピー」を押して、自分のサイトに貼る（プロの段は画像もダウンロードする）</li>
+        </ol>
+
+        <h2>4つの段の違い</h2>
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>段</th>
+              <th>使うもの</th>
+              <th>向いている人</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>初級</td>
+              <td>CSS と数行の JavaScript</td>
+              <td>まず1つ入れてみたい人。貼るだけで動きます</td>
+            </tr>
+            <tr>
+              <td>中級</td>
+              <td>素の JavaScript</td>
+              <td>粒が散る・しっぽが伸びるなど、演出を足したい人</td>
+            </tr>
+            <tr>
+              <td>上級</td>
+              <td>GSAP（CDN の1行付き）</td>
+              <td>ボタンに吸い付く、液体のようにくっつくなど、なめらかな動きが欲しい人</td>
+            </tr>
+            <tr>
+              <td>プロ</td>
+              <td>Blender で描いた立体の画像（16コマ）</td>
+              <td>サイトの印象に残る立体のキャラや素材を付けたい人</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>貼り方</h2>
+        <p>
+          いちばん簡単なのは「まとめて」のコードを、HTML の <code>&lt;/body&gt;</code> の直前に貼る方法です。
+          スタイルとスクリプトが1つにまとまっているので、ほかの場所を触る必要はありません。
+        </p>
+        <p>
+          CSS と JavaScript をファイルに分けて管理しているサイトでは、タブを切り替えて「HTML」「CSS」「JS」を別々にコピーし、それぞれのファイルに足してください。
+          上級のコードは GSAP を CDN から読み込む1行が HTML 側に入っています。すでに GSAP を読み込んでいるサイトでは、その1行は不要です。
+        </p>
+        <p>
+          プロの段は、「画像をダウンロード」で取った画像を、貼ったページから見て <code>images</code> フォルダの中に置きます。
+          別の場所に置く場合は、CSS の <code>url("images/…")</code> を置いた場所に合わせて書き換えてください。
+        </p>
+
+        <h2>リンクの上で形を変える場所を増やす</h2>
+        <p>
+          「リンクで膨らむ」「文字入りの円」「ボタンに吸い付く」は、<code>a</code> と <code>button</code> の上で形が変わります。
+          カードなど、ほかの要素でも反応させたいときは、その要素に <code>data-stalker</code> 属性を付けてください。
+        </p>
+        <pre class="doc-code"><code>&lt;div class="card" data-stalker&gt;…&lt;/div&gt;</code></pre>
+
+        <h2>よくある質問</h2>
+
+        <h3>WordPress にマウスストーカーを入れるには？</h3>
+        <p>
+          「まとめて」のコードを、テーマの <code>footer.php</code> の <code>&lt;/body&gt;</code> の直前か、ヘッダーやフッターにコードを足せるプラグインのフッター欄に貼ります。
+          テーマを直接書き換える場合は、子テーマで行うと更新で消えません。
+        </p>
+
+        <h3>スマホではどうなりますか？</h3>
+        <p>
+          何もしません。書き出すコードは、マウスで操作する端末（<code>hover: hover</code> かつ <code>pointer: fine</code>）のときだけ動き、スマホやタブレットではいつもの表示のままです。
+          端末で「視差効果を減らす」などの動きを減らす設定をしている人にも、何もしません。
+        </p>
+
+        <h3>サイトが重くなりませんか？</h3>
+        <p>
+          位置の更新は <code>requestAnimationFrame</code> の中で <code>transform</code> だけを書き換えるので、ページのレイアウトをやり直さず軽く動きます。
+          キラキラやハートは一定の距離を動いたときだけ粒を出し、消えた粒は取り除きます。
+        </p>
+
+        <h3>元の矢印は消したほうがいいですか？</h3>
+        <p>
+          どちらでも構いません。消すと見た目はすっきりしますが、押せる場所が分かりにくくなることがあります。
+          消すなら「リンクで膨らむ」「文字入りの円」「ボタンに吸い付く」のように、リンクの上で形が変わるものと組み合わせるのがおすすめです。
+        </p>
+
+        <h3>GSAP は無料で使えますか？</h3>
+        <p>
+          使えます。GSAP は2025年から、商用のサイトも含めて無料で使えるようになりました。
+          上級のコードは CDN から読み込む1行が入っているので、そのまま貼れば動きます。
+        </p>
+
+        <h3>プロの段の画像は商用のサイトで使えますか？</h3>
+        <p>使えます。個人・商用を問わず無料で、クレジットの表記も要りません。ただし画像そのものを素材として再配布・販売することは禁止しています。</p>
+
+        <h3>自分のロゴや画像を付いてこさせるには？</h3>
+        <p>
+          初級の「絵文字・画像」を選び、HTML の <code>span</code> の中身を <code>img</code> 要素に替えれば、同じ動きで画像が付いてきます。
+          向きや回転で絵を切り替えたいときは、プロの段と同じく16コマを横に並べた画像を用意し、CSS の <code>background</code> の URL を差し替えます。
+        </p>
+
+        <h3>仕組みを詳しく知りたい</h3>
+        <p>
+          マウスの位置に少しずつ近づける計算や、リンクの上で形を変える書き方は
+          <a href="https://codequest.work/mouse-stalker-cursor-effect/">マウスストーカーの実装方法の記事</a>で解説しています。
+        </p>
+
+        <p class="doc-back"><a href="./">&larr; ツールに戻る</a></p>
+      </article>
+    </main>
+
+    <footer>
+      <span
+        >&copy; <span class="cq-year">2026</span
+        ><script>
+          document.currentScript.previousElementSibling.textContent = new Date().getFullYear();
+        </script>
+        マウスストーカー ジェネレーター | Created by
+        <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span
+      >
+      <div class="footer-links">
+        <a href="./">ツールに戻る</a>
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>

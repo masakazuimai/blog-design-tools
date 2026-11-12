@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>マウスストーカー ジェネレーター｜CSS・JS・GSAPのカーソル追従をコピペ</title>
+    <meta
+      name="description"
+      content="マウスストーカー（カーソルに付いてくる動き）を選んで、色・大きさ・遅れを調整し、HTML・CSS・JavaScriptをそのままコピーできる無料ツール。基本の丸からキラキラ、GSAPの吸い付くカーソル、Blenderで描いた立体のキャラまで。jQuery不要・登録不要。"
+    />
+    <link rel="canonical" href="https://codequest.work/generator/mouse-stalker-generator/" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:title" content="マウスストーカー ジェネレーター｜CSS・JS・GSAPのカーソル追従をコピペ" />
+    <meta
+      property="og:description"
+      content="カーソルに付いてくる動きを選んで調整し、HTML・CSS・JavaScriptをコピー。基本の丸からキラキラ、GSAPの吸い付くカーソルまで。"
+    />
+    <meta property="og:url" content="https://codequest.work/generator/mouse-stalker-generator/" />
+    <meta property="og:image" content="https://codequest.work/generator/mouse-stalker-generator/assets/og.png?v=20261112a" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="マウスストーカー ジェネレーター" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://codequest.work/generator/mouse-stalker-generator/assets/og.png?v=20261112a" />
+    <meta name="twitter:title" content="マウスストーカー ジェネレーター｜CSS・JS・GSAPのカーソル追従をコピペ" />
+    <meta
+      name="twitter:description"
+      content="カーソルに付いてくる動きを選んで調整し、HTML・CSS・JavaScriptをコピー。基本の丸からキラキラ、GSAPの吸い付くカーソルまで。"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "マウスストーカー ジェネレーター",
+            "url": "https://codequest.work/generator/mouse-stalker-generator/",
+            "description": "カーソルに付いてくる動き（マウスストーカー）を選び、色・大きさ・遅れを調整して、HTML・CSS・JavaScriptをコピーできる無料ツール。",
+            "applicationCategory": "DesignApplication",
+            "operatingSystem": "Web",
+            "browserRequirements": "Requires JavaScript.",
+            "inLanguage": "ja",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+            "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+              { "@type": "ListItem", "position": 2, "name": "ジェネレーター", "item": "https://codequest.work/category/generator/" },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "マウスストーカー ジェネレーター",
+                "item": "https://codequest.work/generator/mouse-stalker-generator/"
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css?v=20261112a" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4871781946658288" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+
+    <header class="header">
+      <h1>マウスストーカー ジェネレーター</h1>
+      <p>カーソルに付いてくる動きを選んで、色・大きさ・遅れを変え、コードをそのままコピーできます。初級は貼るだけ、上級は GSAP、プロは Blender で描いた立体を使います。</p>
+    </header>
+
+    <main class="container">
+      <section class="picker" aria-label="動きを選ぶ">
+        <div class="tier-tabs" id="tierTabs" role="tablist" aria-label="むずかしさ"></div>
+        <p class="tier-note" id="tierNote"></p>
+        <div class="fx-list" id="fxList"></div>
+      </section>
+
+      <section class="work">
+        <div class="stage">
+          <div class="stage-bar">
+            <span class="stage-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="stage-name" id="fxName"></span>
+            <div class="themes" id="themes" role="group" aria-label="背景">
+              <button type="button" data-theme="light" aria-pressed="true">明るい</button>
+              <button type="button" data-theme="dark" aria-pressed="false">暗い</button>
+              <button type="button" data-theme="photo" aria-pressed="false">写真</button>
+            </div>
+          </div>
+          <iframe id="stageFrame" class="stage-frame" title="マウスストーカーを試す見本のページ"></iframe>
+          <p class="stage-desc" id="fxDesc"></p>
+        </div>
+
+        <aside class="panel" aria-label="設定">
+          <h2>設定</h2>
+          <div class="field" data-use="color">
+            <label for="optColor">色</label>
+            <div class="color-row">
+              <input type="color" id="optColor" value="#6366f1" />
+              <span id="optColorVal">#6366f1</span>
+            </div>
+          </div>
+          <div class="field" data-use="size">
+            <label for="optSize">大きさ <output id="optSizeVal"></output></label>
+            <input type="range" id="optSize" min="8" max="120" step="1" />
+          </div>
+          <div class="field" data-use="lag">
+            <label for="optLag">遅れ <output id="optLagVal"></output></label>
+            <input type="range" id="optLag" min="0" max="100" step="1" />
+          </div>
+          <div class="field" data-use="text">
+            <label for="optText">円の中の文字</label>
+            <input type="text" id="optText" maxlength="12" />
+          </div>
+          <div class="field" data-use="emoji">
+            <label for="optEmoji">絵文字</label>
+            <input type="text" id="optEmoji" maxlength="8" />
+          </div>
+          <div class="field field-check" data-use="hide">
+            <input type="checkbox" id="optHide" />
+            <label for="optHide">元の矢印を消す</label>
+          </div>
+          <button class="btn" id="resetOpts" type="button">最初の設定に戻す</button>
+          <p class="panel-note">書き出すコードは、スマホなどマウスの無い端末と、動きを減らす設定の端末では何もしません。</p>
+        </aside>
+      </section>
+
+      <section class="code" aria-label="コード">
+        <div class="code-bar">
+          <div class="code-tabs" id="codeTabs" role="tablist" aria-label="コードの種類">
+            <button type="button" role="tab" data-tab="all" aria-selected="true">まとめて</button>
+            <button type="button" role="tab" data-tab="html" aria-selected="false">HTML</button>
+            <button type="button" role="tab" data-tab="css" aria-selected="false">CSS</button>
+            <button type="button" role="tab" data-tab="js" aria-selected="false">JS</button>
+          </div>
+          <div class="code-actions">
+            <a class="btn" id="downloadSprite" href="#" hidden>画像をダウンロード</a>
+            <button class="btn btn-primary" id="copyCode" type="button">コードをコピー</button>
+          </div>
+        </div>
+        <p class="paste-note" id="pasteNote"></p>
+        <pre class="code-out"><code id="codeOut"></code></pre>
+      </section>
+
+      <section class="about">
+        <h2>マウスストーカーとは</h2>
+        <p>
+          マウスの動きに合わせて、丸や画像がカーソルの後を追いかける演出です。リンクに乗ると形が変わるものは、押せる場所を伝える役にも立ちます。
+          仕組み（位置を少しずつ近づける計算や、重さを抑える書き方）は
+          <a href="https://codequest.work/mouse-stalker-cursor-effect/">マウスストーカーの実装方法の記事</a>で解説しています。
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <span
+        >&copy; <span class="cq-year">2026</span
+        ><script>
+          document.currentScript.previousElementSibling.textContent = new Date().getFullYear();
+        </script>
+        マウスストーカー ジェネレーター | Created by
+        <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span
+      >
+      <div class="footer-links">
+        <a href="howto.html">使い方・FAQ</a>
+        <a href="https://codequest.work/mouse-stalker-cursor-effect/">実装方法の解説</a>
+        <a href="../gsap-animation-gallery/">GSAP アニメーション集 &rarr;</a>
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="js/main.js?v=20261112a"></script>
+  </body>
+</html>
