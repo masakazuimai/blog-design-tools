@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { width: 1200px; height: 630px; overflow: hidden; }
+  .og {
+    width: 1200px; height: 630px; position: relative;
+    background: radial-gradient(ellipse 70% 75% at 50% 42%, #1d2129 0%, #16191f 55%, #121418 100%);
+    font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", -apple-system, system-ui, "Helvetica Neue", sans-serif;
+    color: #fff; text-align: center;
+  }
+  .btn {
+    position: absolute; left: 370px; top: 148px; width: 460px; height: 152px;
+    box-sizing: border-box; border-radius: 76px;
+    border: 5px solid #63e3f3;
+    background: radial-gradient(ellipse at 50% 45%, #121417 0%, #0e1013 100%);
+    box-shadow: 0 0 6px rgba(99,227,243,.9), 0 0 24px rgba(56,200,230,.7), 0 0 56px rgba(40,170,210,.35), inset 0 0 8px rgba(99,227,243,.35), inset 0 0 26px rgba(0,0,0,.6);
+    display: flex; align-items: center; justify-content: center;
+    font-family: -apple-system, system-ui, "Helvetica Neue", sans-serif; font-weight: 700; font-size: 38px; letter-spacing: .2em;
+    color: #eef6ff; padding-left: .2em;
+  }
+  .title { position: absolute; left: 0; right: 0; top: 380px; font-size: 64px; font-weight: 800; letter-spacing: -.01em; line-height: 1; }
+  .sub { position: absolute; left: 0; right: 0; top: 461px; font-size: 27px; font-weight: 400; color: #9aa1ad; line-height: 1; }
+  .brand { position: absolute; left: 0; right: 0; top: 544px; font-size: 24px; font-weight: 700; color: #22d3ee; line-height: 1; font-family: -apple-system, system-ui, "Helvetica Neue", sans-serif; }
+  body.en .title { font-family: -apple-system, system-ui, "Helvetica Neue", sans-serif; font-weight: 700; letter-spacing: -.02em; }
+  body.en .sub { font-family: -apple-system, system-ui, "Helvetica Neue", sans-serif; }
+</style>
+</head>
+<body>
+<div class="og">
+  <div class="btn">BUTTON</div>
+  <div class="title" id="title">ネオンボタンジェネレーター</div>
+  <div class="sub" id="sub">光る縁のCSSボタンを15パターンで生成（無料）</div>
+  <div class="brand">CodeQuest.work</div>
+</div>
+<script>
+  if (location.hash === "#en") {
+    document.body.classList.add("en");
+    document.documentElement.lang = "en";
+    document.getElementById("title").textContent = "Neon Button Generator";
+    document.getElementById("sub").textContent = "15 glowing CSS button styles, with copy-paste code";
+  }
+</script>
+</body>
+</html>
