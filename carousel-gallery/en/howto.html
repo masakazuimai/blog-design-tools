@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to Use CSS Carousel Examples and FAQ | CodeQuest.work</title>
+    <meta name="description" content="How to use the CSS Carousel Examples tool in three steps, plus answers to common questions: can you build a carousel with CSS only, how to auto-scroll, swiping on mobile, browser support and how the spiral carousel works." />
+    <link rel="canonical" href="https://codequest.work/generator/carousel-gallery/en/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/carousel-gallery/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/carousel-gallery/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/carousel-gallery/howto.html" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="How to Use CSS Carousel Examples and FAQ" />
+    <meta property="og:description" content="Pick a type, change the settings and copy the code, plus common questions about CSS carousels." />
+    <meta property="og:url" content="https://codequest.work/generator/carousel-gallery/en/howto.html" />
+    <meta property="og:image" content="https://codequest.work/generator/carousel-gallery/assets/og-en.png?v=20261116a" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://codequest.work/generator/carousel-gallery/assets/og-en.png?v=20261116a" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "HowTo",
+            "name": "How to use CSS Carousel Examples",
+            "step": [
+              { "@type": "HowToStep", "name": "Pick a type", "text": "Choose a card from the list, such as a helix, an infinite loop or scroll snap." },
+              { "@type": "HowToStep", "name": "Change the settings", "text": "Move the sliders for card count, speed or radius and watch the preview." },
+              { "@type": "HowToStep", "name": "Copy and paste the code", "text": "Press Copy code and paste it into your page. Replace the card contents with your own images or text." }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "Can I build a carousel with CSS only?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Use scroll-snap for swiping, @keyframes for auto-scrolling and 3D transforms for spirals. Eleven of the twelve carousels here use no JavaScript." } },
+              { "@type": "Question", "name": "Which carousels move on their own?", "acceptedAnswer": { "@type": "Answer", "text": "The infinite marquee and the two-row reverse marquee. The set is repeated twice and moved by half its width so there is no seam. The helix, tornado and double helix also keep moving." } },
+              { "@type": "Question", "name": "Can people swipe on mobile?", "acceptedAnswer": { "@type": "Answer", "text": "Scroll snap, CSS-only buttons and dots, center zoom and coverflow can all be swiped. The spiral types are drawn smaller on screens 600px wide or less." } },
+              { "@type": "Question", "name": "Do any types fail in Safari or Firefox?", "acceptedAnswer": { "@type": "Answer", "text": "Types marked New CSS (CSS-only buttons and dots, center zoom, coverflow) work in Chrome and Edge first. Other browsers show a plain scrolling row without the buttons or effect. The scroll-driven helix falls back to a short JS snippet." } },
+              { "@type": "Question", "name": "How does the spiral carousel work?", "acceptedAnswer": { "@type": "Answer", "text": "One @keyframes animates height (translateY), angle (rotateY) and radius (translateZ) together, and each card gets a negative animation-delay so the cards sit along the spiral." } },
+              { "@type": "Question", "name": "What about people who prefer reduced motion?", "acceptedAnswer": { "@type": "Answer", "text": "The exported code includes prefers-reduced-motion, so the auto-moving types stay still for those users." } },
+              { "@type": "Question", "name": "How do I use my own images?", "acceptedAnswer": { "@type": "Answer", "text": "Put an img element or a background-image inside each cg-card element. The color gradient comes from the .cg-card background, so you can remove it when you use images." } }
+            ]
+          }
+        ]
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css?v=20261116a" />
+  </head>
+  <body>
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <header class="header">
+      <a class="lang-switch" href="../howto.html" hreflang="ja">日本語</a>
+      <h1>How to use CSS Carousel Examples</h1>
+      <p>Add a carousel to your page in three steps. <a href="./">Open the tool</a></p>
+    </header>
+    <main class="container">
+      <section class="about">
+        <h2>Steps</h2>
+        <ol class="related">
+          <li><strong>Pick a type</strong>: choose a card from the list, such as a helix, an infinite loop or scroll snap.</li>
+          <li><strong>Change the settings</strong>: move the sliders for card count, speed or radius and watch the preview.</li>
+          <li><strong>Copy and paste the code</strong>: press Copy code and paste it into your page. Replace the card contents with your own images or text.</li>
+        </ol>
+
+        <h2>FAQ</h2>
+        <h3>Can I build a carousel with CSS only?</h3>
+        <p>Yes. Use scroll-snap for swiping, @keyframes for auto-scrolling and 3D transforms for spirals. Eleven of the twelve carousels here use no JavaScript.</p>
+        <h3>Which carousels move on their own?</h3>
+        <p>The infinite marquee and the two-row reverse marquee. The set is repeated twice and moved by half its width so there is no seam. The helix, tornado and double helix also keep moving.</p>
+        <h3>Can people swipe on mobile?</h3>
+        <p>Scroll snap, CSS-only buttons and dots, center zoom and coverflow can all be swiped. The spiral types are drawn smaller on screens 600px wide or less.</p>
+        <h3>Do any types fail in Safari or Firefox?</h3>
+        <p>Types marked New CSS (CSS-only buttons and dots, center zoom, coverflow) work in Chrome and Edge first. Other browsers show a plain scrolling row without the buttons or effect. The scroll-driven helix falls back to a short JS snippet.</p>
+        <h3>How does the spiral carousel work?</h3>
+        <p>One @keyframes animates height (translateY), angle (rotateY) and radius (translateZ) together, and each card gets a negative animation-delay so the cards sit along the spiral.</p>
+        <h3>What about people who prefer reduced motion?</h3>
+        <p>The exported code includes prefers-reduced-motion, so the auto-moving types stay still for those users.</p>
+        <h3>How do I use my own images?</h3>
+        <p>Put an img element or a background-image inside each cg-card element. The color gradient comes from the .cg-card background, so you can remove it when you use images.</p>
+
+        <h2>Other carousel tools</h2>
+        <ul class="related">
+          <li><a href="../../carousel-3d/en/">3D Carousel Generator</a> (six GSAP 3D carousels)</li>
+          <li><a href="../../slider-generator/en/">Slider &amp; Carousel Generator</a> (Swiper, Splide, Slick)</li>
+        </ul>
+      </section>
+    </main>
+    <footer>
+      <span
+        >&copy; <span class="cq-year">2026</span
+        ><script>
+          document.currentScript.previousElementSibling.textContent = new Date().getFullYear();
+        </script>
+        CSS Carousel Examples | Created by
+        <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span
+      >
+      <div class="footer-links">
+        <a href="./">Open the tool</a>
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">More tools &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>

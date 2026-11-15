@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>カルーセル CSS サンプル集の使い方とよくある質問｜CodeQuest.work</title>
+    <meta name="description" content="カルーセル CSS サンプル集の使い方を3つの手順で説明します。CSSだけでカルーセルを作れるか、自動で流す方法、スマホのスワイプ、Safariで動かない型、螺旋カルーセルの作り方などのよくある質問にも答えます。" />
+    <link rel="canonical" href="https://codequest.work/generator/carousel-gallery/howto.html" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/carousel-gallery/howto.html" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/carousel-gallery/en/howto.html" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/carousel-gallery/howto.html" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:title" content="カルーセル CSS サンプル集の使い方とよくある質問" />
+    <meta property="og:description" content="型を選び、設定を変えて、コードをコピーするまでの手順と、CSSカルーセルのよくある質問。" />
+    <meta property="og:url" content="https://codequest.work/generator/carousel-gallery/howto.html" />
+    <meta property="og:image" content="https://codequest.work/generator/carousel-gallery/assets/og.png?v=20261116a" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://codequest.work/generator/carousel-gallery/assets/og.png?v=20261116a" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "HowTo",
+            "name": "カルーセル CSS サンプル集の使い方",
+            "step": [
+              { "@type": "HowToStep", "name": "型を選ぶ", "text": "下の一覧から、螺旋・無限ループ・スクロールスナップなど使いたい型のカードを押します。" },
+              { "@type": "HowToStep", "name": "設定を変える", "text": "枚数・速さ・半径などのつまみを動かし、見本で動きを確かめます。" },
+              { "@type": "HowToStep", "name": "コードをコピーして貼る", "text": "「コードをコピー」を押し、ページの貼りたい所に貼ります。カードの中身は自分の画像や文に差し替えます。" }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "CSSだけでカルーセルは作れますか？", "acceptedAnswer": { "@type": "Answer", "text": "作れます。手で送る形は scroll-snap、自動で流す形は @keyframes、螺旋のような立体は 3D の transform で作れます。このツールの12種のうち11種は JavaScript を使いません。" } },
+              { "@type": "Question", "name": "自動で流れ続けるカルーセルはどれですか？", "acceptedAnswer": { "@type": "Answer", "text": "無限ループ（マーキー）と2段の逆向きループです。同じ並びを2回置き、半分の幅だけ動かしてつなぎ目を消しています。螺旋・トルネード・二重螺旋も自動で動き続けます。" } },
+              { "@type": "Question", "name": "スマホでスワイプして送れますか？", "acceptedAnswer": { "@type": "Answer", "text": "スクロールスナップ・CSSだけのボタンと点・中央が大きくなる・カバーフローは、指で横に送れます。螺旋の型は、幅が600px以下の画面では小さく表示します。" } },
+              { "@type": "Question", "name": "Safari や Firefox で動かない型はありますか？", "acceptedAnswer": { "@type": "Answer", "text": "「新しいCSS」と書いた型（CSSだけのボタンと点・中央が大きくなる・カバーフロー）は Chrome・Edge が先に対応しています。対応していないブラウザでは、ボタンや動きの無い普通のスクロールとして表示します。スクロールで昇る螺旋は、対応していないブラウザでは短いJSが同じ動きをします。" } },
+              { "@type": "Question", "name": "螺旋カルーセルはどうやって作っていますか？", "acceptedAnswer": { "@type": "Answer", "text": "1つの @keyframes で、高さ（translateY）と角度（rotateY）と半径（translateZ）を同時に動かし、カードごとに animation-delay を負の数でずらして、らせんの上に並べています。" } },
+              { "@type": "Question", "name": "動きを減らす設定の人にはどう見えますか？", "acceptedAnswer": { "@type": "Answer", "text": "書き出すコードには prefers-reduced-motion の指定が入っていて、自動で動く型は止まった形で表示します。" } },
+              { "@type": "Question", "name": "カードを自分の画像に変えるには？", "acceptedAnswer": { "@type": "Answer", "text": "コードの中の cg-card の要素に、img 要素や background-image を入れます。色のグラデーションは .cg-card の background で決めているので、画像に変えるときは消してかまいません。" } }
+            ]
+          }
+        ]
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css?v=20261116a" />
+  </head>
+  <body>
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <header class="header">
+      <a class="lang-switch" href="en/howto.html" hreflang="en">English</a>
+      <h1>カルーセル CSS サンプル集の使い方</h1>
+      <p>3つの手順で、カルーセルを自分のページに入れられます。<a href="./">ツールを開く</a></p>
+    </header>
+    <main class="container">
+      <section class="about">
+        <h2>使い方</h2>
+        <ol class="related">
+          <li><strong>型を選ぶ</strong>：一覧から、螺旋・無限ループ・スクロールスナップなど使いたい型のカードを押します。</li>
+          <li><strong>設定を変える</strong>：枚数・速さ・半径などのつまみを動かし、見本で動きを確かめます。</li>
+          <li><strong>コードをコピーして貼る</strong>：「コードをコピー」を押し、ページの貼りたい所に貼ります。カードの中身は自分の画像や文に差し替えます。</li>
+        </ol>
+
+        <h2>よくある質問</h2>
+        <h3>CSSだけでカルーセルは作れますか？</h3>
+        <p>作れます。手で送る形は scroll-snap、自動で流す形は @keyframes、螺旋のような立体は 3D の transform で作れます。このツールの12種のうち11種は JavaScript を使いません。</p>
+        <h3>自動で流れ続けるカルーセルはどれですか？</h3>
+        <p>無限ループ（マーキー）と2段の逆向きループです。同じ並びを2回置き、半分の幅だけ動かしてつなぎ目を消しています。螺旋・トルネード・二重螺旋も自動で動き続けます。</p>
+        <h3>スマホでスワイプして送れますか？</h3>
+        <p>スクロールスナップ・CSSだけのボタンと点・中央が大きくなる・カバーフローは、指で横に送れます。螺旋の型は、幅が600px以下の画面では小さく表示します。</p>
+        <h3>Safari や Firefox で動かない型はありますか？</h3>
+        <p>「新しいCSS」と書いた型（CSSだけのボタンと点・中央が大きくなる・カバーフロー）は Chrome・Edge が先に対応しています。対応していないブラウザでは、ボタンや動きの無い普通のスクロールとして表示します。スクロールで昇る螺旋は、対応していないブラウザでは短いJSが同じ動きをします。</p>
+        <h3>螺旋カルーセルはどうやって作っていますか？</h3>
+        <p>1つの @keyframes で、高さ（translateY）と角度（rotateY）と半径（translateZ）を同時に動かし、カードごとに animation-delay を負の数でずらして、らせんの上に並べています。</p>
+        <h3>動きを減らす設定の人にはどう見えますか？</h3>
+        <p>書き出すコードには prefers-reduced-motion の指定が入っていて、自動で動く型は止まった形で表示します。</p>
+        <h3>カードを自分の画像に変えるには？</h3>
+        <p>コードの中の cg-card の要素に、img 要素や background-image を入れます。色のグラデーションは .cg-card の background で決めているので、画像に変えるときは消してかまいません。</p>
+
+        <h2>ほかのカルーセルのツール</h2>
+        <ul class="related">
+          <li><a href="../carousel-3d/">3Dカルーセル ジェネレーター</a>（GSAP の3D 6種）</li>
+          <li><a href="../slider-generator/">スライダー・カルーセル ジェネレーター</a>（Swiper・Splide・Slick）</li>
+        </ul>
+      </section>
+    </main>
+    <footer>
+      <span
+        >&copy; <span class="cq-year">2026</span
+        ><script>
+          document.currentScript.previousElementSibling.textContent = new Date().getFullYear();
+        </script>
+        カルーセル CSS サンプル集 | Created by
+        <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span
+      >
+      <div class="footer-links">
+        <a href="./">ツールを開く</a>
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+  </body>
+</html>

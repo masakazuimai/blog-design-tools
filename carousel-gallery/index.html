@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-PT6PZ5N2");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>カルーセル CSS サンプル集｜螺旋・無限ループ・カバーフローなど12種をコピペ</title>
+    <meta
+      name="description"
+      content="カルーセル（スライダー）のCSSサンプル集。螺旋・トルネード・無限ループ・スクロールスナップ・カバーフロー・扇形などを動かして選び、枚数や速さを変えて、HTMLとCSSをそのままコピーできます。ほとんどがJavaScript不要。無料・登録不要。"
+    />
+    <link rel="canonical" href="https://codequest.work/generator/carousel-gallery/" />
+    <link rel="alternate" hreflang="ja" href="https://codequest.work/generator/carousel-gallery/" />
+    <link rel="alternate" hreflang="en" href="https://codequest.work/generator/carousel-gallery/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://codequest.work/generator/carousel-gallery/" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CodeQuest.work" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:title" content="カルーセル CSS サンプル集｜螺旋・無限ループ・カバーフローなど12種をコピペ" />
+    <meta property="og:description" content="螺旋・無限ループ・カバーフローなどのカルーセルを動かして選び、HTMLとCSSをそのままコピー。ほとんどがJavaScript不要。" />
+    <meta property="og:url" content="https://codequest.work/generator/carousel-gallery/" />
+    <meta property="og:image" content="https://codequest.work/generator/carousel-gallery/assets/og.png?v=20261116a" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="カルーセル CSS サンプル集" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="カルーセル CSS サンプル集｜螺旋・無限ループ・カバーフローなど12種をコピペ" />
+    <meta name="twitter:description" content="螺旋・無限ループ・カバーフローなどのカルーセルを動かして選び、HTMLとCSSをそのままコピー。ほとんどがJavaScript不要。" />
+    <meta name="twitter:image" content="https://codequest.work/generator/carousel-gallery/assets/og.png?v=20261116a" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "カルーセル CSS サンプル集",
+            "url": "https://codequest.work/generator/carousel-gallery/",
+            "description": "螺旋・無限ループ・スクロールスナップ・カバーフロー・扇形などのカルーセルを動かして選び、枚数や速さを変えて、HTMLとCSSをコピーできる無料ツール。",
+            "applicationCategory": "DesignApplication",
+            "operatingSystem": "Web",
+            "browserRequirements": "Requires JavaScript.",
+            "inLanguage": "ja",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+            "creator": { "@type": "Organization", "name": "CodeQuest.work", "url": "https://codequest.work/" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://codequest.work/" },
+              { "@type": "ListItem", "position": 2, "name": "ジェネレーター", "item": "https://codequest.work/category/generator/" },
+              { "@type": "ListItem", "position": 3, "name": "カルーセル CSS サンプル集", "item": "https://codequest.work/generator/carousel-gallery/" }
+            ]
+          }
+        ]
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css?v=20261116a" />
+  </head>
+  <body>
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-PT6PZ5N2"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+
+    <header class="header">
+      <a class="lang-switch" href="en/" hreflang="en">English</a>
+      <h1>カルーセル CSS サンプル集</h1>
+      <p>
+        カルーセルは、CSS の scroll-snap・@keyframes・3D の transform を使えば、JavaScript なしでも作れます。螺旋や無限ループなど12種を動かして選び、枚数や速さを変えて、HTML と CSS をそのままコピーできます。
+      </p>
+    </header>
+
+    <main class="container">
+      <section class="work" id="work" aria-label="選んだカルーセル">
+        <div class="stage">
+          <div class="stage-head">
+            <h2 id="typeName"></h2>
+            <span id="typeMethod" class="badge"></span>
+          </div>
+          <iframe id="stageFrame" class="stage-frame" title="カルーセルの見本"></iframe>
+          <div>
+            <p class="stage-desc" id="typeDesc"></p>
+            <p class="stage-support" id="typeSupport" hidden></p>
+          </div>
+        </div>
+        <aside class="panel" aria-label="設定">
+          <h2>設定</h2>
+          <div id="fields"></div>
+          <button class="btn" id="resetOpts" type="button">最初の設定に戻す</button>
+        </aside>
+      </section>
+
+      <section class="code" aria-label="コード">
+        <div class="code-bar">
+          <div class="code-tabs" id="codeTabs" role="tablist" aria-label="コードの種類"></div>
+          <button class="btn btn-primary" id="copyCode" type="button">コードをコピー</button>
+        </div>
+        <p class="paste-note" id="pasteNote"></p>
+        <pre class="code-out"><code id="codeOut"></code></pre>
+      </section>
+
+      <section class="gallery" aria-labelledby="galleryTitle">
+        <h2 id="galleryTitle">カルーセルの種類から選ぶ</h2>
+        <p>カードを押すと、上の見本と設定とコードが切り替わります。</p>
+        <div class="chips" id="catChips" role="group" aria-label="種類で絞り込む"></div>
+        <ul class="type-grid" id="typeGrid"></ul>
+      </section>
+
+      <section class="about" aria-labelledby="aboutTitle">
+        <h2 id="aboutTitle">カルーセルの種類と選び方</h2>
+        <p class="answer">
+          カルーセルは、画像やカードを横（または縦・らせん）に並べて、送ったり流したりして見せる部品です。手で送る形はスクロールスナップ、自動で流す形は無限ループ、目を引きたい所には螺旋やカバーフローが向いています。
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">種類</th>
+                <th scope="col">作り方</th>
+                <th scope="col">動くブラウザ</th>
+                <th scope="col">向いている場所</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>螺旋・トルネード・二重螺旋</td><td>CSSだけ（@keyframes と 3D の transform）</td><td>主なブラウザすべて</td><td>トップページの目玉・作品の一覧</td></tr>
+              <tr><td>スクロールで昇る螺旋</td><td>CSS（animation-timeline）＋少しのJS</td><td>Chrome・Edge は CSS、ほかは JS</td><td>縦に長い紹介ページ</td></tr>
+              <tr><td>無限ループ・2段の逆向き</td><td>CSSだけ</td><td>主なブラウザすべて</td><td>ロゴ・実績・お客様の声</td></tr>
+              <tr><td>スクロールスナップ</td><td>CSSだけ</td><td>主なブラウザすべて</td><td>スマホの商品一覧・記事の一覧</td></tr>
+              <tr><td>CSS だけのボタンと点</td><td>新しいCSS（::scroll-button・::scroll-marker）</td><td>Chrome・Edge 135 以降</td><td>写真のスライド</td></tr>
+              <tr><td>中央が大きくなる・カバーフロー</td><td>新しいCSS（animation-timeline: view()）</td><td>Chrome・Edge（ほかは動きなしで表示）</td><td>商品・作品を1つずつ見せる所</td></tr>
+              <tr><td>扇形・アコーディオン型</td><td>CSSだけ（:hover と transition）</td><td>主なブラウザすべて</td><td>メニュー・カテゴリーの入口</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          新しいCSSの対応状況は
+          <a href="https://developer.chrome.com/blog/carousels-with-css" target="_blank" rel="noopener">Chrome for Developers の「CSS を使用したカルーセル」</a>
+          と
+          <a href="https://developer.mozilla.org/ja/docs/Web/CSS/CSS_overflow/CSS_carousels" target="_blank" rel="noopener">MDN の「CSS によるカルーセルの作成」</a>
+          で確かめられます。書き出すコードは、動きを減らす設定の端末では止まった形で表示します。
+        </p>
+        <h2>ほかのカルーセルのツール</h2>
+        <ul class="related">
+          <li><a href="../carousel-3d/">3Dカルーセル ジェネレーター</a>：メリーゴーランド・キューブ・観覧車など、GSAP で回る3D の6種を数字で調整できます。</li>
+          <li><a href="../slider-generator/">スライダー・カルーセル ジェネレーター</a>：Swiper・Splide・Slick の設定を選んでコードを作れます。</li>
+          <li><a href="../animation-gallery/">CSSアニメーション サンプル集</a>：カルーセル以外の動きも100種以上あります。</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <span
+        >&copy; <span class="cq-year">2026</span
+        ><script>
+          document.currentScript.previousElementSibling.textContent = new Date().getFullYear();
+        </script>
+        カルーセル CSS サンプル集 | Created by
+        <a href="https://codequest.work/" target="_blank" rel="noopener">CodeQuest.work</a></span
+      >
+      <div class="footer-links">
+        <a href="howto.html">使い方・FAQ</a>
+        <a href="https://seo.codequest.work" target="_blank" rel="noopener">Direbase &rarr;</a>
+        <a href="https://codequest.work/category/generator/" target="_blank" rel="noopener">その他のツール &rarr;</a>
+      </div>
+    </footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="js/main.js?v=20261116a"></script>
+  </body>
+</html>

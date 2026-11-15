@@ -1,0 +1,44 @@
+export const UI = {
+  ja: {
+    cats: {
+      all: "すべて",
+      spiral: "螺旋",
+      loop: "無限ループ",
+      basic: "基本",
+      scroll: "スクロールで動く",
+      shape: "並べ方",
+    },
+    method: {
+      css: "CSSだけ",
+      "css-js": "CSS＋少しのJS",
+      "css-new": "新しいCSS",
+    },
+    tabs: { all: "まとめて", html: "HTML", css: "CSS", js: "JS" },
+    copied: "コードをコピーしました",
+    copyFailed: "コピーできませんでした。コードを選んで写してください",
+    pasteAll: "HTML・CSS・JS をまとめて1つにしています。ページの貼りたい所にそのまま貼れます。",
+    pastePart: "選んだ部分だけを表示しています。",
+    stageTitle: (name) => `${name}の見本`,
+  },
+  en: {
+    cats: {
+      all: "All",
+      spiral: "Spiral",
+      loop: "Infinite loop",
+      basic: "Basics",
+      scroll: "Scroll-driven",
+      shape: "Layouts",
+    },
+    method: {
+      css: "CSS only",
+      "css-js": "CSS + a little JS",
+      "css-new": "New CSS",
+    },
+    tabs: { all: "All in one", html: "HTML", css: "CSS", js: "JS" },
+    copied: "Code copied",
+    copyFailed: "Could not copy. Select the code and copy it by hand.",
+    pasteAll: "HTML, CSS and JS are combined into one block. Paste it where you want the carousel.",
+    pastePart: "Showing only the selected part.",
+    stageTitle: (name) => `${name} preview`,
+  },
+};
