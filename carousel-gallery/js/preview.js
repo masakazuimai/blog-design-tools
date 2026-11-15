@@ -18,6 +18,7 @@ body:not(.is-scroll) { overflow: hidden; }
 body.is-scroll { display: block; padding: 0; }
 body.is-thumb { zoom: var(--thumb, 0.5); min-height: calc(100vh / var(--thumb, 0.5)); pointer-events: none; overflow: hidden; }
 body.is-thumb div { --s: 1; }
+body.is-thumb.is-scroll [class$="-sticky"] { height: calc(100vh / var(--thumb, 0.5)); }
 .cg-hint { margin: 0; padding: 16px; text-align: center; color: #4a615f; }
 `;
 
