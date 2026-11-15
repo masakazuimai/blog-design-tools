@@ -15,7 +15,7 @@ export const UI = {
     method: {
       css: "CSSだけ",
       "css-js": "CSS＋少しのJS",
-      "css-new": "新しいCSS",
+      "css-new": "CSS＋古いブラウザ用のJS",
     },
     tabs: { all: "まとめて", html: "HTML", css: "CSS", js: "JS" },
     copied: "コードをコピーしました",
@@ -40,7 +40,7 @@ export const UI = {
     method: {
       css: "CSS only",
       "css-js": "CSS + a little JS",
-      "css-new": "New CSS",
+      "css-new": "CSS + JS fallback",
     },
     tabs: { all: "All in one", html: "HTML", css: "CSS", js: "JS" },
     copied: "Code copied",

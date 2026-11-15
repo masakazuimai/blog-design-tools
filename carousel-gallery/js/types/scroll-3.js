@@ -1,7 +1,9 @@
 import { word, hue, CARD_CSS } from "./_shared.js?v=20261116a";
+import { viewFallback } from "./fallback.js?v=20261116g";
 
 const EDGE = {
   id: "edge-blur",
+  demo: "x",
   cat: "scroll",
   method: "css-new",
   label: { ja: "端でぼける", en: "Blur at the edges" },
@@ -10,8 +12,8 @@ const EDGE = {
     en: "As you scroll sideways, cards near the edges blur and fade so the eye goes to the middle.",
   },
   support: {
-    ja: "CSS のスクロール連動（animation-timeline: view()）は Chrome・Edge が対応しています。対応していないブラウザでは、ぼかしの無いスクロールスナップとして動きます。",
-    en: "CSS view timelines work in Chrome and Edge. Other browsers show a plain scroll-snap row without the blur.",
+    ja: "動きは CSS のスクロール連動（animation-timeline: view()）で作っています。Chrome・Edge は CSS だけで動き、まだ対応していないブラウザではコードの中の短い JS が同じ動きをします。",
+    en: "The motion uses CSS scroll timelines (animation-timeline: view()). Chrome and Edge run it with CSS alone, and other browsers use the short JS in the code instead.",
   },
   fields: [
     { key: "n", label: { ja: "枚数", en: "Cards" }, min: 4, max: 12, step: 1, unit: "" },
@@ -53,13 +55,16 @@ const EDGE = {
   40%, 60% { filter: blur(0); opacity: 1; }
 }
 ${CARD_CSS}`,
-      js: "",
+      js: viewFallback(`.${p}`, `const k = Math.max(0, (t - 0.2) / 0.8);
+      card.style.filter = "blur(" + k * ${o.blur} + "px)";
+      card.style.opacity = String(1 - k * 0.65);`),
     };
   },
 };
 
 const SCROLL_DIAL = {
   id: "scroll-dial",
+  demo: "y",
   cat: "scroll",
   method: "css-js",
   scroll: true,

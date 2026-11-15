@@ -1,7 +1,9 @@
 import { word, hue, CARD_CSS } from "./_shared.js?v=20261116a";
+import { viewFallback } from "./fallback.js?v=20261116g";
 
 const PARALLAX = {
   id: "parallax",
+  demo: "x",
   cat: "scroll",
   method: "css-new",
   label: { ja: "パララックス", en: "Parallax" },
@@ -10,8 +12,8 @@ const PARALLAX = {
     en: "As you scroll sideways, the art inside each card lags behind its frame, adding depth. Scroll the preview to try it.",
   },
   support: {
-    ja: "CSS のスクロール連動（view-timeline）は Chrome・Edge が対応しています。対応していないブラウザでは、絵が止まったスクロールスナップとして動きます。",
-    en: "CSS view timelines work in Chrome and Edge. Other browsers show a normal scroll-snap row with still art.",
+    ja: "動きは CSS のスクロール連動（view-timeline）で作っています。Chrome・Edge は CSS だけで動き、まだ対応していないブラウザではコードの中の短い JS が同じ動きをします。",
+    en: "The motion uses CSS view timelines. Chrome and Edge run it with CSS alone, and other browsers use the short JS in the code instead.",
   },
   fields: [
     { key: "n", label: { ja: "枚数", en: "Cards" }, min: 4, max: 10, step: 1, unit: "" },
@@ -75,13 +77,14 @@ const PARALLAX = {
   from { transform: translateX(-${o.depth / 2}%); }
   to { transform: translateX(${o.depth / 2}%); }
 }`,
-      js: "",
+      js: viewFallback(`.${p}`, `card.firstElementChild.style.transform = "translateX(" + -s * ${o.depth / 2} + "%)";`),
     };
   },
 };
 
 const HSCROLL = {
   id: "horizontal-section",
+  demo: "y",
   cat: "scroll",
   method: "css-js",
   scroll: true,

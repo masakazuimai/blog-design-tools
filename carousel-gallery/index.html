@@ -73,7 +73,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css?v=20261116a" />
+    <link rel="stylesheet" href="css/style.css?v=20261116g" />
   </head>
   <body>
     <noscript
@@ -99,6 +99,7 @@
           <div class="stage-head">
             <h2 id="typeName"></h2>
             <span id="typeMethod" class="badge"></span>
+            <p class="stage-how" id="typeHow"></p>
           </div>
           <iframe id="stageFrame" class="stage-frame" title="カルーセルの見本"></iframe>
           <div>
@@ -153,8 +154,8 @@
               <tr><td>スクロールスナップ・幅で枚数が変わる</td><td>CSSだけ（コンテナクエリ）</td><td>主なブラウザすべて</td><td>スマホの商品一覧・記事の一覧</td></tr>
               <tr><td>サムネイル付き・点で切り替えるスライド</td><td>CSSだけ（ラジオボタンと :has()）</td><td>主なブラウザすべて</td><td>商品の写真・作品の詳細</td></tr>
               <tr><td>自動再生と進み具合のバー・画面いっぱいのフェード</td><td>CSSだけ（@keyframes）</td><td>主なブラウザすべて</td><td>トップページの大きな写真・お知らせ</td></tr>
-              <tr><td>CSS だけのボタンと点</td><td>新しいCSS（::scroll-button・::scroll-marker）</td><td>Chrome・Edge 135 以降</td><td>写真のスライド</td></tr>
-              <tr><td>中央が大きくなる・カバーフロー・パララックス・端でぼける</td><td>新しいCSS（animation-timeline: view()）</td><td>Chrome・Edge（ほかは動きなしで表示）</td><td>商品・作品を1つずつ見せる所</td></tr>
+              <tr><td>CSS だけのボタンと点</td><td>CSS（::scroll-button・::scroll-marker）＋古いブラウザ用のJS</td><td>Chrome・Edge 135 以降は CSS、ほかは JS</td><td>写真のスライド</td></tr>
+              <tr><td>中央が大きくなる・カバーフロー・パララックス・端でぼける</td><td>CSS のスクロール連動（animation-timeline: view()）＋古いブラウザ用のJS</td><td>Chrome・Edge は CSS、ほかは JS</td><td>商品・作品を1つずつ見せる所</td></tr>
               <tr><td>扇形・アコーディオン型・タイル・斜めに切った帯・六角形・吊り下げ</td><td>CSSだけ（:hover・clip-path・grid）</td><td>主なブラウザすべて</td><td>メニュー・カテゴリーの入口</td></tr>
               <tr><td>ズームして切り替え・幕を引くように開く・ぼかしからくっきり</td><td>CSSだけ（@keyframes・clip-path・filter）</td><td>主なブラウザすべて</td><td>トップページの大きな写真</td></tr>
               <tr><td>タイルに割れて入れ替わる・背景の色が合わせて変わる</td><td>CSS＋少しのJS</td><td>主なブラウザすべて</td><td>キャンペーン・商品の色を見せる所</td></tr>
@@ -164,7 +165,7 @@
           </table>
         </div>
         <p>
-          新しいCSSの対応状況は
+          スクロール連動や ::scroll-marker などの CSS がどのブラウザで動くかは
           <a href="https://developer.chrome.com/blog/carousels-with-css" target="_blank" rel="noopener">Chrome for Developers の「CSS を使用したカルーセル」</a>
           と
           <a href="https://developer.mozilla.org/ja/docs/Web/CSS/CSS_overflow/CSS_carousels" target="_blank" rel="noopener">MDN の「CSS によるカルーセルの作成」</a>
@@ -195,6 +196,6 @@
       </div>
     </footer>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script type="module" src="js/main.js?v=20261116f"></script>
+    <script type="module" src="js/main.js?v=20261116g"></script>
   </body>
 </html>

@@ -120,6 +120,16 @@ a {
   background: var(--panel);
 }
 
+.stage-how {
+  flex-basis: 100%;
+  margin: 0;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: #e6e1fb;
+  color: #2c1a7a;
+  font-weight: 600;
+}
+
 .stage-desc {
   margin: 0;
   padding: 14px 20px;

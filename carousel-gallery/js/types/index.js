@@ -1,20 +1,20 @@
-import { SPIRAL } from "./spiral.js?v=20261116b";
+import { SPIRAL } from "./spiral.js?v=20261116g";
 import { SPIRAL_2 } from "./spiral-2.js?v=20261116c";
 import { LOOP } from "./loop.js?v=20261116a";
 import { LOOP_2 } from "./loop-2.js?v=20261116c";
-import { BASIC } from "./basic.js?v=20261116a";
+import { BASIC } from "./basic.js?v=20261116g";
 import { BASIC_2, SWITCH } from "./basic-2.js?v=20261116c";
-import { SCROLL } from "./scroll.js?v=20261116a";
-import { SCROLL_2 } from "./scroll-2.js?v=20261116c";
+import { SCROLL } from "./scroll.js?v=20261116g";
+import { SCROLL_2 } from "./scroll-2.js?v=20261116g";
 import { SHAPE } from "./shape.js?v=20261116a";
 import { SPIRAL_3 } from "./spiral-3.js?v=20261116d";
 import { THREE_D } from "./three-d.js?v=20261116d";
 import { STACK } from "./stack.js?v=20261116d";
 import { DRAG, DRAG_LOOP, DRAG_BASIC, DRAG_SHAPE } from "./drag.js?v=20261116e";
 import { LOOP_3 } from "./loop-3.js?v=20261116f";
-import { SHAPE_2, BASIC_3 } from "./shape-2.js?v=20261116f";
-import { SWITCH_2 } from "./switch-2.js?v=20261116f";
-import { SCROLL_3, THREE_D_2, DRAG_2 } from "./scroll-3.js?v=20261116f";
+import { SHAPE_2, BASIC_3 } from "./shape-2.js?v=20261116g";
+import { SWITCH_2 } from "./switch-2.js?v=20261116g";
+import { SCROLL_3, THREE_D_2, DRAG_2 } from "./scroll-3.js?v=20261116g";
 
 export const TYPES = [
   ...SPIRAL,

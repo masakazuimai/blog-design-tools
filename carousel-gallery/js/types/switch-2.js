@@ -214,6 +214,7 @@ const TILES = {
 
 const BG = {
   id: "bg-sync",
+  demo: "x",
   cat: "switch",
   method: "css-js",
   label: { ja: "背景の色が合わせて変わる", en: "Background follows the slide" },

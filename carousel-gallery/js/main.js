@@ -1,6 +1,7 @@
-import { TYPES, CATS } from "./types/index.js?v=20261116f";
-import { UI } from "./i18n.js?v=20261116f";
-import { previewDoc, combined } from "./preview.js?v=20261116a";
+import { TYPES, CATS } from "./types/index.js?v=20261116g";
+import { UI } from "./i18n.js?v=20261116g";
+import { previewDoc, combined } from "./preview.js?v=20261116g";
+import { howText } from "./how.js?v=20261116g";
 
 const LANG = document.documentElement.lang === "en" ? "en" : "ja";
 const T = UI[LANG];
@@ -12,6 +13,7 @@ const els = {
   stage: $("stageFrame"),
   name: $("typeName"),
   method: $("typeMethod"),
+  how: $("typeHow"),
   desc: $("typeDesc"),
   support: $("typeSupport"),
   fields: $("fields"),
@@ -97,6 +99,7 @@ function renderInfo() {
   els.method.textContent = T.method[t.method];
   els.method.className = `badge badge-${t.method}`;
   els.desc.textContent = t.desc[LANG];
+  els.how.textContent = howText(t, LANG);
   els.support.textContent = t.support ? t.support[LANG] : "";
   els.support.hidden = !t.support;
   els.stage.title = T.stageTitle(t.label[LANG]);

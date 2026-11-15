@@ -278,6 +278,7 @@ ${CARD_CSS}`,
 
 const RESPONSIVE = {
   id: "responsive-count",
+  demo: "x",
   cat: "basic",
   method: "css",
   label: { ja: "幅で枚数が変わる", en: "Responsive card count" },

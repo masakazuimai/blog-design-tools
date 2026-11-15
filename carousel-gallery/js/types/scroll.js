@@ -1,8 +1,9 @@
 import { word, hue, CARD_CSS } from "./_shared.js?v=20261116a";
+import { viewFallback } from "./fallback.js?v=20261116g";
 
 const SUPPORT = {
-  ja: "CSS のスクロール連動（animation-timeline: view()）は Chrome・Edge が対応しています。対応していないブラウザでは、動きの無いスクロールスナップとして動きます。",
-  en: "CSS view timelines (animation-timeline: view()) work in Chrome and Edge. Other browsers show a plain scroll-snap carousel without the effect.",
+  ja: "動きは CSS のスクロール連動（animation-timeline: view()）で作っています。Chrome・Edge は CSS だけで動き、まだ対応していないブラウザではコードの中の短い JS が同じ動きをします。",
+  en: "The motion uses CSS scroll timelines (animation-timeline: view()). Chrome and Edge run it with CSS alone, and other browsers use the short JS in the code instead.",
 };
 
 const list = (p, n, lang) =>
@@ -33,6 +34,7 @@ const FIELDS = [
 
 const CENTER = {
   id: "center-zoom",
+  demo: "x",
   cat: "scroll",
   method: "css-new",
   label: { ja: "中央が大きくなる", en: "Center zoom" },
@@ -61,13 +63,15 @@ const CENTER = {
   50% { scale: 1; opacity: 1; }
 }
 ${CARD_CSS}`,
-      js: "",
+      js: viewFallback(`.${p}`, `card.style.scale = String(1 - t * ${(1 - o.min / 100).toFixed(2)});
+      card.style.opacity = String(1 - t * 0.5);`),
     };
   },
 };
 
 const COVERFLOW = {
   id: "coverflow",
+  demo: "x",
   cat: "scroll",
   method: "css-new",
   label: { ja: "カバーフロー", en: "Coverflow" },
@@ -97,7 +101,8 @@ const COVERFLOW = {
   100% { transform: perspective(800px) rotateY(-${o.angle}deg) scale(0.85); filter: brightness(0.7); }
 }
 ${CARD_CSS}`,
-      js: "",
+      js: viewFallback(`.${p}`, `card.style.transform = "perspective(800px) rotateY(" + s * ${o.angle} + "deg) scale(" + (1 - t * 0.15) + ")";
+      card.style.filter = "brightness(" + (1 - t * 0.3) + ")";`),
     };
   },
 };

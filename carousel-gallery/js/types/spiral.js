@@ -223,6 +223,7 @@ ${CARD_CSS}`,
 
 const SCROLL_HELIX = {
   id: "scroll-helix",
+  demo: "y",
   cat: "spiral",
   thumbZoom: 0.3,
   method: "css-js",
@@ -296,6 +297,7 @@ const SCROLL_HELIX = {
 .${p}-card {
   position: absolute;
   inset: 0;
+  backface-visibility: hidden;
   transform: translateY(calc(var(--i) * var(--step) * -1)) rotateY(calc(var(--i) * var(--angle))) translateZ(var(--r));
 }
 @supports (animation-timeline: scroll()) {

@@ -73,7 +73,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/style.css?v=20261116a" />
+    <link rel="stylesheet" href="../css/style.css?v=20261116g" />
   </head>
   <body>
     <noscript
@@ -99,6 +99,7 @@
           <div class="stage-head">
             <h2 id="typeName"></h2>
             <span id="typeMethod" class="badge"></span>
+            <p class="stage-how" id="typeHow"></p>
           </div>
           <iframe id="stageFrame" class="stage-frame" title="Carousel preview"></iframe>
           <div>
@@ -153,8 +154,8 @@
               <tr><td>Scroll snap, responsive card count</td><td>CSS only (container queries)</td><td>All major browsers</td><td>Mobile product and article lists</td></tr>
               <tr><td>With thumbnails, dot-controlled slides</td><td>CSS only (radio buttons and :has())</td><td>All major browsers</td><td>Product photos, portfolio details</td></tr>
               <tr><td>Autoplay with progress bars, full-width fade</td><td>CSS only (@keyframes)</td><td>All major browsers</td><td>Hero photos, announcements</td></tr>
-              <tr><td>CSS-only buttons and dots</td><td>New CSS (::scroll-button, ::scroll-marker)</td><td>Chrome and Edge 135+</td><td>Photo slides</td></tr>
-              <tr><td>Center zoom, coverflow, parallax, blur at the edges</td><td>New CSS (animation-timeline: view())</td><td>Chrome and Edge (others show it without the effect)</td><td>Showing one product at a time</td></tr>
+              <tr><td>CSS-only buttons and dots</td><td>CSS (::scroll-button, ::scroll-marker) + JS fallback</td><td>CSS in Chrome and Edge 135+, JS elsewhere</td><td>Photo slides</td></tr>
+              <tr><td>Center zoom, coverflow, parallax, blur at the edges</td><td>CSS scroll timelines (animation-timeline: view()) + JS fallback</td><td>CSS in Chrome and Edge, JS elsewhere</td><td>Showing one product at a time</td></tr>
               <tr><td>Fan, accordion, bento tiles, slanted panels, hexagons, hanging cards</td><td>CSS only (:hover, clip-path, grid)</td><td>All major browsers</td><td>Menus and category entrances</td></tr>
               <tr><td>Zoom transition, curtain wipe, blur to focus</td><td>CSS only (@keyframes, clip-path, filter)</td><td>All major browsers</td><td>Hero photos</td></tr>
               <tr><td>Tile flip transition, background follows the slide</td><td>CSS + a little JS</td><td>All major browsers</td><td>Campaigns, showing product colors</td></tr>
@@ -164,7 +165,7 @@
           </table>
         </div>
         <p>
-          Check support for the new CSS in
+          Check which browsers support scroll timelines and ::scroll-marker in
           <a href="https://developer.chrome.com/blog/carousels-with-css" target="_blank" rel="noopener">Chrome for Developers: Carousels with CSS</a>
           and
           <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Overflow/Carousels" target="_blank" rel="noopener">MDN: Creating CSS carousels</a>.
@@ -195,6 +196,6 @@
       </div>
     </footer>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script type="module" src="../js/main.js?v=20261116f"></script>
+    <script type="module" src="../js/main.js?v=20261116g"></script>
   </body>
 </html>

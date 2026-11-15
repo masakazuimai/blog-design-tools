@@ -12,6 +12,7 @@ const FIELDS = [
 
 const SNAP = {
   id: "snap",
+  demo: "x",
   cat: "basic",
   method: "css",
   label: { ja: "スクロールスナップ", en: "Scroll snap" },
@@ -51,6 +52,7 @@ ${CARD_CSS}`,
 
 const MARKERS = {
   id: "scroll-markers",
+  demo: "x",
   cat: "basic",
   method: "css-new",
   label: { ja: "CSS だけのボタンと点", en: "CSS-only buttons and dots" },
@@ -59,8 +61,8 @@ const MARKERS = {
     en: "Previous/next buttons and position dots made with only CSS ::scroll-button and ::scroll-marker.",
   },
   support: {
-    ja: "::scroll-button と ::scroll-marker は Chrome・Edge 135 以降が対応しています。対応していないブラウザでは、ボタンと点の無いスクロールスナップとして動きます。",
-    en: "::scroll-button and ::scroll-marker work in Chrome and Edge 135+. Other browsers show a plain scroll-snap carousel without buttons or dots.",
+    ja: "::scroll-button と ::scroll-marker は Chrome・Edge 135 以降が対応しています。まだ対応していないブラウザでは、コードの中の短い JS が同じボタンと点を作ります。",
+    en: "::scroll-button and ::scroll-marker work in Chrome and Edge 135+. In other browsers, the short JS in the code builds the same buttons and dots.",
   },
   fields: FIELDS,
   defaults: { n: 6, w: 70 },
@@ -132,8 +134,66 @@ const MARKERS = {
 .${p}-card::scroll-marker:target-current {
   background: #13302f;
 }
+.${p}-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding-top: 8px;
+}
+.${p}-nav button {
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.${p}-arrow {
+  width: 44px;
+  height: 44px;
+  background: #13302f;
+  color: #fff;
+  font-size: 18px;
+}
+.${p}-dot {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  background: #c7d1c8;
+}
+.${p}-dot[aria-current="true"] {
+  background: #13302f;
+}
 ${CARD_CSS}`,
-      js: "",
+      js: `if (!CSS.supports("scroll-marker-group: after")) {
+  const list = document.querySelector(".${p}");
+  const cards = [...list.children];
+  const nav = document.createElement("div");
+  nav.className = "${p}-nav";
+  const go = (i) => list.scrollTo({ left: cards[i].offsetLeft - (list.clientWidth - cards[i].offsetWidth) / 2 });
+  const current = () => {
+    const mid = list.scrollLeft + list.clientWidth / 2;
+    return cards.reduce((best, c, i) => (Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid) < Math.abs(cards[best].offsetLeft + cards[best].offsetWidth / 2 - mid) ? i : best), 0);
+  };
+  const button = (cls, label, text, onClick) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = cls;
+    b.setAttribute("aria-label", label);
+    b.textContent = text;
+    b.addEventListener("click", onClick);
+    return b;
+  };
+  nav.append(button("${p}-arrow", "${prev}", "←", () => go(Math.max(0, current() - 1))));
+  const dots = cards.map((_, i) => button("${p}-dot", String(i + 1), "", () => go(i)));
+  nav.append(...dots);
+  nav.append(button("${p}-arrow", "${next}", "→", () => go(Math.min(cards.length - 1, current() + 1))));
+  list.after(nav);
+  const update = () => {
+    const c = current();
+    dots.forEach((d, i) => d.setAttribute("aria-current", String(i === c)));
+  };
+  list.addEventListener("scroll", update, { passive: true });
+  update();
+}`,
     };
   },
 };
