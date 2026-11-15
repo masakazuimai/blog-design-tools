@@ -7,6 +7,7 @@ export const UI = {
       basic: "基本",
       scroll: "スクロールで動く",
       shape: "並べ方",
+      switch: "切り替えの演出",
     },
     method: {
       css: "CSSだけ",
@@ -28,6 +29,7 @@ export const UI = {
       basic: "Basics",
       scroll: "Scroll-driven",
       shape: "Layouts",
+      switch: "Transitions",
     },
     method: {
       css: "CSS only",
