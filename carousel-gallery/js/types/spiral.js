@@ -116,7 +116,7 @@ const TORNADO = {
     { key: "r1", label: { ja: "上の半径", en: "Top radius" }, min: 160, max: 360, step: 10, unit: "px" },
     { key: "turns", label: { ja: "周回の数", en: "Turns" }, min: 1, max: 5, step: 0.5, unit: "" },
   ],
-  defaults: { n: 16, dur: 6, r0: 80, r1: 270, turns: 3 },
+  defaults: { n: 16, dur: 24, r0: 80, r1: 270, turns: 3 },
   build(o, lang) {
     const p = "cg-tornado";
     const items = Array.from({ length: o.n }, (_, i) => item(p, i, o.n, lang)).join("\n    ");

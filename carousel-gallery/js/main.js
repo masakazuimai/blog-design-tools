@@ -1,4 +1,4 @@
-import { TYPES, CATS } from "./types/index.js?v=20261116a";
+import { TYPES, CATS } from "./types/index.js?v=20261116b";
 import { UI } from "./i18n.js?v=20261116a";
 import { previewDoc, combined } from "./preview.js?v=20261116a";
 
