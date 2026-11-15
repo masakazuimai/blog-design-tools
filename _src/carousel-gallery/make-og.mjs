@@ -2,7 +2,7 @@ import { writeFileSync } from "node:fs";
 import { TYPES } from "../../carousel-gallery/js/types/index.js";
 
 const COPY = {
-  ja: { title: "カルーセル<br>CSS サンプル集", sub: "トルネード・螺旋・無限ループなど32種を<br>動かして選び、コードをコピー", tag: "ほとんどが JavaScript 不要" },
+  ja: { title: "カルーセル<br>CSS サンプル集", sub: "トルネード・螺旋・無限ループなど40種を<br>動かして選び、コードをコピー", tag: "ほとんどが JavaScript 不要" },
   en: { title: "CSS Carousel<br>Examples", sub: "Tornado, helix, infinite loop, coverflow.<br>Preview, tweak and copy the code.", tag: "Most need no JavaScript" },
 };
 
