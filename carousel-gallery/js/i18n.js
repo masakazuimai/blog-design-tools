@@ -3,10 +3,12 @@ export const UI = {
     cats: {
       all: "すべて",
       spiral: "螺旋",
+      "3d": "3Dの並べ方",
       loop: "無限ループ",
       basic: "基本",
       scroll: "スクロールで動く",
       shape: "並べ方",
+      stack: "重ね",
       switch: "切り替えの演出",
     },
     method: {
@@ -25,10 +27,12 @@ export const UI = {
     cats: {
       all: "All",
       spiral: "Spiral",
+      "3d": "3D layouts",
       loop: "Infinite loop",
       basic: "Basics",
       scroll: "Scroll-driven",
       shape: "Layouts",
+      stack: "Stacks",
       switch: "Transitions",
     },
     method: {

@@ -1,5 +1,5 @@
-import { TYPES, CATS } from "./types/index.js?v=20261116c";
-import { UI } from "./i18n.js?v=20261116c";
+import { TYPES, CATS } from "./types/index.js?v=20261116d";
+import { UI } from "./i18n.js?v=20261116d";
 import { previewDoc, combined } from "./preview.js?v=20261116a";
 
 const LANG = document.documentElement.lang === "en" ? "en" : "ja";
