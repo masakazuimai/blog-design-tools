@@ -74,7 +74,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@400;600;700;800&text=%20%21%22%23%24%25%26%27%28%29%2A%2B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40ABCDEFGHIJKLMNOPQRSTUVWXYZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D~&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/style.css?v=20261116j" />
+    <link rel="stylesheet" href="../css/style.css?v=20261116l" />
   </head>
   <body>
     <noscript
@@ -145,32 +145,32 @@
           A carousel shows images or cards in a row (or a column, or a spiral) that you swipe through or that move on their own. Use scroll snap for swiping, an infinite loop for things that move by themselves, and a spiral or coverflow where you want to catch the eye.
         </p>
         <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Type</th>
-                <th scope="col">Languages</th>
-                <th scope="col">Main techniques</th>
-                <th scope="col">Browsers</th>
-                <th scope="col">Good for</th>
+          <table class="card-table" role="table">
+            <thead role="rowgroup">
+              <tr role="row">
+                <th scope="col" role="columnheader">Type</th>
+                <th scope="col" role="columnheader">Languages</th>
+                <th scope="col" role="columnheader">Main techniques</th>
+                <th scope="col" role="columnheader">Browsers</th>
+                <th scope="col" role="columnheader">Good for</th>
               </tr>
             </thead>
-            <tbody>
-              <tr><td>Tornado, helix, double helix, swirl, spiral staircase, cone</td><td>CSS</td><td>@keyframes, transforms</td><td>All major browsers</td><td>Hero sections, portfolios</td></tr>
-              <tr><td>Sphere, Saturn ring, tunnel, wavy ring, arch, flip board, page turn, wavy floor, Möbius ring, panorama</td><td>CSS</td><td>3D transforms</td><td>All major browsers</td><td>Campaigns, portfolios, eye-catching spots</td></tr>
-              <tr><td>Scattered photos, card stack cycle</td><td>CSS</td><td>:hover, @keyframes</td><td>All major browsers</td><td>Photo albums, testimonials</td></tr>
-              <tr><td>Scroll-driven helix, scroll down to move sideways, scroll-driven dial</td><td>CSS, JS</td><td>animation-timeline: scroll()</td><td>All major browsers (CSS in Chrome and Edge, JS elsewhere)</td><td>Long product stories</td></tr>
-              <tr><td>Infinite, two-row, vertical, diagonal, wave, perspective, circular and zigzag loops</td><td>CSS</td><td>@keyframes</td><td>All major browsers</td><td>Logos, clients, testimonials, news</td></tr>
-              <tr><td>Scroll snap, responsive card count</td><td>CSS</td><td>scroll-snap, container queries</td><td>All major browsers</td><td>Mobile product and article lists</td></tr>
-              <tr><td>With thumbnails, dot-controlled slides</td><td>CSS</td><td>radio buttons, :has()</td><td>All major browsers</td><td>Product photos, portfolio details</td></tr>
-              <tr><td>Autoplay with progress bars, full-width fade</td><td>CSS</td><td>@keyframes</td><td>All major browsers</td><td>Hero photos, announcements</td></tr>
-              <tr><td>Buttons and dots</td><td>CSS, JS</td><td>::scroll-button, ::scroll-marker</td><td>All major browsers (CSS in Chrome and Edge 135+, JS elsewhere)</td><td>Photo slides</td></tr>
-              <tr><td>Center zoom, coverflow, parallax, blur at the edges</td><td>CSS, JS</td><td>animation-timeline: view()</td><td>All major browsers (CSS in Chrome and Edge, JS elsewhere)</td><td>Showing one product at a time</td></tr>
-              <tr><td>Fan, accordion, bento tiles, slanted panels, hexagons, hanging cards</td><td>CSS</td><td>:hover, clip-path, grid</td><td>All major browsers</td><td>Menus and category entrances</td></tr>
-              <tr><td>Zoom transition, curtain wipe, blur to focus</td><td>CSS</td><td>@keyframes, clip-path, filter</td><td>All major browsers</td><td>Hero photos</td></tr>
-              <tr><td>Tile flip transition, background follows the slide</td><td>CSS, JS</td><td>transitions, IntersectionObserver</td><td>All major browsers</td><td>Campaigns, showing product colors</td></tr>
-              <tr><td>Inertia drag, bounce and snap, skew on speed, drag-to-spin helix, swipe card stack, stretchy drag</td><td>CSS, JS</td><td>Pointer Events</td><td>All major browsers</td><td>Tactile portfolios, mobile galleries</td></tr>
-              <tr><td>Slow-on-hover loop, numbered, dial</td><td>CSS, JS</td><td>Web Animations, scroll-snap</td><td>All major browsers</td><td>Logo strips, photo slides, menu entrances</td></tr>
+            <tbody role="rowgroup">
+              <tr role="row"><td role="cell">Tornado, helix, double helix, swirl, spiral staircase, cone</td><td role="cell">CSS</td><td role="cell">@keyframes, transforms</td><td role="cell">All major browsers</td><td role="cell">Hero sections, portfolios</td></tr>
+              <tr role="row"><td role="cell">Sphere, Saturn ring, tunnel, wavy ring, arch, flip board, page turn, wavy floor, Möbius ring, panorama</td><td role="cell">CSS</td><td role="cell">3D transforms</td><td role="cell">All major browsers</td><td role="cell">Campaigns, portfolios, eye-catching spots</td></tr>
+              <tr role="row"><td role="cell">Scattered photos, card stack cycle</td><td role="cell">CSS</td><td role="cell">:hover, @keyframes</td><td role="cell">All major browsers</td><td role="cell">Photo albums, testimonials</td></tr>
+              <tr role="row"><td role="cell">Scroll-driven helix, scroll down to move sideways, scroll-driven dial</td><td role="cell">CSS, JS</td><td role="cell">animation-timeline: scroll()</td><td role="cell">All major browsers (CSS in Chrome and Edge, JS elsewhere)</td><td role="cell">Long product stories</td></tr>
+              <tr role="row"><td role="cell">Infinite, two-row, vertical, diagonal, wave, perspective, circular and zigzag loops</td><td role="cell">CSS</td><td role="cell">@keyframes</td><td role="cell">All major browsers</td><td role="cell">Logos, clients, testimonials, news</td></tr>
+              <tr role="row"><td role="cell">Scroll snap, responsive card count</td><td role="cell">CSS</td><td role="cell">scroll-snap, container queries</td><td role="cell">All major browsers</td><td role="cell">Mobile product and article lists</td></tr>
+              <tr role="row"><td role="cell">With thumbnails, dot-controlled slides</td><td role="cell">CSS</td><td role="cell">radio buttons, :has()</td><td role="cell">All major browsers</td><td role="cell">Product photos, portfolio details</td></tr>
+              <tr role="row"><td role="cell">Autoplay with progress bars, full-width fade</td><td role="cell">CSS</td><td role="cell">@keyframes</td><td role="cell">All major browsers</td><td role="cell">Hero photos, announcements</td></tr>
+              <tr role="row"><td role="cell">Buttons and dots</td><td role="cell">CSS, JS</td><td role="cell">::scroll-button, ::scroll-marker</td><td role="cell">All major browsers (CSS in Chrome and Edge 135+, JS elsewhere)</td><td role="cell">Photo slides</td></tr>
+              <tr role="row"><td role="cell">Center zoom, coverflow, parallax, blur at the edges</td><td role="cell">CSS, JS</td><td role="cell">animation-timeline: view()</td><td role="cell">All major browsers (CSS in Chrome and Edge, JS elsewhere)</td><td role="cell">Showing one product at a time</td></tr>
+              <tr role="row"><td role="cell">Fan, accordion, bento tiles, slanted panels, hexagons, hanging cards</td><td role="cell">CSS</td><td role="cell">:hover, clip-path, grid</td><td role="cell">All major browsers</td><td role="cell">Menus and category entrances</td></tr>
+              <tr role="row"><td role="cell">Zoom transition, curtain wipe, blur to focus</td><td role="cell">CSS</td><td role="cell">@keyframes, clip-path, filter</td><td role="cell">All major browsers</td><td role="cell">Hero photos</td></tr>
+              <tr role="row"><td role="cell">Tile flip transition, background follows the slide</td><td role="cell">CSS, JS</td><td role="cell">transitions, IntersectionObserver</td><td role="cell">All major browsers</td><td role="cell">Campaigns, showing product colors</td></tr>
+              <tr role="row"><td role="cell">Inertia drag, bounce and snap, skew on speed, drag-to-spin helix, swipe card stack, stretchy drag</td><td role="cell">CSS, JS</td><td role="cell">Pointer Events</td><td role="cell">All major browsers</td><td role="cell">Tactile portfolios, mobile galleries</td></tr>
+              <tr role="row"><td role="cell">Slow-on-hover loop, numbered, dial</td><td role="cell">CSS, JS</td><td role="cell">Web Animations, scroll-snap</td><td role="cell">All major browsers</td><td role="cell">Logo strips, photo slides, menu entrances</td></tr>
             </tbody>
           </table>
         </div>

@@ -74,7 +74,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@400;600;700;800&text=%20%21%22%23%24%25%26%27%28%29%2A%2B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40ABCDEFGHIJKLMNOPQRSTUVWXYZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D~&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css?v=20261116j" />
+    <link rel="stylesheet" href="css/style.css?v=20261116l" />
   </head>
   <body>
     <noscript
@@ -145,32 +145,32 @@
           カルーセルは、画像やカードを横（または縦・らせん）に並べて、送ったり流したりして見せる部品です。手で送る形はスクロールスナップ、自動で流す形は無限ループ、目を引きたい所には螺旋やカバーフローが向いています。
         </p>
         <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">種類</th>
-                <th scope="col">使う言語</th>
-                <th scope="col">主な書き方</th>
-                <th scope="col">動くブラウザ</th>
-                <th scope="col">向いている場所</th>
+          <table class="card-table" role="table">
+            <thead role="rowgroup">
+              <tr role="row">
+                <th scope="col" role="columnheader">種類</th>
+                <th scope="col" role="columnheader">使う言語</th>
+                <th scope="col" role="columnheader">主な書き方</th>
+                <th scope="col" role="columnheader">動くブラウザ</th>
+                <th scope="col" role="columnheader">向いている場所</th>
               </tr>
             </thead>
-            <tbody>
-              <tr><td>トルネード・螺旋・二重螺旋・渦巻き・螺旋階段・円錐</td><td>CSS</td><td>@keyframes・transform</td><td>主なブラウザすべて</td><td>トップページの目玉・作品の一覧</td></tr>
-              <tr><td>球面・土星の輪・トンネル・波打つリング・アーチ・パタパタ・本のページめくり・波打つ床・メビウスの輪・パノラマ</td><td>CSS</td><td>3D の transform</td><td>主なブラウザすべて</td><td>キャンペーン・作品集・目を引きたい所</td></tr>
-              <tr><td>散らばった写真・重ねて送る</td><td>CSS</td><td>:hover・@keyframes</td><td>主なブラウザすべて</td><td>写真のアルバム・お客様の声</td></tr>
-              <tr><td>スクロールで昇る螺旋・縦に送ると横に流れる・スクロールで回るダイヤル</td><td>CSS・JS</td><td>animation-timeline: scroll()</td><td>主なブラウザすべて（Chrome・Edge は CSS、ほかは JS で動く）</td><td>縦に長い紹介ページ</td></tr>
-              <tr><td>無限ループ・2段の逆向き・縦・斜め・ウェーブ・奥行きのある帯・円周を回る・互い違い</td><td>CSS</td><td>@keyframes</td><td>主なブラウザすべて</td><td>ロゴ・実績・お客様の声・お知らせ</td></tr>
-              <tr><td>スクロールスナップ・幅で枚数が変わる</td><td>CSS</td><td>scroll-snap・コンテナクエリ</td><td>主なブラウザすべて</td><td>スマホの商品一覧・記事の一覧</td></tr>
-              <tr><td>サムネイル付き・点で切り替えるスライド</td><td>CSS</td><td>ラジオボタン・:has()</td><td>主なブラウザすべて</td><td>商品の写真・作品の詳細</td></tr>
-              <tr><td>自動再生と進み具合のバー・画面いっぱいのフェード</td><td>CSS</td><td>@keyframes</td><td>主なブラウザすべて</td><td>トップページの大きな写真・お知らせ</td></tr>
-              <tr><td>ボタンと点で送る</td><td>CSS・JS</td><td>::scroll-button・::scroll-marker</td><td>主なブラウザすべて（Chrome・Edge 135 以降は CSS、ほかは JS で動く）</td><td>写真のスライド</td></tr>
-              <tr><td>中央が大きくなる・カバーフロー・パララックス・端でぼける</td><td>CSS・JS</td><td>animation-timeline: view()</td><td>主なブラウザすべて（Chrome・Edge は CSS、ほかは JS で動く）</td><td>商品・作品を1つずつ見せる所</td></tr>
-              <tr><td>扇形・アコーディオン型・タイル・斜めに切った帯・六角形・吊り下げ</td><td>CSS</td><td>:hover・clip-path・grid</td><td>主なブラウザすべて</td><td>メニュー・カテゴリーの入口</td></tr>
-              <tr><td>ズームして切り替え・幕を引くように開く・ぼかしからくっきり</td><td>CSS</td><td>@keyframes・clip-path・filter</td><td>主なブラウザすべて</td><td>トップページの大きな写真</td></tr>
-              <tr><td>タイルに割れて入れ替わる・背景の色が合わせて変わる</td><td>CSS・JS</td><td>transition・IntersectionObserver</td><td>主なブラウザすべて</td><td>キャンペーン・商品の色を見せる所</td></tr>
-              <tr><td>慣性つきドラッグ・弾んで止まる・速さで傾く・ドラッグで回す螺旋・スワイプで送るカード・引っぱると伸びる</td><td>CSS・JS</td><td>Pointer Events</td><td>主なブラウザすべて</td><td>触って楽しい作品集・スマホのギャラリー</td></tr>
-              <tr><td>乗せると減速するループ・番号つき・ダイヤル</td><td>CSS・JS</td><td>Web Animations・scroll-snap</td><td>主なブラウザすべて</td><td>ロゴの帯・写真のスライド・メニューの入口</td></tr>
+            <tbody role="rowgroup">
+              <tr role="row"><td role="cell">トルネード・螺旋・二重螺旋・渦巻き・螺旋階段・円錐</td><td role="cell">CSS</td><td role="cell">@keyframes・transform</td><td role="cell">主なブラウザすべて</td><td role="cell">トップページの目玉・作品の一覧</td></tr>
+              <tr role="row"><td role="cell">球面・土星の輪・トンネル・波打つリング・アーチ・パタパタ・本のページめくり・波打つ床・メビウスの輪・パノラマ</td><td role="cell">CSS</td><td role="cell">3D の transform</td><td role="cell">主なブラウザすべて</td><td role="cell">キャンペーン・作品集・目を引きたい所</td></tr>
+              <tr role="row"><td role="cell">散らばった写真・重ねて送る</td><td role="cell">CSS</td><td role="cell">:hover・@keyframes</td><td role="cell">主なブラウザすべて</td><td role="cell">写真のアルバム・お客様の声</td></tr>
+              <tr role="row"><td role="cell">スクロールで昇る螺旋・縦に送ると横に流れる・スクロールで回るダイヤル</td><td role="cell">CSS・JS</td><td role="cell">animation-timeline: scroll()</td><td role="cell">主なブラウザすべて（Chrome・Edge は CSS、ほかは JS で動く）</td><td role="cell">縦に長い紹介ページ</td></tr>
+              <tr role="row"><td role="cell">無限ループ・2段の逆向き・縦・斜め・ウェーブ・奥行きのある帯・円周を回る・互い違い</td><td role="cell">CSS</td><td role="cell">@keyframes</td><td role="cell">主なブラウザすべて</td><td role="cell">ロゴ・実績・お客様の声・お知らせ</td></tr>
+              <tr role="row"><td role="cell">スクロールスナップ・幅で枚数が変わる</td><td role="cell">CSS</td><td role="cell">scroll-snap・コンテナクエリ</td><td role="cell">主なブラウザすべて</td><td role="cell">スマホの商品一覧・記事の一覧</td></tr>
+              <tr role="row"><td role="cell">サムネイル付き・点で切り替えるスライド</td><td role="cell">CSS</td><td role="cell">ラジオボタン・:has()</td><td role="cell">主なブラウザすべて</td><td role="cell">商品の写真・作品の詳細</td></tr>
+              <tr role="row"><td role="cell">自動再生と進み具合のバー・画面いっぱいのフェード</td><td role="cell">CSS</td><td role="cell">@keyframes</td><td role="cell">主なブラウザすべて</td><td role="cell">トップページの大きな写真・お知らせ</td></tr>
+              <tr role="row"><td role="cell">ボタンと点で送る</td><td role="cell">CSS・JS</td><td role="cell">::scroll-button・::scroll-marker</td><td role="cell">主なブラウザすべて（Chrome・Edge 135 以降は CSS、ほかは JS で動く）</td><td role="cell">写真のスライド</td></tr>
+              <tr role="row"><td role="cell">中央が大きくなる・カバーフロー・パララックス・端でぼける</td><td role="cell">CSS・JS</td><td role="cell">animation-timeline: view()</td><td role="cell">主なブラウザすべて（Chrome・Edge は CSS、ほかは JS で動く）</td><td role="cell">商品・作品を1つずつ見せる所</td></tr>
+              <tr role="row"><td role="cell">扇形・アコーディオン型・タイル・斜めに切った帯・六角形・吊り下げ</td><td role="cell">CSS</td><td role="cell">:hover・clip-path・grid</td><td role="cell">主なブラウザすべて</td><td role="cell">メニュー・カテゴリーの入口</td></tr>
+              <tr role="row"><td role="cell">ズームして切り替え・幕を引くように開く・ぼかしからくっきり</td><td role="cell">CSS</td><td role="cell">@keyframes・clip-path・filter</td><td role="cell">主なブラウザすべて</td><td role="cell">トップページの大きな写真</td></tr>
+              <tr role="row"><td role="cell">タイルに割れて入れ替わる・背景の色が合わせて変わる</td><td role="cell">CSS・JS</td><td role="cell">transition・IntersectionObserver</td><td role="cell">主なブラウザすべて</td><td role="cell">キャンペーン・商品の色を見せる所</td></tr>
+              <tr role="row"><td role="cell">慣性つきドラッグ・弾んで止まる・速さで傾く・ドラッグで回す螺旋・スワイプで送るカード・引っぱると伸びる</td><td role="cell">CSS・JS</td><td role="cell">Pointer Events</td><td role="cell">主なブラウザすべて</td><td role="cell">触って楽しい作品集・スマホのギャラリー</td></tr>
+              <tr role="row"><td role="cell">乗せると減速するループ・番号つき・ダイヤル</td><td role="cell">CSS・JS</td><td role="cell">Web Animations・scroll-snap</td><td role="cell">主なブラウザすべて</td><td role="cell">ロゴの帯・写真のスライド・メニューの入口</td></tr>
             </tbody>
           </table>
         </div>

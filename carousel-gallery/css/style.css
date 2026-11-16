@@ -472,6 +472,99 @@ body:has(.viewer[open]) {
   background: #dfe7df;
 }
 
+@media screen and (max-width: 768px) {
+  .card-table,
+  .card-table tbody,
+  .card-table tr,
+  .card-table td {
+    display: block;
+  }
+
+  .card-table {
+    background: none;
+  }
+
+  .card-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .card-table tbody {
+    display: grid;
+    gap: 12px;
+  }
+
+  .card-table tr {
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--panel);
+  }
+
+  .card-table td {
+    padding: 4px 0;
+    border: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .card-table td:first-child {
+    margin-bottom: 6px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  .card-table td:nth-child(n + 2)::before {
+    font-weight: 700;
+    color: var(--ink-soft);
+  }
+
+  .card-table td:nth-child(2)::before {
+    content: "使う言語：";
+    content: "使う言語：" / "";
+  }
+
+  .card-table td:nth-child(3)::before {
+    content: "主な書き方：";
+    content: "主な書き方：" / "";
+  }
+
+  .card-table td:nth-child(4)::before {
+    content: "動くブラウザ：";
+    content: "動くブラウザ：" / "";
+  }
+
+  .card-table td:nth-child(5)::before {
+    content: "向いている場所：";
+    content: "向いている場所：" / "";
+  }
+
+  :lang(en) .card-table td:nth-child(2)::before {
+    content: "Languages: ";
+    content: "Languages: " / "";
+  }
+
+  :lang(en) .card-table td:nth-child(3)::before {
+    content: "Main techniques: ";
+    content: "Main techniques: " / "";
+  }
+
+  :lang(en) .card-table td:nth-child(4)::before {
+    content: "Browsers: ";
+    content: "Browsers: " / "";
+  }
+
+  :lang(en) .card-table td:nth-child(5)::before {
+    content: "Good for: ";
+    content: "Good for: " / "";
+  }
+}
+
 .related {
   display: grid;
   gap: 8px;
