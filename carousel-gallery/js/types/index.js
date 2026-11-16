@@ -15,6 +15,7 @@ import { LOOP_3 } from "./loop-3.js?v=20261116f";
 import { SHAPE_2, BASIC_3 } from "./shape-2.js?v=20261116g";
 import { SWITCH_2 } from "./switch-2.js?v=20261116g";
 import { SCROLL_3, THREE_D_2, DRAG_2 } from "./scroll-3.js?v=20261116g";
+import { THREE_D_3 } from "./three-d-3.js?v=20261116i";
 
 export const TYPES = [
   ...SPIRAL,
@@ -22,6 +23,7 @@ export const TYPES = [
   ...SPIRAL_3,
   ...THREE_D,
   ...THREE_D_2,
+  ...THREE_D_3,
   ...LOOP,
   ...LOOP_2,
   ...LOOP_3,
