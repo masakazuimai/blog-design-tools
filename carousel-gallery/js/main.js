@@ -150,6 +150,7 @@ function open(type, from) {
 }
 
 els.viewer.addEventListener("close", () => {
+  if (els.viewer.open) return;
   clearTimeout(stageTimer);
   els.stage.removeAttribute("srcdoc");
   history.replaceState(null, "", location.pathname + location.search);
