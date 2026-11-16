@@ -563,6 +563,96 @@ body:has(.viewer[open]) {
     content: "Good for: ";
     content: "Good for: " / "";
   }
+
+  .card-table tbody:has(.row-toggle) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .card-table tr:has(.row-toggle) {
+    min-width: 0;
+    padding: 0;
+  }
+
+  .card-table td:has(.row-toggle) {
+    margin: 0;
+    padding: 0;
+    border-bottom: 0;
+  }
+
+  .card-table tr:has(.row-toggle) td:nth-child(n + 2) {
+    display: none;
+  }
+
+  .card-table tr.open td:first-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .card-table tr.open td:nth-child(n + 3) {
+    display: block;
+    padding: 6px 16px;
+  }
+
+  .card-table tr.open td:nth-child(3) {
+    padding-top: 12px;
+  }
+
+  .card-table tr.open td:last-child {
+    padding-bottom: 14px;
+  }
+
+  .row-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 16px;
+    border: 0;
+    border-radius: 12px;
+    background: none;
+    color: var(--ink);
+    font: inherit;
+    font-size: 17px;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .row-toggle:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: -2px;
+  }
+
+  .row-name {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .row-toggle[aria-expanded="false"] .row-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .row-lang {
+    flex: none;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--ink-soft);
+  }
+
+  .row-toggle::after {
+    content: "▼";
+    content: "▼" / "";
+    flex: none;
+    font-size: 16px;
+    color: var(--ink-soft);
+  }
+
+  .row-toggle[aria-expanded="true"]::after {
+    content: "▲";
+    content: "▲" / "";
+  }
 }
 
 .related {

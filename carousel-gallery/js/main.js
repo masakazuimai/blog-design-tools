@@ -223,6 +223,47 @@ addEventListener("hashchange", () => {
   if (t && !(els.viewer.open && t === state.type)) open(t);
 });
 
+const cardTable = document.querySelector(".card-table");
+const narrow = matchMedia("(max-width: 768px)");
+
+function foldRow(tr) {
+  const [nameCell, langCell] = tr.cells;
+  const button = nameCell.querySelector(".row-toggle");
+  if (narrow.matches && !button) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "row-toggle";
+    b.setAttribute("aria-expanded", "false");
+    const name = document.createElement("span");
+    name.className = "row-name";
+    name.textContent = nameCell.textContent;
+    const lang = document.createElement("span");
+    lang.className = "row-lang";
+    lang.textContent = langCell.textContent;
+    b.append(name, lang);
+    nameCell.replaceChildren(b);
+  } else if (!narrow.matches && button) {
+    nameCell.textContent = button.querySelector(".row-name").textContent;
+    tr.classList.remove("open");
+  }
+}
+
+function foldTable() {
+  if (cardTable) cardTable.querySelectorAll("tbody tr").forEach(foldRow);
+}
+
+if (cardTable) {
+  cardTable.addEventListener("click", (e) => {
+    const b = e.target.closest(".row-toggle");
+    if (!b) return;
+    const opened = b.getAttribute("aria-expanded") !== "true";
+    b.setAttribute("aria-expanded", String(opened));
+    b.closest("tr").classList.toggle("open", opened);
+  });
+  narrow.addEventListener("change", foldTable);
+  foldTable();
+}
+
 renderChips();
 renderGrid();
 const initial = fromHash();
