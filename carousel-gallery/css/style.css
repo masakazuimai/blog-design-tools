@@ -470,6 +470,7 @@ body:has(.viewer[open]) {
 
 .about th {
   background: #dfe7df;
+  white-space: nowrap;
 }
 
 @media screen and (max-width: 768px) {
