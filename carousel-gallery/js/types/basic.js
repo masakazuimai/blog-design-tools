@@ -55,7 +55,7 @@ const MARKERS = {
   demo: "x",
   cat: "basic",
   method: "css-new",
-  label: { ja: "CSS だけのボタンと点", en: "CSS-only buttons and dots" },
+  label: { ja: "ボタンと点で送る", en: "Buttons and dots" },
   desc: {
     ja: "前後のボタンと、いまの位置を示す点を、CSS の ::scroll-button と ::scroll-marker だけで出します。",
     en: "Previous/next buttons and position dots made with only CSS ::scroll-button and ::scroll-marker.",

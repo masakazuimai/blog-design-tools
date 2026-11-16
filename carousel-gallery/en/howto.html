@@ -47,10 +47,10 @@
           {
             "@type": "FAQPage",
             "mainEntity": [
-              { "@type": "Question", "name": "Can I build a carousel with CSS only?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Use scroll-snap for swiping, @keyframes for auto-scrolling and 3D transforms for spirals. Most carousels here use no JavaScript, and the ones that need it are marked CSS + a little JS." } },
+              { "@type": "Question", "name": "Can I build a carousel with CSS only?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Use scroll-snap for swiping, @keyframes for auto-scrolling and 3D transforms for spirals. Most carousels here use no JavaScript, and the ones that do are marked JS." } },
               { "@type": "Question", "name": "Which carousels move on their own?", "acceptedAnswer": { "@type": "Answer", "text": "The infinite marquee and the two-row reverse marquee. The set is repeated twice and moved by half its width so there is no seam. The helix, tornado and double helix also keep moving." } },
-              { "@type": "Question", "name": "Can people swipe on mobile?", "acceptedAnswer": { "@type": "Answer", "text": "Scroll snap, CSS-only buttons and dots, center zoom and coverflow can all be swiped. The spiral types are drawn smaller on screens 600px wide or less." } },
-              { "@type": "Question", "name": "Do any types fail in Safari or Firefox?", "acceptedAnswer": { "@type": "Answer", "text": "No. Types marked CSS + JS fallback (CSS-only buttons and dots, center zoom, coverflow, parallax, blur at the edges) run on CSS alone in Chrome and Edge, and a short JS snippet in the code does the same job in other browsers. The scroll-driven types work the same way." } },
+              { "@type": "Question", "name": "Can people swipe on mobile?", "acceptedAnswer": { "@type": "Answer", "text": "Scroll snap, buttons and dots, center zoom and coverflow can all be swiped. The spiral types are drawn smaller on screens 600px wide or less." } },
+              { "@type": "Question", "name": "Do any types fail in Safari or Firefox?", "acceptedAnswer": { "@type": "Answer", "text": "No. Buttons and dots, center zoom, coverflow, parallax, blur at the edges and the scroll-driven types run on CSS in Chrome and Edge, and a short JS snippet in the code does the same job in other browsers." } },
               { "@type": "Question", "name": "How does the spiral carousel work?", "acceptedAnswer": { "@type": "Answer", "text": "One @keyframes animates height (translateY), angle (rotateY) and radius (translateZ) together, and each card gets a negative animation-delay so the cards sit along the spiral." } },
               { "@type": "Question", "name": "What about people who prefer reduced motion?", "acceptedAnswer": { "@type": "Answer", "text": "The exported code includes prefers-reduced-motion, so the auto-moving types stay still for those users." } },
               { "@type": "Question", "name": "How do I use my own images?", "acceptedAnswer": { "@type": "Answer", "text": "Put an img element or a background-image inside each cg-card element. The color gradient comes from the .cg-card background, so you can remove it when you use images." } }
@@ -62,7 +62,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/style.css?v=20261116g" />
+    <link rel="stylesheet" href="../css/style.css?v=20261116h" />
   </head>
   <body>
     <noscript
@@ -89,13 +89,13 @@
 
         <h2>FAQ</h2>
         <h3>Can I build a carousel with CSS only?</h3>
-        <p>Yes. Use scroll-snap for swiping, @keyframes for auto-scrolling and 3D transforms for spirals. Most carousels here use no JavaScript, and the ones that need it are marked CSS + a little JS.</p>
+        <p>Yes. Use scroll-snap for swiping, @keyframes for auto-scrolling and 3D transforms for spirals. Most carousels here use no JavaScript, and the ones that do are marked JS.</p>
         <h3>Which carousels move on their own?</h3>
         <p>The infinite marquee and the two-row reverse marquee. The set is repeated twice and moved by half its width so there is no seam. The helix, tornado and double helix also keep moving.</p>
         <h3>Can people swipe on mobile?</h3>
-        <p>Scroll snap, CSS-only buttons and dots, center zoom and coverflow can all be swiped. The spiral types are drawn smaller on screens 600px wide or less.</p>
+        <p>Scroll snap, buttons and dots, center zoom and coverflow can all be swiped. The spiral types are drawn smaller on screens 600px wide or less.</p>
         <h3>Do any types fail in Safari or Firefox?</h3>
-        <p>No. Types marked CSS + JS fallback (CSS-only buttons and dots, center zoom, coverflow, parallax, blur at the edges) run on CSS alone in Chrome and Edge, and a short JS snippet in the code does the same job in other browsers. The scroll-driven types work the same way.</p>
+        <p>No. Buttons and dots, center zoom, coverflow, parallax, blur at the edges and the scroll-driven types run on CSS in Chrome and Edge, and a short JS snippet in the code does the same job in other browsers.</p>
         <h3>How does the spiral carousel work?</h3>
         <p>One @keyframes animates height (translateY), angle (rotateY) and radius (translateZ) together, and each card gets a negative animation-delay so the cards sit along the spiral.</p>
         <h3>What about people who prefer reduced motion?</h3>

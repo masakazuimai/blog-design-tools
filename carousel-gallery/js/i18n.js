@@ -12,11 +12,6 @@ export const UI = {
       stack: "重ね",
       switch: "切り替えの演出",
     },
-    method: {
-      css: "CSSだけ",
-      "css-js": "CSS＋少しのJS",
-      "css-new": "CSS＋古いブラウザ用のJS",
-    },
     tabs: { all: "まとめて", html: "HTML", css: "CSS", js: "JS" },
     copied: "コードをコピーしました",
     copyFailed: "コピーできませんでした。コードを選んで写してください",
@@ -36,11 +31,6 @@ export const UI = {
       shape: "Layouts",
       stack: "Stacks",
       switch: "Transitions",
-    },
-    method: {
-      css: "CSS only",
-      "css-js": "CSS + a little JS",
-      "css-new": "CSS + JS fallback",
     },
     tabs: { all: "All in one", html: "HTML", css: "CSS", js: "JS" },
     copied: "Code copied",

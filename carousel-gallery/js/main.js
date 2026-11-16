@@ -1,5 +1,5 @@
-import { TYPES, CATS } from "./types/index.js?v=20261116g";
-import { UI } from "./i18n.js?v=20261116g";
+import { TYPES, CATS } from "./types/index.js?v=20261116h";
+import { UI } from "./i18n.js?v=20261116h";
 import { previewDoc, combined } from "./preview.js?v=20261116g";
 import { howText } from "./how.js?v=20261116g";
 
@@ -35,6 +35,9 @@ const track = (event, extra) => {
 
 const code = () => state.type.build(state.opts, LANG);
 
+const langBadges = (t) =>
+  (t.method === "css" ? ["css"] : ["css", "js"]).map((l) => `<small class="badge badge-${l}">${l.toUpperCase()}</small>`).join("");
+
 function fromHash() {
   const id = new URLSearchParams(location.hash.slice(1)).get("type");
   return TYPES.find((t) => t.id === id);
@@ -54,7 +57,7 @@ function renderGrid() {
       (t) => `<li>
   <button type="button" class="type-card" data-type="${t.id}" aria-pressed="${t.id === state.type.id}">
     <span class="type-thumb"><iframe tabindex="-1" aria-hidden="true" loading="lazy" data-type="${t.id}"></iframe></span>
-    <span class="type-meta"><strong>${t.label[LANG]}</strong><small class="badge badge-${t.method}">${T.method[t.method]}</small></span>
+    <span class="type-meta"><strong>${t.label[LANG]}</strong><span class="langs">${langBadges(t)}</span></span>
   </button>
 </li>`
     )
@@ -96,8 +99,7 @@ function renderFields() {
 function renderInfo() {
   const t = state.type;
   els.name.textContent = t.label[LANG];
-  els.method.textContent = T.method[t.method];
-  els.method.className = `badge badge-${t.method}`;
+  els.method.innerHTML = langBadges(t);
   els.desc.textContent = t.desc[LANG];
   els.how.textContent = howText(t, LANG);
   els.support.textContent = t.support ? t.support[LANG] : "";

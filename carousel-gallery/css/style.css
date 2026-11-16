@@ -153,17 +153,17 @@ a {
   white-space: nowrap;
 }
 
+.langs {
+  display: inline-flex;
+  gap: 6px;
+}
+
 .badge-css {
-  background: #d9ebe0;
-  color: #1d5134;
+  background: #dbe6f5;
+  color: #1d3f73;
 }
 
-.badge-css-js {
-  background: #e6e1fb;
-  color: #3a248f;
-}
-
-.badge-css-new {
+.badge-js {
   background: #f6e7c9;
   color: #6b4508;
 }

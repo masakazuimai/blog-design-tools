@@ -47,10 +47,10 @@
           {
             "@type": "FAQPage",
             "mainEntity": [
-              { "@type": "Question", "name": "CSSだけでカルーセルは作れますか？", "acceptedAnswer": { "@type": "Answer", "text": "作れます。手で送る形は scroll-snap、自動で流す形は @keyframes、螺旋のような立体は 3D の transform で作れます。このツールの型のほとんどは JavaScript を使いません。JS が要る型には「CSS＋少しのJS」の印を付けています。" } },
+              { "@type": "Question", "name": "CSSだけでカルーセルは作れますか？", "acceptedAnswer": { "@type": "Answer", "text": "作れます。手で送る形は scroll-snap、自動で流す形は @keyframes、螺旋のような立体は 3D の transform で作れます。このツールの型のほとんどは JavaScript を使いません。JavaScript も使う型には「JS」の印を付けています。" } },
               { "@type": "Question", "name": "自動で流れ続けるカルーセルはどれですか？", "acceptedAnswer": { "@type": "Answer", "text": "無限ループ（マーキー）と2段の逆向きループです。同じ並びを2回置き、半分の幅だけ動かしてつなぎ目を消しています。螺旋・トルネード・二重螺旋も自動で動き続けます。" } },
-              { "@type": "Question", "name": "スマホでスワイプして送れますか？", "acceptedAnswer": { "@type": "Answer", "text": "スクロールスナップ・CSSだけのボタンと点・中央が大きくなる・カバーフローは、指で横に送れます。螺旋の型は、幅が600px以下の画面では小さく表示します。" } },
-              { "@type": "Question", "name": "Safari や Firefox で動かない型はありますか？", "acceptedAnswer": { "@type": "Answer", "text": "ありません。「CSS＋古いブラウザ用のJS」と書いた型（CSSだけのボタンと点・中央が大きくなる・カバーフロー・パララックス・端でぼける）は、Chrome・Edge では CSS だけで動き、まだ対応していないブラウザではコードの中の短い JS が同じ動きをします。スクロールで動く型も同じです。" } },
+              { "@type": "Question", "name": "スマホでスワイプして送れますか？", "acceptedAnswer": { "@type": "Answer", "text": "スクロールスナップ・ボタンと点で送る・中央が大きくなる・カバーフローは、指で横に送れます。螺旋の型は、幅が600px以下の画面では小さく表示します。" } },
+              { "@type": "Question", "name": "Safari や Firefox で動かない型はありますか？", "acceptedAnswer": { "@type": "Answer", "text": "ありません。ボタンと点で送る・中央が大きくなる・カバーフロー・パララックス・端でぼける、とスクロールで動く型は、Chrome・Edge では CSS で動き、まだ対応していないブラウザではコードの中の短い JS が同じ動きをします。" } },
               { "@type": "Question", "name": "螺旋カルーセルはどうやって作っていますか？", "acceptedAnswer": { "@type": "Answer", "text": "1つの @keyframes で、高さ（translateY）と角度（rotateY）と半径（translateZ）を同時に動かし、カードごとに animation-delay を負の数でずらして、らせんの上に並べています。" } },
               { "@type": "Question", "name": "動きを減らす設定の人にはどう見えますか？", "acceptedAnswer": { "@type": "Answer", "text": "書き出すコードには prefers-reduced-motion の指定が入っていて、自動で動く型は止まった形で表示します。" } },
               { "@type": "Question", "name": "カードを自分の画像に変えるには？", "acceptedAnswer": { "@type": "Answer", "text": "コードの中の cg-card の要素に、img 要素や background-image を入れます。色のグラデーションは .cg-card の background で決めているので、画像に変えるときは消してかまいません。" } }
@@ -62,7 +62,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css?v=20261116g" />
+    <link rel="stylesheet" href="css/style.css?v=20261116h" />
   </head>
   <body>
     <noscript
@@ -89,13 +89,13 @@
 
         <h2>よくある質問</h2>
         <h3>CSSだけでカルーセルは作れますか？</h3>
-        <p>作れます。手で送る形は scroll-snap、自動で流す形は @keyframes、螺旋のような立体は 3D の transform で作れます。このツールの型のほとんどは JavaScript を使いません。JS が要る型には「CSS＋少しのJS」の印を付けています。</p>
+        <p>作れます。手で送る形は scroll-snap、自動で流す形は @keyframes、螺旋のような立体は 3D の transform で作れます。このツールの型のほとんどは JavaScript を使いません。JavaScript も使う型には「JS」の印を付けています。</p>
         <h3>自動で流れ続けるカルーセルはどれですか？</h3>
         <p>無限ループ（マーキー）と2段の逆向きループです。同じ並びを2回置き、半分の幅だけ動かしてつなぎ目を消しています。螺旋・トルネード・二重螺旋も自動で動き続けます。</p>
         <h3>スマホでスワイプして送れますか？</h3>
-        <p>スクロールスナップ・CSSだけのボタンと点・中央が大きくなる・カバーフローは、指で横に送れます。螺旋の型は、幅が600px以下の画面では小さく表示します。</p>
+        <p>スクロールスナップ・ボタンと点で送る・中央が大きくなる・カバーフローは、指で横に送れます。螺旋の型は、幅が600px以下の画面では小さく表示します。</p>
         <h3>Safari や Firefox で動かない型はありますか？</h3>
-        <p>ありません。「CSS＋古いブラウザ用のJS」と書いた型（CSSだけのボタンと点・中央が大きくなる・カバーフロー・パララックス・端でぼける）は、Chrome・Edge では CSS だけで動き、まだ対応していないブラウザではコードの中の短い JS が同じ動きをします。スクロールで動く型も同じです。</p>
+        <p>ありません。ボタンと点で送る・中央が大きくなる・カバーフロー・パララックス・端でぼける、とスクロールで動く型は、Chrome・Edge では CSS で動き、まだ対応していないブラウザではコードの中の短い JS が同じ動きをします。</p>
         <h3>螺旋カルーセルはどうやって作っていますか？</h3>
         <p>1つの @keyframes で、高さ（translateY）と角度（rotateY）と半径（translateZ）を同時に動かし、カードごとに animation-delay を負の数でずらして、らせんの上に並べています。</p>
         <h3>動きを減らす設定の人にはどう見えますか？</h3>
