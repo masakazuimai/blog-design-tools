@@ -1,7 +1,7 @@
-import { TYPES, CATS } from "./types/index.js?v=20261116i";
+import { TYPES, CATS } from "./types/index.js?v=20261116j";
 import { UI } from "./i18n.js?v=20261116h";
-import { previewDoc, combined } from "./preview.js?v=20261116g";
-import { howText } from "./how.js?v=20261116g";
+import { previewDoc, combined } from "./preview.js?v=20261116j";
+import { howText } from "./how.js?v=20261116j";
 
 const LANG = document.documentElement.lang === "en" ? "en" : "ja";
 const T = UI[LANG];
@@ -23,8 +23,11 @@ const els = {
   copy: $("copyCode"),
   pasteNote: $("pasteNote"),
   toast: $("toast"),
-  work: $("work"),
+  viewer: $("viewer"),
+  close: $("viewerClose"),
 };
+
+let opener = null;
 
 const state = { type: TYPES[0], opts: { ...TYPES[0].defaults }, cat: "all", tab: "all" };
 
@@ -55,7 +58,7 @@ function renderGrid() {
   els.grid.innerHTML = list
     .map(
       (t) => `<li>
-  <button type="button" class="type-card" data-type="${t.id}" aria-pressed="${t.id === state.type.id}">
+  <button type="button" class="type-card" data-type="${t.id}" aria-haspopup="dialog">
     <span class="type-thumb"><iframe tabindex="-1" aria-hidden="true" loading="lazy" data-type="${t.id}"></iframe></span>
     <span class="type-meta"><strong>${t.label[LANG]}</strong><span class="langs">${langBadges(t)}</span></span>
   </button>
@@ -125,7 +128,7 @@ function renderCode({ stage = true } = {}) {
   renderTabs(c);
   els.code.textContent = currentCode(c);
   els.pasteNote.textContent = state.tab === "all" ? T.pasteAll : T.pastePart;
-  if (stage) {
+  if (stage && els.viewer.open) {
     clearTimeout(stageTimer);
     stageTimer = setTimeout(() => {
       els.stage.srcdoc = previewDoc(state.type, c, LANG);
@@ -133,17 +136,31 @@ function renderCode({ stage = true } = {}) {
   }
 }
 
-function select(type, { scroll = false, quiet = false } = {}) {
+function open(type, from) {
   state.type = type;
   state.opts = { ...type.defaults };
+  opener = from || els.grid.querySelector(`.type-card[data-type="${type.id}"]`);
   history.replaceState(null, "", `#type=${type.id}`);
-  els.grid.querySelectorAll(".type-card").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.type === type.id)));
+  if (!els.viewer.open) els.viewer.showModal();
+  els.viewer.scrollTop = 0;
   renderInfo();
   renderFields();
   renderCode();
-  if (scroll) els.work.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-  if (!quiet) track("carousel_gallery_select");
+  track("carousel_gallery_select");
 }
+
+els.viewer.addEventListener("close", () => {
+  clearTimeout(stageTimer);
+  els.stage.removeAttribute("srcdoc");
+  history.replaceState(null, "", location.pathname + location.search);
+  if (opener && opener.isConnected) opener.focus();
+});
+
+els.viewer.addEventListener("click", (e) => {
+  if (e.target === els.viewer) els.viewer.close();
+});
+
+els.close.addEventListener("click", () => els.viewer.close());
 
 let toastTimer;
 function toast(msg) {
@@ -164,7 +181,7 @@ els.chips.addEventListener("click", (e) => {
 els.grid.addEventListener("click", (e) => {
   const b = e.target.closest(".type-card");
   if (!b) return;
-  select(TYPES.find((t) => t.id === b.dataset.type), { scroll: true });
+  open(TYPES.find((t) => t.id === b.dataset.type), b);
 });
 
 els.fields.addEventListener("input", (e) => {
@@ -202,10 +219,10 @@ els.copy.addEventListener("click", async () => {
 
 addEventListener("hashchange", () => {
   const t = fromHash();
-  if (t && t !== state.type) select(t);
+  if (t && !(els.viewer.open && t === state.type)) open(t);
 });
 
-const initial = fromHash() || TYPES[0];
 renderChips();
 renderGrid();
-select(initial, { quiet: true });
+const initial = fromHash();
+if (initial) open(initial);

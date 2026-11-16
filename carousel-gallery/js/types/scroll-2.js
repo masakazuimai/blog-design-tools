@@ -8,8 +8,8 @@ const PARALLAX = {
   method: "css-new",
   label: { ja: "パララックス", en: "Parallax" },
   desc: {
-    ja: "横に送ると、カードの中の絵が枠より少し遅れて動き、奥行きが出ます。見本の中を横にスクロールして試してください。",
-    en: "As you scroll sideways, the art inside each card lags behind its frame, adding depth. Scroll the preview to try it.",
+    ja: "横に送ると、奥の景色はカードの枠より遅れて、手前の文字は逆向きに動き、層が分かれて奥行きが出ます。",
+    en: "As you scroll sideways, the background scenery lags behind the card frame and the front label moves the other way, so the layers separate and add depth.",
   },
   support: {
     ja: "動きは CSS のスクロール連動（view-timeline）で作っています。Chrome・Edge は CSS だけで動き、まだ対応していないブラウザではコードの中の短い JS が同じ動きをします。",
@@ -17,11 +17,12 @@ const PARALLAX = {
   },
   fields: [
     { key: "n", label: { ja: "枚数", en: "Cards" }, min: 4, max: 10, step: 1, unit: "" },
-    { key: "depth", label: { ja: "ずれの大きさ", en: "Depth" }, min: 10, max: 40, step: 5, unit: "%" },
+    { key: "depth", label: { ja: "ずれの大きさ", en: "Depth" }, min: 10, max: 50, step: 5, unit: "%" },
   ],
-  defaults: { n: 6, depth: 25 },
+  defaults: { n: 6, depth: 40 },
   build(o, lang) {
     const p = "cg-parallax";
+    const pct = Math.round((o.depth / (1 + (2 * o.depth) / 100)) * 10) / 10;
     const items = Array.from(
       { length: o.n },
       (_, i) =>
@@ -54,30 +55,50 @@ const PARALLAX = {
   position: absolute;
   inset: 0 -${o.depth}%;
   background:
-    radial-gradient(circle at 20% 30%, oklch(0.9 0.08 var(--h)) 0 10%, transparent 11%),
-    radial-gradient(circle at 70% 60%, oklch(0.85 0.1 calc(var(--h) + 60)) 0 14%, transparent 15%),
-    radial-gradient(circle at 40% 85%, oklch(0.8 0.1 calc(var(--h) + 120)) 0 8%, transparent 9%),
-    linear-gradient(150deg, oklch(0.62 0.14 var(--h)), oklch(0.42 0.14 calc(var(--h) + 40)));
+    radial-gradient(circle at 30% 28%, oklch(0.95 0.06 calc(var(--h) + 60)) 0 7%, transparent 7.5%),
+    radial-gradient(ellipse 40% 30% at 20% 100%, oklch(0.35 0.08 var(--h)) 0 99%, transparent 100%),
+    radial-gradient(ellipse 45% 38% at 55% 100%, oklch(0.45 0.1 calc(var(--h) + 20)) 0 99%, transparent 100%),
+    radial-gradient(ellipse 35% 28% at 85% 100%, oklch(0.3 0.07 var(--h)) 0 99%, transparent 100%),
+    linear-gradient(180deg, oklch(0.78 0.1 var(--h)), oklch(0.6 0.14 calc(var(--h) + 40)));
 }
 .${p}-label {
   position: absolute;
-  left: 14px;
-  bottom: 12px;
-  color: #fff;
+  left: 50%;
+  bottom: 22px;
+  margin-left: -70px;
+  width: 140px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgb(255 255 255 / 0.92);
+  color: #13302f;
   font-weight: 700;
   font-size: 16px;
+  text-align: center;
+  box-shadow: 0 8px 18px rgb(0 0 0 / 0.25);
 }
 @supports (animation-timeline: view()) {
   .${p}-art {
-    animation: ${p}-shift linear both;
+    animation: ${p}-back linear both;
+    animation-timeline: --${p}-card;
+  }
+  .${p}-label {
+    animation: ${p}-front linear both;
     animation-timeline: --${p}-card;
   }
 }
-@keyframes ${p}-shift {
-  from { transform: translateX(-${o.depth / 2}%); }
-  to { transform: translateX(${o.depth / 2}%); }
+@keyframes ${p}-back {
+  from { transform: translateX(-${pct}%); }
+  to { transform: translateX(${pct}%); }
+}
+@keyframes ${p}-front {
+  from { transform: translateX(48px); }
+  to { transform: translateX(-48px); }
 }`,
-      js: viewFallback(`.${p}`, `card.firstElementChild.style.transform = "translateX(" + -s * ${o.depth / 2} + "%)";`),
+      js: viewFallback(
+        `.${p}`,
+        `card.children[0].style.transform = "translateX(" + -s * ${pct} + "%)";
+      card.children[1].style.transform = "translateX(" + s * 48 + "px)";`
+      ),
     };
   },
 };

@@ -1,6 +1,8 @@
 import { writeFileSync } from "node:fs";
 import { TYPES } from "../../carousel-gallery/js/types/index.js";
 
+const LATIN = encodeURIComponent(Array.from({ length: 95 }, (_, i) => String.fromCharCode(32 + i)).join(""));
+
 const COPY = {
   ja: { title: "カルーセル<br>CSS サンプル集", sub: "トルネード・螺旋・無限ループなど60種を<br>動かして選び、コードをコピー", tag: "ほとんどが JavaScript 不要" },
   en: { title: "CSS Carousel<br>Examples", sub: "Tornado, helix, infinite loop, coverflow.<br>Preview, tweak and copy the code.", tag: "Most need no JavaScript" },
@@ -11,11 +13,12 @@ for (const lang of ["ja", "en"]) {
   const c = t.build(t.defaults, lang);
   const k = COPY[lang];
   const html = `<!doctype html><html lang="${lang}"><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@600;700;800&text=${LATIN}&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; }
 html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
-body { display: grid; grid-template-columns: 640px 560px; background: #e9eee8; color: #13302f; font-family: "M PLUS 1", sans-serif; }
+body { display: grid; grid-template-columns: 640px 560px; background: #e9eee8; color: #13302f; font-family: "M PLUS 1", "Zen Kaku Gothic New", sans-serif; }
 .text { padding: 64px 0 0 72px; }
 h1 { margin: 0 0 24px; font-size: 68px; line-height: 1.12; font-weight: 800; letter-spacing: -0.04em; }
 p { margin: 0 0 28px; font-size: 27px; line-height: 1.5; color: #4a615f; font-weight: 600; }

@@ -23,6 +23,10 @@ const TEXT = {
     ja: "動かし方：カードにマウスを乗せてください",
     en: "How it moves: hover over the cards",
   },
+  parallax: {
+    ja: "動かし方：自動で横に送っています。奥の景色は枠より遅れ、手前の白い札は逆向きにずれるのを見てください（自分で横にスクロールしても動きます）",
+    en: "How it moves: it scrolls sideways on its own. Watch the background scenery lag behind the frame while the white front label slides the other way (you can also scroll yourself)",
+  },
   auto: {
     ja: "動かし方：自動で動き続けます",
     en: "How it moves: it keeps moving on its own",
@@ -31,6 +35,7 @@ const TEXT = {
 
 const BY_ID = {
   "scroll-markers": "markers",
+  parallax: "parallax",
   "inertia-drag": "drag",
   "bounce-snap": "drag",
   "skew-drag": "drag",

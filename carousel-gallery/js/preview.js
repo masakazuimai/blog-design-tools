@@ -9,7 +9,7 @@ body {
   padding: 8px 0;
   background: #f6f8f4;
   color: #13302f;
-  font-family: "M PLUS 1", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "M PLUS 1", "Zen Kaku Gothic New", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 16px;
   line-height: 1.7;
   overflow-x: hidden;
@@ -21,6 +21,10 @@ body.is-thumb div { --s: 1; }
 body.is-thumb.is-scroll [class$="-sticky"] { height: calc(100vh / var(--thumb, 0.5)); }
 .cg-hint { margin: 0; padding: 16px; text-align: center; color: #4a615f; }
 `;
+
+const LATIN = encodeURIComponent(Array.from({ length: 95 }, (_, i) => String.fromCharCode(32 + i)).join(""));
+
+const FONTS = `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@400;600;700;800&text=${LATIN}&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap">`;
 
 const HINT = {
   ja: "↓ 自動でスクロールしています（自分で上下に動かしても試せます）",
@@ -79,5 +83,5 @@ export function previewDoc(type, code, lang, thumb = false) {
   const js = code.js ? `<script>${code.js}<\/script>` : "";
   const demo = type.demo ? `<script>${DEMO(type.demo)}<\/script>` : "";
   const zoom = thumb && type.thumbZoom ? ` style="--thumb: ${type.thumbZoom}"` : "";
-  return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>${BASE_CSS}\n${code.css}</style></head><body class="${cls}"${zoom}>${hint}${code.html}${js}${demo}</body></html>`;
+  return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">${FONTS}<style>${BASE_CSS}\n${code.css}</style></head><body class="${cls}"${zoom}>${hint}${code.html}${js}${demo}</body></html>`;
 }
