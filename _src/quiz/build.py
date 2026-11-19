@@ -7,7 +7,7 @@
     python3 _src/quiz/build.py <ジャンル>=<フォルダ>  ジャンルを指定して差し替える（いくつでも並べてよい）
 
 decks.json の無いフォルダは、GENRES の decks の順と title で作る（アプリより先にページを作るとき）。
-アプリの案内は GENRES の app で決める。live が False のジャンルは案内を出力しない。
+アプリの案内は GENRES の app で決める。app が無いか live が False のジャンルは案内を出力しない。
 True にするときは url（短縮URL）と scheme を書き、_src/quiz で npm install のあと
 npm run qr -- <ジャンル> <url> で quiz/assets/qr-<ジャンル>.svg を作る。
 出力はリポジトリ直下の quiz/<ジャンル>/ 以下（手で編集しない）。
@@ -45,8 +45,6 @@ GENRES = {
         "plate": "火気厳禁",
         "pass_ratio": 0.6,
         "pass_label": "本番の合格ライン（各科目60%）",
-        "app_pack": "本番形式の模試3回と追加の150問が入った「危険物乙4 実力テストパック」は、アプリで解けます。",
-        "app": {"live": False},
         "faq": [
             ("危険物乙4の試験は、どの科目が何問出ますか？",
              "危険物取扱者試験の乙種第4類は、危険物に関する法令が15問、基礎的な物理学及び基礎的な化学が10問、危険物の性質並びにその火災予防及び消火の方法が10問の、計35問で、どの問題も5つの選択肢から1つを選ぶ形式です。試験時間は2時間です。",
@@ -100,8 +98,6 @@ GENRES = {
         "plate": "衛生管理者",
         "pass_ratio": 0.6,
         "pass_label": "合格の目安（3科目の合計で60%・各科目40%以上）",
-        "app_pack": "第二種衛生管理者の模試と追加の問題は、アプリで解けます。",
-        "app": {"live": False},
         "faq": [
             ("第二種衛生管理者の試験は、どの科目が何問出ますか？",
              "関係法令（有害業務に係るものを除く）、労働衛生（有害業務に係るものを除く）、労働生理の3科目が10問ずつ、計30問です。試験時間は3時間です。",
@@ -207,8 +203,8 @@ def render(name, values):
 
 
 def app_cta(gid, genre, deck_id, placement):
-    app = genre["app"]
-    if not app["live"]:
+    app = genre.get("app")
+    if not app or not app["live"]:
         return ""
     if not app.get("url") or not app.get("scheme"):
         fail(f"{gid} の app に url と scheme がありません（live を True にするときは両方を書く）")
