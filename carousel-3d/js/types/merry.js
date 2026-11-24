@@ -69,7 +69,7 @@ function mount(host, state, autoOn) {
     if (typeof Draggable === "undefined") return;
     if (typeof InertiaPlugin !== "undefined") gsap.registerPlugin(InertiaPlugin);
     const proxy = document.createElement("div");
-    const apply = (self) => (s.rotation -= self.deltaX * SENS);
+    const apply = (self) => (s.rotation += self.deltaX * SENS);
     drag = Draggable.create(proxy, {
       trigger: scene,
       type: "x",
@@ -165,8 +165,8 @@ function scriptBody(p, speed) {
   Draggable.create(proxy, {
     trigger: scene, type: "x", inertia: true,
     onPressInit: function () { active = true; },
-    onDrag: function () { rotation -= this.deltaX * SENS; },
-    onThrowUpdate: function () { rotation -= this.deltaX * SENS; },
+    onDrag: function () { rotation += this.deltaX * SENS; },
+    onThrowUpdate: function () { rotation += this.deltaX * SENS; },
     onThrowComplete: function () { active = false; }
   });
   scene.style.cursor = "grab";`;

@@ -1,4 +1,4 @@
-import { merryType } from "./types/merry.js?v=20260710a";
+import { merryType } from "./types/merry.js?v=20261124a";
 import { cardStackType } from "./types/cardstack.js?v=20260710a";
 import { vRingType } from "./types/vring.js?v=20260710a";
 import { flowerType } from "./types/flower.js?v=20260710a";
