@@ -52,8 +52,8 @@
 
 | アプリ | 説明 | URL |
 |---|---|---|
-| [HTML練習問題](./apps/html-basics/) | HTMLの20問をブラウザで書いて即プレビュー | [デモ](https://codequest.work/apps/html-basics/) |
-| [CSS練習問題](./apps/css-basics/) | CSSの24問をブラウザで書いて即プレビュー | [デモ](https://codequest.work/apps/css-basics/) |
+| [HTML練習問題](./apps/html-basics/) | HTMLの21問をブラウザで書いて即プレビュー | [デモ](https://codequest.work/apps/html-basics/) |
+| [CSS練習問題](./apps/css-basics/) | CSSの29問をブラウザで書いて即プレビュー | [デモ](https://codequest.work/apps/css-basics/) |
 | [JavaScript練習問題](./apps/js-beginner/) | JavaScriptの基礎30問 | [デモ](https://codequest.work/apps/js-beginner/) |
 | [JavaScript配列メソッドクイズ](./apps/js-array/) | map・filter・reduceなど20問 | [デモ](https://codequest.work/apps/js-array/) |
 | [JavaScript DOM操作クイズ](./apps/js-dom/) | DOM操作の20問 | [デモ](https://codequest.work/apps/js-dom/) |
