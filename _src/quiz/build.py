@@ -148,6 +148,7 @@ GENRES = {
 SHELF = [
     {"genre": "otsu4", "name": "危険物乙4", "note": "危険物取扱者 乙種第4類。法令・物理化学・性質消火の3科目を4択で。"},
     {"genre": "eisei2", "name": "第二種衛生管理者", "note": "第二種衛生管理者免許試験。関係法令・労働衛生・労働生理の3科目を4択で。"},
+    {"genre": "nanikiru", "name": "何切るの受け入れ当て", "note": "麻雀の牌効率。13枚の手牌から、引くと前に進む牌をすべて選ぶ。", "count": 10},
 ]
 
 
@@ -421,7 +422,7 @@ def build_shelf(totals):
             "href": f"{item['genre']}/",
             "name": html.escape(item["name"]),
             "note": html.escape(item["note"]),
-            "count": str(totals[item["genre"]]),
+            "count": str(item.get("count") or totals[item["genre"]]),
         })
         for item in SHELF
     )
@@ -433,7 +434,7 @@ def build_shelf(totals):
             {"@type": "ListItem", "position": 2, "name": SHELF_NAME, "item": url},
         ],
     }
-    desc = "資格試験の一問一答を、ブラウザでそのまま解ける無料の問題集です。4択で答えるとすぐに正誤と出典つきの解説が出て、間違えた問題だけを解き直せます。登録不要。"
+    desc = "資格試験の一問一答や麻雀の何切るを、ブラウザでそのまま解ける無料の問題集です。4択で答えるとすぐに正誤と出典つきの解説が出て、間違えた問題だけを解き直せます。登録不要。"
     page = render("shelf.html", {
         "title": "無料の問題集｜資格試験の一問一答を4択で | CodeQuest.work",
         "desc": html.escape(desc),
@@ -469,7 +470,7 @@ def source_dirs(args):
 def main():
     dirs = source_dirs(sys.argv[1:])
     totals = {gid: build_genre(gid, genre, dirs[gid]) for gid, genre in GENRES.items()}
-    missing = [item["genre"] for item in SHELF if item["genre"] not in totals]
+    missing = [item["genre"] for item in SHELF if "count" not in item and item["genre"] not in totals]
     if missing:
         fail(f"SHELF にあるのに GENRES に無いジャンル: {', '.join(missing)}")
     build_shelf(totals)

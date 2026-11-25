@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;900&family=Noto+Serif+JP:wght@600;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/quiz/assets/quiz.css">
+<link rel="stylesheet" href="/quiz/nanikiru/ukeire.css">
+<style>
+html,body{margin:0}
+body.uk{width:1200px;height:630px;background:#1f4a3d;color:#e8efe9;box-sizing:border-box;padding:72px 80px 0;display:flex;flex-direction:column}
+h1{margin:0;font-family:var(--serif);font-weight:900;font-size:84px;line-height:1.1;letter-spacing:-.03em;color:#fbf8ef}
+.sub{margin:18px 0 0;font-size:34px;font-weight:700}
+.row{--tw:72px;display:flex;gap:8px;margin-top:64px}
+.row .tile{flex:none}
+.og-foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;height:88px;border-top:1px solid rgba(232,239,233,.35);font-size:28px;font-weight:700}
+</style></head>
+<body class="uk">
+<h1>何切るの受け入れ当て</h1>
+<p class="sub">引くと前に進む牌を、すべて選ぶ。牌効率の練習10問</p>
+<div class="row" id="row"></div>
+<div class="og-foot"><span>無料・登録不要</span><span>CodeQuest.work</span></div>
+<script type="module">
+import { drawTile } from "/quiz/nanikiru/ukeire.js";
+const row = document.getElementById("row");
+["2m","3m","6m","7m","3p","4p","5p","6p","7p","8p","9s","9s","9s"].forEach((id) => {
+  row.appendChild(drawTile(id, document.createElement("span")));
+});
+</script>
+</body></html>
