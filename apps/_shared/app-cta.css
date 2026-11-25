@@ -11,6 +11,9 @@
 .app-cta__qr { margin: 0; width: 164px; text-align: center; }
 .app-cta__qr img { display: block; width: 148px; height: 148px; margin: 0 auto 8px; border-radius: 8px; background: #ffffff; }
 .app-cta__qr figcaption { font-size: 16px; color: var(--text-sub); line-height: 1.5; }
+.clear-card .app-line { margin: 24px auto 0; max-width: 36em; font-size: 16px; line-height: 1.7; color: var(--text-sub); }
+.app-line a { color: var(--text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+.app-line a:hover { color: var(--amber); }
 @media (max-width: 768px), not all and (hover: hover) and (pointer: fine) {
   .app-cta { grid-template-columns: 1fr; }
   .app-cta__qr { display: none; }

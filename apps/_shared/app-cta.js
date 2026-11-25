@@ -1,4 +1,13 @@
 (function () {
+  var line = document.querySelector(".app-line");
+  if (!line) return;
+  if (/Android/i.test(navigator.userAgent)) { line.remove(); return; }
+  line.querySelector("a").addEventListener("click", function () {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "app_link_click", app: "programming-drill", placement: "practice_app_complete", page: location.pathname });
+  });
+})();
+(function () {
   var box = document.getElementById("app-cta");
   if (!box) return;
   var chip = document.querySelector(".app-chip");
