@@ -96,7 +96,22 @@ function save(blob, filename) {
   setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
 }
 
+function track(format) {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: "handwriting_download",
+    format: format,
+    font: $("font").value,
+    pen: pressed("penSel"),
+    paper: pressed("paperSel"),
+    template: pressed("tplSel"),
+    dir: pressed("dir"),
+    lang: document.documentElement.lang
+  });
+}
+
 function exportRaster(type, ext, quality) {
+  track(ext);
   const o = opts();
   if (type === "image/jpeg") o.forceFill = true;
   const paper = findPaper(pressed("paperSel"));
@@ -218,6 +233,7 @@ $("dir").addEventListener("click", function (ev) {
 $("dlPng").addEventListener("click", function () { exportRaster("image/png", "png"); });
 $("dlJpg").addEventListener("click", function () { exportRaster("image/jpeg", "jpg", 0.92); });
 $("dlSvg").addEventListener("click", function () {
+  track("svg");
   const svg = buildSVG(lastLayout, opts(), findPaper(pressed("paperSel")), findPen(pressed("penSel")));
   save(new Blob([svg], { type: "image/svg+xml" }), "handwriting.svg");
 });
