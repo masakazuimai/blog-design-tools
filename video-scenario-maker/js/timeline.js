@@ -1,8 +1,8 @@
-import { withTimes, totalDuration } from "./store.js?v=20261025b";
-import { fmtTime } from "./prompt.js?v=20261025b";
-import { blobUrl } from "./preview.js?v=20261025b";
-import { BGM_GENRES, pick } from "./vocab.js?v=20261025b";
-import { T, label } from "./i18n.js?v=20261025b";
+import { withTimes, totalDuration } from "./store.js?v=20261128a";
+import { fmtTime } from "./prompt.js?v=20261128a";
+import { blobUrl } from "./preview.js?v=20261128a";
+import { BGM_GENRES, pick } from "./vocab.js?v=20261128a";
+import { T, label } from "./i18n.js?v=20261128a";
 
 const LABEL_MIN_PX = 64;
 const STEPS = [0.5, 1, 2, 5, 10, 15, 30, 60];

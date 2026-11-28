@@ -1,11 +1,11 @@
-import { getShot, categoryName } from "./shots/index.js?v=20261101a";
-import { frameHtml } from "./frame.js?v=20261101a";
-import { VOCAB, vocabLabel } from "./vocab.js?v=20261101a";
-import { shotPrompt } from "./output.js?v=20261101a";
-import { addItem } from "./builder.js?v=20261101a";
-import { copyText, toast, track } from "./ui.js?v=20261101a";
-import { t } from "./i18n.js?v=20261101a";
-import { hasDemo, demoPoster, demoSources, reducedMotion } from "./move-demo.js?v=20261101a";
+import { getShot, categoryName } from "./shots/index.js?v=20261128a";
+import { frameHtml } from "./frame.js?v=20261128a";
+import { VOCAB, vocabLabel } from "./vocab.js?v=20261128a";
+import { shotPrompt } from "./output.js?v=20261128a";
+import { addItem } from "./builder.js?v=20261128a";
+import { copyText, toast, track } from "./ui.js?v=20261128a";
+import { t } from "./i18n.js?v=20261128a";
+import { hasDemo, demoPoster, demoSources, reducedMotion } from "./move-demo.js?v=20261128a";
 
 const $ = (id) => document.getElementById(id);
 
@@ -47,6 +47,11 @@ export const initDetail = () => {
   $("detail-copy").addEventListener("click", () => {
     copyText(shotPrompt(current), t("copiedPrompt"));
     track("copy", { scope: "shot", format: "prompt", shot_id: current.id });
+  });
+  $("detail-domoai").addEventListener("click", () => {
+    if (!current) return;
+    copyText(shotPrompt(current), t("copiedForDomoai"));
+    track("domoai_click", { from: "detail", shot_id: current.id });
   });
   $("detail-add").addEventListener("click", () => {
     addItem(current.id);

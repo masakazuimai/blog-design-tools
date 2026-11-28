@@ -1,5 +1,5 @@
 
-import { LANG } from "./i18n.js?v=20261025b";
+import { LANG } from "./i18n.js?v=20261128a";
 
 const DB_NAME = "video-scenario-maker";
 const STORE = "project";

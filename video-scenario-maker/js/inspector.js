@@ -1,8 +1,8 @@
-import { SHOTS, ANGLES, MOVES, LIGHTS, TRANSITIONS } from "./vocab.js?v=20261025b";
-import { withTimes } from "./store.js?v=20261025b";
-import { fmtTime } from "./prompt.js?v=20261025b";
-import { blobUrl } from "./preview.js?v=20261025b";
-import { T, label } from "./i18n.js?v=20261025b";
+import { SHOTS, ANGLES, MOVES, LIGHTS, TRANSITIONS } from "./vocab.js?v=20261128a";
+import { withTimes } from "./store.js?v=20261128a";
+import { fmtTime } from "./prompt.js?v=20261128a";
+import { blobUrl } from "./preview.js?v=20261128a";
+import { T, label } from "./i18n.js?v=20261128a";
 
 const MAX_IMAGE_BYTES = 20 * 1024 * 1024;
 const $ = (id) => document.getElementById(id);

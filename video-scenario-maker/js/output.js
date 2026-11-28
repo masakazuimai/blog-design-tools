@@ -1,15 +1,15 @@
-import { scenePrompts, timelinePrompt, bgmPrompt, toSrt } from "./prompt.js?v=20261025b";
-import { LANG, T } from "./i18n.js?v=20261025b";
+import { scenePrompts, timelinePrompt, bgmPrompt, toSrt } from "./prompt.js?v=20261128a";
+import { LANG, T } from "./i18n.js?v=20261128a";
 
 let tab = "scene";
 let lang = "en";
 let current = null;
 let deps = null;
 
-const copy = async (text) => {
+const copy = async (text, label = T.copied) => {
   try {
     await navigator.clipboard.writeText(text);
-    deps.toast(T.copied);
+    deps.toast(label);
   } catch (error) {
     console.error("クリップボードへのコピーに失敗しました", error);
     deps.toast(T.copyFailed);
@@ -44,18 +44,45 @@ const button = (label, onClick) => {
   return b;
 };
 
+const domoaiCta = (text, description, from) => {
+  const box = document.createElement("div");
+  box.className = "domoai-cta-box";
+  const link = document.createElement("a");
+  link.className = "btn primary domoai-cta";
+  link.href = "https://www.domoai.app/create/text-to-video?via=cq-tool";
+  link.target = "_blank";
+  link.rel = "sponsored noopener noreferrer";
+  link.textContent = T.domoaiCta;
+  link.addEventListener("click", () => {
+    if (text) copy(text, T.copiedForDomoai);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "video_scenario_maker_domoai_click", from });
+  });
+  const note = document.createElement("p");
+  note.className = "domoai-note";
+  note.textContent = description;
+  box.append(link, note);
+  return box;
+};
+
 const views = {
   scene: (p) => {
     const prompts = scenePrompts(p, lang);
     const all = prompts.join("\n\n---\n\n");
     return {
-      blocks: prompts.map((t, i) => block(T.sceneLabel(i + 1), t)),
+      blocks: [
+        ...prompts.map((t, i) => block(T.sceneLabel(i + 1), t)),
+        domoaiCta(prompts[0], T.domoaiSceneNote, "scene"),
+      ],
       actions: [button(T.copyAll, () => copy(all))],
     };
   },
   timeline: (p) => {
     const text = timelinePrompt(p, lang);
-    return { blocks: [block(T.timelineLabel, text)], actions: [] };
+    return {
+      blocks: [block(T.timelineLabel, text), domoaiCta(p.scenes.length ? text : "", T.domoaiTimelineNote, "timeline")],
+      actions: [],
+    };
   },
   bgm: (p) => {
     const text = bgmPrompt(p, lang);

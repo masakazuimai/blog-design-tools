@@ -217,7 +217,10 @@ input[type="range"]{width:100%; accent-color:var(--accent)}
 .tab-note{color:var(--sub); margin:0; padding:10px 14px 0}
 .out{display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr)); gap:8px; padding:10px 14px 14px}
 .out-block{border:1px solid var(--line); border-radius:4px; overflow:hidden; background:var(--field); display:flex; flex-direction:column}
-.out-block:only-child{grid-column:1/-1}
+.out-block:only-child,.out-block:first-child:nth-last-child(2){grid-column:1/-1}
+.domoai-cta-box{grid-column:1/-1; min-width:0; margin-top:14px; padding-top:14px; border-top:1px solid var(--line)}
+.domoai-cta{max-width:100%; white-space:normal; text-align:center; font-size:1rem}
+.domoai-note{margin:8px 0 0; color:var(--sub); font-size:1rem}
 .out-head{display:flex; flex-direction:row-reverse; justify-content:flex-end; gap:12px; align-items:center; padding:4px 10px; background:var(--pane-2); color:var(--sub)}
 .out pre{
   margin:0; padding:10px 12px; font-family:ui-monospace,"SFMono-Regular",Menlo,monospace; font-size:16px;

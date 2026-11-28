@@ -1,8 +1,10 @@
-import { t } from "./i18n.js?v=20261101a";
+import { t } from "./i18n.js?v=20261128a";
 
 let toastTimer = 0;
 export const toast = (message) => {
   const el = document.getElementById("toast");
+  const container = document.querySelector("#detail[open]") || document.body;
+  if (el.parentElement !== container) container.append(el);
   el.textContent = message;
   el.classList.add("is-on");
   clearTimeout(toastTimer);

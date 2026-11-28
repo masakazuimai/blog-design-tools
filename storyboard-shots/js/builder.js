@@ -1,4 +1,4 @@
-import { getShot } from "./shots/index.js?v=20261101a";
+import { getShot } from "./shots/index.js?v=20261128a";
 
 const KEY = "sbs:board:v1";
 const listeners = new Set();

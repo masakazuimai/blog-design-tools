@@ -1,7 +1,7 @@
-import { withTimes, totalDuration } from "./store.js?v=20261025b";
-import { fmtTime } from "./prompt.js?v=20261025b";
-import { MOVES } from "./vocab.js?v=20261025b";
-import { T, label } from "./i18n.js?v=20261025b";
+import { withTimes, totalDuration } from "./store.js?v=20261128a";
+import { fmtTime } from "./prompt.js?v=20261128a";
+import { MOVES } from "./vocab.js?v=20261128a";
+import { T, label } from "./i18n.js?v=20261128a";
 
 const FADE_SEC = 0.5;
 

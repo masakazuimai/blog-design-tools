@@ -1,6 +1,6 @@
-import { VOICE_GENDERS, VOICE_AGES, VOICE_TONES, VOICE_SPEEDS } from "./vocab.js?v=20261025b";
-import { speakersOf, createVoice } from "./store.js?v=20261025b";
-import { T, label as optLabel } from "./i18n.js?v=20261025b";
+import { VOICE_GENDERS, VOICE_AGES, VOICE_TONES, VOICE_SPEEDS } from "./vocab.js?v=20261128a";
+import { speakersOf, createVoice } from "./store.js?v=20261128a";
+import { T, label as optLabel } from "./i18n.js?v=20261128a";
 
 const FIELDS = [
   { key: "gender", label: T.voiceFields.gender, list: VOICE_GENDERS },

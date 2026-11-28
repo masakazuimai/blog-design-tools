@@ -1,8 +1,8 @@
 import {
   ASPECTS, STYLES, MOODS, SHOTS, ANGLES, MOVES, LIGHTS, TRANSITIONS,
   SPEECH_LANGS, BGM_GENRES, BGM_MOODS, VOICE_GENDERS, VOICE_AGES, VOICE_TONES, VOICE_SPEEDS, pick,
-} from "./vocab.js?v=20261025b";
-import { withTimes, totalDuration } from "./store.js?v=20261025b";
+} from "./vocab.js?v=20261128a";
+import { withTimes, totalDuration } from "./store.js?v=20261128a";
 
 const str = (v) => (typeof v === "string" ? v.trim() : "");
 const word = (list, v, lang) => {

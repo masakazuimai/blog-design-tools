@@ -1,16 +1,16 @@
 import {
   ASPECTS, STYLES, MOODS, SPEECH_LANGS, DIALOGUE_MODES, BGM_GENRES, BGM_MOODS, pick,
-} from "./vocab.js?v=20261025b";
+} from "./vocab.js?v=20261128a";
 import {
   createProject, createSampleProject, createScene, loadProject, saveProject, normalize, totalDuration,
   updateScene, removeScene, moveScene, duplicateScene,
-} from "./store.js?v=20261025b";
-import { createPlayer } from "./preview.js?v=20261025b";
-import { createTimeline } from "./timeline.js?v=20261025b";
-import { renderInspector, bindInspector } from "./inspector.js?v=20261025b";
-import { renderOutput, bindOutput } from "./output.js?v=20261025b";
-import { renderVoices, bindVoices } from "./voices.js?v=20261025b";
-import { T, label } from "./i18n.js?v=20261025b";
+} from "./store.js?v=20261128a";
+import { createPlayer } from "./preview.js?v=20261128a";
+import { createTimeline } from "./timeline.js?v=20261128a";
+import { renderInspector, bindInspector } from "./inspector.js?v=20261128a";
+import { renderOutput, bindOutput } from "./output.js?v=20261128a";
+import { renderVoices, bindVoices } from "./voices.js?v=20261128a";
+import { T, label } from "./i18n.js?v=20261128a";
 
 const $ = (id) => document.getElementById(id);
 const MAX_AUDIO_BYTES = 50 * 1024 * 1024;

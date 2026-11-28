@@ -63,6 +63,10 @@ main { max-width: 1440px; margin: 0 auto; padding: 24px clamp(16px, 3vw, 32px) 6
 .btn--ghost { background: var(--bg); color: var(--text); border-color: var(--line-strong); }
 .btn--ghost:hover { opacity: 1; border-color: var(--text); }
 .btn--block { width: 100%; }
+a.btn { text-decoration: none; }
+a.btn--ghost { color: var(--text); }
+.domoai-cta { white-space: normal; text-align: center; font-size: 1rem; }
+.domoai-note { margin: 0; font-size: 1rem; }
 .icon-btn {
   width: 40px; height: 40px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg);
   font-size: 22px; line-height: 1; cursor: pointer;
